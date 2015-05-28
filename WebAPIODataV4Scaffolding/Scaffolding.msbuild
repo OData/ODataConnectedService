@@ -1,0 +1,96 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="tools\Scaffolding.tasks.targets"/>
+  <UsingTask TaskName="SkipStrongNames.CheckSkipStrongNamesStatus" AssemblyFile="$(SkipStrongNamesExe)" />
+
+  <ItemGroup>
+    <SolutionsToBuild Include="Scaffolding.sln">
+      <BuildInParallel>$(BuildInParallel)</BuildInParallel>
+    </SolutionsToBuild>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <ProjectGuid>{D8EF3877-51F8-4AC3-856A-DE2E8E2060B2}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <NuGetFolder>..\.nuget</NuGetFolder>
+    <NuGetExe>$(NuGetFolder)\NuGet.exe</NuGetExe>
+    <CodeAnalysis Condition=" '$(CodeAnalysis)' == '' and '$(Configuration)' != 'Release' ">true</CodeAnalysis>
+    <SkipStrongNamesExe>$(MSBuildThisFileDirectory)packages\Microsoft.Web.SkipStrongNames.1.0.0\tools\SkipStrongNames.exe</SkipStrongNamesExe>
+    <SkipStrongNamesXml>$(MSBuildThisFileDirectory)tools\SkipStrongNames.xml</SkipStrongNamesXml>
+    <AdditionalRestoreProps></AdditionalRestoreProps>
+  </PropertyGroup>
+
+  <Target Name="RestoreSkipStrongNames" DependsOnTargets="DownloadNuGet">
+    <Exec Command='"$(NuGetExe)" restore .nuget\packages.config -PackagesDirectory packages -NonInteractive ^
+          -Verbosity detailed -ConfigFile .nuget\NuGet.Config' />
+  </Target>
+
+  <Target Name="EnableSkipStrongNames" DependsOnTargets="RestoreSkipStrongNames">
+    <Exec Command='"$(SkipStrongNamesExe)" -e "$(SkipStrongNamesXml)"' />
+    <CheckSkipStrongNamesStatus AssembliesFile="$(SkipStrongNamesXml)">
+      <Output TaskParameter="Status" PropertyName="Status" />
+    </CheckSkipStrongNamesStatus>
+    <Message Text="SkipStrongNames: $(Status)" Importance="High" />
+  </Target>
+
+  <Target Name="DisableSkipStrongNames" DependsOnTargets="RestoreSkipStrongNames">
+    <Exec Command='"$(SkipStrongNamesExe)" -d "$(SkipStrongNamesXml)"' />
+    <CheckSkipStrongNamesStatus AssembliesFile="$(SkipStrongNamesXml)">
+      <Output TaskParameter="Status" PropertyName="Status" />
+    </CheckSkipStrongNamesStatus>
+    <Message Text="SkipStrongNames: $(Status)" Importance="High" />
+  </Target>
+
+  <Target Name="DownloadNuGet" Condition=" '$(NotDownloadNuget)' != 'true' ">
+    <DownloadNuGet Condition="" OutputFileName="$(NuGetExe)" MinimumVersion="2.7.0" />
+  </Target>
+
+  <Target Name="RestorePackages" DependsOnTargets="DownloadNuGet">
+    <Message Text="Restoring NuGet packages..." Importance="High" />
+    <Exec Command='"$(NuGetExe)" restore "%(SolutionsToBuild.Identity)" -PackagesDirectory packages -NonInteractive ^
+          -Verbosity detailed -ConfigFile "$(MsBuildThisFileDirectory)$(NuGetFolder)\NuGet.Config" ^
+          -NoCache $(AdditionalRestoreProps)' />
+  </Target>
+
+  <Target Name="BuildTools">
+    <PropertyGroup>
+      <FxCopProjectLocation>$(MsBuildThisFileDirectory)tools\src\Microsoft.Web.FxCop\</FxCopProjectLocation>
+      <CustomFxCopRulesPath>$(MsBuildThisFileDirectory)packages\CustomFxCopRules</CustomFxCopRulesPath>
+    </PropertyGroup>
+    <MsBuild
+          Condition=" '$(CodeAnalysis)' == 'true' "
+          Projects="$(FxCopProjectLocation)\Microsoft.Web.FxCop.csproj"
+          Properties="Configuration=Release;OutputPath=$(CustomFxCopRulesPath)" />
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="RestorePackages;BuildTools">
+    <MakeDir Directories="bin\$(Configuration)" />
+    <MSBuild
+          Projects="@(SolutionsToBuild)"
+          BuildInParallel="%(SolutionsToBuild.BuildInParallel)"
+          Targets="Build"
+          Condition=" '%(SolutionsToBuild.Portable)' != 'true' or '$(BuildPortable)' == 'true' "
+          Properties="Configuration=$(Configuration);CodeAnalysis=$(CodeAnalysis);StyleCopEnabled=$(StyleCopEnabled);VisualStudioVersion=$(VisualStudioVersion)" />
+  </Target>
+
+  <Target Name="ProjectCopRun">
+  </Target>
+  <Target Name="StyleCopRun">
+  </Target>
+  <Target Name="Clean">
+    <MSBuild
+          Projects="@(SolutionsToBuild)"
+          BuildInParallel="%(SolutionsToBuild.BuildInParallel)"
+          Targets="Clean"
+          Condition=" '%(SolutionsToBuild.Portable)' != 'true' or '$(BuildPortable)' == 'true' "
+          Properties="Configuration=$(Configuration);VisualStudioVersion=$(VisualStudioVersion)" />
+    <RemoveDir Directories="bin\$(Configuration)" />
+  </Target>
+  <Target Name="Rebuild" DependsOnTargets="RestorePackages;BuildTools">
+    <MSBuild
+          Projects="@(SolutionsToBuild)"
+          BuildInParallel="%(SolutionsToBuild.BuildInParallel)"
+          Targets="ReBuild"
+          Condition=" '%(SolutionsToBuild.Portable)' != 'true' or '$(BuildPortable)' == 'true' "
+          Properties="Configuration=$(Configuration);CodeAnalysis=$(CodeAnalysis);StyleCopEnabled=$(StyleCopEnabled);VisualStudioVersion=$(VisualStudioVersion);OutputPath=$(OutputPath)Product;EnableProjectCop=false" />
+  </Target>
+</Project>
