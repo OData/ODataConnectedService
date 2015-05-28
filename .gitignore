@@ -136,7 +136,7 @@ publish/
 
 # NuGet Packages
 *.nupkg
-!**/ReferencePackages/
+!**/System.Web.OData.Design.Scaffolding/ReferencePackages/*
 # The packages folder can be ignored because of Package Restore
 **/packages/*
 # except build/, which is used as an MSBuild target.

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="System.Web.OData.Design.Scaffolding.Extension..40e7bb7e-f72d-44cf-8439-2567be2590c6" Version="1.0" Language="en-US" Publisher="Author Name" />
+    <Identity Id="System.Web.OData.Design.Scaffolding.Extension..40e7bb7e-f72d-44cf-8439-2567be2590c6" Version="0.1.0.0" Language="en-US" Publisher="Microsoft" />
     <DisplayName>System.Web.OData.Design.Scaffolding.Extension</DisplayName>
     <Description xml:space="preserve">The Scaffoldering for WebAPI OData V4</Description>
     <Tags>Scaffolding</Tags>
