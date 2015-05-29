@@ -13,6 +13,6 @@
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.0,)" />
   </Dependencies>
   <Assets>
-    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="System.Web.OData.Design.Scaffolding" Path="|System.Web.OData.Design.Scaffolding|" />
+     <Asset Path="System.Web.OData.Design.Scaffolding.dll" Type="Microsoft.VisualStudio.MefComponent"/>
   </Assets>
 </PackageManifest>
