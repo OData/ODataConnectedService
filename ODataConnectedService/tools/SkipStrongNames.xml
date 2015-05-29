@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assemblies defaultPublicKeyToken="31bf3856ad364e35">
+  <assembly name="OData.Client.CodeGeneratorProvider"/>
+</assemblies>
