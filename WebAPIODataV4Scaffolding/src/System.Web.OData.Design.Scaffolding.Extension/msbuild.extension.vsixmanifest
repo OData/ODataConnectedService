@@ -4,6 +4,7 @@
     <DisplayName>Microsfot Web API OData V4 Scaffolding</DisplayName>
     <Description xml:space="preserve">The Scaffoldering for WebAPI OData V4</Description>
     <Tags>Scaffolding</Tags>
+    <License>ap-pl.txt</License>
   </Metadata>
   <Installation AllUsers="true">
     <InstallationTarget Version="[12.0,15.0)" Id="Microsoft.VisualStudio.Pro" />
