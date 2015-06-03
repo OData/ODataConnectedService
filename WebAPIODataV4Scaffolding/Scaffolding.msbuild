@@ -71,6 +71,15 @@
           Condition=" '%(SolutionsToBuild.Portable)' != 'true' or '$(BuildPortable)' == 'true' "
           Properties="Configuration=$(Configuration);CodeAnalysis=$(CodeAnalysis);StyleCopEnabled=$(StyleCopEnabled);VisualStudioVersion=$(VisualStudioVersion)" />
   </Target>
+  
+  <Target Name="CopyVsixmanifest" AfterTargets="Build">
+     <Copy SourceFiles="src\System.Web.OData.Design.Scaffolding.Extension\source.extension.vsixmanifest" DestinationFiles="bin\$(Configuration)\extension.vsixmanifest"/> 
+  </Target>
+  
+  <Target Name="RegexReplace" AfterTargets="CopyVsixmanifest">
+    <Message Text="RegexReplace "/>
+    <RegexReplace Condition="" Files="bin\$(Configuration)\extension.vsixmanifest" Find="Asset Type=&quot;Microsoft.VisualStudio.MefComponent.*/>" Replace="Asset Type=&quot;Microsoft.VisualStudio.MefComponent&quot; Path=&quot;System.Web.OData.Design.Scaffolding.dll&quot; />" WarnOnNoMatch="true"/>
+  </Target>
 
   <Target Name="ProjectCopRun">
   </Target>
