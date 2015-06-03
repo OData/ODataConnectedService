@@ -16,7 +16,7 @@
     <CodeAnalysis Condition=" '$(CodeAnalysis)' == '' and '$(Configuration)' != 'Release' ">true</CodeAnalysis>
     <SkipStrongNamesExe>$(MSBuildThisFileDirectory)packages\Microsoft.Web.SkipStrongNames.1.0.0\tools\SkipStrongNames.exe</SkipStrongNamesExe>
     <SkipStrongNamesXml>$(MSBuildThisFileDirectory)tools\SkipStrongNames.xml</SkipStrongNamesXml>
-    <AdditionalRestoreProps></AdditionalRestoreProps>
+    <OutputPath>$(MSBuildThisFileDirectory)bin\$(Configuration)</OutputPath>    
   </PropertyGroup>
 
   <Target Name="RestoreSkipStrongNames" DependsOnTargets="DownloadNuGet">
@@ -73,12 +73,13 @@
   </Target>
   
   <Target Name="CopyVsixmanifest" AfterTargets="Build">
-     <Copy SourceFiles="src\System.Web.OData.Design.Scaffolding.Extension\source.extension.vsixmanifest" DestinationFiles="bin\$(Configuration)\extension.vsixmanifest"/> 
+     <Message Text="CopyVsixmanifest" Importance="High" />
+     <Copy SourceFiles="src\System.Web.OData.Design.Scaffolding.Extension\source.extension.vsixmanifest" DestinationFiles="$(OutputPath)\extension.vsixmanifest"/> 
   </Target>
   
   <Target Name="RegexReplace" AfterTargets="CopyVsixmanifest">
-    <Message Text="RegexReplace "/>
-    <RegexReplace Condition="" Files="bin\$(Configuration)\extension.vsixmanifest" Find="Asset Type=&quot;Microsoft.VisualStudio.MefComponent.*/>" Replace="Asset Type=&quot;Microsoft.VisualStudio.MefComponent&quot; Path=&quot;System.Web.OData.Design.Scaffolding.dll&quot; />" WarnOnNoMatch="true"/>
+    <Message Text="RegexReplace" Importance="High" />
+    <RegexReplace Condition="" Files="$(OutputPath)\extension.vsixmanifest" Find="Asset Type=&quot;Microsoft.VisualStudio.MefComponent.*/>" Replace="Asset Type=&quot;Microsoft.VisualStudio.MefComponent&quot; Path=&quot;System.Web.OData.Design.Scaffolding.dll&quot; />" WarnOnNoMatch="true"/>
   </Target>
 
   <Target Name="ProjectCopRun">
