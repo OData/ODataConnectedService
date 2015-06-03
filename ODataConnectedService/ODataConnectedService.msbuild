@@ -22,6 +22,12 @@
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
 
+  <Target Name="DisableBuildVsix">
+    <Message Text="DisableBuildVsix in DTTP"/>
+    <Exec Command='copy .\src\ODataConnectedService.csproj .\src\ODataConnectedService.csproj.bak' />
+    <RegexReplace Condition="'$(UseDTTP)' == 'true'" Files=".\src\ODataConnectedService.csproj" Find=".*Import Project=.*Microsoft.VsSDK.targets&quot;.*/>" Replace=" " WarnOnNoMatch="true"/>
+  </Target>
+
   <Target Name="RestoreSkipStrongNames" DependsOnTargets="DownloadNuGet">
     <Exec Command='"$(NuGetExe)" restore .nuget\packages.config -PackagesDirectory packages -NonInteractive ^
           -Verbosity detailed -ConfigFile .nuget\NuGet.Config' />
@@ -65,7 +71,7 @@
           Properties="Configuration=Release;OutputPath=$(CustomFxCopRulesPath)" />
   </Target>
 
-  <Target Name="Build" DependsOnTargets="RestorePackages;BuildTools" BeforeTargets="RegexReplace1">
+  <Target Name="Build" DependsOnTargets="DisableBuildVsix;RestorePackages;BuildTools">
     <Message Importance="High" Text="Build All Assemblies by connectedservice.msbuild Configuration=$(Configuration);CodeAnalysis=$(CodeAnalysis);StyleCopEnabled=$(StyleCopEnabled);VisualStudioVersion=$(VisualStudioVersion);UseDTTP=$(UseDTTP);OutputPath=$(OutputPath)" />
     <MSBuild
           Projects="@(SolutionsToBuild)"
@@ -76,7 +82,7 @@
   </Target>
 
   <Target Name="RegexReplace" DependsOnTargets="Build" AfterTargets="Build">
-    <Message Text="RegexReplace "/>
+    <Message Text="RegexReplace ..."/>
     <RegexReplace Condition="" Files="$(OutputPath)\source.extension.vsixmanifest" Find="Asset Type=&quot;Microsoft.VisualStudio.MefComponent.*/>" Replace="Asset Type=&quot;Microsoft.VisualStudio.MefComponent&quot; Path=&quot;Microsoft.OData.ConnectedService.dll&quot; />" WarnOnNoMatch="true"/>
   </Target>
 

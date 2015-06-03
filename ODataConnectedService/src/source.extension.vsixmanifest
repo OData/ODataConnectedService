@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="ODataConnectedService.e30335d6-f9c7-4d08-b66a-f011f3f18477" Version="0.1" Language="en-US" Publisher="OData" />
+    <Identity Id="ODataConnectedService.e30335d6-f9c7-4d08-b66a-f011f3f18477" Version="0.1" Language="en-US" Publisher="Microsoft" />
+    <Author>Microsoft</Author>
     <DisplayName>ODataConnectedService</DisplayName>
     <Description xml:space="preserve">OData Connected Service for V1-V4</Description>
     <MoreInfo>https://github.com/odata/odata.net</MoreInfo>
