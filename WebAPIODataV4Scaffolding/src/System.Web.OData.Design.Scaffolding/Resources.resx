@@ -217,10 +217,10 @@
     <value>The project language is not supported.</value>
   </data>
   <data name="ScaffoldODataActions_Description" xml:space="preserve">
-    <value>A Web API 2 OData V4 controller with CRUD actions to create, read, update, delete, and list entities.</value>
+    <value>A OData V4 (http://odata.github.io/) Web API 2 controller with CRUD actions to create, read, update, delete, and list entities.</value>
   </data>
   <data name="ScaffoldODataActions_Name" xml:space="preserve">
-    <value>Web API 2 OData V4 Controller with Read/Write Actions</value>
+    <value>OData V4 Web API Controller</value>
   </data>
   <data name="ScaffoldODataModificationMessage" xml:space="preserve">
     <value>The WebApiConfig class may require additional changes to add a route for this controller. Merge these statements into the Register method of the WebApiConfig class as applicable. Note that OData URLs are case sensitive.</value>
@@ -429,5 +429,8 @@
   </data>
   <data name="FailedToOpenFile" xml:space="preserve">
     <value>Unable to open file '{0}'.</value>
+  </data>
+  <data name="ScaffoldODataActions_Id" xml:space="preserve">
+    <value>ODataV4ControllerWithActionsScaffolder</value>
   </data>
 </root>

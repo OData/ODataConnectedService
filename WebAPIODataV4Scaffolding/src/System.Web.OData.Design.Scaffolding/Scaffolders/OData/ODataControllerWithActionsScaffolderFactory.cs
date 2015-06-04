@@ -19,7 +19,7 @@ namespace System.Web.OData.Design.Scaffolding
             description: Resources.ScaffoldODataActions_Description,
             author: Resources.Scaffold_Auther,
             version: ScaffolderVersions.WebApiODataScaffolderVersion,
-            id: typeof(ODataControllerWithActionsScaffolder).Name,
+            id: Resources.ScaffoldODataActions_Id,
             icon: ToImageSource(Resources._TemplateIconSample),
             gestures: new[] { ScaffoldingGestures.Controller },
             categories: new[] { Categories.Common, Categories.MvcController, Categories.WebApi });
@@ -33,21 +33,6 @@ namespace System.Web.OData.Design.Scaffolding
         {
             return new ODataControllerWithActionsScaffolder(context, Information);
         }
-
-        //public override ICodeGenerator CreateInstance(CodeGenerationContext context)
-        //{
-        //    return new ODataControllerWithActionsScaffolder(context, Information);
-        //}
-
-        //public override bool IsSupported(CodeGenerationContext codeGenerationContext)
-        //{
-        //    if (codeGenerationContext.ActiveProject.CodeModel.Language != EnvDTE.CodeModelLanguageConstants.vsCMLanguageCSharp)
-        //    {
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
 
         public static ImageSource ToImageSource(Icon icon)
         {
