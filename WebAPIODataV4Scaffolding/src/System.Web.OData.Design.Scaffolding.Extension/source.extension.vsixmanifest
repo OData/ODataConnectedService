@@ -1,6 +1,6 @@
 ﻿<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="ODataV4WebAPIScaffolding..40e7bb7e-f72d-44cf-8439-2567be2590c6" Version="0.1.0.0" Language="en-US" Publisher="Microsoft" />
+    <Identity Id="ODataV4WebAPIScaffolding..40e7bb7e-f72d-44cf-8439-2567be2590c6" Version="0.1.1.0" Language="en-US" Publisher="Microsoft" />
     <DisplayName>OData v4 Web API Scaffolding</DisplayName>
     <Description xml:space="preserve">The Scaffolding for OData v4 WebAPI.</Description>
     <License>License.txt</License>
