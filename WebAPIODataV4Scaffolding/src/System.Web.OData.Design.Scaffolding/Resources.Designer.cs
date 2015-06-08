@@ -396,7 +396,7 @@ namespace System.Web.OData.Design.Scaffolding {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A OData V4 (http://odata.github.io/) Web API 2 controller with CRUD actions to create, read, update, delete, and list entities..
+        ///   Looks up a localized string similar to An OData V4 Web API 2 controller with CRUD actions to create, read, update, delete, and list entities..
         /// </summary>
         public static string ScaffoldODataActions_Description {
             get {
@@ -414,7 +414,7 @@ namespace System.Web.OData.Design.Scaffolding {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OData V4 Web API Controller.
+        ///   Looks up a localized string similar to Microsoft OData v4 Web API Controller.
         /// </summary>
         public static string ScaffoldODataActions_Name {
             get {
