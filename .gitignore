@@ -139,6 +139,8 @@ publish/
 !**/System.Web.OData.Design.Scaffolding/ReferencePackages/*
 # The packages folder can be ignored because of Package Restore
 **/packages/*
+# Uncomment the nuget have not been 
+!**/packages/Microsoft.ApplicationInsights.1.0.1-beta/
 # except build/, which is used as an MSBuild target.
 !**/packages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
