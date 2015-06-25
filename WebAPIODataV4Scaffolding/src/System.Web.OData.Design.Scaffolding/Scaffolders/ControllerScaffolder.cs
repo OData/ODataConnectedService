@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web.OData.Design.Scaffolding.UI;
 using EnvDTE;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNet.Scaffolding;
 
 namespace System.Web.OData.Design.Scaffolding.Scaffolders
@@ -14,9 +15,17 @@ namespace System.Web.OData.Design.Scaffolding.Scaffolders
     {
         private const string TemplateName = "Controller";
 
+        private TelemetryClient tc = new TelemetryClient();
+
         protected ControllerScaffolder(CodeGenerationContext context, CodeGeneratorInformation information)
             : base(context, information)
         {
+            tc.InstrumentationKey = "0eac5cec-f2bf-467a-8682-a121ffe68a97"; // Key for odatav4scaffoldingapp
+
+            // Set session data:
+            tc.Context.User.Id = Environment.UserName;
+            tc.Context.Session.Id = Guid.NewGuid().ToString();
+            tc.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
         }
 
         // accessible for unit tests
@@ -61,10 +70,22 @@ namespace System.Web.OData.Design.Scaffolding.Scaffolders
             try
             {
                 GenerateController(new Dictionary<string, object>(StringComparer.Ordinal));
+                tc.TrackEvent(TelemetryEventNames.ActionScaffolding);
+            }
+            catch (Exception)
+            {
+                tc.TrackEvent(TelemetryEventNames.ScaffildingFailure);
+                throw;
             }
             finally
             {
                 Framework.RecordControllerTelemetryOptions(Context, Model);
+
+                if (tc != null)
+                {
+                    tc.Flush(); // only for desktop apps
+                }
+
             }
         }
 
