@@ -96,6 +96,7 @@
     <Compile Include="ServiceProviderExtensions.cs" />
     <Compile Include="Telemetry\CodeGenerationContextExtensions.cs" />
     <Compile Include="Telemetry\DependencyScaffolderOptions.cs" />
+    <Compile Include="Telemetry\ScaffoldingTelemetry.cs" />
     <Compile Include="Telemetry\TelemetrySharedKeys.cs" />
     <Compile Include="Telemetry\WebApiControllerScaffolderOptions.cs" />
     <Compile Include="UI\AddCancelButtonControl.xaml.cs">
