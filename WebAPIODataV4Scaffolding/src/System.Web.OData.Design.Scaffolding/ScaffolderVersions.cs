@@ -5,6 +5,6 @@ namespace System.Web.OData.Design.Scaffolding
 {
     internal static class ScaffolderVersions
     {
-        public static readonly Version WebApiODataScaffolderVersion = new Version(0, 1, 2, 0);
+        public static readonly Version WebApiODataScaffolderVersion = new Version(0, 1, 3, 0);
     }
 }
