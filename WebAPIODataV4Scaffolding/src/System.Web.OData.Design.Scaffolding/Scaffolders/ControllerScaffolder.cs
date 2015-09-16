@@ -64,11 +64,12 @@ namespace System.Web.OData.Design.Scaffolding
             try
             {
                 GenerateController(new Dictionary<string, object>(StringComparer.Ordinal));
-                tc.TrackEvent(TelemetryEventNames.ActionScaffolding);
+                tc.TrackEvent(TelemetryEventNames.AddControllerWithAction);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                tc.TrackEvent(TelemetryEventNames.ScaffildingFailure);
+                tc.TrackEvent(TelemetryEventNames.ActionScaffolderFailure);
+                tc.TrackException(e);
                 throw;
             }
             finally

@@ -42,11 +42,12 @@ namespace System.Web.OData.Design.Scaffolding
             try
             {
                 GenerateContextAndController();
-                tc.TrackEvent(TelemetryEventNames.ActionScaffoldingWithEF);
+                tc.TrackEvent(TelemetryEventNames.AddControllerWithContext);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                tc.TrackEvent(TelemetryEventNames.ScaffildingFailure);
+                tc.TrackEvent(TelemetryEventNames.ContextScaffolderFailure);
+                tc.TrackException(e);
                 throw;
             }
             finally
@@ -71,6 +72,7 @@ namespace System.Web.OData.Design.Scaffolding
             CodeType dbContextType = Context.ServiceProvider.GetService<ICodeTypeService>().GetCodeType(Context.ActiveProject, dbContextTypeName);
 
             IDictionary<string, object> templateParameters = AddTemplateParameters(dbContextType, modelMetadata);
+
             // scaffold the controller
             GenerateController(templateParameters);
             return modelMetadata;

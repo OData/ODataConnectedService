@@ -30,6 +30,14 @@ namespace System.Web.OData.Design.Scaffolding.Telemetry
             }
         }
 
+        public void TrackException(Exception exception)
+        {
+            if (tc != null && IsParticipateVsExperienceImprovementProgram == true)
+            {
+                tc.TrackException(exception);
+            }
+        }
+
         public void Flush()
         {
             if (tc != null && IsParticipateVsExperienceImprovementProgram == true)

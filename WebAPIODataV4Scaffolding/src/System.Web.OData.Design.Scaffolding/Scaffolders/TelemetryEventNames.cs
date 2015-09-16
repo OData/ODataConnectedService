@@ -5,8 +5,9 @@ namespace System.Web.OData.Design.Scaffolding
 {
     internal static class TelemetryEventNames
     {
-        public const string ActionScaffolding = "AddController";
-        public const string ActionScaffoldingWithEF = "AddControllerWithEFContext";
-        public const string ScaffildingFailure = "ScaffildingFailure";
+        public const string AddControllerWithAction = "AddControllerWithAction";
+        public const string AddControllerWithContext = "AddControllerWithContext";
+        public const string ActionScaffolderFailure = "ActionScaffolderFailure";
+        public const string ContextScaffolderFailure = "ContextScaffolderFailure";
     }
 }
