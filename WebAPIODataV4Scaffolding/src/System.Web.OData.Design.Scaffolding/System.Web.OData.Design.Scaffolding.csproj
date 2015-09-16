@@ -80,13 +80,17 @@
     <Compile Include="Scaffolders\ContextKeys.cs" />
     <Compile Include="Scaffolders\ControllerScaffolder.cs" />
     <Compile Include="Scaffolders\ControllerScaffolderModel.cs" />
+    <Compile Include="Scaffolders\ControllerWithContextScaffolder.cs" />
     <Compile Include="Scaffolders\DependencyInstaller.cs" />
     <Compile Include="Scaffolders\FrameworkDependencyStatus.cs" />
     <Compile Include="Scaffolders\IFrameworkDependency.cs" />
     <Compile Include="Scaffolders\InteractiveScaffolder.cs" />
     <Compile Include="Scaffolders\MvcViewScaffolderModel.cs" />
+    <Compile Include="Scaffolders\OData\ODataControllerWithContextScaffolder.cs" />
+    <Compile Include="Scaffolders\OData\ODataControllerWithContextScaffolderFactory.cs" />
     <Compile Include="Scaffolders\OData\ODataDependencyInstaller.cs" />
     <Compile Include="Scaffolders\OData\ODataFrameworkDependency.cs" />
+    <Compile Include="Scaffolders\OverpostingProtection.cs" />
     <Compile Include="Scaffolders\ScaffolderFactory.cs" />
     <Compile Include="Scaffolders\ScaffolderFilter.cs" />
     <Compile Include="Scaffolders\StringUtil.cs" />
@@ -263,6 +267,9 @@
     <None Include="Resources\_TemplateIconSample.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Templates\ODataControllerWithContext\Controller.cs.t4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Templates\PackageVersions5.2.0.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -273,6 +280,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

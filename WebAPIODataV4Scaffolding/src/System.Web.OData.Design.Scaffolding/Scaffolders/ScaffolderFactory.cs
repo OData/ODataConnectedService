@@ -2,7 +2,12 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System.ComponentModel.Composition;
+using System.Drawing;
 using System.Web.OData.Design.Scaffolding.VisualStudio;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Microsoft.AspNet.Scaffolding;
 
 namespace System.Web.OData.Design.Scaffolding
@@ -76,6 +81,16 @@ namespace System.Web.OData.Design.Scaffolding
             }
 
             return Framework.IsSupported(context);
+        }
+
+        public static ImageSource ToImageSource(Icon icon)
+        {
+            ImageSource imageSource = Imaging.CreateBitmapSourceFromHIcon(
+                icon.Handle,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromEmptyOptions());
+
+            return imageSource;
         }
     }
 }

@@ -8,14 +8,14 @@ using System.Web.OData.Design.Scaffolding.UI;
 using EnvDTE;
 using Microsoft.AspNet.Scaffolding;
 
-namespace System.Web.OData.Design.Scaffolding.Scaffolders
+namespace System.Web.OData.Design.Scaffolding
 {
     public abstract class ControllerScaffolder<TFramework> : InteractiveScaffolder<ControllerScaffolderModel, TFramework>
         where TFramework : IFrameworkDependency
     {
         private const string TemplateName = "Controller";
 
-        private ScaffoldingTelemetry tc = new ScaffoldingTelemetry();
+        internal ScaffoldingTelemetry tc = new ScaffoldingTelemetry();
 
         protected ControllerScaffolder(CodeGenerationContext context, CodeGeneratorInformation information)
             : base(context, information)

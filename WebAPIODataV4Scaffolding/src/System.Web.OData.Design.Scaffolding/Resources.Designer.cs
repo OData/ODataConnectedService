@@ -360,6 +360,16 @@ namespace System.Web.OData.Design.Scaffolding {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        ///more details see {0}..
+        /// </summary>
+        public static string OverpostingWarningMessage {
+            get {
+                return ResourceManager.GetString("OverpostingWarningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A file with the name {0} already exists. Do you want to replace it?.
         /// </summary>
         public static string OverwriteMessage {
@@ -396,7 +406,7 @@ namespace System.Web.OData.Design.Scaffolding {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An OData V4 Web API 2 controller with CRUD actions to create, read, update, delete, and list entities..
+        ///   Looks up a localized string similar to An OData v4 Web API 2 controller with CRUD actions to create, read, update, delete, and list entities..
         /// </summary>
         public static string ScaffoldODataActions_Description {
             get {
@@ -405,7 +415,7 @@ namespace System.Web.OData.Design.Scaffolding {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ODataV4ControllerWithActionsScaffolder.
+        ///   Looks up a localized string similar to ODatav4ControllerWithActionsScaffolder.
         /// </summary>
         public static string ScaffoldODataActions_Id {
             get {
@@ -419,6 +429,33 @@ namespace System.Web.OData.Design.Scaffolding {
         public static string ScaffoldODataActions_Name {
             get {
                 return ResourceManager.GetString("ScaffoldODataActions_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An OData v4 Web API 2 controller with CRUD actions to create, read, update, delete, and list entities from an Entity Framework data context..
+        /// </summary>
+        public static string ScaffoldODataContext_Description {
+            get {
+                return ResourceManager.GetString("ScaffoldODataContext_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ODatav4ControllerWithContextScaffolder.
+        /// </summary>
+        public static string ScaffoldODataContext_Id {
+            get {
+                return ResourceManager.GetString("ScaffoldODataContext_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microsoft OData v4 Web API Controller Using Entity Framework.
+        /// </summary>
+        public static string ScaffoldODataContext_Name {
+            get {
+                return ResourceManager.GetString("ScaffoldODataContext_Name", resourceCulture);
             }
         }
         

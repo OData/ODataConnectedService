@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Remoting.Contexts;
 using System.Web.OData.Design.Scaffolding.Metadata;
-using System.Web.OData.Design.Scaffolding.Scaffolders;
 using EnvDTE;
 using Microsoft.AspNet.Scaffolding;
 using Microsoft.AspNet.Scaffolding.Core.Metadata;

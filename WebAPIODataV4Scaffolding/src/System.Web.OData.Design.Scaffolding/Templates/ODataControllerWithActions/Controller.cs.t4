@@ -73,11 +73,7 @@ foreach (var property in ModelMetadata.Properties) {
 #>
     builder.EntitySet<<#= property.ShortTypeName #>>("<#= GetEntitySetName(property) #>"); 
 <# } } #>
-<# if (IsLegacyOdataVersion) { #>
     config.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
-<# } else { #>
-    config.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
-<# } #>
     */
 <# } #>
     public class <#= ControllerName #> : ODataController

@@ -217,7 +217,7 @@
     <value>The project language is not supported.</value>
   </data>
   <data name="ScaffoldODataActions_Description" xml:space="preserve">
-    <value>An OData V4 Web API 2 controller with CRUD actions to create, read, update, delete, and list entities.</value>
+    <value>An OData v4 Web API 2 controller with CRUD actions to create, read, update, delete, and list entities.</value>
   </data>
   <data name="ScaffoldODataActions_Name" xml:space="preserve">
     <value>Microsoft OData v4 Web API Controller</value>
@@ -431,6 +431,19 @@
     <value>Unable to open file '{0}'.</value>
   </data>
   <data name="ScaffoldODataActions_Id" xml:space="preserve">
-    <value>ODataV4ControllerWithActionsScaffolder</value>
+    <value>ODatav4ControllerWithActionsScaffolder</value>
+  </data>
+  <data name="OverpostingWarningMessage" xml:space="preserve">
+    <value>To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+more details see {0}.</value>
+  </data>
+  <data name="ScaffoldODataContext_Description" xml:space="preserve">
+    <value>An OData v4 Web API 2 controller with CRUD actions to create, read, update, delete, and list entities from an Entity Framework data context.</value>
+  </data>
+  <data name="ScaffoldODataContext_Id" xml:space="preserve">
+    <value>ODatav4ControllerWithContextScaffolder</value>
+  </data>
+  <data name="ScaffoldODataContext_Name" xml:space="preserve">
+    <value>Microsoft OData v4 Web API Controller Using Entity Framework</value>
   </data>
 </root>
