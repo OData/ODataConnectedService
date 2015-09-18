@@ -12,12 +12,5 @@ namespace Microsoft.OData.ConnectedService.Views
         {
             InitializeComponent();
         }
-
-        private void Endpoint_GotFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox tb = (TextBox)sender;
-            tb.Text = string.Empty;
-            tb.GotFocus -= Endpoint_GotFocus;
-        }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.VisualStudio.ConnectedServices;
 using Microsoft.OData.ConnectedService.Views;
+using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService.ViewModels
 {
@@ -46,7 +46,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         {
             return checkBox.IsChecked.HasValue && checkBox.IsChecked.Value;
         }
-        public override Task<WizardNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
+
+        public override Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
         {
             return base.OnPageLeavingAsync(args);
         }
