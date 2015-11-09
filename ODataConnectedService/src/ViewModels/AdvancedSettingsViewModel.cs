@@ -30,6 +30,14 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             ConfigAdvancedSettings dialog = new ConfigAdvancedSettings();
             dialog.DataContext = this;
             dialog.Owner = Window.GetWindow(this.View);
+            var wizard = (ODataConnectedServiceWizard)this.Wizard;
+            if (wizard.EdmxVersion == Common.Constants.EdmxVersion4)
+            {
+                dialog.EnableCamelCase.Visibility = Visibility.Visible;
+                dialog.EnableCamelCase.IsEnabled = true;
+                dialog.IgnoreUnknownAttributeOrElement.Visibility = Visibility.Visible;
+                dialog.IgnoreUnknownAttributeOrElement.IsEnabled = true;
+            }
             dialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             ConfigDone = dialog.ShowDialog();
             if (ConfigDone == true)

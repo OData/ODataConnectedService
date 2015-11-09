@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using EnvDTE;
-using Microsoft.VisualStudio.ConnectedServices;
 using Microsoft.OData.ConnectedService.Common;
-using Microsoft.OData.ConnectedService.ViewModels;
 using Microsoft.OData.ConnectedService.Models;
+using Microsoft.OData.ConnectedService.ViewModels;
+using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService
 {
@@ -18,6 +19,11 @@ namespace Microsoft.OData.ConnectedService
         public ConnectedServiceProviderContext Context { get; set; }
 
         public Project Project { get; set; }
+
+        public Version EdmxVersion
+        {
+            get { return this.ConfigODataEndpointViewModel.EdmxVersion; }
+        }
 
         public UserSettings UserSettings
         {
@@ -45,7 +51,8 @@ namespace Microsoft.OData.ConnectedService
             ODataConnectedServiceInstance instance = new ODataConnectedServiceInstance();
             instance.Name = "OData Connected Service";
             instance.Endpoint = ConfigODataEndpointViewModel.Endpoint;
-            instance.GenByDataSvcUtil = ConfigODataEndpointViewModel.UseDataSvcUtil;
+            instance.EdmxVersion = ConfigODataEndpointViewModel.EdmxVersion;
+            instance.MetadataTempFilePath = ConfigODataEndpointViewModel.MetadataTempPath;
 
             if (AdvancedSettingsViewModel.UseNamespacePrefix)
             {

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using Microsoft.OData.ConnectedService.Common;
 using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService
 {
-    [ConnectedServiceProviderExport("Microsoft.OData.ConnectedService")]
+    [ConnectedServiceProviderExport(Constants.ProviderId)]
     internal class ODataConnectedServiceProvider : ConnectedServiceProvider
     {
         public ODataConnectedServiceProvider()
@@ -29,7 +30,7 @@ namespace Microsoft.OData.ConnectedService
         public override IEnumerable<Tuple<string, Uri>> GetSupportedTechnologyLinks()
         {
             yield return new Tuple<string, Uri>("OData Website", new Uri("http://www.odata.org/"));
-            yield return new Tuple<string, Uri>("OData Doc and Samples", new Uri("http://odata.github.io/odata.net/"));
+            yield return new Tuple<string, Uri>("OData Docs and Samples", new Uri("http://odata.github.io/odata.net/"));
         }
 
     }

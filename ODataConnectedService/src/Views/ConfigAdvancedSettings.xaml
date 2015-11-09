@@ -17,9 +17,9 @@
         <CheckBox x:Name="UseDSC" Content="Enable entity and property tracking"
         	HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Width="274"/>
         <CheckBox x:Name="IgnoreUnknownAttributeOrElement" Content="Ignore unexpected content"
-                  HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" Width="274" IsEnabled="False"/>
+                  HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" Width="274" IsEnabled="False" Visibility="Hidden" />
         <CheckBox x:Name="EnableCamelCase" Content="Use c# casing style"
-                  HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Width="274"  IsEnabled="False"/>
+                  HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Width="274"  IsEnabled="False" Visibility="Hidden" />
         <Button x:Name="ok" Content="Ok" Margin="221,210,121,53" Width="70" UseLayoutRounding="False" Click="ok_Click" >
             <Button.Background>
                 <ImageBrush/>

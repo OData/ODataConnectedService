@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.ConnectedServices;
+﻿using System;
+using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService
 {
@@ -9,6 +10,7 @@ namespace Microsoft.OData.ConnectedService
         public bool UseDataServiceCollection { get; set; }
         public bool EnableNamingAlias { get; set; }
         public bool IgnoreUnexpectedElementsAndAttributes { get; set; }
-        public bool GenByDataSvcUtil { get; set; }
+        public Version EdmxVersion { get; set; }
+        public string MetadataTempFilePath { get; internal set; }
     }
 }

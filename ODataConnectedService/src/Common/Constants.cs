@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.OData.ConnectedService.Common
 {
-    public class Constants
+    internal class Constants
     {
-        public static Version V3Version = new Version(3, 0);
-        public static Version V4Version = new Version(4, 0);
+        public static Version EdmxVersion1 = new Version(1, 0);
+        public static Version EdmxVersion2 = new Version(2, 0);
+        public static Version EdmxVersion3 = new Version(3, 0);
+        public static Version EdmxVersion4 = new Version(4, 0);
 
         public const string V3ClientNuGetPackage = "Microsoft.Data.Services.Client";
         public const string V3ODataNuGetPackage = "Microsoft.Data.OData";
@@ -16,6 +20,11 @@ namespace Microsoft.OData.ConnectedService.Common
         public const string V4ODataNuGetPackage = "Microsoft.OData.Core";
         public const string V4EdmNuGetPackage = "Microsoft.OData.Edm";
         public const string V4SpatialNuGetPackage = "Microsoft.Spatial";
+
+        public const string EdmxVersion1Namespace = "http://schemas.microsoft.com/ado/2007/06/edmx";
+        public const string EdmxVersion2Namespace = "http://schemas.microsoft.com/ado/2008/10/edmx";
+        public const string EdmxVersion3Namespace = "http://schemas.microsoft.com/ado/2009/11/edmx";
+        public const string EdmxVersion4Namespace = "http://docs.oasis-open.org/odata/ns/edmx";
 
         public const string ProviderId = "Microsoft.OData.ConnectedService";
 
@@ -39,5 +48,15 @@ namespace Microsoft.OData.ConnectedService.Common
             V4EdmNuGetPackage,
             V4SpatialNuGetPackage
         };
+
+        public static Dictionary<Version, string> SupportedEdmxVersions = new Dictionary<Version, string>
+        {
+            { EdmxVersion1, EdmxVersion1Namespace},
+            { EdmxVersion2, EdmxVersion2Namespace},
+            { EdmxVersion3, EdmxVersion3Namespace},
+            { EdmxVersion4, EdmxVersion4Namespace}
+        };
+
+        internal static Dictionary<string, Version> SupportedEdmxNamespaces = SupportedEdmxVersions.ToDictionary(v => v.Value, v => v.Key);
     }
 }
