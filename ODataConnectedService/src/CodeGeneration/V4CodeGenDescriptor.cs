@@ -32,7 +32,6 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Generating Client Proxy ...");
 
             ODataConnectedServiceInstance codeGenInstance = (ODataConnectedServiceInstance)this.Context.ServiceInstance;
-            string namespacePrefix = codeGenInstance.NamespacePrefix;
 
             ODataT4CodeGenerator t4CodeGenerator = new ODataT4CodeGenerator();
             t4CodeGenerator.MetadataDocumentUri = MetadataUri;
@@ -40,6 +39,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             t4CodeGenerator.TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp;
             t4CodeGenerator.IgnoreUnexpectedElementsAndAttributes = codeGenInstance.IgnoreUnexpectedElementsAndAttributes;
             t4CodeGenerator.EnableNamingAlias = codeGenInstance.EnableNamingAlias;
+            t4CodeGenerator.NamespacePrefix = codeGenInstance.NamespacePrefix;
 
             string tempFile = Path.GetTempFileName();
 

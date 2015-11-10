@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService
 {
-    public class ODataConnectedServiceInstance : ConnectedServiceInstance
+    internal class ODataConnectedServiceInstance : ConnectedServiceInstance
     {
         public string Endpoint { get; set; }
         public string NamespacePrefix { get; set; }

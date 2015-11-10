@@ -129,7 +129,6 @@
     <Compile Include="CodeGeneration\V4CodeGenDescriptor.cs" />
     <Compile Include="Common\CodeGeneratorUtils.cs" />
     <Compile Include="Common\Constants.cs" />
-    <Compile Include="Common\ProcessHelper.cs" />
     <Compile Include="Common\ProjectHelper.cs" />
     <Compile Include="Common\UserSettingsPersistenceHelper.cs" />
     <Compile Include="Models\UserSettings.cs" />
@@ -147,9 +146,6 @@
     <Compile Include="ViewModels\ConfigODataEndpointViewModel.cs" />
     <Compile Include="Views\AdvancedSettings.xaml.cs">
       <DependentUpon>AdvancedSettings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ConfigAdvancedSettings.xaml.cs">
-      <DependentUpon>ConfigAdvancedSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConfigODataEndpoint.xaml.cs">
       <DependentUpon>ConfigODataEndpoint.xaml</DependentUpon>
@@ -195,10 +191,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\AdvancedSettings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConfigAdvancedSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

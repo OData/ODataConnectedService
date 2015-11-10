@@ -1,6 +1,4 @@
 ﻿using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using Microsoft.OData.ConnectedService.Views;
 using Microsoft.VisualStudio.ConnectedServices;
 
@@ -14,50 +12,35 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public string TargetLanguage { get; set; }
         public bool EnableNamingAlias { get; set; }
         public bool IgnoreUnexpectedElementsAndAttributes { get; set; }
-        public bool? ConfigDone { get; set; }
 
         public AdvancedSettingsViewModel() : base()
         {
             this.Title = "Settings";
-            this.Description = "Some witty sentence about configuring the provider";
+            this.Description = "Advanced settings for generating client proxy";
             this.Legend = "Settings";
+            this.ResetDataContext();
+        }
+
+        public override Task OnPageEnteringAsync(WizardEnteringArgs args)
+        {
             this.View = new AdvancedSettings();
+            this.ResetDataContext();
             this.View.DataContext = this;
-        }
-
-        internal void ConfigAdvancedSettings()
-        {
-            ConfigAdvancedSettings dialog = new ConfigAdvancedSettings();
-            dialog.DataContext = this;
-            dialog.Owner = Window.GetWindow(this.View);
-            var wizard = (ODataConnectedServiceWizard)this.Wizard;
-            if (wizard.EdmxVersion == Common.Constants.EdmxVersion4)
-            {
-                dialog.EnableCamelCase.Visibility = Visibility.Visible;
-                dialog.EnableCamelCase.IsEnabled = true;
-                dialog.IgnoreUnknownAttributeOrElement.Visibility = Visibility.Visible;
-                dialog.IgnoreUnknownAttributeOrElement.IsEnabled = true;
-            }
-            dialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            ConfigDone = dialog.ShowDialog();
-            if (ConfigDone == true)
-            {
-                this.UseNamespacePrefix = IsChecked(dialog.UseNamespacePrefix);
-                this.NamespacePrefix = dialog.NamespacePrefix.Text;
-                this.UseDataServiceCollection = IsChecked(dialog.UseDSC);
-                this.IgnoreUnexpectedElementsAndAttributes = IsChecked(dialog.IgnoreUnknownAttributeOrElement);
-                this.EnableNamingAlias = IsChecked(dialog.EnableCamelCase);
-            }
-        }
-
-        private bool IsChecked(CheckBox checkBox)
-        {
-            return checkBox.IsChecked.HasValue && checkBox.IsChecked.Value;
+            return base.OnPageEnteringAsync(args);
         }
 
         public override Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
         {
             return base.OnPageLeavingAsync(args);
+        }
+
+        private void ResetDataContext()
+        {
+            this.UseNamespacePrefix = false;
+            this.NamespacePrefix = null;
+            this.UseDataServiceCollection = true;
+            this.IgnoreUnexpectedElementsAndAttributes = false;
+            this.EnableNamingAlias = false;
         }
     }
 }

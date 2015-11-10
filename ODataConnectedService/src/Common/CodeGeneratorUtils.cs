@@ -3,10 +3,15 @@ using Microsoft.Win32;
 
 namespace Microsoft.OData.ConnectedService.Common
 {
-    public static class CodeGeneratorUtils
+    internal static class CodeGeneratorUtils
     {
-        internal const string InstallLocationSubKeyName = "InstallLocation";
-        internal static string GetWCFDSInstallLocation()
+        public const string InstallLocationSubKeyName = "InstallLocation";
+
+        /// <summary>
+        /// Try to get the location of the installed WCF Data Service.
+        /// </summary>
+        /// <returns>Returns the location of the installed WCF Data Service if it exists, else returns null.</returns>
+        public static string GetWCFDSInstallLocation()
         {
             string dataFxRegistryPath = 8 == IntPtr.Size
                 ? @"SOFTWARE\Wow6432Node\Microsoft\Microsoft WCF Data Services\VS 2014 Tooling\"

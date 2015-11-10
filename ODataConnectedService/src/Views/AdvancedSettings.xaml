@@ -3,13 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Microsoft.OData.ConnectedService.Views"
+             xmlns:viewModels="clr-namespace:Microsoft.OData.ConnectedService.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewModels:AdvancedSettingsViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="433">
-    <StackPanel HorizontalAlignment="Left" Height="283" Margin="10,10,-122,0" VerticalAlignment="Top" Width="412">
-        <Label x:Name="label" Content="Great! We have enough information to connect to this OData service."/>
-        <TextBlock x:Name="TextBlock" TextWrapping="Wrap" Padding="5">
+    <StackPanel x:Name="SettingsPanel" HorizontalAlignment="Left" Height="280" Margin="10,10,0,0" VerticalAlignment="Top" Width="410">
+        <TextBlock x:Name="Label" TextWrapping="WrapWithOverflow" Margin="10,5" Height="35">
+            You can generate the client proxy based on the default settings, or you can click following link for further configuration.
+        </TextBlock>
+        <TextBlock x:Name="TextBlock" TextWrapping="Wrap" Margin="10,5" Height="20">
             <Hyperlink Name="settings" Click="settings_Click">AdvancedSettings</Hyperlink>
         </TextBlock>
+        <StackPanel x:Name="AdvancedSettingsPanel"
+                    HorizontalAlignment="Left" Height="200" Margin="10, 5, 0, 0" VerticalAlignment="Top"
+                    Visibility="Hidden">
+            <CheckBox x:Name="UseNamespacePrefix" Content="Use a custom namespace" IsChecked="{Binding Path=UseNamespacePrefix}"
+                      HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="280" Height="25" Margin="0, 0, 0, 0" />        
+            <TextBox x:Name="NamespacePrefix" Text="{Binding Path=NamespacePrefix}"
+                     HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="274" Height="20" Margin="0, 0, 5, 17"/>
+            <CheckBox x:Name="UseDSC" Content="Enable entity and property tracking" IsChecked="{Binding Path=UseDataServiceCollection}"
+                      HorizontalAlignment="Left" VerticalAlignment="Top" Width="280" Height="25" Margin="0, 5" />
+            <CheckBox x:Name="IgnoreUnknownAttributeOrElement" Content="Ignore unknown element" IsChecked="{Binding Path=IgnoreUnexpectedElementsAndAttributes}"
+                      HorizontalAlignment="Left" VerticalAlignment="Top" Width="280" Height="25" Margin="0, 5"
+                      IsEnabled="False" Visibility="Hidden"/>
+            <CheckBox x:Name="EnableCamelCase" Content="Use c# casing style" IsChecked="{Binding Path=EnableNamingAlias}"
+                      HorizontalAlignment="Left" VerticalAlignment="Top" Width="280"  Height="25" Margin="0, 5"
+                      IsEnabled="False" Visibility="Hidden"/>
+        </StackPanel>
     </StackPanel>
 </UserControl>

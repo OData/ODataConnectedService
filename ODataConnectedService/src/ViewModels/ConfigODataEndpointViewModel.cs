@@ -25,7 +25,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public ConfigODataEndpointViewModel(UserSettings userSettings) : base()
         {
             this.Title = "Configure endpoint";
-            this.Description = "Enter the endpoint to OData service to begin";
+            this.Description = "Enter or choose an OData service endpoint to begin";
             this.Legend = "Endpoint";
             this.View = new ConfigODataEndpoint();
             this.View.DataContext = this;
