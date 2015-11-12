@@ -12,6 +12,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public string TargetLanguage { get; set; }
         public bool EnableNamingAlias { get; set; }
         public bool IgnoreUnexpectedElementsAndAttributes { get; set; }
+        public string GeneratedFileName { get; set; }
+        public bool IncludeT4File { get; set; }
 
         public AdvancedSettingsViewModel() : base()
         {
@@ -41,6 +43,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             this.UseDataServiceCollection = true;
             this.IgnoreUnexpectedElementsAndAttributes = false;
             this.EnableNamingAlias = false;
+            this.GeneratedFileName = "Reference";
+            this.IncludeT4File = false;
         }
     }
 }

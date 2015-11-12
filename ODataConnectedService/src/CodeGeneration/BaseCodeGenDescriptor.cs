@@ -13,12 +13,28 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
     {
         public IVsPackageInstaller PackageInstaller { get; private set; }
         public IVsPackageInstallerServices PackageInstallerServices { get; private set; }
-
         public ConnectedServiceHandlerContext Context { get; private set; }
+        public ODataConnectedServiceInstance CodeGenInstance { get; set; }
         public Project Project { get; private set; }
         public string MetadataUri { get; private set; }
         public string ClientNuGetPackageName { get; set; }
-        internal string ClientDocUri { get; set; }
+        public string ClientDocUri { get; set; }
+        protected string GeneratedFileNamePrefix
+        {
+            get
+            {
+                return string.IsNullOrWhiteSpace(this.CodeGenInstance.GeneratedFileNamePrefix)
+                    ? "Reference" : this.CodeGenInstance.GeneratedFileNamePrefix;
+            }
+        }
+
+        protected string CurrentAssemblyPath
+        {
+            get
+            {
+                return Path.GetDirectoryName(this.GetType().Assembly.Location);
+            }
+        }
 
         public BaseCodeGenDescriptor(string metadataUri, ConnectedServiceHandlerContext Context, Project project)
         {
@@ -27,6 +43,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             this.MetadataUri = metadataUri;
             this.Context = Context;
             this.Project = project;
+            this.CodeGenInstance = (ODataConnectedServiceInstance)this.Context.ServiceInstance;
         }
 
         private void Init()
@@ -39,17 +56,15 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
         public abstract Task AddNugetPackages();
         public abstract Task AddGeneratedClientCode();
 
-        public string GetReferenceFilePath()
+        protected string GetReferenceFileFolder()
         {
-            ODataConnectedServiceInstance codeGenInstance = (ODataConnectedServiceInstance)this.Context.ServiceInstance;
             var serviceReferenceFolderName = this.Context.HandlerHelper.GetServiceArtifactsRootFolder();
 
             var referenceFolderPath = Path.Combine(
                 ProjectHelper.GetProjectFullPath(this.Project),
                 serviceReferenceFolderName,
-                this.Context.ServiceInstance.Name,
-                codeGenInstance.NamespacePrefix ?? "",
-                "Reference.cs");
+                CodeGenInstance.Name,
+                CodeGenInstance.NamespacePrefix ?? "");
 
             return referenceFolderPath;
         }

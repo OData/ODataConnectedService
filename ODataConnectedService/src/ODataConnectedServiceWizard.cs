@@ -62,6 +62,8 @@ namespace Microsoft.OData.ConnectedService
             instance.IgnoreUnexpectedElementsAndAttributes = AdvancedSettingsViewModel.IgnoreUnexpectedElementsAndAttributes;
             instance.UseDataServiceCollection = AdvancedSettingsViewModel.UseDataServiceCollection;
             instance.EnableNamingAlias = AdvancedSettingsViewModel.EnableNamingAlias;
+            instance.GeneratedFileNamePrefix = AdvancedSettingsViewModel.GeneratedFileName;
+            instance.IncludeT4File = AdvancedSettingsViewModel.IncludeT4File;
 
             return Task.FromResult<ConnectedServiceInstance>(instance);
         }

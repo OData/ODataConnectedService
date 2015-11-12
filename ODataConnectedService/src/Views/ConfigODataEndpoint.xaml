@@ -7,10 +7,10 @@
              xmlns:viewModels="clr-namespace:Microsoft.OData.ConnectedService.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewModels:ConfigODataEndpointViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="433">
-    <StackPanel HorizontalAlignment="Left" Height="283" Margin="10,0,-122,0" VerticalAlignment="Top" Width="412">
+             d:DesignHeight="300" d:DesignWidth="500">
+    <StackPanel HorizontalAlignment="Left" Margin="10, 0, 0, 0" VerticalAlignment="Top" Width="490">
         <ComboBox x:Name="comboBox" 
-                  Margin="10, 10, 0, 0" 
+                  Margin="10, 10, 10, 0" 
                   IsEditable="True"
                   ItemsSource="{Binding Path=UserSettings.MruEndpoints}"
                   Text="{Binding Path=Endpoint, TargetNullValue='Enter your endpoint...' }"/>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using EnvDTE;
 using Microsoft.OData.ConnectedService.Templates;
@@ -31,21 +32,58 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
         {
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Generating Client Proxy ...");
 
-            ODataConnectedServiceInstance codeGenInstance = (ODataConnectedServiceInstance)this.Context.ServiceInstance;
+            if (this.CodeGenInstance.IncludeT4File)
+            {
+                await AddT4File();
+            }
+            else
+            {
+                await AddGeneratedCSharpCode();
+            }
+        }
 
+        private async Task AddT4File()
+        {
+            string tempFile = Path.GetTempFileName();
+            string t4Folder = Path.Combine(this.CurrentAssemblyPath, "Templates");
+
+            using (StreamWriter writer = File.CreateText(tempFile))
+            {
+                string text = File.ReadAllText(Path.Combine(t4Folder, "ODataT4CodeGenerator.tt"));
+
+                text = Regex.Replace(text, "ODataT4CodeGenerator(\\.ttinclude)", this.GeneratedFileNamePrefix + "$1");
+                text = Regex.Replace(text, "(public const string MetadataDocumentUri = )\"\";", "$1\"" + CodeGenInstance.Endpoint + "\";");
+                text = Regex.Replace(text, "(public const bool UseDataServiceCollection = ).*;", "$1" + CodeGenInstance.UseDataServiceCollection.ToString().ToLower() + ";");
+                text = Regex.Replace(text, "(public const string NamespacePrefix = )\"\\$rootnamespace\\$\";", "$1\"" + CodeGenInstance.NamespacePrefix + "\";");
+                text = Regex.Replace(text, "(public const string TargetLanguage = )\"OutputLanguage\";", "$1\"CSharp\";");
+                text = Regex.Replace(text, "(public const bool EnableNamingAlias = )true;", "$1" + CodeGenInstance.EnableNamingAlias.ToString().ToLower() + ";");
+                text = Regex.Replace(text, "(public const bool IgnoreUnexpectedElementsAndAttributes = )true;", "$1" + CodeGenInstance.IgnoreUnexpectedElementsAndAttributes.ToString().ToLower() + ";");
+
+                await writer.WriteAsync(text);
+                await writer.FlushAsync();
+            }
+
+            string referenceFolder = GetReferenceFileFolder();
+            await this.Context.HandlerHelper.AddFileAsync(Path.Combine(t4Folder, "ODataT4CodeGenerator.ttinclude"), Path.Combine(referenceFolder, this.GeneratedFileNamePrefix + ".ttinclude"));            
+            await this.Context.HandlerHelper.AddFileAsync(tempFile, Path.Combine(referenceFolder, this.GeneratedFileNamePrefix + ".tt"));
+        }
+
+        private async Task AddGeneratedCSharpCode()
+        {
             ODataT4CodeGenerator t4CodeGenerator = new ODataT4CodeGenerator();
             t4CodeGenerator.MetadataDocumentUri = MetadataUri;
-            t4CodeGenerator.UseDataServiceCollection = codeGenInstance.UseDataServiceCollection;
+            t4CodeGenerator.UseDataServiceCollection = this.CodeGenInstance.UseDataServiceCollection;
             t4CodeGenerator.TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp;
-            t4CodeGenerator.IgnoreUnexpectedElementsAndAttributes = codeGenInstance.IgnoreUnexpectedElementsAndAttributes;
-            t4CodeGenerator.EnableNamingAlias = codeGenInstance.EnableNamingAlias;
-            t4CodeGenerator.NamespacePrefix = codeGenInstance.NamespacePrefix;
+            t4CodeGenerator.IgnoreUnexpectedElementsAndAttributes = this.CodeGenInstance.IgnoreUnexpectedElementsAndAttributes;
+            t4CodeGenerator.EnableNamingAlias = this.CodeGenInstance.EnableNamingAlias;
+            t4CodeGenerator.NamespacePrefix = this.CodeGenInstance.NamespacePrefix;
 
             string tempFile = Path.GetTempFileName();
 
             using (StreamWriter writer = File.CreateText(tempFile))
             {
                 await writer.WriteAsync(t4CodeGenerator.TransformText());
+                await writer.FlushAsync();
                 if (t4CodeGenerator.Errors != null && t4CodeGenerator.Errors.Count > 0)
                 {
                     foreach (var err in t4CodeGenerator.Errors)
@@ -55,7 +93,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 }
             }
 
-            string outputFile = GetReferenceFilePath();
+            string outputFile = Path.Combine(GetReferenceFileFolder(), this.GeneratedFileNamePrefix + ".cs");
             await this.Context.HandlerHelper.AddFileAsync(tempFile, outputFile);
         }
     }

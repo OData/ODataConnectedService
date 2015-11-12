@@ -12,29 +12,23 @@ namespace Microsoft.OData.ConnectedService.Views
         public AdvancedSettings()
         {
             InitializeComponent();
+            this.AdvancedSettingsPanel.Visibility = Visibility.Hidden;
         }
 
-        internal AdvancedSettingsViewModel AdvancedSettingsViewModel
+        internal ODataConnectedServiceWizard ODataConnectedServiceWizard
         {
-            get { return (AdvancedSettingsViewModel)this.DataContext; }
+            get { return ((AdvancedSettingsViewModel)this.DataContext).Wizard as ODataConnectedServiceWizard; }
         }
 
         private void settings_Click(object sender, RoutedEventArgs e)
         {
-            this.AdvancedSettingsPanel.Margin = new Thickness(10, -60, 0, 0);
+            this.SettingsPanel.Visibility = Visibility.Hidden;
+
+            this.AdvancedSettingsPanel.Margin = new Thickness(10, -125, 0, 0);
             this.AdvancedSettingsPanel.Visibility = Visibility.Visible;
 
-            var wizard = (ODataConnectedServiceWizard)this.AdvancedSettingsViewModel.Wizard;
-            if (wizard.EdmxVersion == Common.Constants.EdmxVersion4)
-            {
-                this.EnableCamelCase.Visibility = Visibility.Visible;
-                this.EnableCamelCase.IsEnabled = true;
-                this.IgnoreUnknownAttributeOrElement.Visibility = Visibility.Visible;
-                this.IgnoreUnknownAttributeOrElement.IsEnabled = true;
-            }
-
-            this.TextBlock.Visibility = Visibility.Hidden;
-            this.Label.Visibility = Visibility.Hidden;
+            this.AdvancedSettingsForv4.Visibility = this.ODataConnectedServiceWizard.EdmxVersion == Common.Constants.EdmxVersion4
+                ? Visibility.Visible : Visibility.Hidden;
         }
     }
 }

@@ -6,29 +6,44 @@
              xmlns:viewModels="clr-namespace:Microsoft.OData.ConnectedService.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewModels:AdvancedSettingsViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="433">
-    <StackPanel x:Name="SettingsPanel" HorizontalAlignment="Left" Height="280" Margin="10,10,0,0" VerticalAlignment="Top" Width="410">
-        <TextBlock x:Name="Label" TextWrapping="WrapWithOverflow" Margin="10,5" Height="35">
-            You can generate the client proxy based on the default settings, or you can click following link for further configuration.
-        </TextBlock>
-        <TextBlock x:Name="TextBlock" TextWrapping="Wrap" Margin="10,5" Height="20">
+             d:DesignHeight="400" d:DesignWidth="500">
+    <StackPanel>
+        <StackPanel x:Name="SettingsPanel" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="125">
+                <TextBlock x:Name="ReferenceFileNameLabel" Text="Enter the file name (without extension):"
+                           HorizontalAlignment="Left" Margin="0, 5, 0, 0"/>
+                <TextBox x:Name="ReferenceFileName" Text="{Binding GeneratedFileName}"
+                         HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="250" Margin="20, 5, 0, 0"/>
+            
+            <TextBlock x:Name="Label" TextWrapping="WrapWithOverflow" Margin="0, 20, 40, 0">
+                You can generate the client proxy based on the default settings, or you can click following link for further configuration.
+            </TextBlock>
+            <TextBlock x:Name="TextBlock" TextWrapping="Wrap" Margin="0,5" >
             <Hyperlink Name="settings" Click="settings_Click">AdvancedSettings</Hyperlink>
-        </TextBlock>
-        <StackPanel x:Name="AdvancedSettingsPanel"
-                    HorizontalAlignment="Left" Height="200" Margin="10, 5, 0, 0" VerticalAlignment="Top"
-                    Visibility="Hidden">
-            <CheckBox x:Name="UseNamespacePrefix" Content="Use a custom namespace" IsChecked="{Binding Path=UseNamespacePrefix}"
-                      HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="280" Height="25" Margin="0, 0, 0, 0" />        
-            <TextBox x:Name="NamespacePrefix" Text="{Binding Path=NamespacePrefix}"
-                     HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="274" Height="20" Margin="0, 0, 5, 17"/>
-            <CheckBox x:Name="UseDSC" Content="Enable entity and property tracking" IsChecked="{Binding Path=UseDataServiceCollection}"
-                      HorizontalAlignment="Left" VerticalAlignment="Top" Width="280" Height="25" Margin="0, 5" />
-            <CheckBox x:Name="IgnoreUnknownAttributeOrElement" Content="Ignore unknown element" IsChecked="{Binding Path=IgnoreUnexpectedElementsAndAttributes}"
-                      HorizontalAlignment="Left" VerticalAlignment="Top" Width="280" Height="25" Margin="0, 5"
-                      IsEnabled="False" Visibility="Hidden"/>
-            <CheckBox x:Name="EnableCamelCase" Content="Use c# casing style" IsChecked="{Binding Path=EnableNamingAlias}"
-                      HorizontalAlignment="Left" VerticalAlignment="Top" Width="280"  Height="25" Margin="0, 5"
-                      IsEnabled="False" Visibility="Hidden"/>
+            </TextBlock>
+        </StackPanel>
+        <StackPanel x:Name="AdvancedSettingsPanel">
+            <StackPanel HorizontalAlignment="Left" Margin="10, 5, 0, 0" VerticalAlignment="Top">
+                <CheckBox x:Name="UseNamespacePrefix" IsChecked="{Binding UseNamespacePrefix}"
+                          HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,5">
+                    <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">
+                        Use a custom namespace (It will replace the original namespace in the metadata document, unless the model has several namespaces.)
+                    </TextBlock>
+                </CheckBox>
+                <TextBox x:Name="NamespacePrefix" Text="{Binding NamespacePrefix}"
+                         HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="250" Margin="20, 0, 0, 5"/>
+                <CheckBox x:Name="UseDSC" Content="Enable entity and property tracking" IsChecked="{Binding UseDataServiceCollection}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5, 0, 0" />
+            </StackPanel>
+            <StackPanel x:Name="AdvancedSettingsForv4" HorizontalAlignment="Left" Margin="10, 5, 0, 0" VerticalAlignment="Top">
+                <CheckBox x:Name="EnableCamelCase" Content="Use c# casing style" IsChecked="{Binding EnableNamingAlias}"
+            		HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5"/>
+                <CheckBox x:Name="IgnoreUnknownAttributeOrElement" IsChecked="{Binding IgnoreUnexpectedElementsAndAttributes}"
+            		HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5">
+                    <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Ignore unknown elements (Whether to ignore unexpected elements and attributes in the metadata document and generate the client code if any.)</TextBlock>
+                </CheckBox>
+                <CheckBox x:Name="IncludeT4File" Content="Whether to include the T4 files into this project" IsChecked="{Binding IncludeT4File}"
+            		HorizontalAlignment="Left" VerticalAlignment="Top" Width="280"  Height="25" Margin="0, 15" FontWeight="Medium"/>
+            </StackPanel>
         </StackPanel>
     </StackPanel>
 </UserControl>

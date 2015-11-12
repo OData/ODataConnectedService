@@ -36,16 +36,29 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         {
             UserSettings.AddToTopOfMruList(((ODataConnectedServiceWizard)this.Wizard).UserSettings.MruEndpoints, this.Endpoint);
             Version version;
-            this.MetadataTempPath = GetMetadata(this.Endpoint, out version);
-            this.EdmxVersion = version;
-            return base.OnPageLeavingAsync(args);
+            try
+            {
+                this.MetadataTempPath = GetMetadata(this.Endpoint, out version);
+                this.EdmxVersion = version;
+                return base.OnPageLeavingAsync(args);
+            }
+            catch (Exception e)
+            {
+                return Task.FromResult<PageNavigationResult>(
+                    new PageNavigationResult()
+                    {
+                        ErrorMessage = e.Message,
+                        IsSuccess = false,
+                        ShowMessageBoxOnFailure = true
+                    });
+            }
         }
 
         private string GetMetadata(string address, out Version edmxVersion)
         {
             if (String.IsNullOrEmpty(address))
             {
-                throw new Exception("Please input the service endpoint");
+                throw new ArgumentNullException("OData Service Endpoint", "Please input the service endpoint");
             }
 
             if (address.StartsWith("https:") || address.StartsWith("http"))
@@ -63,32 +76,28 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                     Credentials = CredentialCache.DefaultNetworkCredentials
                 }
             };
-            XmlReader reader = null;
+
+            string workFile = Path.GetTempFileName();
+
             try
             {
-                string workFile = Path.GetTempFileName();
-                using (reader = XmlReader.Create(address, readerSettings))
+                using (XmlReader reader = XmlReader.Create(address, readerSettings))
                 {
                     using (XmlWriter writer = XmlWriter.Create(workFile))
                     {
+                        while (reader.NodeType != XmlNodeType.Element)
+                        {
+                            reader.Read();
+                        }
+
+                        if (reader.EOF)
+                        {
+                            throw new Exception("The metadata is an empty file");
+                        }
+
+                        Common.Constants.SupportedEdmxNamespaces.TryGetValue(reader.NamespaceURI, out edmxVersion);
                         writer.WriteNode(reader, false);
                     }
-                }
-
-                using (reader = XmlReader.Create(address, readerSettings))
-                {
-                    while (reader.NodeType != XmlNodeType.Element)
-                    {
-                        reader.Read();
-                    }
-
-                    if (reader.EOF)
-                    {
-                        throw new Exception("The metadata is an empty file");
-                    }
-
-                    Common.Constants.SupportedEdmxNamespaces.TryGetValue(reader.NamespaceURI, out edmxVersion);
-
                 }
                 return workFile;
             }

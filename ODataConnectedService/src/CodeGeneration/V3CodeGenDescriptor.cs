@@ -53,10 +53,8 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
         {
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Generating Client Proxy ...");
 
-            ODataConnectedServiceInstance codeGenInstance = (ODataConnectedServiceInstance)this.Context.ServiceInstance;
-
             EntityClassGenerator generator = new EntityClassGenerator(LanguageOption.GenerateCSharpCode);
-            generator.UseDataServiceCollection = codeGenInstance.UseDataServiceCollection;
+            generator.UseDataServiceCollection = this.CodeGenInstance.UseDataServiceCollection;
             generator.Version = DataServiceCodeVersion.V3;
 
             XmlReaderSettings settings = new XmlReaderSettings()
@@ -73,7 +71,8 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
 
                 using (StreamWriter writer = File.CreateText(tempFile))
                 {
-                    var errors = generator.GenerateCode(reader, writer, codeGenInstance.NamespacePrefix);
+                    var errors = generator.GenerateCode(reader, writer, this.CodeGenInstance.NamespacePrefix);
+                    await writer.FlushAsync();
                     if (errors != null && errors.Count() > 0)
                     {
                         foreach (var err in errors)
@@ -83,7 +82,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                     }
                 }
 
-                string outputFile = GetReferenceFilePath();
+                string outputFile = Path.Combine(GetReferenceFileFolder(), this.GeneratedFileNamePrefix + ".cs");
                 await this.Context.HandlerHelper.AddFileAsync(tempFile, outputFile);
             }
         }
