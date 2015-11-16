@@ -54,7 +54,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Generating Client Proxy ...");
 
             EntityClassGenerator generator = new EntityClassGenerator(LanguageOption.GenerateCSharpCode);
-            generator.UseDataServiceCollection = this.CodeGenInstance.UseDataServiceCollection;
+            generator.UseDataServiceCollection = this.ServiceConfiguration.UseDataServiceCollection;
             generator.Version = DataServiceCodeVersion.V3;
 
             XmlReaderSettings settings = new XmlReaderSettings()
@@ -71,7 +71,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
 
                 using (StreamWriter writer = File.CreateText(tempFile))
                 {
-                    var errors = generator.GenerateCode(reader, writer, this.CodeGenInstance.NamespacePrefix);
+                    var errors = generator.GenerateCode(reader, writer, this.ServiceConfiguration.NamespacePrefix);
                     await writer.FlushAsync();
                     if (errors != null && errors.Count() > 0)
                     {

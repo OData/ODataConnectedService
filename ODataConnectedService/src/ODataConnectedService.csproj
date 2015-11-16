@@ -131,6 +131,7 @@
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\ProjectHelper.cs" />
     <Compile Include="Common\UserSettingsPersistenceHelper.cs" />
+    <Compile Include="Models\ServiceConfiguration.cs" />
     <Compile Include="Models\UserSettings.cs" />
     <Compile Include="ODataConnectedServiceHandler.cs" />
     <Compile Include="ODataConnectedServiceInstance.cs" />

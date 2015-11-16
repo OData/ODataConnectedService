@@ -28,11 +28,6 @@ namespace Microsoft.OData.ConnectedService.Common
             return (Project)projectObject;
         }
 
-        public static string GetProjectNamespace(Project project)
-        {
-            return project.Properties.Item("DefaultNamespace").Value.ToString();
-        }
-
         public static string GetProjectFullPath(Project project)
         {
             return project.Properties.Item("FullPath").Value.ToString();

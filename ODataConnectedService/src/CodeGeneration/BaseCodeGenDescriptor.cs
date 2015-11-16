@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using EnvDTE;
 using Microsoft.OData.ConnectedService.Common;
+using Microsoft.OData.ConnectedService.Models;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.ConnectedServices;
 using NuGet.VisualStudio;
@@ -14,7 +15,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
         public IVsPackageInstaller PackageInstaller { get; private set; }
         public IVsPackageInstallerServices PackageInstallerServices { get; private set; }
         public ConnectedServiceHandlerContext Context { get; private set; }
-        public ODataConnectedServiceInstance CodeGenInstance { get; set; }
+        public ServiceConfiguration ServiceConfiguration { get; set; }
         public Project Project { get; private set; }
         public string MetadataUri { get; private set; }
         public string ClientNuGetPackageName { get; set; }
@@ -23,8 +24,8 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
         {
             get
             {
-                return string.IsNullOrWhiteSpace(this.CodeGenInstance.GeneratedFileNamePrefix)
-                    ? "Reference" : this.CodeGenInstance.GeneratedFileNamePrefix;
+                return string.IsNullOrWhiteSpace(this.ServiceConfiguration.GeneratedFileNamePrefix)
+                    ? Common.Constants.DefaultReferenceFileName : this.ServiceConfiguration.GeneratedFileNamePrefix;
             }
         }
 
@@ -43,7 +44,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             this.MetadataUri = metadataUri;
             this.Context = Context;
             this.Project = project;
-            this.CodeGenInstance = (ODataConnectedServiceInstance)this.Context.ServiceInstance;
+            this.ServiceConfiguration = ((ODataConnectedServiceInstance)this.Context.ServiceInstance).ServiceConfig;
         }
 
         private void Init()
@@ -63,8 +64,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             var referenceFolderPath = Path.Combine(
                 ProjectHelper.GetProjectFullPath(this.Project),
                 serviceReferenceFolderName,
-                CodeGenInstance.Name,
-                CodeGenInstance.NamespacePrefix ?? "");
+                this.Context.ServiceInstance.Name);
 
             return referenceFolderPath;
         }

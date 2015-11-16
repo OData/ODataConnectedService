@@ -1,12 +1,8 @@
-﻿using Microsoft.OData.ConnectedService.Common;
-using Microsoft.VisualStudio.ConnectedServices;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.OData.ConnectedService.Common;
+using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService.Models
 {

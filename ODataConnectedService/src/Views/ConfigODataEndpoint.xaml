@@ -9,9 +9,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500">
     <StackPanel HorizontalAlignment="Left" Margin="10, 0, 0, 0" VerticalAlignment="Top" Width="490">
-        <ComboBox x:Name="comboBox" 
-                  Margin="10, 10, 10, 0" 
-                  IsEditable="True"
+        <TextBlock x:Name="ServiceName1" Text="Service name： "
+                   HorizontalAlignment="Left" Margin="0, 5, 10, 5">
+        </TextBlock>
+        <TextBox x:Name="ServiceName" Text="{Binding Path=ServiceName}"
+                 HorizontalAlignment="Left" Margin="20, 5, 10, 5"  Width="250"/>
+        <TextBlock x:Name="EndpointLabel" Text="Address"
+                   HorizontalAlignment="Left" Margin="0, 5, 10, 5">
+        </TextBlock>
+        <ComboBox x:Name="Endpoint" 
+                  Margin="20, 5, 5, 0" IsEditable="True"
                   ItemsSource="{Binding Path=UserSettings.MruEndpoints}"
                   Text="{Binding Path=Endpoint, TargetNullValue='Enter your endpoint...' }"/>
     </StackPanel>

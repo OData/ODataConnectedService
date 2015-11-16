@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using EnvDTE;
 using Microsoft.OData.ConnectedService.CodeGeneration;
 using Microsoft.OData.ConnectedService.Common;
+using Microsoft.OData.ConnectedService.Models;
 using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService
@@ -16,10 +18,25 @@ namespace Microsoft.OData.ConnectedService
             Project project = ProjectHelper.GetProjectFromHierarchy(context.ProjectHierarchy);
             ODataConnectedServiceInstance codeGenInstance = (ODataConnectedServiceInstance)context.ServiceInstance;
 
-            var codeGenDescriptor = await GenerateCode(codeGenInstance.MetadataTempFilePath, codeGenInstance.EdmxVersion, context, project);
-            return new AddServiceInstanceResult(
+            var codeGenDescriptor = await GenerateCode(codeGenInstance.MetadataTempFilePath, codeGenInstance.ServiceConfig.EdmxVersion, context, project);
+
+            context.SetExtendedDesignerData<ServiceConfiguration>(codeGenInstance.ServiceConfig);
+
+            var result = new AddServiceInstanceResult(
                 context.ServiceInstance.Name,
                 new Uri(codeGenDescriptor.ClientDocUri));
+
+            return result;
+        }
+
+        public override async Task<UpdateServiceInstanceResult> UpdateServiceInstanceAsync(ConnectedServiceHandlerContext context, CancellationToken ct)
+        {
+            Project project = ProjectHelper.GetProjectFromHierarchy(context.ProjectHierarchy);
+            ODataConnectedServiceInstance codeGenInstance = (ODataConnectedServiceInstance)context.ServiceInstance;
+
+            var codeGenDescriptor = await GenerateCode(codeGenInstance.ServiceConfig.Endpoint, codeGenInstance.ServiceConfig.EdmxVersion, context, project);
+            context.SetExtendedDesignerData<ServiceConfiguration>(codeGenInstance.ServiceConfig);
+            return new UpdateServiceInstanceResult();
         }
 
         private async Task<BaseCodeGenDescriptor> GenerateCode(string metadataUri, Version edmxVersion, ConnectedServiceHandlerContext context, Project project)

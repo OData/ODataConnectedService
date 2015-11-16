@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Microsoft.OData.ConnectedService.Common
 {
     internal class Constants
     {
-        public static Version EdmxVersion1 = new Version(1, 0);
-        public static Version EdmxVersion2 = new Version(2, 0);
-        public static Version EdmxVersion3 = new Version(3, 0);
-        public static Version EdmxVersion4 = new Version(4, 0);
+        public static Version EdmxVersion1 = new Version(1, 0, 0, 0);
+        public static Version EdmxVersion2 = new Version(2, 0, 0, 0);
+        public static Version EdmxVersion3 = new Version(3, 0, 0, 0);
+        public static Version EdmxVersion4 = new Version(4, 0, 0, 0);
 
         public const string V3ClientNuGetPackage = "Microsoft.Data.Services.Client";
         public const string V3ODataNuGetPackage = "Microsoft.Data.OData";
@@ -33,6 +32,9 @@ namespace Microsoft.OData.ConnectedService.Common
 
         public const string NuGetOnlineRepository = "https://www.nuget.org/api/v2/";
 
+        public const string DefaultReferenceFileName = "Reference";
+        public const string DefaultServiceName = "OData Service";
+
         public static string[] V3NuGetPackages = new string[]
         {
             V3ClientNuGetPackage,
@@ -49,14 +51,20 @@ namespace Microsoft.OData.ConnectedService.Common
             V4SpatialNuGetPackage
         };
 
-        public static Dictionary<Version, string> SupportedEdmxVersions = new Dictionary<Version, string>
+        private static Dictionary<string, Version> supportedEdmxNamespaces = new Dictionary<string, Version>
         {
-            { EdmxVersion1, EdmxVersion1Namespace},
-            { EdmxVersion2, EdmxVersion2Namespace},
-            { EdmxVersion3, EdmxVersion3Namespace},
-            { EdmxVersion4, EdmxVersion4Namespace}
+            { EdmxVersion1Namespace, EdmxVersion1},
+            { EdmxVersion2Namespace, EdmxVersion2},
+            { EdmxVersion3Namespace, EdmxVersion3},
+            { EdmxVersion4Namespace, EdmxVersion4}
         };
 
-        internal static Dictionary<string, Version> SupportedEdmxNamespaces = SupportedEdmxVersions.ToDictionary(v => v.Value, v => v.Key);
+        public static Dictionary<string, Version> SupportedEdmxNamespaces
+        {
+            get
+            {
+                return supportedEdmxNamespaces;
+            }
+        }
     }
 }

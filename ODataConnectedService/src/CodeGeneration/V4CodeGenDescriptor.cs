@@ -3,6 +3,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using EnvDTE;
+using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.Templates;
 using Microsoft.VisualStudio.ConnectedServices;
 
@@ -15,8 +16,11 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
         {
             this.ClientNuGetPackageName = Common.Constants.V4ClientNuGetPackage;
             this.ClientDocUri = Common.Constants.V4DocUri;
+            this.ServiceConfiguration = base.ServiceConfiguration as ServiceConfigurationV4;
         }
 
+        private new ServiceConfigurationV4 ServiceConfiguration { get; set; }
+        
         public override async Task AddNugetPackages()
         {
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Adding Nuget Packages");
@@ -32,7 +36,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
         {
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Generating Client Proxy ...");
 
-            if (this.CodeGenInstance.IncludeT4File)
+            if (this.ServiceConfiguration.IncludeT4File)
             {
                 await AddT4File();
             }
@@ -52,12 +56,12 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 string text = File.ReadAllText(Path.Combine(t4Folder, "ODataT4CodeGenerator.tt"));
 
                 text = Regex.Replace(text, "ODataT4CodeGenerator(\\.ttinclude)", this.GeneratedFileNamePrefix + "$1");
-                text = Regex.Replace(text, "(public const string MetadataDocumentUri = )\"\";", "$1\"" + CodeGenInstance.Endpoint + "\";");
-                text = Regex.Replace(text, "(public const bool UseDataServiceCollection = ).*;", "$1" + CodeGenInstance.UseDataServiceCollection.ToString().ToLower() + ";");
-                text = Regex.Replace(text, "(public const string NamespacePrefix = )\"\\$rootnamespace\\$\";", "$1\"" + CodeGenInstance.NamespacePrefix + "\";");
+                text = Regex.Replace(text, "(public const string MetadataDocumentUri = )\"\";", "$1\"" + ServiceConfiguration.Endpoint + "\";");
+                text = Regex.Replace(text, "(public const bool UseDataServiceCollection = ).*;", "$1" + ServiceConfiguration.UseDataServiceCollection.ToString().ToLower() + ";");
+                text = Regex.Replace(text, "(public const string NamespacePrefix = )\"\\$rootnamespace\\$\";", "$1\"" + ServiceConfiguration.NamespacePrefix + "\";");
                 text = Regex.Replace(text, "(public const string TargetLanguage = )\"OutputLanguage\";", "$1\"CSharp\";");
-                text = Regex.Replace(text, "(public const bool EnableNamingAlias = )true;", "$1" + CodeGenInstance.EnableNamingAlias.ToString().ToLower() + ";");
-                text = Regex.Replace(text, "(public const bool IgnoreUnexpectedElementsAndAttributes = )true;", "$1" + CodeGenInstance.IgnoreUnexpectedElementsAndAttributes.ToString().ToLower() + ";");
+                text = Regex.Replace(text, "(public const bool EnableNamingAlias = )true;", "$1" + this.ServiceConfiguration.EnableNamingAlias.ToString().ToLower() + ";");
+                text = Regex.Replace(text, "(public const bool IgnoreUnexpectedElementsAndAttributes = )true;", "$1" + this.ServiceConfiguration.IgnoreUnexpectedElementsAndAttributes.ToString().ToLower() + ";");
 
                 await writer.WriteAsync(text);
                 await writer.FlushAsync();
@@ -72,11 +76,11 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
         {
             ODataT4CodeGenerator t4CodeGenerator = new ODataT4CodeGenerator();
             t4CodeGenerator.MetadataDocumentUri = MetadataUri;
-            t4CodeGenerator.UseDataServiceCollection = this.CodeGenInstance.UseDataServiceCollection;
+            t4CodeGenerator.UseDataServiceCollection = this.ServiceConfiguration.UseDataServiceCollection;
             t4CodeGenerator.TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp;
-            t4CodeGenerator.IgnoreUnexpectedElementsAndAttributes = this.CodeGenInstance.IgnoreUnexpectedElementsAndAttributes;
-            t4CodeGenerator.EnableNamingAlias = this.CodeGenInstance.EnableNamingAlias;
-            t4CodeGenerator.NamespacePrefix = this.CodeGenInstance.NamespacePrefix;
+            t4CodeGenerator.IgnoreUnexpectedElementsAndAttributes = this.ServiceConfiguration.IgnoreUnexpectedElementsAndAttributes;
+            t4CodeGenerator.EnableNamingAlias = this.ServiceConfiguration.EnableNamingAlias;
+            t4CodeGenerator.NamespacePrefix = this.ServiceConfiguration.NamespacePrefix;
 
             string tempFile = Path.GetTempFileName();
 

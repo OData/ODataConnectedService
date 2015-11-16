@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.OData.ConnectedService.Views;
 using Microsoft.VisualStudio.ConnectedServices;
 
@@ -23,12 +24,19 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             this.ResetDataContext();
         }
 
-        public override Task OnPageEnteringAsync(WizardEnteringArgs args)
+        public event EventHandler<EventArgs> PageEntering;
+
+        public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
+            await base.OnPageEnteringAsync(args);
+
             this.View = new AdvancedSettings();
             this.ResetDataContext();
             this.View.DataContext = this;
-            return base.OnPageEnteringAsync(args);
+            if (PageEntering != null)
+            {
+                this.PageEntering(this, EventArgs.Empty);
+            }
         }
 
         public override Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
@@ -43,7 +51,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             this.UseDataServiceCollection = true;
             this.IgnoreUnexpectedElementsAndAttributes = false;
             this.EnableNamingAlias = false;
-            this.GeneratedFileName = "Reference";
+            this.GeneratedFileName = Common.Constants.DefaultReferenceFileName;
             this.IncludeT4File = false;
         }
     }

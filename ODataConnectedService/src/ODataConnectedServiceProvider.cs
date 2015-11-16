@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService
 {
-    [ConnectedServiceProviderExport(Constants.ProviderId)]
+    [ConnectedServiceProviderExport(Constants.ProviderId, SupportsUpdate = true)]
     internal class ODataConnectedServiceProvider : ConnectedServiceProvider
     {
         public ODataConnectedServiceProvider()
@@ -32,6 +32,5 @@ namespace Microsoft.OData.ConnectedService
             yield return new Tuple<string, Uri>("OData Website", new Uri("http://www.odata.org/"));
             yield return new Tuple<string, Uri>("OData Docs and Samples", new Uri("http://odata.github.io/odata.net/"));
         }
-
     }
 }
