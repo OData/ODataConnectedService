@@ -22,15 +22,6 @@ namespace Microsoft.OData.ConnectedService
                 new Uri(codeGenDescriptor.ClientDocUri));
         }
 
-        public override async Task<UpdateServiceInstanceResult> UpdateServiceInstanceAsync(ConnectedServiceHandlerContext context, CancellationToken ct)
-        {
-            Project project = ProjectHelper.GetProjectFromHierarchy(context.ProjectHierarchy);
-            ODataConnectedServiceInstance codeGenInstance = (ODataConnectedServiceInstance)context.ServiceInstance;
-
-            var codeGenDescriptor = await GenerateCode(codeGenInstance.MetadataTempFilePath, codeGenInstance.EdmxVersion, context, project);
-            return new UpdateServiceInstanceResult();
-        }
-
         private async Task<BaseCodeGenDescriptor> GenerateCode(string metadataUri, Version edmxVersion, ConnectedServiceHandlerContext context, Project project)
         {
             BaseCodeGenDescriptor codeGenDescriptor;
