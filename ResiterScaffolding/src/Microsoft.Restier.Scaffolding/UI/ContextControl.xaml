@@ -1,0 +1,90 @@
+﻿<!--Copyright (c) Microsoft Corporation.  All rights reserved.-->
+<!--Licensed under the MIT License.  See License.txt in the project root for license information.-->
+
+<UserControl
+  x:Class="Microsoft.Restier.Scaffolding.UI.ContextControl"
+  x:ClassModifier="internal"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+  xmlns:ui="clr-namespace:Microsoft.Restier.Scaffolding.UI"
+  xmlns:res="clr-namespace:Microsoft.Restier.Scaffolding"
+  xmlns:mvc="clr-namespace:Microsoft.Restier.Scaffolding"
+  mc:Ignorable="d"
+  d:DesignWidth="596">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+          Source="StyleResources.xaml">
+                </ResourceDictionary>
+                <ResourceDictionary
+          Source="ApplicationResources.xaml">
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <StackPanel>
+        <Grid
+      Visibility="{Binding Path=IsDataContextSupported, Mode=OneTime, Converter={StaticResource BoolToVisibility}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+          SharedSizeGroup="LabelColumn" />
+                <ColumnDefinition
+          Width="20" />
+                <ColumnDefinition
+          Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label
+        Grid.Column="0"
+        Content="{x:Static res:Resources.DataContextClassLabel}"
+        Target="{Binding ElementName=dataContextComboBox}" />
+            <Grid
+        Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+            Width="*" />
+                    <ColumnDefinition
+            Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ComboBox
+          Name="dataContextComboBox"
+          Grid.Column="0"
+          IsEditable="true"
+          AutomationProperties.Name="{x:Static res:Resources.DataContextClassLabel}"
+          ItemsSource="{Binding DataContextTypes}"
+          SelectedItem="{Binding DataContextType, Mode=OneWayToSource}"
+          TextSearch.TextPath="DisplayName"
+          DisplayMemberPath="DisplayName"
+          Text="{Binding DataContextTypeName, UpdateSourceTrigger=LostFocus}" />
+                <!--
+                <Button
+          Name="dataContextAddButton"
+          Grid.Column="1"
+          Style="{StaticResource SmallButton}"
+          Command="{Binding AddNewDataContextCommand}"
+          AutomationProperties.Name="{x:Static res:Resources.AddNewDbContext}"
+          ToolTip="{x:Static res:Resources.AddNewDbContext}">
+                    <Path
+            Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+            StrokeThickness="2">
+                        <Path.Data>
+                            <GeometryGroup>
+                                <LineGeometry
+                  StartPoint="0,5"
+                  EndPoint="10,5" />
+                                <LineGeometry
+                  StartPoint="5,10"
+                  EndPoint="5,0" />
+                            </GeometryGroup>
+                        </Path.Data>
+                    </Path>
+                </Button>
+                -->
+            </Grid>
+        </Grid>
+    </StackPanel>
+</UserControl>    
