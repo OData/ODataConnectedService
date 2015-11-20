@@ -25,26 +25,26 @@ namespace Microsoft.Restier.Scaffolding
 
         protected internal override void Scaffold()
         {
-            ModifyConfigFile(GeneratedAppendLine(Model.DataContextType.TypeName));
+            ModifyConfigFile(GeneratedAppendLine(Model.DataContextType.TypeName, Model.DataContextType.ShortTypeName));
 
             // We want to record SQM data even on failure
             Framework.RecordControllerTelemetryOptions(Context, Model);
         }
 
-        protected string GeneratedAppendLine(string contextName)
+        protected string GeneratedAppendLine(string contextTypeName, string contextShortName)
         {
-            if (string.IsNullOrEmpty(contextName))
+            if (string.IsNullOrEmpty(contextTypeName))
             {
                 throw new ArgumentException("contextName");
             }
-            string name = contextName;
+            string name = contextShortName;
 
             if (name.ToLower().EndsWith(ContextPostfix))
             {
                 name = name.Substring(0, name.Length - ContextPostfix.Length);
             }
 
-            return String.Format(TemplateName, contextName, name);
+            return String.Format(TemplateName, contextTypeName, name);
         }
 
         protected void ModifyConfigFile(string appendLine)
@@ -83,7 +83,7 @@ namespace Microsoft.Restier.Scaffolding
                 allLines.Insert(0, "// " + appendLine);
                 allLines.Insert(0, Instruction);
             }
-            allLines.Insert(0, String.Format(UsingLine, Model.DataContextType.TypeName));
+            allLines.Insert(0, UsingLine);
 
             File.WriteAllLines(Model.ConfigFileFullPath, allLines.ToArray());
         }
