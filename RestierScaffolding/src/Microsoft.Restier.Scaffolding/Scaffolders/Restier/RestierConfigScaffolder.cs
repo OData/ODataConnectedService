@@ -77,12 +77,11 @@ namespace Microsoft.Restier.Scaffolding
             {
                 allLines.Insert(insertPos, appendLine);
                 allLines.Insert(insertPos, AnnotationLine);
-
             }
             else
             {
-                allLines.Insert(0, Instruction);
                 allLines.Insert(0, "// " + appendLine);
+                allLines.Insert(0, Instruction);
             }
             allLines.Insert(0, String.Format(UsingLine, Model.DataContextType.TypeName));
 

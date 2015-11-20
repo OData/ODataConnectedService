@@ -3,7 +3,7 @@
   <Metadata>
     <Identity Id="RestierScaffolding..40e7bb7e-f72d-44cf-8439-2567be2590c6" Version="0.1.0.0" Language="en-US" Publisher="Microsoft" />
     <DisplayName>Restier Scaffolding</DisplayName>
-    <Description xml:space="preserve">VSIX Project to create a custom scaffolder.</Description>
+    <Description xml:space="preserve">The scaffolding that simplifies the process of building the OData service with EF by RestierTAn assistent Scaffolding </Description>
     <License>License.txt</License>
     <Tags>Scaffolding, OData</Tags>
   </Metadata>

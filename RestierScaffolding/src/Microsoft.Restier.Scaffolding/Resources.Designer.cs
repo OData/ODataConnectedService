@@ -316,7 +316,7 @@ namespace Microsoft.Restier.Scaffolding {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An OData Restier scaffolder .
+        ///   Looks up a localized string similar to The scaffolding will help to modify the config class to simplifies the process of building the OData service with EF by Restier.
         /// </summary>
         public static string RestierScaffolderDescription {
             get {
@@ -334,7 +334,7 @@ namespace Microsoft.Restier.Scaffolding {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Microsoft OData Restier Scaffoler.
+        ///   Looks up a localized string similar to Microsoft OData Restier Config.
         /// </summary>
         public static string RestierScaffolderName {
             get {

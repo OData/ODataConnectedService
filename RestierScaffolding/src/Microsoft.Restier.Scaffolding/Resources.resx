@@ -197,13 +197,13 @@ more details see {0}.</value>
     <value>A file with the name {0} already exists. Do you want to replace it?</value>
   </data>
   <data name="RestierScaffolderDescription" xml:space="preserve">
-    <value>An OData Restier scaffolder </value>
+    <value>The scaffolding will help to modify the config class to simplifies the process of building the OData service with EF by Restier</value>
   </data>
   <data name="RestierScaffolderId" xml:space="preserve">
     <value>MicrosoftODataRestierScaffoler</value>
   </data>
   <data name="RestierScaffolderName" xml:space="preserve">
-    <value>Microsoft OData Restier Scaffoler</value>
+    <value>Microsoft OData Restier Config</value>
   </data>
   <data name="ScaffoldLanguageNotSupported" xml:space="preserve">
     <value>The project language is not supported.</value>
