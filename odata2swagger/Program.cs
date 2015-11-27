@@ -10,7 +10,7 @@ using Microsoft.OData.Edm.Csdl;
 using Microsoft.OData.Edm.Validation;
 using Newtonsoft.Json.Linq;
 
-namespace ODataServiceToSwagger
+namespace OData2Swagger
 {
     public static class ExtensionMethods
     {
@@ -95,7 +95,14 @@ namespace ODataServiceToSwagger
             return jObject;
         }
 
-        public static JArray Parameter(this JArray parameters, string name, string kind, string description, string type, string format = null, bool? required = true)
+        public static JArray Parameter(this JArray parameters, string name, string kind, string description,
+            string type)
+        {
+            return Parameter(parameters, name, kind, description, type, format: null, required: null);
+        }
+
+        public static JArray Parameter(this JArray parameters, string name, string kind, string description,
+            string type, string format, bool? required)
         {
             parameters.Add(new JObject()
             {
@@ -114,11 +121,17 @@ namespace ODataServiceToSwagger
                 (parameters.Last as JObject).Add("required", required);
             }
 
-
             return parameters;
         }
 
-        public static JArray Parameter(this JArray parameters, string name, string kind, string description, IEdmType type)
+        public static JArray Parameter(this JArray parameters, string name, string kind, string description,
+            IEdmType type)
+        {
+            return Parameter(parameters, name, kind, description, type, required: null);
+        }
+
+        public static JArray Parameter(this JArray parameters, string name, string kind, string description,
+            IEdmType type, bool? required)
         {
             var parameter = new JObject()
             {
@@ -137,7 +150,12 @@ namespace ODataServiceToSwagger
                 Program.SetSwaggerType(schema, type);
                 parameter.Add("schema", schema);
             }
-            
+
+            if (required != null)
+            {
+                parameter.Add("required", required);
+            }
+
             parameters.Add(parameter);
 
             return parameters;
@@ -190,7 +208,7 @@ namespace ODataServiceToSwagger
         private const string host = "services.odata.org";
         private const string version = "0.1.0";
         private const string basePath = "/V4/(S(cnbm44wtbc1v5bgrlek5lpcc))/TripPinServiceRW";
-        private const string outputFile = @"E:\swagger-ui\dist\swagger\trippin.json";
+        private const string outputFile = @"trippin.json";
 
         static JObject CreateSwaggerPathForEntitySet(IEdmEntitySet entitySet)
         {
@@ -213,7 +231,6 @@ namespace ODataServiceToSwagger
                             .Response("200", "EntitySet " + entitySet.Name, entitySet.EntityType())
                             .DefaultErrorResponse()
                         )
-
                 },
                 {
                     "post", new JObject()
@@ -315,7 +332,7 @@ namespace ODataServiceToSwagger
             foreach (var parameter in operationImport.Operation.Parameters)
             {
                 swaggerParameters.Parameter(parameter.Name, operationImport is IEdmFunctionImport ? "path" : "body",
-                    "parameter: " + parameter.Name, parameter.Type.Definition);
+                    "parameter: " + parameter.Name, parameter.Type.Definition, required: true);
             }
 
             JObject swaggerResponses = new JObject();
@@ -352,7 +369,7 @@ namespace ODataServiceToSwagger
             foreach (var parameter in operation.Parameters.Skip(1))
             {
                 swaggerParameters.Parameter(parameter.Name, operation is IEdmFunction ? "path" : "body",
-                    "parameter: " + parameter.Name, parameter.Type.Definition);
+                    "parameter: " + parameter.Name, parameter.Type.Definition, required: true);
             }
 
             JObject swaggerResponses = new JObject();
@@ -398,7 +415,7 @@ namespace ODataServiceToSwagger
             foreach (var parameter in operation.Parameters.Skip(1))
             {
                 swaggerParameters.Parameter(parameter.Name, operation is IEdmFunction ? "path" : "body",
-                    "parameter: " + parameter.Name, parameter.Type.Definition);
+                    "parameter: " + parameter.Name, parameter.Type.Definition, required: true);
             }
 
             JObject swaggerResponses = new JObject();
@@ -483,8 +500,8 @@ namespace ODataServiceToSwagger
             {
                 foreach (var parameter in operation.Parameters.Skip(1))
                 {
-                    if (parameter.Type.Definition.TypeKind == EdmTypeKind.Primitive &&
-                   (parameter.Type.Definition as IEdmPrimitiveType).PrimitiveKind == EdmPrimitiveTypeKind.String)
+                    if (parameter.Type.Definition.TypeKind == EdmTypeKind.Primitive
+                        && (parameter.Type.Definition as IEdmPrimitiveType).PrimitiveKind == EdmPrimitiveTypeKind.String)
                     {
                         swaggerOperationPath += parameter.Name + "=" + "'{" + parameter.Name + "}',";
                     }
@@ -554,8 +571,6 @@ namespace ODataServiceToSwagger
                 swaggerPaths.Add(GetPathForEntity(entitySet), CreateSwaggerPathForEntity(entitySet));
             }
 
-            
-
             foreach (var operationImport in model.EntityContainer.OperationImports())
             {
                 swaggerPaths.Add(GetPathForOperationImport(operationImport), CreateSwaggerPathForOperationImport(operationImport));
@@ -585,7 +600,8 @@ namespace ODataServiceToSwagger
                         var entitySet in
                             model.EntityContainer.EntitySets().Where(es => es.EntityType().Equals(entityType)))
                     {
-                        swaggerPaths.Add(GetPathForOperationOfEntity(operation, entitySet), CreateSwaggerPathForOperationOfEntity(operation, entitySet));
+                        swaggerPaths.Add(GetPathForOperationOfEntity(operation, entitySet),
+                            CreateSwaggerPathForOperationOfEntity(operation, entitySet));
                     }
                 }
 
@@ -597,7 +613,8 @@ namespace ODataServiceToSwagger
                         var entitySet in
                             model.EntityContainer.EntitySets().Where(es => es.EntityType().Equals(entityType)))
                     {
-                        swaggerPaths.Add(GetPathForOperationOfEntitySet(operation, entitySet), CreateSwaggerPathForOperationOfEntitySet(operation, entitySet));
+                        swaggerPaths.Add(GetPathForOperationOfEntitySet(operation, entitySet),
+                            CreateSwaggerPathForOperationOfEntitySet(operation, entitySet));
                     }
                 }
             }
@@ -702,6 +719,5 @@ namespace ODataServiceToSwagger
                     return "string";
             }
         }
-
     }
 }
