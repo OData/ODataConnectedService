@@ -9,6 +9,7 @@
 *.mdf binary
 *.ldf binary
 *.sql binary
+*.nupkg binary
 
 *.ascx text
 *.cd text
