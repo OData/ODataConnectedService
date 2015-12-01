@@ -1,14 +1,17 @@
-﻿using System.Reflection;
+﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
+// Licensed under the MIT License.  See License.txt in the project root for license information.
+
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Contoso.Samples.ConnectedServices.UITemplates.Wizard")]
+[assembly: AssemblyTitle("Microsoft.OData.ConnectedService")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Contoso.Samples.ConnectedServices.UITemplates.Wizard")]
+[assembly: AssemblyProduct("Microsoft.OData.ConnectedService")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
