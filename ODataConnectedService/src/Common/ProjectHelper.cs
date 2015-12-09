@@ -25,7 +25,7 @@ namespace Microsoft.OData.ConnectedService.Common
                 out projectObject);
             if (result != VSConstans_S_OK)
             {
-                throw new Exception("Cannot find the project from VsHierarchy");
+                throw new InvalidOperationException("Cannot find the project from VsHierarchy");
             }
 
             return (Project)projectObject;

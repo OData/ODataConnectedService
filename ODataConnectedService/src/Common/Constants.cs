@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.OData.ConnectedService.Common
 {
-    internal class Constants
+    internal static class Constants
     {
         public static Version EdmxVersion1 = new Version(1, 0, 0, 0);
         public static Version EdmxVersion2 = new Version(2, 0, 0, 0);
@@ -44,14 +44,6 @@ namespace Microsoft.OData.ConnectedService.Common
             V3ODataNuGetPackage,
             V3EdmNuGetPackage,
             V3SpatialNuGetPackage
-        };
-
-        public static string[] V4NuGetPackages = new string[]
-        {
-            V4ClientNuGetPackage,
-            V4ODataNuGetPackage,
-            V4EdmNuGetPackage,
-            V4SpatialNuGetPackage
         };
 
         private static Dictionary<string, Version> supportedEdmxNamespaces = new Dictionary<string, Version>

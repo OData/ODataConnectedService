@@ -14,7 +14,7 @@
     <NuGetFolder>.nuget</NuGetFolder>
     <NuGetExe>$(NuGetFolder)\NuGet.exe</NuGetExe>
     <OutputPath>$(MSBuildThisFileDirectory)bin\$(Configuration)</OutputPath>
-    <CodeAnalysis Condition=" '$(CodeAnalysis)' == '' and '$(Configuration)' != 'Release' ">true</CodeAnalysis>
+    <RunCodeAnalysis Condition=" '$(RunCodeAnalysis)' == ''">true</RunCodeAnalysis>
     <UseDTTP Condition=" '$(UseDTTP)' == ''">false</UseDTTP>
     <SkipStrongNamesExe>$(MSBuildThisFileDirectory)packages\Microsoft.Web.SkipStrongNames.1.0.0\tools\SkipStrongNames.exe</SkipStrongNamesExe>
     <SkipStrongNamesXml>$(MSBuildThisFileDirectory)tools\SkipStrongNames.xml</SkipStrongNamesXml>
@@ -60,25 +60,14 @@
           -NoCache $(AdditionalRestoreProps)' />
   </Target>
 
-  <Target Name="BuildTools">
-    <PropertyGroup>
-      <FxCopProjectLocation>$(MsBuildThisFileDirectory)tools\src\Microsoft.Web.FxCop\</FxCopProjectLocation>
-      <CustomFxCopRulesPath>$(MsBuildThisFileDirectory)packages\CustomFxCopRules</CustomFxCopRulesPath>
-    </PropertyGroup>
-    <MsBuild
-          Condition=" '$(CodeAnalysis)' == 'true' "
-          Projects="$(FxCopProjectLocation)\Microsoft.Web.FxCop.csproj"
-          Properties="Configuration=Release;OutputPath=$(CustomFxCopRulesPath)" />
-  </Target>
-
-  <Target Name="Build" DependsOnTargets="DisableBuildVsix;RestorePackages;BuildTools">
-    <Message Importance="High" Text="Build All Assemblies by connectedservice.msbuild Configuration=$(Configuration);CodeAnalysis=$(CodeAnalysis);StyleCopEnabled=$(StyleCopEnabled);VisualStudioVersion=$(VisualStudioVersion);UseDTTP=$(UseDTTP);OutputPath=$(OutputPath)" />
+  <Target Name="Build" DependsOnTargets="DisableBuildVsix;RestorePackages">
+    <Message Importance="High" Text="Build All Assemblies by ODataConnectedService.msbuild Configuration=$(Configuration);RunCodeAnalysis=$(RunCodeAnalysis);StyleCopEnabled=$(StyleCopEnabled);VisualStudioVersion=$(VisualStudioVersion);UseDTTP=$(UseDTTP);OutputPath=$(OutputPath)" />
     <MSBuild
           Projects="@(SolutionsToBuild)"
           BuildInParallel="%(SolutionsToBuild.BuildInParallel)"
           Targets="Build"
           Condition=" '%(SolutionsToBuild.Portable)' != 'true' or '$(BuildPortable)' == 'true' "
-          Properties="Configuration=$(Configuration);CodeAnalysis=$(CodeAnalysis);StyleCopEnabled=$(StyleCopEnabled);VisualStudioVersion=$(VisualStudioVersion);UseDTTP=$(UseDTTP);OutputPath=$(OutputPath)" />
+          Properties="Configuration=$(Configuration);RunCodeAnalysis=$(RunCodeAnalysis);StyleCopEnabled=$(StyleCopEnabled);VisualStudioVersion=$(VisualStudioVersion);UseDTTP=$(UseDTTP);OutputPath=$(OutputPath)" />
   </Target>
 
   <Target Name="RegexReplace" DependsOnTargets="Build" AfterTargets="Build">
@@ -99,12 +88,12 @@
           Properties="Configuration=$(Configuration);VisualStudioVersion=$(VisualStudioVersion)" />
     <RemoveDir Directories="bin\$(Configuration);OutputPath=$(OutputPath)" />
   </Target>
-  <Target Name="Rebuild" DependsOnTargets="RestorePackages;BuildTools">
+  <Target Name="Rebuild" DependsOnTargets="RestorePackages">
     <MSBuild
           Projects="@(SolutionsToBuild)"
           BuildInParallel="%(SolutionsToBuild.BuildInParallel)"
           Targets="ReBuild"
           Condition=" '%(SolutionsToBuild.Portable)' != 'true' or '$(BuildPortable)' == 'true' "
-          Properties="Configuration=$(Configuration);CodeAnalysis=$(CodeAnalysis);StyleCopEnabled=$(StyleCopEnabled);VisualStudioVersion=$(VisualStudioVersion);OutputPath=;OutputPath=$(OutputPath);EnableProjectCop=false" />
+          Properties="Configuration=$(Configuration);RunCodeAnalysis=$(RunCodeAnalysis);StyleCopEnabled=$(StyleCopEnabled);VisualStudioVersion=$(VisualStudioVersion);OutputPath=;OutputPath=$(OutputPath);EnableProjectCop=false" />
   </Target>
 </Project>

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -66,9 +67,10 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                 throw new ArgumentNullException("OData Service Endpoint", "Please input the service endpoint");
             }
 
-            if (this.Endpoint.StartsWith("https:") || this.Endpoint.StartsWith("http"))
+            if (this.Endpoint.StartsWith("https:", StringComparison.Ordinal) 
+                || this.Endpoint.StartsWith("http", StringComparison.Ordinal))
             {
-                if (!this.Endpoint.EndsWith("$metadata"))
+                if (!this.Endpoint.EndsWith("$metadata", StringComparison.Ordinal))
                 {
                     this.Endpoint = this.Endpoint.TrimEnd('/') + "/$metadata";
                 }
@@ -97,7 +99,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
                         if (reader.EOF)
                         {
-                            throw new Exception("The metadata is an empty file");
+                            throw new InvalidOperationException("The metadata is an empty file");
                         }
 
                         Common.Constants.SupportedEdmxNamespaces.TryGetValue(reader.NamespaceURI, out edmxVersion);
@@ -108,7 +110,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
             catch (WebException e)
             {
-                throw new Exception(string.Format("Cannot access {0}", this.Endpoint), e);
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "Cannot access {0}", this.Endpoint), e);
             }
         }
     }

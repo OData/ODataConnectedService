@@ -15,6 +15,7 @@ namespace Microsoft.OData.ConnectedService
     internal class ODataConnectedServiceWizard : ConnectedServiceWizard
     {
         private UserSettings userSettings;
+        private ODataConnectedServiceInstance serviceInstance;
 
         public ConfigODataEndpointViewModel ConfigODataEndpointViewModel { get; set; }
 
@@ -22,7 +23,18 @@ namespace Microsoft.OData.ConnectedService
 
         public ConnectedServiceProviderContext Context { get; set; }
 
-        public Project Project { get; set; }
+        public ODataConnectedServiceInstance ServiceInstance
+        {
+            get
+            {
+                if (this.serviceInstance == null)
+                {
+                    this.serviceInstance = new ODataConnectedServiceInstance();
+                }
+
+                return this.serviceInstance;
+            }
+        }
 
         public Version EdmxVersion
         {
@@ -37,7 +49,6 @@ namespace Microsoft.OData.ConnectedService
         public ODataConnectedServiceWizard(ConnectedServiceProviderContext context)
         {
             this.Context = context;
-            this.Project = ProjectHelper.GetProjectFromHierarchy(this.Context.ProjectHierarchy);
             this.userSettings = UserSettings.Load(context.Logger);
 
             ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(this.userSettings);
@@ -87,14 +98,12 @@ namespace Microsoft.OData.ConnectedService
         {
             this.userSettings.Save();
 
-            ODataConnectedServiceInstance instance = new ODataConnectedServiceInstance();
-            instance.InstanceId = AdvancedSettingsViewModel.GeneratedFileName;
-            instance.Name = ConfigODataEndpointViewModel.ServiceName;
-            instance.MetadataTempFilePath = ConfigODataEndpointViewModel.MetadataTempPath;
-
-            instance.ServiceConfig = this.CreateServiceConfiguration();
-
-            return Task.FromResult<ConnectedServiceInstance>(instance);
+            this.ServiceInstance.InstanceId = AdvancedSettingsViewModel.GeneratedFileName;
+            this.ServiceInstance.Name = ConfigODataEndpointViewModel.ServiceName;
+            this.ServiceInstance.MetadataTempFilePath = ConfigODataEndpointViewModel.MetadataTempPath;
+            this.ServiceInstance.ServiceConfig = this.CreateServiceConfiguration();
+        
+            return Task.FromResult<ConnectedServiceInstance>(this.ServiceInstance);
         }
 
         /// <summary>
@@ -129,6 +138,41 @@ namespace Microsoft.OData.ConnectedService
             }
 
             return serviceConfiguration;
+        }
+
+        /// <summary>
+        /// Cleanup object references
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    if(this.AdvancedSettingsViewModel != null)
+                    {
+                        this.AdvancedSettingsViewModel.Dispose();
+                        this.AdvancedSettingsViewModel = null;
+                    }
+
+                    if (this.ConfigODataEndpointViewModel != null)
+                    {
+                        this.ConfigODataEndpointViewModel.Dispose();
+                        this.ConfigODataEndpointViewModel = null;
+                    }
+
+                    if (this.serviceInstance != null)
+                    {
+                        this.serviceInstance.Dispose();
+                        this.serviceInstance = null;
+                    }
+                }
+            }
+            finally
+            {
+                base.Dispose(disposing);
+            }
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Microsoft.OData.ConnectedService
             return new UpdateServiceInstanceResult();
         }
 
-        private async Task<BaseCodeGenDescriptor> GenerateCode(string metadataUri, Version edmxVersion, ConnectedServiceHandlerContext context, Project project)
+        private static async Task<BaseCodeGenDescriptor> GenerateCode(string metadataUri, Version edmxVersion, ConnectedServiceHandlerContext context, Project project)
         {
             BaseCodeGenDescriptor codeGenDescriptor;
 

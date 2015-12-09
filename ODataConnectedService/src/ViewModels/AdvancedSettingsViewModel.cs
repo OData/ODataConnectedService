@@ -13,7 +13,6 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public bool UseDataServiceCollection { get; set; }
         public bool UseNamespacePrefix { get; set; }
         public string NamespacePrefix { get; set; }
-        public string TargetLanguage { get; set; }
         public bool EnableNamingAlias { get; set; }
         public bool IgnoreUnexpectedElementsAndAttributes { get; set; }
         public string GeneratedFileName { get; set; }
