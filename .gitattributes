@@ -10,6 +10,7 @@
 *.ldf binary
 *.sql binary
 *.nupkg binary
+*.exe binary
 
 *.ascx text
 *.cd text
