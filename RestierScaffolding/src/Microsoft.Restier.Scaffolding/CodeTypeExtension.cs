@@ -17,17 +17,14 @@ namespace Microsoft.Restier.Scaffolding
                 throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, Resources.ArgumentNullOrEmpty, "codeType"));
             }
 
-            if (codeType is CodeClass2)
+            var cc = codeType as CodeClass2;
+            if (cc != null && cc.IsShared && cc.Name.EndsWith("Config", StringComparison.Ordinal))
             {
-                var cc = (CodeClass2)codeType;
-                if ((cc.IsShared) && cc.Name.EndsWith("Config"))
+                foreach (CodeElement ce in cc.Children)
                 {
-                    foreach (CodeElement ce in cc.Children)
+                    if (ce.Name.EndsWith("Register", StringComparison.Ordinal) && ce is CodeFunction)
                     {
-                        if (ce.Name.EndsWith("Register") && ce is CodeFunction)
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
             }

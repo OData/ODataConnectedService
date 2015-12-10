@@ -29,14 +29,6 @@ namespace Microsoft.Restier.Scaffolding.VisualStudio
             private set;
         }
 
-        public IOleServiceProvider OleServiceProvider
-        {
-            get
-            {
-                return (IOleServiceProvider)ServiceProvider.GetService(typeof(SDTE));
-            }
-        }
-
         public IComponentModel ComponentModel
         {
             get

@@ -111,6 +111,11 @@ namespace Microsoft.Restier.Scaffolding
 
         public void SaveSettings(VisualStudio.IProjectSettings settings)
         {
+            if (settings == null)
+            {
+                throw new ArgumentNullException("settings");
+            }
+
             // TODO - Right now this class inherits from the view scaffolder model, so we need to call into the
             // base class to save those settings as well. We want to remove this inheritance at some point
             // and this method will have to change when we do.

@@ -4,6 +4,7 @@
 namespace Microsoft.Restier.Scaffolding
 {
     using System;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using Microsoft.AspNet.Scaffolding;
@@ -31,31 +32,38 @@ namespace Microsoft.Restier.Scaffolding
             Framework.RecordControllerTelemetryOptions(Context, Model);
         }
 
-        protected string GeneratedAppendLine(string contextTypeName, string contextShortName)
+        protected static string GeneratedAppendLine(string contextTypeName, string contextShortName)
         {
             if (string.IsNullOrEmpty(contextTypeName))
             {
-                throw new ArgumentException("contextName");
+                throw new ArgumentException("contextTypeName cannot be null or empty", "contextTypeName");
             }
+
+            if (string.IsNullOrEmpty(contextShortName))
+            {
+                throw new ArgumentException("contextShortName cannot be null or empty", "contextShortName");
+            }
+
             string name = contextShortName;
 
-            if (name.ToLower().EndsWith(ContextPostfix))
+            if (name.ToLower(CultureInfo.InvariantCulture).EndsWith(ContextPostfix, StringComparison.Ordinal))
             {
                 name = name.Substring(0, name.Length - ContextPostfix.Length);
             }
 
-            return String.Format(TemplateName, contextTypeName, name);
+            return String.Format(CultureInfo.InvariantCulture, TemplateName, contextTypeName, name);
         }
 
         protected void ModifyConfigFile(string appendLine)
         {
+            if (string.IsNullOrEmpty(appendLine))
+            {
+                throw new ArgumentException("appendLine cannot be null or empty", "appendLine");
+            }
+
             if (string.IsNullOrEmpty(Model.ConfigFileFullPath))
             {
                 throw new ArgumentException("configFilePath");
-            }
-            if (string.IsNullOrEmpty(appendLine))
-            {
-                throw new ArgumentException("appendLine");
             }
 
             var allLines = File.ReadAllLines(Model.ConfigFileFullPath).ToList();

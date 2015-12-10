@@ -47,11 +47,21 @@ namespace Microsoft.Restier.Scaffolding.UI
 
         public static ResizeMode GetIsEnabled(DependencyObject dependencyObject)
         {
+            if (dependencyObject == null)
+            {
+                throw new ArgumentNullException("dependencyObject");
+            }
+
             return (ResizeMode)dependencyObject.GetValue(IsEnabledProperty);
         }
 
         public static void SetIsEnabled(DependencyObject dependencyObject, bool value)
         {
+            if (dependencyObject == null)
+            {
+                throw new ArgumentNullException("dependencyObject");
+            }
+
             dependencyObject.SetValue(IsEnabledProperty, value);
         }
 

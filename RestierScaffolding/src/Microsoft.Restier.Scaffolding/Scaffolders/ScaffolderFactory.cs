@@ -86,6 +86,11 @@ namespace Microsoft.Restier.Scaffolding
 
         public static ImageSource ToImageSource(Icon icon)
         {
+            if (icon == null)
+            {
+                throw new ArgumentNullException("icon");
+            }
+
             ImageSource imageSource = Imaging.CreateBitmapSourceFromHIcon(
                 icon.Handle,
                 Int32Rect.Empty,

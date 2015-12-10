@@ -8,11 +8,11 @@ namespace Microsoft.Restier.Scaffolding
 
     internal static class MvcProjectUtil
     {
-        public static readonly string ControllerSuffix = "Controller";
-        public static readonly string DataContextSuffix = "Context";
-        public static readonly string ConfigName = "WebApiConfig";
+        public const string ControllerSuffix = "Controller";
+        public const string DataContextSuffix = "Context";
+        public const string ConfigName = "WebApiConfig";
 
-        public static readonly string DefaultNamespace = "DefaultNamespace";
+        public const string DefaultNamespace = "DefaultNamespace";
         public static readonly string PathSeparator = Path.DirectorySeparatorChar.ToString();
 
         /// <summary>
@@ -28,41 +28,12 @@ namespace Microsoft.Restier.Scaffolding
         /// 
         /// Technically some other characters besides _\d\w are allowed, but this should handled the 99.9% case.
         /// </remarks>
-        public static readonly string ControllerNameRegex = @"\b([_\d\w]*)" + ControllerSuffix + "$";
+        public const string ControllerNameRegex = @"\b([_\d\w]*)" + ControllerSuffix + "$";
 
         /// <summary>
         /// Regex for selecting the 'Controller' portion of a name. See the remarks on ControllerNameRegex.
         /// </summary>
-        public static readonly string DataContextNameRegex = @"\b([_\d\w]*)" + DataContextSuffix + "$";
-
-        /// <summary>
-        /// This method extracts the root name of the controller from the class name of
-        /// the controller.
-        /// </summary>
-        /// <param name="fullConfigName">Full class name of the controller</param>
-        /// <returns>The stripped string if the suffix was found, or the same string as the parameter if
-        /// no 'Controller' suffix was found</returns>
-        public static string StripConfigName(string fullConfigName)
-        {
-            if (String.IsNullOrEmpty(fullConfigName))
-            {
-                return fullConfigName;
-            }
-
-            return EndsWithConfig(fullConfigName) ? fullConfigName.Substring(0, fullConfigName.Length - ControllerSuffix.Length)
-                                                          : fullConfigName;
-        }
-
-        /// <summary>
-        /// This method checks to see if a controller name follows the MVC convention of ending the
-        /// class name with the suffix 'Controller'.
-        /// </summary>
-        /// <param name="name">Name of the controller class</param>
-        /// <returns>true if the name ends with the correct suffix, false otherwise</returns>
-        public static bool EndsWithConfig(string name)
-        {
-            return name.EndsWith(ControllerSuffix, StringComparison.Ordinal);
-        }
+        public const string DataContextNameRegex = @"\b([_\d\w]*)" + DataContextSuffix + "$";
 
         public static string EnsureTrailingBackSlash(string str)
         {

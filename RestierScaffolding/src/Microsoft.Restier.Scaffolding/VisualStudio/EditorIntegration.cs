@@ -20,15 +20,11 @@ namespace Microsoft.Restier.Scaffolding.VisualStudio
 
     internal class EditorIntegration : IEditorIntegration
     {
+        private readonly VisualStudioIntegration visualStudio;
+
         public EditorIntegration(VisualStudioIntegration visualStudio)
         {
-            VisualStudio = visualStudio;
-        }
-
-        private VisualStudioIntegration VisualStudio
-        {
-            get;
-            set;
+            this.visualStudio = visualStudio;
         }
 
         public void FormatDocument(string filePath)
@@ -38,7 +34,7 @@ namespace Microsoft.Restier.Scaffolding.VisualStudio
             uint itemID;
             IVsWindowFrame windowFrame;
             if (VsShellUtilities.IsDocumentOpen(
-                VisualStudio.ServiceProvider,
+                visualStudio.ServiceProvider,
                 filePath,
                 Guid.Empty,
                 out uiHierarchy,
@@ -89,7 +85,7 @@ namespace Microsoft.Restier.Scaffolding.VisualStudio
         public IEditorInterfaces GetOrOpenDocument(string path)
         {
             OpenFileInEditor(path);
-            IVsRunningDocumentTable runningDocumentTable = (IVsRunningDocumentTable)VisualStudio.ServiceProvider.GetService(typeof(SVsRunningDocumentTable));
+            IVsRunningDocumentTable runningDocumentTable = (IVsRunningDocumentTable)visualStudio.ServiceProvider.GetService(typeof(SVsRunningDocumentTable));
 
             IVsHierarchy hierarchy;
             uint itemId;
@@ -111,7 +107,7 @@ namespace Microsoft.Restier.Scaffolding.VisualStudio
                     IVsTextBuffer vsTextBuffer = Marshal.GetObjectForIUnknown(documentData) as IVsTextBuffer;
                     if (vsTextBuffer != null)
                     {
-                        IVsEditorAdaptersFactoryService editorAdaptersFactory = VisualStudio.ComponentModel.GetService<IVsEditorAdaptersFactoryService>();
+                        IVsEditorAdaptersFactoryService editorAdaptersFactory = visualStudio.ComponentModel.GetService<IVsEditorAdaptersFactoryService>();
                         ITextBuffer buffer = editorAdaptersFactory.GetDocumentBuffer(vsTextBuffer);
                         ITextDocument document = buffer.Properties.GetProperty<ITextDocument>(typeof(ITextDocument));
 
@@ -138,7 +134,7 @@ namespace Microsoft.Restier.Scaffolding.VisualStudio
             // path of an open 'readme' file, then it will no-op trying to open it in the editor.
             File.WriteAllText(tempFilename, text);
 
-            IVsUIShellOpenDocument openDocument = (IVsUIShellOpenDocument)VisualStudio.ServiceProvider.GetService(typeof(SVsUIShellOpenDocument));
+            IVsUIShellOpenDocument openDocument = (IVsUIShellOpenDocument)visualStudio.ServiceProvider.GetService(typeof(SVsUIShellOpenDocument));
 
             Guid logicalView = VSConstants.LOGVIEWID.TextView_guid;
             IOleServiceProvider oleServiceProvider;
@@ -177,7 +173,7 @@ namespace Microsoft.Restier.Scaffolding.VisualStudio
 
         public void OpenFileInEditor(string filePath)
         {
-            DTE dte = (DTE)VisualStudio.ServiceProvider.GetService(typeof(SDTE));
+            DTE dte = (DTE)visualStudio.ServiceProvider.GetService(typeof(SDTE));
             if (File.Exists(filePath))
             {
                 if (!dte.ItemOperations.IsFileOpen(filePath))
@@ -225,7 +221,7 @@ namespace Microsoft.Restier.Scaffolding.VisualStudio
             //
             // See: http://msdn.microsoft.com/en-us/library/microsoft.visualstudio.shell.interop.ivsfilechangeex.syncfile(v=vs.110).aspx
             // for an example.
-            IVsFileChangeEx fileChangeService = (IVsFileChangeEx)VisualStudio.ServiceProvider.GetService(typeof(IVsFileChangeEx));
+            IVsFileChangeEx fileChangeService = (IVsFileChangeEx)visualStudio.ServiceProvider.GetService(typeof(IVsFileChangeEx));
 
             // This is a COM interface that wants the Win32 TRUE, which is why the third value is 1.
             int hr = fileChangeService.IgnoreFile(0u, filePath, 1);
@@ -236,7 +232,7 @@ namespace Microsoft.Restier.Scaffolding.VisualStudio
 
         private void ResumeChangeNotifications(string filePath)
         {
-            IVsFileChangeEx fileChangeService = (IVsFileChangeEx)VisualStudio.ServiceProvider.GetService(typeof(IVsFileChangeEx));
+            IVsFileChangeEx fileChangeService = (IVsFileChangeEx)visualStudio.ServiceProvider.GetService(typeof(IVsFileChangeEx));
 
             int hr;
             try

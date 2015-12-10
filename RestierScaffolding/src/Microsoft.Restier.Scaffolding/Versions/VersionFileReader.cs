@@ -9,7 +9,7 @@ namespace Microsoft.Restier.Scaffolding.Versions
     using System.IO;
     using System.Xml;
 
-    internal class VersionFileReader
+    internal static class VersionFileReader
     {
         private const string IdAttribute = "Id";
         private const string VersionAttribute = "Version";
@@ -21,7 +21,7 @@ namespace Microsoft.Restier.Scaffolding.Versions
         /// <param name="xmlFile">The file containing the version information.</param>
         /// <param name="elementXPath">The specified XPath.</param>
         /// <returns>The version <see cref="Dictionary"/> if the file and XPath is valid, else returns null.</returns>
-        internal static IDictionary<string, string> GetVersions(string xmlFile, string elementXPath)
+        public static IDictionary<string, string> GetVersions(string xmlFile, string elementXPath)
         {
             if (String.IsNullOrWhiteSpace(xmlFile))
             {

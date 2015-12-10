@@ -134,6 +134,11 @@ namespace Microsoft.Restier.Scaffolding.UI
             [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "We don't want to crash if using settings fails.")]
             public bool TrySelectFile(Project project, string title, string filter, string storageKey, out string file)
             {
+                if (project == null)
+                {
+                    throw new ArgumentNullException("project");
+                }
+
                 IVsSolution solution = (IVsSolution)Dialog.ServiceProvider.GetService(typeof(SVsSolution));
 
                 IVsHierarchy hierarchy;

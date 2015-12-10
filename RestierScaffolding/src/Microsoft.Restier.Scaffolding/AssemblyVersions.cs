@@ -13,10 +13,10 @@ namespace Microsoft.Restier.Scaffolding
         private const string AssemblyVersionsFile = @"Templates\AssemblyVersions.xml";
         private const string AssemblyElementXPath = "/Assemblies/Assembly";
 
-        public static readonly string WebApiAssemblyName = "System.Web.Http";
-        public static readonly string ODataAssemblyName = "System.Web.OData";
-        public static readonly string ODataRestierAssemblyName = "Microsoft.Restier.Core";
-        public static readonly string EntityFrameworkAssemblyName = "EntityFramework";
+        public const string WebApiAssemblyName = "System.Web.Http";
+        public const string ODataAssemblyName = "System.Web.OData";
+        public const string ODataRestierAssemblyName = "Microsoft.Restier.Core";
+        public const string EntityFrameworkAssemblyName = "EntityFramework";
 
         public static readonly Version WebApiAssemblyMinVersion = new Version(5, 2, 2);
         public static readonly Version WebApiAssemblyMaxVersion = new Version(6, 0, 0, 0);
@@ -39,7 +39,7 @@ namespace Microsoft.Restier.Scaffolding
         {
             if (assemblyName == null)
             {
-                throw new ArgumentNullException("assemblyReferenceName");
+                throw new ArgumentNullException("assemblyName");
             }
 
             if (Versions == null)

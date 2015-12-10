@@ -226,7 +226,12 @@ namespace Microsoft.Restier.Scaffolding.UI
 
         public virtual void SaveDialogSettings(IProjectSettings settings)
         {
-            settings[SavedSettingsKeys.ConfigDialogWidthKey] = DialogWidth.ToString();
+            if (settings == null)
+            {
+                throw new ArgumentNullException("settings");
+            }
+
+            settings[SavedSettingsKeys.ConfigDialogWidthKey] = DialogWidth.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

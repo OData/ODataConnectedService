@@ -3,6 +3,7 @@
 
 namespace Microsoft.Restier.Scaffolding
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Microsoft.AspNet.Scaffolding;
@@ -39,6 +40,11 @@ namespace Microsoft.Restier.Scaffolding
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists", Justification = "This is an internal API.")]
         protected internal void AddScaffoldDependencies(List<NuGetPackage> packages)
         {
+            if (packages == null)
+            {
+                throw new ArgumentNullException("packages");
+            }
+
             base.AddScaffoldDependencies(packages);
 
             IEntityFrameworkService efService = Context.ServiceProvider.GetService<IEntityFrameworkService>();
