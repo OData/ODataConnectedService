@@ -30,6 +30,11 @@ namespace System.Web.OData.Design.Scaffolding
 
         protected override void OnModelCreated(ControllerScaffolderModel model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException("model");
+            }
+
             base.OnModelCreated(model);
             model.ControllerName = null;
 

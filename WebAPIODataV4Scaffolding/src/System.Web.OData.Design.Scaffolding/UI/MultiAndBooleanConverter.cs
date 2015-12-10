@@ -10,6 +10,11 @@ namespace System.Web.OData.Design.Scaffolding.UI
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
+            if (values == null)
+            {
+                throw new ArgumentNullException("values");
+            }
+
             bool returnValue = true;
 
             for (int i = 0; i < values.Length; i++)

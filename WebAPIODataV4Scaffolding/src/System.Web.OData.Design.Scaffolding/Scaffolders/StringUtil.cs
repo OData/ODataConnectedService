@@ -12,7 +12,7 @@ namespace System.Web.OData.Design.Scaffolding
                 throw new ArgumentNullException("input");
             }
 
-            if (input == String.Empty)
+            if (String.IsNullOrEmpty(input))
             {
                 return input;
             }

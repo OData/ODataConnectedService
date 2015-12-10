@@ -8,14 +8,14 @@ namespace System.Web.OData.Design.Scaffolding
 {
     internal static class MvcProjectUtil
     {
-        public static readonly string AreaRegistration = "AreaRegistration";
-        public static readonly string ControllerSuffix = "Controller";
-        public static readonly string DataContextSuffix = "Context";
-        public static readonly string ControllerName = "Default{0}Controller";
-        public static readonly string PartialViewName = "Partial{0}";
-        public static readonly string ViewName = "View{0}";
+        public const string AreaRegistration = "AreaRegistration";
+        public const string ControllerSuffix = "Controller";
+        public const string DataContextSuffix = "Context";
+        public const string ControllerName = "Default{0}Controller";
+        public const string PartialViewName = "Partial{0}";
+        public const string ViewName = "View{0}";
 
-        public static readonly string DefaultNamespace = "DefaultNamespace";
+        public const string DefaultNamespace = "DefaultNamespace";
         public static readonly string PathSeparator = Path.DirectorySeparatorChar.ToString();
 
         /// <summary>
@@ -31,12 +31,12 @@ namespace System.Web.OData.Design.Scaffolding
         /// 
         /// Technically some other characters besides _\d\w are allowed, but this should handled the 99.9% case.
         /// </remarks>
-        public static readonly string ControllerNameRegex = @"\b([_\d\w]*)" + ControllerSuffix + "$";
+        public const string ControllerNameRegex = @"\b([_\d\w]*)" + ControllerSuffix + "$";
 
         /// <summary>
         /// Regex for selecting the 'Controller' portion of a name. See the remarks on ControllerNameRegex.
         /// </summary>
-        public static readonly string DataContextNameRegex = @"\b([_\d\w]*)" + DataContextSuffix + "$";
+        public const string DataContextNameRegex = @"\b([_\d\w]*)" + DataContextSuffix + "$";
 
         /// <summary>
         /// This method extracts the root name of the controller from the class name of

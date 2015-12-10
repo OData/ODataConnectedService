@@ -12,14 +12,14 @@ namespace System.Web.OData.Design.Scaffolding
         private const string AssemblyVersionsFile = @"Templates\AssemblyVersions.xml";
         private const string AssemblyElementXPath = "/Assemblies/Assembly";
         
-        public static readonly string WebApiAssemblyName = "System.Web.Http";
-        public static readonly string ODataAssemblyName = "System.Web.OData";
+        public const string WebApiAssemblyName = "System.Web.Http";
+        public const string ODataAssemblyName = "System.Web.OData";
         public static readonly Version WebApiAssemblyMinVersion = new Version(5, 0, 0);
         public static readonly Version WebApiAssemblyMaxVersion = new Version(6, 0, 0, 0);
         public static readonly Version ODataAssemblyMinVersion = new Version(5, 0, 0);
         public static readonly Version ODataAssemblyMaxVersion = new Version(6, 0, 0, 0);
         // The name and minimum version of Entity Framework required to use async controller actions
-        public static readonly string AsyncEntityFrameworkAssemblyName = "EntityFramework";
+        public const string AsyncEntityFrameworkAssemblyName = "EntityFramework";
         public static readonly Version AsyncEntityFrameworkMinVersion = new Version(6, 0, 0);
 
         private static IDictionary<string, string> Versions
@@ -38,7 +38,7 @@ namespace System.Web.OData.Design.Scaffolding
         {
             if (assemblyName == null)
             {
-                throw new ArgumentNullException("assemblyReferenceName");
+                throw new ArgumentNullException("assemblyName");
             }
 
             if (Versions == null)

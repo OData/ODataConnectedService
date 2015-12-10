@@ -22,6 +22,11 @@ namespace System.Web.OData.Design.Scaffolding
 
         protected override void OnModelCreated(ControllerScaffolderModel model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException("model");
+            }
+
             base.OnModelCreated(model);
             model.ControllerName = null;
             model.IsModelClassSupported = true;
@@ -31,6 +36,11 @@ namespace System.Web.OData.Design.Scaffolding
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists", Justification = "This is an internal API.")]
         protected internal override void AddScaffoldDependencies(List<NuGetPackage> packages)
         {
+            if (packages == null)
+            {
+                throw new ArgumentNullException("packages");
+            }
+
             base.AddScaffoldDependencies(packages);
 
             IEntityFrameworkService efService = Context.ServiceProvider.GetService<IEntityFrameworkService>();

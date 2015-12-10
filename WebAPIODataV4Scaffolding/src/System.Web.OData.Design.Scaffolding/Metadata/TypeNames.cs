@@ -5,9 +5,9 @@ namespace System.Web.OData.Design.Scaffolding.Metadata
 {
     internal static class TypeNames
     {
-        public static readonly string KeyAttributeTypeName = "System.ComponentModel.DataAnnotations.KeyAttribute";
-        public static readonly string ColumnAttributeTypeName = "System.Data.Linq.Mapping.ColumnAttribute";
-        public static readonly string EdmScalarPropertyAttributeTypeName = "System.Data.Entity.Core.Objects.DataClasses.EdmScalarPropertyAttribute";
-        public static readonly string ScaffoldColumnAttributeTypeName = "System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute";
+        public const string KeyAttributeTypeName = "System.ComponentModel.DataAnnotations.KeyAttribute";
+        public const string ColumnAttributeTypeName = "System.Data.Linq.Mapping.ColumnAttribute";
+        public const string EdmScalarPropertyAttributeTypeName = "System.Data.Entity.Core.Objects.DataClasses.EdmScalarPropertyAttribute";
+        public const string ScaffoldColumnAttributeTypeName = "System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute";
     }
 }

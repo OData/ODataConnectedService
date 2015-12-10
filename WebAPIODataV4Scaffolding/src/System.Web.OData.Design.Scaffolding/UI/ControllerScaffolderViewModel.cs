@@ -494,7 +494,12 @@ namespace System.Web.OData.Design.Scaffolding.UI
 
         public virtual void SaveDialogSettings(IProjectSettings settings)
         {
-            settings[SavedSettingsKeys.ControllerDialogWidthKey] = DialogWidth.ToString();
+            if (settings == null)
+            {
+                throw new ArgumentNullException("settings");
+            }
+
+            settings[SavedSettingsKeys.ControllerDialogWidthKey] = DialogWidth.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

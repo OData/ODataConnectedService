@@ -3,9 +3,9 @@
 
 namespace System.Web.OData.Design.Scaffolding.ReadMe
 {
-    internal class ODataReadMe
+    internal static class ODataReadMe
     {
-        internal static string CreateReadMeText()
+        public static string CreateReadMeText()
         {
             return Environment.NewLine + Resources.ScaffoldODataReadMeText + Environment.NewLine + Environment.NewLine;
         }

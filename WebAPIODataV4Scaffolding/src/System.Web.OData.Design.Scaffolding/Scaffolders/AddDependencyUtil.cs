@@ -15,33 +15,6 @@ namespace System.Web.OData.Design.Scaffolding
         private const string OptimizationNamespace = "System.Web.Optimization";
 
         /// <summary>
-        /// This function verifies if a file by the name BundleConfig resides in the file system under the App_Start folder 
-        /// or if a class by the name BundleConfig is present in the default namespace.
-        /// </summary>
-        /// <param name="context">The <see cref="CodeGenerationContext"/> provided by the core scaffolder.</param>
-        /// <returns><see langword="true" /> if a file by the name BundleConfig is present under the App_Start folder or 
-        /// if a class by the name BundleConfig is present in the default namespace; otherwise, <see langword="false" />.</returns>
-        public static bool IsBundleConfigPresent(CodeGenerationContext context)
-        {
-            if (context == null)
-            {
-                throw new ArgumentNullException("context");
-            }
-
-            Project activeProject = context.ActiveProject;
-            string defaultNamespace = activeProject.GetDefaultNamespace();
-            ICodeTypeService codeTypeService = context.ServiceProvider.GetService<ICodeTypeService>();
-            CodeType matchingConfigFile = codeTypeService.GetCodeType(activeProject, defaultNamespace + "." + CommonFilenames.BundleConfig);
-            if (matchingConfigFile != null)
-            {
-                return true;
-            }
-
-            string configFileNameWithExtension = CommonFilenames.BundleConfig + "." + activeProject.GetCodeLanguage().CodeFileExtension;
-            return File.Exists(Path.Combine(activeProject.GetFullPath(), CommonFolderNames.AppStart, configFileNameWithExtension));
-        }
-
-        /// <summary>
         /// This function is used to verify if the specified text is present in the specified file.
         /// </summary>
         /// <param name="fileFullPath">The full path of the file including the filename and extension.</param>

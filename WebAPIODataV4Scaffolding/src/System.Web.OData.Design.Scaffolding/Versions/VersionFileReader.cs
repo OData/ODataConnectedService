@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace System.Web.OData.Design.Scaffolding.Versions
 {
-    internal class VersionFileReader
+    internal static class VersionFileReader
     {
         private const string IdAttribute = "Id";
         private const string VersionAttribute = "Version";

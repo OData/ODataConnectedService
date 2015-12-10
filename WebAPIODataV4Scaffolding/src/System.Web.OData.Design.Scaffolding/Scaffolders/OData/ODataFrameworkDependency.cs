@@ -49,6 +49,11 @@ namespace System.Web.OData.Design.Scaffolding
 
         public bool IsDependencyInstalled(CodeGenerationContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+
             bool isODataAssemblyReferenced = ProjectReferences.IsAssemblyReferenced(context.ActiveProject, AssemblyVersions.ODataAssemblyName);
 
             // It is possible that this function could be called multiple times to check the status of dependency installation.

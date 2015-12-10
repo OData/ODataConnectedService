@@ -5,16 +5,16 @@ namespace System.Web.OData.Design.Scaffolding
 {
     internal static class NuGetPackages
     {
-        public static readonly string WebApiNuGetPackageId = "Microsoft.AspNet.WebApi";
-        public static readonly string WebApiClientNuGetPackageId = "Microsoft.AspNet.WebApi.Client";
-        public static readonly string WebApiCoreNuGetPackageId = "Microsoft.AspNet.WebApi.Core";
-        public static readonly string WebApiWebHostNuGetPackageId = "Microsoft.AspNet.WebApi.WebHost";
-        public static readonly string NewtonsoftJsonNuGetPackageId = "Newtonsoft.Json";
+        public const string WebApiNuGetPackageId = "Microsoft.AspNet.WebApi";
+        public const string WebApiClientNuGetPackageId = "Microsoft.AspNet.WebApi.Client";
+        public const string WebApiCoreNuGetPackageId = "Microsoft.AspNet.WebApi.Core";
+        public const string WebApiWebHostNuGetPackageId = "Microsoft.AspNet.WebApi.WebHost";
+        public const string NewtonsoftJsonNuGetPackageId = "Newtonsoft.Json";
 
-        public static readonly string ODataNuGetPackageId = "Microsoft.AspNet.OData";
-        public static readonly string EdmNuGetPackageId = "Microsoft.OData.Edm";
-        public static readonly string MicrosoftODataNuGetPackageId = "Microsoft.OData.Core";
-        public static readonly string SpatialNuGetPackageId = "Microsoft.Spatial";
+        public const string ODataNuGetPackageId = "Microsoft.AspNet.OData";
+        public const string EdmNuGetPackageId = "Microsoft.OData.Edm";
+        public const string MicrosoftODataNuGetPackageId = "Microsoft.OData.Core";
+        public const string SpatialNuGetPackageId = "Microsoft.Spatial";
 
         public static readonly string[] WebApiPackageSet = new string[]
         {

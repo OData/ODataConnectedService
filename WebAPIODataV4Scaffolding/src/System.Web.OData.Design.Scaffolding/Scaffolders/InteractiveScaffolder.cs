@@ -45,6 +45,11 @@ namespace System.Web.OData.Design.Scaffolding
         protected InteractiveScaffolder(CodeGenerationContext context, CodeGeneratorInformation information)
             : base(context, information)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+
             Framework = context.Items.GetProperty<TFramework>(typeof(TFramework));
             Repository = context.Items.GetProperty<INuGetRepository>(typeof(INuGetRepository));
             VisualStudioIntegration = context.Items.GetProperty<IVisualStudioIntegration>(typeof(IVisualStudioIntegration));

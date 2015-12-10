@@ -2,6 +2,7 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System.Diagnostics.Contracts;
+using System.Globalization;
 using System.Web.OData.Design.Scaffolding.VisualStudio;
 
 namespace System.Web.OData.Design.Scaffolding.UI
@@ -53,7 +54,12 @@ namespace System.Web.OData.Design.Scaffolding.UI
 
         public virtual void SaveDialogSettings(IProjectSettings settings)
         {
-            settings[SavedSettingsKeys.DbContextDialogWidthKey] = DialogWidth.ToString();
+            if (settings == null)
+            {
+                throw new ArgumentNullException("settings");
+            }
+
+            settings[SavedSettingsKeys.DbContextDialogWidthKey] = DialogWidth.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

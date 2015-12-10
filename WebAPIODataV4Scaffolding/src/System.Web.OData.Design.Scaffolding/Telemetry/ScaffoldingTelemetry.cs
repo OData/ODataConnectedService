@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
+using System.Globalization;
 using Microsoft.ApplicationInsights;
 using Microsoft.Win32;
 
@@ -59,7 +60,7 @@ namespace System.Web.OData.Design.Scaffolding.Telemetry
                     Object o = key.GetValue("Optin");
                     if (o != null)
                     {
-                        bool result = Convert.ToBoolean(o);
+                        bool result = Convert.ToBoolean(o, CultureInfo.InvariantCulture);
                         return result;
                     }
                 }

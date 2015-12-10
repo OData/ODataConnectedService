@@ -16,8 +16,13 @@ namespace System.Web.OData.Design.Scaffolding.UI
     {
         private double _dialogWidth;
 
-        public ViewModel(ScaffolderModel model)
+        protected ViewModel(ScaffolderModel model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException("model");
+            }
+
             Context = model.Context;
             LoadDialogSettings();
             if (DialogWidth == default(double) || DialogWidth > SystemParameters.PrimaryScreenWidth)
