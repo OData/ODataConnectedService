@@ -13,6 +13,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <NuGetFolder>.nuget</NuGetFolder>
     <NuGetExe>$(NuGetFolder)\NuGet.exe</NuGetExe>
+    <IntermediateOutputPath>$(MSBuildThisFileDirectory)obj\$(Configuration)</IntermediateOutputPath>
     <OutputPath>$(MSBuildThisFileDirectory)bin\$(Configuration)</OutputPath>
     <RunCodeAnalysis Condition=" '$(RunCodeAnalysis)' == ''">true</RunCodeAnalysis>
     <UseDTTP Condition=" '$(UseDTTP)' == ''">false</UseDTTP>
@@ -20,6 +21,12 @@
     <SkipStrongNamesXml>$(MSBuildThisFileDirectory)tools\SkipStrongNames.xml</SkipStrongNamesXml>
     <AdditionalRestoreProps></AdditionalRestoreProps>
     <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BinScopeOutDir Condition="'$(BinScopeOutDir)' == ''">$(OutputPath)\BinScope</BinScopeOutDir>
+    <BinScopeTargetDir Condition="'$(BinScopeTarget)' == ''">$(IntermediateOutputPath)\BinScope</BinScopeTargetDir>
+    <BinScopeLogFile Condition="'$(BinScopeLogFile)' == ''">$(BinScopeOutDir)\BinScopeResults.xml</BinScopeLogFile>
   </PropertyGroup>
 
   <Target Name="DisableBuildVsix">
@@ -77,8 +84,17 @@
 
   <Target Name="ProjectCopRun">
   </Target>
-  <Target Name="StyleCopRun">
+
+  <Target Name="BinScope">
+    <ItemGroup>
+      <BinScopeTargetFiles Include="$(OutputPath)Microsoft.OData.ConnectedService.dll;" />
+    </ItemGroup>
+    <RemoveDir Directories="$(BinScopeTargetDir)" />
+    <MakeDir Directories="$(BinScopeTargetDir)" />
+    <Copy SourceFiles="$(OutputPath)\Microsoft.OData.ConnectedService.dll" DestinationFolder="$(BinScopeTargetDir)" SkipUnchangedFiles="true" />
+    <Exec Command="&quot;$(BinScopeEXE)&quot; /target &quot;$(BinScopeTargetDir)&quot; /sympath &quot;$(OutputPath)&quot; /logfile &quot;$(BinScopeLogFile)&quot;" />
   </Target>
+
   <Target Name="Clean">
     <MSBuild
           Projects="@(SolutionsToBuild)"

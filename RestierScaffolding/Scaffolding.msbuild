@@ -16,7 +16,14 @@
     <RunCodeAnalysis Condition=" '$(RunCodeAnalysis)' == '' ">true</RunCodeAnalysis>
     <SkipStrongNamesExe>$(MSBuildThisFileDirectory)packages\Microsoft.Web.SkipStrongNames.1.0.0\tools\SkipStrongNames.exe</SkipStrongNamesExe>
     <SkipStrongNamesXml>$(MSBuildThisFileDirectory)tools\SkipStrongNames.xml</SkipStrongNamesXml>
-    <OutputPath>$(MSBuildThisFileDirectory)bin\$(Configuration)</OutputPath>    
+    <IntermediateOutputPath>$(MSBuildThisFileDirectory)obj\$(Configuration)</IntermediateOutputPath>
+    <OutputPath>$(MSBuildThisFileDirectory)bin\$(Configuration)</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BinScopeOutDir Condition="'$(BinScopeOutDir)' == ''">$(OutputPath)\BinScope</BinScopeOutDir>
+    <BinScopeTargetDir Condition="'$(BinScopeTarget)' == ''">$(IntermediateOutputPath)\BinScope</BinScopeTargetDir>
+    <BinScopeLogFile Condition="'$(BinScopeLogFile)' == ''">$(BinScopeOutDir)\BinScopeResults.xml</BinScopeLogFile>
   </PropertyGroup>
 
   <Target Name="RestoreSkipStrongNames" DependsOnTargets="DownloadNuGet">
@@ -73,8 +80,17 @@
 
   <Target Name="ProjectCopRun">
   </Target>
-  <Target Name="StyleCopRun">
+
+  <Target Name="BinScope">
+    <ItemGroup>
+      <BinScopeTargetFiles Include="$(OutputPath)System.Web.OData.Design.Scaffolding.dll;" />
+    </ItemGroup>
+    <RemoveDir Directories="$(BinScopeTargetDir)" />
+    <MakeDir Directories="$(BinScopeTargetDir)" />
+    <Copy SourceFiles="$(OutputPath)\Microsoft.Restier.Scaffolding.dll" DestinationFolder="$(BinScopeTargetDir)" SkipUnchangedFiles="true" />
+    <Exec Command="&quot;$(BinScopeEXE)&quot; /target &quot;$(BinScopeTargetDir)&quot; /sympath &quot;$(OutputPath)&quot; /logfile &quot;$(BinScopeLogFile)&quot;" />
   </Target>
+
   <Target Name="Clean">
     <MSBuild
           Projects="@(SolutionsToBuild)"
