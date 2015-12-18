@@ -26,6 +26,11 @@
     <BinScopeLogFile Condition="'$(BinScopeLogFile)' == ''">$(BinScopeOutDir)\BinScopeResults.xml</BinScopeLogFile>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PoliCheckOutput>$(OutputPath)\PoliCheck\Output.xml</PoliCheckOutput>
+    <PoliCheckProperties>/f:"$(MSBuildThisFileDirectory)\src" /t:"9" /o:"$(PoliCheckOutput)" /ge:0 /pe:0 /fc:1 /xs:1 /sev:"1|2|3|4"</PoliCheckProperties>
+  </PropertyGroup>
+
   <Target Name="RestoreSkipStrongNames" DependsOnTargets="DownloadNuGet">
     <Exec Command='"$(NuGetExe)" restore .nuget\packages.config -PackagesDirectory packages -NonInteractive ^
           -Verbosity detailed -ConfigFile .nuget\NuGet.Config' />
@@ -91,6 +96,15 @@
     <Exec Command="&quot;$(BinScopeEXE)&quot; /target &quot;$(BinScopeTargetDir)&quot; /sympath &quot;$(OutputPath)&quot; /logfile &quot;$(BinScopeLogFile)&quot;" />
   </Target>
 
+  <Target Name ="PoliCheck">
+    <ItemGroup>
+      <ObjFiles Include="$(MSBuildThisFileDirectory)\src\**\obj\**\*.*;"/>
+    </ItemGroup>
+    <Message Importance="High" Text="Delete Noise Files Before PoliCheck" />
+    <Delete Files="@(ObjFiles)"/>
+    <Exec Command='"$(PoliCheckExe)" $(PoliCheckProperties)'/>
+  </Target>
+
   <Target Name="Clean">
     <MSBuild
           Projects="@(SolutionsToBuild)"
@@ -100,6 +114,7 @@
           Properties="Configuration=$(Configuration);VisualStudioVersion=$(VisualStudioVersion)" />
     <RemoveDir Directories="bin\$(Configuration)" />
   </Target>
+
   <Target Name="Rebuild" DependsOnTargets="RestorePackages">
     <MSBuild
           Projects="@(SolutionsToBuild)"
