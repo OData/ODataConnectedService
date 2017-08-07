@@ -1,4 +1,10 @@
-# lab
+ lab
+ ============= 
+ Build  | Status 
+--------|--------- 
+Rolling | <img src="https://identitydivision.visualstudio.com/_apis/public/build/definitions/2cfe7ec3-b94f-4ab9-85ab-2ebff928f3fd/274/badge"/>
+
+ ## Introduction 
 This repository is for exploring new ideas and developing early prototypes of various OData stacks.
 
 ### OData Connected Service Provider
