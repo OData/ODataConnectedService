@@ -38,7 +38,7 @@ namespace Microsoft.Restier.Scaffolding
         }
 
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists", Justification = "This is an internal API.")]
-        protected internal void AddScaffoldDependencies(List<NuGetPackage> packages)
+        protected internal override void AddScaffoldDependencies(List<NuGetPackage> packages)
         {
             if (packages == null)
             {
