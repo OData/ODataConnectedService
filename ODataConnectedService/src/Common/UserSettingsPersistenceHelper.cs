@@ -84,7 +84,12 @@ namespace Microsoft.OData.ConnectedService.Common
                             try
                             {
                                 stream = file.OpenFile(fileName, FileMode.Open);
-                                using (XmlReader reader = XmlReader.Create(stream))
+                                XmlReaderSettings settings = new XmlReaderSettings()
+                                {
+                                    XmlResolver = null
+                                };
+
+                                using (XmlReader reader = XmlReader.Create(stream, settings))
                                 {
                                     stream = null;
 

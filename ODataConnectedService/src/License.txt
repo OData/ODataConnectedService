@@ -1,4 +1,4 @@
-OData Connected Service ver. 0.2.0
+OData Connected Service ver. 0.2.1
 
 Copyright (c) Microsoft Corporation
 

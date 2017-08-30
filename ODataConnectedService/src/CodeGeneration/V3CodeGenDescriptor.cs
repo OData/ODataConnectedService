@@ -5,6 +5,7 @@ using System;
 using System.Data.Services.Design;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
@@ -60,12 +61,17 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             generator.UseDataServiceCollection = this.ServiceConfiguration.UseDataServiceCollection;
             generator.Version = DataServiceCodeVersion.V3;
 
+            // Set up XML secure resolver
+            XmlUrlResolver xmlUrlResolver = new XmlUrlResolver()
+            {
+                Credentials = System.Net.CredentialCache.DefaultNetworkCredentials
+            };
+
+            PermissionSet permissionSet = new PermissionSet(System.Security.Permissions.PermissionState.Unrestricted);
+
             XmlReaderSettings settings = new XmlReaderSettings()
             {
-                XmlResolver = new XmlUrlResolver()
-                {
-                    Credentials = System.Net.CredentialCache.DefaultNetworkCredentials
-                }
+                XmlResolver = new XmlSecureResolver(xmlUrlResolver, permissionSet)
             };
 
             using (XmlReader reader = XmlReader.Create(this.MetadataUri, settings))

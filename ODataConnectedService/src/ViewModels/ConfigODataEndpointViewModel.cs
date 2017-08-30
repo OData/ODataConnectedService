@@ -5,6 +5,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Security;
 using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.OData.ConnectedService.Common;
@@ -76,12 +77,17 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                 }
             }
 
+            // Set up XML secure resolver
+            XmlUrlResolver xmlUrlResolver = new XmlUrlResolver()
+            {
+                Credentials = CredentialCache.DefaultNetworkCredentials
+            };
+
+            PermissionSet permissionSet = new PermissionSet(System.Security.Permissions.PermissionState.Unrestricted);
+
             XmlReaderSettings readerSettings = new XmlReaderSettings()
             {
-                XmlResolver = new XmlUrlResolver()
-                {
-                    Credentials = CredentialCache.DefaultNetworkCredentials
-                }
+                XmlResolver = new XmlSecureResolver(xmlUrlResolver, permissionSet)
             };
 
             string workFile = Path.GetTempFileName();

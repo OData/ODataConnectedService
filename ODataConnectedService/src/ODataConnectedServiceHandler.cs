@@ -2,7 +2,7 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using EnvDTE;
@@ -58,7 +58,7 @@ namespace Microsoft.OData.ConnectedService
             }
             else
             {
-                throw new Exception(string.Format("Not supported Edmx Version {0}", edmxVersion.ToString()));
+                throw new Exception(string.Format(CultureInfo.InvariantCulture, "Not supported Edmx Version {0}", edmxVersion.ToString()));
             }
 
             await codeGenDescriptor.AddNugetPackages();
