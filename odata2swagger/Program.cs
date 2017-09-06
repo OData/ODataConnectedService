@@ -102,7 +102,7 @@ namespace OData2Swagger
         }
 
         public static JArray Parameter(this JArray parameters, string name, string kind, string description,
-            string type, string format, bool? required)
+            string type, string format = null, bool? required = null)
         {
             parameters.Add(new JObject()
             {
