@@ -13,7 +13,7 @@ namespace Microsoft.OData.ConnectedService.Common
         /// <summary>
         /// Try to get the location of the installed WCF Data Service.
         /// </summary>
-        /// <returns>Returns the location of the installed WCF Data Service if it exists, else returns null.</returns>
+        /// <returns>Returns the location of the installed WCF Data Service if it exists, else returns empty string.</returns>
         public static string GetWCFDSInstallLocation()
         {
             string dataFxRegistryPath = 8 == IntPtr.Size
@@ -31,7 +31,7 @@ namespace Microsoft.OData.ConnectedService.Common
                 }
             }
 
-            return null;
+            return String.Empty;
         }
     }
 }
