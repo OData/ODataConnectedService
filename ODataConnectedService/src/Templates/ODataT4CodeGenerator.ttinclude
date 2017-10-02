@@ -14,8 +14,10 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <#@ template debug="true" hostSpecific="true" visibility="internal" linePragmas="false"#>
 <#@ output extension=".cs" #>
 <#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Runtime.dll" #>
 <#@ Assembly Name="System.Xml.dll" #>
 <#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Xml.ReaderWriter.dll" #>
 <#@ Assembly Name="System.Windows.Forms.dll" #>
 <#@ Assembly Name="Microsoft.OData.Edm.dll" #>
 <#@ Import Namespace="System" #>
@@ -2345,14 +2347,14 @@ public abstract class TemplateBase
     /// </summary>
     public void Write(string format, params object[] args)
     {
-        this.Write(string.Format(CultureInfo.InvariantCulture, global::System.Globalization.CultureInfo.CurrentCulture, format, args));
+        this.Write(string.Format(CultureInfo.InvariantCulture, format, args));
     }
     /// <summary>
     /// Write formatted text directly into the generated output
     /// </summary>
     public void WriteLine(string format, params object[] args)
     {
-        this.WriteLine(string.Format(CultureInfo.InvariantCulture, global::System.Globalization.CultureInfo.CurrentCulture, format, args));
+        this.WriteLine(string.Format(CultureInfo.InvariantCulture, format, args));
     }
     /// <summary>
     /// Raise an error
