@@ -11,30 +11,24 @@ This repository is for exploring new ideas and developing early prototypes of va
 
 ### OData Connected Service Provider
 
-* Source
-
-  https://github.com/OData/lab/tree/master/ODataConnectedService
-
-* Visual Studio Extension
-
-  https://visualstudiogallery.msdn.microsoft.com/b343d0eb-6493-44c2-b558-13a0408d013f
+* [Source](https://github.com/OData/lab/tree/master/ODataConnectedService)
+* [Visual Studio Extension](https://visualstudiogallery.msdn.microsoft.com/b343d0eb-6493-44c2-b558-13a0408d013f)
+* FAQ
   
+  **Question**: In Visual Studio 2017, upon configuring the service endpoint in the OData Connected Services extension and clicking "Finish", I get an error message that says "Value cannot be null.\r\nParameter name: path1".  
+  **Workaround**: Download the [Microsoft WCF ToolKit](https://download.microsoft.com/download/1/C/A/1CAA41C7-88B9-42D6-9E11-3C655656DAB1/WcfDataServices.exe) and install it. Then go to the registry and find the following key: `[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft WCF Data Services]`. Create a duplicate of "VS 2010 Tooling" (if this doesn't exist, use "5.6" instead) named "VS 2014 Tooling". Then try again. (Special thanks to [mohsenno1](https://github.com/mohsenno1) for pointing this out.)
+  
+  **Question**: In Visual Studio 2017, upon configuring the service endpoint in the OData Connected Services extension and clicking "Finish", I get an error message that says "Cannot access".  
+  **Workaround**: Most reported issues for this error are related to authentication-based endpoints. This extension does not currently support authentication. To work around, download the metadata as a text file from the endpoint and then point the OData Connected Services URI to the downloaded file.
+
 ### OData v4 Web API Scaffolding
 
-* Source
-
-  https://github.com/OData/lab/tree/master/WebAPIODataV4Scaffolding
-  
-* Tutorial
-
-  http://odata.github.io/WebApi/#11-01-OData-V4-Web-API-Scaffolding
-
-* Visual Studio Extension
-
-  https://visualstudiogallery.msdn.microsoft.com/db6b8857-06cc-4f40-95dd-a379f0494f45
+* [Source](https://github.com/OData/lab/tree/master/WebAPIODataV4Scaffolding)
+* [Tutorial](http://odata.github.io/WebApi/#11-01-OData-V4-Web-API-Scaffolding)
+* [Visual Studio Extension](https://visualstudiogallery.msdn.microsoft.com/db6b8857-06cc-4f40-95dd-a379f0494f45)
 
 ### RESTier Scaffolding
 
   The scaffolder simplifies the process of building an OData v4 service with EF. 
 * [Source](https://github.com/OData/lab/tree/master/RestierScaffolding)
-* [vsix] (https://visualstudiogallery.msdn.microsoft.com/6b18599d-34d5-4123-a586-cdf411728d23) in Visual Studio Gallery
+* [Visual Studio Extension](https://visualstudiogallery.msdn.microsoft.com/6b18599d-34d5-4123-a586-cdf411728d23)
