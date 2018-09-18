@@ -8,9 +8,10 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Microsoft.OData2OpenApi.ConsoleApp</RootNamespace>
     <AssemblyName>OData2OpenApi</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -39,7 +40,7 @@
       <HintPath>..\packages\Microsoft.OpenApi.1.1.0\lib\net46\Microsoft.OpenApi.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.OpenApi.OData.Reader, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.OpenApi.OData.1.0.0-beta5\lib\net46\Microsoft.OpenApi.OData.Reader.dll</HintPath>
+      <HintPath>..\packages\Microsoft.OpenApi.OData.1.0.0-Nightly201809182239\lib\net461\Microsoft.OpenApi.OData.Reader.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,19 +52,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstracts\ICommandManager.cs" />
+    <Compile Include="Abstracts\ICommandOptionManager.cs" />
+    <Compile Include="ConvertSettingProvider.cs" />
     <Compile Include="CommandLineParser.cs" />
     <Compile Include="CommandOptionManager.cs" />
-    <Compile Include="CommandKeyAttribute.cs" />
-    <Compile Include="Generator\IEdmModelProvider.cs" />
-    <Compile Include="Generator\IConvertSettingProvider.cs" />
-    <Compile Include="Log\Logger.cs" />
+    <Compile Include="CommandOptionAttribute.cs" />
+    <Compile Include="Abstracts\IEdmModelProvider.cs" />
+    <Compile Include="Abstracts\IConvertSettingProvider.cs" />
+    <Compile Include="EdmModelProvider.cs" />
     <Compile Include="Configuration.cs" />
-    <Compile Include="Generator\FileOpenApiGenerator.cs" />
-    <Compile Include="Generator\UrlOpenApiGenerator.cs" />
-    <Compile Include="Generator\OpenApiGenerator.cs" />
-    <Compile Include="Log\ODataOpenApiException.cs" />
-    <Compile Include="Log\LogLevel.cs" />
+    <Compile Include="OpenApiGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

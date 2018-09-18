@@ -13,41 +13,23 @@ namespace Microsoft.OData2OpenApi.ConsoleApp
     /// <summary>
     /// Open Api generator.
     /// </summary>
-    internal class OpenApiGenerator
+    internal static class OpenApiGenerator
     {
-        /// <summary>
-        /// Gets the configuration.
-        /// </summary>
-        public Configuration Config { get; }
-
-        public IEdmModelProvider ModelProvider { get; }
-
-        public IConvertSettingsProvider SettingsProvider { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OpenApiGenerator"/> class.
-        /// </summary>
-        /// <param name="config">The configuration.</param>
-        public OpenApiGenerator(Configuration config)
-        {
-            Config = config;
-            ModelProvider = new EdmModelProvider(config.InputCsdl, config.IsLocalFile);
-            SettingsProvider = new ConvertSettingsProvider(config);
-        }
-
         /// <summary>
         /// Generate the Open Api.
         /// </summary>
-        public bool Run()
+        public static bool Run(Configuration config)
         {
-            IEdmModel edmModel = ModelProvider.GetEdmModel();
+            IEdmModelProvider modelProvider = new EdmModelProvider(config.InputCsdl, config.IsLocalFile);
+            IEdmModel edmModel = modelProvider.GetEdmModel();
 
-            OpenApiConvertSettings settings = SettingsProvider.GetConvertSettings();
+            IConvertSettingsProvider settingsProvider = new ConvertSettingsProvider(config);
+            OpenApiConvertSettings settings = settingsProvider.GetConvertSettings();
 
-            using (FileStream fs = File.Create(Config.OutputFileName))
+            using (FileStream fs = File.Create(config.OutputFileName))
             {
                 OpenApiDocument document = edmModel.ConvertToOpenApi(settings);
-                document.Serialize(fs, OpenApi.OpenApiSpecVersion.OpenApi3_0, Config.Format);
+                document.Serialize(fs, OpenApi.OpenApiSpecVersion.OpenApi3_0, config.Format);
                 fs.Flush();
             }
 

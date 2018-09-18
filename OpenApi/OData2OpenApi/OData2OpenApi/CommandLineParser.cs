@@ -10,21 +10,21 @@ namespace Microsoft.OData2OpenApi.ConsoleApp
     /// <summary>
     /// Command line arguments processer.
     /// </summary>
-    internal class CommandLineParser
+    internal static class CommandLineParser
     {
-        private ICommandOptionManager _commandManager = new CommandOptionManager<Configuration>();
+        private static ICommandOptionManager _commandManager = new CommandOptionManager<Configuration>();
 
         /// <summary>
         /// Gets the command options.
         /// </summary>
-        public IEnumerable<CommandOptionAttribute> Options => _commandManager.ListOptions();
+        public static IEnumerable<CommandOptionAttribute> Options => _commandManager.ListOptions();
 
         /// <summary>
         /// Process the arguments.
         /// </summary>
         /// <param name="args">The input arguments.</param>
         /// <returns>The configuration instance.</returns>
-        public Configuration Parse(string [] args)
+        public static Configuration Parse(string [] args)
         {
             Configuration config = new Configuration();
 
@@ -54,14 +54,20 @@ namespace Microsoft.OData2OpenApi.ConsoleApp
                     throw new Exception($"Unknown input argument {pieces[0]}.");
                 }
 
-                /* 
-                if (propertyInfo.GetValue(config) != null)
-                {
-                    throw new ODataOpenApiException($"Multiple '{pieces[0]}' are not allowed.\n");
-                }*/
-
                 // The last option will win.
-                propertyInfo.SetValue(config, pieces[1]);
+                if (propertyInfo.PropertyType == typeof(bool))
+                {
+                    if (!Boolean.TryParse(pieces[1], out bool boolValue))
+                    {
+                        throw new Exception($"Invalid input value '{pieces[1]}' for argument '{pieces[0]}'.");
+                    }
+
+                    propertyInfo.SetValue(config, boolValue);
+                }
+                else
+                {
+                    propertyInfo.SetValue(config, pieces[1]);
+                }
             }
 
             return config;

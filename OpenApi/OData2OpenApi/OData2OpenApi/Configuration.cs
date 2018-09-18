@@ -12,6 +12,7 @@ namespace Microsoft.OData2OpenApi.ConsoleApp
     /// </summary>
     public class Configuration
     {
+#region Commands
         /// <summary>
         /// Gets/sets the input CSDL.
         /// </summary>
@@ -28,25 +29,50 @@ namespace Microsoft.OData2OpenApi.ConsoleApp
         /// Gets/set the option for Edm operation path.
         /// </summary>
         [CommandOption("--OperationPath=[true/false] : Enable Edm operation path or not.")]
-        public string OperationPath { get; set; }
+        public bool OperationPath { get; set; } = true;
 
         /// <summary>
         /// Gets/set the option for Edm operation import path.
         /// </summary>
         [CommandOption("--OperationImportPath=[true/false] : Enable Edm operation import path or not.")]
-        public string OperationImportPath { get; set; }
+        public bool OperationImportPath { get; set; } = true;
 
         /// <summary>
         /// Gets/set the option for Edm operation import path.
         /// </summary>
         [CommandOption("--NavigationPath=[true/false] : Enable Edm navigation property path or not.")]
-        public string NavigationPropertyPath { get; set; }
+        public bool NavigationPropertyPath { get; set; } = true;
 
         /// <summary>
         /// Gets/set the option for Validate Edm model.
         /// </summary>
         [CommandOption("--Validate=[true/false] : Enable validate Edm model or not.")]
-        public string ValidateModel { get; set; }
+        public bool ValidateModel { get; set; }
+
+        /// <summary>
+        /// Gets/set the option for qualified function/action call.
+        /// </summary>
+        [CommandOption("--UnqualifiedCall=[true/false] : Enable unqualified function/action call or not.")]
+        public bool UnqualifiedCall { get; set; } = true;
+
+        /// <summary>
+        /// Gets/set the option for qualified function/action call.
+        /// </summary>
+        [CommandOption("--KeyAsSegment=[true/false] : Enable key as segment or not.")]
+        public bool KeyAsSegment { get; set; }
+
+        /// <summary>
+        /// Gets/set the option for qualified function/action call.
+        /// </summary>
+        [CommandOption("--OperationId=[true/false] : Enable operation ID for Open API operation.")]
+        public bool OperationId { get; set; } = true;
+
+        /// <summary>
+        /// Gets/set the option for qualified function/action call.
+        /// </summary>
+        [CommandOption("--PrefixTypeBeforeKey=[true/false] : Enable prefix entity type name before single key.")]
+        public bool PrefixTypeBeforeKey { get; set; } = true;
+#endregion
 
         /// <summary>
         /// Gets the boolean value indicating whether the input is local file or not.

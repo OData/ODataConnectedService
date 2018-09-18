@@ -19,7 +19,13 @@ namespace Microsoft.OData2OpenApi.ConsoleApp
         {
             var settings = new OpenApiConvertSettings();
 
-
+            settings.EnableKeyAsSegment = Config.KeyAsSegment;
+            settings.EnableNavigationPropertyPath = Config.NavigationPropertyPath;
+            settings.EnableOperationPath = Config.OperationPath;
+            settings.EnableOperationId = Config.OperationId;
+            settings.PrefixEntityTypeNameBeforeKey = Config.PrefixTypeBeforeKey;
+            settings.EnableOperationImportPath = Config.OperationImportPath;
+            settings.EnableUnqualifiedCall = Config.UnqualifiedCall;
 
             return settings;
         }

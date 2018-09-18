@@ -11,9 +11,11 @@ namespace Microsoft.OData2OpenApi.ConsoleApp
     {
         static int Main(string[] args)
         {
-            args = new[] { @"--csdl1=adf", @"--csdl=E:\work\OneApiDesign\test\TripService.OData.xml", @"--output=E:\work\OneApiDesign\test1\Trip.json" };
-
-            PrintCopyright();
+            // just for test
+            if (args.Length == 0)
+            {
+                // args = new[] { @"--csdl=E:\github\microsoft\OpenAPI.NET.OData\docs\csdl\graph1.0.xml", @"--output=E:\work\OpenApi\output\Graph1.0.json" };
+            }
 
             Configuration config = ParseArguments(args);
             if (config == null)
@@ -21,9 +23,9 @@ namespace Microsoft.OData2OpenApi.ConsoleApp
                 return 1;
             }
 
-            if (new OpenApiGenerator(config).Run())
+            if (OpenApiGenerator.Run(config))
             {
-                Console.WriteLine("Successed!");
+                Console.WriteLine("Passed!\nExit Code: 0");
                 return 0;
             }
             else
@@ -35,24 +37,24 @@ namespace Microsoft.OData2OpenApi.ConsoleApp
 
         private static Configuration ParseArguments(string[] args)
         {
-            CommandLineParser parser = new CommandLineParser();
+            PrintCopyright();
 
             if (args.Length == 0)
             {
-                PrintUsage(parser.Options);
+                PrintUsage(CommandLineParser.Options);
                 Environment.Exit(0);
             }
 
             Configuration config = null;
             try
             {
-                config = parser.Parse(args);
+                config = CommandLineParser.Parse(args);
             }
             catch (Exception ex)
             {
                 WriteException(ex);
-                PrintUsage(parser.Options);
-                Environment.Exit(1); 
+                PrintUsage(CommandLineParser.Options);
+                Environment.Exit(1);
             }
 
             try

@@ -34,7 +34,7 @@ namespace Microsoft.OData2OpenApi.ConsoleApp
             }
 
             Raw = command;
-            Key = pieces[0];
+            Key = pieces[0].ToLower();
             Description = pieces[1];
         }
 
