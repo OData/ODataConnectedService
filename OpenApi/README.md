@@ -33,38 +33,39 @@ Options is a pair liking `--key=value`. Belows are the options:
 
 Input the OData CSDL, file or Url. It's required.
 
-### --output=[value]
+#### --output=[value]
 
 Set the output file, with extension as 'yaml' or 'json'. It's required.
 
-### --OperationPath=[true/false]
+#### --OperationPath=[true/false]
 
 Enable Edm operation path or not.
 
-### --OperationImportPath=[true/false]
+#### --OperationImportPath=[true/false]
 
 Enable Edm operation import path or not.
 
-### --NavigationPath=[true/false]
+#### --NavigationPath=[true/false]
 
 Enable Edm navigation property path or not.
 
-### --UnqualifiedCall=[true/false]
+#### --UnqualifiedCall=[true/false]
 
 Enable unqualified function/action call or not.
 
-### --KeyAsSegment=[true/false]
+#### --KeyAsSegment=[true/false]
 
 Enable key as segment or not.
 
-### --OperationId=[true/false]
+#### --OperationId=[true/false]
 
 Enable operation ID for Open API operation.
 
-### --PrefixTypeBeforeKey=[true/false]
+#### --PrefixTypeBeforeKey=[true/false]
 
 Enable prefix entity type name before single key.
-	
+
+---
 **Be noted**, all boolean options are optional, the default value are true.
 	
 ## Examples
