@@ -40,7 +40,7 @@
       <HintPath>..\packages\Microsoft.OpenApi.1.1.0\lib\net46\Microsoft.OpenApi.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.OpenApi.OData.Reader, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.OpenApi.OData.1.0.0-Nightly201809182239\lib\net461\Microsoft.OpenApi.OData.Reader.dll</HintPath>
+      <HintPath>..\packages\Microsoft.OpenApi.OData.1.0.0-beta6\lib\net461\Microsoft.OpenApi.OData.Reader.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
