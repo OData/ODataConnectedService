@@ -47,7 +47,8 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             UseDataServiceCollection = this.UseDataServiceCollection,
             TargetLanguage = this.TargetLanguage,
             EnableNamingAlias = this.EnableNamingAlias,
-            IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes
+            IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
+            MakeTypesInternal = this.MakeTypesInternal
         };
     }
     else
@@ -63,7 +64,8 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             UseDataServiceCollection = this.UseDataServiceCollection,
             TargetLanguage = this.TargetLanguage,
             EnableNamingAlias = this.EnableNamingAlias,
-            IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes
+            IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
+            MakeTypesInternal = this.MakeTypesInternal
         };
     }
 
@@ -214,6 +216,16 @@ public bool IgnoreUnexpectedElementsAndAttributes
 }
 
 /// <summary>
+/// true to use the "internal" access modifier ("Friend" in VB) on generated types,
+/// otherwise "public" is used
+/// </summary>
+public bool MakeTypesInternal
+{
+    get;
+    set;
+}
+
+/// <summary>
 /// Generate code targeting a specific .Net Framework language.
 /// </summary>
 public enum LanguageOption
@@ -228,18 +240,18 @@ public enum LanguageOption
 /// <summary>
 /// Set the UseDataServiceCollection property with the given value.
 /// </summary>
-/// <param name="stringValue">The value to set.</param>
-public void ValidateAndSetUseDataServiceCollectionFromString(string stringValue)
+/// <param name="inputValue">The value to set.</param>
+public void ValidateAndSetUseDataServiceCollectionFromString(string inputValue)
 {
     bool boolValue;
-    if (!bool.TryParse(stringValue, out boolValue))
+    if (!bool.TryParse(inputValue, out boolValue))
     {
         // ********************************************************************************************************
         // To fix this error, if the current text transformation is run by the TextTemplatingFileGenerator
         // custom tool inside Visual Studio, update the .odata.config file in the project with a valid parameter
         // value then hit Ctrl-S to save the .tt file to refresh the code generation.
         // ********************************************************************************************************
-        throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" cannot be assigned to the UseDataServiceCollection parameter because it is not a valid boolean value.", stringValue));
+        throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" cannot be assigned to the UseDataServiceCollection parameter because it is not a valid boolean value.", inputValue));
     }
 
     this.UseDataServiceCollection = boolValue;
@@ -248,18 +260,18 @@ public void ValidateAndSetUseDataServiceCollectionFromString(string stringValue)
 /// <summary>
 /// Tries to set the TargetLanguage property with the given value.
 /// </summary>
-/// <param name="stringValue">The value to set.</param>
-public void ValidateAndSetTargetLanguageFromString(string stringValue)
+/// <param name="inputValue">The value to set.</param>
+public void ValidateAndSetTargetLanguageFromString(string inputValue)
 {
     LanguageOption option;
-    if (!Enum.TryParse(stringValue, true, out option))
+    if (!Enum.TryParse(inputValue, true, out option))
     {
         // ********************************************************************************************************
         // To fix this error, if the current text transformation is run by the TextTemplatingFileGenerator
         // custom tool inside Visual Studio, update the .odata.config file in the project with a valid parameter
         // value then hit Ctrl-S to save the .tt file to refresh the code generation.
         // ********************************************************************************************************
-        throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" cannot be assigned to the TargetLanguage parameter because it is not a valid LanguageOption. The supported LanguageOptions are \"CSharp\" and \"VB\".", stringValue));
+        throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" cannot be assigned to the TargetLanguage parameter because it is not a valid LanguageOption. The supported LanguageOptions are \"CSharp\" and \"VB\".", inputValue));
     }
 
     this.TargetLanguage = option;
@@ -268,18 +280,18 @@ public void ValidateAndSetTargetLanguageFromString(string stringValue)
 /// <summary>
 /// Set the EnableNamingAlias property with the given value.
 /// </summary>
-/// <param name="stringValue">The value to set.</param>
-public void ValidateAndSetEnableNamingAliasFromString(string stringValue)
+/// <param name="inputValue">The value to set.</param>
+public void ValidateAndSetEnableNamingAliasFromString(string inputValue)
 {
     bool boolValue;
-    if (!bool.TryParse(stringValue, out boolValue))
+    if (!bool.TryParse(inputValue, out boolValue))
     {
         // ********************************************************************************************************
         // To fix this error, if the current text transformation is run by the TextTemplatingFileGenerator
         // custom tool inside Visual Studio, update the .odata.config file in the project with a valid parameter
         // value then hit Ctrl-S to save the .tt file to refresh the code generation.
         // ********************************************************************************************************
-        throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" cannot be assigned to the EnableNamingAlias parameter because it is not a valid boolean value.", stringValue));
+        throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" cannot be assigned to the EnableNamingAlias parameter because it is not a valid boolean value.", inputValue));
     }
 
     this.EnableNamingAlias = boolValue;
@@ -288,21 +300,41 @@ public void ValidateAndSetEnableNamingAliasFromString(string stringValue)
 /// <summary>
 /// Set the IgnoreUnexpectedElementsAndAttributes property with the given value.
 /// </summary>
-/// <param name="stringValue">The value to set.</param>
-public void ValidateAndSetIgnoreUnexpectedElementsAndAttributesFromString(string stringValue)
+/// <param name="inputValue">The value to set.</param>
+public void ValidateAndSetIgnoreUnexpectedElementsAndAttributesFromString(string inputValue)
 {
     bool boolValue;
-    if (!bool.TryParse(stringValue, out boolValue))
+    if (!bool.TryParse(inputValue, out boolValue))
     {
         // ********************************************************************************************************
         // To fix this error, if the current text transformation is run by the TextTemplatingFileGenerator
         // custom tool inside Visual Studio, update the .odata.config file in the project with a valid parameter
         // value then hit Ctrl-S to save the .tt file to refresh the code generation.
         // ********************************************************************************************************
-        throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" cannot be assigned to the IgnoreUnexpectedElementsAndAttributes parameter because it is not a valid boolean value.", stringValue));
+        throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" cannot be assigned to the IgnoreUnexpectedElementsAndAttributes parameter because it is not a valid boolean value.", inputValue));
     }
 
     this.IgnoreUnexpectedElementsAndAttributes = boolValue;
+}
+
+/// <summary>
+/// Set the MakeTypesInternal property with the given value.
+/// </summary>
+/// <param name="inputValue">The value to set.</param>
+public void ValidateAndSetMakeTypesInternalFromString(string inputValue)
+{
+    bool parsedValue;
+    if (!bool.TryParse(inputValue, out parsedValue))
+    {
+        // ********************************************************************************************************
+        // To fix this error, if the current text transformation is run by the TextTemplatingFileGenerator
+        // custom tool inside Visual Studio, update the .odata.config file in the project with a valid parameter
+        // value then hit Ctrl-S to save the .tt file to refresh the code generation.
+        // ********************************************************************************************************
+        throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" cannot be assigned to the MakeTypesInternal parameter because it is not a valid boolean value.", inputValue));
+    }
+
+    this.MakeTypesInternal = parsedValue;
 }
 
 /// <summary>
@@ -316,6 +348,7 @@ private void ApplyParametersFromConfigurationClass()
     this.ValidateAndSetTargetLanguageFromString(Configuration.TargetLanguage);
     this.EnableNamingAlias = Configuration.EnableNamingAlias;
     this.IgnoreUnexpectedElementsAndAttributes = Configuration.IgnoreUnexpectedElementsAndAttributes;
+    this.MakeTypesInternal = Configuration.MakeTypesInternal;
 }
 
 /// <summary>
@@ -362,6 +395,12 @@ private void ApplyParametersFromCommandLine()
     if (!string.IsNullOrEmpty(ignoreUnexpectedElementsAndAttributes))
     {
         this.ValidateAndSetIgnoreUnexpectedElementsAndAttributesFromString(ignoreUnexpectedElementsAndAttributes);
+    }
+
+    string makeTypesInternal = this.Host.ResolveParameterValue("notempty", "notempty", "MakeTypesInternal");
+    if (!string.IsNullOrEmpty(makeTypesInternal))
+    {
+        this.ValidateAndSetMakeTypesInternalFromString(makeTypesInternal);
     }
 }
 
@@ -672,6 +711,16 @@ public class CodeGenerationContext
         get;
         set;
     }
+	
+	/// <summary>
+	/// true to use internal access modifier for generated classes, otherwise they will be made public.
+	/// This is useful if you don't want the generated classes to be visible outside the assembly
+	/// </summary>
+	public bool MakeTypesInternal
+	{
+        get;
+        set;
+	}
 
     /// <summary>
     /// Specifies which specific .Net Framework language the generated code will target.
@@ -932,6 +981,8 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract string GlobalPrefix { get; }
     internal abstract string SystemTypeTypeName { get; }
     internal abstract string AbstractModifier { get; }
+    internal abstract string PublicAccessModifier { get; }
+    internal abstract string InternalAccessModifier { get; }
     internal abstract string DataServiceActionQueryTypeName { get; }
     internal abstract string DataServiceActionQuerySingleOfTStructureTemplate { get; }
     internal abstract string DataServiceActionQueryOfTStructureTemplate { get; }
@@ -1076,6 +1127,12 @@ public abstract class ODataClientTemplate : TemplateBase
         return clrReferenceTypes;
     } }
     private HashSet<EdmPrimitiveTypeKind> clrReferenceTypes;
+
+    internal string ClassAccessModifier {
+        get {
+            return this.context.MakeTypesInternal ? this.InternalAccessModifier : this.PublicAccessModifier;
+        }
+    }
 
     /// <summary>
     /// Generates code for the OData client.
@@ -3016,6 +3073,8 @@ public sealed class ODataClientCSharpTemplate : ODataClientTemplate
     internal override string GlobalPrefix { get {return "global::"; } }
     internal override string SystemTypeTypeName { get { return "global::System.Type"; } }
     internal override string AbstractModifier { get { return " abstract"; } }
+    internal override string PublicAccessModifier { get { return "public"; } }
+    internal override string InternalAccessModifier { get { return "internal"; } }
     internal override string DataServiceActionQueryTypeName { get { return "global::Microsoft.OData.Client.DataServiceActionQuery"; } }
     internal override string DataServiceActionQuerySingleOfTStructureTemplate { get { return "global::Microsoft.OData.Client.DataServiceActionQuerySingle<{0}>"; } }
     internal override string DataServiceActionQueryOfTStructureTemplate { get { return "global::Microsoft.OData.Client.DataServiceActionQuery<{0}>"; } }
@@ -3137,7 +3196,7 @@ namespace <#= fullNamespace #>
 <#+
         }
 #>
-    public partial class <#= fixedContainerName #> : global::Microsoft.OData.Client.DataServiceContext
+    <#= ClassAccessModifier #> partial class <#= fixedContainerName #> : global::Microsoft.OData.Client.DataServiceContext
     {
 <#+
     }
@@ -3560,7 +3619,7 @@ namespace <#= fullNamespace #>
 <#+
         }
 #>
-    public<#= abstractModifier #> partial class <#= typeName #><#= baseTypeName #>
+    <#= ClassAccessModifier #><#= abstractModifier #> partial class <#= typeName #><#= baseTypeName #>
     {
 <#+
     }
@@ -3724,7 +3783,7 @@ namespace <#= fullNamespace #>
 <#+
         }
 #>
-    public enum <#= enumName #><#= underlyingType #>
+    <#= ClassAccessModifier #> enum <#= enumName #><#= underlyingType #>
     {
 <#+
     }
@@ -3892,7 +3951,7 @@ namespace <#= fullNamespace #>
     /// <summary>
     /// Class containing all extension methods
     /// </summary>
-    public static class ExtensionMethods
+    <#= ClassAccessModifier #> static class ExtensionMethods
     {
 <#+ 
     }
@@ -4055,6 +4114,8 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
     internal override string GlobalPrefix { get { return string.Empty; } }
     internal override string SystemTypeTypeName { get { return "Global.System.Type"; } }
     internal override string AbstractModifier { get { return " MustInherit"; } }
+    internal override string PublicAccessModifier { get { return "Public"; } }
+    internal override string InternalAccessModifier { get { return "Friend"; } }
     internal override string DataServiceActionQueryTypeName { get { return "Global.Microsoft.OData.Client.DataServiceActionQuery"; } }
     internal override string DataServiceActionQuerySingleOfTStructureTemplate { get { return "Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of {0})"; } }
     internal override string DataServiceActionQueryOfTStructureTemplate { get { return "Global.Microsoft.OData.Client.DataServiceActionQuery(Of {0})"; } }
@@ -4188,7 +4249,7 @@ Namespace <#= fullNamespace #>
 <#+
         }
 #>
-    Partial Public Class <#= fixedContainerName #>
+    Partial <#= ClassAccessModifier #> Class <#= fixedContainerName #>
         Inherits Global.Microsoft.OData.Client.DataServiceContext
 <#+
     }
@@ -4602,7 +4663,7 @@ Namespace <#= fullNamespace #>
 <#+
         }
 #>
-    Partial Public<#= abstractModifier #> Class <#= typeName #><#= baseTypeName #>
+    Partial <#= ClassAccessModifier #><#= abstractModifier #> Class <#= typeName #><#= baseTypeName #>
 <#+
     }
 
@@ -4768,7 +4829,7 @@ Namespace <#= fullNamespace #>
 <#+
         }
 #>
-    Public Enum <#= enumName #><#= underlyingType #>
+    <#= ClassAccessModifier #> Enum <#= enumName #><#= underlyingType #>
 <#+
     }
 
@@ -4927,7 +4988,7 @@ Namespace <#= fullNamespace #>
     ''' <summary>
     ''' Class containing all extension methods
     ''' </summary>
-    Public Module ExtensionMethods
+    <#= ClassAccessModifier #> Module ExtensionMethods
 <#+
     }
 

@@ -24,6 +24,10 @@ public static class Configuration
 	// This flag indicates whether to ignore unexpected elements and attributes in the metadata document and generate
 	// the client code if any. The value must be set to true or false.
 	public const bool IgnoreUnexpectedElementsAndAttributes = true;
+
+	// If set to true, generated types will have an "internal" class modifier ("Friend" in VB) instead of "public"
+	// thereby making them invisible outside the assembly
+	public const bool MakeTypesInternal = false;
 }
 
 public static class Customization

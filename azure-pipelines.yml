@@ -1,0 +1,238 @@
+trigger:
+- master
+
+name: 'ODataConnectedService'
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  connectedServiceDir: '$(Build.SourcesDirectory)\ODataConnectedService'
+  sln: '$(connectedServiceDir)\ODataConnectedService.sln'
+  testSln: '$(connectedServiceDir)\ODataConnectedService.Tests.sln'
+  productBinPath: '$(connectedServiceDir)\src\bin\$(BuildConfiguration)'
+  productFiles: 'Microsoft.OData.ConnectedService.*?(*.dll|*.config|*.pdb)'
+  vsixPath: '$(productBinPath)'
+  vsixFile: 'Microsoft.OData.ConnectedService.vsix'
+  signingFiles: 'Microsoft.OData.ConnectedService.dll'
+
+steps:
+- task: NuGetToolInstaller@0
+  inputs:
+    versionSpec: '>=5.2.0'
+
+- task: NuGetCommand@2
+  displayName: 'Nuget restore - ODataConnectedService.sln'
+  inputs:
+    restoreSolution: '$(sln)'
+
+- task: VSBuild@1
+  displayName: 'Build solution - ODataConnectedService.sln'
+  inputs:
+    solution: '$(sln)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: NuGetCommand@2
+  displayName: 'Nuget restore tests - ODataConnectedServiceTests.sln'
+  inputs:
+    restoreSolution: '$(testSln)'
+
+- task: VSBuild@1
+  displayName: 'Build tests solution - ODataConnectedServiceTests.sln'
+  inputs:
+    solution: '$(testSln)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+
+- task: VSTest@2
+  displayName: 'Run tests'
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: '$(connectedServiceDir)\test\ODataConnectedService.Tests\bin\$(BuildConfiguration)\ODataConnectedService.Tests.dll'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    searchFolder:  '$(System.DefaultWorkingDirectory)'
+
+- task: EsrpCodeSigning@1
+  displayName: 'ESRP CodeSign - Sign Binaries'
+  inputs:
+    ConnectedServiceName: "ESRP CodeSigning - OData"
+    FolderPath: '$(connectedServiceDir)\src\bin\$(BuildConfiguration)'
+    Pattern: 'Microsoft.OData.ConnectedService.dll'
+    signConfigType: 'inlineSignParams'
+    inlineOperation: |
+      [
+        {
+          "keyCode": "MSSharedLibSnKey",
+          "operationSetCode": "StrongNameSign",
+          "parameters": null,
+          "toolName": "sn.exe",
+          "toolVersion": "V4.6.1586.0"
+        },
+        {
+          "keyCode": "MSSharedLibSnKey",
+          "operationSetCode": "StrongNameVerify",
+          "parameters": null,
+          "toolName": "sn.exe",
+          "toolVersion": "V4.6.1586.0"
+        },
+        {
+          "keyCode": "CP-230012",
+          "operationSetCode": "SigntoolSign",
+          "parameters": [
+          {
+            "parameterName": "OpusName",
+            "parameterValue": "TestSign"
+          },
+          {
+            "parameterName": "OpusInfo",
+            "parameterValue": "http://test"
+          },
+          {
+            "parameterName": "PageHash",
+            "parameterValue": "/NPH"
+          },
+          {
+            "parameterName": "TimeStamp",
+            "parameterValue": "/t \"http://ts4096.gtm.microsoft.com/TSS/AuthenticodeTS\""
+          }
+          ],
+          "toolName": "signtool.exe",
+          "toolVersion": "6.2.9304.0"
+        },
+        {
+          "keyCode": "CP-230012",
+          "operationSetCode": "SigntoolSign",
+          "parameters": [
+          {
+            "parameterName": "OpusName",
+            "parameterValue": "TestSign"
+          },
+          {
+            "parameterName": "OpusInfo",
+            "parameterValue": "http://test"
+          },
+          {
+            "parameterName": "Append",
+            "parameterValue": "/AS"
+          },
+          {
+            "parameterName": "PageHash",
+            "parameterValue": "/NPH"
+          },
+          {
+            "parameterName": "FileDigest",
+            "parameterValue": "/fd sha256"
+          },
+          {
+            "parameterName": "TimeStamp",
+            "parameterValue": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
+          }
+          ],
+          "toolName": "signtool.exe",
+          "toolVersion": "6.2.9304.0"
+        },
+        {
+          "keyCode": "CP-230012",
+          "operationSetCode": "SigntoolVerify",
+          "parameters": [
+          {
+            "parameterName": "VerifyAll",
+            "parameterValue": "/all"
+          }
+          ],
+          "toolName": "signtool.exe",
+          "toolVersion": "6.2.9304.0"
+        }
+      ]
+    SessionTimeout: '60'
+    MaxConcurrency: '50'
+    MaxRetryAttempts: '5'
+
+- task: CopyFiles@2
+  displayName: 'Copy Files - VSIX to Artifacts Staging'
+  inputs:
+    SourceFolder: '$(connectedServiceDir)\src\bin\$(BuildConfiguration)'
+    Contents: 'Microsoft.OData.ConnectedService.vsix'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\VSIX'
+
+- task: CopyFiles@2
+  displayName: 'Copy Files - Stage Product'
+  inputs:
+    SourceFolder: '$(productBinPath)'
+    Contents: '$(productFiles)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\Product'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact - Product'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\Product'
+    ArtifactName: 'Product'
+    publishLocation: 'Container'
+
+- task: ExtractFiles@1
+  displayName: 'Extract Files - Unpack VSIX copy'
+  inputs:
+    archiveFilePatterns: '$(vsixPath)\$(vsixFile)'
+    destinationFolder: '$(Build.ArtifactStagingDirectory)\VSIXStaging'
+    cleanDestinationFolder: true
+
+- task: CopyFiles@2
+  displayName: 'Copy Files - Signed Binaries to VSIX'
+  inputs:
+    SourceFolder: '$(productBinPath)'
+    Contents: '$(signingFiles)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\VSIXStaging'
+
+- task: ArchiveFiles@2
+  displayName: 'Archive files - Pack VSIX'
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)\VSIXStaging'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)\VSIX\$(vsixFile)'
+    replaceExistingArchive: true
+
+- task: EsrpCodeSigning@1
+  displayName: 'ESRP CodeSigning - VSIX Signing'
+  inputs:
+    ConnectedServiceName: 'ESRP CodeSigning - OData'
+    FolderPath: '$(Build.ArtifactStagingDirectory)\VSIX'
+    Pattern: '$(vsixFile)'
+    signConfigType: 'inlineSignParams'
+    inlineOperation: |
+      [
+        {
+          "keyCode": "CP-233016",
+          "operationSetCode": "OpcSign",
+          "parameters": [
+            {
+              "parameterName": "FileDigest",
+              "parameterValue": "/fd SHA256"
+            }
+          ],
+          "toolName": "Opcsigntool.exe",
+          "tooVersion": "V6.2.8189.0"
+        },
+        {
+          "keyCode": "CP-233016",
+          "operationSetCode": "OpcVerify",
+          "parameters": null,
+          "toolName": "Opcsigntool.exe",
+          "tooVersion": "V6.2.8189.0"
+        }
+      ]
+    SessionTimeout: '60'
+    MaxConcurrency: '50'
+    MaxRetryAttempts: '5'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Public Artifact: VSIX'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/VSIX'
+    ArtifactName: 'VSIX'
+    publishLocation: 'Container'

@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-  <Metadata>
-    <Identity Id="ODataConnectedService.e30335d6-f9c7-4d08-b66a-f011f3f18477" Version="0.3.0" Language="en-US" Publisher="Microsoft" />
-    <Author>Microsoft</Author>
-    <DisplayName>OData Connected Service</DisplayName>
-    <Description xml:space="preserve">OData Connected Service for V1-V4</Description>
-    <MoreInfo>https://github.com/odata/lab</MoreInfo>
-    <License>License.txt</License>
-    <Icon>Resources\ExtensionIcon.png</Icon>
-    <Tags>OData Connected Service</Tags>
-  </Metadata>
-  <Installation AllUsers="true">
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[15.0]" />
-  </Installation>
-  <Dependencies>
-    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
-  </Dependencies>
-  <Assets>
-    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" Path="|%CurrentProject%|" />
-  </Assets>
-  <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0.26208.0,16.0)" DisplayName="Visual Studio core editor" />
-  </Prerequisites>
+    <Metadata>
+        <Identity Id="ODataConnectedService.e30335d6-f9c7-4d08-b66a-f011f3f18477" Version="0.4.0" Language="en-US" Publisher="Microsoft" />
+        <Author>Microsoft</Author>
+        <DisplayName>OData Connected Service</DisplayName>
+        <Description xml:space="preserve">OData Connected Service for V1-V4</Description>
+        <MoreInfo>https://github.com/odata/lab</MoreInfo>
+        <License>License.txt</License>
+        <Icon>Resources\ExtensionIcon.png</Icon>
+        <Tags>OData Connected Service</Tags>
+    </Metadata>
+    <Installation AllUsers="true">
+        <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[15.0, 17.0)" />
+        <InstallationTarget Version="[15.0,17.0)" Id="Microsoft.VisualStudio.Community" />
+        <InstallationTarget Version="[15.0,17.0)" Id="Microsoft.VisualStudio.Enterprise" />
+    </Installation>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+    </Dependencies>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" Path="|%CurrentProject%|" />
+    </Assets>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,17.0)" DisplayName="Visual Studio core editor" />
+    </Prerequisites>
 </PackageManifest>

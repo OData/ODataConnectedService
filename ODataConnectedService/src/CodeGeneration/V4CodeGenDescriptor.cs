@@ -15,13 +15,16 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
 {
     internal class V4CodeGenDescriptor : BaseCodeGenDescriptor
     {
-        public V4CodeGenDescriptor(string metadataUri, ConnectedServiceHandlerContext context, Project project)
+        public V4CodeGenDescriptor(string metadataUri, ConnectedServiceHandlerContext context, Project project, IODataT4CodeGeneratorFactory codeGeneratorFactory)
             : base(metadataUri, context, project)
         {
-            this.ClientNuGetPackageName = Common.Constants.V4ClientNuGetPackage;
-            this.ClientDocUri = Common.Constants.V4DocUri;
-            this.ServiceConfiguration = base.ServiceConfiguration as ServiceConfigurationV4;
+            ClientNuGetPackageName = Common.Constants.V4ClientNuGetPackage;
+            ClientDocUri = Common.Constants.V4DocUri;
+            ServiceConfiguration = base.ServiceConfiguration as ServiceConfigurationV4;
+            CodeGeneratorFactory = codeGeneratorFactory;
         }
+
+        private IODataT4CodeGeneratorFactory CodeGeneratorFactory { get; set; }
 
         private new ServiceConfigurationV4 ServiceConfiguration { get; set; }
         
@@ -66,7 +69,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 text = Regex.Replace(text, "(public const string TargetLanguage = )\"OutputLanguage\";", "$1\"CSharp\";");
                 text = Regex.Replace(text, "(public const bool EnableNamingAlias = )true;", "$1" + this.ServiceConfiguration.EnableNamingAlias.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
                 text = Regex.Replace(text, "(public const bool IgnoreUnexpectedElementsAndAttributes = )true;", "$1" + this.ServiceConfiguration.IgnoreUnexpectedElementsAndAttributes.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
-
+                text = Regex.Replace(text, "(public const bool MakeTypesInternal = )false;", "$1" + ServiceConfiguration.MakeTypesInternal.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
                 await writer.WriteAsync(text);
                 await writer.FlushAsync();
             }
@@ -78,13 +81,14 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
 
         private async Task AddGeneratedCSharpCode()
         {
-            ODataT4CodeGenerator t4CodeGenerator = new ODataT4CodeGenerator();
+            ODataT4CodeGenerator t4CodeGenerator = CodeGeneratorFactory.Create();
             t4CodeGenerator.MetadataDocumentUri = MetadataUri;
             t4CodeGenerator.UseDataServiceCollection = this.ServiceConfiguration.UseDataServiceCollection;
             t4CodeGenerator.TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp;
             t4CodeGenerator.IgnoreUnexpectedElementsAndAttributes = this.ServiceConfiguration.IgnoreUnexpectedElementsAndAttributes;
             t4CodeGenerator.EnableNamingAlias = this.ServiceConfiguration.EnableNamingAlias;
             t4CodeGenerator.NamespacePrefix = this.ServiceConfiguration.NamespacePrefix;
+            t4CodeGenerator.MakeTypesInternal = ServiceConfiguration.MakeTypesInternal;
 
             string tempFile = Path.GetTempFileName();
 
