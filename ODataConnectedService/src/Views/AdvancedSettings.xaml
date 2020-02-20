@@ -44,8 +44,12 @@
             		HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5">
                     <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Ignore unknown elements (Whether to ignore unexpected elements and attributes in the metadata document and generate the client code if any.)</TextBlock>
                 </CheckBox>
+                <CheckBox x:Name="MakeTypesInternal" IsChecked="{Binding MakeTypesInternal}"
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5">
+                    <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Make generated types internal (Enable this if you don't want to expose the generated types outside of your assembly.)</TextBlock>
+                </CheckBox>
                 <CheckBox x:Name="IncludeT4File" Content="Add code templates (Whether to include the T4 files into this project.)" IsChecked="{Binding IncludeT4File}"
-            		HorizontalAlignment="Left" VerticalAlignment="Top" Width="280"  Height="25" Margin="0, 15" FontWeight="Medium"/>
+            		HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 15" FontWeight="Medium"/>
             </StackPanel>
         </StackPanel>
     </StackPanel>

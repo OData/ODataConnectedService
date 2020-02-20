@@ -15,13 +15,13 @@ namespace Microsoft.OData.ConnectedService
     {
         public ODataConnectedServiceProvider()
         {
-            this.Name = "OData Connected Service";
-            this.Category = "OData";
-            this.Description = "OData Connected Service for V1-V4";
-            this.Icon = new BitmapImage(new Uri("pack://application:,,/" + this.GetType().Assembly.ToString() + ";component/Resources/Icon.png"));
-            this.CreatedBy = "OData";
-            this.Version = new Version(0, 2, 0);
-            this.MoreInfoUri = new Uri("https://github.com/odata/lab");
+            Name = "OData Connected Service";
+            Category = "OData";
+            Description = "OData Connected Service for V1-V4";
+            Icon = new BitmapImage(new Uri("pack://application:,,/" + this.GetType().Assembly.ToString() + ";component/Resources/Icon.png"));
+            CreatedBy = "OData";
+            Version = new Version(0, 4, 0);
+            MoreInfoUri = new Uri("https://github.com/odata/lab");
         }
 
         public override Task<ConnectedServiceConfigurator> CreateConfiguratorAsync(ConnectedServiceProviderContext context)

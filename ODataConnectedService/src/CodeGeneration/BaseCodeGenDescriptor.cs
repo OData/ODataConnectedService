@@ -50,7 +50,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             this.ServiceConfiguration = ((ODataConnectedServiceInstance)this.Context.ServiceInstance).ServiceConfig;
         }
 
-        private void Init()
+        protected virtual void Init()
         {
             var componentModel = (IComponentModel)Shell.Package.GetGlobalService(typeof(SComponentModel));
             this.PackageInstallerServices = componentModel.GetService<IVsPackageInstallerServices>();

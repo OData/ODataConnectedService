@@ -17,6 +17,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public bool IgnoreUnexpectedElementsAndAttributes { get; set; }
         public string GeneratedFileName { get; set; }
         public bool IncludeT4File { get; set; }
+        public bool MakeTypesInternal { get; set; }
 
         public AdvancedSettingsViewModel() : base()
         {
@@ -55,6 +56,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             this.EnableNamingAlias = false;
             this.GeneratedFileName = Common.Constants.DefaultReferenceFileName;
             this.IncludeT4File = false;
+            MakeTypesInternal = false;
         }
     }
 }
