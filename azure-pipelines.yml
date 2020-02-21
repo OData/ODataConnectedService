@@ -17,6 +17,8 @@ variables:
   vsixPath: '$(productBinPath)'
   vsixFile: 'Microsoft.OData.ConnectedService.vsix'
   signingFiles: 'Microsoft.OData.ConnectedService.dll'
+  snExe: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\sn.exe'
+  snExe64: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\x64\sn.exe'
 
 steps:
 - task: NuGetToolInstaller@0
@@ -47,6 +49,12 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: CmdLine@2
+  displayName: 'Skip strong name validation'
+  inputs:
+    script: |
+      $(sn) -Vr $(productBinPath)/$(signingFiles)
+      $(snExe64) -Vr $(productBinPath)/$(signingFiles)
 
 - task: VSTest@2
   displayName: 'Run tests'
