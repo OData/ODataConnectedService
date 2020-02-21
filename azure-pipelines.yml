@@ -54,8 +54,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $(snExe) -Vr $(productBinPath)/$(signingFiles)
-      $(snExe64) -Vr $(productBinPath)/$(signingFiles)
+      "$(snExe)" -Vr $(productBinPath)/$(signingFiles)
+      "$(snExe64)" -Vr $(productBinPath)/$(signingFiles)
 
 - task: VSTest@2
   displayName: 'Run tests'
