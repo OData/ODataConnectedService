@@ -14,6 +14,7 @@ variables:
   testSln: '$(connectedServiceDir)\ODataConnectedService.Tests.sln'
   productBinPath: '$(connectedServiceDir)\src\bin\$(BuildConfiguration)'
   productFiles: 'Microsoft.OData.ConnectedService.*?(*.dll|*.config|*.pdb)'
+  testBinPath: '$(connectedServiceDir)\test\ODataConnectedService.Tests\bin\$(BuildConfiguration)\'
   vsixPath: '$(productBinPath)'
   vsixFile: 'Microsoft.OData.ConnectedService.vsix'
   signingFiles: 'Microsoft.OData.ConnectedService.dll'
@@ -58,14 +59,14 @@ steps:
     script: |
       & "$(snExe)" /Vr $(productBinPath)\$(mainDll)
       & "$(snExe64)" /Vr $(productBinPath)\$(mainDll)
-      & "$(snExe)" /Vr $(productBinPath)\$(testDll)
-      & "$(snExe64)" /Vr $(productBinPath)\$(testDll)
+      & "$(snExe)" /Vr $(testBinPath)\$(testDll)
+      & "$(snExe64)" /Vr $(testBinPath)\$(testDll)
 
 - task: VSTest@2
   displayName: 'Run tests'
   inputs:
     testSelector: 'testAssemblies'
-    testAssemblyVer2: '$(connectedServiceDir)\test\ODataConnectedService.Tests\bin\$(BuildConfiguration)\$(testDll)'
+    testAssemblyVer2: '$(testBinPath)\$(testDll)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     searchFolder:  '$(System.DefaultWorkingDirectory)'
@@ -77,8 +78,8 @@ steps:
     script: |
       & "$(snExe)" /Vu $(productBinPath)\$(mainDll)
       & "$(snExe64)" /Vu $(productBinPath)\$(mainDll)
-      & "$(snExe)" /Vu $(productBinPath)\$(testDll)
-      & "$(snExe64)" /Vu $(productBinPath)\$(testDll)
+      & "$(snExe)" /Vu $(testBinPath)\$(testDll)
+      & "$(snExe64)" /Vu $(testBinPath)\$(testDll)
 
 - task: EsrpCodeSigning@1
   displayName: 'ESRP CodeSign - Sign Binaries'
