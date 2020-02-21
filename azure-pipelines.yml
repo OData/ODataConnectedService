@@ -17,6 +17,8 @@ variables:
   vsixPath: '$(productBinPath)'
   vsixFile: 'Microsoft.OData.ConnectedService.vsix'
   signingFiles: 'Microsoft.OData.ConnectedService.dll'
+  mainDll: 'Microsoft.OData.ConnectedService.dll'
+  testDll: 'ODataConnectedService.Tests.dll'
   snExe: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\sn.exe'
   snExe64: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\x64\sn.exe'
 
@@ -54,24 +56,36 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      & "$(snExe)" /Vr $(productBinPath)\$(signingFiles)
-      & "$(snExe64)" /Vr $(productBinPath)\$(signingFiles)
+      & "$(snExe)" /Vr $(productBinPath)\$(mainDll)
+      & "$(snExe64)" /Vr $(productBinPath)\$(mainDll)
+      & "$(snExe)" /Vr $(productBinPath)\$(testDll)
+      & "$(snExe64)" /Vr $(productBinPath)\$(testDll)
 
 - task: VSTest@2
   displayName: 'Run tests'
   inputs:
     testSelector: 'testAssemblies'
-    testAssemblyVer2: '$(connectedServiceDir)\test\ODataConnectedService.Tests\bin\$(BuildConfiguration)\ODataConnectedService.Tests.dll'
+    testAssemblyVer2: '$(connectedServiceDir)\test\ODataConnectedService.Tests\bin\$(BuildConfiguration)\$(testDll)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     searchFolder:  '$(System.DefaultWorkingDirectory)'
+
+- task: Powershell@2
+  displayName: 'Re-enable strong name validation'
+  inputs:
+    targetType: 'inline'
+    script: |
+      & "$(snExe)" /Vu $(productBinPath)\$(mainDll)
+      & "$(snExe64)" /Vu $(productBinPath)\$(mainDll)
+      & "$(snExe)" /Vu $(productBinPath)\$(testDll)
+      & "$(snExe64)" /Vu $(productBinPath)\$(testDll)
 
 - task: EsrpCodeSigning@1
   displayName: 'ESRP CodeSign - Sign Binaries'
   inputs:
     ConnectedServiceName: "ESRP CodeSigning - OData"
     FolderPath: '$(connectedServiceDir)\src\bin\$(BuildConfiguration)'
-    Pattern: 'Microsoft.OData.ConnectedService.dll'
+    Pattern: '$(mainDll)'
     signConfigType: 'inlineSignParams'
     inlineOperation: |
       [
