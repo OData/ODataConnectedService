@@ -49,11 +49,12 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: CmdLine@2
+- task: Powershell@2
   displayName: 'Skip strong name validation'
   inputs:
+    targetType: 'inline'
     script: |
-      $(sn) -Vr $(productBinPath)/$(signingFiles)
+      $(snExe) -Vr $(productBinPath)/$(signingFiles)
       $(snExe64) -Vr $(productBinPath)/$(signingFiles)
 
 - task: VSTest@2
