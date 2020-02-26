@@ -216,7 +216,7 @@ steps:
   displayName: 'Archive files - Pack VSIX'
   inputs:
     rootFolderOrFile: '$(Build.ArtifactStagingDirectory)\VSIXStaging'
-    includeRootFolder: true
+    includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)\VSIX\$(vsixFile)'
     replaceExistingArchive: true
