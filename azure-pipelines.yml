@@ -52,6 +52,9 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+# because the assemblies are delay-signed, we need to disable
+# strong name validation so that the tests may run,
+# otherwise our assemblies will fail to load
 - task: Powershell@2
   displayName: 'Skip strong name validation'
   inputs:
@@ -81,11 +84,12 @@ steps:
       & "$(snExe)" /Vu $(testBinPath)\$(testDll)
       & "$(snExe64)" /Vu $(testBinPath)\$(testDll)
 
+# sign the connected service assembly      
 - task: EsrpCodeSigning@1
   displayName: 'ESRP CodeSign - Sign Binaries'
   inputs:
     ConnectedServiceName: "ESRP CodeSigning - OData"
-    FolderPath: '$(connectedServiceDir)\src\bin\$(BuildConfiguration)'
+    FolderPath: '$(productBinPath)'
     Pattern: '$(mainDll)'
     signConfigType: 'inlineSignParams'
     inlineOperation: |
@@ -180,7 +184,7 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy Files - VSIX to Artifacts Staging'
   inputs:
-    SourceFolder: '$(connectedServiceDir)\src\bin\$(BuildConfiguration)'
+    SourceFolder: '$(productBinPath)'
     Contents: 'Microsoft.OData.ConnectedService.vsix'
     TargetFolder: '$(Build.ArtifactStagingDirectory)\VSIX'
 
@@ -191,6 +195,7 @@ steps:
     Contents: '$(productFiles)'
     TargetFolder: '$(Build.ArtifactStagingDirectory)\Product'
 
+# this allows to download the built dll as an artifact (without the vsix)
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact - Product'
   inputs:
@@ -198,6 +203,7 @@ steps:
     ArtifactName: 'Product'
     publishLocation: 'Container'
 
+# extract the vsix so that we can replace the .dll inside the vsix with a signed version
 - task: ExtractFiles@1
   displayName: 'Extract Files - Unpack VSIX copy'
   inputs:
@@ -205,13 +211,16 @@ steps:
     destinationFolder: '$(Build.ArtifactStagingDirectory)\VSIXStaging'
     cleanDestinationFolder: true
 
+# replace the .dll inside the vsix with the one that was signed
 - task: CopyFiles@2
   displayName: 'Copy Files - Signed Binaries to VSIX'
   inputs:
     SourceFolder: '$(productBinPath)'
     Contents: '$(signingFiles)'
     TargetFolder: '$(Build.ArtifactStagingDirectory)\VSIXStaging'
+    OverWrite: true
 
+# repackage the vsix that now contains the signed assembly
 - task: ArchiveFiles@2
   displayName: 'Archive files - Pack VSIX'
   inputs:
@@ -221,6 +230,7 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)\VSIX\$(vsixFile)'
     replaceExistingArchive: true
 
+# signed the entire vsix package as well
 - task: EsrpCodeSigning@1
   displayName: 'ESRP CodeSigning - VSIX Signing'
   inputs:
@@ -254,6 +264,7 @@ steps:
     MaxConcurrency: '50'
     MaxRetryAttempts: '5'
 
+# publish the vsix as an artifact so we can download it after the build
 - task: PublishBuildArtifacts@1
   displayName: 'Public Artifact: VSIX'
   inputs:
