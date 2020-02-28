@@ -9,7 +9,7 @@ pool:
 variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  connectedServiceDir: '$(Build.SourcesDirectory)\ODataConnectedService'
+  connectedServiceDir: '$(Build.SourcesDirectory)'
   sln: '$(connectedServiceDir)\ODataConnectedService.sln'
   testSln: '$(connectedServiceDir)\ODataConnectedService.Tests.sln'
   productBinPath: '$(connectedServiceDir)\src\bin\$(BuildConfiguration)'
