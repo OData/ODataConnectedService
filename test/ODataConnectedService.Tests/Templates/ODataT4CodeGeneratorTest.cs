@@ -75,6 +75,20 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
             VerifyGeneratedCode(expected, output);
         }
 
+        [TestMethod]
+        public void TestTypeDefinitionsParamsConvertedToUnderlyingType()
+        {
+            string edmx = LoadReferenceContent("TypeDefinitions.xml");
+            string expected = LoadReferenceContent("TypeDefinitionsParamsConvertedToUnderlyingType.cs");
+            var generator = new ODataT4CodeGenerator()
+            {
+                Edmx = edmx,
+                TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp
+            };
+            var output = generator.TransformText();
+            VerifyGeneratedCode(expected, output);
+        }
+
         static Assembly Assembly = Assembly.GetExecutingAssembly();
         const string ReferenceResourcePrefix = "ODataConnectedService.Tests.CodeGenReferences.";
 
