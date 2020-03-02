@@ -953,7 +953,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -965,7 +965,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType> source,
             string serialNo)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "SerialNo", serialNo }
             };
@@ -976,7 +976,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -988,7 +988,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType> source,
             string key)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Key", key }
             };
@@ -999,7 +999,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -1011,7 +1011,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType> source,
             string key)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Key", key }
             };
@@ -1632,7 +1632,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -1644,7 +1644,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType> source,
             string key)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Key", key }
             };

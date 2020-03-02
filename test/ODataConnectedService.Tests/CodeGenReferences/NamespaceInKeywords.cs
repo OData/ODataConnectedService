@@ -148,7 +148,7 @@ namespace NamespaceInKeywords.@event.@string.@int
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::NamespaceInKeywords.@event.@string.@int.TestType1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespaceInKeywords.@event.@string.@int.TestType1> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::NamespaceInKeywords.@event.@string.@int.TestType1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespaceInKeywords.@event.@string.@int.TestType1> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::NamespaceInKeywords.@event.@string.@int.TestType1Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -160,7 +160,7 @@ namespace NamespaceInKeywords.@event.@string.@int
         public static global::NamespaceInKeywords.@event.@string.@int.TestType1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespaceInKeywords.@event.@string.@int.TestType1> source,
             int keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
@@ -439,7 +439,7 @@ namespace NamespaceInKeywords.@double
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::NamespaceInKeywords.@double.TestType2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespaceInKeywords.@double.TestType2> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::NamespaceInKeywords.@double.TestType2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespaceInKeywords.@double.TestType2> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::NamespaceInKeywords.@double.TestType2Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -451,7 +451,7 @@ namespace NamespaceInKeywords.@double
         public static global::NamespaceInKeywords.@double.TestType2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespaceInKeywords.@double.TestType2> source,
             int keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };

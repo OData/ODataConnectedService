@@ -110,7 +110,7 @@ namespace TestUnexpectedElementsAndAttributes
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::TestUnexpectedElementsAndAttributes.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::TestUnexpectedElementsAndAttributes.TestType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::TestUnexpectedElementsAndAttributes.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::TestUnexpectedElementsAndAttributes.TestType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::TestUnexpectedElementsAndAttributes.TestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -122,7 +122,7 @@ namespace TestUnexpectedElementsAndAttributes
         public static global::TestUnexpectedElementsAndAttributes.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::TestUnexpectedElementsAndAttributes.TestType> source,
             int keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };

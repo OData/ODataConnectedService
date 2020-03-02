@@ -600,7 +600,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -612,7 +612,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         public static global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> source,
             string id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
@@ -641,7 +641,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -653,7 +653,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> source,
             string id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
@@ -691,7 +691,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -703,7 +703,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         public static global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey> source,
             string id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
@@ -723,7 +723,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -735,7 +735,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         public static global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2> source,
             string id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };

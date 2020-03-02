@@ -331,7 +331,7 @@ namespace Foo.NamespacePrefixWithDoubleNamespaces
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Foo.NamespacePrefixWithDoubleNamespaces.EntityTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Foo.NamespacePrefixWithDoubleNamespaces.EntityType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Foo.NamespacePrefixWithDoubleNamespaces.EntityTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Foo.NamespacePrefixWithDoubleNamespaces.EntityType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Foo.NamespacePrefixWithDoubleNamespaces.EntityTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -343,7 +343,7 @@ namespace Foo.NamespacePrefixWithDoubleNamespaces
         public static global::Foo.NamespacePrefixWithDoubleNamespaces.EntityTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Foo.NamespacePrefixWithDoubleNamespaces.EntityType> source,
             global::System.Guid id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
@@ -488,7 +488,7 @@ namespace Foo.NamespacePrefixWithDoubleNamespaces2
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Foo.NamespacePrefixWithDoubleNamespaces2.EntityTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Foo.NamespacePrefixWithDoubleNamespaces2.EntityType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Foo.NamespacePrefixWithDoubleNamespaces2.EntityTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Foo.NamespacePrefixWithDoubleNamespaces2.EntityType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Foo.NamespacePrefixWithDoubleNamespaces2.EntityTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -500,7 +500,7 @@ namespace Foo.NamespacePrefixWithDoubleNamespaces2
         public static global::Foo.NamespacePrefixWithDoubleNamespaces2.EntityTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Foo.NamespacePrefixWithDoubleNamespaces2.EntityType> source,
             global::System.Guid id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
