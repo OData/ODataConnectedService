@@ -333,8 +333,8 @@ public bool IgnoreUnexpectedElementsAndAttributes
 /// </summary>
 public bool MakeTypesInternal
 {
-	get;
-	set;
+    get;
+    set;
 }
 
 /// <summary>
@@ -828,11 +828,11 @@ public class CodeGenerationContext
 	/// true to use internal access modifier for generated classes, otherwise they will be made public.
 	/// This is useful if you don't want the generated classes to be visible outside the assembly
 	/// </summary>
-	public bool MakeTypesInternal
-	{
-		get;
-		set;
-	}
+    public bool MakeTypesInternal
+    {
+        get;
+        set;
+    }
 
     /// <summary>
     /// Specifies which specific .Net Framework language the generated code will target.
