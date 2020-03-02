@@ -1166,7 +1166,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -1178,7 +1178,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         public static global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person> source,
             string userName)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "UserName", userName }
             };
@@ -1189,7 +1189,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirlineSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirlineSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirlineSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -1201,7 +1201,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         public static global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirlineSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline> source,
             string airlineCode)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "AirlineCode", airlineCode }
             };
@@ -1212,7 +1212,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirportSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirportSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirportSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -1224,7 +1224,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         public static global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirportSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport> source,
             string icaoCode)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "IcaoCode", icaoCode }
             };
@@ -1235,7 +1235,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.TripSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.TripSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.TripSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -1247,7 +1247,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         public static global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.TripSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip> source,
             int tripId)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "TripId", tripId }
             };
@@ -1267,7 +1267,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.EmployeeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.EmployeeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.EmployeeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -1279,7 +1279,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         public static global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.EmployeeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee> source,
             string userName)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "UserName", userName }
             };
