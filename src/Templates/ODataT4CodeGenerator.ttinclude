@@ -514,12 +514,12 @@ public class CodeGenerationContext
                 Debug.Assert(this.edmx != null, "this.edmx != null");
 
                 IEnumerable<Microsoft.OData.Edm.Validation.EdmError> errors;
-                EdmxReaderSettings edmxReaderSettings = new EdmxReaderSettings()
+                CsdlReaderSettings csdlReaderSettings = new CsdlReaderSettings()
                 {
                     GetReferencedModelReaderFunc = this.GetReferencedModelReaderFuncWrapper,
                     IgnoreUnexpectedAttributesAndElements = this.IgnoreUnexpectedElementsAndAttributes
                 };
-                if (!EdmxReader.TryParse(this.edmx.CreateReader(ReaderOptions.None), Enumerable.Empty<IEdmModel>(), edmxReaderSettings, out this.edmModel, out errors))
+                if (!EdmxReader.TryParse(this.edmx.CreateReader(ReaderOptions.None), Enumerable.Empty<IEdmModel>(), csdlReaderSettings, out this.edmModel, out errors))
                 {
                     Debug.Assert(errors != null, "errors != null");
                     throw new InvalidOperationException(errors.FirstOrDefault().ErrorMessage);
