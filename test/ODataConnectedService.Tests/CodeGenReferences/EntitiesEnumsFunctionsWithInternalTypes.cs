@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 1/21/2020 11:02:50 AM
+// Generation date: 3/3/2020 3:37:21 PM
 namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
 {
     /// <summary>
@@ -228,7 +228,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);
                 try
                 {
-                    return global::Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader);
+                    return global::Microsoft.OData.Edm.Csdl.EdmxReader.Parse(reader);
                 }
                 finally
                 {
