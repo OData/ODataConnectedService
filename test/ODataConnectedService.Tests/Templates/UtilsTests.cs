@@ -8,8 +8,6 @@ using System;
 using System.Xml.Linq;
 using FluentAssertions;
 using Microsoft.OData.Edm;
-using Microsoft.OData.Edm.Library;
-using Microsoft.OData.Edm.Library.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.OData.ConnectedService.Templates;
 
@@ -304,8 +302,8 @@ namespace ODataConnectedService.Tests
         public void GetClrTypeNameShouldReturnICollectionStructureTemplateForCollectionOfEnumType()
         {
             EdmEnumType gender = new EdmEnumType("Namespace", "Gender", EdmPrimitiveTypeKind.Byte, true);
-            gender.AddMember("Male", new EdmIntegerConstant(1));
-            gender.AddMember("Female", new EdmIntegerConstant(2));
+            gender.AddMember("Male", new EdmEnumMemberValue(1));
+            gender.AddMember("Female", new EdmEnumMemberValue(2));
 
             IEdmTypeReference elementTypeReference = new EdmTypeReferenceForTest(gender, false);
             IEdmCollectionType collectionType = new EdmCollectionType(elementTypeReference);

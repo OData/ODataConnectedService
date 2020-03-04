@@ -28,16 +28,19 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <#@ Import Namespace="System.Xml"#>
 <#@ Import Namespace="System.Xml.Linq" #>
 <#@ Import Namespace="System.Collections.Generic" #>
-<#@ Import Namespace="Microsoft.OData.Edm.Csdl" #>
-<#@ Import Namespace="Microsoft.OData.Edm" #>
-<#@ Import Namespace="Microsoft.OData.Edm.Annotations" #>
-<#@ Import Namespace="Microsoft.OData.Edm.Expressions" #>
-<#@ Import Namespace="Microsoft.OData.Edm.Library" #>
-<#@ Import Namespace="Microsoft.OData.Edm.Values" #>
-<#@ Import Namespace="Microsoft.OData.Edm.Vocabularies.V1" #>
-<#@ Import Namespace="Microsoft.OData.Edm.Vocabularies.Community.V1" #>
 <#@ Import Namespace="System.Text"#>
 <#@ Import Namespace="System.Net"#>
+<#@ Import Namespace="Microsoft.Data.Edm.Annotations" #>
+<#@ Import Namespace="Microsoft.Data.Edm.Values" #>
+<#@ Import Namespace="Microsoft.OData.Edm.Csdl" #>
+<#@ Import Namespace="Microsoft.OData.Edm" #>
+<#@ Import Namespace="Microsoft.OData.Edm.Vocabularies.V1" #>
+<#@ Import Namespace="Microsoft.OData.Edm.Vocabularies.Community.V1" #>
+<#@ Import Namespace="Microsoft.OData.Edm.Vocabularies" #>
+<#@ Import Namespace="IEdmVocabularyAnnotation = Edm.Vocabularies.IEdmVocabularyAnnotation" #>
+<#@ Import Namespace="IEdmValueTerm = Microsoft.Data.Edm.IEdmValueTerm" #>
+<#@ Import Namespace="IEdmIntegerValue = Microsoft.OData.Edm.Vocabularies.IEdmIntegerValue" #>
+
 <#
     CodeGenerationContext context;
     if (!string.IsNullOrWhiteSpace(this.Edmx))
@@ -514,12 +517,12 @@ public class CodeGenerationContext
                 Debug.Assert(this.edmx != null, "this.edmx != null");
 
                 IEnumerable<Microsoft.OData.Edm.Validation.EdmError> errors;
-                EdmxReaderSettings edmxReaderSettings = new EdmxReaderSettings()
+                CsdlReaderSettings csdlReaderSettings = new CsdlReaderSettings()
                 {
                     GetReferencedModelReaderFunc = this.GetReferencedModelReaderFuncWrapper,
                     IgnoreUnexpectedAttributesAndElements = this.IgnoreUnexpectedElementsAndAttributes
                 };
-                if (!EdmxReader.TryParse(this.edmx.CreateReader(ReaderOptions.None), Enumerable.Empty<IEdmModel>(), edmxReaderSettings, out this.edmModel, out errors))
+                if (!CsdlReader.TryParse(this.edmx.CreateReader(ReaderOptions.None), Enumerable.Empty<IEdmModel>(), csdlReaderSettings, out this.edmModel, out errors))
                 {
                     Debug.Assert(errors != null, "errors != null");
                     throw new InvalidOperationException(errors.FirstOrDefault().ErrorMessage);
@@ -927,7 +930,7 @@ public class CodeGenerationContext
     private static IEnumerable<T> GetElementsFromModelTree<T>(IEdmModel mainModel, Func<IEdmModel, IEnumerable<T>> getElementFromOneModelFunc)
     {
         List<T> ret = new List<T>();
-        if(mainModel is EdmCoreModel || mainModel.FindDeclaredValueTerm(CoreVocabularyConstants.OptimisticConcurrencyControl) != null)
+        if(mainModel is EdmCoreModel || mainModel.FindDeclaredTerm(CoreVocabularyConstants.OptimisticConcurrency) != null)
         {
             return ret;
         }
@@ -936,9 +939,9 @@ public class CodeGenerationContext
         foreach (var tmp in mainModel.ReferencedModels)
         {
             if (tmp is EdmCoreModel ||
-                tmp.FindDeclaredValueTerm(CoreVocabularyConstants.OptimisticConcurrencyControl) != null ||
-                tmp.FindDeclaredValueTerm(CapabilitiesVocabularyConstants.ChangeTracking) != null ||
-                tmp.FindDeclaredValueTerm(AlternateKeysVocabularyConstants.AlternateKeys) != null)
+                tmp.FindDeclaredTerm(CoreVocabularyConstants.OptimisticConcurrency) != null ||
+                tmp.FindDeclaredTerm(CapabilitiesVocabularyConstants.ChangeTracking) != null ||
+                tmp.FindDeclaredTerm(AlternateKeysVocabularyConstants.AlternateKeys) != null)
             {
                 continue;
             }
@@ -1648,7 +1651,7 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             string propertyType;
             string propertyName = this.context.EnableNamingAlias ? Customization.CustomizeNaming(property.Name) : property.Name;
-            if (property.Type is Microsoft.OData.Edm.Library.EdmCollectionTypeReference)
+            if (property.Type is Microsoft.OData.Edm.EdmCollectionTypeReference)
             {
                 propertyType = GetSourceOrReturnTypeName(property.Type);
                 WriteContextEntitySetProperty(propertyName, GetFixedName(propertyName), property.Name, propertyType, false);
@@ -4580,7 +4583,7 @@ Namespace <#= fullNamespace #>
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.EdmxReader.Parse(reader, AddressOf getReferencedModelFromMap)
+                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader, AddressOf getReferencedModelFromMap)
                 Finally
                     CType(reader,Global.System.IDisposable).Dispose
                 End Try
@@ -4594,7 +4597,7 @@ Namespace <#= fullNamespace #>
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.EdmxReader.Parse(reader)
+                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader)
                 Finally
                     CType(reader,Global.System.IDisposable).Dispose
                 End Try
