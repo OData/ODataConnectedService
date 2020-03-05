@@ -13,6 +13,8 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
     [TestClass]
     public class ODataT4CodeGeneratorTest
     {
+
+        private const string T4Version = "#VersionNumber#";
         [TestMethod]
         public void TestEntitiesComplexTypesEnumsFunctions()
         {
@@ -105,6 +107,10 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
             normalized = Regex.Replace(normalized, "'Generation date:.*", string.Empty, RegexOptions.Multiline);
             normalized = Regex.Replace(normalized, "//     Runtime Version:.*", string.Empty, RegexOptions.Multiline);
             normalized = Regex.Replace(normalized, "'     Runtime Version:.*", string.Empty, RegexOptions.Multiline);
+            normalized = Regex.Replace(normalized,
+               "global::System.CodeDom.Compiler.GeneratedCodeAttribute\\(.*\\)",
+               "global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData.Client.Design.T4\", \"" + T4Version + "\")",
+               RegexOptions.Multiline);
             //Remove the spaces from the string to avoid indentation change errors
             normalized = Regex.Replace(normalized, @"\s+", "");
             return normalized;
