@@ -1067,7 +1067,7 @@ public class CodeGenerationContext
 /// </summary>
 public abstract class ODataClientTemplate : TemplateBase
 {
-    protected const string T4Version  = "2.4.0";
+    protected const string T4Version  = "#VersionNumber#";
 
     /// <summary>
     /// The code generation context.
