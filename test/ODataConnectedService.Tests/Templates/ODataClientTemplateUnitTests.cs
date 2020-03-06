@@ -373,7 +373,7 @@ namespace ODataConnectedService.Tests
 
             internal override string ODataVersion
             {
-                get { return "global::Microsoft.OData.Core.ODataVersion.V4"; }
+                get { return "global::Microsoft.OData.ODataVersion.V4"; }
             }
 
             internal override string ParameterDeclarationTemplate

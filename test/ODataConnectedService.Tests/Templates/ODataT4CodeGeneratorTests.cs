@@ -21,7 +21,7 @@ using System.Xml;
 namespace ODataConnectedService.Tests
 {
     using System.Reflection;
-    using Microsoft.OData.Core;
+    using Microsoft.OData;
     using System.Text.RegularExpressions;
     using Microsoft.OData.ConnectedService.Templates;
     using Microsoft.OData.Client;

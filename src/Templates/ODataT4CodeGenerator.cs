@@ -19,10 +19,7 @@ namespace Microsoft.OData.ConnectedService.Templates
     using System.Collections.Generic;
     using Microsoft.OData.Edm.Csdl;
     using Microsoft.OData.Edm;
-    using Microsoft.OData.Edm.Annotations;
-    using Microsoft.OData.Edm.Expressions;
-    using Microsoft.OData.Edm.Library;
-    using Microsoft.OData.Edm.Values;
+    using Microsoft.OData.Edm.Vocabularies;
     using Microsoft.OData.Edm.Vocabularies.V1;
     using Microsoft.OData.Edm.Vocabularies.Community.V1;
     using System.Text;
@@ -522,12 +519,12 @@ private void ApplyParametersFromCommandLine()
 public class CodeGenerationContext
 {
     /// <summary>
-    /// The namespace of the term to use when building value annotations for indicating the conventions used.
+    /// The namespace of the term to use when building annotations for indicating the conventions used.
     /// </summary>
     private const string ConventionTermNamespace = "Com.Microsoft.OData.Service.Conventions.V1";
 
     /// <summary>
-    /// The name of the term to use when building value annotations for indicating the conventions used.
+    /// The name of the term to use when building annotations for indicating the conventions used.
     /// </summary>
     private const string ConventionTermName = "UrlConventions";
 
@@ -626,12 +623,12 @@ public class CodeGenerationContext
                 Debug.Assert(this.edmx != null, "this.edmx != null");
 
                 IEnumerable<Microsoft.OData.Edm.Validation.EdmError> errors;
-                EdmxReaderSettings edmxReaderSettings = new EdmxReaderSettings()
+                CsdlReaderSettings csdlReaderSettings = new CsdlReaderSettings()
                 {
                     GetReferencedModelReaderFunc = this.GetReferencedModelReaderFuncWrapper,
                     IgnoreUnexpectedAttributesAndElements = this.IgnoreUnexpectedElementsAndAttributes
                 };
-                if (!EdmxReader.TryParse(this.edmx.CreateReader(ReaderOptions.None), Enumerable.Empty<IEdmModel>(), edmxReaderSettings, out this.edmModel, out errors))
+                if (!CsdlReader.TryParse(this.edmx.CreateReader(ReaderOptions.None), Enumerable.Empty<IEdmModel>(), csdlReaderSettings, out this.edmModel, out errors))
                 {
                     Debug.Assert(errors != null, "errors != null");
                     throw new InvalidOperationException(errors.FirstOrDefault().ErrorMessage);
@@ -741,7 +738,9 @@ public class CodeGenerationContext
             if (!this.modelHasInheritance.HasValue)
             {
                 Debug.Assert(this.EdmModel != null, "this.EdmModel != null");
-                this.modelHasInheritance = this.EdmModel.SchemaElementsAcrossModels().OfType<IEdmStructuredType>().Any(t => t.BaseType != null);
+                this.modelHasInheritance = this.EdmModel.SchemaElementsAcrossModels().OfType<IEdmStructuredType>().Any(t => !t.FullTypeName().StartsWith("Org.OData.Authorization.V1") && 
+                            !t.FullTypeName().StartsWith("Org.OData.Capabilities.V1") && 
+                            !t.FullTypeName().StartsWith("Org.OData.Core.V1") && t.BaseType != null);
             }
 
             return this.modelHasInheritance.Value;
@@ -882,10 +881,10 @@ public class CodeGenerationContext
             this.keyAsSegmentContainers = new HashSet<string>();
             Debug.Assert(this.EdmModel != null, "this.EdmModel != null");
             IEnumerable<IEdmVocabularyAnnotation> annotations = this.EdmModel.VocabularyAnnotations;
-            foreach(IEdmValueAnnotation valueAnnotation in annotations.OfType<IEdmValueAnnotation>())
+            foreach(IEdmVocabularyAnnotation valueAnnotation in annotations)
             {
                 IEdmEntityContainer container = valueAnnotation.Target as IEdmEntityContainer;
-                IEdmValueTerm valueTerm = valueAnnotation.Term as IEdmValueTerm;
+                IEdmTerm valueTerm = valueAnnotation.Term as IEdmTerm;
                 IEdmStringConstantExpression expression = valueAnnotation.Value as IEdmStringConstantExpression;
                 if (container != null && valueTerm != null && expression != null)
                 {
@@ -1039,7 +1038,7 @@ public class CodeGenerationContext
     private static IEnumerable<T> GetElementsFromModelTree<T>(IEdmModel mainModel, Func<IEdmModel, IEnumerable<T>> getElementFromOneModelFunc)
     {
         List<T> ret = new List<T>();
-        if(mainModel is EdmCoreModel || mainModel.FindDeclaredValueTerm(CoreVocabularyConstants.OptimisticConcurrencyControl) != null)
+        if(mainModel is EdmCoreModel || mainModel.FindDeclaredTerm(CoreVocabularyConstants.OptimisticConcurrency) != null)
         {
             return ret;
         }
@@ -1048,9 +1047,10 @@ public class CodeGenerationContext
         foreach (var tmp in mainModel.ReferencedModels)
         {
             if (tmp is EdmCoreModel ||
-                tmp.FindDeclaredValueTerm(CoreVocabularyConstants.OptimisticConcurrencyControl) != null ||
-                tmp.FindDeclaredValueTerm(CapabilitiesVocabularyConstants.ChangeTracking) != null ||
-                tmp.FindDeclaredValueTerm(AlternateKeysVocabularyConstants.AlternateKeys) != null)
+                tmp.FindDeclaredTerm(CoreVocabularyConstants.OptimisticConcurrency) != null ||
+                tmp.FindDeclaredTerm(CapabilitiesVocabularyConstants.ChangeTracking) != null ||
+                tmp.FindDeclaredTerm(AlternateKeysVocabularyConstants.AlternateKeys) != null ||
+                tmp.FindDeclaredTerm("Org.OData.Authorization.V1.Authorizations") != null)
             {
                 continue;
             }
@@ -1760,7 +1760,7 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             string propertyType;
             string propertyName = this.context.EnableNamingAlias ? Customization.CustomizeNaming(property.Name) : property.Name;
-            if (property.Type is Microsoft.OData.Edm.Library.EdmCollectionTypeReference)
+            if (property.Type is Microsoft.OData.Edm.EdmCollectionTypeReference)
             {
                 propertyType = GetSourceOrReturnTypeName(property.Type);
                 WriteContextEntitySetProperty(propertyName, GetFixedName(propertyName), property.Name, propertyType, false);
@@ -2332,7 +2332,7 @@ public abstract class ODataClientTemplate : TemplateBase
             string value = string.Empty;
             if (member.Value != null)
             {
-                IEdmIntegerValue integerValue = member.Value as IEdmIntegerValue;
+                IEdmEnumMemberValue integerValue = member.Value as IEdmEnumMemberValue;
                 if (integerValue != null)
                 {
                     value = " = " + integerValue.Value.ToString(CultureInfo.InvariantCulture);
@@ -3244,10 +3244,10 @@ public sealed class ODataClientCSharpTemplate : ODataClientTemplate
     internal override string GeometryMultiPolygonTypeName { get { return "global::Microsoft.Spatial.GeometryMultiPolygon"; } }
     internal override string GeometryMultiLineStringTypeName { get { return "global::Microsoft.Spatial.GeometryMultiLineString"; } }
     internal override string GeometryMultiPointTypeName { get { return "global::Microsoft.Spatial.GeometryMultiPoint"; } }
-    internal override string DateTypeName { get { return "global::Microsoft.OData.Edm.Library.Date"; } }
+    internal override string DateTypeName { get { return "global::Microsoft.OData.Edm.Date"; } }
     internal override string DateTimeOffsetTypeName { get { return "global::System.DateTimeOffset"; } }
     internal override string DurationTypeName { get { return "global::System.TimeSpan"; } }
-    internal override string TimeOfDayTypeName { get { return "global::Microsoft.OData.Edm.Library.TimeOfDay"; } }
+    internal override string TimeOfDayTypeName { get { return "global::Microsoft.OData.Edm.TimeOfDay"; } }
     internal override string XmlConvertClassName { get { return "global::System.Xml.XmlConvert"; } }
     internal override string EnumTypeName { get { return "global::System.Enum"; } }
     internal override string FixPattern { get { return "@{0}"; } }
@@ -3259,7 +3259,7 @@ public sealed class ODataClientCSharpTemplate : ODataClientTemplate
     internal override string BodyOperationParameterConstructor { get { return "new global::Microsoft.OData.Client.BodyOperationParameter(\"{0}\", {1})"; } }
     internal override string BaseEntityType { get { return " : global::Microsoft.OData.Client.BaseEntityType"; } }
     internal override string OverloadsModifier { get { return "new "; } }
-    internal override string ODataVersion { get { return "global::Microsoft.OData.Core.ODataVersion.V4"; } }
+    internal override string ODataVersion { get { return "global::Microsoft.OData.ODataVersion.V4"; } }
     internal override string ParameterDeclarationTemplate { get { return "{0} {1}"; } }
     internal override string DictionaryItemConstructor { get { return "{{ {0}, {1} }}"; } }
     internal override HashSet<string> LanguageKeywords { get {
@@ -3373,8 +3373,8 @@ this.Write("(global::System.Uri serviceRoot) : \r\n                base(serviceR
     internal override void WriteKeyAsSegmentUrlConvention()
     {
 
-this.Write("            this.UrlConventions = global::Microsoft.OData.Client.DataServiceUrlCo" +
-        "nventions.KeyAsSegment;\r\n");
+this.Write("            this.UrlKeyDelimiter = global::Microsoft.OData.Client.DataServiceUrlK" +
+        "eyDelimiter.Slash;\r\n");
 
 
     }
@@ -3893,7 +3893,7 @@ this.Write(@""")]
                 global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);
                 try
                 {
-                    return global::Microsoft.OData.Edm.Csdl.EdmxReader.Parse(reader, getReferencedModelFromMap);
+                    return global::Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader, getReferencedModelFromMap);
                 }
                 finally
                 {
@@ -3918,7 +3918,7 @@ this.Write(@""")]
                 global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);
                 try
                 {
-                    return global::Microsoft.OData.Edm.Csdl.EdmxReader.Parse(reader);
+                    return global::Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader);
                 }
                 finally
                 {
@@ -5196,10 +5196,10 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
     internal override string GeometryMultiPolygonTypeName { get { return "Global.Microsoft.Spatial.GeometryMultiPolygon"; } }
     internal override string GeometryMultiLineStringTypeName { get { return "Global.Microsoft.Spatial.GeometryMultiLineString"; } }
     internal override string GeometryMultiPointTypeName { get { return "Global.Microsoft.Spatial.GeometryMultiPoint"; } }
-    internal override string DateTypeName { get { return "Global.Microsoft.OData.Edm.Library.Date"; } }
+    internal override string DateTypeName { get { return "Global.Microsoft.OData.Edm.Date"; } }
     internal override string DateTimeOffsetTypeName { get { return "Global.System.DateTimeOffset"; } }
     internal override string DurationTypeName { get { return "Global.System.TimeSpan"; } }
-    internal override string TimeOfDayTypeName { get { return "Global.Microsoft.OData.Edm.Library.TimeOfDay"; } }
+    internal override string TimeOfDayTypeName { get { return "Global.Microsoft.OData.Edm.TimeOfDay"; } }
     internal override string XmlConvertClassName { get { return "Global.System.Xml.XmlConvert"; } }
     internal override string EnumTypeName { get { return "Global.System.Enum"; } }
     internal override string FixPattern { get { return "[{0}]"; } }
@@ -5211,7 +5211,7 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
     internal override string BodyOperationParameterConstructor { get { return "New Global.Microsoft.OData.Client.BodyOperationParameter(\"{0}\", {1})"; } }
     internal override string BaseEntityType { get { return "\r\n        Inherits Global.Microsoft.OData.Client.BaseEntityType"; } }
     internal override string OverloadsModifier { get { return "Overloads "; } }
-    internal override string ODataVersion { get { return "Global.Microsoft.OData.Core.ODataVersion.V4"; } }
+    internal override string ODataVersion { get { return "Global.Microsoft.OData.ODataVersion.V4"; } }
     internal override string ParameterDeclarationTemplate { get { return "{1} As {0}"; } }
     internal override string DictionaryItemConstructor { get { return "{{ {0}, {1} }}"; } }
     internal override HashSet<string> LanguageKeywords { get { 
@@ -5339,8 +5339,8 @@ this.Write("\")>  _\r\n        Public Sub New(ByVal serviceRoot As Global.System
     internal override void WriteKeyAsSegmentUrlConvention()
     {
 
-this.Write("            Me.UrlConventions = Global.Microsoft.OData.Client.DataServiceUrlConve" +
-        "ntions.KeyAsSegment\r\n");
+this.Write("            Me.UrlKeyDelimiter = Global.Microsoft.OData.Client.DataServiceUrlKeyD" +
+        "elimiter.Slash\r\n");
 
 
     }
@@ -5901,7 +5901,7 @@ this.Write(@""")>  _
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.EdmxReader.Parse(reader, AddressOf getReferencedModelFromMap)
+                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader, AddressOf getReferencedModelFromMap)
                 Finally
                     CType(reader,Global.System.IDisposable).Dispose
                 End Try
@@ -5922,7 +5922,7 @@ this.Write(@""")>  _
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.EdmxReader.Parse(reader)
+                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader)
                 Finally
                     CType(reader,Global.System.IDisposable).Dispose
                 End Try
