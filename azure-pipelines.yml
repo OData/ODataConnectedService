@@ -1,6 +1,15 @@
 trigger:
 - master
 
+schedules:
+  # 3AM UTC, 6AM EAT, 8PM PDT
+  - cron: "0 3 * * *"
+    displayName: "Nightly build"
+    branches:
+      include:
+      - master
+      - integrate-semmle
+
 name: 'ODataConnectedService'
 
 pool:
@@ -31,6 +40,18 @@ stages:
   jobs:
   - job: Build
     steps:
+
+    - task: Semmle@0
+      # condition: or(in(variables['Build.SourceBranch'], 'refs/heads/master', 'refs/heads/release'), eq(variables['Build.Reason'], 'Schedule'))
+      inputs:
+        sourceCodeDirectory: '$(Build.SourcesDirectory)'
+        language: 'csharp'
+        cleanupBuildCommands: '"%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" $(sln) /t:Clean'
+        buildCommands: '"%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" $(sln)'
+        querySuite: 'Recommended'
+        timeout: '1800'
+        ram: '16384'
+        addProjectDirToScanningExclusionList: true
 
     - task: NuGetToolInstaller@0
       inputs:
