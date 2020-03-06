@@ -12,6 +12,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Reflection;
+using Microsoft.OData.Edm;
+using Microsoft.OData.Edm.Csdl;
+using Microsoft.OData.Edm.Validation;
 
 
 namespace ODataConnectedService.Tests
@@ -47,6 +50,27 @@ namespace ODataConnectedService.Tests
             public Action<string, bool, bool> Verify { get; set; }
         }
 
+        internal static void ValidateXMLFile(string tempFilePath)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(tempFilePath);
+        }
+
+        internal static void ValidateEdmx(string tempFilePath)
+        {
+            string edmx = File.ReadAllText(tempFilePath);
+            using (var stringReader = new StringReader(edmx))
+            {
+                using (var xmlReader = XmlReader.Create(stringReader))
+                {
+                    IEdmModel edmModel = null;
+                    IEnumerable<EdmError> edmErrors = null;
+                    CsdlReader.TryParse(xmlReader, out edmModel, out edmErrors);
+                    edmErrors.Should().BeEmpty();
+                };
+            };
+        }
+
         private static void VerifyGeneratedCode(string actualCode, Dictionary<string, string> expectedCode, bool isCSharp, bool useDSC, string key = null)
         {
             string expected;
@@ -80,18 +104,23 @@ namespace ODataConnectedService.Tests
                 "Global.System.CodeDom.Compiler.GeneratedCodeAttribute\\(.*\\)",
                 "Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData.Client.Design.T4\", \"" + T4Version + "\")",
                 RegexOptions.Multiline);
+
+            //Remove the spaces from the string to avoid indentation change errors
+            string rawExpectedCode = Regex.Replace(normalizedExpectedCode, @"\s+", "");
             actualCode = Regex.Replace(actualCode, "// Generation date:.*", string.Empty);
             actualCode = Regex.Replace(actualCode, "'Generation date:.*", string.Empty);
             actualCode = Regex.Replace(actualCode, "//     Runtime Version:.*", string.Empty);
             actualCode = Regex.Replace(actualCode, "'     Runtime Version:.*", string.Empty);
+            //Remove the spaces from the string to avoid indentation change errors
+            string rawActualCode = Regex.Replace(actualCode, @"\s+", "");
 
             if (key == null)
             {
-                actualCode.Should().Be(normalizedExpectedCode);
+                rawActualCode.Should().Be(rawExpectedCode);
             }
             else
             {
-                bool equal = actualCode == normalizedExpectedCode;
+                bool equal = rawExpectedCode == rawActualCode;
 
                 if (!equal)
                 {
@@ -99,7 +128,8 @@ namespace ODataConnectedService.Tests
                     string currentFolder = Directory.GetCurrentDirectory();
                     string path = Path.Combine(currentFolder, filename);
                     File.WriteAllText(path, actualBak);
-                    string basePath = string.Format(currentFolder + @"\..\CodeGen\{0}", filename);
+                    string basePath = Path.Combine(currentFolder, "Expected" + filename);
+                    File.WriteAllText(basePath, expected);
                     equal.Should().Be(true, "Baseline not equal.\n " +
                         "To diff run: \n" +
                         "odd \"{0}\" \"{1}\"\n" +

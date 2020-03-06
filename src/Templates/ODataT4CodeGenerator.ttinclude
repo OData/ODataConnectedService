@@ -45,6 +45,7 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             TargetLanguage = this.TargetLanguage,
             EnableNamingAlias = this.EnableNamingAlias,
             IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
+            TempFilePath = this.TempFilePath,
             MakeTypesInternal = this.MakeTypesInternal
         };
     }
@@ -62,6 +63,7 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             TargetLanguage = this.TargetLanguage,
             EnableNamingAlias = this.EnableNamingAlias,
             IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
+            TempFilePath = this.TempFilePath,
             MakeTypesInternal = this.MakeTypesInternal
         };
     }
@@ -223,6 +225,15 @@ public bool MakeTypesInternal
 }
 
 /// <summary>
+/// The path for the temporary file where the metadata xml document can be stored.
+/// </summary>
+public string TempFilePath
+{
+    get;
+    set;
+}
+
+/// <summary>
 /// Generate code targeting a specific .Net Framework language.
 /// </summary>
 public enum LanguageOption
@@ -346,6 +357,7 @@ private void ApplyParametersFromConfigurationClass()
     this.EnableNamingAlias = Configuration.EnableNamingAlias;
     this.IgnoreUnexpectedElementsAndAttributes = Configuration.IgnoreUnexpectedElementsAndAttributes;
     this.MakeTypesInternal = Configuration.MakeTypesInternal;
+    this.TempFilePath = Configuration.TempFilePath;
 }
 
 /// <summary>
@@ -743,6 +755,15 @@ public class CodeGenerationContext
     /// true to ignore unknown elements or attributes in metadata, false otherwise.
     /// </summary>
     public bool IgnoreUnexpectedElementsAndAttributes
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
+    /// The path for the temporary file where the metadata xml document can be stored.
+    /// </summary>
+    public string TempFilePath
     {
         get;
         set;
@@ -1427,6 +1448,8 @@ public abstract class ODataClientTemplate : TemplateBase
     internal void WriteEntityContainer(IEdmEntityContainer container, string fullNamespace)
     {
         string camelCaseContainerName = container.Name;
+        string path = this.context.TempFilePath;
+        bool useTempFile = !String.IsNullOrEmpty(path);
         if (this.context.EnableNamingAlias)
         {
             camelCaseContainerName = Customization.CustomizeNaming(camelCaseContainerName);
@@ -1502,7 +1525,14 @@ public abstract class ODataClientTemplate : TemplateBase
             }
         }
 
-        this.WriteGeneratedEdmModel(Utils.SerializeToString(this.context.Edmx).Replace("\"", "\"\""));
+        if (useTempFile)
+        {
+            this.WriteGeneratedEdmModel(Utils.SerializeToString(this.context.Edmx));
+        }
+        else
+        {
+            this.WriteGeneratedEdmModel(Utils.SerializeToString(this.context.Edmx).Replace("\"", "\"\""));
+        }
         
         bool hasOperationImport = container.OperationImports().OfType<IEdmOperationImport>().Any();
         foreach (IEdmFunctionImport functionImport in container.OperationImports().OfType<IEdmFunctionImport>())
@@ -3476,6 +3506,16 @@ namespace <#= fullNamespace #>
 
     internal override void WriteGeneratedEdmModel(string escapedEdmxString)
     {
+        string path = this.context.TempFilePath;
+        if(!String.IsNullOrEmpty(path))
+        {
+            using (StreamWriter writer = new StreamWriter(path, false))
+            {
+                writer.WriteLine(escapedEdmxString);
+            }
+        }
+
+        bool useTempFile = !String.IsNullOrEmpty(path) && System.IO.File.Exists(path);
 #>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
         private abstract class GeneratedEdmModel
@@ -3501,8 +3541,24 @@ namespace <#= fullNamespace #>
 #>
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
             private static global::Microsoft.OData.Edm.IEdmModel ParsedModel = LoadModelFromString();
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
-            private const string Edmx = @"<#= escapedEdmxString #>";
+
+<#+
+            if (useTempFile)
+            {
+#>
+                [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
+                private const string filePath = @"<#= path #>";
+<#+
+            }
+            else
+            {
+#>
+                [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
+                private const string Edmx = @"<#= escapedEdmxString #>";
+<#+
+            }
+#>
+
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
             public static global::Microsoft.OData.Edm.IEdmModel GetInstance()
             {
@@ -3544,7 +3600,20 @@ namespace <#= fullNamespace #>
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
             private static global::Microsoft.OData.Edm.IEdmModel LoadModelFromString()
             {
-                global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);
+<#+
+                if (useTempFile)
+                {
+#>
+                    global::System.Xml.XmlReader reader = CreateXmlReader();
+<#+
+                }
+                else
+                {
+#>
+                    global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);
+<#+
+                }
+#>
                 try
                 {
                     return global::Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader);
@@ -3562,6 +3631,19 @@ namespace <#= fullNamespace #>
             {
                 return global::System.Xml.XmlReader.Create(new global::System.IO.StringReader(edmxToParse));
             }
+
+<#+
+            if (useTempFile)
+            {
+#>
+                [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
+                private static global::System.Xml.XmlReader CreateXmlReader()
+                {
+                    return global::System.Xml.XmlReader.Create(new global::System.IO.StreamReader(filePath));
+                }
+<#+
+            }
+#>
         }
 <#+
     }
