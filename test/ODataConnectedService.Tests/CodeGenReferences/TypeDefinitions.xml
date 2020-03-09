@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+  <edmx:DataServices>
+    <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Microsoft.OData.TestService">
+      <EntityType Name="Person">
+        <Key>
+          <PropertyRef Name="UserName" />
+        </Key>
+        <Property Name="UserName" Nullable="false" Type="Edm.String"/>
+        <Property Name="WakeUpTime" Type="Edm.TimeOfDay"/>
+      </EntityType>
+      <EntityType Name="Reminder">
+        <Key>
+          <PropertyRef Name="Id"/>
+        </Key>
+        <Property Name="Id" Type="Edm.Int32"/>
+        <Property Name="ReminderTime" Type="Microsoft.OData.TestService.DateTime"/>
+      </EntityType>
+      <TypeDefinition Name="DateTime" UnderlyingType="Edm.String" />
+      <TypeDefinition Name="ItemCount" UnderlyingType="Edm.Int32"/>
+      <Function Name="ReminderView" IsBound="true">
+        <Parameter Name="bindingparameter" Type="Microsoft.OData.TestService.Person"/>
+        <Parameter Name="StartDateTime" Type="Microsoft.OData.TestService.DateTime" Nullable="false"/>
+        <Parameter Name="EndDateTime" Type="Microsoft.OData.TestService.DateTime"/>
+        <Parameter Name="MaxCount" Type="Microsoft.OData.TestService.ItemCount" Nullable="true"/>
+        <ReturnType Type="Collection(Microsoft.OData.TestService.Person)" Nullable="false"/>
+      </Function>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
