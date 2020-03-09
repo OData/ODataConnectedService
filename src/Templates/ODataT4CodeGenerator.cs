@@ -59,6 +59,7 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             TargetLanguage = this.TargetLanguage,
             EnableNamingAlias = this.EnableNamingAlias,
             IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
+            TempFilePath = this.TempFilePath,
             MakeTypesInternal = this.MakeTypesInternal
         };
     }
@@ -76,6 +77,7 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             TargetLanguage = this.TargetLanguage,
             EnableNamingAlias = this.EnableNamingAlias,
             IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
+            TempFilePath = this.TempFilePath,
             MakeTypesInternal = this.MakeTypesInternal
         };
     }
@@ -142,6 +144,10 @@ public static class Configuration
 
 	// The target language of the generated client code. The value must be set to "CSharp" or "VB".
 	public const string TargetLanguage = "OutputLanguage";
+
+	// The path for the temporary file where the metadata xml document can be stored. Use this if your metadata is too big to be stored in a string literal. Ensure that you have write permission for this path. 
+	// For example - "C:\\temp\\Test.xml"
+	public const string TempFilePath = "";
 
 	// This flag indicates whether to enable naming alias. The value must be set to true or false.
 	public const bool EnableNamingAlias = true;
@@ -335,6 +341,15 @@ public bool MakeTypesInternal
 }
 
 /// <summary>
+/// The path for the temporary file where the metadata xml document can be stored.
+/// </summary>
+public string TempFilePath
+{
+    get;
+    set;
+}
+
+/// <summary>
 /// Generate code targeting a specific .Net Framework language.
 /// </summary>
 public enum LanguageOption
@@ -458,6 +473,7 @@ private void ApplyParametersFromConfigurationClass()
     this.EnableNamingAlias = Configuration.EnableNamingAlias;
     this.IgnoreUnexpectedElementsAndAttributes = Configuration.IgnoreUnexpectedElementsAndAttributes;
     this.MakeTypesInternal = Configuration.MakeTypesInternal;
+    this.TempFilePath = Configuration.TempFilePath;
 }
 
 /// <summary>
@@ -855,6 +871,15 @@ public class CodeGenerationContext
     /// true to ignore unknown elements or attributes in metadata, false otherwise.
     /// </summary>
     public bool IgnoreUnexpectedElementsAndAttributes
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
+    /// The path for the temporary file where the metadata xml document can be stored.
+    /// </summary>
+    public string TempFilePath
     {
         get;
         set;
@@ -1539,6 +1564,8 @@ public abstract class ODataClientTemplate : TemplateBase
     internal void WriteEntityContainer(IEdmEntityContainer container, string fullNamespace)
     {
         string camelCaseContainerName = container.Name;
+        string path = this.context.TempFilePath;
+        bool useTempFile = !String.IsNullOrEmpty(path);
         if (this.context.EnableNamingAlias)
         {
             camelCaseContainerName = Customization.CustomizeNaming(camelCaseContainerName);
@@ -1614,7 +1641,14 @@ public abstract class ODataClientTemplate : TemplateBase
             }
         }
 
-        this.WriteGeneratedEdmModel(Utils.SerializeToString(this.context.Edmx).Replace("\"", "\"\""));
+        if (useTempFile)
+        {
+            this.WriteGeneratedEdmModel(Utils.SerializeToString(this.context.Edmx));
+        }
+        else
+        {
+            this.WriteGeneratedEdmModel(Utils.SerializeToString(this.context.Edmx).Replace("\"", "\"\""));
+        }
         
         bool hasOperationImport = container.OperationImports().OfType<IEdmOperationImport>().Any();
         foreach (IEdmFunctionImport functionImport in container.OperationImports().OfType<IEdmFunctionImport>())
@@ -3797,6 +3831,16 @@ this.Write(");\r\n        }\r\n");
 
     internal override void WriteGeneratedEdmModel(string escapedEdmxString)
     {
+        string path = this.context.TempFilePath;
+        if(!String.IsNullOrEmpty(path))
+        {
+            using (StreamWriter writer = new StreamWriter(path, false))
+            {
+                writer.WriteLine(escapedEdmxString);
+            }
+        }
+
+        bool useTempFile = !String.IsNullOrEmpty(path) && System.IO.File.Exists(path);
 
 this.Write("        [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData." +
         "Client.Design.T4\", \"");
@@ -3846,17 +3890,44 @@ this.Write("            [global::System.CodeDom.Compiler.GeneratedCodeAttribute(
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
 this.Write("\")]\r\n            private static global::Microsoft.OData.Edm.IEdmModel ParsedModel" +
-        " = LoadModelFromString();\r\n            [global::System.CodeDom.Compiler.Generate" +
-        "dCodeAttribute(\"Microsoft.OData.Client.Design.T4\", \"");
+        " = LoadModelFromString();\r\n\r\n");
+
+
+            if (useTempFile)
+            {
+
+this.Write("                [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsof" +
+        "t.OData.Client.Design.T4\", \"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
-this.Write("\")]\r\n            private const string Edmx = @\"");
+this.Write("\")]\r\n                private const string filePath = @\"");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(path));
+
+this.Write("\";\r\n");
+
+
+            }
+            else
+            {
+
+this.Write("                [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsof" +
+        "t.OData.Client.Design.T4\", \"");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
+
+this.Write("\")]\r\n                private const string Edmx = @\"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(escapedEdmxString));
 
-this.Write("\";\r\n            [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsof" +
-        "t.OData.Client.Design.T4\", \"");
+this.Write("\";\r\n");
+
+
+            }
+
+this.Write("\r\n            [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft." +
+        "OData.Client.Design.T4\", \"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
@@ -3912,11 +3983,27 @@ this.Write("            [global::System.CodeDom.Compiler.GeneratedCodeAttribute(
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
-this.Write(@""")]
-            private static global::Microsoft.OData.Edm.IEdmModel LoadModelFromString()
-            {
-                global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);
-                try
+this.Write("\")]\r\n            private static global::Microsoft.OData.Edm.IEdmModel LoadModelFr" +
+        "omString()\r\n            {\r\n");
+
+
+                if (useTempFile)
+                {
+
+this.Write("                    global::System.Xml.XmlReader reader = CreateXmlReader();\r\n");
+
+
+                }
+                else
+                {
+
+this.Write("                    global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);\r" +
+        "\n");
+
+
+                }
+
+this.Write(@"                try
                 {
                     return global::Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader);
                 }
@@ -3937,8 +4024,25 @@ this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
 this.Write("\")]\r\n            private static global::System.Xml.XmlReader CreateXmlReader(stri" +
         "ng edmxToParse)\r\n            {\r\n                return global::System.Xml.XmlRea" +
-        "der.Create(new global::System.IO.StringReader(edmxToParse));\r\n            }\r\n   " +
-        "     }\r\n");
+        "der.Create(new global::System.IO.StringReader(edmxToParse));\r\n            }\r\n\r\n");
+
+
+            if (useTempFile)
+            {
+
+this.Write("                [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsof" +
+        "t.OData.Client.Design.T4\", \"");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
+
+this.Write("\")]\r\n                private static global::System.Xml.XmlReader CreateXmlReader(" +
+        ")\r\n                {\r\n                    return global::System.Xml.XmlReader.Cr" +
+        "eate(new global::System.IO.StreamReader(filePath));\r\n                }\r\n");
+
+
+            }
+
+this.Write("        }\r\n");
 
 
     }

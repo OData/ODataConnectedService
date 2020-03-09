@@ -37,6 +37,7 @@ namespace ODataConnectedService.Tests
         private static string T4TransformToolPath;
         private static string T4TemplatePath;
         private static string T4IncludeTemplatePath;
+        private static string TempFilePath;
 
         [TestInitialize]
         public void Init()
@@ -393,7 +394,18 @@ namespace ODataConnectedService.Tests
             ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
-        private static string CodeGenWithT4Template(string edmx, string namespacePrefix, bool isCSharp, bool useDataServiceCollection, bool enableNamingAlias = false, bool ignoreUnexpectedElementsAndAttributes = false, Func<Uri, XmlReader> getReferencedModelReaderFunc = null, bool appendDSCSuffix = false)
+        [TestMethod]
+        public void CodeGenUsingTempMetadataFileTest()
+        {
+            TempFilePath = "tempMetadata.xml";
+            File.Delete(TempFilePath);
+            CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Metadata, null, true, true, false, false, null, true, TempFilePath);
+            Action action = () => ODataT4CodeGeneratorTestDescriptors.ValidateXMLFile(TempFilePath);
+            action.ShouldNotThrow<XmlException>();
+            ODataT4CodeGeneratorTestDescriptors.ValidateEdmx(TempFilePath);
+        }
+
+        private static string CodeGenWithT4Template(string edmx, string namespacePrefix, bool isCSharp, bool useDataServiceCollection, bool enableNamingAlias = false, bool ignoreUnexpectedElementsAndAttributes = false, Func<Uri, XmlReader> getReferencedModelReaderFunc = null, bool appendDSCSuffix = false, string TempFilePath = null)
         {
             if (useDataServiceCollection
                 && appendDSCSuffix) // hack now
@@ -418,6 +430,11 @@ namespace ODataConnectedService.Tests
                 EnableNamingAlias = enableNamingAlias,
                 IgnoreUnexpectedElementsAndAttributes = ignoreUnexpectedElementsAndAttributes
             };
+
+            if (!String.IsNullOrEmpty(TempFilePath))
+            {
+                t4CodeGenerator.TempFilePath = TempFilePath;
+            }
 
             if (useDataServiceCollection)
             {
