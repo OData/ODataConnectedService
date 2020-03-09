@@ -4007,7 +4007,25 @@ this.Write("                    global::System.Xml.XmlReader reader = CreateXmlR
 
 this.Write(@"                try
                 {
-                    return global::Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader);
+                    global::System.Collections.Generic.IEnumerable<global::Microsoft.OData.Edm.Validation.EdmError> errors;
+                    global::Microsoft.OData.Edm.IEdmModel edmModel;
+
+                    if (!global::Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, ");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(this.context.IgnoreUnexpectedElementsAndAttributes ? "true" : "false"));
+
+this.Write(@", out edmModel, out errors))
+                    {
+	                    global::System.Text.StringBuilder errorMessages = new System.Text.StringBuilder();
+	                    foreach (var error in errors)
+	                    {
+		                    errorMessages.Append(error.ErrorMessage);
+		                    errorMessages.Append(""; "");
+	                    }
+	                    throw new global::System.InvalidOperationException(errorMessages.ToString());
+                    }
+
+        return edmModel;
                 }
                 finally
                 {
