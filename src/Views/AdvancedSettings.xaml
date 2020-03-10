@@ -50,7 +50,7 @@
                 </CheckBox>
                 <CheckBox x:Name="IncludeT4File" Content="Add code templates (Whether to include the T4 files into this project.)" IsChecked="{Binding IncludeT4File}"
             		HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 15" FontWeight="Medium"/>
-                <CheckBox x:Name="OpenGeneratedFilesInIDE" Content="Open generated files in the IDE when generation completes." IsChecked="{Binding OpenGeneratedFilesInIDE, Mode=TwoWay}"
+                <CheckBox x:Name="OpenGeneratedFilesInIDE" Content="Open generated files in the IDE when generation completes." IsChecked="{Binding OpenGeneratedFilesInIDE}"
                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5"/>
             </StackPanel>
         </StackPanel>
