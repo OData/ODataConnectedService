@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -49,6 +51,8 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             {
                 await AddGeneratedCSharpCodeAsync();
             }
+            // Don't write headers to json file
+            this.ServiceConfiguration.CustomHttpHeaders = null;
         }
 
         private async Task AddT4FileAsync()
@@ -68,6 +72,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 text = Regex.Replace(text, "(public const bool EnableNamingAlias = )true;", "$1" + this.ServiceConfiguration.EnableNamingAlias.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
                 text = Regex.Replace(text, "(public const bool IgnoreUnexpectedElementsAndAttributes = )true;", "$1" + this.ServiceConfiguration.IgnoreUnexpectedElementsAndAttributes.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
                 text = Regex.Replace(text, "(public const bool MakeTypesInternal = )false;", "$1" + ServiceConfiguration.MakeTypesInternal.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
+                text = Regex.Replace(text, "(public const bool CustomHttpHeaders = )\"\";", "$1" + ServiceConfiguration.CustomHttpHeaders.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
                 await writer.WriteAsync(text);
                 await writer.FlushAsync();
             }
@@ -87,6 +92,18 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             t4CodeGenerator.EnableNamingAlias = this.ServiceConfiguration.EnableNamingAlias;
             t4CodeGenerator.NamespacePrefix = this.ServiceConfiguration.NamespacePrefix;
             t4CodeGenerator.MakeTypesInternal = ServiceConfiguration.MakeTypesInternal;
+            var headers = new List<string>();
+            if (this.ServiceConfiguration.CustomHttpHeaders !=null)
+            {
+                string[] headerElements = this.ServiceConfiguration.CustomHttpHeaders.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var headerElement in headerElements)
+                {
+                    // Trim header for empty spaces
+                    var header = headerElement.Trim();
+                    headers.Add(header);
+                }
+            }
+            t4CodeGenerator.CustomHttpHeaders = headers;
 
             string tempFile = Path.GetTempFileName();
 

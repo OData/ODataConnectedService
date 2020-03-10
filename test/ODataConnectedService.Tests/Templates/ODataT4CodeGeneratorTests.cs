@@ -52,10 +52,10 @@ namespace ODataConnectedService.Tests
             string T4TransformToolPathVer11 = commonProgramFiles + "\\Microsoft Shared\\TextTemplating\\14.0\\TextTransform.exe";
             string T4TransformToolPathVer12 = commonProgramFiles + "\\Microsoft Shared\\TextTemplating\\15.0\\TextTransform.exe";
             string T4TransformToolPathVSVer2019 = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\IDE\\TextTransform.exe";
-
-            if (File.Exists(T4TransformToolPathVer12))
+            
+            if (File.Exists(T4TransformToolPathVSVer2019))
             {
-                T4TransformToolPath = T4TransformToolPathVer12;
+                T4TransformToolPath = T4TransformToolPathVSVer2019;
             }
             else if(File.Exists(T4TransformToolPathVer11))
             {
@@ -63,7 +63,7 @@ namespace ODataConnectedService.Tests
             }
             else
             {
-                T4TransformToolPath = T4TransformToolPathVSVer2019;
+                T4TransformToolPath = T4TransformToolPathVer12;
             }
 
             string T4TemplateName = "ODataConnectedService.Tests.Templates.ODataT4CodeGenerator.tt";

@@ -60,5 +60,6 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             MakeTypesInternal = false;
             this.OpenGeneratedFilesInIDE = false;
         }
+
     }
 }

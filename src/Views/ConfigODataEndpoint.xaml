@@ -24,5 +24,20 @@
                   Margin="20, 5, 5, 0" IsEditable="True"
                   ItemsSource="{Binding Path=UserSettings.MruEndpoints}"
                   Text="{Binding Path=Endpoint, TargetNullValue='Enter your endpoint...' }"/>
+        <TextBlock
+            x:Name="CustomHttpHeadersLabel"
+            Text="Custom Headers： "
+            HorizontalAlignment="Left"
+            Margin="0, 5, 10, 5">
+        </TextBlock>
+        <TextBox
+            x:Name="CustomHttpHeaders"
+            Text="{Binding Path=CustomHttpHeaders}"
+            HorizontalAlignment="Left"
+            TextWrapping="Wrap"
+            AcceptsReturn="True"
+            VerticalScrollBarVisibility="Visible"
+            Margin="20, 5, 10, 5"
+            Width="250"/>
     </StackPanel>
 </UserControl>

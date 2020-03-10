@@ -71,7 +71,7 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             this.ApplyParametersFromConfigurationClass();
         }
 
-        context = new CodeGenerationContext(new Uri(this.MetadataDocumentUri, UriKind.Absolute), this.NamespacePrefix)
+        context = new CodeGenerationContext(new Uri(this.MetadataDocumentUri, UriKind.Absolute), this.NamespacePrefix, this.CustomHttpHeaders)
         {
             UseDataServiceCollection = this.UseDataServiceCollection,
             TargetLanguage = this.TargetLanguage,
@@ -159,6 +159,8 @@ public static class Configuration
 	// If set to true, generated types will have an "internal" class modifier ("Friend" in VB) instead of "public"
 	// thereby making them invisible outside the assembly
 	public const bool MakeTypesInternal = false;
+	// (Optional) Custom http headers as a multiline string
+	public const string CustomHttpHeaders = "";
 }
 
 public static class Customization
@@ -362,6 +364,15 @@ public enum LanguageOption
 }
 
 /// <summary>
+/// Stores Custom Http Headers to be added to the WebRequest.Headers property.
+/// </summary>
+public virtual IList<string> CustomHttpHeaders
+{
+    get;
+    set;
+}
+
+/// <summary>
 /// Set the UseDataServiceCollection property with the given value.
 /// </summary>
 /// <param name="inputValue">The value to set.</param>
@@ -462,6 +473,42 @@ public void ValidateAndSetMakeTypesInternalFromString(string inputValue)
 }
 
 /// <summary>
+/// Validate the supplied custom http header string.
+/// </summary>
+/// <param name="header">Custom http header string.</param>
+public void ValidateCustomHttpHeaderString(string header)
+{
+    if (!header.Contains(':'))
+    {
+        throw new ArgumentException("A http header string must have a colon delimeter");
+    }
+}
+
+/// <summary>
+/// Set the CustomHttpHeaders property using supplied custom http headers string.
+/// </summary>
+/// <param name="headersValue">Custom http headers string.</param>
+public void SetCustomHttpHeadersFromString(string headersValue)
+{
+    if (String.IsNullOrWhiteSpace(headersValue))
+    {
+        return;
+    }
+
+    this.CustomHttpHeaders = new List<string>();
+
+    string[] headerElements = headersValue.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+    foreach (var headerElement in headerElements)
+    {
+        // Trim header for empty spaces
+        var header = headerElement.Trim();
+        ValidateCustomHttpHeaderString(header);
+        CustomHttpHeaders.Add(header);
+    }
+
+}
+
+/// <summary>
 /// Reads the parameter values from the Configuration class and applies them.
 /// </summary>
 private void ApplyParametersFromConfigurationClass()
@@ -474,6 +521,7 @@ private void ApplyParametersFromConfigurationClass()
     this.IgnoreUnexpectedElementsAndAttributes = Configuration.IgnoreUnexpectedElementsAndAttributes;
     this.MakeTypesInternal = Configuration.MakeTypesInternal;
     this.TempFilePath = Configuration.TempFilePath;
+    this.SetCustomHttpHeadersFromString(Configuration.CustomHttpHeaders);
 }
 
 /// <summary>
@@ -526,6 +574,12 @@ private void ApplyParametersFromCommandLine()
     if (!string.IsNullOrEmpty(makeTypesInternal))
     {
         this.ValidateAndSetMakeTypesInternalFromString(makeTypesInternal);
+    }
+
+    string customHttpHeaders = this.Host.ResolveParameterValue("notempty", "notempty", "CustomHttpHeaders");
+    if (!string.IsNullOrEmpty(customHttpHeaders))
+    {
+        this.SetCustomHttpHeadersFromString(customHttpHeaders);
     }
 }
 
@@ -601,8 +655,8 @@ public class CodeGenerationContext
     /// Constructs an instance of <see cref="CodeGenerationContext"/>.
     /// </summary>
     /// <param name="metadataUri">The Uri to the metadata document. The supported scheme are File, http and https.</param>
-    public CodeGenerationContext(Uri metadataUri, string namespacePrefix)
-        : this(GetEdmxStringFromMetadataPath(metadataUri), namespacePrefix)
+    public CodeGenerationContext(Uri metadataUri, string namespacePrefix, IList<string> CustomHttpHeaders = null)
+        : this(GetEdmxStringFromMetadataPath(metadataUri, CustomHttpHeaders), namespacePrefix)
     {
     }
 
@@ -1008,10 +1062,10 @@ public class CodeGenerationContext
     /// Reads the edmx string from a file path or a http/https path.
     /// </summary>
     /// <param name="metadataUri">The Uri to the metadata document. The supported scheme are File, http and https.</param>
-    private static string GetEdmxStringFromMetadataPath(Uri metadataUri)
+    private static string GetEdmxStringFromMetadataPath(Uri metadataUri, IList<string> CustomHttpHeaders = null)
     {
         string content = null;
-        using (StreamReader streamReader = new StreamReader(GetEdmxStreamFromUri(metadataUri)))
+        using (StreamReader streamReader = new StreamReader(GetEdmxStreamFromUri(metadataUri, CustomHttpHeaders)))
         {
             content = streamReader.ReadToEnd();
         }
@@ -1023,7 +1077,7 @@ public class CodeGenerationContext
     /// Get the metadata stream from a file path or a http/https path.
     /// </summary>
     /// <param name="metadataUri">The Uri to the stream. The supported scheme are File, http and https.</param>
-    private static Stream GetEdmxStreamFromUri(Uri metadataUri)
+    private static Stream GetEdmxStreamFromUri(Uri metadataUri, IList<string> CustomHttpHeaders  = null)
     {
         Debug.Assert(metadataUri != null, "metadataUri != null");
         Stream metadataStream = null;
@@ -1036,6 +1090,13 @@ public class CodeGenerationContext
             try
             {
                 HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(metadataUri);
+                if (CustomHttpHeaders != null)
+                {
+                    foreach (var header in CustomHttpHeaders)
+                    {
+                        webRequest.Headers.Add(header);
+                    }
+                }
                 WebResponse webResponse = webRequest.GetResponse();
                 metadataStream = webResponse.GetResponseStream();
             }

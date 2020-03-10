@@ -32,6 +32,8 @@ public static class Configuration
 	// If set to true, generated types will have an "internal" class modifier ("Friend" in VB) instead of "public"
 	// thereby making them invisible outside the assembly
 	public const bool MakeTypesInternal = false;
+	// (Optional) Custom http headers as a multiline string
+	public const string CustomHttpHeaders = "";
 }
 
 public static class Customization

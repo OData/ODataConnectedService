@@ -2,6 +2,7 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net;
@@ -23,6 +24,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public string ServiceName { get; set; }
         public Version EdmxVersion { get; set; }
         public string MetadataTempPath { get; set; }
+        public string CustomHttpHeaders { get; set; }
         public UserSettings UserSettings
         {
             get { return this.userSettings; }
@@ -77,24 +79,26 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                 }
             }
 
-            // Set up XML secure resolver
-            XmlUrlResolver xmlUrlResolver = new XmlUrlResolver()
+            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(this.Endpoint);
+            if(this.CustomHttpHeaders !=null)
             {
-                Credentials = CredentialCache.DefaultNetworkCredentials
-            };
+                string[] headerElements = this.CustomHttpHeaders.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var headerElement in headerElements)
+                {
+                    // Trim header for empty spaces
+                    var header = headerElement.Trim();
+                    webRequest.Headers.Add(header);
+                }
+            }
 
-            PermissionSet permissionSet = new PermissionSet(System.Security.Permissions.PermissionState.Unrestricted);
-
-            XmlReaderSettings readerSettings = new XmlReaderSettings()
-            {
-                XmlResolver = new XmlSecureResolver(xmlUrlResolver, permissionSet)
-            };
+            WebResponse webResponse = webRequest.GetResponse();
+            Stream metadataStream = webResponse.GetResponseStream();
 
             string workFile = Path.GetTempFileName();
 
             try
             {
-                using (XmlReader reader = XmlReader.Create(this.Endpoint, readerSettings))
+                using (XmlReader reader = XmlReader.Create(metadataStream))
                 {
                     using (XmlWriter writer = XmlWriter.Create(workFile))
                     {
