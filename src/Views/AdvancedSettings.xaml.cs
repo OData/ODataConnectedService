@@ -7,19 +7,15 @@ using Microsoft.OData.ConnectedService.ViewModels;
 
 namespace Microsoft.OData.ConnectedService.Views
 {
-    //public delegate void OpenGeneratedFilesInIDE(object sender, RoutedEventArgs e);
     /// <summary>
     /// Interaction logic for AdvancedSettings.xaml
     /// </summary>
     public partial class AdvancedSettings : UserControl
     {
-        //public event OpenGeneratedFilesInIDE Checked;
         public AdvancedSettings()
         {
             InitializeComponent();
             this.AdvancedSettingsPanel.Visibility = Visibility.Hidden;
-            //Checked += (obj, ev) => { };
-
         }
 
         internal ODataConnectedServiceWizard ODataConnectedServiceWizard
