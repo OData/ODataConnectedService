@@ -6,19 +6,19 @@ using System.Windows.Controls;
 
 namespace Microsoft.OData.ConnectedService.Views
 {
+
+    public delegate void OpenGeneratedFilesInIDE(object sender, RoutedEventArgs e);
+    
     /// <summary>
     /// Interaction logic for ConfigODataEndpoint.xaml
     /// </summary>
     public partial class ConfigODataEndpoint : UserControl
     {
+        public event OpenGeneratedFilesInIDE Checked;
         public ConfigODataEndpoint()
         {
             InitializeComponent();
-        }
-
-        private void OpenGeneratedFilesOnIDE_Checked(object sender, RoutedEventArgs e)
-        {
-
+            Checked += (obj, ev) => { };
         }
     }
 }

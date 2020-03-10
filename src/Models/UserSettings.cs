@@ -20,7 +20,7 @@ namespace Microsoft.OData.ConnectedService.Models
         [DataMember]
         public ObservableCollection<string> MruEndpoints { get; private set; }
         [DataMember]
-        public bool OpenGeneratedFilesOnIDE { get; set; } = false;
+        public bool OpenGeneratedFilesInIDE { get; set; } = false;
 
         private UserSettings()
         {
