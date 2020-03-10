@@ -132,6 +132,7 @@ namespace Microsoft.OData.ConnectedService
             serviceConfiguration.GeneratedFileNamePrefix = AdvancedSettingsViewModel.GeneratedFileName;
             serviceConfiguration.UseNameSpacePrefix = AdvancedSettingsViewModel.UseNamespacePrefix;
             serviceConfiguration.MakeTypesInternal = AdvancedSettingsViewModel.MakeTypesInternal;
+            serviceConfiguration.OpenGeneratedFilesOnIDE = ConfigODataEndpointViewModel.UserSettings.OpenGeneratedFilesOnIDE;
             if (AdvancedSettingsViewModel.UseNamespacePrefix && !string.IsNullOrEmpty(AdvancedSettingsViewModel.NamespacePrefix))
             {
                 serviceConfiguration.NamespacePrefix = AdvancedSettingsViewModel.NamespacePrefix;

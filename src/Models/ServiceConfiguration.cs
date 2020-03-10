@@ -15,6 +15,7 @@ namespace Microsoft.OData.ConnectedService.Models
         public string NamespacePrefix { get; set; }
         public bool UseDataServiceCollection { get; set; }
         public bool MakeTypesInternal { get; set; }
+        public bool OpenGeneratedFilesOnIDE { get; set; }
     }
 
     internal class ServiceConfigurationV4 : ServiceConfiguration

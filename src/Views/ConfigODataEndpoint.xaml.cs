@@ -15,5 +15,10 @@ namespace Microsoft.OData.ConnectedService.Views
         {
             InitializeComponent();
         }
+
+        private void OpenGeneratedFilesOnIDE_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
