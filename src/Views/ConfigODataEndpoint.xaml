@@ -24,11 +24,6 @@
                   Margin="20, 5, 5, 0" IsEditable="True"
                   ItemsSource="{Binding Path=UserSettings.MruEndpoints}"
                   Text="{Binding Path=Endpoint, TargetNullValue='Enter your endpoint...' }"/>
-        <CheckBox
-            x:Name="OpenGeneratedFilesInIDE"
-            Margin="20,15,10,5"
-            HorizontalAlignment="Stretch"
-            Content="Open generated files in the IDE when generation completes."
-            IsChecked="{Binding Path=UserSettings.OpenGeneratedFilesInIDE, Mode=TwoWay}" />
+        
     </StackPanel>
 </UserControl>
