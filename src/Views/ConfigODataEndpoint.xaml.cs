@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace Microsoft.OData.ConnectedService.Views
-{  
+{
     /// <summary>
     /// Interaction logic for ConfigODataEndpoint.xaml
     /// </summary>
@@ -13,7 +13,7 @@ namespace Microsoft.OData.ConnectedService.Views
     {
         public ConfigODataEndpoint()
         {
-            InitializeComponent();           
+            InitializeComponent();
         }
     }
 }
