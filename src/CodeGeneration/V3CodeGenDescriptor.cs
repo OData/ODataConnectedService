@@ -92,7 +92,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 }
 
                 string outputFile = Path.Combine(GetReferenceFileFolder(), this.GeneratedFileNamePrefix + ".cs");
-                await this.Context.HandlerHelper.AddFileAsync(tempFile, outputFile);
+                await this.Context.HandlerHelper.AddFileAsync(tempFile, outputFile, new AddFileOptions { OpenOnComplete = this.ServiceConfiguration.OpenGeneratedFilesInIDE });
             }
         }
     }

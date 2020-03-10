@@ -118,6 +118,7 @@ namespace Microsoft.OData.ConnectedService
                 ServiceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = AdvancedSettingsViewModel.IgnoreUnexpectedElementsAndAttributes;
                 ServiceConfigurationV4.EnableNamingAlias = AdvancedSettingsViewModel.EnableNamingAlias;
                 ServiceConfigurationV4.IncludeT4File = AdvancedSettingsViewModel.IncludeT4File;
+                ServiceConfigurationV4.OpenGeneratedFilesInIDE = AdvancedSettingsViewModel.OpenGeneratedFilesInIDE;
                 serviceConfiguration = ServiceConfigurationV4;
             }
             else
@@ -132,6 +133,7 @@ namespace Microsoft.OData.ConnectedService
             serviceConfiguration.GeneratedFileNamePrefix = AdvancedSettingsViewModel.GeneratedFileName;
             serviceConfiguration.UseNameSpacePrefix = AdvancedSettingsViewModel.UseNamespacePrefix;
             serviceConfiguration.MakeTypesInternal = AdvancedSettingsViewModel.MakeTypesInternal;
+            serviceConfiguration.OpenGeneratedFilesInIDE = AdvancedSettingsViewModel.OpenGeneratedFilesInIDE;
             if (AdvancedSettingsViewModel.UseNamespacePrefix && !string.IsNullOrEmpty(AdvancedSettingsViewModel.NamespacePrefix))
             {
                 serviceConfiguration.NamespacePrefix = AdvancedSettingsViewModel.NamespacePrefix;
