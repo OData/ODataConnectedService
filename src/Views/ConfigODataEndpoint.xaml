@@ -29,7 +29,6 @@
             Margin="20,15,10,5"
             HorizontalAlignment="Stretch"
             Content="Open generated files in the IDE when generation completes."
-            FontWeight="Bold"
             IsChecked="{Binding Path=UserSettings.OpenGeneratedFilesInIDE, Mode=TwoWay}" />
     </StackPanel>
 </UserControl>
