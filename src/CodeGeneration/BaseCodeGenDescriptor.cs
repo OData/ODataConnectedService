@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using EnvDTE;
@@ -70,6 +71,28 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 this.Context.ServiceInstance.Name);
 
             return referenceFolderPath;
+        }
+
+        internal async Task CheckAndInstallNuGetPackageAsync(string packageSource, string nugetPackage)
+        {
+            try
+            {
+                if (!PackageInstallerServices.IsPackageInstalled(this.Project, nugetPackage))
+                {
+                    Version packageVersion = null;
+                    PackageInstaller.InstallPackage(packageSource, this.Project, nugetPackage, packageVersion, false);
+
+                    await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, $"Nuget Package \"{nugetPackage}\" for OData client was added.");
+                }
+                else
+                {
+                    await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, $"Nuget Package \"{nugetPackage}\" for OData client already installed.");
+                }
+            }
+            catch (Exception ex)
+            {
+                await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Error, $"Nuget Package \"{nugetPackage}\" for OData client not installed. Error: {ex.Message}.");
+            }
         }
     }
 }

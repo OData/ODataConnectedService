@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
-using System;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -30,13 +29,12 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
 
         public override async Task AddNugetPackagesAsync()
         {
-            await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Adding Nuget Packages");
+            await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Adding Nuget Packages...");
 
-            if (!PackageInstallerServices.IsPackageInstalled(this.Project, this.ClientNuGetPackageName))
-            {
-                Version packageVersion = null;
-                PackageInstaller.InstallPackage(Common.Constants.NuGetOnlineRepository, this.Project, this.ClientNuGetPackageName, packageVersion, false);
-            }
+            foreach (var nugetPackage in Common.Constants.V4NuGetPackages)
+                await CheckAndInstallNuGetPackageAsync(Common.Constants.NuGetOnlineRepository, nugetPackage);
+
+            await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Nuget Packages were installed.");
         }
 
         public override async Task AddGeneratedClientCodeAsync()

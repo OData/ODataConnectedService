@@ -46,6 +46,14 @@ namespace Microsoft.OData.ConnectedService.Common
             V3SpatialNuGetPackage
         };
 
+        public static string[] V4NuGetPackages = new string[]
+        {
+            V4ClientNuGetPackage,
+            V4ODataNuGetPackage,
+            V4EdmNuGetPackage,
+            V4SpatialNuGetPackage
+        };
+
         private static Dictionary<string, Version> supportedEdmxNamespaces = new Dictionary<string, Version>
         {
             { EdmxVersion1Namespace, EdmxVersion1},
