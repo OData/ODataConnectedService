@@ -24,6 +24,10 @@ namespace Microsoft.OData.ConnectedService.Templates
     using Microsoft.OData.Edm.Vocabularies.Community.V1;
     using System.Text;
     using System.Net;
+    using System.Security;
+    using Microsoft.VisualStudio.TextTemplating;
+    using Microsoft.OData.ConnectedService.CodeGeneration;
+    using Microsoft.VisualStudio.ConnectedServices;
     
     /// <summary>
     /// Class to produce the template output
@@ -49,6 +53,17 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+/*
+OData Client T4 Template ver. #VersionNumber#
+Copyright (c) Microsoft Corporation
+All rights reserved. 
+MIT License
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
 
     CodeGenerationContext context;
     if (!string.IsNullOrWhiteSpace(this.Edmx))
@@ -60,7 +75,9 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             EnableNamingAlias = this.EnableNamingAlias,
             IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
             TempFilePath = this.TempFilePath,
-            MakeTypesInternal = this.MakeTypesInternal
+            MakeTypesInternal = this.MakeTypesInternal,
+            MultipleFilesManager = FilesManager.Create(this.Host, null),
+            GenerateMultipleFiles = this.GenerateMultipleFiles
         };
     }
     else
@@ -78,9 +95,13 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             EnableNamingAlias = this.EnableNamingAlias,
             IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
             TempFilePath = this.TempFilePath,
-            MakeTypesInternal = this.MakeTypesInternal
+            MakeTypesInternal = this.MakeTypesInternal,
+            MultipleFilesManager = FilesManager.Create(this.Host, null),
+            GenerateMultipleFiles = this.GenerateMultipleFiles
         };
     }
+
+     this.MultipleFilesManager = context.MultipleFilesManager;
 
     if(this.GetReferencedModelReaderFunc != null)
     {
@@ -159,8 +180,13 @@ public static class Configuration
 	// If set to true, generated types will have an "internal" class modifier ("Friend" in VB) instead of "public"
 	// thereby making them invisible outside the assembly
 	public const bool MakeTypesInternal = false;
-	// (Optional) Custom http headers as a multiline string
-	public const string CustomHttpHeaders = "";
+
+	//This files indicates whether to generate the files into multiple files or single.
+    //If set to true then multiple files will be generated. Otherwise only a single file is generated.
+    public const bool GenerateMultipleFiles = false;
+
+    // (Optional) Custom http headers as a multiline string
+    public const string CustomHttpHeaders = "";
 }
 
 public static class Customization
@@ -352,6 +378,24 @@ public string TempFilePath
 }
 
 /// <summary>
+/// Object instance of a file manager responsible for splitting generating multiple files.
+/// </summary>
+public FilesManager MultipleFilesManager
+{
+    get;
+    set;
+}
+
+/// <summary>
+/// true to generate multiple files, false generate a single file.
+/// </summary>
+public bool GenerateMultipleFiles
+{
+    get;
+    set;
+}
+
+/// <summary>
 /// Generate code targeting a specific .Net Framework language.
 /// </summary>
 public enum LanguageOption
@@ -521,6 +565,7 @@ private void ApplyParametersFromConfigurationClass()
     this.IgnoreUnexpectedElementsAndAttributes = Configuration.IgnoreUnexpectedElementsAndAttributes;
     this.MakeTypesInternal = Configuration.MakeTypesInternal;
     this.TempFilePath = Configuration.TempFilePath;
+    this.GenerateMultipleFiles = Configuration.GenerateMultipleFiles;
     this.SetCustomHttpHeadersFromString(Configuration.CustomHttpHeaders);
 }
 
@@ -931,9 +976,27 @@ public class CodeGenerationContext
     }
 
     /// <summary>
+    /// true to generate multiple files, false generate a single file.
+    /// </summary>
+    public bool GenerateMultipleFiles
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
     /// The path for the temporary file where the metadata xml document can be stored.
     /// </summary>
     public string TempFilePath
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
+    /// Object instance of a file manager responsible for splitting generating multiple files.
+    /// </summary>
+    public FilesManager MultipleFilesManager
     {
         get;
         set;
@@ -1174,6 +1237,10 @@ public abstract class ODataClientTemplate : TemplateBase
     public ODataClientTemplate(CodeGenerationContext context)
     {
         this.context = context;
+        if(context.MultipleFilesManager != null)
+        {
+            context.MultipleFilesManager.Template = this.GenerationEnvironment;
+        }
     }
 
     internal string SingleSuffix
@@ -1344,9 +1411,12 @@ public abstract class ODataClientTemplate : TemplateBase
     /// <returns>The generated code for the OData client.</returns>
     public override string TransformText()
     {
+        context.MultipleFilesManager.StartHeader();
         this.WriteFileHeader();
+        context.MultipleFilesManager.EndBlock();
         this.WriteNamespaces();
-        return this.GenerationEnvironment.ToString();
+        context.MultipleFilesManager.GenerateFiles(context.GenerateMultipleFiles,null,null, false);
+        return context.MultipleFilesManager.Template.ToString();
     }
 
     internal void WriteNamespaces()
@@ -1403,7 +1473,17 @@ public abstract class ODataClientTemplate : TemplateBase
                 }
                 else if (type is IEdmEntityType entityType)
                 {
+                    if(context.GenerateMultipleFiles) 
+                    {
+                        context.MultipleFilesManager.StartNewFile($"{entityType.Name}.cs",false);
+                        this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
+                    }
                     this.WriteEntityType(entityType, boundOperationsMap);
+                    if(context.GenerateMultipleFiles) 
+                    {
+                        this.WriteNamespaceEnd();
+                        context.MultipleFilesManager.EndBlock();
+                    }
                 }
 
                 IEdmStructuredType structuredType = type as IEdmStructuredType;
@@ -7341,6 +7421,273 @@ this.Write("End Namespace\r\n");
     }
 }
 
+
+/// <summary>
+/// Creates an instance of the FilesManager. The object used to generate and manage
+/// multiple source files.
+/// </summary>
+/// <param name="context">The code generation context.</param>
+public class FilesManager {
+    
+    /// <summary>
+    /// Creates an instance of the FilesManager. The object used to generate and manage
+    /// multiple source files.
+    /// </summary>
+    private class Block {
+
+        /// <summary> Name of the block.</summary>
+        public string Name;
+
+        /// <summary> The line in the template from which the block starts.</summary>
+        public int Start;
+        
+        /// <summary> Length of the block.</summary>
+        public int Length;
+
+         /// <summary> Block currently being processed.</summary>
+        public bool IsContainer;
+    }
+
+    /// <summary> Block currently being processed.</summary>
+    private Block _currentBlock;
+
+    /// <summary> A list of all the blocks of texts to be used to generate multiple files.</summary>
+    private List<Block> _files = new List<Block>();
+
+    /// <summary> A block describing the footer of all files.</summary>
+    private Block _footer = new Block();
+
+    /// <summary> A block describing the header of all files.</summary>
+    private Block _header = new Block();
+
+    /// <summary> Templating engine host being used.</summary>
+    private ITextTemplatingEngineHost _host; 
+  
+    /// <summary> A list of file names to be generated.</summary>
+    protected List<String> generatedFileNames = new List<String>();
+
+    /// <summary> Contains generated text.</summary>
+    public StringBuilder Template
+        {
+            get; 
+            set;
+        }
+
+
+    /// <summary> 
+    /// Creates FilesManager object given <paramref name="host"> and <param name="template">.
+    /// </summary>
+    /// <param name="host">Templating engine host</param>
+    /// <param name="template">Holds generated text</param>
+    [SecurityCritical]
+    public static FilesManager Create(ITextTemplatingEngineHost host, StringBuilder template) 
+    {
+        return (host is IServiceProvider) ? new VSManager(host, template) : new FilesManager(host, template);
+    }
+
+    /// <summary>
+    /// Marks the start of a new file.
+    /// </summary>
+    public void StartNewFile(string name, bool isContainer) 
+    {
+        if (name == null)
+        {
+                throw new ArgumentNullException("name");
+        } 
+
+        CurrentBlock = new Block { Name = name, IsContainer =  isContainer};
+    }
+
+    /// <summary>
+    /// Marks the start of the footer for all files.
+    /// </summary>
+    public void StartFooter() 
+    {
+        CurrentBlock = _footer;
+    }
+
+    /// <summary>
+    /// Marks the start of the header for all files.
+    /// </summary>
+    public void StartHeader() 
+    {
+        CurrentBlock = _header;
+    }
+
+    
+    /// <summary>
+    /// Marks the End of a file.
+    /// </summary>
+    public void EndBlock() 
+    {
+        if (CurrentBlock == null)
+        {
+            return;
+        }
+           
+        CurrentBlock.Length = Template.Length - CurrentBlock.Start;
+
+        if (CurrentBlock != _header && CurrentBlock != _footer)
+        {
+            _files.Add(CurrentBlock);
+        }
+
+        _currentBlock = null;
+    }
+
+    /// <summary>
+    /// Generated multiple files depending on the number of blocks.
+    /// </summary>
+    /// <param name="split">If true the function is executed and multiple files generated
+    /// otherwoise only a single file is generated.</param>
+    [SecurityCritical]
+    public virtual void GenerateFiles(bool split,BaseCodeGenDescriptor codeGenDescriptor,string referenceFolder,bool fileCreated) 
+    {
+        if (split) 
+        {
+            EndBlock();
+            string headerText = Template.ToString(_header.Start, _header.Length);
+            string footerText = Template.ToString(_footer.Start, _footer.Length);
+
+            if(_host != null)
+            {
+                Path.GetDirectoryName(_host.TemplateFile);
+            }
+            
+            _files.Reverse();
+
+            foreach(Block block in _files) 
+            {
+
+                if(block.IsContainer) continue;
+                string fileName = block.Name;
+                
+                if(fileCreated)
+                {
+                    string outputFile = Path.Combine(referenceFolder, fileName);
+                    codeGenDescriptor.Context.HandlerHelper.AddFileAsync(fileName, outputFile, new AddFileOptions { OpenOnComplete = codeGenDescriptor.ServiceConfiguration.OpenGeneratedFilesInIDE });
+                }
+                else
+                {
+                    string content = headerText + Template.ToString(block.Start, block.Length) + footerText;
+                    generatedFileNames.Add(fileName);
+                    CreateFile(fileName, content);
+                    Template.Remove(block.Start, block.Length);
+                }               
+            }
+        }
+    }
+
+    /// <summary>
+    ///Creates a file with the name <paramref name="fileName"> and content <paramref name="content">.
+    /// </summary>
+    /// <param name="fileName">Name of the file to be created</param>
+    /// <param name="content">Content of the file to be created</param>
+    protected virtual void CreateFile(string fileName, string content) 
+    {
+        if (IsFileContentDifferent(fileName, content))
+        {
+                 File.WriteAllText(fileName, content);
+        }
+           
+    }
+
+    public virtual string GetCustomToolNamespace(string fileName) 
+    {
+        return null;
+    }
+
+    public virtual string DefaultProjectNamespace 
+    {
+        get 
+        { 
+            return null; 
+        }
+    }
+
+    /// <summary>
+    /// checks if the generated content is different from the existing content.
+    /// </summary>
+    /// <param name="fileName">Name of the existing file</param>
+    /// <param name="newContent">Content of existing file</param>
+    /// <returns>true if the file content is different</returns>
+    protected bool IsFileContentDifferent(string fileName, string newContent) 
+    {
+        return !(File.Exists(fileName) && File.ReadAllText(fileName) == newContent);
+    }
+    
+    /// <summary>
+    /// FilesManager constructor. Initializes the host and template variable.
+    /// </summary>
+    [SecurityCritical]
+    private FilesManager(ITextTemplatingEngineHost host, StringBuilder template) 
+    {
+        _host = host;
+        Template = template;
+    }
+
+    private Block CurrentBlock 
+    {
+        get 
+        { 
+            return _currentBlock; 
+        }
+        set 
+        {
+            if (CurrentBlock != null)
+            {
+                EndBlock();
+            }
+                
+            if (value != null)
+            {
+                value.Start = Template.Length;
+            }
+            _currentBlock = value;
+        }
+    }
+
+    private class VSManager : FilesManager {
+        
+        /// <summary>
+        /// Generated multiple files depending on the number of blocks.
+        /// </summary>
+        /// <param name="split">If true the function is executed and multiple files generated
+        /// otherwoise only a single file is generated.</param>
+        [SecurityCritical]
+        public override void GenerateFiles(bool split,BaseCodeGenDescriptor codeGenDescriptor,string referenceFolder,bool fileCreated) 
+        {            
+            base.GenerateFiles(split,codeGenDescriptor,referenceFolder, fileCreated);
+        }
+
+        /// <summary>
+        ///Creates a file with the name <paramref name="fileName"> and content <paramref name="content">.
+        /// </summary>
+        /// <param name="fileName">Name of the file to be created</param>
+        /// <param name="content">Content of the file to be created</param>
+        protected override void CreateFile(string fileName, string content) 
+        {
+            if (IsFileContentDifferent(fileName, content)) 
+            {
+                File.WriteAllText(fileName, content);
+            }
+        }
+
+        /// <summary>
+        /// VSManager constructor. Initializes the host and template variable.
+        /// </summary>
+        internal VSManager(ITextTemplatingEngineHost host, StringBuilder template)
+            : base(host, template) 
+        {
+            var hostServiceProvider = host as IServiceProvider;
+
+            if (hostServiceProvider == null)
+            {
+                throw new ArgumentNullException("Could not obtain IServiceProvider");
+            }                
+        } 
+    }
+} 
     }
     #region Base class
     /// <summary>

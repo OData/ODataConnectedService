@@ -18,7 +18,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public string GeneratedFileName { get; set; }
         public bool IncludeT4File { get; set; }
         public bool MakeTypesInternal { get; set; }
-        public bool OpenGeneratedFilesInIDE { get; set; }
+        public bool OpenGeneratedFilesInIDE { get; set; };
+        public bool GenerateMultipleFiles { get; set; }
 
         public AdvancedSettingsViewModel() : base()
         {
@@ -59,6 +60,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             this.IncludeT4File = false;
             MakeTypesInternal = false;
             this.OpenGeneratedFilesInIDE = false;
+            GenerateMultipleFiles = false;
         }
 
     }

@@ -5,7 +5,7 @@ using System;
 
 namespace Microsoft.OData.ConnectedService.Models
 {
-    internal class ServiceConfiguration
+    public class ServiceConfiguration
     {
         public string ServiceName { get; set; }
         public string Endpoint { get; set; }
@@ -16,6 +16,7 @@ namespace Microsoft.OData.ConnectedService.Models
         public bool UseDataServiceCollection { get; set; }
         public bool MakeTypesInternal { get; set; }
         public bool OpenGeneratedFilesInIDE { get; set; }
+        public bool GenerateMultipleFiles { get; set; }
         public string CustomHttpHeaders { get; set; }
     }
 

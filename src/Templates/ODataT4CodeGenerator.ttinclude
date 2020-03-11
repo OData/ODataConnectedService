@@ -35,7 +35,8 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <#@ Import Namespace="Microsoft.OData.Edm.Vocabularies.Community.V1" #>
 <#@ Import Namespace="System.Text"#>
 <#@ Import Namespace="System.Net"#>
-<#
+<#@include file="ODataT4CodeGenFilesManager.ttinclude"
+#><#
     CodeGenerationContext context;
     if (!string.IsNullOrWhiteSpace(this.Edmx))
     {
@@ -46,7 +47,9 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             EnableNamingAlias = this.EnableNamingAlias,
             IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
             TempFilePath = this.TempFilePath,
-            MakeTypesInternal = this.MakeTypesInternal
+            MakeTypesInternal = this.MakeTypesInternal,
+            MultipleFilesManager = FilesManager.Create(this.Host, null),
+            GenerateMultipleFiles = this.GenerateMultipleFiles
         };
     }
     else
@@ -64,9 +67,13 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             EnableNamingAlias = this.EnableNamingAlias,
             IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
             TempFilePath = this.TempFilePath,
-            MakeTypesInternal = this.MakeTypesInternal
+            MakeTypesInternal = this.MakeTypesInternal,
+            MultipleFilesManager = FilesManager.Create(this.Host, null),
+            GenerateMultipleFiles = this.GenerateMultipleFiles
         };
     }
+
+     this.MultipleFilesManager = context.MultipleFilesManager;
 
     if(this.GetReferencedModelReaderFunc != null)
     {
@@ -228,6 +235,24 @@ public bool MakeTypesInternal
 /// The path for the temporary file where the metadata xml document can be stored.
 /// </summary>
 public string TempFilePath
+{
+    get;
+    set;
+}
+
+/// <summary>
+/// Object instance of a file manager responsible for splitting generating multiple files.
+/// </summary>
+public FilesManager MultipleFilesManager
+{
+    get;
+    set;
+}
+
+/// <summary>
+/// true to generate multiple files, false generate a single file.
+/// </summary>
+public bool GenerateMultipleFiles
 {
     get;
     set;
@@ -403,6 +428,7 @@ private void ApplyParametersFromConfigurationClass()
     this.IgnoreUnexpectedElementsAndAttributes = Configuration.IgnoreUnexpectedElementsAndAttributes;
     this.MakeTypesInternal = Configuration.MakeTypesInternal;
     this.TempFilePath = Configuration.TempFilePath;
+    this.GenerateMultipleFiles = Configuration.GenerateMultipleFiles;
     this.SetCustomHttpHeadersFromString(Configuration.CustomHttpHeaders);
 }
 
@@ -813,9 +839,27 @@ public class CodeGenerationContext
     }
 
     /// <summary>
+    /// true to generate multiple files, false generate a single file.
+    /// </summary>
+    public bool GenerateMultipleFiles
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
     /// The path for the temporary file where the metadata xml document can be stored.
     /// </summary>
     public string TempFilePath
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
+    /// Object instance of a file manager responsible for splitting generating multiple files.
+    /// </summary>
+    public FilesManager MultipleFilesManager
     {
         get;
         set;
@@ -1056,6 +1100,10 @@ public abstract class ODataClientTemplate : TemplateBase
     public ODataClientTemplate(CodeGenerationContext context)
     {
         this.context = context;
+        if(context.MultipleFilesManager != null)
+        {
+            context.MultipleFilesManager.Template = this.GenerationEnvironment;
+        }
     }
 
     internal string SingleSuffix
@@ -1226,9 +1274,12 @@ public abstract class ODataClientTemplate : TemplateBase
     /// <returns>The generated code for the OData client.</returns>
     public override string TransformText()
     {
+        context.MultipleFilesManager.StartHeader();
         this.WriteFileHeader();
+        context.MultipleFilesManager.EndBlock();
         this.WriteNamespaces();
-        return this.GenerationEnvironment.ToString();
+        context.MultipleFilesManager.GenerateFiles(context.GenerateMultipleFiles,null,null, false);
+        return context.MultipleFilesManager.Template.ToString();
     }
 
     internal void WriteNamespaces()
@@ -1285,7 +1336,17 @@ public abstract class ODataClientTemplate : TemplateBase
                 }
                 else if (type is IEdmEntityType entityType)
                 {
+                    if(context.GenerateMultipleFiles) 
+                    {
+                        context.MultipleFilesManager.StartNewFile($"{entityType.Name}.cs",false);
+                        this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
+                    }
                     this.WriteEntityType(entityType, boundOperationsMap);
+                    if(context.GenerateMultipleFiles) 
+                    {
+                        this.WriteNamespaceEnd();
+                        context.MultipleFilesManager.EndBlock();
+                    }
                 }
 
                 IEdmStructuredType structuredType = type as IEdmStructuredType;

@@ -32,6 +32,11 @@ public static class Configuration
 	// If set to true, generated types will have an "internal" class modifier ("Friend" in VB) instead of "public"
 	// thereby making them invisible outside the assembly
 	public const bool MakeTypesInternal = false;
+
+	//This files indicates whether to generate the files into multiple files or single.
+    //If set to true then multiple files will be generated. Otherwise only a single file is generated.
+    public const bool GenerateMultipleFiles = false;
+
 	// (Optional) Custom http headers as a multiline string
 	public const string CustomHttpHeaders = "";
 }

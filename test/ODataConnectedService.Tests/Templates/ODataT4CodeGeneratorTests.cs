@@ -37,6 +37,7 @@ namespace ODataConnectedService.Tests
         private static string T4TransformToolPath;
         private static string T4TemplatePath;
         private static string T4IncludeTemplatePath;
+        private static string T4IncludeFileManagePath;
         private static string TempFilePath;
 
         [TestInitialize]
@@ -68,10 +69,13 @@ namespace ODataConnectedService.Tests
 
             string T4TemplateName = "ODataConnectedService.Tests.Templates.ODataT4CodeGenerator.tt";
             string T4IncludeTemplateName = "ODataConnectedService.Tests.Templates.ODataT4CodeGenerator.ttinclude";
+            string T4IncludeFileManagerName = "ODataConnectedService.Tests.Templates.ODataT4CodeGenFilesManager.ttinclude";
             T4TemplatePath = AssemblyPath + "\\ODataT4CodeGenerator.tt";
             T4IncludeTemplatePath = AssemblyPath + "\\ODataT4CodeGenerator.ttinclude";
+            T4IncludeFileManagePath = AssemblyPath + "\\ODataT4CodeGenFilesManager.ttinclude";
             string ttSourceCode = string.Empty;
             string ttinlucdeSourceCode = string.Empty;
+            string ttincludeFileManagerCode = string.Empty;
             Assembly assembly = Assembly.GetExecutingAssembly();
             using (Stream stream = assembly.GetManifestResourceStream(T4TemplateName))
             {
@@ -84,6 +88,19 @@ namespace ODataConnectedService.Tests
             using (StreamWriter writer = new StreamWriter(T4TemplatePath))
             {
                 writer.Write(ttSourceCode);
+            }
+
+            using (Stream stream = assembly.GetManifestResourceStream(T4IncludeFileManagerName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    ttincludeFileManagerCode = reader.ReadToEnd();
+                }
+            }
+
+            using (StreamWriter writer = new StreamWriter(T4IncludeFileManagePath))
+            {
+                writer.Write(ttincludeFileManagerCode);
             }
 
             using (Stream stream = assembly.GetManifestResourceStream(T4IncludeTemplateName))

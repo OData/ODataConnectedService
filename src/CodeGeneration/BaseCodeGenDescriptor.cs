@@ -14,7 +14,7 @@ using Shell = Microsoft.VisualStudio.Shell;
 
 namespace Microsoft.OData.ConnectedService.CodeGeneration
 {
-    internal abstract class BaseCodeGenDescriptor
+    public abstract class BaseCodeGenDescriptor
     {
         public IVsPackageInstaller PackageInstaller { get; private set; }
         public IVsPackageInstallerServices PackageInstallerServices { get; private set; }
