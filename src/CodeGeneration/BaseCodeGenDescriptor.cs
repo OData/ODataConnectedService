@@ -57,8 +57,8 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             this.PackageInstaller = componentModel.GetService<IVsPackageInstaller>();
         }
 
-        public abstract Task AddNugetPackages();
-        public abstract Task AddGeneratedClientCode();
+        public abstract Task AddNugetPackagesAsync();
+        public abstract Task AddGeneratedClientCodeAsync();
 
         protected string GetReferenceFileFolder()
         {

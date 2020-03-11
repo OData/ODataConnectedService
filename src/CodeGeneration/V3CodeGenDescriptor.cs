@@ -24,7 +24,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             this.ClientDocUri = Common.Constants.V3DocUri;
         }
 
-        public async override Task AddNugetPackages()
+        public async override Task AddNugetPackagesAsync()
         {
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Adding Nuget Packages");
 
@@ -53,7 +53,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             }
         }
 
-        public async override Task AddGeneratedClientCode()
+        public async override Task AddGeneratedClientCodeAsync()
         {
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Generating Client Proxy ...");
 

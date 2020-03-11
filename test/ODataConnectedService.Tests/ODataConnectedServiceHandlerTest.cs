@@ -98,13 +98,13 @@ namespace Microsoft.OData.ConnectedService.Tests
         public bool AddedNugetPackages { get; private set; }
 
         protected override void Init() { }
-        public override Task AddGeneratedClientCode()
+        public override Task AddGeneratedClientCodeAsync()
         {
             AddedClientCode = true;
             return Task.CompletedTask;
         }
 
-        public override Task AddNugetPackages()
+        public override Task AddNugetPackagesAsync()
         {
             AddedNugetPackages = true;
             return Task.CompletedTask;
