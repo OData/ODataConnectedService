@@ -140,6 +140,11 @@ namespace ODataConnectedService.Tests
             }
         }
 
+        internal static string GetFilecontent(string fileName)
+        {
+            return LoadContentFromBaseline(fileName);
+        }
+
         private const string BaseName = "ODataConnectedService.Tests.CodeGenReferences.";
         private static readonly Assembly Assembly = Assembly.GetExecutingAssembly();
 
@@ -197,6 +202,17 @@ namespace ODataConnectedService.Tests
             Metadata = EdmxSimple,
             ExpectedResults = new Dictionary<string, string>() { { ExpectedCSharp, SimpleCSharp }, { ExpectedCSharpUseDSC, SimpleCSharpUseDSC }, { ExpectedVB, SimpleVB }, { ExpectedVBUseDSC, SimpleVBUseDSC } },
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, Simple.ExpectedResults, isCSharp, useDSC, "Simple"),
+        };
+        #endregion
+
+        #region SimpleMultipleFiles
+        public static string EdmxSimpleMultipleFiles = LoadContentFromBaseline("SimpleMultipleFiles.xml");
+        public static string SimpleMultipleFilesCSharp = LoadContentFromBaseline("SimpleMultipleFilesMain.cs");
+        public static ODataT4CodeGeneratorTestsDescriptor SimpleMultipleFiles = new ODataT4CodeGeneratorTestsDescriptor()
+        {
+            Metadata = EdmxSimpleMultipleFiles,
+            ExpectedResults = new Dictionary<string, string>() { { ExpectedCSharp, SimpleMultipleFilesCSharp }, { ExpectedCSharpUseDSC, SimpleCSharpUseDSC }, { ExpectedVB, SimpleVB }, { ExpectedVBUseDSC, SimpleVBUseDSC } },
+            Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, SimpleMultipleFiles.ExpectedResults, isCSharp, useDSC, "SimpleMultipleFiles"),
         };
         #endregion
 

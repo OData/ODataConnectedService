@@ -25,11 +25,12 @@ namespace ODataConnectedService.Tests
     using System.Text.RegularExpressions;
     using Microsoft.OData.ConnectedService.Templates;
     using Microsoft.OData.Client;
+    using Microsoft.OData.ConnectedService.Tests.Templates;
 
     [TestClass]
     public class ODataT4CodeGeneratorTests
     {
-        private const bool CompileGeneratedCode = true;
+        private static bool CompileGeneratedCode = true;
         private static string AssemblyPath;
         private static string EdmxTestInputFile;
         private static string EdmxTestOutputFile;
@@ -131,6 +132,16 @@ namespace ODataConnectedService.Tests
 
             code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.Simple.Metadata, null, false, true, false, false, null, true);
             ODataT4CodeGeneratorTestDescriptors.Simple.Verify(code, false/*isCSharp*/, true/*useDSC*/);
+        }
+
+        [TestMethod]
+        public void CodeGenSimpleEdmxMultipleFiles()
+        {
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SimpleMultipleFiles.Metadata, null, true, false, generateMultipleFiles : true);
+            ODataT4CodeGeneratorTestDescriptors.SimpleMultipleFiles.Verify(code, true/*isCSharp*/, false/*useDSC*/);
+            string expected = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleTestType.cs"));
+            string actual = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(File.ReadAllText("TestType.cs"));
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -422,7 +433,7 @@ namespace ODataConnectedService.Tests
             ODataT4CodeGeneratorTestDescriptors.ValidateEdmx(TempFilePath);
         }
 
-        private static string CodeGenWithT4Template(string edmx, string namespacePrefix, bool isCSharp, bool useDataServiceCollection, bool enableNamingAlias = false, bool ignoreUnexpectedElementsAndAttributes = false, Func<Uri, XmlReader> getReferencedModelReaderFunc = null, bool appendDSCSuffix = false, string TempFilePath = null)
+        private static string CodeGenWithT4Template(string edmx, string namespacePrefix, bool isCSharp, bool useDataServiceCollection, bool enableNamingAlias = false, bool ignoreUnexpectedElementsAndAttributes = false, Func<Uri, XmlReader> getReferencedModelReaderFunc = null, bool appendDSCSuffix = false, string TempFilePath = null, bool generateMultipleFiles = false)
         {
             if (useDataServiceCollection
                 && appendDSCSuffix) // hack now
@@ -445,7 +456,8 @@ namespace ODataConnectedService.Tests
                 NamespacePrefix = namespacePrefix,
                 TargetLanguage = isCSharp ? ODataT4CodeGenerator.LanguageOption.CSharp : ODataT4CodeGenerator.LanguageOption.VB,
                 EnableNamingAlias = enableNamingAlias,
-                IgnoreUnexpectedElementsAndAttributes = ignoreUnexpectedElementsAndAttributes
+                IgnoreUnexpectedElementsAndAttributes = ignoreUnexpectedElementsAndAttributes,
+                GenerateMultipleFiles = generateMultipleFiles
             };
 
             if (!String.IsNullOrEmpty(TempFilePath))
@@ -460,7 +472,7 @@ namespace ODataConnectedService.Tests
 
             string code = t4CodeGenerator.TransformText();
 
-            if (CompileGeneratedCode)
+            if (CompileGeneratedCode && !generateMultipleFiles)
             {
                 // Comment next line to not to verify that the generated code can be compiled successfully
                 GeneratedCodeShouldCompile(code, isCSharp);
