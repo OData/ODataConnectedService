@@ -4,7 +4,6 @@ about: Use this template for questions and other custom issues that don't fit as
   or bugs
 title: ''
 labels: ''
-assignees: ''
 
 ---
 
