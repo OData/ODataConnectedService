@@ -29,16 +29,17 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 await CheckAndInstallNuGetPackageAsync(Common.Constants.NuGetOnlineRepository, nugetPackage);
 
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Nuget Packages were installed.");
-
         }
 
         public async override Task AddGeneratedClientCodeAsync()
         {
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Generating Client Proxy ...");
 
-            EntityClassGenerator generator = new EntityClassGenerator(LanguageOption.GenerateCSharpCode);
-            generator.UseDataServiceCollection = this.ServiceConfiguration.UseDataServiceCollection;
-            generator.Version = DataServiceCodeVersion.V3;
+            EntityClassGenerator generator = new EntityClassGenerator(this.ServiceConfiguration.LanguageOption)
+            {
+                UseDataServiceCollection = this.ServiceConfiguration.UseDataServiceCollection,
+                Version = DataServiceCodeVersion.V3
+            };
 
             // Set up XML secure resolver
             XmlUrlResolver xmlUrlResolver = new XmlUrlResolver()
@@ -56,22 +57,36 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             using (XmlReader reader = XmlReader.Create(this.MetadataUri, settings))
             {
                 string tempFile = Path.GetTempFileName();
+                bool noErrors = true;
 
                 using (StreamWriter writer = File.CreateText(tempFile))
                 {
                     var errors = generator.GenerateCode(reader, writer, this.ServiceConfiguration.NamespacePrefix);
                     await writer.FlushAsync();
-                    if (errors != null && errors.Count() > 0)
+                    if (errors != null && errors.Any())
                     {
+                        noErrors = false;
+
                         foreach (var err in errors)
                         {
                             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, err.Message);
                         }
+
+                        await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, "Client Proxy for OData V3 was not generated.");
                     }
                 }
 
-                string outputFile = Path.Combine(GetReferenceFileFolder(), this.GeneratedFileNamePrefix + ".cs");
-                await this.Context.HandlerHelper.AddFileAsync(tempFile, outputFile, new AddFileOptions { OpenOnComplete = this.ServiceConfiguration.OpenGeneratedFilesInIDE });
+                if (noErrors)
+                {
+                    var ext = this.ServiceConfiguration.LanguageOption == LanguageOption.GenerateCSharpCode
+                        ? ".cs"
+                        : ".vb";
+
+                    string outputFile = Path.Combine(GetReferenceFileFolder(), this.GeneratedFileNamePrefix + ext);
+                    await this.Context.HandlerHelper.AddFileAsync(tempFile, outputFile, new AddFileOptions { OpenOnComplete = this.ServiceConfiguration.OpenGeneratedFilesInIDE });
+
+                    await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Client Proxy for OData V3 was generated.");
+                }
             }
         }
     }

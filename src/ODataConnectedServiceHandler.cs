@@ -12,7 +12,7 @@ using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService
 {
-    [ConnectedServiceHandlerExport(Common.Constants.ProviderId, AppliesTo = "CSharp")]
+    [ConnectedServiceHandlerExport(Common.Constants.ProviderId, AppliesTo = "VB | CSharp | Web")]
     internal class ODataConnectedServiceHandler : ConnectedServiceHandler
     {
         private ICodeGenDescriptorFactory codeGenDescriptorFactory;

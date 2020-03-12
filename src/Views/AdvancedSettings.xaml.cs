@@ -25,7 +25,7 @@ namespace Microsoft.OData.ConnectedService.Views
 
         private void settings_Click(object sender, RoutedEventArgs e)
         {
-            this.SettingsPanel.Visibility = Visibility.Hidden;
+            this.AdvancedSettingsHyperLinkPanel.Visibility = Visibility.Hidden;
 
             this.AdvancedSettingsPanel.Margin = new Thickness(10, -125, 0, 0);
             this.AdvancedSettingsPanel.Visibility = Visibility.Visible;

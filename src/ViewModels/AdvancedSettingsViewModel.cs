@@ -2,7 +2,10 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System;
+using System.Data.Services.Design;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.Views;
 using Microsoft.VisualStudio.ConnectedServices;
 
@@ -20,11 +23,36 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public bool MakeTypesInternal { get; set; }
         public bool OpenGeneratedFilesInIDE { get; set; }
 
-        public AdvancedSettingsViewModel() : base()
+        public UserSettings UserSettings { get; }
+
+        public LanguageOption[] LanguageOptions
         {
+            get
+            {
+                return Enum.GetNames(typeof(LanguageOption))
+                    .Select(t => (LanguageOption)Enum.Parse(typeof(LanguageOption), t))
+                    .ToArray();
+            }
+        }
+        private LanguageOption _languageOption;
+        public LanguageOption LanguageOption
+        {
+            get => _languageOption;
+            set
+            {
+                _languageOption = value;
+                UserSettings.LanguageOption = value;
+                OnPropertyChanged(nameof(LanguageOption));
+            }
+        }
+
+        public AdvancedSettingsViewModel(UserSettings userSettings) : base()
+        {
+            this.UserSettings = userSettings;
             this.Title = "Settings";
             this.Description = "Advanced settings for generating client proxy";
             this.Legend = "Settings";
+            this.LanguageOption = userSettings.LanguageOption;
             this.ResetDataContext();
         }
 
@@ -37,10 +65,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             this.View = new AdvancedSettings();
             this.ResetDataContext();
             this.View.DataContext = this;
-            if (PageEntering != null)
-            {
-                this.PageEntering(this, EventArgs.Empty);
-            }
+            PageEntering?.Invoke(this, EventArgs.Empty);
         }
 
         public override Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
@@ -59,6 +84,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             this.IncludeT4File = false;
             MakeTypesInternal = false;
             this.OpenGeneratedFilesInIDE = false;
+            this.LanguageOption = this.UserSettings.LanguageOption;
         }
     }
 }
