@@ -59,7 +59,7 @@ namespace Microsoft.OData.TestService
         /// There are no comments for Property UserName in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public string UserName
+        public virtual string UserName
         {
             get
             {
@@ -80,7 +80,7 @@ namespace Microsoft.OData.TestService
         /// There are no comments for Property WakeUpTime in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public global::System.Nullable<global::Microsoft.OData.Edm.TimeOfDay> WakeUpTime
+        public virtual global::System.Nullable<global::Microsoft.OData.Edm.TimeOfDay> WakeUpTime
         {
             get
             {
@@ -100,7 +100,7 @@ namespace Microsoft.OData.TestService
         /// <summary>
         /// There are no comments for ReminderView in the schema.
         /// </summary>
-        public global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Person> ReminderView(string StartDateTime, string EndDateTime, global::System.Nullable<int> MaxCount)
+        public virtual global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Person> ReminderView(string StartDateTime, string EndDateTime, global::System.Nullable<int> MaxCount)
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);
@@ -146,7 +146,7 @@ namespace Microsoft.OData.TestService
         /// There are no comments for Property Id in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public global::System.Nullable<int> Id
+        public virtual global::System.Nullable<int> Id
         {
             get
             {
@@ -167,7 +167,7 @@ namespace Microsoft.OData.TestService
         /// There are no comments for Property ReminderTime in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public string ReminderTime
+        public virtual string ReminderTime
         {
             get
             {
@@ -195,7 +195,7 @@ namespace Microsoft.OData.TestService
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.TestService.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Person> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Microsoft.OData.TestService.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Person> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Microsoft.OData.TestService.PersonSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -207,7 +207,7 @@ namespace Microsoft.OData.TestService
         public static global::Microsoft.OData.TestService.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Person> source,
             string userName)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "UserName", userName }
             };
@@ -218,7 +218,7 @@ namespace Microsoft.OData.TestService
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.TestService.ReminderSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Reminder> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Microsoft.OData.TestService.ReminderSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Reminder> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Microsoft.OData.TestService.ReminderSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -230,7 +230,7 @@ namespace Microsoft.OData.TestService
         public static global::Microsoft.OData.TestService.ReminderSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Reminder> source,
             global::System.Nullable<int> id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
