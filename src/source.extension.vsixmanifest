@@ -5,7 +5,7 @@
         <Author>Microsoft</Author>
         <DisplayName>OData Connected Service</DisplayName>
         <Description xml:space="preserve">OData Connected Service for V1-V4</Description>
-        <MoreInfo>https://github.com/odata/lab</MoreInfo>
+        <MoreInfo>https://github.com/odata/ODataConnectedService</MoreInfo>
         <License>License.txt</License>
         <Icon>Resources\ExtensionIcon.png</Icon>
         <Tags>OData Connected Service</Tags>
