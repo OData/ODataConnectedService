@@ -4,7 +4,7 @@ There are many ways for you to contribute to ODataConnected service The easiest 
 
 ## 1. Discussion
 
-You can participate into discussions and ask questions about OData .NET at our [Github issues](https://github.com/OData/ODataConnectedService/issues).
+You can participate into discussions and ask questions about  OData Connected service at our [Github issues](https://github.com/OData/ODataConnectedService/issues).
 
 ## 2. Bug reports
 
