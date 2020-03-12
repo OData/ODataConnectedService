@@ -56,7 +56,7 @@ There are many ways for you to contribute to OData Connected services. The easie
 - Issues: Report issues on [Github issues](https://github.com/OData/ODataConnectedService/issues).
 - Questions: Ask questions on [Stack Overflow](http://stackoverflow.com/questions/ask?tags=odata).
 - Feedback: Please send mails to [odatafeedback@microsoft.com](mailto:odatafeedback@microsoft.com).
-- Team blog: Please visit [https://docs.microsoft.com/odata/](http://blogs.msdn.com/b/odatateam/) and [http://www.odata.org/blog/](http://www.odata.org/blog/).
+- Team blog: Please visit [https://docs.microsoft.com/odata/](https://docs.microsoft.com/odata/) and [http://www.odata.org/blog/](http://www.odata.org/blog/).
 
 ### Code of Conduct
 
