@@ -422,7 +422,7 @@ namespace namespacePrefix.Namespace.Foo
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::namespacePrefix.Namespace.Foo.BaseTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::namespacePrefix.Namespace.Foo.BaseType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::namespacePrefix.Namespace.Foo.BaseTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::namespacePrefix.Namespace.Foo.BaseType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::namespacePrefix.Namespace.Foo.BaseTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -434,7 +434,7 @@ namespace namespacePrefix.Namespace.Foo
         public static global::namespacePrefix.Namespace.Foo.BaseTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::namespacePrefix.Namespace.Foo.BaseType> source,
             int keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "keyProp", keyProp }
             };
@@ -445,7 +445,7 @@ namespace namespacePrefix.Namespace.Foo
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::namespacePrefix.Namespace.Foo.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::namespacePrefix.Namespace.Foo.TestType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::namespacePrefix.Namespace.Foo.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::namespacePrefix.Namespace.Foo.TestType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::namespacePrefix.Namespace.Foo.TestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -457,7 +457,7 @@ namespace namespacePrefix.Namespace.Foo
         public static global::namespacePrefix.Namespace.Foo.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::namespacePrefix.Namespace.Foo.TestType> source,
             int keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "keyProp", keyProp }
             };
@@ -477,7 +477,7 @@ namespace namespacePrefix.Namespace.Foo
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::namespacePrefix.Namespace.Foo.SingleTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::namespacePrefix.Namespace.Foo.SingleType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::namespacePrefix.Namespace.Foo.SingleTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::namespacePrefix.Namespace.Foo.SingleType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::namespacePrefix.Namespace.Foo.SingleTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -489,7 +489,7 @@ namespace namespacePrefix.Namespace.Foo
         public static global::namespacePrefix.Namespace.Foo.SingleTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::namespacePrefix.Namespace.Foo.SingleType> source,
             int keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "keyProp", keyProp }
             };

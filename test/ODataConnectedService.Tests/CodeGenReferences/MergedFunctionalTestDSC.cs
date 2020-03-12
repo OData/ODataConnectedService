@@ -8781,7 +8781,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.CustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Customer> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.CustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Customer> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.CustomerSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -8793,7 +8793,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.CustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Customer> source,
             int customerId)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "CustomerId", customerId }
             };
@@ -8804,7 +8804,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.GoodCustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.GoodCustomer> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.GoodCustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.GoodCustomer> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.GoodCustomerSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -8816,7 +8816,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.GoodCustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.GoodCustomer> source,
             int customerId)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "CustomerId", customerId }
             };
@@ -8836,7 +8836,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.BadCustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.BadCustomer> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.BadCustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.BadCustomer> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.BadCustomerSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -8848,7 +8848,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.BadCustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.BadCustomer> source,
             int customerId)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "CustomerId", customerId }
             };
@@ -8868,7 +8868,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.CustomerInfoSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.CustomerInfo> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.CustomerInfoSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.CustomerInfo> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.CustomerInfoSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -8880,7 +8880,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.CustomerInfoSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.CustomerInfo> source,
             int customerInfoId)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "CustomerInfoId", customerInfoId }
             };
@@ -8891,7 +8891,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.OrderSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Order> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.OrderSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Order> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.OrderSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -8903,7 +8903,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.OrderSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Order> source,
             int orderId)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "OrderId", orderId }
             };
@@ -8914,7 +8914,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.CompanySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Company> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.CompanySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Company> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.CompanySingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -8926,7 +8926,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.CompanySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Company> source,
             int companyId)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "CompanyId", companyId }
             };
@@ -8937,7 +8937,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.ProductSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Product> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.ProductSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Product> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.ProductSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -8949,7 +8949,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.ProductSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Product> source,
             string iD)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "ID", iD }
             };
@@ -8960,7 +8960,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.ProductDetailSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.ProductDetail> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.ProductDetailSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.ProductDetail> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.ProductDetailSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -8972,7 +8972,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.ProductDetailSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.ProductDetail> source,
             int productId)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "ProductId", productId }
             };
@@ -8983,7 +8983,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacetSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacet> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacetSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacet> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacetSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -8995,7 +8995,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacetSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacet> source,
             int id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
@@ -9006,7 +9006,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.BlobTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.BlobType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.BlobTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.BlobType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.BlobTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9018,7 +9018,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.BlobTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.BlobType> source,
             int keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
@@ -9029,7 +9029,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.ChildSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Child> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.ChildSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Child> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.ChildSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9041,7 +9041,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.ChildSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Child> source,
             global::System.Guid iD)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "ID", iD }
             };
@@ -9061,7 +9061,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Person> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Person> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.PersonSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9073,7 +9073,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Person> source,
             global::System.Guid iD)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "ID", iD }
             };
@@ -9084,7 +9084,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.TestType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.TestType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.TestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9096,7 +9096,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.TestType> source,
             global::System.DateTimeOffset id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
@@ -9107,7 +9107,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.TestCollectionTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.TestCollectionType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.TestCollectionTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.TestCollectionType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.TestCollectionTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9119,7 +9119,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.TestCollectionTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.TestCollectionType> source,
             int keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
@@ -9130,7 +9130,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.DefaultValueTestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.DefaultValueTestType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.DefaultValueTestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.DefaultValueTestType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.DefaultValueTestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9142,7 +9142,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.DefaultValueTestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.DefaultValueTestType> source,
             int keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
@@ -9153,7 +9153,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.MultiKeyTestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.MultiKeyTestType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.MultiKeyTestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.MultiKeyTestType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.MultiKeyTestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9171,7 +9171,7 @@ namespace MergedFunctionalTest.DSC
             global::System.DateTimeOffset dateTimeOffsetId,
             global::System.Guid guidId)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Int64Id", int64Id },
                 { "StringId", stringId },
@@ -9185,7 +9185,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.BaseTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.BaseType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.BaseTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.BaseType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.BaseTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9197,7 +9197,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.BaseTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.BaseType> source,
             long keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
@@ -9208,7 +9208,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.KatmaiTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.KatmaiType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.KatmaiTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.KatmaiType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.KatmaiTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9220,7 +9220,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.KatmaiTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.KatmaiType> source,
             int keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
@@ -9231,7 +9231,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.Level0Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Level0> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.Level0Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Level0> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.Level0Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9243,7 +9243,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.Level0Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Level0> source,
             string level0Prop)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Level0Prop", level0Prop }
             };
@@ -9254,7 +9254,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.Level1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Level1> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.Level1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Level1> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.Level1Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9266,7 +9266,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.Level1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Level1> source,
             int level1Id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Level1Id", level1Id }
             };
@@ -9286,7 +9286,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.Level2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Level2> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.Level2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Level2> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.Level2Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9298,7 +9298,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.Level2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Level2> source,
             int level1Id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Level1Id", level1Id }
             };
@@ -9327,7 +9327,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.SingleTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.SingleType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.SingleTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.SingleType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.SingleTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9339,7 +9339,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.SingleTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.SingleType> source,
             global::Microsoft.Spatial.GeographyPoint keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
@@ -9350,7 +9350,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.GroupSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Group> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.GroupSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Group> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.GroupSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9362,7 +9362,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.GroupSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Group> source,
             int id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
@@ -9373,7 +9373,7 @@ namespace MergedFunctionalTest.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DSC.PrincipalSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Principal> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest.DSC.PrincipalSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Principal> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest.DSC.PrincipalSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9385,7 +9385,7 @@ namespace MergedFunctionalTest.DSC
         public static global::MergedFunctionalTest.DSC.PrincipalSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DSC.Principal> source,
             int id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
@@ -9912,7 +9912,7 @@ namespace MergedFunctionalTest1.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest1.DSC.DerivedTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest1.DSC.DerivedType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest1.DSC.DerivedTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest1.DSC.DerivedType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest1.DSC.DerivedTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9924,7 +9924,7 @@ namespace MergedFunctionalTest1.DSC
         public static global::MergedFunctionalTest1.DSC.DerivedTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest1.DSC.DerivedType> source,
             long keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
@@ -9944,7 +9944,7 @@ namespace MergedFunctionalTest1.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest1.DSC.CustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest1.DSC.Customer> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::MergedFunctionalTest1.DSC.CustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest1.DSC.Customer> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::MergedFunctionalTest1.DSC.CustomerSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -9956,7 +9956,7 @@ namespace MergedFunctionalTest1.DSC
         public static global::MergedFunctionalTest1.DSC.CustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest1.DSC.Customer> source,
             int customerId)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "CustomerId", customerId }
             };

@@ -482,7 +482,7 @@ namespace OverrideOperations.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::OverrideOperations.DSC.ETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.ET> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::OverrideOperations.DSC.ETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.ET> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::OverrideOperations.DSC.ETSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -494,7 +494,7 @@ namespace OverrideOperations.DSC
         public static global::OverrideOperations.DSC.ETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.ET> source,
             string userName)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "UserName", userName }
             };
@@ -505,7 +505,7 @@ namespace OverrideOperations.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::OverrideOperations.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.DerivedET> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::OverrideOperations.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.DerivedET> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::OverrideOperations.DSC.DerivedETSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -517,7 +517,7 @@ namespace OverrideOperations.DSC
         public static global::OverrideOperations.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.DerivedET> source,
             string userName)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "UserName", userName }
             };

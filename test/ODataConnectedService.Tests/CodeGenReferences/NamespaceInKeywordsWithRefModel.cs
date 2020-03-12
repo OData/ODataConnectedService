@@ -154,7 +154,7 @@ namespace Event.String.Int
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Event.String.Int.TestType1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Event.String.Int.TestType1> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Event.String.Int.TestType1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Event.String.Int.TestType1> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Event.String.Int.TestType1Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -166,7 +166,7 @@ namespace Event.String.Int
         public static global::Event.String.Int.TestType1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Event.String.Int.TestType1> source,
             int keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "keyProp", keyProp }
             };
@@ -509,7 +509,7 @@ namespace Simple.Double
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Simple.Double.TestType2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Simple.Double.TestType2> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Simple.Double.TestType2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Simple.Double.TestType2> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Simple.Double.TestType2Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -521,7 +521,7 @@ namespace Simple.Double
         public static global::Simple.Double.TestType2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Simple.Double.TestType2> source,
             int keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "keyProp", keyProp }
             };
