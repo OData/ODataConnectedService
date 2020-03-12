@@ -30,20 +30,21 @@ These are the recommended steps to create a pull request:
 1. Create a forked repository of [(https://github.com/OData/ODataConnectedService.git](https://github.com/OData/ODataConnectedService.git)
 2. Clone the forked repository into your local environment
 3. Add a git remote to upstream for local repository with command _git remote add upstream (https://github.com/OData/ODataConnectedService.git]((https://github.com/OData/ODataConnectedService.git)_
-4. Make code changes and add test cases
-5. Test the changed code locally to make sure they pass
-6. Commit changed code to local repository with clear message
-7. Rebase the code to upstream via command _git pull --rebase upstream master_ and resolve conflicts if there is any then continue rebase via command _git pull --rebase continue_
-8. Push local commit to the forked repository
-9. Create pull request from forked repository Web console via comparing with upstream and add the ready for review label.
-10. Complete a Contributor License Agreement (CLA), refer below section for more details.
-11. Pull request will be reviewed by Microsoft OData team
-12. Address comments and revise code if necessary
+4. Create a branch for the new changes ` git checkout -b {branch_name}` where branch_name uses the following naming conventions. fix/{issue-number}-title for bug fixes. feature/{issue-number}-title for feature branches.
+5. Make code changes and add test cases
+6. Test the changed code locally to make sure they pass
+7. Commit changed code to local repository with clear message
+8. Rebase the code to upstream via command _git pull --rebase upstream master_ and resolve conflicts if there is any then continue rebase via command _git pull --rebase continue_
+9. Push local commit to the forked repository
+10. Create pull request from forked repository Web console via comparing with upstream and add the ready for review label.
+11. Complete a Contributor License Agreement (CLA), refer below section for more details.
+12. Pull request will be reviewed by Microsoft OData team
+13. Address comments and revise code if necessary
 13. Commit the changes to local repository or amend existing commit via command _git commit --amend_
-14. Rebase the code with upstream again via command _git pull --rebase upstream master_ and resolve conflicts if there is any then continue rebase via command _git pull --rebase continue_
-15. Test the changed code again
-16. Push changes to the forked repository and use _--force_ option if existing commit is amended
-17. Microsoft OData team will merge the pull request into upstream
+15. Rebase the code with upstream again via command _git pull --rebase upstream master_ and resolve conflicts if there is any then continue rebase via command _git pull --rebase continue_
+16. Test the changed code again
+17. Push changes to the forked repository and use _--force_ option if existing commit is amended
+18. Microsoft OData team will merge the pull request into upstream
 
 ### Complete a Contribution License Agreement (CLA)
 
