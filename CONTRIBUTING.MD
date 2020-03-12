@@ -23,9 +23,9 @@ You should either create or pick an issue on the [issue tracker](https://github.
 
 These are the recommended steps to create a pull request:
 
-1. Create a forked repository of [(ODataConnectedService](https://github.com/OData/ODataConnectedService.git)
+1. Create a forked repository of [ODataConnectedService](https://github.com/OData/ODataConnectedService.git)
 2. Clone the forked repository into your local environment
-3. Add a git remote to upstream for local repository with command `_git remote add upstream https://github.com/OData/ODataConnectedService.git)`
+3. Add a git remote to upstream for local repository with command `git remote add upstream https://github.com/OData/ODataConnectedService.git`
 4. Create a branch for the new changes `git checkout -b {branch_name}` where branch_name uses the following naming conventions. fix/{issue-number}-title for bug fixes. feature/{issue-number}-title for feature branches.
 5. Make code changes and add test cases
 6. Test the changed code locally to make sure they pass
