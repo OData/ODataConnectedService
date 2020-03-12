@@ -1,6 +1,6 @@
 # How to contribute
 
-There are many ways for you to contribute to ODataConnected service The easiest way is to participate in discussion of features and issues. You can also contribute by sending pull requests of features or bug fixes to us. 
+There are many ways for you to contribute to OData Connected service The easiest way is to participate in discussion of features and issues. You can also contribute by sending pull requests of features or bug fixes to us. 
 
 ## 1. Discussion
 
@@ -49,4 +49,4 @@ These are the recommended steps to create a pull request:
 
 You will need to complete a Contributor License Agreement (CLA). Briefly, this agreement testifies that you are granting us permission to use the submitted change according to the terms of the project's license, and that the work being submitted is under appropriate copyright.
 
-Please submit a Contributor License Agreement (CLA) before submitting a pull request. Download the agreement ([Microsoft Contribution License Agreement.pdf]("https://github.com/odata/odatacpp/wiki/files/Microsoft Contribution License Agreement.pdf")), sign, scan, and email it back to [cla@microsoft.com](mailto:cla@microsoft.com). Be sure to include your Github user name along with the agreement. Only after we have received the signed CLA, we'll review the pull request that you send. You only need to do this once for contributing to any Microsoft open source projects.
+Please submit a Contributor License Agreement (CLA) before submitting a pull request. You can do so on the following [link](https://cla.opensource.microsoft.com/OData/ODataConnectedService) or Download the agreement ([Microsoft Contribution License Agreement.pdf]("https://github.com/odata/odatacpp/wiki/files/Microsoft Contribution License Agreement.pdf")), sign, scan, and email it back to [cla@microsoft.com](mailto:cla@microsoft.com). Be sure to include your Github user name along with the agreement. Only after we have received the signed CLA, we'll review the pull request that you send. You only need to do this once for contributing to any Microsoft open source projects.
