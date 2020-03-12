@@ -17,7 +17,7 @@ In order to build the application Visual Studio 2019/2017 is the recommended dev
 
 The repository has 2 projects which are 
 1. The main ODataConnectedService project `ODataConnectedService.sln`
-2. The ODataConnectedService Tests project `ODataConnectedService.Tests.sln`
+2. The ODataConnectedServiceTests project `ODataConnectedService.Tests.sln`
 
 #### Building in visual studio
 Open the `ODataConnectedService.sln` in visual studio and install any suggested extensions that may be missing in your instance.
