@@ -334,6 +334,39 @@ namespace ODataConnectedService.Tests
                 .Should().Be("global::System.Collections.Generic.ICollection<global::NamespacePrefix.elementName>");
         }
 
+        [DataTestMethod]
+        [DataRow(EdmPrimitiveTypeKind.Int32, false)]
+        [DataRow(EdmPrimitiveTypeKind.Int16, false)]
+        [DataRow(EdmPrimitiveTypeKind.Byte, false)]
+        [DataRow(EdmPrimitiveTypeKind.SByte, false)]
+        [DataRow(EdmPrimitiveTypeKind.Single, false)]
+        [DataRow(EdmPrimitiveTypeKind.Double, false)]
+        [DataRow(EdmPrimitiveTypeKind.Decimal, false)]
+        [DataRow(EdmPrimitiveTypeKind.Binary, true)]
+        [DataRow(EdmPrimitiveTypeKind.Boolean, false)]
+        [DataRow(EdmPrimitiveTypeKind.Guid, false)]
+        [DataRow(EdmPrimitiveTypeKind.String, true)]
+        [DataRow(EdmPrimitiveTypeKind.Date, false)]
+        [DataRow(EdmPrimitiveTypeKind.TimeOfDay, false)]
+        [DataRow(EdmPrimitiveTypeKind.DateTimeOffset, false)]
+        [DataRow(EdmPrimitiveTypeKind.Duration, false)]
+        [DataRow(EdmPrimitiveTypeKind.Stream, true)]
+        [DataRow(EdmPrimitiveTypeKind.Geography, true)]
+        [DataRow(EdmPrimitiveTypeKind.Geometry, true)]
+        public void GetClrTypeNameShouldReturnUnderlyingTypeForTypeDefinition(EdmPrimitiveTypeKind primitiveTypeKind, bool isReferenceType)
+        {
+            var underlyingType = new EdmPrimitiveType(primitiveTypeKind);
+            var typeDefinition = new EdmTypeDefinition("namespace", "Field", underlyingType);
+            var typeDefinitionReference = new EdmTypeDefinitionReference(typeDefinition, false);
+            var nullableTypeDefinitionReference = new EdmTypeDefinitionReference(typeDefinition, true);
+
+            var underlyingTypeName = ODataT4CodeGenerator.Utils.GetClrTypeName(underlyingType, template);
+            var nullableName = isReferenceType ? underlyingTypeName : $"global::System.Nullable<{underlyingTypeName}>";
+            ODataT4CodeGenerator.Utils.GetClrTypeName(typeDefinitionReference, false, template, context).Should().Be(underlyingTypeName);
+            ODataT4CodeGenerator.Utils.GetClrTypeName(nullableTypeDefinitionReference, false, template, context).Should().Be(nullableName);
+
+        }
+
         [TestMethod]
         public void GetPropertyInitializationValueShouldNotThrowOnPropertyNotInCollectionType()
         {
