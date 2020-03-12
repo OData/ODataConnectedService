@@ -50,7 +50,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
                 IncludeT4File = false
             };
             var codeGenDescriptor = SetupCodeGenDescriptor(serviceConfig, "TestService", codeGenFactory, handlerHelper);
-            codeGenDescriptor.AddGeneratedClientCode().Wait();
+            codeGenDescriptor.AddGeneratedClientCodeAsync().Wait();
 
             var generator = codeGenFactory.LastCreatedInstance;
             Assert.AreEqual(useDSC, generator.UseDataServiceCollection);
@@ -77,7 +77,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             var handlerHelper = new TestConnectedServiceHandlerHelper();
             var codeGenDescriptor = SetupCodeGenDescriptor(serviceConfig, serviceName,
                 new TestODataT4CodeGeneratorFactory(), handlerHelper);
-            codeGenDescriptor.AddGeneratedClientCode().Wait();
+            codeGenDescriptor.AddGeneratedClientCodeAsync().Wait();
             using (var reader = new StreamReader(handlerHelper.AddedFileInputFileName))
             {
                 var generatedCode = reader.ReadToEnd();

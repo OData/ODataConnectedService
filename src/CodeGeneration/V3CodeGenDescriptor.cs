@@ -1,16 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
-using System;
 using System.Data.Services.Design;
 using System.IO;
 using System.Linq;
 using System.Security;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using EnvDTE;
-using Microsoft.OData.ConnectedService.Common;
 using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService.CodeGeneration
@@ -24,36 +21,18 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             this.ClientDocUri = Common.Constants.V3DocUri;
         }
 
-        public async override Task AddNugetPackages()
+        public async override Task AddNugetPackagesAsync()
         {
-            await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Adding Nuget Packages");
+            await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Adding Nuget Packages...");
 
-            var wcfDSInstallLocation = CodeGeneratorUtils.GetWCFDSInstallLocation();
-            var packageSource = Path.Combine(wcfDSInstallLocation, @"bin\NuGet");
-            if (Directory.Exists(packageSource))
-            {
-                var files = Directory.EnumerateFiles(packageSource, "*.nupkg").ToList();
-                foreach (var nugetPackage in Common.Constants.V3NuGetPackages)
-                {
-                    if (!files.Any(f => Regex.IsMatch(f, nugetPackage + @"(.\d){2,4}.nupkg")))
-                    {
-                        packageSource = Common.Constants.NuGetOnlineRepository;
-                    }
-                }
-            }
-            else
-            {
-                packageSource = Common.Constants.NuGetOnlineRepository;
-            }
+            foreach (var nugetPackage in Common.Constants.V3NuGetPackages)
+                await CheckAndInstallNuGetPackageAsync(Common.Constants.NuGetOnlineRepository, nugetPackage);
 
-            if (!PackageInstallerServices.IsPackageInstalled(this.Project, this.ClientNuGetPackageName))
-            {
-                Version packageVersion = null;
-                PackageInstaller.InstallPackage(Common.Constants.NuGetOnlineRepository, this.Project, this.ClientNuGetPackageName, packageVersion, false);
-            }
+            await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Nuget Packages were installed.");
+
         }
 
-        public async override Task AddGeneratedClientCode()
+        public async override Task AddGeneratedClientCodeAsync()
         {
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Generating Client Proxy ...");
 

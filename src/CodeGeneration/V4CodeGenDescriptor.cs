@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
-using System;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -27,33 +26,32 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
         private IODataT4CodeGeneratorFactory CodeGeneratorFactory { get; set; }
 
         private new ServiceConfigurationV4 ServiceConfiguration { get; set; }
-        
-        public override async Task AddNugetPackages()
-        {
-            await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Adding Nuget Packages");
 
-            if (!PackageInstallerServices.IsPackageInstalled(this.Project, this.ClientNuGetPackageName))
-            {
-                Version packageVersion = null;
-                PackageInstaller.InstallPackage(Common.Constants.NuGetOnlineRepository, this.Project, this.ClientNuGetPackageName, packageVersion, false);
-            }
+        public override async Task AddNugetPackagesAsync()
+        {
+            await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Adding Nuget Packages...");
+
+            foreach (var nugetPackage in Common.Constants.V4NuGetPackages)
+                await CheckAndInstallNuGetPackageAsync(Common.Constants.NuGetOnlineRepository, nugetPackage);
+
+            await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Nuget Packages were installed.");
         }
 
-        public override async Task AddGeneratedClientCode()
+        public override async Task AddGeneratedClientCodeAsync()
         {
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Generating Client Proxy ...");
 
             if (this.ServiceConfiguration.IncludeT4File)
             {
-                await AddT4File();
+                await AddT4FileAsync();
             }
             else
             {
-                await AddGeneratedCSharpCode();
+                await AddGeneratedCSharpCodeAsync();
             }
         }
 
-        private async Task AddT4File()
+        private async Task AddT4FileAsync()
         {
             string tempFile = Path.GetTempFileName();
             string t4Folder = Path.Combine(this.CurrentAssemblyPath, "Templates");
@@ -75,11 +73,11 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             }
 
             string referenceFolder = GetReferenceFileFolder();
-            await this.Context.HandlerHelper.AddFileAsync(Path.Combine(t4Folder, "ODataT4CodeGenerator.ttinclude"), Path.Combine(referenceFolder, this.GeneratedFileNamePrefix + ".ttinclude"));            
+            await this.Context.HandlerHelper.AddFileAsync(Path.Combine(t4Folder, "ODataT4CodeGenerator.ttinclude"), Path.Combine(referenceFolder, this.GeneratedFileNamePrefix + ".ttinclude"));
             await this.Context.HandlerHelper.AddFileAsync(tempFile, Path.Combine(referenceFolder, this.GeneratedFileNamePrefix + ".tt"));
         }
 
-        private async Task AddGeneratedCSharpCode()
+        private async Task AddGeneratedCSharpCodeAsync()
         {
             ODataT4CodeGenerator t4CodeGenerator = CodeGeneratorFactory.Create();
             t4CodeGenerator.MetadataDocumentUri = MetadataUri;

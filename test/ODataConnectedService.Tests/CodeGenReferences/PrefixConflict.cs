@@ -32,7 +32,7 @@ namespace PrefixConflict
         /// There are no comments for Set1 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::Microsoft.OData.Client.DataServiceQuery<EntityType> Set1
+        public virtual global::Microsoft.OData.Client.DataServiceQuery<EntityType> Set1
         {
             get
             {
@@ -49,7 +49,7 @@ namespace PrefixConflict
         /// There are no comments for Set1 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public void AddToSet1(EntityType entityType)
+        public virtual void AddToSet1(EntityType entityType)
         {
             base.AddObject("Set1", entityType);
         }
@@ -165,7 +165,7 @@ namespace PrefixConflict
         /// There are no comments for Property Id in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::System.Guid Id
+        public virtual global::System.Guid Id
         {
             get
             {
@@ -186,7 +186,7 @@ namespace PrefixConflict
         /// There are no comments for Property Name in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::System.Nullable<int> Name
+        public virtual global::System.Nullable<int> Name
         {
             get
             {
@@ -207,7 +207,7 @@ namespace PrefixConflict
         /// There are no comments for Property _Name in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public string _Name
+        public virtual string _Name
         {
             get
             {
@@ -228,7 +228,7 @@ namespace PrefixConflict
         /// There are no comments for Property __Name in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::System.Nullable<int> __Name
+        public virtual global::System.Nullable<int> __Name
         {
             get
             {
@@ -256,7 +256,7 @@ namespace PrefixConflict
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::PrefixConflict.EntityTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::PrefixConflict.EntityType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::PrefixConflict.EntityTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::PrefixConflict.EntityType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::PrefixConflict.EntityTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -268,7 +268,7 @@ namespace PrefixConflict
         public static global::PrefixConflict.EntityTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::PrefixConflict.EntityType> source,
             global::System.Guid id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };

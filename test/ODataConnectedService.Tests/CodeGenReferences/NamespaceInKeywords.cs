@@ -31,7 +31,7 @@ namespace NamespaceInKeywords.@event.@string.@int
         /// There are no comments for Property Value in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public string Value
+        public virtual string Value
         {
             get
             {
@@ -99,7 +99,7 @@ namespace NamespaceInKeywords.@event.@string.@int
         /// There are no comments for Property KeyProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public int KeyProp
+        public virtual int KeyProp
         {
             get
             {
@@ -120,7 +120,7 @@ namespace NamespaceInKeywords.@event.@string.@int
         /// There are no comments for Property ValueProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public string ValueProp
+        public virtual string ValueProp
         {
             get
             {
@@ -148,7 +148,7 @@ namespace NamespaceInKeywords.@event.@string.@int
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::NamespaceInKeywords.@event.@string.@int.TestType1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespaceInKeywords.@event.@string.@int.TestType1> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::NamespaceInKeywords.@event.@string.@int.TestType1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespaceInKeywords.@event.@string.@int.TestType1> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::NamespaceInKeywords.@event.@string.@int.TestType1Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -160,7 +160,7 @@ namespace NamespaceInKeywords.@event.@string.@int
         public static global::NamespaceInKeywords.@event.@string.@int.TestType1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespaceInKeywords.@event.@string.@int.TestType1> source,
             int keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
@@ -191,7 +191,7 @@ namespace NamespaceInKeywords.@double
         /// There are no comments for Set1 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::Microsoft.OData.Client.DataServiceQuery<global::NamespaceInKeywords.@event.@string.@int.TestType1> Set1
+        public virtual global::Microsoft.OData.Client.DataServiceQuery<global::NamespaceInKeywords.@event.@string.@int.TestType1> Set1
         {
             get
             {
@@ -208,7 +208,7 @@ namespace NamespaceInKeywords.@double
         /// There are no comments for Set2 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::Microsoft.OData.Client.DataServiceQuery<TestType2> Set2
+        public virtual global::Microsoft.OData.Client.DataServiceQuery<TestType2> Set2
         {
             get
             {
@@ -225,7 +225,7 @@ namespace NamespaceInKeywords.@double
         /// There are no comments for Set1 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public void AddToSet1(global::NamespaceInKeywords.@event.@string.@int.TestType1 testType1)
+        public virtual void AddToSet1(global::NamespaceInKeywords.@event.@string.@int.TestType1 testType1)
         {
             base.AddObject("Set1", testType1);
         }
@@ -233,7 +233,7 @@ namespace NamespaceInKeywords.@double
         /// There are no comments for Set2 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public void AddToSet2(TestType2 testType2)
+        public virtual void AddToSet2(TestType2 testType2)
         {
             base.AddObject("Set2", testType2);
         }
@@ -369,7 +369,7 @@ namespace NamespaceInKeywords.@double
         /// There are no comments for Property KeyProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public int KeyProp
+        public virtual int KeyProp
         {
             get
             {
@@ -390,7 +390,7 @@ namespace NamespaceInKeywords.@double
         /// There are no comments for Property ValueProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public string ValueProp
+        public virtual string ValueProp
         {
             get
             {
@@ -411,7 +411,7 @@ namespace NamespaceInKeywords.@double
         /// There are no comments for Property ComplexValueProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::NamespaceInKeywords.@event.@string.@int.ComplexType ComplexValueProp
+        public virtual global::NamespaceInKeywords.@event.@string.@int.ComplexType ComplexValueProp
         {
             get
             {
@@ -439,7 +439,7 @@ namespace NamespaceInKeywords.@double
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::NamespaceInKeywords.@double.TestType2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespaceInKeywords.@double.TestType2> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::NamespaceInKeywords.@double.TestType2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespaceInKeywords.@double.TestType2> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::NamespaceInKeywords.@double.TestType2Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -451,7 +451,7 @@ namespace NamespaceInKeywords.@double
         public static global::NamespaceInKeywords.@double.TestType2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespaceInKeywords.@double.TestType2> source,
             int keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };

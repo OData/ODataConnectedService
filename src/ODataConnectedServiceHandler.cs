@@ -45,16 +45,16 @@ namespace Microsoft.OData.ConnectedService
             Project project = ProjectHelper.GetProjectFromHierarchy(context.ProjectHierarchy);
             ODataConnectedServiceInstance serviceInstance = (ODataConnectedServiceInstance)context.ServiceInstance;
 
-            var codeGenDescriptor = await GenerateCode(serviceInstance.ServiceConfig.Endpoint, serviceInstance.ServiceConfig.EdmxVersion, context, project);
+            var codeGenDescriptor = await GenerateCodeAsync(serviceInstance.ServiceConfig.Endpoint, serviceInstance.ServiceConfig.EdmxVersion, context, project);
             context.SetExtendedDesignerData<ServiceConfiguration>(serviceInstance.ServiceConfig);
             return codeGenDescriptor;
         }
 
-        private async Task<BaseCodeGenDescriptor> GenerateCode(string metadataUri, Version edmxVersion, ConnectedServiceHandlerContext context, Project project)
+        private async Task<BaseCodeGenDescriptor> GenerateCodeAsync(string metadataUri, Version edmxVersion, ConnectedServiceHandlerContext context, Project project)
         {
             BaseCodeGenDescriptor codeGenDescriptor = codeGenDescriptorFactory.Create(edmxVersion, metadataUri, context, project);
-            await codeGenDescriptor.AddNugetPackages();
-            await codeGenDescriptor.AddGeneratedClientCode();
+            await codeGenDescriptor.AddNugetPackagesAsync();
+            await codeGenDescriptor.AddGeneratedClientCodeAsync();
             return codeGenDescriptor;
         }
     }

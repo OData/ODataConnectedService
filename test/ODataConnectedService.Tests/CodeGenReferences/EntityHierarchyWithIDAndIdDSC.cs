@@ -43,7 +43,7 @@ namespace Namespace1.DSC
         /// There are no comments for Set1 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::Microsoft.OData.Client.DataServiceQuery<EntityType> Set1
+        public virtual global::Microsoft.OData.Client.DataServiceQuery<EntityType> Set1
         {
             get
             {
@@ -60,7 +60,7 @@ namespace Namespace1.DSC
         /// There are no comments for Set1 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public void AddToSet1(EntityType entityType)
+        public virtual void AddToSet1(EntityType entityType)
         {
             base.AddObject("Set1", entityType);
         }
@@ -176,7 +176,7 @@ namespace Namespace1.DSC
         /// There are no comments for Property Id in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public int Id
+        public virtual int Id
         {
             get
             {
@@ -263,7 +263,7 @@ namespace Namespace1.DSC
         /// There are no comments for Property ID in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public int ID
+        public virtual int ID
         {
             get
             {
@@ -292,7 +292,7 @@ namespace Namespace1.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Namespace1.DSC.EntityBaseSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace1.DSC.EntityBase> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Namespace1.DSC.EntityBaseSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace1.DSC.EntityBase> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Namespace1.DSC.EntityBaseSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -304,7 +304,7 @@ namespace Namespace1.DSC
         public static global::Namespace1.DSC.EntityBaseSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace1.DSC.EntityBase> source,
             int id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
@@ -315,7 +315,7 @@ namespace Namespace1.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Namespace1.DSC.EntityTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace1.DSC.EntityType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Namespace1.DSC.EntityTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace1.DSC.EntityType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Namespace1.DSC.EntityTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -327,7 +327,7 @@ namespace Namespace1.DSC
         public static global::Namespace1.DSC.EntityTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace1.DSC.EntityType> source,
             int id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };

@@ -3641,7 +3641,7 @@ this.Write("\")]\r\n");
 
         }
 
-this.Write("        public global::Microsoft.OData.Client.DataServiceQuery<");
+this.Write("        public virtual global::Microsoft.OData.Client.DataServiceQuery<");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(entitySetElementTypeName));
 
@@ -3731,7 +3731,7 @@ this.Write("\")]\r\n");
 
         }
 
-this.Write("        public ");
+this.Write("        public virtual ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(singletonElementTypeName));
 
@@ -3806,7 +3806,7 @@ this.Write(" in the schema.\r\n        /// </summary>\r\n        [global::System
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
-this.Write("\")]\r\n        public void AddTo");
+this.Write("\")]\r\n        public virtual void AddTo");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(entitySetName));
 
@@ -4332,7 +4332,7 @@ this.Write("\")]\r\n");
 
         }
 
-this.Write("        public ");
+this.Write("        public virtual ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyType));
 
@@ -4547,7 +4547,7 @@ this.Write("\")]\r\n");
 
         }
 
-this.Write("        public global::Microsoft.OData.Client.DataServiceQuery<");
+this.Write("        public virtual global::Microsoft.OData.Client.DataServiceQuery<");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(returnTypeName));
 
@@ -4602,7 +4602,7 @@ this.Write("\")]\r\n");
 
         }
 
-this.Write("        public ");
+this.Write("        public virtual ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName)));
 
@@ -4665,7 +4665,7 @@ this.Write("\")]\r\n");
 
         }
 
-this.Write("        public ");
+this.Write("        public virtual ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(hideBaseMethod ? this.OverloadsModifier : string.Empty));
 
@@ -4808,7 +4808,7 @@ this.Write("\")]\r\n");
 
         }
 
-this.Write("        public ");
+this.Write("        public virtual ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(returnTypeName));
 
@@ -4859,7 +4859,7 @@ this.Write("\")]\r\n");
 
         }
 
-this.Write("        public ");
+this.Write("        public virtual ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(hideBaseMethod ? this.OverloadsModifier : string.Empty));
 
@@ -4944,8 +4944,8 @@ this.Write(" ByKey(this global::Microsoft.OData.Client.DataServiceQuery<");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(entityTypeName));
 
-this.Write("> source, global::System.Collections.Generic.Dictionary<string, object> keys)\r\n  " +
-        "      {\r\n            return new ");
+this.Write("> source, global::System.Collections.Generic.IDictionary<string, object> keys)\r\n " +
+        "       {\r\n            return new ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(returnTypeName));
 
@@ -4991,9 +4991,9 @@ this.Write("> source,\r\n            ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(keyParameters));
 
-this.Write(")\r\n        {\r\n            global::System.Collections.Generic.Dictionary<string, o" +
-        "bject> keys = new global::System.Collections.Generic.Dictionary<string, object>\r" +
-        "\n            {\r\n                ");
+this.Write(")\r\n        {\r\n            global::System.Collections.Generic.IDictionary<string, " +
+        "object> keys = new global::System.Collections.Generic.Dictionary<string, object>" +
+        "\r\n            {\r\n                ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(keyDictionaryItems));
 

@@ -32,7 +32,7 @@ namespace Namespace1
         /// There are no comments for double in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public global::Microsoft.OData.Client.DataServiceQuery<@event> @double
+        public virtual global::Microsoft.OData.Client.DataServiceQuery<@event> @double
         {
             get
             {
@@ -49,7 +49,7 @@ namespace Namespace1
         /// There are no comments for double in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public void AddTodouble(@event @event)
+        public virtual void AddTodouble(@event @event)
         {
             base.AddObject("double", @event);
         }
@@ -137,14 +137,14 @@ namespace Namespace1
         /// <summary>
         /// There are no comments for @short in the schema.
         /// </summary>
-        public global::Namespace1.eventSingle @short(global::Namespace1.@event p0, bool useEntityReference = false)
+        public virtual global::Namespace1.eventSingle @short(global::Namespace1.@event p0, bool useEntityReference = false)
         {
             return new global::Namespace1.eventSingle(this.CreateFunctionQuerySingle<global::Namespace1.@event>("", "short", false, new global::Microsoft.OData.Client.UriEntityOperationParameter("p0", p0, useEntityReference)));
         }
         /// <summary>
         /// There are no comments for @enum in the schema.
         /// </summary>
-        public global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::Namespace1.@event> @enum(global::Namespace1.@event p0)
+        public virtual global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::Namespace1.@event> @enum(global::Namespace1.@event p0)
         {
             return new global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::Namespace1.@event>(this, this.BaseUri.OriginalString.Trim('/') + "/enum", new global::Microsoft.OData.Client.BodyOperationParameter("p0", p0));
         }
@@ -176,7 +176,7 @@ namespace Namespace1
         /// There are no comments for event in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public global::Namespace1.eventSingle @event
+        public virtual global::Namespace1.eventSingle @event
         {
             get
             {
@@ -224,7 +224,7 @@ namespace Namespace1
         /// There are no comments for Property string in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public string @string
+        public virtual string @string
         {
             get
             {
@@ -246,7 +246,7 @@ namespace Namespace1
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         [global::Microsoft.OData.Client.OriginalNameAttribute("event")]
-        public global::Namespace1.@event event1
+        public virtual global::Namespace1.@event event1
         {
             get
             {
@@ -276,7 +276,7 @@ namespace Namespace1
         /// <summary>
         /// There are no comments for @as in the schema.
         /// </summary>
-        public global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::Namespace1.@event> @as()
+        public virtual global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::Namespace1.@event> @as()
         {
             global::Microsoft.OData.Client.EntityDescriptor resource = Context.EntityTracker.TryGetEntityDescriptor(this);
             if (resource == null)
@@ -297,7 +297,7 @@ namespace Namespace1
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Namespace1.eventSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace1.@event> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Namespace1.eventSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace1.@event> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Namespace1.eventSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -309,7 +309,7 @@ namespace Namespace1
         public static global::Namespace1.eventSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace1.@event> source,
             string @string)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "string", @string }
             };

@@ -61,7 +61,7 @@ namespace Simple.DSC
         /// There are no comments for Property KeyProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public int KeyProp
+        public virtual int KeyProp
         {
             get
             {
@@ -83,7 +83,7 @@ namespace Simple.DSC
         /// There are no comments for Property ValueProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public string ValueProp
+        public virtual string ValueProp
         {
             get
             {
@@ -129,7 +129,7 @@ namespace Simple.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Simple.DSC.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Simple.DSC.TestType> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::Simple.DSC.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Simple.DSC.TestType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::Simple.DSC.TestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -141,7 +141,7 @@ namespace Simple.DSC
         public static global::Simple.DSC.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Simple.DSC.TestType> source,
             int keyProp)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };

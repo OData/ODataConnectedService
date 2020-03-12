@@ -43,7 +43,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// There are no comments for DerivedBaseETSet in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.3.0")]
-        public global::Microsoft.OData.Client.DataServiceQuery<DerivedBaseET> DerivedBaseETSet
+        public virtual global::Microsoft.OData.Client.DataServiceQuery<DerivedBaseET> DerivedBaseETSet
         {
             get
             {
@@ -60,7 +60,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// There are no comments for DerivedETSet in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.3.0")]
-        public global::Microsoft.OData.Client.DataServiceQuery<DerivedET> DerivedETSet
+        public virtual global::Microsoft.OData.Client.DataServiceQuery<DerivedET> DerivedETSet
         {
             get
             {
@@ -77,7 +77,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// There are no comments for DerivedAbstractETSet in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.3.0")]
-        public global::Microsoft.OData.Client.DataServiceQuery<DerivedAbstractETWithKey> DerivedAbstractETSet
+        public virtual global::Microsoft.OData.Client.DataServiceQuery<DerivedAbstractETWithKey> DerivedAbstractETSet
         {
             get
             {
@@ -94,7 +94,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// There are no comments for DerivedBaseETSet in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.3.0")]
-        public void AddToDerivedBaseETSet(DerivedBaseET derivedBaseET)
+        public virtual void AddToDerivedBaseETSet(DerivedBaseET derivedBaseET)
         {
             base.AddObject("DerivedBaseETSet", derivedBaseET);
         }
@@ -102,7 +102,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// There are no comments for DerivedETSet in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.3.0")]
-        public void AddToDerivedETSet(DerivedET derivedET)
+        public virtual void AddToDerivedETSet(DerivedET derivedET)
         {
             base.AddObject("DerivedETSet", derivedET);
         }
@@ -110,7 +110,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// There are no comments for DerivedAbstractETSet in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.3.0")]
-        public void AddToDerivedAbstractETSet(DerivedAbstractETWithKey derivedAbstractETWithKey)
+        public virtual void AddToDerivedAbstractETSet(DerivedAbstractETWithKey derivedAbstractETWithKey)
         {
             base.AddObject("DerivedAbstractETSet", derivedAbstractETWithKey);
         }
@@ -228,7 +228,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// There are no comments for Property PropertyInAbstractET in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.3.0")]
-        public string PropertyInAbstractET
+        public virtual string PropertyInAbstractET
         {
             get
             {
@@ -298,7 +298,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// There are no comments for Property PropertyInDerivedAbstractET in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.3.0")]
-        public string PropertyInDerivedAbstractET
+        public virtual string PropertyInDerivedAbstractET
         {
             get
             {
@@ -366,7 +366,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// There are no comments for Property Id in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.3.0")]
-        public string Id
+        public virtual string Id
         {
             get
             {
@@ -436,7 +436,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// There are no comments for Property PropertyInDerivedET in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.3.0")]
-        public int PropertyInDerivedET
+        public virtual int PropertyInDerivedET
         {
             get
             {
@@ -493,7 +493,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// There are no comments for Property Id in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.3.0")]
-        public string Id
+        public virtual string Id
         {
             get
             {
@@ -562,7 +562,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// There are no comments for Property PropertyInDerivedET2 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.3.0")]
-        public string PropertyInDerivedET2
+        public virtual string PropertyInDerivedET2
         {
             get
             {
@@ -600,7 +600,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -612,7 +612,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         public static global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> source,
             string id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
@@ -641,7 +641,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -653,7 +653,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> source,
             string id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
@@ -691,7 +691,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -703,7 +703,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         public static global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey> source,
             string id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
@@ -723,7 +723,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// </summary>
         /// <param name="source">source entity set</param>
         /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2> source, global::System.Collections.Generic.Dictionary<string, object> keys)
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2> source, global::System.Collections.Generic.IDictionary<string, object> keys)
         {
             return new global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
         }
@@ -735,7 +735,7 @@ namespace AbstractEntityTypeWithoutKey.DSC
         public static global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2> source,
             string id)
         {
-            global::System.Collections.Generic.Dictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
