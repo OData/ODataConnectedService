@@ -72,7 +72,7 @@ namespace NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePre
         /// There are no comments for Items in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::Microsoft.OData.Client.DataServiceQuery<TestType> Items
+        public virtual global::Microsoft.OData.Client.DataServiceQuery<TestType> Items
         {
             get
             {
@@ -89,7 +89,7 @@ namespace NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePre
         /// There are no comments for Items2 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::Microsoft.OData.Client.DataServiceQuery<global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestType> Items2
+        public virtual global::Microsoft.OData.Client.DataServiceQuery<global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestType> Items2
         {
             get
             {
@@ -106,7 +106,7 @@ namespace NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePre
         /// There are no comments for Items in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public void AddToItems(TestType testType)
+        public virtual void AddToItems(TestType testType)
         {
             base.AddObject("Items", testType);
         }
@@ -114,7 +114,7 @@ namespace NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePre
         /// There are no comments for Items2 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public void AddToItems2(global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestType testType)
+        public virtual void AddToItems2(global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestType testType)
         {
             base.AddObject("Items2", testType);
         }
@@ -240,7 +240,7 @@ namespace NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePre
         /// There are no comments for Property KeyProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public int KeyProp
+        public virtual int KeyProp
         {
             get
             {
@@ -261,7 +261,7 @@ namespace NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePre
         /// There are no comments for Property ValueProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public string ValueProp
+        public virtual string ValueProp
         {
             get
             {
@@ -361,7 +361,7 @@ namespace NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePre
         /// There are no comments for Property KeyProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public int KeyProp
+        public virtual int KeyProp
         {
             get
             {
@@ -382,7 +382,7 @@ namespace NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePre
         /// There are no comments for Property ValueProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public string ValueProp
+        public virtual string ValueProp
         {
             get
             {

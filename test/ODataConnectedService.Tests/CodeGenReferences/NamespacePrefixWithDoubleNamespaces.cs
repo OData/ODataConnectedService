@@ -72,7 +72,7 @@ namespace Foo.NamespacePrefixWithDoubleNamespaces
         /// There are no comments for Set1 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::Microsoft.OData.Client.DataServiceQuery<EntityType> Set1
+        public virtual global::Microsoft.OData.Client.DataServiceQuery<EntityType> Set1
         {
             get
             {
@@ -89,7 +89,7 @@ namespace Foo.NamespacePrefixWithDoubleNamespaces
         /// There are no comments for Set2 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::Microsoft.OData.Client.DataServiceQuery<EntityType> Set2
+        public virtual global::Microsoft.OData.Client.DataServiceQuery<EntityType> Set2
         {
             get
             {
@@ -106,7 +106,7 @@ namespace Foo.NamespacePrefixWithDoubleNamespaces
         /// There are no comments for Set1 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public void AddToSet1(EntityType entityType)
+        public virtual void AddToSet1(EntityType entityType)
         {
             base.AddObject("Set1", entityType);
         }
@@ -114,7 +114,7 @@ namespace Foo.NamespacePrefixWithDoubleNamespaces
         /// There are no comments for Set2 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public void AddToSet2(EntityType entityType)
+        public virtual void AddToSet2(EntityType entityType)
         {
             base.AddObject("Set2", entityType);
         }
@@ -216,7 +216,7 @@ namespace Foo.NamespacePrefixWithDoubleNamespaces
         /// There are no comments for Property Value in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public string Value
+        public virtual string Value
         {
             get
             {
@@ -282,7 +282,7 @@ namespace Foo.NamespacePrefixWithDoubleNamespaces
         /// There are no comments for Property Id in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::System.Guid Id
+        public virtual global::System.Guid Id
         {
             get
             {
@@ -303,7 +303,7 @@ namespace Foo.NamespacePrefixWithDoubleNamespaces
         /// There are no comments for Property Complex in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::Foo.NamespacePrefixWithDoubleNamespaces.ComplexType Complex
+        public virtual global::Foo.NamespacePrefixWithDoubleNamespaces.ComplexType Complex
         {
             get
             {
@@ -373,7 +373,7 @@ namespace Foo.NamespacePrefixWithDoubleNamespaces2
         /// There are no comments for Property Value in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public string Value
+        public virtual string Value
         {
             get
             {
@@ -439,7 +439,7 @@ namespace Foo.NamespacePrefixWithDoubleNamespaces2
         /// There are no comments for Property Id in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::System.Guid Id
+        public virtual global::System.Guid Id
         {
             get
             {
@@ -460,7 +460,7 @@ namespace Foo.NamespacePrefixWithDoubleNamespaces2
         /// There are no comments for Property Complex in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.2.0")]
-        public global::Foo.NamespacePrefixWithDoubleNamespaces2.ComplexType Complex
+        public virtual global::Foo.NamespacePrefixWithDoubleNamespaces2.ComplexType Complex
         {
             get
             {
