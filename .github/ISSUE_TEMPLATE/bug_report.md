@@ -10,6 +10,7 @@ A clear and concise description of what the bug is.
 #### Version of the Project affected
 ODataConnectedService v0.4.x
 VisualStudio Version v16.4
+Microsoft.Odata.Client v7.6.x
 
 #### To Reproduce
 Steps to reproduce the behavior:
