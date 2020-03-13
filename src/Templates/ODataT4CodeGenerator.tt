@@ -42,6 +42,7 @@ public static class Configuration
 	
 	// Comma-separated list of the names of operation imports to exclude from the generated code
 	public const string ExcludedOperationImports = "";
+
 }
 
 public static class Customization

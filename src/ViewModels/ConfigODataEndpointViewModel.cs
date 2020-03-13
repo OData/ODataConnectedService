@@ -25,15 +25,48 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public UserSettings UserSettings { get; }
         public string CustomHttpHeaders { get; set; }
 
+
+        public bool IncludeWebProxy { get; set; }
+
+        public string WebProxyHost { get; set; }
+
+        public bool IncludeWebProxyNetworkCredentials { get; set; }
+
+        public string WebProxyNetworkCredentialsUsername { get; set; }
+        public string WebProxyNetworkCredentialsPassword { get; set; }
+
+        public string WebProxyNetworkCredentialsDomain { get; set; }
+
+        public bool IncludeCustomHeaders { get; set; }
+
+        public event EventHandler<EventArgs> PageEntering;
+
+
         public ConfigODataEndpointViewModel(UserSettings userSettings) : base()
         {
             this.Title = "Configure endpoint";
             this.Description = "Enter or choose an OData service endpoint to begin";
             this.Legend = "Endpoint";
-            this.View = new ConfigODataEndpoint();
-            this.ServiceName = Constants.DefaultServiceName;
-            this.View.DataContext = this;
             this.UserSettings = userSettings;
+
+        }
+
+        public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
+        {
+            await base.OnPageEnteringAsync(args);
+            this.View = new ConfigODataEndpoint();
+            this.ResetDataContext();
+            this.View.DataContext = this;
+
+            if (PageEntering != null)
+            {
+                this.PageEntering(this, EventArgs.Empty);
+            }
+        }
+
+        private void ResetDataContext()
+        {
+            this.ServiceName = Constants.DefaultServiceName;
         }
 
         public event EventHandler<EventArgs> PageLeaving;
@@ -77,26 +110,54 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                     this.Endpoint = this.Endpoint.TrimEnd('/') + "/$metadata";
                 }
             }
-
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(this.Endpoint);
-            if(this.CustomHttpHeaders !=null)
+            Stream metadataStream;
+            Uri metadataUri = new Uri(this.Endpoint);
+            if (!metadataUri.IsFile)
             {
-                string[] headerElements = this.CustomHttpHeaders.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var headerElement in headerElements)
+                HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(this.Endpoint);
+                if (this.CustomHttpHeaders != null)
                 {
-                    // Trim header for empty spaces
-                    var header = headerElement.Trim();
-                    webRequest.Headers.Add(header);
+                    string[] headerElements = this.CustomHttpHeaders.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var headerElement in headerElements)
+                    {
+                        // Trim header for empty spaces
+                        var header = headerElement.Trim();
+                        webRequest.Headers.Add(header);
+                    }
                 }
-            }
 
-            WebResponse webResponse = webRequest.GetResponse();
-            Stream metadataStream = webResponse.GetResponseStream();
+                if (IncludeWebProxy)
+                {
+                    WebProxy proxy = new WebProxy(WebProxyHost);
+                    if (IncludeWebProxyNetworkCredentials)
+                    {
+                        proxy.Credentials = new NetworkCredential(WebProxyNetworkCredentialsUsername, WebProxyNetworkCredentialsPassword, WebProxyNetworkCredentialsDomain);
+                    }
+
+                    webRequest.Proxy = proxy;
+                }
+
+                WebResponse webResponse = webRequest.GetResponse();
+                metadataStream = webResponse.GetResponseStream();
+                
+            }
+            else
+            {
+                // Set up XML secure resolver
+                XmlUrlResolver xmlUrlResolver = new XmlUrlResolver()
+                {
+                    Credentials = CredentialCache.DefaultNetworkCredentials
+
+                };
+                PermissionSet permissionSet = new PermissionSet(System.Security.Permissions.PermissionState.Unrestricted);
+
+                metadataStream = (Stream)xmlUrlResolver.GetEntity(metadataUri, null, typeof(Stream));
+            }
 
             string workFile = Path.GetTempFileName();
 
             try
-            {
+            {   using(metadataStream)
                 using (XmlReader reader = XmlReader.Create(metadataStream))
                 {
                     using (XmlWriter writer = XmlWriter.Create(workFile))

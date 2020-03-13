@@ -50,8 +50,13 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             {
                 await AddGeneratedCodeAsync();
             }
-            // Don't write headers to json file
+
             this.ServiceConfiguration.CustomHttpHeaders = null;
+
+            // Since all the code is generated make sure we don't write the username and password for the network credentials
+            this.ServiceConfiguration.WebProxyNetworkCredentialsUsername = null;
+            this.ServiceConfiguration.WebProxyNetworkCredentialsPassword = null;
+
         }
 
         private async Task AddT4FileAsync()
@@ -139,6 +144,13 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 }
             }
             t4CodeGenerator.CustomHttpHeaders = headers;
+
+            t4CodeGenerator.IncludeWebProxy = ServiceConfiguration.IncludeWebProxy;
+            t4CodeGenerator.WebProxyHost = ServiceConfiguration.WebProxyHost;
+            t4CodeGenerator.IncludeWebProxyNetworkCredentials = ServiceConfiguration.IncludeWebProxyNetworkCredentials;
+            t4CodeGenerator.WebProxyNetworkCredentialsUsername = ServiceConfiguration.WebProxyNetworkCredentialsUsername;
+            t4CodeGenerator.WebProxyNetworkCredentialsPassword = ServiceConfiguration.WebProxyNetworkCredentialsPassword;
+            t4CodeGenerator.WebProxyNetworkCredentialsDomain = ServiceConfiguration.WebProxyNetworkCredentialsDomain;
 
             string tempFile = Path.GetTempFileName();
 

@@ -59,9 +59,10 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             this.EnableNamingAlias = false;
             this.GeneratedFileName = Common.Constants.DefaultReferenceFileName;
             this.IncludeT4File = false;
-            MakeTypesInternal = false;
+            this.MakeTypesInternal = false;
             this.OpenGeneratedFilesInIDE = false;
-            GenerateMultipleFiles = false;
+            this.GenerateMultipleFiles = false;
+
         }
 
     }

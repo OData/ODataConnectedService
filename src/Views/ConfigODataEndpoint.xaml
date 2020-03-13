@@ -11,6 +11,9 @@
              d:DataContext="{d:DesignInstance Type=viewModels:ConfigODataEndpointViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
     <StackPanel HorizontalAlignment="Left" Margin="10, 0, 0, 0" VerticalAlignment="Top" Width="490">
         <TextBlock x:Name="ServiceName1" Text="Service name： "
                    HorizontalAlignment="Left" Margin="0, 5, 10, 5">
@@ -24,13 +27,20 @@
                   Margin="20, 5, 5, 0" IsEditable="True"
                   ItemsSource="{Binding Path=UserSettings.MruEndpoints}"
                   Text="{Binding Path=Endpoint, TargetNullValue='Enter your endpoint...' }"/>
-        <TextBlock
+
+        <CheckBox x:Name="IncludeHttpHeadersElement" Content="Include Custom Http Headers" IsChecked="{Binding IncludeCustomHeaders}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,15" FontWeight="Medium"/>
+
+        <StackPanel
+                    Visibility="{Binding Path=IsChecked, ElementName=IncludeHttpHeadersElement, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="20, 0, 0, 0">
+
+            <TextBlock
             x:Name="CustomHttpHeadersLabel"
             Text="Custom Headers： "
             HorizontalAlignment="Left"
             Margin="0, 5, 10, 5">
-        </TextBlock>
-        <TextBox
+            </TextBlock>
+            <TextBox
             x:Name="CustomHttpHeaders"
             Text="{Binding Path=CustomHttpHeaders}"
             HorizontalAlignment="Left"
@@ -39,15 +49,51 @@
             VerticalScrollBarVisibility="Visible"
             Margin="20, 5, 10, 5"
             Width="250">
-            <TextBox.ToolTip>
-                <ToolTip HorizontalAlignment="Center">
-                    <TextBlock>
+                <TextBox.ToolTip>
+                    <ToolTip HorizontalAlignment="Center">
+                        <TextBlock>
                         (Optional) We add Http Headers to our http request as a multiline string e.g <LineBreak/>
                         HeaderKey1: HeaderValue1<LineBreak/>
                         HeaderKey2: HeaderValue2<LineBreak/>
-                    </TextBlock>
-                </ToolTip>
-            </TextBox.ToolTip>
-        </TextBox>
+                        </TextBlock>
+                    </ToolTip>
+                </TextBox.ToolTip>
+            </TextBox>
+        </StackPanel>
+
+        <CheckBox x:Name="IncludeWebProxyElement" Content="Include WebProxy" IsChecked="{Binding IncludeWebProxy}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 15" FontWeight="Medium"/>
+
+        <StackPanel
+                    Visibility="{Binding Path=IsChecked, ElementName=IncludeWebProxyElement, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="20, 0, 0, 0">
+
+            <StackPanel Orientation="Vertical" Margin=" 0, 0, 0,0" >
+                <TextBlock x:Name="HostLabel" Text="Enter the webproxy host with the port (e.g. http://localhost:8080):"
+                           HorizontalAlignment="Left" Margin="0, 0, 5, 0"/>
+                <TextBox x:Name="WebProxyHost" Text="{Binding WebProxyHost}"
+                             HorizontalAlignment="Left" TextWrapping="Wrap" Width="300" Margin="0, 0, 0, 0"/>
+            </StackPanel>
+            <CheckBox x:Name="IncludeWebProxyNetworkCredentialsElement" Content="Include Proxy Network credentials" IsChecked="{Binding IncludeWebProxyNetworkCredentials}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 10" FontWeight="Medium"/>
+            <StackPanel Orientation="Vertical"
+                        Visibility="{Binding Path=IsChecked, ElementName=IncludeWebProxyNetworkCredentialsElement, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="20, 0, 0, 0">
+
+                <TextBlock x:Name="WebProxyNetworkCredentialsUsernameLabel" Text="Username:"
+                           HorizontalAlignment="Left" Margin="0, 10, 0, 0"/>
+                <TextBox x:Name="WebProxyNetworkCredentialsUsername" Text="{Binding WebProxyNetworkCredentialsUsername}"
+                             HorizontalAlignment="Left" TextWrapping="Wrap" Width="300" Margin="0, 5, 0, 0"/>
+
+                <TextBlock x:Name="WebProxyNetworkCredentialsPasswordLabel" Text="Password:"
+                           HorizontalAlignment="Left" Margin="0, 10, 0, 0"/>
+                <TextBox x:Name="WebProxyNetworkCredentialsPassword" Text="{Binding WebProxyNetworkCredentialsPassword}"
+                             HorizontalAlignment="Left" TextWrapping="Wrap" Width="300" Margin="0, 5, 0, 0"/>
+
+                <TextBlock x:Name="WebProxyNetworkCredentialsDomainLabel" Text="Domain:"
+                           HorizontalAlignment="Left" Margin="0, 10, 0, 0"/>
+                <TextBox x:Name="WebProxyNetworkCredentialsDomain" Text="{Binding WebProxyNetworkCredentialsDomain}"
+                             HorizontalAlignment="Left" TextWrapping="Wrap" Width="300" Margin="0, 5, 0, 0"/>
+
+            </StackPanel>
+        </StackPanel>
     </StackPanel>
 </UserControl>
