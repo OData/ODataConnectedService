@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.Services.Design;
 using System.Runtime.Serialization;
 using Microsoft.OData.ConnectedService.Common;
 using Microsoft.VisualStudio.ConnectedServices;
@@ -20,9 +19,6 @@ namespace Microsoft.OData.ConnectedService.Models
 
         [DataMember]
         public ObservableCollection<string> MruEndpoints { get; private set; }
-
-        [DataMember]
-        public LanguageOption LanguageOption { get; set; }
 
         private UserSettings()
         {

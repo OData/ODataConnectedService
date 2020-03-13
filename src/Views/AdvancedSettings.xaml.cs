@@ -18,10 +18,7 @@ namespace Microsoft.OData.ConnectedService.Views
             this.AdvancedSettingsPanel.Visibility = Visibility.Hidden;
         }
 
-        internal ODataConnectedServiceWizard ODataConnectedServiceWizard
-        {
-            get { return ((AdvancedSettingsViewModel)this.DataContext).Wizard as ODataConnectedServiceWizard; }
-        }
+        internal ODataConnectedServiceWizard ODataConnectedServiceWizard => ((AdvancedSettingsViewModel)this.DataContext).Wizard as ODataConnectedServiceWizard;
 
         private void settings_Click(object sender, RoutedEventArgs e)
         {

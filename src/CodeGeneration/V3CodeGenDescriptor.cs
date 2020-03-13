@@ -21,7 +21,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             this.ClientDocUri = Common.Constants.V3DocUri;
         }
 
-        public async override Task AddNugetPackagesAsync()
+        public override async Task AddNugetPackagesAsync()
         {
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Adding Nuget Packages...");
 
@@ -31,25 +31,25 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Nuget Packages were installed.");
         }
 
-        public async override Task AddGeneratedClientCodeAsync()
+        public override async Task AddGeneratedClientCodeAsync()
         {
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Generating Client Proxy ...");
 
-            EntityClassGenerator generator = new EntityClassGenerator(this.ServiceConfiguration.LanguageOption)
+            EntityClassGenerator generator = new EntityClassGenerator(this.TargetProjectLanguage)
             {
                 UseDataServiceCollection = this.ServiceConfiguration.UseDataServiceCollection,
                 Version = DataServiceCodeVersion.V3
             };
 
             // Set up XML secure resolver
-            XmlUrlResolver xmlUrlResolver = new XmlUrlResolver()
+            XmlUrlResolver xmlUrlResolver = new XmlUrlResolver
             {
                 Credentials = System.Net.CredentialCache.DefaultNetworkCredentials
             };
 
             PermissionSet permissionSet = new PermissionSet(System.Security.Permissions.PermissionState.Unrestricted);
 
-            XmlReaderSettings settings = new XmlReaderSettings()
+            XmlReaderSettings settings = new XmlReaderSettings
             {
                 XmlResolver = new XmlSecureResolver(xmlUrlResolver, permissionSet)
             };
@@ -78,7 +78,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
 
                 if (noErrors)
                 {
-                    var ext = this.ServiceConfiguration.LanguageOption == LanguageOption.GenerateCSharpCode
+                    var ext = this.TargetProjectLanguage == LanguageOption.GenerateCSharpCode
                         ? ".cs"
                         : ".vb";
 

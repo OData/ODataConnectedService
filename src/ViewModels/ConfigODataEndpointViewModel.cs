@@ -17,16 +17,11 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 {
     internal class ConfigODataEndpointViewModel : ConnectedServiceWizardPage
     {
-        private UserSettings userSettings;
-
         public string Endpoint { get; set; }
         public string ServiceName { get; set; }
         public Version EdmxVersion { get; set; }
         public string MetadataTempPath { get; set; }
-        public UserSettings UserSettings
-        {
-            get { return this.userSettings; }
-        }
+        public UserSettings UserSettings { get; }
 
         public ConfigODataEndpointViewModel(UserSettings userSettings) : base()
         {
@@ -36,23 +31,22 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             this.View = new ConfigODataEndpoint();
             this.ServiceName = Constants.DefaultServiceName;
             this.View.DataContext = this;
-            this.userSettings = userSettings;
+            this.UserSettings = userSettings;
         }
 
         public override Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
         {
             UserSettings.AddToTopOfMruList(((ODataConnectedServiceWizard)this.Wizard).UserSettings.MruEndpoints, this.Endpoint);
-            Version version;
             try
             {
-                this.MetadataTempPath = GetMetadata(out version);
+                this.MetadataTempPath = GetMetadata(out var version);
                 this.EdmxVersion = version;
                 return base.OnPageLeavingAsync(args);
             }
             catch (Exception e)
             {
-                return Task.FromResult<PageNavigationResult>(
-                    new PageNavigationResult()
+                return Task.FromResult(
+                    new PageNavigationResult
                     {
                         ErrorMessage = e.Message,
                         IsSuccess = false,
@@ -63,12 +57,12 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         private string GetMetadata(out Version edmxVersion)
         {
-            if (String.IsNullOrEmpty(this.Endpoint))
+            if (string.IsNullOrEmpty(this.Endpoint))
             {
                 throw new ArgumentNullException("OData Service Endpoint", "Please input the service endpoint");
             }
 
-            if (this.Endpoint.StartsWith("https:", StringComparison.Ordinal) 
+            if (this.Endpoint.StartsWith("https:", StringComparison.Ordinal)
                 || this.Endpoint.StartsWith("http", StringComparison.Ordinal))
             {
                 if (!this.Endpoint.EndsWith("$metadata", StringComparison.Ordinal))
@@ -78,14 +72,14 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
 
             // Set up XML secure resolver
-            XmlUrlResolver xmlUrlResolver = new XmlUrlResolver()
+            XmlUrlResolver xmlUrlResolver = new XmlUrlResolver
             {
                 Credentials = CredentialCache.DefaultNetworkCredentials
             };
 
             PermissionSet permissionSet = new PermissionSet(System.Security.Permissions.PermissionState.Unrestricted);
 
-            XmlReaderSettings readerSettings = new XmlReaderSettings()
+            XmlReaderSettings readerSettings = new XmlReaderSettings
             {
                 XmlResolver = new XmlSecureResolver(xmlUrlResolver, permissionSet)
             };

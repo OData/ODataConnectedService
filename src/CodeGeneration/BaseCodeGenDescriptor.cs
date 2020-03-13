@@ -2,6 +2,7 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System;
+using System.Data.Services.Design;
 using System.IO;
 using System.Threading.Tasks;
 using EnvDTE;
@@ -24,29 +25,20 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
         public string MetadataUri { get; private set; }
         public string ClientNuGetPackageName { get; set; }
         public string ClientDocUri { get; set; }
-        protected string GeneratedFileNamePrefix
-        {
-            get
-            {
-                return string.IsNullOrWhiteSpace(this.ServiceConfiguration.GeneratedFileNamePrefix)
-                    ? Common.Constants.DefaultReferenceFileName : this.ServiceConfiguration.GeneratedFileNamePrefix;
-            }
-        }
+        protected string GeneratedFileNamePrefix =>
+            string.IsNullOrWhiteSpace(this.ServiceConfiguration.GeneratedFileNamePrefix)
+                ? Common.Constants.DefaultReferenceFileName : this.ServiceConfiguration.GeneratedFileNamePrefix;
 
-        protected string CurrentAssemblyPath
-        {
-            get
-            {
-                return Path.GetDirectoryName(this.GetType().Assembly.Location);
-            }
-        }
+        protected string CurrentAssemblyPath => Path.GetDirectoryName(this.GetType().Assembly.Location);
+        
+        protected LanguageOption TargetProjectLanguage => this.Project.GetLanguageOption();
 
-        public BaseCodeGenDescriptor(string metadataUri, ConnectedServiceHandlerContext Context, Project project)
+        protected BaseCodeGenDescriptor(string metadataUri, ConnectedServiceHandlerContext context, Project project)
         {
             this.Init();
 
             this.MetadataUri = metadataUri;
-            this.Context = Context;
+            this.Context = context;
             this.Project = project;
             this.ServiceConfiguration = ((ODataConnectedServiceInstance)this.Context.ServiceInstance).ServiceConfig;
         }
@@ -66,7 +58,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             var serviceReferenceFolderName = this.Context.HandlerHelper.GetServiceArtifactsRootFolder();
 
             var referenceFolderPath = Path.Combine(
-                ProjectHelper.GetProjectFullPath(this.Project),
+                this.Project.GetFullPath(),
                 serviceReferenceFolderName,
                 this.Context.ServiceInstance.Name);
 

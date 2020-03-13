@@ -62,7 +62,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             using (var writer = File.CreateText(tempFile))
             {
                 var ttIncludeText = File.ReadAllText(Path.Combine(t4Folder, "ODataT4CodeGenerator.ttinclude"));
-                if (this.ServiceConfiguration.LanguageOption == LanguageOption.GenerateVBCode)
+                if (this.TargetProjectLanguage == LanguageOption.GenerateVBCode)
                     ttIncludeText = Regex.Replace(ttIncludeText, "(output extension=)\".cs\"", "$1\".vb\"");
                 await writer.WriteAsync(ttIncludeText);
                 await writer.FlushAsync();
@@ -80,12 +80,12 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 text = Regex.Replace(text, "(public const string MetadataDocumentUri = )\"\";", "$1\"" + ServiceConfiguration.Endpoint + "\";");
                 text = Regex.Replace(text, "(public const bool UseDataServiceCollection = ).*;", "$1" + ServiceConfiguration.UseDataServiceCollection.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
                 text = Regex.Replace(text, "(public const string NamespacePrefix = )\"\\$rootnamespace\\$\";", "$1\"" + ServiceConfiguration.NamespacePrefix + "\";");
-                if (this.ServiceConfiguration.LanguageOption == LanguageOption.GenerateCSharpCode)
+                if (this.TargetProjectLanguage == LanguageOption.GenerateCSharpCode)
                 {
                     text = Regex.Replace(text, "(public const string TargetLanguage = )\"OutputLanguage\";",
                         "$1\"CSharp\";");
                 }
-                else if (this.ServiceConfiguration.LanguageOption == LanguageOption.GenerateVBCode)
+                else if (this.TargetProjectLanguage == LanguageOption.GenerateVBCode)
                 {
                     text = Regex.Replace(text, "(public const string TargetLanguage = )\"OutputLanguage\";",
                         "$1\"VB\";");
@@ -110,7 +110,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             t4CodeGenerator.MetadataDocumentUri = MetadataUri;
             t4CodeGenerator.UseDataServiceCollection = this.ServiceConfiguration.UseDataServiceCollection;
             t4CodeGenerator.TargetLanguage =
-                this.ServiceConfiguration.LanguageOption == LanguageOption.GenerateCSharpCode
+                this.TargetProjectLanguage == LanguageOption.GenerateCSharpCode
                     ? ODataT4CodeGenerator.LanguageOption.CSharp
                     : ODataT4CodeGenerator.LanguageOption.VB;
             t4CodeGenerator.IgnoreUnexpectedElementsAndAttributes = this.ServiceConfiguration.IgnoreUnexpectedElementsAndAttributes;
@@ -132,7 +132,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                     }
                 }
             }
-            string outputFile = Path.Combine(GetReferenceFileFolder(), $"{this.GeneratedFileNamePrefix}{(this.ServiceConfiguration.LanguageOption == LanguageOption.GenerateCSharpCode ? ".cs" : ".vb")}");
+            string outputFile = Path.Combine(GetReferenceFileFolder(), $"{this.GeneratedFileNamePrefix}{(this.TargetProjectLanguage == LanguageOption.GenerateCSharpCode ? ".cs" : ".vb")}");
             await this.Context.HandlerHelper.AddFileAsync(tempFile, outputFile, new AddFileOptions { OpenOnComplete = this.ServiceConfiguration.OpenGeneratedFilesInIDE });
 
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Client Proxy for OData V4 was generated.");

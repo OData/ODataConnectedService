@@ -12,7 +12,6 @@ namespace Microsoft.OData.ConnectedService
 {
     internal class ODataConnectedServiceWizard : ConnectedServiceWizard
     {
-        private UserSettings userSettings;
         private ODataConnectedServiceInstance serviceInstance;
 
         public ConfigODataEndpointViewModel ConfigODataEndpointViewModel { get; set; }
@@ -25,15 +24,15 @@ namespace Microsoft.OData.ConnectedService
 
         public Version EdmxVersion => this.ConfigODataEndpointViewModel.EdmxVersion;
 
-        public UserSettings UserSettings => this.userSettings;
+        public UserSettings UserSettings { get; }
 
         public ODataConnectedServiceWizard(ConnectedServiceProviderContext context)
         {
             this.Context = context;
-            this.userSettings = UserSettings.Load(context.Logger);
+            this.UserSettings = UserSettings.Load(context.Logger);
 
-            ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(this.userSettings);
-            AdvancedSettingsViewModel = new AdvancedSettingsViewModel(this.userSettings);
+            ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(this.UserSettings);
+            AdvancedSettingsViewModel = new AdvancedSettingsViewModel(this.UserSettings);
 
             if (this.Context.IsUpdating)
             {
@@ -49,7 +48,6 @@ namespace Microsoft.OData.ConnectedService
                 AdvancedSettingsViewModel.UseNamespacePrefix = serviceConfig.UseNameSpacePrefix;
                 AdvancedSettingsViewModel.NamespacePrefix = serviceConfig.NamespacePrefix;
                 AdvancedSettingsViewModel.UseDataServiceCollection = serviceConfig.UseDataServiceCollection;
-                AdvancedSettingsViewModel.LanguageOption = serviceConfig.LanguageOption;
 
                 if (serviceConfig.EdmxVersion == Common.Constants.EdmxVersion4)
                 {
@@ -93,7 +91,7 @@ namespace Microsoft.OData.ConnectedService
 
         public override Task<ConnectedServiceInstance> GetFinishedServiceInstanceAsync()
         {
-            this.userSettings.Save();
+            this.UserSettings.Save();
 
             this.ServiceInstance.InstanceId = AdvancedSettingsViewModel.GeneratedFileName;
             this.ServiceInstance.Name = ConfigODataEndpointViewModel.ServiceName;
@@ -137,7 +135,6 @@ namespace Microsoft.OData.ConnectedService
             {
                 serviceConfiguration.NamespacePrefix = AdvancedSettingsViewModel.NamespacePrefix;
             }
-            serviceConfiguration.LanguageOption = AdvancedSettingsViewModel.UserSettings.LanguageOption;
 
             return serviceConfiguration;
         }
@@ -152,7 +149,7 @@ namespace Microsoft.OData.ConnectedService
             {
                 if (disposing)
                 {
-                    if(this.AdvancedSettingsViewModel != null)
+                    if (this.AdvancedSettingsViewModel != null)
                     {
                         this.AdvancedSettingsViewModel.Dispose();
                         this.AdvancedSettingsViewModel = null;

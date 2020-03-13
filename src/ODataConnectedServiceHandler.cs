@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using EnvDTE;
 using Microsoft.OData.ConnectedService.CodeGeneration;
 using Microsoft.OData.ConnectedService.Common;
-using Microsoft.OData.ConnectedService.Models;
 using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService
@@ -15,8 +14,8 @@ namespace Microsoft.OData.ConnectedService
     [ConnectedServiceHandlerExport(Common.Constants.ProviderId, AppliesTo = "VB | CSharp | Web")]
     internal class ODataConnectedServiceHandler : ConnectedServiceHandler
     {
-        private ICodeGenDescriptorFactory codeGenDescriptorFactory;
-        public ODataConnectedServiceHandler(): this(new CodeGenDescriptorFactory()) {}
+        private readonly ICodeGenDescriptorFactory codeGenDescriptorFactory;
+        public ODataConnectedServiceHandler() : this(new CodeGenDescriptorFactory()) { }
 
         public ODataConnectedServiceHandler(ICodeGenDescriptorFactory codeGenDescriptorFactory)
             : base()
@@ -46,7 +45,7 @@ namespace Microsoft.OData.ConnectedService
             ODataConnectedServiceInstance serviceInstance = (ODataConnectedServiceInstance)context.ServiceInstance;
 
             var codeGenDescriptor = await GenerateCodeAsync(serviceInstance.ServiceConfig.Endpoint, serviceInstance.ServiceConfig.EdmxVersion, context, project);
-            context.SetExtendedDesignerData<ServiceConfiguration>(serviceInstance.ServiceConfig);
+            context.SetExtendedDesignerData(serviceInstance.ServiceConfig);
             return codeGenDescriptor;
         }
 

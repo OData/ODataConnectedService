@@ -9,7 +9,7 @@ using Microsoft.OData.ConnectedService.Templates;
 
 namespace Microsoft.OData.ConnectedService.CodeGeneration
 {
-    class CodeGenDescriptorFactory: ICodeGenDescriptorFactory
+    class CodeGenDescriptorFactory : ICodeGenDescriptorFactory
     {
         public BaseCodeGenDescriptor Create(Version edmxVersion, string metadataUri, ConnectedServiceHandlerContext context, Project project)
         {

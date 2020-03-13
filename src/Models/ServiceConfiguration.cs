@@ -2,7 +2,6 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System;
-using System.Data.Services.Design;
 
 namespace Microsoft.OData.ConnectedService.Models
 {
@@ -17,7 +16,6 @@ namespace Microsoft.OData.ConnectedService.Models
         public bool UseDataServiceCollection { get; set; }
         public bool MakeTypesInternal { get; set; }
         public bool OpenGeneratedFilesInIDE { get; set; }
-        public LanguageOption LanguageOption { get; set; }
     }
 
     internal class ServiceConfigurationV4 : ServiceConfiguration

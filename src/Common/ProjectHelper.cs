@@ -2,6 +2,7 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System;
+using System.Data.Services.Design;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell.Interop;
 
@@ -31,9 +32,21 @@ namespace Microsoft.OData.ConnectedService.Common
             return (Project)projectObject;
         }
 
-        public static string GetProjectFullPath(Project project)
+        public static string GetFullPath(this Project project)
         {
             return project.Properties.Item("FullPath").Value.ToString();
+        }
+
+        public static LanguageOption GetLanguageOption(this Project project)
+        {
+            switch (project.CodeModel.Language)
+            {
+                case EnvDTE.CodeModelLanguageConstants.vsCMLanguageVB:
+                    return LanguageOption.GenerateVBCode;
+                case EnvDTE.CodeModelLanguageConstants.vsCMLanguageCSharp:
+                default:
+                    return LanguageOption.GenerateCSharpCode;
+            }
         }
     }
 }
