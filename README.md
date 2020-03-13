@@ -19,6 +19,16 @@ The repository has 2 projects which are
 1. The main ODataConnectedService project `ODataConnectedService.sln`
 2. The ODataConnectedServiceTests project `ODataConnectedService.Tests.sln`
 
+#### Skipping strong name validation
+Since the projects are delay-signed, in order for you to debug them or run the tests, you will need to skip strong name verification for
+the main and test dlls.
+
+Open a command or Powershell window as Administrator and run the `SkipStrongName.cmd` script from the project oot before you run the projects for the first time:
+```powershell
+SkipStrongName.cmd
+# ./SkipStrongName.cmd in Powershell
+```
+
 #### Building in visual studio
 Open the `ODataConnectedService.sln` in visual studio and install any suggested extensions that may be missing in your instance.
 Build and run the project. 
