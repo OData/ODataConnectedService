@@ -20,8 +20,8 @@ namespace Microsoft.OData.ConnectedService
             Description = "OData Connected Service for V1-V4";
             Icon = new BitmapImage(new Uri("pack://application:,,/" + this.GetType().Assembly.ToString() + ";component/Resources/Icon.png"));
             CreatedBy = "OData";
-            Version = new Version(0, 4, 0);
-            MoreInfoUri = new Uri("https://github.com/odata/lab");
+            Version = new Version(0, 5, 1);
+            MoreInfoUri = new Uri("https://github.com/odata/ODataConnectedService");
         }
 
         public override Task<ConnectedServiceConfigurator> CreateConfiguratorAsync(ConnectedServiceProviderContext context)
