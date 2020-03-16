@@ -1326,13 +1326,37 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             if (type is IEdmEnumType enumType)
             {
-                this.WriteEnumType(enumType);
+                    if(context.GenerateMultipleFiles) 
+                    {
+                        context.MultipleFilesManager.StartNewFile($"{enumType.Name}.cs",false);
+                        this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
+                    }
+
+                    this.WriteEnumType(enumType);
+
+                    if(context.GenerateMultipleFiles) 
+                    {
+                        this.WriteNamespaceEnd();
+                        context.MultipleFilesManager.EndBlock();
+                    }
             }
             else
             {
                 if (type is IEdmComplexType complexType)
                 {
+                    if(context.GenerateMultipleFiles) 
+                    {
+                        context.MultipleFilesManager.StartNewFile($"{complexType.Name}.cs",false);
+                        this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
+                    }
+
                     this.WriteComplexType(complexType, boundOperationsMap);
+
+                    if(context.GenerateMultipleFiles) 
+                    {
+                        this.WriteNamespaceEnd();
+                        context.MultipleFilesManager.EndBlock();
+                    }
                 }
                 else if (type is IEdmEntityType entityType)
                 {
@@ -1341,7 +1365,9 @@ public abstract class ODataClientTemplate : TemplateBase
                         context.MultipleFilesManager.StartNewFile($"{entityType.Name}.cs",false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
+
                     this.WriteEntityType(entityType, boundOperationsMap);
+
                     if(context.GenerateMultipleFiles) 
                     {
                         this.WriteNamespaceEnd();
