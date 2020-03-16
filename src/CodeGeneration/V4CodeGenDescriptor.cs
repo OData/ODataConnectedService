@@ -123,7 +123,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             string referenceFolder = GetReferenceFileFolder();
             string outputFile = Path.Combine(referenceFolder, this.GeneratedFileNamePrefix + ".cs");
             await this.Context.HandlerHelper.AddFileAsync(tempFile, outputFile, new AddFileOptions { OpenOnComplete = this.ServiceConfiguration.OpenGeneratedFilesInIDE });
-            t4CodeGenerator.MultipleFilesManager?.GenerateFiles(ServiceConfiguration.GenerateMultipleFiles,this, referenceFolder,true);
+            t4CodeGenerator.MultipleFilesManager?.GenerateFiles(ServiceConfiguration.GenerateMultipleFiles,this.Context.HandlerHelper, referenceFolder,true, this.ServiceConfiguration.OpenGeneratedFilesInIDE);
         }
     }
 }

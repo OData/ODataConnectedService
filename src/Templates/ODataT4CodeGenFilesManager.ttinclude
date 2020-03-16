@@ -21,7 +21,6 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #><#@ import namespace="System.Security"
 #><#@ import namespace="System.Xml.Linq"
 #><#@ import namespace="Microsoft.VisualStudio.TextTemplating"
-#><#@ import namespace="Microsoft.OData.ConnectedService.CodeGeneration"
 #><#@ import namespace="Microsoft.VisualStudio.ConnectedServices"
 #><#+
 /// <summary>
@@ -143,7 +142,7 @@ public class FilesManager {
     /// <param name="split">If true the function is executed and multiple files generated
     /// otherwoise only a single file is generated.</param>
     [SecurityCritical]
-    public virtual void GenerateFiles(bool split,BaseCodeGenDescriptor codeGenDescriptor,string referenceFolder,bool fileCreated) 
+    public virtual void GenerateFiles(bool split,ConnectedServiceHandlerHelper handlerHelper,string referenceFolder,bool fileCreated,bool OpenGeneratedFilesInIDE) 
     {
         if (split) 
         {
@@ -167,7 +166,7 @@ public class FilesManager {
                 if(fileCreated)
                 {
                     string outputFile = Path.Combine(referenceFolder, fileName);
-                    codeGenDescriptor.Context.HandlerHelper.AddFileAsync(fileName, outputFile, new AddFileOptions { OpenOnComplete = codeGenDescriptor.ServiceConfiguration.OpenGeneratedFilesInIDE });
+                    handlerHelper.AddFileAsync(fileName, outputFile, new AddFileOptions { OpenOnComplete = OpenGeneratedFilesInIDE });
                 }
                 else
                 {
@@ -257,9 +256,9 @@ public class FilesManager {
         /// <param name="split">If true the function is executed and multiple files generated
         /// otherwoise only a single file is generated.</param>
         [SecurityCritical]
-        public override void GenerateFiles(bool split,BaseCodeGenDescriptor codeGenDescriptor,string referenceFolder,bool fileCreated) 
+        public override void GenerateFiles(bool split,ConnectedServiceHandlerHelper handlerHelper,string referenceFolder,bool fileCreated,bool OpenGeneratedFilesInIDE) 
         {            
-            base.GenerateFiles(split,codeGenDescriptor,referenceFolder, fileCreated);
+            base.GenerateFiles(split,handlerHelper,referenceFolder, fileCreated,OpenGeneratedFilesInIDE);
         }
 
         /// <summary>

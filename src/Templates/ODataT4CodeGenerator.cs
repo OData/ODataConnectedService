@@ -26,7 +26,6 @@ namespace Microsoft.OData.ConnectedService.Templates
     using System.Net;
     using System.Security;
     using Microsoft.VisualStudio.TextTemplating;
-    using Microsoft.OData.ConnectedService.CodeGeneration;
     using Microsoft.VisualStudio.ConnectedServices;
     
     /// <summary>
@@ -1415,7 +1414,7 @@ public abstract class ODataClientTemplate : TemplateBase
         this.WriteFileHeader();
         context.MultipleFilesManager.EndBlock();
         this.WriteNamespaces();
-        context.MultipleFilesManager.GenerateFiles(context.GenerateMultipleFiles,null,null, false);
+        context.MultipleFilesManager.GenerateFiles(context.GenerateMultipleFiles,null,null, false,false);
         return context.MultipleFilesManager.Template.ToString();
     }
 
@@ -7567,7 +7566,7 @@ public class FilesManager {
     /// <param name="split">If true the function is executed and multiple files generated
     /// otherwoise only a single file is generated.</param>
     [SecurityCritical]
-    public virtual void GenerateFiles(bool split,BaseCodeGenDescriptor codeGenDescriptor,string referenceFolder,bool fileCreated) 
+    public virtual void GenerateFiles(bool split,ConnectedServiceHandlerHelper handlerHelper,string referenceFolder,bool fileCreated,bool OpenGeneratedFilesInIDE) 
     {
         if (split) 
         {
@@ -7591,7 +7590,7 @@ public class FilesManager {
                 if(fileCreated)
                 {
                     string outputFile = Path.Combine(referenceFolder, fileName);
-                    codeGenDescriptor.Context.HandlerHelper.AddFileAsync(fileName, outputFile, new AddFileOptions { OpenOnComplete = codeGenDescriptor.ServiceConfiguration.OpenGeneratedFilesInIDE });
+                    handlerHelper.AddFileAsync(fileName, outputFile, new AddFileOptions { OpenOnComplete = OpenGeneratedFilesInIDE });
                 }
                 else
                 {
@@ -7681,9 +7680,9 @@ public class FilesManager {
         /// <param name="split">If true the function is executed and multiple files generated
         /// otherwoise only a single file is generated.</param>
         [SecurityCritical]
-        public override void GenerateFiles(bool split,BaseCodeGenDescriptor codeGenDescriptor,string referenceFolder,bool fileCreated) 
+        public override void GenerateFiles(bool split,ConnectedServiceHandlerHelper handlerHelper,string referenceFolder,bool fileCreated,bool OpenGeneratedFilesInIDE) 
         {            
-            base.GenerateFiles(split,codeGenDescriptor,referenceFolder, fileCreated);
+            base.GenerateFiles(split,handlerHelper,referenceFolder, fileCreated,OpenGeneratedFilesInIDE);
         }
 
         /// <summary>

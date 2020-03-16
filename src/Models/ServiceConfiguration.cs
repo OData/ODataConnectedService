@@ -5,7 +5,7 @@ using System;
 
 namespace Microsoft.OData.ConnectedService.Models
 {
-    public class ServiceConfiguration
+    internal class ServiceConfiguration
     {
         public string ServiceName { get; set; }
         public string Endpoint { get; set; }
