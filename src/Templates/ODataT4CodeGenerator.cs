@@ -76,7 +76,8 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             TempFilePath = this.TempFilePath,
             MakeTypesInternal = this.MakeTypesInternal,
             MultipleFilesManager = FilesManager.Create(this.Host, null),
-            GenerateMultipleFiles = this.GenerateMultipleFiles
+            GenerateMultipleFiles = this.GenerateMultipleFiles,
+            ExcludedOperationImports = this.ExcludedOperationImports
         };
     }
     else
@@ -96,7 +97,8 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             TempFilePath = this.TempFilePath,
             MakeTypesInternal = this.MakeTypesInternal,
             MultipleFilesManager = FilesManager.Create(this.Host, null),
-            GenerateMultipleFiles = this.GenerateMultipleFiles
+            GenerateMultipleFiles = this.GenerateMultipleFiles,
+            ExcludedOperationImports = this.ExcludedOperationImports
         };
     }
 
@@ -184,8 +186,11 @@ public static class Configuration
     //If set to true then multiple files will be generated. Otherwise only a single file is generated.
     public const bool GenerateMultipleFiles = false;
 
-    // (Optional) Custom http headers as a multiline string
-    public const string CustomHttpHeaders = "";
+	// (Optional) Custom http headers as a multiline string
+	public const string CustomHttpHeaders = "";
+	
+	// Comma-separated list of the names of operation imports to exclude from the generated code
+	public const string ExcludedOperationImports = "";
 }
 
 public static class Customization
@@ -365,6 +370,24 @@ public bool MakeTypesInternal
 {
     get;
     set;
+}
+
+private IEnumerable<string> excludedOperationImports = new List<string>();
+
+/// <summary>
+/// list of operation imports to exclude from the generated code
+/// </summary>
+public IEnumerable <string> ExcludedOperationImports
+{
+    get
+    {
+        return excludedOperationImports;
+    }
+
+    set
+    {
+        excludedOperationImports = value;
+    }
 }
 
 /// <summary>
@@ -548,7 +571,14 @@ public void SetCustomHttpHeadersFromString(string headersValue)
         ValidateCustomHttpHeaderString(header);
         CustomHttpHeaders.Add(header);
     }
+}
 
+/// Set the ExcludedOperationImports property with the given value.
+/// </summary>
+/// <param name="inputValue">Comma-separated list of operation import names</param>
+public void ValidateAndSetExcludedOperationImportsFromString(string inputValue)
+{
+    this.ExcludedOperationImports = inputValue.Split(',').Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
 }
 
 /// <summary>
@@ -566,6 +596,8 @@ private void ApplyParametersFromConfigurationClass()
     this.TempFilePath = Configuration.TempFilePath;
     this.GenerateMultipleFiles = Configuration.GenerateMultipleFiles;
     this.SetCustomHttpHeadersFromString(Configuration.CustomHttpHeaders);
+    this.ExcludedOperationImports = Configuration.ExcludedOperationImports.Split(',')
+        .Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
 }
 
 /// <summary>
@@ -942,6 +974,15 @@ public class CodeGenerationContext
 	/// This is useful if you don't want the generated classes to be visible outside the assembly
 	/// </summary>
     public bool MakeTypesInternal
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
+	/// list of operation imports to omit from the generated code
+	/// </summary>
+    public IEnumerable<string> ExcludedOperationImports
     {
         get;
         set;
@@ -1818,6 +1859,11 @@ public abstract class ODataClientTemplate : TemplateBase
         bool hasOperationImport = container.OperationImports().OfType<IEdmOperationImport>().Any();
         foreach (IEdmFunctionImport functionImport in container.OperationImports().OfType<IEdmFunctionImport>())
         {
+            if (this.context.ExcludedOperationImports.Contains(functionImport.Name))
+            {
+                continue;
+            }
+
             string parameterString, parameterTypes, parameterExpressionString, parameterValues;
             bool useEntityReference;
             this.GetParameterStrings(false, false, functionImport.Function.Parameters.ToArray(), out parameterString, out parameterTypes, out parameterExpressionString, out parameterValues, out useEntityReference);
@@ -1844,6 +1890,11 @@ public abstract class ODataClientTemplate : TemplateBase
         
         foreach (IEdmActionImport actionImport in container.OperationImports().OfType<IEdmActionImport>())
         {
+            if (this.context.ExcludedOperationImports.Contains(actionImport.Name))
+            {
+                continue;
+            }
+
             string parameterString, parameterTypes, parameterExpressionString, parameterValues;
             bool useEntityReference;
             this.GetParameterStrings(false, true, actionImport.Action.Parameters.ToArray(), out parameterString, out parameterTypes, out parameterExpressionString, out parameterValues, out useEntityReference);

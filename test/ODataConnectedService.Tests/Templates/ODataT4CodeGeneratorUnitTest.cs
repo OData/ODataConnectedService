@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.OData.ConnectedService.Templates;
+using System.Collections.Generic;
 
 namespace ODataConnectedService.Tests
 {
@@ -44,6 +45,13 @@ namespace ODataConnectedService.Tests
         {
             Action setUseDataServiceCollection = () => codeGenerator.ValidateAndSetUseDataServiceCollectionFromString("NotTrue");
             setUseDataServiceCollection.ShouldThrow<ArgumentException>().WithMessage("The value \"NotTrue\" cannot be assigned to the UseDataServiceCollection parameter because it is not a valid boolean value.");
+        }
+
+        [TestMethod]
+        public void ValidateAndSetExcludedOperationImportsFromStringShouldReturnListOfstring()
+        {
+            codeGenerator.ValidateAndSetExcludedOperationImportsFromString("Func1, Func2,      Func3, ,Func4  ");
+            codeGenerator.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string>() { "Func1", "Func2", "Func3", "Func4" });
         }
 
         [TestMethod]

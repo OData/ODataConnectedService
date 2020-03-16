@@ -91,6 +91,22 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
             VerifyGeneratedCode(expected, output);
         }
 
+        [TestMethod]
+        public void TestExcludedOperationImportsNotIncludeInGeneratedCode()
+        {
+            string edmx = LoadReferenceContent("EntitiesEnumsFunctions.xml");
+            string expected = LoadReferenceContent("EntitiesEnumsFunctionsDSCExcludeOperationImports.cs");
+            var generator = new ODataT4CodeGenerator()
+            {
+                Edmx = edmx,
+                UseDataServiceCollection = true,
+                ExcludedOperationImports = new string[] { "GetPersonWithMostFriends", "ResetDataSource" },
+                TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp
+            };
+            var output = generator.TransformText();
+            VerifyGeneratedCode(expected, output);
+        }
+
 
         static Assembly Assembly = Assembly.GetExecutingAssembly();
         const string ReferenceResourcePrefix = "ODataConnectedService.Tests.CodeGenReferences.";

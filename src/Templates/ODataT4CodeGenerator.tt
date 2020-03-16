@@ -39,6 +39,9 @@ public static class Configuration
 
 	// (Optional) Custom http headers as a multiline string
 	public const string CustomHttpHeaders = "";
+	
+	// Comma-separated list of the names of operation imports to exclude from the generated code
+	public const string ExcludedOperationImports = "";
 }
 
 public static class Customization
