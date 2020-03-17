@@ -41,6 +41,8 @@ namespace Microsoft.OData.ConnectedService
                 ConfigODataEndpointViewModel.Endpoint = serviceConfig.Endpoint;
                 ConfigODataEndpointViewModel.EdmxVersion = serviceConfig.EdmxVersion;
                 ConfigODataEndpointViewModel.ServiceName = serviceConfig.ServiceName;
+                ConfigODataEndpointViewModel.CustomHttpHeaders = serviceConfig.CustomHttpHeaders;
+
                 if (ConfigODataEndpointViewModel.View is ConfigODataEndpoint configODataEndpoint)
                     configODataEndpoint.IsEnabled = false;
 
@@ -126,6 +128,7 @@ namespace Microsoft.OData.ConnectedService
             serviceConfiguration.ServiceName = ConfigODataEndpointViewModel.ServiceName;
             serviceConfiguration.Endpoint = ConfigODataEndpointViewModel.Endpoint;
             serviceConfiguration.EdmxVersion = ConfigODataEndpointViewModel.EdmxVersion;
+            serviceConfiguration.CustomHttpHeaders = ConfigODataEndpointViewModel.CustomHttpHeaders;
             serviceConfiguration.UseDataServiceCollection = AdvancedSettingsViewModel.UseDataServiceCollection;
             serviceConfiguration.GeneratedFileNamePrefix = AdvancedSettingsViewModel.GeneratedFileName;
             serviceConfiguration.UseNameSpacePrefix = AdvancedSettingsViewModel.UseNamespacePrefix;
