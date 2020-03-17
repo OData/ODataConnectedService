@@ -7580,11 +7580,11 @@ public class FilesManager {
             {
 
                 if(block.IsContainer) continue;
-                string fileName = block.Name;
+                string fileName = Path.Combine(Path.GetTempPath(),block.Name);
                 
                 if(fileCreated)
                 {
-                    string outputFile = Path.Combine(referenceFolder, fileName);
+                    string outputFile = Path.Combine(referenceFolder, block.Name);
                     handlerHelper.AddFileAsync(fileName, outputFile, new AddFileOptions { OpenOnComplete = OpenGeneratedFilesInIDE });
                 }
                 else
