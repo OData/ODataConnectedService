@@ -1414,7 +1414,7 @@ public abstract class ODataClientTemplate : TemplateBase
         this.WriteFileHeader();
         context.MultipleFilesManager.EndBlock();
         this.WriteNamespaces();
-        context.MultipleFilesManager.GenerateFiles(context.GenerateMultipleFiles,null,null, false,false);
+        context.MultipleFilesManager.GenerateFiles(context.GenerateMultipleFiles, null, null, false, false);
         return context.MultipleFilesManager.Template.ToString();
     }
 
@@ -7573,11 +7573,6 @@ public class FilesManager {
             EndBlock();
             string headerText = Template.ToString(_header.Start, _header.Length);
             string footerText = Template.ToString(_footer.Start, _footer.Length);
-
-            if(_host != null)
-            {
-                Path.GetDirectoryName(_host.TemplateFile);
-            }
             
             _files.Reverse();
 

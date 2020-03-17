@@ -149,11 +149,6 @@ public class FilesManager {
             EndBlock();
             string headerText = Template.ToString(_header.Start, _header.Length);
             string footerText = Template.ToString(_footer.Start, _footer.Length);
-
-            if(_host != null)
-            {
-                Path.GetDirectoryName(_host.TemplateFile);
-            }
             
             _files.Reverse();
 

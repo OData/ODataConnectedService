@@ -1278,7 +1278,7 @@ public abstract class ODataClientTemplate : TemplateBase
         this.WriteFileHeader();
         context.MultipleFilesManager.EndBlock();
         this.WriteNamespaces();
-        context.MultipleFilesManager.GenerateFiles(context.GenerateMultipleFiles,null,null, false,false);
+        context.MultipleFilesManager.GenerateFiles(context.GenerateMultipleFiles, null, null, false, false);
         return context.MultipleFilesManager.Template.ToString();
     }
 
