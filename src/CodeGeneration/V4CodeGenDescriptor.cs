@@ -92,6 +92,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             t4CodeGenerator.EnableNamingAlias = this.ServiceConfiguration.EnableNamingAlias;
             t4CodeGenerator.NamespacePrefix = this.ServiceConfiguration.NamespacePrefix;
             t4CodeGenerator.MakeTypesInternal = ServiceConfiguration.MakeTypesInternal;
+            t4CodeGenerator.GenerateMultipleFiles = ServiceConfiguration.GenerateMultipleFiles;
             var headers = new List<string>();
             if (this.ServiceConfiguration.CustomHttpHeaders !=null)
             {
@@ -119,8 +120,10 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                     }
                 }
             }
-            string outputFile = Path.Combine(GetReferenceFileFolder(), this.GeneratedFileNamePrefix + ".cs");
+            string referenceFolder = GetReferenceFileFolder();
+            string outputFile = Path.Combine(referenceFolder, this.GeneratedFileNamePrefix + ".cs");
             await this.Context.HandlerHelper.AddFileAsync(tempFile, outputFile, new AddFileOptions { OpenOnComplete = this.ServiceConfiguration.OpenGeneratedFilesInIDE });
+            t4CodeGenerator.MultipleFilesManager?.GenerateFiles(ServiceConfiguration.GenerateMultipleFiles,this.Context.HandlerHelper, referenceFolder,true, this.ServiceConfiguration.OpenGeneratedFilesInIDE);
         }
     }
 }

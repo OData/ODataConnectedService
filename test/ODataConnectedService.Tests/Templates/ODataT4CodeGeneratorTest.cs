@@ -116,7 +116,7 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
             Assert.AreEqual(normalizedExpected, normalizedActual);
         }
 
-        static string NormalizeGeneratedCode(string code)
+        public static string NormalizeGeneratedCode(string code)
         {
             string normalized = Regex.Replace(code, "// Generation date:.*", string.Empty, RegexOptions.Multiline);
             normalized = Regex.Replace(normalized, "'Generation date:.*", string.Empty, RegexOptions.Multiline);

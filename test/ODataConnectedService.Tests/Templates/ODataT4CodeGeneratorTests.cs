@@ -25,11 +25,12 @@ namespace ODataConnectedService.Tests
     using System.Text.RegularExpressions;
     using Microsoft.OData.ConnectedService.Templates;
     using Microsoft.OData.Client;
+    using Microsoft.OData.ConnectedService.Tests.Templates;
 
     [TestClass]
     public class ODataT4CodeGeneratorTests
     {
-        private const bool CompileGeneratedCode = true;
+        private static bool CompileGeneratedCode = true;
         private static string AssemblyPath;
         private static string EdmxTestInputFile;
         private static string EdmxTestOutputFile;
@@ -37,6 +38,7 @@ namespace ODataConnectedService.Tests
         private static string T4TransformToolPath;
         private static string T4TemplatePath;
         private static string T4IncludeTemplatePath;
+        private static string T4IncludeFileManagePath;
         private static string TempFilePath;
 
         [TestInitialize]
@@ -68,10 +70,13 @@ namespace ODataConnectedService.Tests
 
             string T4TemplateName = "ODataConnectedService.Tests.Templates.ODataT4CodeGenerator.tt";
             string T4IncludeTemplateName = "ODataConnectedService.Tests.Templates.ODataT4CodeGenerator.ttinclude";
+            string T4IncludeFileManagerName = "ODataConnectedService.Tests.Templates.ODataT4CodeGenFilesManager.ttinclude";
             T4TemplatePath = AssemblyPath + "\\ODataT4CodeGenerator.tt";
             T4IncludeTemplatePath = AssemblyPath + "\\ODataT4CodeGenerator.ttinclude";
+            T4IncludeFileManagePath = AssemblyPath + "\\ODataT4CodeGenFilesManager.ttinclude";
             string ttSourceCode = string.Empty;
             string ttinlucdeSourceCode = string.Empty;
+            string ttincludeFileManagerCode = string.Empty;
             Assembly assembly = Assembly.GetExecutingAssembly();
             using (Stream stream = assembly.GetManifestResourceStream(T4TemplateName))
             {
@@ -84,6 +89,19 @@ namespace ODataConnectedService.Tests
             using (StreamWriter writer = new StreamWriter(T4TemplatePath))
             {
                 writer.Write(ttSourceCode);
+            }
+
+            using (Stream stream = assembly.GetManifestResourceStream(T4IncludeFileManagerName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    ttincludeFileManagerCode = reader.ReadToEnd();
+                }
+            }
+
+            using (StreamWriter writer = new StreamWriter(T4IncludeFileManagePath))
+            {
+                writer.Write(ttincludeFileManagerCode);
             }
 
             using (Stream stream = assembly.GetManifestResourceStream(T4IncludeTemplateName))
@@ -114,6 +132,26 @@ namespace ODataConnectedService.Tests
 
             code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.Simple.Metadata, null, false, true, false, false, null, true);
             ODataT4CodeGeneratorTestDescriptors.Simple.Verify(code, false/*isCSharp*/, true/*useDSC*/);
+        }
+
+        [TestMethod]
+        public void CodeGenSimpleEdmxMultipleFiles()
+        {
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SimpleMultipleFiles.Metadata, null, true, false, generateMultipleFiles : true);
+            ODataT4CodeGeneratorTestDescriptors.SimpleMultipleFiles.Verify(code, true/*isCSharp*/, false/*useDSC*/);
+            
+            string expectedTestType = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleTestType.cs"));
+            string actualTestType = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "TestType.cs")));
+
+            string expectedPersonGender = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleFilesPersonGender.cs"));
+            string actualPersonGender = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "PersonGender.cs")));
+
+            string expectedCity = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleFilesCity.cs"));
+            string actualCity = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "City.cs")));
+            
+            Assert.AreEqual(expectedTestType, actualTestType);
+            Assert.AreEqual(expectedPersonGender, actualPersonGender);
+            Assert.AreEqual(expectedCity, actualCity);
         }
 
         [TestMethod]
@@ -405,7 +443,7 @@ namespace ODataConnectedService.Tests
             ODataT4CodeGeneratorTestDescriptors.ValidateEdmx(TempFilePath);
         }
 
-        private static string CodeGenWithT4Template(string edmx, string namespacePrefix, bool isCSharp, bool useDataServiceCollection, bool enableNamingAlias = false, bool ignoreUnexpectedElementsAndAttributes = false, Func<Uri, XmlReader> getReferencedModelReaderFunc = null, bool appendDSCSuffix = false, string TempFilePath = null)
+        private static string CodeGenWithT4Template(string edmx, string namespacePrefix, bool isCSharp, bool useDataServiceCollection, bool enableNamingAlias = false, bool ignoreUnexpectedElementsAndAttributes = false, Func<Uri, XmlReader> getReferencedModelReaderFunc = null, bool appendDSCSuffix = false, string TempFilePath = null, bool generateMultipleFiles = false)
         {
             if (useDataServiceCollection
                 && appendDSCSuffix) // hack now
@@ -428,7 +466,8 @@ namespace ODataConnectedService.Tests
                 NamespacePrefix = namespacePrefix,
                 TargetLanguage = isCSharp ? ODataT4CodeGenerator.LanguageOption.CSharp : ODataT4CodeGenerator.LanguageOption.VB,
                 EnableNamingAlias = enableNamingAlias,
-                IgnoreUnexpectedElementsAndAttributes = ignoreUnexpectedElementsAndAttributes
+                IgnoreUnexpectedElementsAndAttributes = ignoreUnexpectedElementsAndAttributes,
+                GenerateMultipleFiles = generateMultipleFiles
             };
 
             if (!String.IsNullOrEmpty(TempFilePath))
@@ -443,7 +482,7 @@ namespace ODataConnectedService.Tests
 
             string code = t4CodeGenerator.TransformText();
 
-            if (CompileGeneratedCode)
+            if (CompileGeneratedCode && !generateMultipleFiles)
             {
                 // Comment next line to not to verify that the generated code can be compiled successfully
                 GeneratedCodeShouldCompile(code, isCSharp);
