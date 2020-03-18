@@ -106,6 +106,8 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 }
             }
             t4CodeGenerator.CustomHttpHeaders = headers;
+            string tempMetadataFile = Path.Combine(GetEdmxFileFolder(), "Edmx" + ".xml");
+            t4CodeGenerator.TempFilePath = tempMetadataFile;
 
             string tempFile = Path.GetTempFileName();
 
