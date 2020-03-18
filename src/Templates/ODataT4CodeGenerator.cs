@@ -7025,7 +7025,7 @@ this.Write(@" specified by key from an entity set
 
 this.Write(this.ToStringHelper.ToStringWithCulture(entityTypeName));
 
-this.Write("), ByVal keys As Global.System.Collections.Generic.Dictionary(Of String, Object))" +
+this.Write("), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object))" +
         " As ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(returnTypeName));
@@ -7077,7 +7077,7 @@ this.Write(") As ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(returnTypeName));
 
-this.Write("\r\n            Dim keys As Global.System.Collections.Generic.Dictionary(Of String," +
+this.Write("\r\n            Dim keys As Global.System.Collections.Generic.IDictionary(Of String," +
         " Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)()" +
         " From\r\n            {\r\n                ");
 
