@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 2/19/2016 10:59:52 AM
+'Generation date: 18.03.2020 14:24:59
 Namespace Namespace1
     '''<summary>
     '''There are no comments for New in the schema.
@@ -261,7 +261,7 @@ Namespace Namespace1
         ''' <param name="source">source entity set</param>
         ''' <param name="keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Namespace1.[event]), ByVal keys As Global.System.Collections.Generic.Dictionary(Of String, Object)) As Namespace1.eventSingle
+        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Namespace1.[event]), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Namespace1.eventSingle
             Return New Namespace1.eventSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
         End Function
         ''' <summary>
@@ -272,7 +272,7 @@ Namespace Namespace1
         <Global.System.Runtime.CompilerServices.Extension()>
         Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Namespace1.[event]),
             [string] As String) As Namespace1.eventSingle
-            Dim keys As Global.System.Collections.Generic.Dictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "string", [string] }
             }
