@@ -76,6 +76,8 @@ namespace Microsoft.OData.ConnectedService
                         advancedSettingsViewModel.UseNamespacePrefix = serviceConfig.UseNameSpacePrefix;
                         advancedSettingsViewModel.NamespacePrefix = serviceConfig.NamespacePrefix;
                         advancedSettingsViewModel.UseDataServiceCollection = serviceConfig.UseDataServiceCollection;
+                        advancedSettingsViewModel.GenerateMultipleFiles = serviceConfig.GenerateMultipleFiles;
+                        advancedSettings.GenerateMultipleFiles.IsEnabled = false;
 
                         if (serviceConfig.EdmxVersion == Common.Constants.EdmxVersion4)
                         {
