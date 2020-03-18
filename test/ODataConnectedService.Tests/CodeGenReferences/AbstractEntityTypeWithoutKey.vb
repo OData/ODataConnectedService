@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 13:56:22
+'Generation date: 18.03.2020 15:06:23
 Namespace AbstractEntityTypeWithoutKey
     '''<summary>
     '''There are no comments for Container in the schema.
@@ -75,7 +75,7 @@ Namespace AbstractEntityTypeWithoutKey
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedBaseETSet")>  _
-        Public ReadOnly Property DerivedBaseETSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of DerivedBaseET)
+        Public Overridable ReadOnly Property DerivedBaseETSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of DerivedBaseET)
             Get
                 If (Me._DerivedBaseETSet Is Nothing) Then
                     Me._DerivedBaseETSet = MyBase.CreateQuery(Of DerivedBaseET)("DerivedBaseETSet")
@@ -90,7 +90,7 @@ Namespace AbstractEntityTypeWithoutKey
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedETSet")>  _
-        Public ReadOnly Property DerivedETSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of DerivedET)
+        Public Overridable ReadOnly Property DerivedETSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of DerivedET)
             Get
                 If (Me._DerivedETSet Is Nothing) Then
                     Me._DerivedETSet = MyBase.CreateQuery(Of DerivedET)("DerivedETSet")
@@ -105,7 +105,7 @@ Namespace AbstractEntityTypeWithoutKey
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedAbstractETSet")>  _
-        Public ReadOnly Property DerivedAbstractETSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of DerivedAbstractETWithKey)
+        Public Overridable ReadOnly Property DerivedAbstractETSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of DerivedAbstractETWithKey)
             Get
                 If (Me._DerivedAbstractETSet Is Nothing) Then
                     Me._DerivedAbstractETSet = MyBase.CreateQuery(Of DerivedAbstractETWithKey)("DerivedAbstractETSet")
@@ -119,21 +119,21 @@ Namespace AbstractEntityTypeWithoutKey
         '''There are no comments for DerivedBaseETSet in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToDerivedBaseETSet(ByVal derivedBaseET As DerivedBaseET)
+        Public Overridable Sub AddToDerivedBaseETSet(ByVal derivedBaseET As DerivedBaseET)
             MyBase.AddObject("DerivedBaseETSet", derivedBaseET)
         End Sub
         '''<summary>
         '''There are no comments for DerivedETSet in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToDerivedETSet(ByVal derivedET As DerivedET)
+        Public Overridable Sub AddToDerivedETSet(ByVal derivedET As DerivedET)
             MyBase.AddObject("DerivedETSet", derivedET)
         End Sub
         '''<summary>
         '''There are no comments for DerivedAbstractETSet in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToDerivedAbstractETSet(ByVal derivedAbstractETWithKey As DerivedAbstractETWithKey)
+        Public Overridable Sub AddToDerivedAbstractETSet(ByVal derivedAbstractETWithKey As DerivedAbstractETWithKey)
             MyBase.AddObject("DerivedAbstractETSet", derivedAbstractETWithKey)
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -234,7 +234,7 @@ Namespace AbstractEntityTypeWithoutKey
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("PropertyInAbstractET")>  _
-        Public Property PropertyInAbstractET() As String
+        Public Overridable Property PropertyInAbstractET() As String
             Get
                 Return Me._PropertyInAbstractET
             End Get
@@ -290,7 +290,7 @@ Namespace AbstractEntityTypeWithoutKey
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("PropertyInDerivedAbstractET")>  _
-        Public Property PropertyInDerivedAbstractET() As String
+        Public Overridable Property PropertyInDerivedAbstractET() As String
             Get
                 Return Me._PropertyInDerivedAbstractET
             End Get
@@ -359,7 +359,7 @@ Namespace AbstractEntityTypeWithoutKey
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Id")>  _
-        Public Property Id() As String
+        Public Overridable Property Id() As String
             Get
                 Return Me._Id
             End Get
@@ -430,7 +430,7 @@ Namespace AbstractEntityTypeWithoutKey
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("PropertyInDerivedET")>  _
-        Public Property PropertyInDerivedET() As Integer
+        Public Overridable Property PropertyInDerivedET() As Integer
             Get
                 Return Me._PropertyInDerivedET
             End Get
@@ -489,7 +489,7 @@ Namespace AbstractEntityTypeWithoutKey
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Id")>  _
-        Public Property Id() As String
+        Public Overridable Property Id() As String
             Get
                 Return Me._Id
             End Get
@@ -560,7 +560,7 @@ Namespace AbstractEntityTypeWithoutKey
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("PropertyInDerivedET2")>  _
-        Public Property PropertyInDerivedET2() As String
+        Public Overridable Property PropertyInDerivedET2() As String
             Get
                 Return Me._PropertyInDerivedET2
             End Get

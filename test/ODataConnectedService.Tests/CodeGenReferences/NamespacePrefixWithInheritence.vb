@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 14:15:36
+'Generation date: 18.03.2020 15:20:18
 Namespace Foo
     '''<summary>
     '''There are no comments for EntityContainer in the schema.
@@ -64,7 +64,7 @@ Namespace Foo
         '''There are no comments for Set1 in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public ReadOnly Property Set1() As Global.Microsoft.OData.Client.DataServiceQuery(Of EntityType)
+        Public Overridable ReadOnly Property Set1() As Global.Microsoft.OData.Client.DataServiceQuery(Of EntityType)
             Get
                 If (Me._Set1 Is Nothing) Then
                     Me._Set1 = MyBase.CreateQuery(Of EntityType)("Set1")
@@ -78,7 +78,7 @@ Namespace Foo
         '''There are no comments for Set1 in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToSet1(ByVal entityType As EntityType)
+        Public Overridable Sub AddToSet1(ByVal entityType As EntityType)
             MyBase.AddObject("Set1", entityType)
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -172,7 +172,7 @@ Namespace Foo
         '''There are no comments for Property IdKey in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property IdKey() As Integer
+        Public Overridable Property IdKey() As Integer
             Get
                 Return Me._IdKey
             End Get
@@ -240,7 +240,7 @@ Namespace Foo
         '''There are no comments for Property ID in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property ID() As Integer
+        Public Overridable Property ID() As Integer
             Get
                 Return Me._ID
             End Get

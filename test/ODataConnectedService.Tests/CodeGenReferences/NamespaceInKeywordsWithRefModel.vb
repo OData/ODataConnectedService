@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 14:28:17
+'Generation date: 18.03.2020 15:29:37
 Namespace [Event].[String].Int
     '''<summary>
     '''There are no comments for ComplexType in the schema.
@@ -34,7 +34,7 @@ Namespace [Event].[String].Int
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("value")>  _
-        Public Property Value() As String
+        Public Overridable Property Value() As String
             Get
                 Return Me._Value
             End Get
@@ -105,7 +105,7 @@ Namespace [Event].[String].Int
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("keyProp")>  _
-        Public Property KeyProp() As Integer
+        Public Overridable Property KeyProp() As Integer
             Get
                 Return Me._KeyProp
             End Get
@@ -126,7 +126,7 @@ Namespace [Event].[String].Int
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("valueProp")>  _
-        Public Property ValueProp() As String
+        Public Overridable Property ValueProp() As String
             Get
                 Return Me._ValueProp
             End Get
@@ -240,7 +240,7 @@ Namespace Simple.[Double]
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("set1")>  _
-        Public ReadOnly Property Set1() As Global.Microsoft.OData.Client.DataServiceQuery(Of [Event].[String].Int.TestType1)
+        Public Overridable ReadOnly Property Set1() As Global.Microsoft.OData.Client.DataServiceQuery(Of [Event].[String].Int.TestType1)
             Get
                 If (Me._Set1 Is Nothing) Then
                     Me._Set1 = MyBase.CreateQuery(Of [Event].[String].Int.TestType1)("set1")
@@ -255,7 +255,7 @@ Namespace Simple.[Double]
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("set2")>  _
-        Public ReadOnly Property Set2() As Global.Microsoft.OData.Client.DataServiceQuery(Of TestType2)
+        Public Overridable ReadOnly Property Set2() As Global.Microsoft.OData.Client.DataServiceQuery(Of TestType2)
             Get
                 If (Me._Set2 Is Nothing) Then
                     Me._Set2 = MyBase.CreateQuery(Of TestType2)("set2")
@@ -269,14 +269,14 @@ Namespace Simple.[Double]
         '''There are no comments for Set1 in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToSet1(ByVal testType1 As [Event].[String].Int.TestType1)
+        Public Overridable Sub AddToSet1(ByVal testType1 As [Event].[String].Int.TestType1)
             MyBase.AddObject("set1", testType1)
         End Sub
         '''<summary>
         '''There are no comments for Set2 in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToSet2(ByVal testType2 As TestType2)
+        Public Overridable Sub AddToSet2(ByVal testType2 As TestType2)
             MyBase.AddObject("set2", testType2)
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -411,7 +411,7 @@ Namespace Simple.[Double]
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("keyProp")>  _
-        Public Property KeyProp() As Integer
+        Public Overridable Property KeyProp() As Integer
             Get
                 Return Me._KeyProp
             End Get
@@ -432,7 +432,7 @@ Namespace Simple.[Double]
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("valueProp")>  _
-        Public Property ValueProp() As String
+        Public Overridable Property ValueProp() As String
             Get
                 Return Me._ValueProp
             End Get
@@ -453,7 +453,7 @@ Namespace Simple.[Double]
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("complexValueProp")>  _
-        Public Property ComplexValueProp() As [Event].[String].Int.ComplexType
+        Public Overridable Property ComplexValueProp() As [Event].[String].Int.ComplexType
             Get
                 Return Me._ComplexValueProp
             End Get

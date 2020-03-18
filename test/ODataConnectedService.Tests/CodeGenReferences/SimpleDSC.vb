@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 14:21:31
+'Generation date: 18.03.2020 15:23:10
 Namespace Simple.DSC
     '''<summary>
     '''There are no comments for TestTypeSingle in the schema.
@@ -66,7 +66,7 @@ Namespace Simple.DSC
         '''There are no comments for Property KeyProp in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property KeyProp() As Integer
+        Public Overridable Property KeyProp() As Integer
             Get
                 Return Me._KeyProp
             End Get
@@ -87,7 +87,7 @@ Namespace Simple.DSC
         '''There are no comments for Property ValueProp in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property ValueProp() As String
+        Public Overridable Property ValueProp() As String
             Get
                 Return Me._ValueProp
             End Get

@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 14:09:45
+'Generation date: 18.03.2020 15:14:36
 Namespace OverrideOperations
     '''<summary>
     '''There are no comments for OverrideOperationsContainer in the schema.
@@ -75,7 +75,7 @@ Namespace OverrideOperations
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("ETSets")>  _
-        Public ReadOnly Property ETSets() As Global.Microsoft.OData.Client.DataServiceQuery(Of ET)
+        Public Overridable ReadOnly Property ETSets() As Global.Microsoft.OData.Client.DataServiceQuery(Of ET)
             Get
                 If (Me._ETSets Is Nothing) Then
                     Me._ETSets = MyBase.CreateQuery(Of ET)("ETSets")
@@ -89,7 +89,7 @@ Namespace OverrideOperations
         '''There are no comments for ETSets in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToETSets(ByVal eT As ET)
+        Public Overridable Sub AddToETSets(ByVal eT As ET)
             MyBase.AddObject("ETSets", eT)
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -232,7 +232,7 @@ Namespace OverrideOperations
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("UserName")>  _
-        Public Property UserName() As String
+        Public Overridable Property UserName() As String
             Get
                 Return Me._UserName
             End Get
@@ -252,7 +252,7 @@ Namespace OverrideOperations
         ''' There are no comments for FunctionWithoutParameter in the schema.
         ''' </summary>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("FunctionWithoutParameter")>  _
-        Public Function FunctionWithoutParameter() As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.CT)
+        Public Overridable Function FunctionWithoutParameter() As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.CT)
             Dim requestUri As Global.System.Uri = Nothing
             Context.TryGetUri(Me, requestUri)
             Return Me.Context.CreateFunctionQuerySingle(Of OverrideOperations.CT)(String.Join("/", Global.System.Linq.Enumerable.Select(Global.System.Linq.Enumerable.Skip(requestUri.Segments, Me.Context.BaseUri.Segments.Length), Function(s) s.Trim("/"C))), "/OverrideOperations.FunctionWithoutParameter", False)
@@ -261,7 +261,7 @@ Namespace OverrideOperations
         ''' There are no comments for ActionWithParameter in the schema.
         ''' </summary>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("ActionWithParameter")>  _
-        Public Function ActionWithParameter(p1 As String) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)
+        Public Overridable Function ActionWithParameter(p1 As String) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)
             Dim resource As Global.Microsoft.OData.Client.EntityDescriptor = Context.EntityTracker.TryGetEntityDescriptor(Me)
             If resource Is Nothing Then
                 Throw New Global.System.Exception("cannot find entity")
@@ -322,7 +322,7 @@ Namespace OverrideOperations
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedComplexP")>  _
-        Public Property DerivedComplexP() As OverrideOperations.DerivedCT
+        Public Overridable Property DerivedComplexP() As OverrideOperations.DerivedCT
             Get
                 Return Me._DerivedComplexP
             End Get
@@ -342,7 +342,7 @@ Namespace OverrideOperations
         ''' There are no comments for FunctionWithoutParameter in the schema.
         ''' </summary>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("FunctionWithoutParameter")>  _
-        Public Overloads Function FunctionWithoutParameter() As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.CT)
+        Public Overridable Overloads Function FunctionWithoutParameter() As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.CT)
             Dim requestUri As Global.System.Uri = Nothing
             Context.TryGetUri(Me, requestUri)
             Return Me.Context.CreateFunctionQuerySingle(Of OverrideOperations.CT)(String.Join("/", Global.System.Linq.Enumerable.Select(Global.System.Linq.Enumerable.Skip(requestUri.Segments, Me.Context.BaseUri.Segments.Length), Function(s) s.Trim("/"C))), "/OverrideOperations.FunctionWithoutParameter", False)
@@ -351,7 +351,7 @@ Namespace OverrideOperations
         ''' There are no comments for ActionWithParameter in the schema.
         ''' </summary>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("ActionWithParameter")>  _
-        Public Overloads Function ActionWithParameter(p1 As String) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)
+        Public Overridable Overloads Function ActionWithParameter(p1 As String) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)
             Dim resource As Global.Microsoft.OData.Client.EntityDescriptor = Context.EntityTracker.TryGetEntityDescriptor(Me)
             If resource Is Nothing Then
                 Throw New Global.System.Exception("cannot find entity")
@@ -380,7 +380,7 @@ Namespace OverrideOperations
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Name")>  _
-        Public Property Name() As String
+        Public Overridable Property Name() As String
             Get
                 Return Me._Name
             End Get
@@ -420,7 +420,7 @@ Namespace OverrideOperations
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Description")>  _
-        Public Property Description() As String
+        Public Overridable Property Description() As String
             Get
                 Return Me._Description
             End Get

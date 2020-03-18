@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 14:06:13
+'Generation date: 18.03.2020 15:13:28
 Namespace DupNames
     '''<summary>
     '''There are no comments for EntityContainer in the schema.
@@ -71,7 +71,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Set1")>  _
-        Public ReadOnly Property Set1() As Global.Microsoft.OData.Client.DataServiceQuery(Of DupWithTypeName)
+        Public Overridable ReadOnly Property Set1() As Global.Microsoft.OData.Client.DataServiceQuery(Of DupWithTypeName)
             Get
                 If (Me._Set1 Is Nothing) Then
                     Me._Set1 = MyBase.CreateQuery(Of DupWithTypeName)("Set1")
@@ -86,7 +86,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Set2")>  _
-        Public ReadOnly Property Set2() As Global.Microsoft.OData.Client.DataServiceQuery(Of DupWithTypeName1)
+        Public Overridable ReadOnly Property Set2() As Global.Microsoft.OData.Client.DataServiceQuery(Of DupWithTypeName1)
             Get
                 If (Me._Set2 Is Nothing) Then
                     Me._Set2 = MyBase.CreateQuery(Of DupWithTypeName1)("Set2")
@@ -100,14 +100,14 @@ Namespace DupNames
         '''There are no comments for Set1 in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToSet1(ByVal dupWithTypeName As DupWithTypeName)
+        Public Overridable Sub AddToSet1(ByVal dupWithTypeName As DupWithTypeName)
             MyBase.AddObject("Set1", dupWithTypeName)
         End Sub
         '''<summary>
         '''There are no comments for Set2 in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToSet2(ByVal dupWithTypeName1 As DupWithTypeName1)
+        Public Overridable Sub AddToSet2(ByVal dupWithTypeName1 As DupWithTypeName1)
             MyBase.AddObject("Set2", dupWithTypeName1)
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -207,7 +207,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupPropertyName")>  _
-        Public ReadOnly Property DupPropertyName() As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName1)
+        Public Overridable ReadOnly Property DupPropertyName() As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName1)
             Get
                 If Not Me.IsComposable Then
                     Throw New Global.System.NotSupportedException("The previous function is not composable.")
@@ -257,7 +257,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName")>  _
-        Public Property DupWithTypeName() As Global.System.Guid
+        Public Overridable Property DupWithTypeName() As Global.System.Guid
             Get
                 Return Me._DupWithTypeName
             End Get
@@ -278,7 +278,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupWithTypeName")>  _
-        Public Property DupWithTypeName4() As Global.System.Nullable(Of Integer)
+        Public Overridable Property DupWithTypeName4() As Global.System.Nullable(Of Integer)
             Get
                 Return Me._DupWithTypeName4
             End Get
@@ -299,7 +299,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName1")>  _
-        Public Property DupWithTypeName1() As Global.System.Guid
+        Public Overridable Property DupWithTypeName1() As Global.System.Guid
             Get
                 Return Me._DupWithTypeName1
             End Get
@@ -320,7 +320,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupWithTypeName1")>  _
-        Public Property DupWithTypeName11() As Global.System.Guid
+        Public Overridable Property DupWithTypeName11() As Global.System.Guid
             Get
                 Return Me._DupWithTypeName11
             End Get
@@ -341,7 +341,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName2")>  _
-        Public Property DupWithTypeName2() As Global.System.Guid
+        Public Overridable Property DupWithTypeName2() As Global.System.Guid
             Get
                 Return Me._DupWithTypeName2
             End Get
@@ -362,7 +362,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName3")>  _
-        Public Property DupWithTypeName3() As DupNames.DupWithComplexTypeName
+        Public Overridable Property DupWithTypeName3() As DupNames.DupWithComplexTypeName
             Get
                 Return Me._DupWithTypeName3
             End Get
@@ -383,7 +383,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupPropertyName")>  _
-        Public Property DupPropertyName() As Global.System.Nullable(Of Integer)
+        Public Overridable Property DupPropertyName() As Global.System.Nullable(Of Integer)
             Get
                 Return Me._DupPropertyName
             End Get
@@ -404,7 +404,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupPropertyName")>  _
-        Public Property DupPropertyName1() As Global.System.Collections.ObjectModel.Collection(Of DupNames.DupWithTypeName1)
+        Public Overridable Property DupPropertyName1() As Global.System.Collections.ObjectModel.Collection(Of DupNames.DupWithTypeName1)
             Get
                 Return Me._DupPropertyName1
             End Get
@@ -431,7 +431,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithComplexTypeName")>  _
-        Public Property DupWithComplexTypeName() As Global.System.Nullable(Of Integer)
+        Public Overridable Property DupWithComplexTypeName() As Global.System.Nullable(Of Integer)
             Get
                 Return Me._DupWithComplexTypeName
             End Get
@@ -452,7 +452,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupWithComplexTypeName")>  _
-        Public Property DupWithComplexTypeName2() As Global.System.Nullable(Of Integer)
+        Public Overridable Property DupWithComplexTypeName2() As Global.System.Nullable(Of Integer)
             Get
                 Return Me._DupWithComplexTypeName21
             End Get
@@ -473,7 +473,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithComplexTypeName1")>  _
-        Public Property DupWithComplexTypeName1() As String
+        Public Overridable Property DupWithComplexTypeName1() As String
             Get
                 Return Me._DupWithComplexTypeName1
             End Get
@@ -494,7 +494,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("_DupWithComplexTypeName2")>  _
-        Public Property _DupWithComplexTypeName2() As Global.System.Nullable(Of Integer)
+        Public Overridable Property _DupWithComplexTypeName2() As Global.System.Nullable(Of Integer)
             Get
                 Return Me.__DupWithComplexTypeName21
             End Get
@@ -515,7 +515,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("__DupWithComplexTypeName2")>  _
-        Public Property __DupWithComplexTypeName2() As Global.System.Nullable(Of Integer)
+        Public Overridable Property __DupWithComplexTypeName2() As Global.System.Nullable(Of Integer)
             Get
                 Return Me.___DupWithComplexTypeName2
             End Get
@@ -586,7 +586,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupWithTypeName")>  _
-        Public Property DupWithTypeName2() As Global.System.Guid
+        Public Overridable Property DupWithTypeName2() As Global.System.Guid
             Get
                 Return Me._DupWithTypeName2
             End Get
@@ -607,7 +607,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupwithtypeName")>  _
-        Public Property DupwithtypeName4() As Global.System.Guid
+        Public Overridable Property DupwithtypeName4() As Global.System.Guid
             Get
                 Return Me._DupwithtypeName4
             End Get
@@ -628,7 +628,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName")>  _
-        Public Property DupWithTypeName() As Global.System.Nullable(Of Integer)
+        Public Overridable Property DupWithTypeName() As Global.System.Nullable(Of Integer)
             Get
                 Return Me._DupWithTypeName
             End Get
@@ -649,7 +649,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName1")>  _
-        Public Property DupWithTypeName1() As Global.System.Nullable(Of Integer)
+        Public Overridable Property DupWithTypeName1() As Global.System.Nullable(Of Integer)
             Get
                 Return Me._DupWithTypeName1
             End Get
@@ -670,7 +670,7 @@ Namespace DupNames
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName3")>  _
-        Public Property DupWithTypeName3() As Global.System.Nullable(Of Integer)
+        Public Overridable Property DupWithTypeName3() As Global.System.Nullable(Of Integer)
             Get
                 Return Me._DupWithTypeName3
             End Get

@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 14:26:04
+'Generation date: 18.03.2020 15:28:38
 Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
     '''<summary>
     '''There are no comments for TruckDemoService in the schema.
@@ -47,7 +47,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Trucks in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public ReadOnly Property Trucks() As Global.Microsoft.OData.Client.DataServiceQuery(Of TruckType)
+        Public Overridable ReadOnly Property Trucks() As Global.Microsoft.OData.Client.DataServiceQuery(Of TruckType)
             Get
                 If (Me._Trucks Is Nothing) Then
                     Me._Trucks = MyBase.CreateQuery(Of TruckType)("Trucks")
@@ -61,7 +61,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for VehicleGPSSet in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public ReadOnly Property VehicleGPSSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)
+        Public Overridable ReadOnly Property VehicleGPSSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)
             Get
                 If (Me._VehicleGPSSet Is Nothing) Then
                     Me._VehicleGPSSet = MyBase.CreateQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)("VehicleGPSSet")
@@ -75,7 +75,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for DerivedVehicleGPSSet in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public ReadOnly Property DerivedVehicleGPSSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of DerivedVehicleGPSType)
+        Public Overridable ReadOnly Property DerivedVehicleGPSSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of DerivedVehicleGPSType)
             Get
                 If (Me._DerivedVehicleGPSSet Is Nothing) Then
                     Me._DerivedVehicleGPSSet = MyBase.CreateQuery(Of DerivedVehicleGPSType)("DerivedVehicleGPSSet")
@@ -89,7 +89,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for VehicleGPSSetInGPS in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public ReadOnly Property VehicleGPSSetInGPS() As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)
+        Public Overridable ReadOnly Property VehicleGPSSetInGPS() As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)
             Get
                 If (Me._VehicleGPSSetInGPS Is Nothing) Then
                     Me._VehicleGPSSetInGPS = MyBase.CreateQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)("VehicleGPSSetInGPS")
@@ -103,28 +103,28 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Trucks in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToTrucks(ByVal truckType As TruckType)
+        Public Overridable Sub AddToTrucks(ByVal truckType As TruckType)
             MyBase.AddObject("Trucks", truckType)
         End Sub
         '''<summary>
         '''There are no comments for VehicleGPSSet in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToVehicleGPSSet(ByVal vehicleGPSType As Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)
+        Public Overridable Sub AddToVehicleGPSSet(ByVal vehicleGPSType As Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)
             MyBase.AddObject("VehicleGPSSet", vehicleGPSType)
         End Sub
         '''<summary>
         '''There are no comments for DerivedVehicleGPSSet in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToDerivedVehicleGPSSet(ByVal derivedVehicleGPSType As DerivedVehicleGPSType)
+        Public Overridable Sub AddToDerivedVehicleGPSSet(ByVal derivedVehicleGPSType As DerivedVehicleGPSType)
             MyBase.AddObject("DerivedVehicleGPSSet", derivedVehicleGPSType)
         End Sub
         '''<summary>
         '''There are no comments for VehicleGPSSetInGPS in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToVehicleGPSSetInGPS(ByVal vehicleGPSType As Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)
+        Public Overridable Sub AddToVehicleGPSSetInGPS(ByVal vehicleGPSType As Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)
             MyBase.AddObject("VehicleGPSSetInGPS", vehicleGPSType)
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -355,13 +355,13 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         ''' <summary>
         ''' There are no comments for GetDefaultOutsideGeoFenceAlarm in the schema.
         ''' </summary>
-        Public Function GetDefaultOutsideGeoFenceAlarm() As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.Location.OutsideGeoFenceAlarmType)
+        Public Overridable Function GetDefaultOutsideGeoFenceAlarm() As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.Location.OutsideGeoFenceAlarmType)
             Return Me.CreateFunctionQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.Location.OutsideGeoFenceAlarmType)("", "/GetDefaultOutsideGeoFenceAlarm", True)
         End Function
         ''' <summary>
         ''' There are no comments for ResetVehicleSpeedToValue in the schema.
         ''' </summary>
-        Public Function ResetVehicleSpeedToValue(targetValue As Global.System.Nullable(Of Double)) As Global.Microsoft.OData.Client.DataServiceActionQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)
+        Public Overridable Function ResetVehicleSpeedToValue(targetValue As Global.System.Nullable(Of Double)) As Global.Microsoft.OData.Client.DataServiceActionQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)
             Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)(Me, Me.BaseUri.OriginalString.Trim("/"C) + "/ResetVehicleSpeedToValue", New Global.Microsoft.OData.Client.BodyOperationParameter("targetValue", targetValue))
         End Function
     End Class
@@ -373,7 +373,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property FuelLevel in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property FuelLevel() As Global.System.Nullable(Of Double)
+        Public Overridable Property FuelLevel() As Global.System.Nullable(Of Double)
             Get
                 Return Me._FuelLevel
             End Get
@@ -393,7 +393,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property Location in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Location() As Microsoft.OData.SampleService.Models.ModelRefDemo.Location.GeoLocation
+        Public Overridable Property Location() As Microsoft.OData.SampleService.Models.ModelRefDemo.Location.GeoLocation
             Get
                 Return Me._Location
             End Get
@@ -418,7 +418,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property Severity in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Severity() As Global.System.Nullable(Of Integer)
+        Public Overridable Property Severity() As Global.System.Nullable(Of Integer)
             Get
                 Return Me._Severity
             End Get
@@ -438,7 +438,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property LocationAndFuel in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property LocationAndFuel() As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.LocationAndFuel
+        Public Overridable Property LocationAndFuel() As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.LocationAndFuel
             Get
                 Return Me._LocationAndFuel
             End Get
@@ -504,7 +504,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property SerialNo in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property SerialNo() As String
+        Public Overridable Property SerialNo() As String
             Get
                 Return Me._SerialNo
             End Get
@@ -524,7 +524,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property DimmingLevel in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property DimmingLevel() As Global.System.Nullable(Of Double)
+        Public Overridable Property DimmingLevel() As Global.System.Nullable(Of Double)
             Get
                 Return Me._DimmingLevel
             End Get
@@ -570,7 +570,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for HeadUnit in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public ReadOnly Property HeadUnit() As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle
+        Public Overridable ReadOnly Property HeadUnit() As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle
             Get
                 If Not Me.IsComposable Then
                     Throw New Global.System.NotSupportedException("The previous function is not composable.")
@@ -587,7 +587,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for VehicleGPS in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public ReadOnly Property VehicleGPS() As Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle
+        Public Overridable ReadOnly Property VehicleGPS() As Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle
             Get
                 If Not Me.IsComposable Then
                     Throw New Global.System.NotSupportedException("The previous function is not composable.")
@@ -624,7 +624,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property Key in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Key() As String
+        Public Overridable Property Key() As String
             Get
                 Return Me._Key
             End Get
@@ -644,7 +644,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property VIN in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property VIN() As String
+        Public Overridable Property VIN() As String
             Get
                 Return Me._VIN
             End Get
@@ -664,7 +664,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property FuelLevel in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property FuelLevel() As Global.System.Nullable(Of Double)
+        Public Overridable Property FuelLevel() As Global.System.Nullable(Of Double)
             Get
                 Return Me._FuelLevel
             End Get
@@ -684,7 +684,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property ACState in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property ACState() As Global.System.Nullable(Of Boolean)
+        Public Overridable Property ACState() As Global.System.Nullable(Of Boolean)
             Get
                 Return Me._ACState
             End Get
@@ -704,7 +704,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property TruckIsHomeFuelLevel in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property TruckIsHomeFuelLevel() As Global.System.Nullable(Of Double)
+        Public Overridable Property TruckIsHomeFuelLevel() As Global.System.Nullable(Of Double)
             Get
                 Return Me._TruckIsHomeFuelLevel
             End Get
@@ -724,7 +724,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property TruckStoppedAlarm in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property TruckStoppedAlarm() As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckStoppedAlarmType
+        Public Overridable Property TruckStoppedAlarm() As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckStoppedAlarmType
             Get
                 Return Me._TruckStoppedAlarm
             End Get
@@ -744,7 +744,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property OutsideGeoFenceAlarm in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property OutsideGeoFenceAlarm() As Microsoft.OData.SampleService.Models.ModelRefDemo.Location.OutsideGeoFenceAlarmType
+        Public Overridable Property OutsideGeoFenceAlarm() As Microsoft.OData.SampleService.Models.ModelRefDemo.Location.OutsideGeoFenceAlarmType
             Get
                 Return Me._OutsideGeoFenceAlarm
             End Get
@@ -764,7 +764,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property HeadUnit in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property HeadUnit() As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType
+        Public Overridable Property HeadUnit() As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType
             Get
                 Return Me._HeadUnit
             End Get
@@ -784,7 +784,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property VehicleGPS in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property VehicleGPS() As Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType
+        Public Overridable Property VehicleGPS() As Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType
             Get
                 Return Me._VehicleGPS
             End Get
@@ -803,7 +803,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         ''' <summary>
         ''' There are no comments for SetACState in the schema.
         ''' </summary>
-        Public Function SetACState(state As Global.System.Nullable(Of Boolean)) As Global.Microsoft.OData.Client.DataServiceActionQuery
+        Public Overridable Function SetACState(state As Global.System.Nullable(Of Boolean)) As Global.Microsoft.OData.Client.DataServiceActionQuery
             Dim resource As Global.Microsoft.OData.Client.EntityDescriptor = Context.EntityTracker.TryGetEntityDescriptor(Me)
             If resource Is Nothing Then
                 Throw New Global.System.Exception("cannot find entity")
@@ -814,7 +814,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         ''' <summary>
         ''' There are no comments for TurnOffAC in the schema.
         ''' </summary>
-        Public Function TurnOffAC() As Global.Microsoft.OData.Client.DataServiceActionQuery
+        Public Overridable Function TurnOffAC() As Global.Microsoft.OData.Client.DataServiceActionQuery
             Dim resource As Global.Microsoft.OData.Client.EntityDescriptor = Context.EntityTracker.TryGetEntityDescriptor(Me)
             If resource Is Nothing Then
                 Throw New Global.System.Exception("cannot find entity")
@@ -872,7 +872,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         '''There are no comments for Property DisplayName in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property DisplayName() As String
+        Public Overridable Property DisplayName() As String
             Get
                 Return Me._DisplayName
             End Get
@@ -1031,7 +1031,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         '''There are no comments for VehicleGPSSetInGPS in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public ReadOnly Property VehicleGPSSetInGPS() As Global.Microsoft.OData.Client.DataServiceQuery(Of VehicleGPSType)
+        Public Overridable ReadOnly Property VehicleGPSSetInGPS() As Global.Microsoft.OData.Client.DataServiceQuery(Of VehicleGPSType)
             Get
                 If (Me._VehicleGPSSetInGPS Is Nothing) Then
                     Me._VehicleGPSSetInGPS = MyBase.CreateQuery(Of VehicleGPSType)("VehicleGPSSetInGPS")
@@ -1045,7 +1045,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         '''There are no comments for VehicleGPSSetInGPS in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToVehicleGPSSetInGPS(ByVal vehicleGPSType As VehicleGPSType)
+        Public Overridable Sub AddToVehicleGPSSetInGPS(ByVal vehicleGPSType As VehicleGPSType)
             MyBase.AddObject("VehicleGPSSetInGPS", vehicleGPSType)
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -1276,7 +1276,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         ''' <summary>
         ''' There are no comments for ResetVehicleSpeedToValue in the schema.
         ''' </summary>
-        Public Function ResetVehicleSpeedToValue(targetValue As Global.System.Nullable(Of Double)) As Global.Microsoft.OData.Client.DataServiceActionQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)
+        Public Overridable Function ResetVehicleSpeedToValue(targetValue As Global.System.Nullable(Of Double)) As Global.Microsoft.OData.Client.DataServiceActionQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)
             Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)(Me, Me.BaseUri.OriginalString.Trim("/"C) + "/ResetVehicleSpeedToValue", New Global.Microsoft.OData.Client.BodyOperationParameter("targetValue", targetValue))
         End Function
     End Class
@@ -1288,7 +1288,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         '''There are no comments for Property Severity in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Severity() As Global.System.Nullable(Of Integer)
+        Public Overridable Property Severity() As Global.System.Nullable(Of Integer)
             Get
                 Return Me._Severity
             End Get
@@ -1308,7 +1308,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         '''There are no comments for Property LastKnownLocation in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property LastKnownLocation() As Microsoft.OData.SampleService.Models.ModelRefDemo.Location.GeoLocation
+        Public Overridable Property LastKnownLocation() As Microsoft.OData.SampleService.Models.ModelRefDemo.Location.GeoLocation
             Get
                 Return Me._LastKnownLocation
             End Get
@@ -1374,7 +1374,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         '''There are no comments for Property Key in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Key() As String
+        Public Overridable Property Key() As String
             Get
                 Return Me._Key
             End Get
@@ -1394,7 +1394,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         '''There are no comments for Property VehicleSpeed in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property VehicleSpeed() As Global.System.Nullable(Of Double)
+        Public Overridable Property VehicleSpeed() As Global.System.Nullable(Of Double)
             Get
                 Return Me._VehicleSpeed
             End Get
@@ -1414,7 +1414,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         '''There are no comments for Property StartLocation in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property StartLocation() As Microsoft.OData.SampleService.Models.ModelRefDemo.Location.GeoLocation
+        Public Overridable Property StartLocation() As Microsoft.OData.SampleService.Models.ModelRefDemo.Location.GeoLocation
             Get
                 Return Me._StartLocation
             End Get
@@ -1434,7 +1434,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         '''There are no comments for Property EndLocation in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property EndLocation() As Microsoft.OData.SampleService.Models.ModelRefDemo.Location.GeoLocation
+        Public Overridable Property EndLocation() As Microsoft.OData.SampleService.Models.ModelRefDemo.Location.GeoLocation
             Get
                 Return Me._EndLocation
             End Get
@@ -1454,7 +1454,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         '''There are no comments for Property CurrentLocation in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property CurrentLocation() As Microsoft.OData.SampleService.Models.ModelRefDemo.Location.GeoLocation
+        Public Overridable Property CurrentLocation() As Microsoft.OData.SampleService.Models.ModelRefDemo.Location.GeoLocation
             Get
                 Return Me._CurrentLocation
             End Get
@@ -1474,7 +1474,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         '''There are no comments for Property Map in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Map() As Microsoft.OData.SampleService.Models.ModelRefDemo.Map.MapType
+        Public Overridable Property Map() As Microsoft.OData.SampleService.Models.ModelRefDemo.Map.MapType
             Get
                 Return Me._Map
             End Get
@@ -1494,7 +1494,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         '''There are no comments for Property LostSignalAlarm in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property LostSignalAlarm() As Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.GPSLostSignalAlarmType
+        Public Overridable Property LostSignalAlarm() As Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.GPSLostSignalAlarmType
             Get
                 Return Me._LostSignalAlarm
             End Get
@@ -1513,7 +1513,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         ''' <summary>
         ''' There are no comments for GetVehicleSpeed in the schema.
         ''' </summary>
-        Public Function GetVehicleSpeed() As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Double)
+        Public Overridable Function GetVehicleSpeed() As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Double)
             Dim requestUri As Global.System.Uri = Nothing
             Context.TryGetUri(Me, requestUri)
             Return Me.Context.CreateFunctionQuerySingle(Of Double)(String.Join("/", Global.System.Linq.Enumerable.Select(Global.System.Linq.Enumerable.Skip(requestUri.Segments, Me.Context.BaseUri.Segments.Length), Function(s) s.Trim("/"C))), "/Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.GetVehicleSpeed", False)
@@ -1521,7 +1521,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         ''' <summary>
         ''' There are no comments for ResetVehicleSpeed in the schema.
         ''' </summary>
-        Public Function ResetVehicleSpeed(targetValue As Global.System.Nullable(Of Double)) As Global.Microsoft.OData.Client.DataServiceActionQuery
+        Public Overridable Function ResetVehicleSpeed(targetValue As Global.System.Nullable(Of Double)) As Global.Microsoft.OData.Client.DataServiceActionQuery
             Dim resource As Global.Microsoft.OData.Client.EntityDescriptor = Context.EntityTracker.TryGetEntityDescriptor(Me)
             If resource Is Nothing Then
                 Throw New Global.System.Exception("cannot find entity")
@@ -1589,7 +1589,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.Location
         '''There are no comments for Property Lat in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Lat() As Global.System.Nullable(Of Double)
+        Public Overridable Property Lat() As Global.System.Nullable(Of Double)
             Get
                 Return Me._Lat
             End Get
@@ -1609,7 +1609,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.Location
         '''There are no comments for Property Long in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property [Long]() As Global.System.Nullable(Of Double)
+        Public Overridable Property [Long]() As Global.System.Nullable(Of Double)
             Get
                 Return Me._Long
             End Get
@@ -1634,7 +1634,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.Location
         '''There are no comments for Property Severity in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Severity() As Global.System.Nullable(Of Integer)
+        Public Overridable Property Severity() As Global.System.Nullable(Of Integer)
             Get
                 Return Me._Severity
             End Get
@@ -1654,7 +1654,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.Location
         '''There are no comments for Property Location in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Location() As Microsoft.OData.SampleService.Models.ModelRefDemo.Location.GeoLocation
+        Public Overridable Property Location() As Microsoft.OData.SampleService.Models.ModelRefDemo.Location.GeoLocation
             Get
                 Return Me._Location
             End Get
@@ -1681,7 +1681,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.Map
         '''There are no comments for Property ProviderName in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property ProviderName() As String
+        Public Overridable Property ProviderName() As String
             Get
                 Return Me._ProviderName
             End Get
@@ -1701,7 +1701,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.Map
         '''There are no comments for Property Uri in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Uri() As String
+        Public Overridable Property Uri() As String
             Get
                 Return Me._Uri
             End Get
@@ -1721,7 +1721,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.Map
         '''There are no comments for Property MBytesDownloaded in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property MBytesDownloaded() As Global.System.Nullable(Of Double)
+        Public Overridable Property MBytesDownloaded() As Global.System.Nullable(Of Double)
             Get
                 Return Me._MBytesDownloaded
             End Get

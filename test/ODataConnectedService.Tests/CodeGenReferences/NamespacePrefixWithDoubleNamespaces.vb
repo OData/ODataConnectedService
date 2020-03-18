@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 14:14:15
+'Generation date: 18.03.2020 15:16:35
 Namespace Foo.NamespacePrefixWithDoubleNamespaces
     '''<summary>
     '''There are no comments for EntityContainer in the schema.
@@ -71,7 +71,7 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces
         '''There are no comments for Set1 in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public ReadOnly Property Set1() As Global.Microsoft.OData.Client.DataServiceQuery(Of EntityType)
+        Public Overridable ReadOnly Property Set1() As Global.Microsoft.OData.Client.DataServiceQuery(Of EntityType)
             Get
                 If (Me._Set1 Is Nothing) Then
                     Me._Set1 = MyBase.CreateQuery(Of EntityType)("Set1")
@@ -85,7 +85,7 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces
         '''There are no comments for Set2 in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public ReadOnly Property Set2() As Global.Microsoft.OData.Client.DataServiceQuery(Of EntityType)
+        Public Overridable ReadOnly Property Set2() As Global.Microsoft.OData.Client.DataServiceQuery(Of EntityType)
             Get
                 If (Me._Set2 Is Nothing) Then
                     Me._Set2 = MyBase.CreateQuery(Of EntityType)("Set2")
@@ -99,14 +99,14 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces
         '''There are no comments for Set1 in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToSet1(ByVal entityType As EntityType)
+        Public Overridable Sub AddToSet1(ByVal entityType As EntityType)
             MyBase.AddObject("Set1", entityType)
         End Sub
         '''<summary>
         '''There are no comments for Set2 in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToSet2(ByVal entityType As EntityType)
+        Public Overridable Sub AddToSet2(ByVal entityType As EntityType)
             MyBase.AddObject("Set2", entityType)
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -183,7 +183,7 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces
         '''There are no comments for Property Value in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Value() As String
+        Public Overridable Property Value() As String
             Get
                 Return Me._Value
             End Get
@@ -249,7 +249,7 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces
         '''There are no comments for Property Id in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Id() As Global.System.Guid
+        Public Overridable Property Id() As Global.System.Guid
             Get
                 Return Me._Id
             End Get
@@ -269,7 +269,7 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces
         '''There are no comments for Property Complex in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Complex() As Foo.NamespacePrefixWithDoubleNamespaces.ComplexType
+        Public Overridable Property Complex() As Foo.NamespacePrefixWithDoubleNamespaces.ComplexType
             Get
                 Return Me._Complex
             End Get
@@ -334,7 +334,7 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces2
         '''There are no comments for Property Value in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Value() As String
+        Public Overridable Property Value() As String
             Get
                 Return Me._Value
             End Get
@@ -400,7 +400,7 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces2
         '''There are no comments for Property Id in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Id() As Global.System.Guid
+        Public Overridable Property Id() As Global.System.Guid
             Get
                 Return Me._Id
             End Get
@@ -420,7 +420,7 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces2
         '''There are no comments for Property Complex in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Complex() As Foo.NamespacePrefixWithDoubleNamespaces2.ComplexType
+        Public Overridable Property Complex() As Foo.NamespacePrefixWithDoubleNamespaces2.ComplexType
             Get
                 Return Me._Complex
             End Get

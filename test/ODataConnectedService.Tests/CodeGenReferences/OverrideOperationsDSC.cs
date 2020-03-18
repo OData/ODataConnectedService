@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 3/11/2020 3:59:04 PM
+// Generation date: 18.03.2020 16:10:06
 namespace OverrideOperations.DSC
 {
     /// <summary>
@@ -19,8 +19,8 @@ namespace OverrideOperations.DSC
         /// <summary>
         /// Initialize a new OverrideOperationsContainer object.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
-        public OverrideOperationsContainer(global::System.Uri serviceRoot) :
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        public OverrideOperationsContainer(global::System.Uri serviceRoot) : 
                 base(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
         {
             this.ResolveName = new global::System.Func<global::System.Type, string>(this.ResolveNameFromType);
@@ -34,7 +34,7 @@ namespace OverrideOperations.DSC
         /// in Visual Studio is different from the one indicated in the
         /// server schema, use type-mappers to map between the two.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         protected string ResolveNameFromType(global::System.Type clientType)
         {
             return clientType.FullName;
@@ -42,7 +42,7 @@ namespace OverrideOperations.DSC
         /// <summary>
         /// There are no comments for ETSets in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual global::Microsoft.OData.Client.DataServiceQuery<ET> ETSets
         {
             get
@@ -54,23 +54,23 @@ namespace OverrideOperations.DSC
                 return this._ETSets;
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private global::Microsoft.OData.Client.DataServiceQuery<ET> _ETSets;
         /// <summary>
         /// There are no comments for ETSets in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual void AddToETSets(ET eT)
         {
             base.AddObject("ETSets", eT);
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private abstract class GeneratedEdmModel
         {
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
             private static global::Microsoft.OData.Edm.IEdmModel ParsedModel = LoadModelFromString();
 
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
             private const string Edmx = @"<edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
   <edmx:DataServices>
     <Schema Namespace=""OverrideOperations.DSC"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
@@ -136,12 +136,12 @@ namespace OverrideOperations.DSC
   </edmx:DataServices>
 </edmx:Edmx>";
 
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
             public static global::Microsoft.OData.Edm.IEdmModel GetInstance()
             {
                 return ParsedModel;
             }
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
             private static global::Microsoft.OData.Edm.IEdmModel LoadModelFromString()
             {
                 global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);
@@ -152,14 +152,13 @@ namespace OverrideOperations.DSC
 
                     if (!global::Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, false, out edmModel, out errors))
                     {
-                        global::System.Text.StringBuilder errorMessages = new System.Text.StringBuilder();
-                        foreach (var error in errors)
-                        {
-                            errorMessages.Append(error.ErrorMessage);
-                            errorMessages.Append("; ");
-                        }
-
-                        throw new global::System.InvalidOperationException(errorMessages.ToString());
+	                    global::System.Text.StringBuilder errorMessages = new System.Text.StringBuilder();
+	                    foreach (var error in errors)
+	                    {
+		                    errorMessages.Append(error.ErrorMessage);
+		                    errorMessages.Append("; ");
+	                    }
+	                    throw new global::System.InvalidOperationException(errorMessages.ToString());
                     }
 
                     return edmModel;
@@ -169,7 +168,7 @@ namespace OverrideOperations.DSC
                     ((global::System.IDisposable)(reader)).Dispose();
                 }
             }
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
             private static global::System.Xml.XmlReader CreateXmlReader(string edmxToParse)
             {
                 return global::System.Xml.XmlReader.Create(new global::System.IO.StringReader(edmxToParse));
@@ -186,19 +185,19 @@ namespace OverrideOperations.DSC
         /// Initialize a new ETSingle object.
         /// </summary>
         public ETSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) { }
+            : base(context, path) {}
 
         /// <summary>
         /// Initialize a new ETSingle object.
         /// </summary>
         public ETSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) { }
+            : base(context, path, isComposable) {}
 
         /// <summary>
         /// Initialize a new ETSingle object.
         /// </summary>
         public ETSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<ET> query)
-            : base(query) { }
+            : base(query) {}
 
     }
     /// <summary>
@@ -215,7 +214,7 @@ namespace OverrideOperations.DSC
         /// Create a new ET object.
         /// </summary>
         /// <param name="userName">Initial value of UserName.</param>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public static ET CreateET(string userName)
         {
             ET eT = new ET();
@@ -225,7 +224,7 @@ namespace OverrideOperations.DSC
         /// <summary>
         /// There are no comments for Property UserName in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual string UserName
         {
             get
@@ -240,20 +239,20 @@ namespace OverrideOperations.DSC
                 this.OnPropertyChanged("UserName");
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private string _UserName;
         partial void OnUserNameChanging(string value);
         partial void OnUserNameChanged();
         /// <summary>
         /// This event is raised when the value of the property is changed
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         /// <summary>
         /// The value of the property is changed
         /// </summary>
         /// <param name="property">property name</param>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         protected virtual void OnPropertyChanged(string property)
         {
             if ((this.PropertyChanged != null))
@@ -264,7 +263,7 @@ namespace OverrideOperations.DSC
         /// <summary>
         /// There are no comments for FunctionWithoutParameter in the schema.
         /// </summary>
-        public global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.CT> FunctionWithoutParameter()
+        public virtual  global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.CT> FunctionWithoutParameter()
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);
@@ -294,19 +293,19 @@ namespace OverrideOperations.DSC
         /// Initialize a new DerivedETSingle object.
         /// </summary>
         public DerivedETSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) { }
+            : base(context, path) {}
 
         /// <summary>
         /// Initialize a new DerivedETSingle object.
         /// </summary>
         public DerivedETSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) { }
+            : base(context, path, isComposable) {}
 
         /// <summary>
         /// Initialize a new DerivedETSingle object.
         /// </summary>
         public DerivedETSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<DerivedET> query)
-            : base(query) { }
+            : base(query) {}
 
     }
     /// <summary>
@@ -322,7 +321,7 @@ namespace OverrideOperations.DSC
         /// Create a new DerivedET object.
         /// </summary>
         /// <param name="userName">Initial value of UserName.</param>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public static DerivedET CreateDerivedET(string userName)
         {
             DerivedET derivedET = new DerivedET();
@@ -332,7 +331,7 @@ namespace OverrideOperations.DSC
         /// <summary>
         /// There are no comments for Property DerivedComplexP in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual global::OverrideOperations.DSC.DerivedCT DerivedComplexP
         {
             get
@@ -347,14 +346,14 @@ namespace OverrideOperations.DSC
                 this.OnPropertyChanged("DerivedComplexP");
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private global::OverrideOperations.DSC.DerivedCT _DerivedComplexP;
         partial void OnDerivedComplexPChanging(global::OverrideOperations.DSC.DerivedCT value);
         partial void OnDerivedComplexPChanged();
         /// <summary>
         /// There are no comments for FunctionWithoutParameter in the schema.
         /// </summary>
-        public new global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.CT> FunctionWithoutParameter()
+        public virtual new  global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.CT> FunctionWithoutParameter()
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);
@@ -384,7 +383,7 @@ namespace OverrideOperations.DSC
         /// Create a new CT object.
         /// </summary>
         /// <param name="name">Initial value of Name.</param>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public static CT CreateCT(string name)
         {
             CT cT = new CT();
@@ -394,7 +393,7 @@ namespace OverrideOperations.DSC
         /// <summary>
         /// There are no comments for Property Name in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual string Name
         {
             get
@@ -409,20 +408,20 @@ namespace OverrideOperations.DSC
                 this.OnPropertyChanged("Name");
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private string _Name;
         partial void OnNameChanging(string value);
         partial void OnNameChanged();
         /// <summary>
         /// This event is raised when the value of the property is changed
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         /// <summary>
         /// The value of the property is changed
         /// </summary>
         /// <param name="property">property name</param>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         protected virtual void OnPropertyChanged(string property)
         {
             if ((this.PropertyChanged != null))
@@ -441,7 +440,7 @@ namespace OverrideOperations.DSC
         /// </summary>
         /// <param name="name">Initial value of Name.</param>
         /// <param name="description">Initial value of Description.</param>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public static DerivedCT CreateDerivedCT(string name, string description)
         {
             DerivedCT derivedCT = new DerivedCT();
@@ -452,7 +451,7 @@ namespace OverrideOperations.DSC
         /// <summary>
         /// There are no comments for Property Description in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual string Description
         {
             get
@@ -467,7 +466,7 @@ namespace OverrideOperations.DSC
                 this.OnPropertyChanged("Description");
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private string _Description;
         partial void OnDescriptionChanging(string value);
         partial void OnDescriptionChanged();

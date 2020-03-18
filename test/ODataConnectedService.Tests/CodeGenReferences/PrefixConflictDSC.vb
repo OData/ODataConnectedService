@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 14:13:01
+'Generation date: 18.03.2020 15:15:30
 Namespace PrefixConflict.DSC
     '''<summary>
     '''There are no comments for EntityContainer in the schema.
@@ -35,7 +35,7 @@ Namespace PrefixConflict.DSC
         '''There are no comments for Set1 in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public ReadOnly Property Set1() As Global.Microsoft.OData.Client.DataServiceQuery(Of EntityType)
+        Public Overridable ReadOnly Property Set1() As Global.Microsoft.OData.Client.DataServiceQuery(Of EntityType)
             Get
                 If (Me._Set1 Is Nothing) Then
                     Me._Set1 = MyBase.CreateQuery(Of EntityType)("Set1")
@@ -49,7 +49,7 @@ Namespace PrefixConflict.DSC
         '''There are no comments for Set1 in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToSet1(ByVal entityType As EntityType)
+        Public Overridable Sub AddToSet1(ByVal entityType As EntityType)
             MyBase.AddObject("Set1", entityType)
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -145,7 +145,7 @@ Namespace PrefixConflict.DSC
         '''There are no comments for Property Id in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Id() As Global.System.Guid
+        Public Overridable Property Id() As Global.System.Guid
             Get
                 Return Me._Id
             End Get
@@ -166,7 +166,7 @@ Namespace PrefixConflict.DSC
         '''There are no comments for Property Name in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property Name() As Global.System.Nullable(Of Integer)
+        Public Overridable Property Name() As Global.System.Nullable(Of Integer)
             Get
                 Return Me._Name1
             End Get
@@ -187,7 +187,7 @@ Namespace PrefixConflict.DSC
         '''There are no comments for Property _Name in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property _Name() As String
+        Public Overridable Property _Name() As String
             Get
                 Return Me.__Name1
             End Get
@@ -208,7 +208,7 @@ Namespace PrefixConflict.DSC
         '''There are no comments for Property __Name in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property __Name() As Global.System.Nullable(Of Integer)
+        Public Overridable Property __Name() As Global.System.Nullable(Of Integer)
             Get
                 Return Me.___Name
             End Get

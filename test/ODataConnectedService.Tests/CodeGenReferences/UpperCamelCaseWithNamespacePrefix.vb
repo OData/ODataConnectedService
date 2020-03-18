@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 14:30:11
+'Generation date: 18.03.2020 15:31:53
 Namespace namespacePrefix.[Namespace].Foo
     '''<summary>
     '''There are no comments for BaseTypeSingle in the schema.
@@ -66,7 +66,7 @@ Namespace namespacePrefix.[Namespace].Foo
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("keyProp")>  _
-        Public Property KeyProp() As Integer
+        Public Overridable Property KeyProp() As Integer
             Get
                 Return Me._KeyProp
             End Get
@@ -114,7 +114,7 @@ Namespace namespacePrefix.[Namespace].Foo
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("singleType")>  _
-        Public ReadOnly Property SingleType() As namespacePrefix.[Namespace].Foo.SingleTypeSingle
+        Public Overridable ReadOnly Property SingleType() As namespacePrefix.[Namespace].Foo.SingleTypeSingle
             Get
                 If Not Me.IsComposable Then
                     Throw New Global.System.NotSupportedException("The previous function is not composable.")
@@ -153,7 +153,7 @@ Namespace namespacePrefix.[Namespace].Foo
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("singleType")>  _
-        Public Property SingleType() As namespacePrefix.[Namespace].Foo.SingleType
+        Public Overridable Property SingleType() As namespacePrefix.[Namespace].Foo.SingleType
             Get
                 Return Me._SingleType
             End Get
@@ -173,7 +173,7 @@ Namespace namespacePrefix.[Namespace].Foo
         ''' There are no comments for Foo7 in the schema.
         ''' </summary>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("foo7")>  _
-        Public Function Foo7(p1 As namespacePrefix.[Namespace].Foo.Color, p2 As namespacePrefix.[Namespace].Foo.Complex) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of String)
+        Public Overridable Function Foo7(p1 As namespacePrefix.[Namespace].Foo.Color, p2 As namespacePrefix.[Namespace].Foo.Complex) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of String)
             Dim requestUri As Global.System.Uri = Nothing
             Context.TryGetUri(Me, requestUri)
             Return Me.Context.CreateFunctionQuerySingle(Of String)(String.Join("/", Global.System.Linq.Enumerable.Select(Global.System.Linq.Enumerable.Skip(requestUri.Segments, Me.Context.BaseUri.Segments.Length), Function(s) s.Trim("/"C))), "/namespace.foo.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1),
@@ -211,7 +211,7 @@ Namespace namespacePrefix.[Namespace].Foo
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("baseSet")>  _
-        Public ReadOnly Property BaseSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.TestType)
+        Public Overridable ReadOnly Property BaseSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.TestType)
             Get
                 If Not Me.IsComposable Then
                     Throw New Global.System.NotSupportedException("The previous function is not composable.")
@@ -252,7 +252,7 @@ Namespace namespacePrefix.[Namespace].Foo
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("keyProp")>  _
-        Public Property KeyProp() As Integer
+        Public Overridable Property KeyProp() As Integer
             Get
                 Return Me._KeyProp
             End Get
@@ -273,7 +273,7 @@ Namespace namespacePrefix.[Namespace].Foo
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("colorProp")>  _
-        Public Property ColorProp() As namespacePrefix.[Namespace].Foo.Color
+        Public Overridable Property ColorProp() As namespacePrefix.[Namespace].Foo.Color
             Get
                 Return Me._ColorProp
             End Get
@@ -294,7 +294,7 @@ Namespace namespacePrefix.[Namespace].Foo
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("baseSet")>  _
-        Public Property BaseSet() As Global.System.Collections.ObjectModel.Collection(Of namespacePrefix.[Namespace].Foo.TestType)
+        Public Overridable Property BaseSet() As Global.System.Collections.ObjectModel.Collection(Of namespacePrefix.[Namespace].Foo.TestType)
             Get
                 Return Me._BaseSet
             End Get
@@ -314,7 +314,7 @@ Namespace namespacePrefix.[Namespace].Foo
         ''' There are no comments for Foo8 in the schema.
         ''' </summary>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("foo8")>  _
-        Public Function Foo8() As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Global.System.Nullable(Of Integer))
+        Public Overridable Function Foo8() As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Global.System.Nullable(Of Integer))
             Dim resource As Global.Microsoft.OData.Client.EntityDescriptor = Context.EntityTracker.TryGetEntityDescriptor(Me)
             If resource Is Nothing Then
                 Throw New Global.System.Exception("cannot find entity")
@@ -345,7 +345,7 @@ Namespace namespacePrefix.[Namespace].Foo
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("intProp")>  _
-        Public Property IntProp() As Integer
+        Public Overridable Property IntProp() As Integer
             Get
                 Return Me._IntProp
             End Get
@@ -366,7 +366,7 @@ Namespace namespacePrefix.[Namespace].Foo
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("stringProp")>  _
-        Public Property StringProp() As String
+        Public Overridable Property StringProp() As String
             Get
                 Return Me._StringProp
             End Get
@@ -576,7 +576,7 @@ Namespace namespacePrefix.[Namespace].Bar
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("testTypeSet")>  _
-        Public ReadOnly Property TestTypeSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.TestType)
+        Public Overridable ReadOnly Property TestTypeSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.TestType)
             Get
                 If (Me._TestTypeSet Is Nothing) Then
                     Me._TestTypeSet = MyBase.CreateQuery(Of namespacePrefix.[Namespace].Foo.TestType)("testTypeSet")
@@ -591,7 +591,7 @@ Namespace namespacePrefix.[Namespace].Bar
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("baseTypeSet")>  _
-        Public ReadOnly Property BaseTypeSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.BaseType)
+        Public Overridable ReadOnly Property BaseTypeSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.BaseType)
             Get
                 If (Me._BaseTypeSet Is Nothing) Then
                     Me._BaseTypeSet = MyBase.CreateQuery(Of namespacePrefix.[Namespace].Foo.BaseType)("baseTypeSet")
@@ -605,14 +605,14 @@ Namespace namespacePrefix.[Namespace].Bar
         '''There are no comments for TestTypeSet in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToTestTypeSet(ByVal testType As namespacePrefix.[Namespace].Foo.TestType)
+        Public Overridable Sub AddToTestTypeSet(ByVal testType As namespacePrefix.[Namespace].Foo.TestType)
             MyBase.AddObject("testTypeSet", testType)
         End Sub
         '''<summary>
         '''There are no comments for BaseTypeSet in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddToBaseTypeSet(ByVal baseType As namespacePrefix.[Namespace].Foo.BaseType)
+        Public Overridable Sub AddToBaseTypeSet(ByVal baseType As namespacePrefix.[Namespace].Foo.BaseType)
             MyBase.AddObject("baseTypeSet", baseType)
         End Sub
         '''<summary>
@@ -620,7 +620,7 @@ Namespace namespacePrefix.[Namespace].Bar
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("superType")>  _
-        Public ReadOnly Property SuperType() As namespacePrefix.[Namespace].Foo.TestTypeSingle
+        Public Overridable ReadOnly Property SuperType() As namespacePrefix.[Namespace].Foo.TestTypeSingle
             Get
                 If (Me._SuperType Is Nothing) Then
                     Me._SuperType = New namespacePrefix.[Namespace].Foo.TestTypeSingle(Me, "superType")
@@ -635,7 +635,7 @@ Namespace namespacePrefix.[Namespace].Bar
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("single")>  _
-        Public ReadOnly Property [Single]() As namespacePrefix.[Namespace].Foo.SingleTypeSingle
+        Public Overridable ReadOnly Property [Single]() As namespacePrefix.[Namespace].Foo.SingleTypeSingle
             Get
                 If (Me._Single Is Nothing) Then
                     Me._Single = New namespacePrefix.[Namespace].Foo.SingleTypeSingle(Me, "single")
@@ -732,14 +732,14 @@ Namespace namespacePrefix.[Namespace].Bar
         ''' There are no comments for Foo6 in the schema.
         ''' </summary>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("foo6")>  _
-        Public Function Foo6(p1 As Global.System.Collections.Generic.ICollection(Of namespacePrefix.[Namespace].Foo.TestType), Optional ByVal useEntityReference As Boolean = False) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of String)
+        Public Overridable Function Foo6(p1 As Global.System.Collections.Generic.ICollection(Of namespacePrefix.[Namespace].Foo.TestType), Optional ByVal useEntityReference As Boolean = False) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of String)
             Return Me.CreateFunctionQuerySingle(Of String)("", "/foo6", False, New Global.Microsoft.OData.Client.UriEntityOperationParameter("p1", p1, useEntityReference))
         End Function
         ''' <summary>
         ''' There are no comments for Foo9 in the schema.
         ''' </summary>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("foo9")>  _
-        Public Function Foo9(p1 As Global.System.Nullable(Of namespacePrefix.[Namespace].Foo.Color), p2 As namespacePrefix.[Namespace].Foo.Complex) As Global.Microsoft.OData.Client.DataServiceActionQuery
+        Public Overridable Function Foo9(p1 As Global.System.Nullable(Of namespacePrefix.[Namespace].Foo.Color), p2 As namespacePrefix.[Namespace].Foo.Complex) As Global.Microsoft.OData.Client.DataServiceActionQuery
             Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Me, Me.BaseUri.OriginalString.Trim("/"C) + "/foo9", New Global.Microsoft.OData.Client.BodyOperationParameter("p1", p1),
                     New Global.Microsoft.OData.Client.BodyOperationParameter("p2", p2))
         End Function
