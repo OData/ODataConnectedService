@@ -15,7 +15,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public ObjectSelectionViewModel(): base()
         {
             Title = "Object Selection";
-            Description = "Select with action and function imports to include/exlcude in the generated code.";
+            Description = "Select objects to include in the generated code.";
             Legend = "Object Selection";
             OperationImports = new List<OperationImportModel>();
             
