@@ -60,8 +60,6 @@ namespace Microsoft.OData.ConnectedService
                 ConfigODataEndpointViewModel.EdmxVersion = serviceConfig.EdmxVersion;
                 ConfigODataEndpointViewModel.ServiceName = serviceConfig.ServiceName;
                 ConfigODataEndpointViewModel.CustomHttpHeaders = serviceConfig.CustomHttpHeaders;
-                var configODataEndpoint = (ConfigODataEndpointViewModel.View as ConfigODataEndpoint);
-                configODataEndpoint.IsEnabled = false;
 
                 //Restore the advanced settings to UI elements.
                 AdvancedSettingsViewModel.PageEntering += (sender, args) =>
