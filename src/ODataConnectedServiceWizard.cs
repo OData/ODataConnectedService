@@ -16,6 +16,8 @@ namespace Microsoft.OData.ConnectedService
 
         public ConfigODataEndpointViewModel ConfigODataEndpointViewModel { get; set; }
 
+        public ObjectSelectionViewModel ObjectSelectionViewModel { get; set; }
+
         public AdvancedSettingsViewModel AdvancedSettingsViewModel { get; set; }
 
         public ConnectedServiceProviderContext Context { get; set; }
@@ -33,6 +35,7 @@ namespace Microsoft.OData.ConnectedService
 
             ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(this.UserSettings);
             AdvancedSettingsViewModel = new AdvancedSettingsViewModel(this.UserSettings);
+            ObjectSelectionViewModel = new ObjectSelectionViewModel();
 
             if (this.Context.IsUpdating)
             {
@@ -89,6 +92,7 @@ namespace Microsoft.OData.ConnectedService
             }
 
             this.Pages.Add(ConfigODataEndpointViewModel);
+            this.Pages.Add(ObjectSelectionViewModel);
             this.Pages.Add(AdvancedSettingsViewModel);
             this.IsFinishEnabled = true;
         }
@@ -159,6 +163,12 @@ namespace Microsoft.OData.ConnectedService
                     {
                         this.AdvancedSettingsViewModel.Dispose();
                         this.AdvancedSettingsViewModel = null;
+                    }
+
+                    if (this.ObjectSelectionViewModel != null)
+                    {
+                        this.ObjectSelectionViewModel.Dispose();
+                        ObjectSelectionViewModel = null;
                     }
 
                     if (this.ConfigODataEndpointViewModel != null)
