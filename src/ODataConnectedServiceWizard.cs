@@ -111,7 +111,6 @@ namespace Microsoft.OData.ConnectedService
             };
 
             this.Pages.Add(ConfigODataEndpointViewModel);
-            this.Pages.Add(ObjectSelectionViewModel);
             this.Pages.Add(AdvancedSettingsViewModel);
             this.IsFinishEnabled = true;
         }
@@ -126,6 +125,14 @@ namespace Microsoft.OData.ConnectedService
             this.ServiceInstance.ServiceConfig = this.CreateServiceConfiguration();
 
             return Task.FromResult<ConnectedServiceInstance>(this.ServiceInstance);
+        }
+
+        public void AddObjectSelectionPage()
+        {
+            if (!Pages.Contains(ObjectSelectionViewModel))
+            {
+                Pages.Add(ObjectSelectionViewModel);
+            }
         }
 
         /// <summary>

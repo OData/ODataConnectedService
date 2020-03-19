@@ -38,11 +38,18 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public override Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
         {
-            UserSettings.AddToTopOfMruList(((ODataConnectedServiceWizard)this.Wizard).UserSettings.MruEndpoints, this.Endpoint);
+            var wizard = this.Wizard as ODataConnectedServiceWizard;
+            UserSettings.AddToTopOfMruList(wizard.UserSettings.MruEndpoints, this.Endpoint);
+            Version version;
             try
             {
                 this.MetadataTempPath = GetMetadata(out var version);
                 this.EdmxVersion = version;
+                if (EdmxVersion == Common.Constants.EdmxVersion4)
+                {
+                    wizard.AddObjectSelectionPage();
+                }
+
                 return base.OnPageLeavingAsync(args);
             }
             catch (Exception e)

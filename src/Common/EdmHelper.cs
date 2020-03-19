@@ -26,7 +26,7 @@ namespace Microsoft.OData.ConnectedService.Common
             if (result)
             {
                 return model;
-            }
+            } 
 
             if (context != null)
             {

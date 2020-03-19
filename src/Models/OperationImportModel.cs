@@ -9,7 +9,6 @@ namespace Microsoft.OData.ConnectedService.Models
 {
     class OperationImportModel: INotifyPropertyChanged
     {
-        private string _name;
         private bool _isSelected;
 
         public string Name { get; set; }
