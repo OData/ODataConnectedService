@@ -39,10 +39,12 @@ namespace Microsoft.OData.ConnectedService
             AdvancedSettingsViewModel = new AdvancedSettingsViewModel(this.UserSettings);
             ObjectSelectionViewModel = new ObjectSelectionViewModel();
 
+            ServiceConfigurationV4 serviceConfig = null;
+
             if (this.Context.IsUpdating)
             {
                 //Since ServiceConfigurationV4 is a derived type of ServiceConfiguration. So we can deserialize a ServiceConfiguration into a ServiceConfigurationV4.
-                ServiceConfigurationV4 serviceConfig = this.Context.GetExtendedDesignerData<ServiceConfigurationV4>();
+                serviceConfig = this.Context.GetExtendedDesignerData<ServiceConfigurationV4>();
                 ConfigODataEndpointViewModel.Endpoint = serviceConfig.Endpoint;
                 ConfigODataEndpointViewModel.EdmxVersion = serviceConfig.EdmxVersion;
                 ConfigODataEndpointViewModel.ServiceName = serviceConfig.ServiceName;
@@ -100,6 +102,11 @@ namespace Microsoft.OData.ConnectedService
                     var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
                     var operations = EdmHelper.GetOperationImports(model);
                     ObjectSelectionViewModel.LoadOperationImports(operations);
+
+                    if (context.IsUpdating)
+                    {
+                        objectSelectionViewModel.ExcludeOperationImports(serviceConfig?.ExcludedOperationImports ?? Enumerable.Empty<string>());
+                    }
                 }
             };
 

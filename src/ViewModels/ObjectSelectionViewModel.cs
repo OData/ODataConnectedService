@@ -50,5 +50,13 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             OperationImports = operationImports.Select(op => new OperationImportModel() { IsSelected = true, Name = op.Name }).ToList();
         }
 
+        public void ExcludeOperationImports(IEnumerable<string> operationsToExclude)
+        {
+            foreach (var operationModel in OperationImports)
+            {
+                operationModel.IsSelected = !operationsToExclude.Contains(operationModel.Name);
+            }
+        }
+
     }
 }
