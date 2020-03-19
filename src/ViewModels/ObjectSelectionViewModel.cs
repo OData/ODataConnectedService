@@ -5,23 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.Views;
+using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService.ViewModels
 {
-    class ObjectSelectionViewModel: ConnectedServiceWizardPage
+    internal class ObjectSelectionViewModel: ConnectedServiceWizardPage
     {
         public ObjectSelectionViewModel(): base()
         {
             Title = "Object Selection";
             Description = "Select with action and function imports to include/exlcude in the generated code.";
             Legend = "Object Selection";
-            OperationImports = new List<OperationImportModel>()
-            {
-                new OperationImportModel() { IsSelected = true, Name = "Func1" },
-                new OperationImportModel() { IsSelected = false, Name = "Action2" },
-                new OperationImportModel() { IsSelected = true, Name= "Func3" }
-            };
+            OperationImports = new List<OperationImportModel>();
+            
         }
 
         public List<OperationImportModel> OperationImports { get; set; }
@@ -46,6 +43,11 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public override async Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
         {
             return await base.OnPageLeavingAsync(args);
+        }
+
+        public void LoadOperationImports(IEnumerable<IEdmOperationImport> operationImports)
+        {
+            OperationImports = operationImports.Select(op => new OperationImportModel() { IsSelected = true, Name = op.Name }).ToList();
         }
 
     }

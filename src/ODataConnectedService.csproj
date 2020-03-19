@@ -169,6 +169,7 @@
     <Compile Include="CodeGeneration\V3CodeGenDescriptor.cs" />
     <Compile Include="CodeGeneration\V4CodeGenDescriptor.cs" />
     <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\EdmHelper.cs" />
     <Compile Include="Common\ProjectHelper.cs" />
     <Compile Include="Common\UserSettingsPersistenceHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />

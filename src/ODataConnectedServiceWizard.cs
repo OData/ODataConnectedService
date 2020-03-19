@@ -2,7 +2,9 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.ViewModels;
 using Microsoft.OData.ConnectedService.Views;
@@ -91,6 +93,16 @@ namespace Microsoft.OData.ConnectedService
                 };
             }
 
+            ObjectSelectionViewModel.PageEntering += (sender, args) =>
+            {
+                if (sender is ObjectSelectionViewModel objectSelectionViewModel)
+                {
+                    var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+                    var operations = EdmHelper.GetOperationImports(model);
+                    ObjectSelectionViewModel.LoadOperationImports(operations);
+                }
+            };
+
             this.Pages.Add(ConfigODataEndpointViewModel);
             this.Pages.Add(ObjectSelectionViewModel);
             this.Pages.Add(AdvancedSettingsViewModel);
@@ -118,13 +130,13 @@ namespace Microsoft.OData.ConnectedService
             ServiceConfiguration serviceConfiguration;
             if (ConfigODataEndpointViewModel.EdmxVersion == Common.Constants.EdmxVersion4)
             {
-                serviceConfiguration = new ServiceConfigurationV4
-                {
-                    IgnoreUnexpectedElementsAndAttributes =
-                        AdvancedSettingsViewModel.IgnoreUnexpectedElementsAndAttributes,
-                    EnableNamingAlias = AdvancedSettingsViewModel.EnableNamingAlias,
-                    IncludeT4File = AdvancedSettingsViewModel.IncludeT4File
-                };
+                var ServiceConfigurationV4 = new ServiceConfigurationV4();
+                ServiceConfigurationV4.ExcludedOperationImports = ObjectSelectionViewModel.ExcludedOperationImportsNames.ToList();
+                ServiceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = AdvancedSettingsViewModel.IgnoreUnexpectedElementsAndAttributes;
+                ServiceConfigurationV4.EnableNamingAlias = AdvancedSettingsViewModel.EnableNamingAlias;
+                ServiceConfigurationV4.IncludeT4File = AdvancedSettingsViewModel.IncludeT4File;
+                ServiceConfigurationV4.OpenGeneratedFilesInIDE = AdvancedSettingsViewModel.OpenGeneratedFilesInIDE;
+                serviceConfiguration = ServiceConfigurationV4;
             }
             else
             {
