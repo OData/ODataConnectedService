@@ -36,6 +36,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             this.UserSettings = userSettings;
         }
 
+        public event EventHandler<EventArgs> PageLeaving;
+
         public override Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
         {
             var wizard = this.Wizard as ODataConnectedServiceWizard;
@@ -45,11 +47,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             {
                 this.MetadataTempPath = GetMetadata(out var version);
                 this.EdmxVersion = version;
-                if (EdmxVersion == Common.Constants.EdmxVersion4)
-                {
-                    wizard.AddObjectSelectionPage();
-                }
-
+                PageLeaving?.Invoke(this, EventArgs.Empty);
                 return base.OnPageLeavingAsync(args);
             }
             catch (Exception e)

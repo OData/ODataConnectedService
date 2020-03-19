@@ -69,6 +69,7 @@
     <Compile Include="TestHelpers\TestConnectedServiceHandlerHelper.cs" />
     <Compile Include="Templates\UniqueIdentifierServiceTests.cs" />
     <Compile Include="Templates\UtilsTests.cs" />
+    <Compile Include="ViewModels\ObjectSelectionViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentAssertions">

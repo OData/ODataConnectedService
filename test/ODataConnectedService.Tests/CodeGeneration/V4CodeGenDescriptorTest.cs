@@ -10,6 +10,7 @@ using Microsoft.OData.ConnectedService.CodeGeneration;
 using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.Templates;
 using Microsoft.OData.ConnectedService.Tests.TestHelpers;
+using System.Collections.Generic;
 
 namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
 {
@@ -30,34 +31,57 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             catch (DirectoryNotFoundException) { }
         }
 
+        public static IEnumerable<object[]> ClientCodeServiceConfigToCodeGeneratorData
+        {
+            get
+            {
+                yield return new ServiceConfigurationV4[]
+                {
+                    new ServiceConfigurationV4()
+                    {
+                        UseDataServiceCollection = true,
+                        IgnoreUnexpectedElementsAndAttributes = true,
+                        EnableNamingAlias = true,
+                        NamespacePrefix = "Prefix",
+                        MakeTypesInternal = true,
+                        ExcludedOperationImports = new List<string>() { "Func1", "Action2" }
+                    }
+                };
+
+                yield return new ServiceConfigurationV4[]
+                {
+                    new ServiceConfigurationV4()
+                    {
+                        UseDataServiceCollection = false,
+                        IgnoreUnexpectedElementsAndAttributes = false,
+                        EnableNamingAlias = false,
+                        NamespacePrefix = null,
+                        MakeTypesInternal = false,
+                        ExcludedOperationImports = null
+                    }
+                };
+            }
+        }
+
         [DataTestMethod]
-        [DataRow(true, true, true, "Prefix", true)]
-        [DataRow(false, false, false, null, false)]
-        public void TestAddGeneratedClientCode_PassesServiceConfigOptionsToCodeGenerator(
-            bool useDSC, bool ignoreUnexpected, bool enableNamingAlias,
-            string namespacePrefix, bool makeTypesInternal)
+        [DynamicData(nameof(ClientCodeServiceConfigToCodeGeneratorData), DynamicDataSourceType.Property)]
+        public void TestAddGeneratedClientCode_PassesServiceConfigOptionsToCodeGenerator(object configObject)
         {
             var handlerHelper = new TestConnectedServiceHandlerHelper();
             var codeGenFactory = new TestODataT4CodeGeneratorFactory();
+            var serviceConfig = configObject as ServiceConfigurationV4;
+            serviceConfig.IncludeT4File = false;
 
-            var serviceConfig = new ServiceConfigurationV4()
-            {
-                UseDataServiceCollection = useDSC,
-                IgnoreUnexpectedElementsAndAttributes = ignoreUnexpected,
-                EnableNamingAlias = enableNamingAlias,
-                NamespacePrefix = namespacePrefix,
-                MakeTypesInternal = makeTypesInternal,
-                IncludeT4File = false
-            };
             var codeGenDescriptor = SetupCodeGenDescriptor(serviceConfig, "TestService", codeGenFactory, handlerHelper);
             codeGenDescriptor.AddGeneratedClientCodeAsync().Wait();
 
             var generator = codeGenFactory.LastCreatedInstance;
-            Assert.AreEqual(useDSC, generator.UseDataServiceCollection);
-            Assert.AreEqual(enableNamingAlias, generator.EnableNamingAlias);
-            Assert.AreEqual(ignoreUnexpected, generator.IgnoreUnexpectedElementsAndAttributes);
-            Assert.AreEqual(makeTypesInternal, generator.MakeTypesInternal);
-            Assert.AreEqual(namespacePrefix, generator.NamespacePrefix);
+            Assert.AreEqual(serviceConfig.UseDataServiceCollection, generator.UseDataServiceCollection);
+            Assert.AreEqual(serviceConfig.EnableNamingAlias, generator.EnableNamingAlias);
+            Assert.AreEqual(serviceConfig.IgnoreUnexpectedElementsAndAttributes, generator.IgnoreUnexpectedElementsAndAttributes);
+            Assert.AreEqual(serviceConfig.MakeTypesInternal, generator.MakeTypesInternal);
+            Assert.AreEqual(serviceConfig.NamespacePrefix, generator.NamespacePrefix);
+            Assert.AreEqual(serviceConfig.ExcludedOperationImports, generator.ExcludedOperationImports);
             Assert.AreEqual(MetadataUri, generator.MetadataDocumentUri);
             Assert.AreEqual(ODataT4CodeGenerator.LanguageOption.CSharp, generator.TargetLanguage);
         }

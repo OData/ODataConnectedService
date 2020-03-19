@@ -41,6 +41,9 @@ namespace Microsoft.OData.ConnectedService
 
             ServiceConfigurationV4 serviceConfig = null;
 
+            ConfigODataEndpointViewModel.PageLeaving += ConfigODataEndpointViewModel_PageLeaving;
+            ObjectSelectionViewModel.PageEntering += ObjectSelectionViewModel_PageEntering;
+
             if (this.Context.IsUpdating)
             {
                 //Since ServiceConfigurationV4 is a derived type of ServiceConfiguration. So we can deserialize a ServiceConfiguration into a ServiceConfigurationV4.
@@ -94,21 +97,6 @@ namespace Microsoft.OData.ConnectedService
                     }
                 };
             }
-
-            ObjectSelectionViewModel.PageEntering += (sender, args) =>
-            {
-                if (sender is ObjectSelectionViewModel objectSelectionViewModel)
-                {
-                    var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
-                    var operations = EdmHelper.GetOperationImports(model);
-                    ObjectSelectionViewModel.LoadOperationImports(operations);
-
-                    if (context.IsUpdating)
-                    {
-                        objectSelectionViewModel.ExcludeOperationImports(serviceConfig?.ExcludedOperationImports ?? Enumerable.Empty<string>());
-                    }
-                }
-            };
 
             this.Pages.Add(ConfigODataEndpointViewModel);
             this.Pages.Add(AdvancedSettingsViewModel);
@@ -174,6 +162,34 @@ namespace Microsoft.OData.ConnectedService
 
             return serviceConfiguration;
         }
+
+        #region "Event Handlers"
+
+        public void ConfigODataEndpointViewModel_PageLeaving(object sender, EventArgs args)
+        {
+            if (ConfigODataEndpointViewModel.EdmxVersion == Constants.EdmxVersion4)
+            {
+                AddObjectSelectionPage();
+            }
+        }
+
+        public void ObjectSelectionViewModel_PageEntering(object sender, EventArgs args)
+        {
+            if (sender is ObjectSelectionViewModel objectSelectionViewModel)
+            {
+                var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+                var operations = EdmHelper.GetOperationImports(model);
+                ObjectSelectionViewModel.LoadOperationImports(operations);
+
+                if (Context.IsUpdating)
+                {
+                    var serviceConfig = Context.GetExtendedDesignerData<ServiceConfigurationV4>();
+                    objectSelectionViewModel.ExcludeOperationImports(serviceConfig?.ExcludedOperationImports ?? Enumerable.Empty<string>());
+                }
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// Cleanup object references
