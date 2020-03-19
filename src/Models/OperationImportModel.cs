@@ -23,5 +23,6 @@ namespace Microsoft.OData.ConnectedService.Models
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
     }
 }

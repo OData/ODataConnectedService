@@ -21,7 +21,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             
         }
 
-        public List<OperationImportModel> OperationImports { get; set; }
+        public IEnumerable<OperationImportModel> OperationImports { get; set; }
 
         public IEnumerable<string> ExcludedOperationImportsNames
         {
@@ -47,7 +47,24 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public void LoadOperationImports(IEnumerable<IEdmOperationImport> operationImports)
         {
-            OperationImports = operationImports.Select(op => new OperationImportModel() { IsSelected = true, Name = op.Name }).ToList();
+            var toLoad = new List<OperationImportModel>();
+            var alreadyAdded = new HashSet<string>();
+            
+            foreach (var operation in operationImports)
+            {
+                if (!alreadyAdded.Contains(operation.Name))
+                {
+                    toLoad.Add(new OperationImportModel()
+                    {
+                        Name = operation.Name,
+                        IsSelected = true
+                    });
+
+                    alreadyAdded.Add(operation.Name);
+                }
+            }
+
+            OperationImports = toLoad.OrderBy(o => o.Name).ToList();
         }
 
         public void ExcludeOperationImports(IEnumerable<string> operationsToExclude)
