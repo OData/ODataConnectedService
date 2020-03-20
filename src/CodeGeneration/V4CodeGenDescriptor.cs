@@ -59,6 +59,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
         {
             string tempFile = Path.GetTempFileName();
             string t4Folder = Path.Combine(this.CurrentAssemblyPath, "Templates");
+            const string CsdlFileName = "Csdl.xml";
 
             using (StreamWriter writer = File.CreateText(tempFile))
             {
@@ -73,11 +74,14 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 text = Regex.Replace(text, "(public const bool IgnoreUnexpectedElementsAndAttributes = )true;", "$1" + this.ServiceConfiguration.IgnoreUnexpectedElementsAndAttributes.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
                 text = Regex.Replace(text, "(public const bool MakeTypesInternal = )false;", "$1" + ServiceConfiguration.MakeTypesInternal.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
                 text = Regex.Replace(text, "(public const string CustomHttpHeaders = )\"\";", "$1@\"" + ServiceConfiguration.CustomHttpHeaders ?? string.Empty + "\";");
+                text = Regex.Replace(text, "(public const string TempFilePath = )\"\";", "$1\"" + CsdlFileName + "\";");
                 await writer.WriteAsync(text);
                 await writer.FlushAsync();
             }
 
             string referenceFolder = GetReferenceFileFolder();
+            string tempMetadataFile = Path.Combine(referenceFolder, CsdlFileName);
+            await this.Context.HandlerHelper.AddFileAsync(tempFile, tempMetadataFile);
             await this.Context.HandlerHelper.AddFileAsync(Path.Combine(t4Folder, "ODataT4CodeGenerator.ttinclude"), Path.Combine(referenceFolder, this.GeneratedFileNamePrefix + ".ttinclude"));
             await this.Context.HandlerHelper.AddFileAsync(Path.Combine(t4Folder, "ODataT4CodeGenFilesManager.ttinclude"), Path.Combine(referenceFolder, "ODataT4CodeGenFilesManager.ttinclude"));
             await this.Context.HandlerHelper.AddFileAsync(tempFile, Path.Combine(referenceFolder, this.GeneratedFileNamePrefix + ".tt"));
