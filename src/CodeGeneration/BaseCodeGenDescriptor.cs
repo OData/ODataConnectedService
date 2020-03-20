@@ -73,16 +73,6 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             return referenceFolderPath;
         }
 
-        protected string GetEdmxFileFolder()
-        {
-            var serviceReferenceFolderName = this.Context.HandlerHelper.GetServiceArtifactsRootFolder();
-
-            var referenceFolderPath = Path.Combine(
-                ProjectHelper.GetProjectFullPath(this.Project));
-
-            return referenceFolderPath;
-        }
-
         internal async Task CheckAndInstallNuGetPackageAsync(string packageSource, string nugetPackage)
         {
             try

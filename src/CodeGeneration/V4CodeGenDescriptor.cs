@@ -106,10 +106,11 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 }
             }
             t4CodeGenerator.CustomHttpHeaders = headers;
-            string tempMetadataFile = Path.Combine(GetEdmxFileFolder(), "Edmx" + ".xml");
-            t4CodeGenerator.TempFilePath = tempMetadataFile;
-
             string tempFile = Path.GetTempFileName();
+            const string CsdlFileName = "Csdl.xml";
+            string tempMetadataFile = Path.Combine(GetReferenceFileFolder(), CsdlFileName);
+            await this.Context.HandlerHelper.AddFileAsync(tempFile, tempMetadataFile);
+            t4CodeGenerator.TempFilePath = tempMetadataFile;
 
             using (StreamWriter writer = File.CreateText(tempFile))
             {
