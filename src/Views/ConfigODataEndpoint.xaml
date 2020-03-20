@@ -38,6 +38,16 @@
             AcceptsReturn="True"
             VerticalScrollBarVisibility="Visible"
             Margin="20, 5, 10, 5"
-            Width="250"/>
+            Width="250">
+            <TextBox.ToolTip>
+                <ToolTip HorizontalAlignment="Center">
+                    <TextBlock>
+                        (Optional) We add Http Headers to our http request as a multiline string e.g <LineBreak/>
+                        HeaderKey1: HeaderValue1<LineBreak/>
+                        HeaderKey2: HeaderValue2<LineBreak/>
+                    </TextBlock>
+                </ToolTip>
+            </TextBox.ToolTip>
+        </TextBox>
     </StackPanel>
 </UserControl>
