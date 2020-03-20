@@ -33,12 +33,29 @@ as the class it is testing, followed by the suffix `Test`.
 Example: for some class `Microsoft.OData.ConnectedService.X.Y` located in `src\X\Y.cs`,
 the test class would be `Microsoft.OData.Tests.ConnectedService.Tests.X.YTest` located in `test\X\YTest.cs`
 
-### Building Commandline 
-The project can also be build using on the commandline by relying on the provided build.cmd
+### Building Command-line 
+The project can also be build using on the command-line by relying on the provided build.cmd
 
 ### FAQ
   **Question**: The extension module is not loaded when debugging in the Visual Studio experimental instance, or it is not listed as part of the "Add Connected Service" options
-  **Workaround**: Disable signing by going to the Project Properties > Signing and disabling both "Sign the assembly" and "Delay sign only" options.
+  **Workaround**: Disable strong name verification for the main and test assemblies. You can do that using the `sn.exe` tool from
+  the Visual Studio Developer Command Prompt. First, build the solution using Visual Studio, then open the developer command
+  prompt with Adminstrator privileges and run the following commands:
+
+  For the main assembly:
+
+  ```
+  sn.exe -Vr path\to\ODataConnectedService\src\bin\Debug\Microsoft.OData.ConnectedService.dll
+  ```
+
+  For the test assembly:
+  ```
+  sn.exe -Vr path\to\ODataConnectedService\test\ODataConnectedService.Tests\bin\Debug\ODataConnectedServiceTests.dll
+  ```
+  Then restart Visual Studio.
+
+  If disabling verification is not an option, then you can disable signing by going to the Project Properties > Signing and disabling both "Sign the assembly" and "Delay sign only" options. Do this for both the main and test projects. Then open the `AssemblyInfo.cs` file
+  under the main project's properties in solution explorer and remove the public key from the `[assembly: InternalsVisibleTo("ODataConnectedService.Tests, PublicKey=...")]` attribute so that it only reads as `[assembly: InternalsVisibleTo("ODataConnectedService.Tests")]`. Remember to re-enable delay-signing and to restore the public key before commiting your changes.
   
   **Question**: In Visual Studio 2017, upon configuring the service endpoint in the OData Connected Services extension and clicking "Finish", I get an error message that says "Value cannot be null.\r\nParameter name: path1".  
   **Workaround**: Download the [Microsoft WCF ToolKit](https://download.microsoft.com/download/1/C/A/1CAA41C7-88B9-42D6-9E11-3C655656DAB1/WcfDataServices.exe) and install it. Then go to the registry and find the following key: `[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft WCF Data Services]`. Create a duplicate of "VS 2010 Tooling" (if this doesn't exist, use "5.6" instead) named "VS 2014 Tooling". Then try again. (Special thanks to [mohsenno1](https://github.com/mohsenno1) for pointing this out.)
