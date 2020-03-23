@@ -62,9 +62,6 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             string t4Folder = Path.Combine(this.CurrentAssemblyPath, "Templates");
 
             string referenceFolder = GetReferenceFileFolder();
-            const string CsdlFileName = "Csdl.xml";
-            string tempMetadataFile = Path.Combine(referenceFolder, CsdlFileName);
-            await this.Context.HandlerHelper.AddFileAsync(tempFile, tempMetadataFile);
 
             // generate .ttinclude
             using (var writer = File.CreateText(tempFile))
@@ -102,13 +99,8 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 text = Regex.Replace(text, "(public const bool EnableNamingAlias = )true;", "$1" + this.ServiceConfiguration.EnableNamingAlias.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
                 text = Regex.Replace(text, "(public const bool IgnoreUnexpectedElementsAndAttributes = )true;", "$1" + this.ServiceConfiguration.IgnoreUnexpectedElementsAndAttributes.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
                 text = Regex.Replace(text, "(public const bool MakeTypesInternal = )false;", "$1" + ServiceConfiguration.MakeTypesInternal.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
-                string customHeaders = "";
-                if(ServiceConfiguration.CustomHttpHeaders != null)
-                {
-                    customHeaders = ServiceConfiguration.CustomHttpHeaders;
-                }
+                string customHeaders = ServiceConfiguration.CustomHttpHeaders ?? "";
                 text = Regex.Replace(text, "(public const string CustomHttpHeaders = )\"\";", "$1@\"" + customHeaders + "\";");
-                text = Regex.Replace(text, "(public const string TempFilePath = )\"\";", "$1\"" + CsdlFileName + "\";");
                 await writer.WriteAsync(text);
                 await writer.FlushAsync();
             }
@@ -146,11 +138,8 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 }
             }
             t4CodeGenerator.CustomHttpHeaders = headers;
+
             string tempFile = Path.GetTempFileName();
-            const string CsdlFileName = "Csdl.xml";
-            string tempMetadataFile = Path.Combine(GetReferenceFileFolder(), CsdlFileName);
-            await this.Context.HandlerHelper.AddFileAsync(tempFile, tempMetadataFile);
-            t4CodeGenerator.TempFilePath = CsdlFileName;
 
             using (StreamWriter writer = File.CreateText(tempFile))
             {
