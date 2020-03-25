@@ -1464,7 +1464,14 @@ public abstract class ODataClientTemplate : TemplateBase
             {
                     if(context.GenerateMultipleFiles) 
                     {
-                        context.MultipleFilesManager.StartNewFile($"{enumType.Name}.cs",false);
+                        if (this.context.TargetLanguage == LanguageOption.VB)
+                        {
+                            context.MultipleFilesManager.StartNewFile($"{enumType.Name}.vb", false);
+                        }
+                        else
+                        {
+                            context.MultipleFilesManager.StartNewFile($"{enumType.Name}.cs", false);
+                        }
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
@@ -1482,7 +1489,14 @@ public abstract class ODataClientTemplate : TemplateBase
                 {
                     if(context.GenerateMultipleFiles) 
                     {
-                        context.MultipleFilesManager.StartNewFile($"{complexType.Name}.cs",false);
+                        if (this.context.TargetLanguage == LanguageOption.VB)
+                        {
+                            context.MultipleFilesManager.StartNewFile($"{complexType.Name}.vb", false);
+                        }
+                        else
+                        {
+                            context.MultipleFilesManager.StartNewFile($"{complexType.Name}.cs", false);
+                        }
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
@@ -1498,7 +1512,14 @@ public abstract class ODataClientTemplate : TemplateBase
                 {
                     if(context.GenerateMultipleFiles) 
                     {
-                        context.MultipleFilesManager.StartNewFile($"{entityType.Name}.cs",false);
+                        if (this.context.TargetLanguage == LanguageOption.VB)
+                        {
+                            context.MultipleFilesManager.StartNewFile($"{entityType.Name}.vb", false);
+                        }
+                        else
+                        {
+                            context.MultipleFilesManager.StartNewFile($"{entityType.Name}.cs", false);
+                        }
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
