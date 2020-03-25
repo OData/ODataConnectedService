@@ -1328,7 +1328,7 @@ public abstract class ODataClientTemplate : TemplateBase
             {
                     if(context.GenerateMultipleFiles) 
                     {
-                        context.MultipleFilesManager.StartNewFile($"{enumType.Name}.cs",false);
+                        context.MultipleFilesManager.StartNewFile($"{enumType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
@@ -1346,7 +1346,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 {
                     if(context.GenerateMultipleFiles) 
                     {
-                        context.MultipleFilesManager.StartNewFile($"{complexType.Name}.cs",false);
+                        context.MultipleFilesManager.StartNewFile($"{complexType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
@@ -1362,7 +1362,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 {
                     if(context.GenerateMultipleFiles) 
                     {
-                        context.MultipleFilesManager.StartNewFile($"{entityType.Name}.cs",false);
+                        context.MultipleFilesManager.StartNewFile($"{entityType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
@@ -3703,15 +3703,15 @@ namespace <#= fullNamespace #>
             if (useTempFile)
             {
 #>
-                [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
-                private const string filePath = @"<#= path #>";
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
+            private const string filePath = @"<#= path #>";
 <#+
             }
             else
             {
 #>
-                [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
-                private const string Edmx = @"<#= escapedEdmxString #>";
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
+            private const string Edmx = @"<#= escapedEdmxString #>";
 <#+
             }
 #>
@@ -3761,13 +3761,13 @@ namespace <#= fullNamespace #>
                 if (useTempFile)
                 {
 #>
-                    global::System.Xml.XmlReader reader = CreateXmlReader();
+                global::System.Xml.XmlReader reader = CreateXmlReader();
 <#+
                 }
                 else
                 {
 #>
-                    global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);
+                global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);
 <#+
                 }
 #>
@@ -3787,7 +3787,7 @@ namespace <#= fullNamespace #>
 	                    throw new global::System.InvalidOperationException(errorMessages.ToString());
                     }
 
-        return edmModel;
+                    return edmModel;
                 }
                 finally
                 {
@@ -4150,7 +4150,7 @@ namespace <#= fullNamespace #>
 <#+
         }
 #>
-        public <#= hideBaseMethod ? this.OverloadsModifier : string.Empty #> <#= isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName) #> <#= functionName #>(<#= parameters #><#= useEntityReference ? ", bool useEntityReference = false" : string.Empty #>)
+        public virtual <#= hideBaseMethod ? this.OverloadsModifier : string.Empty #> <#= isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName) #> <#= functionName #>(<#= parameters #><#= useEntityReference ? ", bool useEntityReference = false" : string.Empty #>)
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);
@@ -4709,7 +4709,7 @@ Namespace <#= fullNamespace #>
 <#+
         }
 #>
-        Public ReadOnly Property <#= entitySetFixedName #>() As Global.Microsoft.OData.Client.DataServiceQuery(Of <#= entitySetElementTypeName #>)
+        Public Overridable ReadOnly Property <#= entitySetFixedName #>() As Global.Microsoft.OData.Client.DataServiceQuery(Of <#= entitySetElementTypeName #>)
             Get
 <#+
         if (!inContext)
@@ -4747,7 +4747,7 @@ Namespace <#= fullNamespace #>
 <#+
         }
 #>
-        Public ReadOnly Property <#= singletonFixedName #>() As <#= singletonElementTypeName #>
+        Public Overridable ReadOnly Property <#= singletonFixedName #>() As <#= singletonElementTypeName #>
             Get
 <#+
         if (!inContext)
@@ -4777,7 +4777,7 @@ Namespace <#= fullNamespace #>
         '''There are no comments for <#= entitySetName #> in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")>  _
-        Public Sub AddTo<#= entitySetName #>(ByVal <#= parameterName #> As <#= typeName #>)
+        Public Overridable Sub AddTo<#= entitySetName #>(ByVal <#= parameterName #> As <#= typeName #>)
             MyBase.AddObject("<#= originalEntitySetName #>", <#= parameterName #>)
         End Sub
 <#+
@@ -5005,7 +5005,7 @@ Namespace <#= fullNamespace #>
 <#+
         }
 #>
-        Public Property <#= fixedPropertyName #>() As <#= propertyType #>
+        Public Overridable Property <#= fixedPropertyName #>() As <#= propertyType #>
             Get
                 Return Me.<#= privatePropertyName #>
             End Get
@@ -5130,7 +5130,7 @@ Namespace <#= fullNamespace #>
 <#+
         }
 #>
-        Public Function <#= functionName #>(<#= parameters #><#= useEntityReference ? ", Optional ByVal useEntityReference As Boolean = False" : string.Empty #>) As Global.Microsoft.OData.Client.DataServiceQuery(Of <#= returnTypeName #>)
+        Public Overridable Function <#= functionName #>(<#= parameters #><#= useEntityReference ? ", Optional ByVal useEntityReference As Boolean = False" : string.Empty #>) As Global.Microsoft.OData.Client.DataServiceQuery(Of <#= returnTypeName #>)
             Return Me.CreateFunctionQuery(Of <#= returnTypeName #>)("", "/<#= originalFunctionName #>", <#= isComposable #> <#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>)
         End Function
 <#+
@@ -5150,7 +5150,7 @@ Namespace <#= fullNamespace #>
 <#+
         }
 #>
-        Public Function <#= functionName #>(<#= parameters #><#= useEntityReference ? ", Optional ByVal useEntityReference As Boolean = False" : string.Empty #>) As <#= isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName) #>
+        Public Overridable Function <#= functionName #>(<#= parameters #><#= useEntityReference ? ", Optional ByVal useEntityReference As Boolean = False" : string.Empty #>) As <#= isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName) #>
             Return <#= isReturnEntity ? "New " + returnTypeNameWithSingleSuffix + "(" : string.Empty #>Me.CreateFunctionQuerySingle(<#= "Of " + returnTypeName #>)("", "/<#= originalFunctionName #>", <#= isComposable #><#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>)<#= isReturnEntity ? ")" : string.Empty #>
         End Function
 <#+
@@ -5170,7 +5170,7 @@ Namespace <#= fullNamespace #>
 <#+
         }
 #>
-        Public <#= hideBaseMethod ? this.OverloadsModifier : string.Empty #>Function <#= functionName #>(<#= parameters #><#= useEntityReference ? ", Optional ByVal useEntityReference As Boolean = False" : string.Empty #>) As Global.Microsoft.OData.Client.DataServiceQuery(Of <#= returnTypeName #>)
+        Public Overridable <#= hideBaseMethod ? this.OverloadsModifier : string.Empty #>Function <#= functionName #>(<#= parameters #><#= useEntityReference ? ", Optional ByVal useEntityReference As Boolean = False" : string.Empty #>) As Global.Microsoft.OData.Client.DataServiceQuery(Of <#= returnTypeName #>)
             Dim requestUri As Global.System.Uri = Nothing
             Context.TryGetUri(Me, requestUri)
             Return Me.Context.CreateFunctionQuery(Of <#= returnTypeName #>)("", String.Join("/", Global.System.Linq.Enumerable.Select(Global.System.Linq.Enumerable.Skip(requestUri.Segments, Me.Context.BaseUri.Segments.Length), Function(s) s.Trim("/"C))) + "/<#= fullNamespace #>.<#= originalFunctionName #>", <#= isComposable #><#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>)
@@ -5192,7 +5192,7 @@ Namespace <#= fullNamespace #>
 <#+
         }
 #>
-        Public <#= hideBaseMethod ? this.OverloadsModifier : string.Empty #>Function <#= functionName #>(<#= parameters #><#= useEntityReference ? ", Optional ByVal useEntityReference As Boolean = False" : string.Empty #>) As <#= isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName) #>
+        Public Overridable <#= hideBaseMethod ? this.OverloadsModifier : string.Empty #>Function <#= functionName #>(<#= parameters #><#= useEntityReference ? ", Optional ByVal useEntityReference As Boolean = False" : string.Empty #>) As <#= isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName) #>
             Dim requestUri As Global.System.Uri = Nothing
             Context.TryGetUri(Me, requestUri)
             Return <#= isReturnEntity ? "New " + returnTypeNameWithSingleSuffix + "(" : string.Empty #>Me.Context.CreateFunctionQuerySingle(<#= "Of " + returnTypeName #>)(String.Join("/", Global.System.Linq.Enumerable.Select(Global.System.Linq.Enumerable.Skip(requestUri.Segments, Me.Context.BaseUri.Segments.Length), Function(s) s.Trim("/"C))), "/<#= fullNamespace #>.<#= originalFunctionName #>", <#= isComposable #><#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>)<#= isReturnEntity ? ")" : string.Empty #>
@@ -5214,7 +5214,7 @@ Namespace <#= fullNamespace #>
 <#+
         }
 #>
-        Public Function <#= actionName #>(<#= parameters #>) As <#= returnTypeName #>
+        Public Overridable Function <#= actionName #>(<#= parameters #>) As <#= returnTypeName #>
             Return New <#= returnTypeName #>(Me, Me.BaseUri.OriginalString.Trim("/"C) + "/<#= originalActionName #>"<#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>)
         End Function
 <#+
@@ -5234,7 +5234,7 @@ Namespace <#= fullNamespace #>
 <#+
         }
 #>
-        Public <#= hideBaseMethod ? this.OverloadsModifier : string.Empty #>Function <#= actionName #>(<#= parameters #>) As <#= returnTypeName #>
+        Public Overridable <#= hideBaseMethod ? this.OverloadsModifier : string.Empty #>Function <#= actionName #>(<#= parameters #>) As <#= returnTypeName #>
             Dim resource As Global.Microsoft.OData.Client.EntityDescriptor = Context.EntityTracker.TryGetEntityDescriptor(Me)
             If resource Is Nothing Then
                 Throw New Global.System.Exception("cannot find entity")
@@ -5271,7 +5271,7 @@ Namespace <#= fullNamespace #>
         ''' <param name="source">source entity set</param>
         ''' <param name="keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of <#= entityTypeName #>), ByVal keys As Global.System.Collections.Generic.Dictionary(Of String, Object)) As <#= returnTypeName #>
+        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of <#= entityTypeName #>), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As <#= returnTypeName #>
             Return New <#= returnTypeName #>(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
         End Function
         ''' <summary>
@@ -5289,7 +5289,7 @@ Namespace <#= fullNamespace #>
         <Global.System.Runtime.CompilerServices.Extension()>
         Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of <#= entityTypeName #>),
             <#= keyParameters #>) As <#= returnTypeName #>
-            Dim keys As Global.System.Collections.Generic.Dictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 <#= keyDictionaryItems #>
             }

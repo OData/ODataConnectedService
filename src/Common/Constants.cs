@@ -38,16 +38,14 @@ namespace Microsoft.OData.ConnectedService.Common
         public const string DefaultReferenceFileName = "Reference";
         public const string DefaultServiceName = "OData Service";
 
-        public static string[] V3NuGetPackages = new string[]
-        {
+        public static string[] V3NuGetPackages = {
             V3ClientNuGetPackage,
             V3ODataNuGetPackage,
             V3EdmNuGetPackage,
             V3SpatialNuGetPackage
         };
 
-        public static string[] V4NuGetPackages = new string[]
-        {
+        public static string[] V4NuGetPackages = {
             V4ClientNuGetPackage,
             V4ODataNuGetPackage,
             V4EdmNuGetPackage,
@@ -62,12 +60,6 @@ namespace Microsoft.OData.ConnectedService.Common
             { EdmxVersion4Namespace, EdmxVersion4}
         };
 
-        public static Dictionary<string, Version> SupportedEdmxNamespaces
-        {
-            get
-            {
-                return supportedEdmxNamespaces;
-            }
-        }
+        public static Dictionary<string, Version> SupportedEdmxNamespaces => supportedEdmxNamespaces;
     }
 }

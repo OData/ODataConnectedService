@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 2/19/2016 10:56:48 AM
+// Generation date: 18.03.2020 16:11:25
 namespace Namespace1
 {
     /// <summary>
@@ -58,6 +58,7 @@ namespace Namespace1
         {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
             private static global::Microsoft.OData.Edm.IEdmModel ParsedModel = LoadModelFromString();
+
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
             private const string Edmx = @"<edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
   <edmx:DataServices>
@@ -95,6 +96,7 @@ namespace Namespace1
     </Schema>
   </edmx:DataServices>
 </edmx:Edmx>";
+
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
             public static global::Microsoft.OData.Edm.IEdmModel GetInstance()
             {
@@ -111,14 +113,13 @@ namespace Namespace1
 
                     if (!global::Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, false, out edmModel, out errors))
                     {
-                        global::System.Text.StringBuilder errorMessages = new System.Text.StringBuilder();
-                        foreach (var error in errors)
-                        {
-                            errorMessages.Append(error.ErrorMessage);
-                            errorMessages.Append("; ");
-                        }
-
-                        throw new global::System.InvalidOperationException(errorMessages.ToString());
+	                    global::System.Text.StringBuilder errorMessages = new System.Text.StringBuilder();
+	                    foreach (var error in errors)
+	                    {
+		                    errorMessages.Append(error.ErrorMessage);
+		                    errorMessages.Append("; ");
+	                    }
+	                    throw new global::System.InvalidOperationException(errorMessages.ToString());
                     }
 
                     return edmModel;
@@ -133,6 +134,7 @@ namespace Namespace1
             {
                 return global::System.Xml.XmlReader.Create(new global::System.IO.StringReader(edmxToParse));
             }
+
         }
         /// <summary>
         /// There are no comments for @short in the schema.
@@ -266,7 +268,7 @@ namespace Namespace1
         /// <summary>
         /// There are no comments for @const in the schema.
         /// </summary>
-        public  global::Namespace1.eventSingle @const()
+        public virtual  global::Namespace1.eventSingle @const()
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);

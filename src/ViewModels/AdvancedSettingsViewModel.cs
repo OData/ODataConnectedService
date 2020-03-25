@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.Views;
 using Microsoft.VisualStudio.ConnectedServices;
 
@@ -21,8 +22,11 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public bool OpenGeneratedFilesInIDE { get; set; }
         public bool GenerateMultipleFiles { get; set; }
 
-        public AdvancedSettingsViewModel() : base()
+        public UserSettings UserSettings { get; }
+
+        public AdvancedSettingsViewModel(UserSettings userSettings) : base()
         {
+            this.UserSettings = userSettings;
             this.Title = "Settings";
             this.Description = "Advanced settings for generating client proxy";
             this.Legend = "Settings";
@@ -38,10 +42,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             this.View = new AdvancedSettings();
             this.ResetDataContext();
             this.View.DataContext = this;
-            if (PageEntering != null)
-            {
-                this.PageEntering(this, EventArgs.Empty);
-            }
+            PageEntering?.Invoke(this, EventArgs.Empty);
         }
 
         public override Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)

@@ -44,17 +44,11 @@ namespace Microsoft.OData.ConnectedService.Common
                         }
                         finally
                         {
-                            if (stream != null)
-                            {
-                                stream.Dispose();
-                            }
+                            stream?.Dispose();
                         }
                     }
 
-                    if (onSaved != null)
-                    {
-                        onSaved();
-                    }
+                    onSaved?.Invoke();
                 },
                 logger,
                 "Failed loading the {0} user settings",
@@ -99,10 +93,7 @@ namespace Microsoft.OData.ConnectedService.Common
                             }
                             finally
                             {
-                                if (stream != null)
-                                {
-                                    stream.Dispose();
-                                }
+                                stream?.Dispose();
                             }
 
                             if (onLoaded != null && result != null)

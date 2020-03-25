@@ -4,28 +4,29 @@
 <UserControl x:Class="Microsoft.OData.ConnectedService.Views.AdvancedSettings"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:Microsoft.OData.ConnectedService.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewModels:AdvancedSettingsViewModel}"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="500">
     <StackPanel>
-        <StackPanel x:Name="SettingsPanel" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="125">
+        <StackPanel x:Name="SettingsPanel" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="175">
             <TextBlock x:Name="ReferenceFileNameLabel" Text="Enter the file name (without extension):"
                            HorizontalAlignment="Left" Margin="0, 5, 0, 0"/>
             <TextBox x:Name="ReferenceFileName" Text="{Binding GeneratedFileName}"
                          HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="250" Margin="20, 5, 0, 0"/>
-
-            <TextBlock x:Name="Label" TextWrapping="WrapWithOverflow" Margin="0, 20, 40, 0">
-                You can generate the client proxy based on the default settings, or you can click following link for further configuration.
-            </TextBlock>
-            <TextBlock x:Name="TextBlock" TextWrapping="Wrap" Margin="0,5" >
-            <Hyperlink Name="settings" Click="settings_Click">AdvancedSettings</Hyperlink>
-            </TextBlock>
+            <StackPanel x:Name="AdvancedSettingsHyperLinkPanel">
+                <TextBlock x:Name="Label" TextWrapping="WrapWithOverflow" Margin="0, 20, 40, 0">
+                    You can generate the client proxy based on the default settings, or you can click following link for further configuration.
+                </TextBlock>
+                <TextBlock x:Name="TextBlock" TextWrapping="Wrap" Margin="0,5" >
+                    <Hyperlink Name="settings" Click="settings_Click">AdvancedSettings</Hyperlink>
+                </TextBlock>
+            </StackPanel>
         </StackPanel>
         <StackPanel x:Name="AdvancedSettingsPanel">
-            <StackPanel HorizontalAlignment="Left" Margin="10, 5, 0, 0" VerticalAlignment="Top">
+            <StackPanel HorizontalAlignment="Left" Margin="10, 0, 0, 0" VerticalAlignment="Top">
                 <CheckBox x:Name="UseNamespacePrefix" IsChecked="{Binding UseNamespacePrefix}"
                           HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,5">
                     <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">

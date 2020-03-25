@@ -1464,7 +1464,7 @@ public abstract class ODataClientTemplate : TemplateBase
             {
                     if(context.GenerateMultipleFiles) 
                     {
-                        context.MultipleFilesManager.StartNewFile($"{enumType.Name}.cs",false);
+                        context.MultipleFilesManager.StartNewFile($"{enumType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}", false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
@@ -1482,7 +1482,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 {
                     if(context.GenerateMultipleFiles) 
                     {
-                        context.MultipleFilesManager.StartNewFile($"{complexType.Name}.cs",false);
+                        context.MultipleFilesManager.StartNewFile($"{complexType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}", false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
@@ -1498,7 +1498,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 {
                     if(context.GenerateMultipleFiles) 
                     {
-                        context.MultipleFilesManager.StartNewFile($"{entityType.Name}.cs",false);
+                        context.MultipleFilesManager.StartNewFile($"{entityType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}", false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
@@ -4073,12 +4073,12 @@ this.Write("\")]\r\n            private static global::Microsoft.OData.Edm.IEdmM
             if (useTempFile)
             {
 
-this.Write("                [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsof" +
+this.Write("            [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsof" +
         "t.OData.Client.Design.T4\", \"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
-this.Write("\")]\r\n                private const string filePath = @\"");
+this.Write("\")]\r\n            private const string filePath = @\"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(path));
 
@@ -4089,12 +4089,12 @@ this.Write("\";\r\n");
             else
             {
 
-this.Write("                [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsof" +
+this.Write("            [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsof" +
         "t.OData.Client.Design.T4\", \"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
-this.Write("\")]\r\n                private const string Edmx = @\"");
+this.Write("\")]\r\n            private const string Edmx = @\"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(escapedEdmxString));
 
@@ -4167,14 +4167,14 @@ this.Write("\")]\r\n            private static global::Microsoft.OData.Edm.IEdmM
                 if (useTempFile)
                 {
 
-this.Write("                    global::System.Xml.XmlReader reader = CreateXmlReader();\r\n");
+this.Write("                global::System.Xml.XmlReader reader = CreateXmlReader();\r\n");
 
 
                 }
                 else
                 {
 
-this.Write("                    global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);\r" +
+this.Write("                global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);\r" +
         "\n");
 
 
@@ -4200,7 +4200,7 @@ this.Write(@", out edmModel, out errors))
 	                    throw new global::System.InvalidOperationException(errorMessages.ToString());
                     }
 
-        return edmModel;
+                    return edmModel;
                 }
                 finally
                 {
@@ -4909,7 +4909,7 @@ this.Write("\")]\r\n");
 
         }
 
-this.Write("        public ");
+this.Write("        public virtual ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(hideBaseMethod ? this.OverloadsModifier : string.Empty));
 
@@ -5911,7 +5911,7 @@ this.Write("\")>  _\r\n");
 
         }
 
-this.Write("        Public ReadOnly Property ");
+this.Write("        Public Overridable ReadOnly Property ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(entitySetFixedName));
 
@@ -6001,7 +6001,7 @@ this.Write("\")>  _\r\n");
 
         }
 
-this.Write("        Public ReadOnly Property ");
+this.Write("        Public Overridable ReadOnly Property ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(singletonFixedName));
 
@@ -6076,7 +6076,7 @@ this.Write(" in the schema.\r\n        \'\'\'</summary>\r\n        <Global.Syste
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
-this.Write("\")>  _\r\n        Public Sub AddTo");
+this.Write("\")>  _\r\n        Public Overridable Sub AddTo");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(entitySetName));
 
@@ -6514,7 +6514,7 @@ this.Write("\")>  _\r\n");
 
         }
 
-this.Write("        Public Property ");
+this.Write("        Public Overridable Property ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(fixedPropertyName));
 
@@ -6734,7 +6734,7 @@ this.Write("\")>  _\r\n");
 
         }
 
-this.Write("        Public Function ");
+this.Write("        Public Overridable Function ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(functionName));
 
@@ -6791,7 +6791,7 @@ this.Write("\")>  _\r\n");
 
         }
 
-this.Write("        Public Function ");
+this.Write("        Public Overridable Function ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(functionName));
 
@@ -6854,7 +6854,7 @@ this.Write("\")>  _\r\n");
 
         }
 
-this.Write("        Public ");
+this.Write("        Public Overridable ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(hideBaseMethod ? this.OverloadsModifier : string.Empty));
 
@@ -6921,7 +6921,7 @@ this.Write("\")>  _\r\n");
 
         }
 
-this.Write("        Public ");
+this.Write("        Public Overridable ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(hideBaseMethod ? this.OverloadsModifier : string.Empty));
 
@@ -6995,7 +6995,7 @@ this.Write("\")>  _\r\n");
 
         }
 
-this.Write("        Public Function ");
+this.Write("        Public Overridable Function ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(actionName));
 
@@ -7046,7 +7046,7 @@ this.Write("\")>  _\r\n");
 
         }
 
-this.Write("        Public ");
+this.Write("        Public Overridable ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(hideBaseMethod ? this.OverloadsModifier : string.Empty));
 
@@ -7130,7 +7130,7 @@ this.Write(@" specified by key from an entity set
 
 this.Write(this.ToStringHelper.ToStringWithCulture(entityTypeName));
 
-this.Write("), ByVal keys As Global.System.Collections.Generic.Dictionary(Of String, Object))" +
+this.Write("), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object))" +
         " As ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(returnTypeName));
@@ -7182,7 +7182,7 @@ this.Write(") As ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(returnTypeName));
 
-this.Write("\r\n            Dim keys As Global.System.Collections.Generic.Dictionary(Of String," +
+this.Write("\r\n            Dim keys As Global.System.Collections.Generic.IDictionary(Of String," +
         " Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)()" +
         " From\r\n            {\r\n                ");
 

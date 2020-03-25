@@ -57,9 +57,6 @@ The project can also be build using on the command-line by relying on the provid
   If disabling verification is not an option, then you can disable signing by going to the Project Properties > Signing and disabling both "Sign the assembly" and "Delay sign only" options. Do this for both the main and test projects. Then open the `AssemblyInfo.cs` file
   under the main project's properties in solution explorer and remove the public key from the `[assembly: InternalsVisibleTo("ODataConnectedService.Tests, PublicKey=...")]` attribute so that it only reads as `[assembly: InternalsVisibleTo("ODataConnectedService.Tests")]`. Remember to re-enable delay-signing and to restore the public key before commiting your changes.
   
-  **Question**: In Visual Studio 2017, upon configuring the service endpoint in the OData Connected Services extension and clicking "Finish", I get an error message that says "Value cannot be null.\r\nParameter name: path1".  
-  **Workaround**: Download the [Microsoft WCF ToolKit](https://download.microsoft.com/download/1/C/A/1CAA41C7-88B9-42D6-9E11-3C655656DAB1/WcfDataServices.exe) and install it. Then go to the registry and find the following key: `[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft WCF Data Services]`. Create a duplicate of "VS 2010 Tooling" (if this doesn't exist, use "5.6" instead) named "VS 2014 Tooling". Then try again. (Special thanks to [mohsenno1](https://github.com/mohsenno1) for pointing this out.)
-  
   **Question**: In Visual Studio 2017, upon configuring the service endpoint in the OData Connected Services extension and clicking "Finish", I get an error message that says "Cannot access".  
   **Workaround**: Most reported issues for this error are related to authentication-based endpoints. This extension does not currently support authentication. To work around, download the metadata as a text file from the endpoint and then point the OData Connected Services URI to the downloaded file.
 

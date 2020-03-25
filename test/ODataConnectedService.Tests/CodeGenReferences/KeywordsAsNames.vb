@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 2/19/2016 10:59:52 AM
+'Generation date: 18.03.2020 15:27:13
 Namespace Namespace1
     '''<summary>
     '''There are no comments for New in the schema.
@@ -35,7 +35,7 @@ Namespace Namespace1
         '''There are no comments for double in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public ReadOnly Property [double]() As Global.Microsoft.OData.Client.DataServiceQuery(Of [event])
+        Public Overridable ReadOnly Property [double]() As Global.Microsoft.OData.Client.DataServiceQuery(Of [event])
             Get
                 If (Me._double Is Nothing) Then
                     Me._double = MyBase.CreateQuery(Of [event])("double")
@@ -49,7 +49,7 @@ Namespace Namespace1
         '''There are no comments for double in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Sub AddTodouble(ByVal [event] As [event])
+        Public Overridable Sub AddTodouble(ByVal [event] As [event])
             MyBase.AddObject("double", [event])
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -114,13 +114,13 @@ Namespace Namespace1
         ''' <summary>
         ''' There are no comments for [short] in the schema.
         ''' </summary>
-        Public Function [short](p0 As Namespace1.[event], Optional ByVal useEntityReference As Boolean = False) As Namespace1.eventSingle
+        Public Overridable Function [short](p0 As Namespace1.[event], Optional ByVal useEntityReference As Boolean = False) As Namespace1.eventSingle
             Return New Namespace1.eventSingle(Me.CreateFunctionQuerySingle(Of Namespace1.[event])("", "/short", False, New Global.Microsoft.OData.Client.UriEntityOperationParameter("p0", p0, useEntityReference)))
         End Function
         ''' <summary>
         ''' There are no comments for [enum] in the schema.
         ''' </summary>
-        Public Function [enum](p0 As Namespace1.[event]) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Namespace1.[event])
+        Public Overridable Function [enum](p0 As Namespace1.[event]) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Namespace1.[event])
             Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Namespace1.[event])(Me, Me.BaseUri.OriginalString.Trim("/"C) + "/enum", New Global.Microsoft.OData.Client.BodyOperationParameter("p0", p0))
         End Function
     End Class
@@ -153,7 +153,7 @@ Namespace Namespace1
         '''There are no comments for event in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public ReadOnly Property [event]() As Namespace1.eventSingle
+        Public Overridable ReadOnly Property [event]() As Namespace1.eventSingle
             Get
                 If Not Me.IsComposable Then
                     Throw New Global.System.NotSupportedException("The previous function is not composable.")
@@ -195,7 +195,7 @@ Namespace Namespace1
         '''There are no comments for Property string in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property [string]() As String
+        Public Overridable Property [string]() As String
             Get
                 Return Me._string
             End Get
@@ -215,7 +215,7 @@ Namespace Namespace1
         '''There are no comments for Property event in the schema.
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Property [event]() As Namespace1.[event]
+        Public Overridable Property [event]() As Namespace1.[event]
             Get
                 Return Me._event
             End Get
@@ -234,7 +234,7 @@ Namespace Namespace1
         ''' <summary>
         ''' There are no comments for [const] in the schema.
         ''' </summary>
-        Public Function [const]() As Namespace1.eventSingle
+        Public Overridable Function [const]() As Namespace1.eventSingle
             Dim requestUri As Global.System.Uri = Nothing
             Context.TryGetUri(Me, requestUri)
             Return New Namespace1.eventSingle(Me.Context.CreateFunctionQuerySingle(Of Namespace1.[event])(String.Join("/", Global.System.Linq.Enumerable.Select(Global.System.Linq.Enumerable.Skip(requestUri.Segments, Me.Context.BaseUri.Segments.Length), Function(s) s.Trim("/"C))), "/Namespace1.const", False))
@@ -242,7 +242,7 @@ Namespace Namespace1
         ''' <summary>
         ''' There are no comments for [as] in the schema.
         ''' </summary>
-        Public Function [as]() As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Namespace1.[event])
+        Public Overridable Function [as]() As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Namespace1.[event])
             Dim resource As Global.Microsoft.OData.Client.EntityDescriptor = Context.EntityTracker.TryGetEntityDescriptor(Me)
             If resource Is Nothing Then
                 Throw New Global.System.Exception("cannot find entity")
@@ -261,7 +261,7 @@ Namespace Namespace1
         ''' <param name="source">source entity set</param>
         ''' <param name="keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Namespace1.[event]), ByVal keys As Global.System.Collections.Generic.Dictionary(Of String, Object)) As Namespace1.eventSingle
+        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Namespace1.[event]), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Namespace1.eventSingle
             Return New Namespace1.eventSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
         End Function
         ''' <summary>
@@ -272,7 +272,7 @@ Namespace Namespace1
         <Global.System.Runtime.CompilerServices.Extension()>
         Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Namespace1.[event]),
             [string] As String) As Namespace1.eventSingle
-            Dim keys As Global.System.Collections.Generic.Dictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "string", [string] }
             }

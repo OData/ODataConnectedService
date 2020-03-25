@@ -87,11 +87,11 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             }
         }
 
-        static V4CodeGenDescriptor SetupCodeGenDescriptor(ServiceConfiguration serviceConfig, string serviceName, IODataT4CodeGeneratorFactory codeGenFactory, TestConnectedServiceHandlerHelper handlerHelper)
+        static V4CodeGenDescriptor SetupCodeGenDescriptor(ServiceConfiguration serviceConfig, string serviceName, IODataT4CodeGeneratorFactory codeGenFactory, TestConnectedServiceHandlerHelper handlerHelper, ODataT4CodeGenerator.LanguageOption targetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp)
         {
             var referenceFolderPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName);
             Directory.CreateDirectory(referenceFolderPath);
-            Project project = CreateTestProject(TestProjectRootPath);
+            Project project = CreateTestProject(TestProjectRootPath, targetLanguage);
             var serviceInstance = new ODataConnectedServiceInstance()
             {
                 ServiceConfig = serviceConfig,
@@ -103,7 +103,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             return new TestV4CodeGenDescriptor(MetadataUri, context, project, codeGenFactory);
         }
 
-        static Project CreateTestProject(string projectPath)
+        static Project CreateTestProject(string projectPath, ODataT4CodeGenerator.LanguageOption targetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp)
         {
             var fullPathPropertyMock = new Mock<Property>();
             fullPathPropertyMock.SetupGet(p => p.Value).Returns(projectPath);
@@ -113,6 +113,19 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             var projectMock = new Mock<Project>();
             projectMock.SetupGet(p => p.Properties)
                 .Returns(projectPropertiesMock.Object);
+            var projectCodeModelMock = new Mock<CodeModel>();
+            if (targetLanguage == ODataT4CodeGenerator.LanguageOption.CSharp)
+            {
+                projectCodeModelMock.Setup(p => p.Language)
+                    .Returns("{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}"); // for C# = EnvDTE.CodeModelLanguageConstants.vsCMLanguageCSharp
+            }
+            else
+            {
+                projectCodeModelMock.Setup(p => p.Language)
+                    .Returns("{B5E9BD33-6D3E-4B5D-925E-8A43B79820B4}"); // for VB = EnvDTE.CodeModelLanguageConstants.vsCMLanguageVB
+            }
+            projectMock.SetupGet(p => p.CodeModel)
+                .Returns(projectCodeModelMock.Object);
             return projectMock.Object;
         }
     }
