@@ -149,7 +149,6 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                     Credentials = CredentialCache.DefaultNetworkCredentials
 
                 };
-                PermissionSet permissionSet = new PermissionSet(System.Security.Permissions.PermissionState.Unrestricted);
 
                 metadataStream = (Stream)xmlUrlResolver.GetEntity(metadataUri, null, typeof(Stream));
             }
@@ -157,7 +156,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             string workFile = Path.GetTempFileName();
 
             try
-            {   using(metadataStream)
+            {   
                 using (XmlReader reader = XmlReader.Create(metadataStream))
                 {
                     using (XmlWriter writer = XmlWriter.Create(workFile))
@@ -181,6 +180,10 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             catch (WebException e)
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "Cannot access {0}", this.Endpoint), e);
+            }
+            finally
+            {
+                metadataStream?.Dispose();
             }
         }
     }
