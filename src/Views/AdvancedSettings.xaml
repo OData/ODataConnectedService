@@ -21,7 +21,7 @@
                     You can generate the client proxy based on the default settings, or you can click following link for further configuration.
                 </TextBlock>
                 <TextBlock x:Name="TextBlock" TextWrapping="Wrap" Margin="0,5" >
-                    <Hyperlink Name="settings" Click="settings_Click">AdvancedSettings</Hyperlink>
+                    <Hyperlink Name="settings" Click="settings_Click">Advanced Settings</Hyperlink>
                 </TextBlock>
             </StackPanel>
         </StackPanel>

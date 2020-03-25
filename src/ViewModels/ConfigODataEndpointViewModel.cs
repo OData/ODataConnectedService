@@ -36,13 +36,18 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             this.UserSettings = userSettings;
         }
 
+        public event EventHandler<EventArgs> PageLeaving;
+
         public override Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
         {
-            UserSettings.AddToTopOfMruList(((ODataConnectedServiceWizard)this.Wizard).UserSettings.MruEndpoints, this.Endpoint);
+            var wizard = this.Wizard as ODataConnectedServiceWizard;
+            UserSettings.AddToTopOfMruList(wizard.UserSettings.MruEndpoints, this.Endpoint);
+
             try
             {
                 this.MetadataTempPath = GetMetadata(out var version);
                 this.EdmxVersion = version;
+                PageLeaving?.Invoke(this, EventArgs.Empty);
                 return base.OnPageLeavingAsync(args);
             }
             catch (Exception e)

@@ -2,7 +2,9 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.ViewModels;
 using Microsoft.OData.ConnectedService.Views;
@@ -15,6 +17,8 @@ namespace Microsoft.OData.ConnectedService
         private ODataConnectedServiceInstance serviceInstance;
 
         public ConfigODataEndpointViewModel ConfigODataEndpointViewModel { get; set; }
+
+        public OperationImportsViewModel OperationImportsViewModel { get; set; }
 
         public AdvancedSettingsViewModel AdvancedSettingsViewModel { get; set; }
 
@@ -33,11 +37,16 @@ namespace Microsoft.OData.ConnectedService
 
             ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(this.UserSettings);
             AdvancedSettingsViewModel = new AdvancedSettingsViewModel(this.UserSettings);
+            OperationImportsViewModel = new OperationImportsViewModel();
+
+            ServiceConfigurationV4 serviceConfig = null;
+
+            OperationImportsViewModel.PageEntering += ObjectSelectionViewModel_PageEntering;
 
             if (this.Context.IsUpdating)
             {
                 //Since ServiceConfigurationV4 is a derived type of ServiceConfiguration. So we can deserialize a ServiceConfiguration into a ServiceConfigurationV4.
-                ServiceConfigurationV4 serviceConfig = this.Context.GetExtendedDesignerData<ServiceConfigurationV4>();
+                serviceConfig = this.Context.GetExtendedDesignerData<ServiceConfigurationV4>();
                 ConfigODataEndpointViewModel.Endpoint = serviceConfig.Endpoint;
                 ConfigODataEndpointViewModel.EdmxVersion = serviceConfig.EdmxVersion;
                 ConfigODataEndpointViewModel.ServiceName = serviceConfig.ServiceName;
@@ -89,6 +98,7 @@ namespace Microsoft.OData.ConnectedService
             }
 
             this.Pages.Add(ConfigODataEndpointViewModel);
+            this.Pages.Add(OperationImportsViewModel);
             this.Pages.Add(AdvancedSettingsViewModel);
             this.IsFinishEnabled = true;
         }
@@ -114,13 +124,13 @@ namespace Microsoft.OData.ConnectedService
             ServiceConfiguration serviceConfiguration;
             if (ConfigODataEndpointViewModel.EdmxVersion == Common.Constants.EdmxVersion4)
             {
-                serviceConfiguration = new ServiceConfigurationV4
-                {
-                    IgnoreUnexpectedElementsAndAttributes =
-                        AdvancedSettingsViewModel.IgnoreUnexpectedElementsAndAttributes,
-                    EnableNamingAlias = AdvancedSettingsViewModel.EnableNamingAlias,
-                    IncludeT4File = AdvancedSettingsViewModel.IncludeT4File
-                };
+                var ServiceConfigurationV4 = new ServiceConfigurationV4();
+                ServiceConfigurationV4.ExcludedOperationImports = OperationImportsViewModel.ExcludedOperationImportsNames.ToList();
+                ServiceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = AdvancedSettingsViewModel.IgnoreUnexpectedElementsAndAttributes;
+                ServiceConfigurationV4.EnableNamingAlias = AdvancedSettingsViewModel.EnableNamingAlias;
+                ServiceConfigurationV4.IncludeT4File = AdvancedSettingsViewModel.IncludeT4File;
+                ServiceConfigurationV4.OpenGeneratedFilesInIDE = AdvancedSettingsViewModel.OpenGeneratedFilesInIDE;
+                serviceConfiguration = ServiceConfigurationV4;
             }
             else
             {
@@ -145,6 +155,32 @@ namespace Microsoft.OData.ConnectedService
             return serviceConfiguration;
         }
 
+        #region "Event Handlers"
+
+        public void ObjectSelectionViewModel_PageEntering(object sender, EventArgs args)
+        {
+            if (sender is OperationImportsViewModel objectSelectionViewModel)
+            {
+                if (ConfigODataEndpointViewModel.EdmxVersion != Constants.EdmxVersion4)
+                {
+                    objectSelectionViewModel.View.IsEnabled = false;
+                    objectSelectionViewModel.IsSupportedODataVersion = false;
+                    return;
+                }
+                var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+                var operations = EdmHelper.GetOperationImports(model);
+                OperationImportsViewModel.LoadOperationImports(operations);
+
+                if (Context.IsUpdating)
+                {
+                    var serviceConfig = Context.GetExtendedDesignerData<ServiceConfigurationV4>();
+                    objectSelectionViewModel.ExcludeOperationImports(serviceConfig?.ExcludedOperationImports ?? Enumerable.Empty<string>());
+                }
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// Cleanup object references
         /// </summary>
@@ -159,6 +195,12 @@ namespace Microsoft.OData.ConnectedService
                     {
                         this.AdvancedSettingsViewModel.Dispose();
                         this.AdvancedSettingsViewModel = null;
+                    }
+
+                    if (this.OperationImportsViewModel != null)
+                    {
+                        this.OperationImportsViewModel.Dispose();
+                        OperationImportsViewModel = null;
                     }
 
                     if (this.ConfigODataEndpointViewModel != null)

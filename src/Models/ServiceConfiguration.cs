@@ -2,6 +2,7 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 
 namespace Microsoft.OData.ConnectedService.Models
 {
@@ -25,5 +26,6 @@ namespace Microsoft.OData.ConnectedService.Models
         public bool EnableNamingAlias { get; set; }
         public bool IgnoreUnexpectedElementsAndAttributes { get; set; }
         public bool IncludeT4File { get; set; }
+        public List<string> ExcludedOperationImports;
     }
 }

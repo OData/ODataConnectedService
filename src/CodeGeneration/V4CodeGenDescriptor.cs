@@ -126,6 +126,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             t4CodeGenerator.NamespacePrefix = this.ServiceConfiguration.NamespacePrefix;
             t4CodeGenerator.MakeTypesInternal = ServiceConfiguration.MakeTypesInternal;
             t4CodeGenerator.GenerateMultipleFiles = ServiceConfiguration.GenerateMultipleFiles;
+            t4CodeGenerator.ExcludedOperationImports = ServiceConfiguration.ExcludedOperationImports;
             var headers = new List<string>();
             if (this.ServiceConfiguration.CustomHttpHeaders !=null)
             {

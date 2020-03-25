@@ -20,7 +20,7 @@ namespace Microsoft.OData.ConnectedService.Models
         [DataMember]
         public ObservableCollection<string> MruEndpoints { get; private set; }
 
-        private UserSettings()
+        public UserSettings()
         {
             this.MruEndpoints = new ObservableCollection<string>();
         }
