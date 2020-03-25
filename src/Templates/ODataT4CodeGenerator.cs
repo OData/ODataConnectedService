@@ -1319,7 +1319,7 @@ public class CodeGenerationContext
                     }
                 }
 
-                if(proxy!=null)
+                if(proxy != null)
                 {
                     webRequest.Proxy= proxy;
                 }

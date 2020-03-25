@@ -37,7 +37,7 @@ namespace ODataConnectedService.Tests
             /// <summary>
             /// Gets or Sets the func for getting the referenced model's stream.
             /// </summary>
-            public Func<Uri,WebProxy,IList<string>, XmlReader> GetReferencedModelReaderFunc { get; set; }
+            public Func<Uri, WebProxy, IList<string>, XmlReader> GetReferencedModelReaderFunc { get; set; }
 
             /// <summary>
             /// Dictionary of expected CSharp/VB code generation results.

@@ -116,7 +116,6 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
         [TestMethod]
         public void Test_GeneratesAndSavesCodeFileWithProxy()
         {
-            // @todo add mock Httpcreator and work with it to create the files
 
             var serviceName = "MyService";
             ServiceConfiguration serviceConfig = new ServiceConfigurationV4()
