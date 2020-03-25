@@ -88,7 +88,22 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             this.ApplyParametersFromConfigurationClass();
         }
 
-        context = new CodeGenerationContext(new Uri(this.MetadataDocumentUri, UriKind.Absolute), this.NamespacePrefix, this.CustomHttpHeaders)
+        WebProxy proxy = null;
+        if(this.IncludeWebProxy)
+        {
+            proxy = new WebProxy(this.WebProxyHost,true);
+
+            if(this.IncludeWebProxyNetworkCredentials)
+            {
+               NetworkCredential  credentials = new NetworkCredential(this.WebProxyNetworkCredentialsUsername,
+               this.WebProxyNetworkCredentialsPassword,
+               this.WebProxyNetworkCredentialsDomain);
+               proxy.Credentials = credentials;
+            }
+
+        }
+
+        context = new CodeGenerationContext(new Uri(this.MetadataDocumentUri, UriKind.Absolute), this.NamespacePrefix, proxy, this.CustomHttpHeaders)
         {
             UseDataServiceCollection = this.UseDataServiceCollection,
             TargetLanguage = this.TargetLanguage,
@@ -191,6 +206,7 @@ public static class Configuration
 	
 	// Comma-separated list of the names of operation imports to exclude from the generated code
 	public const string ExcludedOperationImports = "";
+
 }
 
 public static class Customization
@@ -293,7 +309,7 @@ private string metadataDocumentUri;
 /// <summary>
 /// The Func to get referenced model's XmlReader. Must have value when the this.Edmx xml or this.metadataDocumentUri's model has referneced model.
 /// </summary>
-public Func<Uri,XmlReader> GetReferencedModelReaderFunc
+public Func<Uri, WebProxy, IList<string>, XmlReader> GetReferencedModelReaderFunc
 {
     get;
     set;
@@ -409,9 +425,62 @@ public FilesManager MultipleFilesManager
 }
 
 /// <summary>
+/// The web proxy host address
+/// </summary>
+public string WebProxyHost
+{
+    get;
+    set;
+}
+
+/// <summary>
 /// true to generate multiple files, false generate a single file.
 /// </summary>
 public bool GenerateMultipleFiles
+{
+    get;
+    set;
+}
+/// <summary>
+/// Boolean to show if we should include the web proxy 
+/// </summary>
+public bool IncludeWebProxy
+{
+    get;
+    set;
+}
+
+/// <summary>
+/// Boolean to show if we should include the web proxy network credentials
+/// </summary>
+public bool IncludeWebProxyNetworkCredentials
+{
+    get;
+    set;
+}
+
+/// <summary>
+/// The web proxy host network credentials domain
+/// </summary>
+public string WebProxyNetworkCredentialsDomain
+{
+    get;
+    set;
+}
+
+/// <summary>
+/// The web proxy host network credentials username
+/// </summary>
+public string WebProxyNetworkCredentialsUsername
+{
+    get;
+    set;
+}
+
+/// <summary>
+/// The web proxy host network credentials password
+/// </summary>
+public string WebProxyNetworkCredentialsPassword
 {
     get;
     set;
@@ -660,6 +729,24 @@ private void ApplyParametersFromCommandLine()
 }
 
 /// <summary>
+/// Enable one to mock the requests when fetching metadata
+/// </summary>
+internal interface IHttpRequestCreator
+{
+    HttpWebRequest Create(Uri uri);
+}
+/// <summary>
+/// Includes a default http request creator that creates web requests for the client
+/// </summary>
+internal class DefaultHttpRequestCreator : IHttpRequestCreator
+{
+    public HttpWebRequest Create(Uri uri)
+    {
+        return (HttpWebRequest) WebRequest.Create(uri);
+    }
+}
+
+/// <summary>
 /// Context object to provide the model and configuration info to the code generator.
 /// </summary>
 public class CodeGenerationContext
@@ -728,14 +815,32 @@ public class CodeGenerationContext
     private HashSet<string> keyAsSegmentContainers;
 
     /// <summary>
+    /// Preconfigured WebProxy for fetching the metadata
+    /// </summary>
+    private WebProxy webProxy;
+    private  IList<string> customHttpHeaders;
+    /// <summary>
     /// Constructs an instance of <see cref="CodeGenerationContext"/>.
     /// </summary>
     /// <param name="metadataUri">The Uri to the metadata document. The supported scheme are File, http and https.</param>
-    public CodeGenerationContext(Uri metadataUri, string namespacePrefix, IList<string> CustomHttpHeaders = null)
-        : this(GetEdmxStringFromMetadataPath(metadataUri, CustomHttpHeaders), namespacePrefix)
+    /// <param name="namespacePrefix">The namespacePrefix is used as the only namespace in generated code
+    public CodeGenerationContext(Uri metadataUri, string namespacePrefix)
+        : this(metadataUri, namespacePrefix, null, null)
     {
     }
 
+    /// <summary>
+    /// Constructs an instance of <see cref="CodeGenerationContext"/>.
+    /// </summary>
+    /// <param name="metadataUri">The Uri to the metadata document. The supported scheme are File, http and https.</param>
+    /// <param name="proxy">Webproxy instance to use for retriving the metadata</param>
+    /// <param name="namespacePrefix">The namespacePrefix is used as the only namespace in generated code
+    public CodeGenerationContext(Uri metadataUri, string namespacePrefix,  WebProxy proxy,  IList<string> CustomHttpHeaders)
+        : this(GetEdmxStringFromMetadataPath(metadataUri, proxy, CustomHttpHeaders), namespacePrefix)
+    {
+        webProxy = proxy;
+        customHttpHeaders = CustomHttpHeaders;
+    }
     /// <summary>
     /// Constructs an instance of <see cref="CodeGenerationContext"/>.
     /// </summary>
@@ -795,12 +900,25 @@ public class CodeGenerationContext
     /// <summary>
     /// The func for user code to overwrite and provide referenced model's XmlReader.
     /// </summary>
-    public Func<Uri,XmlReader> GetReferencedModelReaderFunc
+    public Func<Uri, WebProxy, IList<string>, XmlReader> GetReferencedModelReaderFunc
     {
         get { return getReferencedModelReaderFunc; }
         set { this.getReferencedModelReaderFunc = value; }
     }
+    private static IHttpRequestCreator requestCreator;
+    internal static IHttpRequestCreator RequestCreator
+    { 
+        get 
+        { 
+             if(requestCreator==null)
+             {
+                requestCreator= new DefaultHttpRequestCreator();
+             }
+             return  requestCreator;
+        }
 
+        set { requestCreator = value;}
+    }
     /// <summary>
     /// Basic setting for XmlReader.
     /// </summary>
@@ -809,7 +927,7 @@ public class CodeGenerationContext
     /// <summary>
     /// The func for user code to overwrite and provide referenced model's XmlReader.
     /// </summary>
-    private Func<Uri, XmlReader> getReferencedModelReaderFunc = uri => XmlReader.Create(GetEdmxStreamFromUri(uri), settings);
+    private Func<Uri, WebProxy, IList<string>, XmlReader> getReferencedModelReaderFunc = (uri, proxy, headers) => XmlReader.Create(GetEdmxStreamFromUri(uri, proxy, headers), settings);
 
     /// <summary>
     /// The Wrapper func for user code to overwrite and provide referenced model's stream.
@@ -820,7 +938,7 @@ public class CodeGenerationContext
         {
             return (uri) =>
             {
-                using (XmlReader reader = GetReferencedModelReaderFunc(uri))
+                using (XmlReader reader = GetReferencedModelReaderFunc(uri, webProxy, customHttpHeaders))
                 {
                     if (reader == null)
                     {
@@ -1165,10 +1283,10 @@ public class CodeGenerationContext
     /// Reads the edmx string from a file path or a http/https path.
     /// </summary>
     /// <param name="metadataUri">The Uri to the metadata document. The supported scheme are File, http and https.</param>
-    private static string GetEdmxStringFromMetadataPath(Uri metadataUri, IList<string> CustomHttpHeaders = null)
+    private static string GetEdmxStringFromMetadataPath(Uri metadataUri, WebProxy proxy, IList<string> customHttpHeaders)
     {
         string content = null;
-        using (StreamReader streamReader = new StreamReader(GetEdmxStreamFromUri(metadataUri, CustomHttpHeaders)))
+        using (StreamReader streamReader = new StreamReader(GetEdmxStreamFromUri(metadataUri, proxy ,customHttpHeaders)))
         {
             content = streamReader.ReadToEnd();
         }
@@ -1180,7 +1298,7 @@ public class CodeGenerationContext
     /// Get the metadata stream from a file path or a http/https path.
     /// </summary>
     /// <param name="metadataUri">The Uri to the stream. The supported scheme are File, http and https.</param>
-    private static Stream GetEdmxStreamFromUri(Uri metadataUri, IList<string> CustomHttpHeaders  = null)
+    private static Stream GetEdmxStreamFromUri(Uri metadataUri, WebProxy proxy, IList<string> customHttpHeaders)
     {
         Debug.Assert(metadataUri != null, "metadataUri != null");
         Stream metadataStream = null;
@@ -1192,16 +1310,23 @@ public class CodeGenerationContext
         {
             try
             {
-                HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(metadataUri);
-                if (CustomHttpHeaders != null)
+                 HttpWebRequest webRequest = RequestCreator.Create(metadataUri);
+                if (customHttpHeaders != null)
                 {
-                    foreach (var header in CustomHttpHeaders)
+                    foreach (var header in customHttpHeaders)
                     {
                         webRequest.Headers.Add(header);
                     }
                 }
+
+                if(proxy != null)
+                {
+                    webRequest.Proxy= proxy;
+                }
+
                 WebResponse webResponse = webRequest.GetResponse();
                 metadataStream = webResponse.GetResponseStream();
+               
             }
             catch (WebException e)
             {
@@ -1505,7 +1630,7 @@ public abstract class ODataClientTemplate : TemplateBase
             {
                     if(context.GenerateMultipleFiles) 
                     {
-                        context.MultipleFilesManager.StartNewFile($"{enumType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}", false);
+                        context.MultipleFilesManager.StartNewFile($"{enumType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
@@ -1523,7 +1648,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 {
                     if(context.GenerateMultipleFiles) 
                     {
-                        context.MultipleFilesManager.StartNewFile($"{complexType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}", false);
+                        context.MultipleFilesManager.StartNewFile($"{complexType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
@@ -1539,7 +1664,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 {
                     if(context.GenerateMultipleFiles) 
                     {
-                        context.MultipleFilesManager.StartNewFile($"{entityType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}", false);
+                        context.MultipleFilesManager.StartNewFile($"{entityType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
@@ -4124,8 +4249,8 @@ this.Write("\")]\r\n            private static global::Microsoft.OData.Edm.IEdmM
             if (useTempFile)
             {
 
-this.Write("            [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsof" +
-        "t.OData.Client.Design.T4\", \"");
+this.Write("            [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OD" +
+        "ata.Client.Design.T4\", \"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
@@ -4140,8 +4265,8 @@ this.Write("\";\r\n");
             else
             {
 
-this.Write("            [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsof" +
-        "t.OData.Client.Design.T4\", \"");
+this.Write("            [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OD" +
+        "ata.Client.Design.T4\", \"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
@@ -4225,8 +4350,7 @@ this.Write("                global::System.Xml.XmlReader reader = CreateXmlReade
                 else
                 {
 
-this.Write("                global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);\r" +
-        "\n");
+this.Write("                global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);\r\n");
 
 
                 }
@@ -7181,8 +7305,8 @@ this.Write(@" specified by key from an entity set
 
 this.Write(this.ToStringHelper.ToStringWithCulture(entityTypeName));
 
-this.Write("), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object))" +
-        " As ");
+this.Write("), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)" +
+        ") As ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(returnTypeName));
 
@@ -7233,9 +7357,9 @@ this.Write(") As ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(returnTypeName));
 
-this.Write("\r\n            Dim keys As Global.System.Collections.Generic.IDictionary(Of String," +
-        " Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)()" +
-        " From\r\n            {\r\n                ");
+this.Write("\r\n            Dim keys As Global.System.Collections.Generic.IDictionary(Of String" +
+        ", Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)(" +
+        ") From\r\n            {\r\n                ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(keyDictionaryItems));
 

@@ -11,6 +11,9 @@ using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.Templates;
 using Microsoft.OData.ConnectedService.Tests.TestHelpers;
 using System.Collections.Generic;
+using System.Net;
+using ODataConnectedService.Tests;
+using System.Text;
 
 namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
 {
@@ -110,10 +113,89 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
                     handlerHelper.AddedFileTargetFilePath);
             }
         }
-
-        static V4CodeGenDescriptor SetupCodeGenDescriptor(ServiceConfiguration serviceConfig, string serviceName, IODataT4CodeGeneratorFactory codeGenFactory, TestConnectedServiceHandlerHelper handlerHelper, ODataT4CodeGenerator.LanguageOption targetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp)
+        [TestMethod]
+        public void Test_GeneratesAndSavesCodeFileWithProxy()
         {
-            var referenceFolderPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName);
+
+            var serviceName = "MyService";
+            ServiceConfiguration serviceConfig = new ServiceConfigurationV4()
+            {
+                UseDataServiceCollection = false,
+                ServiceName = serviceName,
+                GeneratedFileNamePrefix = "MyFile",
+                IncludeT4File = false,
+                IncludeWebProxy = true,
+                IncludeWebProxyNetworkCredentials = true,
+                WebProxyHost = "http://example.com:80",
+                WebProxyNetworkCredentialsUsername = "user",
+                WebProxyNetworkCredentialsPassword = "pass",
+                Endpoint = "http://localhost:9000"
+            };
+
+
+            var testT4Factory = new TestODataT4NetworkCodeGeneratorFactory();
+            testT4Factory.EDMX = ODataT4CodeGeneratorTestDescriptors.Simple.Metadata;
+
+
+            var handlerHelper = new TestConnectedServiceHandlerHelper();
+
+            var codeGenDescriptor = SetupCodeGenDescriptor(serviceConfig, serviceName,
+              testT4Factory, handlerHelper);
+
+            codeGenDescriptor.AddGeneratedClientCodeAsync().Wait();
+            using (var reader = new StreamReader(handlerHelper.AddedFileInputFileName))
+            {
+                var generatedCode = reader.ReadToEnd();
+                ODataT4CodeGeneratorTestDescriptors.Simple.Verify(generatedCode, true/*isCSharp*/, false/*useDSC*/);
+
+                var requestGenerator = (TestODataT4NetworkCodeGeneratorFactory.TestHttpCreator)ODataT4CodeGenerator.CodeGenerationContext.RequestCreator;
+                var proxy = requestGenerator.mock.Object.Proxy;
+                Assert.IsNotNull(proxy);
+                Assert.IsNotNull(proxy.Credentials);
+                Assert.AreEqual(Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "MyFile.cs"),
+                    handlerHelper.AddedFileTargetFilePath);
+            }
+        }
+
+        [TestMethod]
+        public void Test_GeneratesAndSavesCodeFileWithoutProxy()
+        {
+            // @todo add mock Httpcreator and work with it to create the files
+
+            var serviceName = "MyService";
+            ServiceConfiguration serviceConfig = new ServiceConfigurationV4()
+            {
+                UseDataServiceCollection = false,
+                ServiceName = serviceName,
+                GeneratedFileNamePrefix = "MyFile",
+                IncludeT4File = false,
+                Endpoint = "http://localhost:9000"
+            };
+
+
+            var testT4Factory = new TestODataT4NetworkCodeGeneratorFactory();
+            testT4Factory.EDMX = ODataT4CodeGeneratorTestDescriptors.Simple.Metadata;
+
+            var handlerHelper = new TestConnectedServiceHandlerHelper();
+
+            var codeGenDescriptor = SetupCodeGenDescriptor(serviceConfig, serviceName,
+              testT4Factory, handlerHelper);
+
+            codeGenDescriptor.AddGeneratedClientCodeAsync().Wait();
+            using (var reader = new StreamReader(handlerHelper.AddedFileInputFileName))
+            {
+                var generatedCode = reader.ReadToEnd();
+                ODataT4CodeGeneratorTestDescriptors.Simple.Verify(generatedCode, true/*isCSharp*/, false/*useDSC*/);
+                var requestGenerator = (TestODataT4NetworkCodeGeneratorFactory.TestHttpCreator)ODataT4CodeGenerator.CodeGenerationContext.RequestCreator;
+                var proxy = requestGenerator.mock.Object.Proxy;
+                Assert.IsNull(proxy);
+                Assert.AreEqual(Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "MyFile.cs"),
+                    handlerHelper.AddedFileTargetFilePath);
+            }
+        }
+        static V4CodeGenDescriptor SetupCodeGenDescriptor(ServiceConfiguration serviceConfig, string serviceName, IODataT4CodeGeneratorFactory codeGenFactory, TestConnectedServiceHandlerHelper handlerHelper, ODataT4CodeGenerator.LanguageOption targetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp)
+            {
+                var referenceFolderPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName);
             Directory.CreateDirectory(referenceFolderPath);
             Project project = CreateTestProject(TestProjectRootPath, targetLanguage);
             var serviceInstance = new ODataConnectedServiceInstance()
@@ -124,7 +206,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             handlerHelper.ServicesRootFolder = ServicesRootFolder;
             ConnectedServiceHandlerContext context = new TestConnectedServiceHandlerContext(serviceInstance, handlerHelper);
 
-            return new TestV4CodeGenDescriptor(MetadataUri, context, project, codeGenFactory);
+            return new TestV4CodeGenDescriptor(serviceConfig.Endpoint ?? MetadataUri, context, project, codeGenFactory);
         }
 
         static Project CreateTestProject(string projectPath, ODataT4CodeGenerator.LanguageOption targetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp)
@@ -154,7 +236,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
         }
     }
 
-    class TestV4CodeGenDescriptor: V4CodeGenDescriptor
+    class TestV4CodeGenDescriptor : V4CodeGenDescriptor
     {
         public TestV4CodeGenDescriptor(string metadataUri, ConnectedServiceHandlerContext context, Project project, IODataT4CodeGeneratorFactory codeGenFactory)
             : base(metadataUri, context, project, codeGenFactory)
@@ -163,12 +245,16 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
         protected override void Init() { }
     }
 
-    class TestODataT4CodeGenerator: ODataT4CodeGenerator
+    class TestODataT4CodeGenerator : ODataT4CodeGenerator
     {
         public override string TransformText()
         {
             return "Generated code";
         }
+    }
+    class TestODataT4CodeGeneratorUsingProxy : ODataT4CodeGenerator
+    {
+
     }
 
     class TestODataT4CodeGeneratorFactory : IODataT4CodeGeneratorFactory
@@ -179,6 +265,63 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             var generator = new TestODataT4CodeGenerator();
             LastCreatedInstance = generator;
             return generator;
+        }
+    }
+
+    internal class TestODataT4NetworkCodeGeneratorFactory : IODataT4CodeGeneratorFactory
+    {
+        public ODataT4CodeGenerator LastCreatedInstance { get; private set; }
+
+        public int MyProperty { get; set; }
+
+        public string EDMX { get; set; }
+        public ODataT4CodeGenerator Create()
+        {
+            var generator = new TestODataT4CodeGeneratorUsingProxy();
+            LastCreatedInstance = generator;
+            ODataT4CodeGenerator.CodeGenerationContext.RequestCreator = new TestHttpCreator(EDMX);
+
+            return generator;
+        }
+
+        public class TestHttpCreator : ODataT4CodeGenerator.IHttpRequestCreator
+        {
+            internal Mock<HttpWebRequest> mock;
+            private WebResponse response;
+
+            public TestHttpCreator(string edmx)
+            {
+
+                var edmxStream = new MemoryStream(Encoding.ASCII.GetBytes(edmx));
+                response = new TestWebResponse(edmxStream);
+                this.mock = new Mock<HttpWebRequest>();
+                mock.Setup(inst => inst.GetResponse()).Returns(response);
+                mock.SetupProperty(inst => inst.Proxy);
+
+
+
+            }
+
+            public HttpWebRequest Create(System.Uri metadataUri)
+            {
+                return this.mock.Object;
+            }
+
+
+        }
+        private class TestWebResponse : WebResponse
+        {
+            private readonly Stream stream;
+
+            public TestWebResponse(Stream stream)
+            {
+
+                this.stream = stream;
+            }
+            public override Stream GetResponseStream()
+            {
+                return stream;
+            }
         }
     }
 }

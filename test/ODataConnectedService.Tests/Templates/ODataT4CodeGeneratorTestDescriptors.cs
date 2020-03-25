@@ -15,7 +15,7 @@ using System.Reflection;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
 using Microsoft.OData.Edm.Validation;
-
+using System.Net;
 
 namespace ODataConnectedService.Tests
 {
@@ -37,7 +37,7 @@ namespace ODataConnectedService.Tests
             /// <summary>
             /// Gets or Sets the func for getting the referenced model's stream.
             /// </summary>
-            public Func<Uri, XmlReader> GetReferencedModelReaderFunc { get; set; }
+            public Func<Uri, WebProxy, IList<string>, XmlReader> GetReferencedModelReaderFunc { get; set; }
 
             /// <summary>
             /// Dictionary of expected CSharp/VB code generation results.
@@ -397,7 +397,7 @@ namespace ODataConnectedService.Tests
         public static ODataT4CodeGeneratorTestsDescriptor NamespaceInKeywordsWithRefModel = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxNamespaceInKeywordsWithRefModel,
-            GetReferencedModelReaderFunc = url => XmlReader.Create(new MemoryStream(Encoding.UTF8.GetBytes(EdmxNamespaceInKeywordsWithRefModelReferencedEdmx))),
+            GetReferencedModelReaderFunc = (url,proxy,headers) => XmlReader.Create(new MemoryStream(Encoding.UTF8.GetBytes(EdmxNamespaceInKeywordsWithRefModelReferencedEdmx))),
             ExpectedResults = new Dictionary<string, string>() 
             { 
                 { ExpectedCSharp, NamespaceInKeywordsWithRefModelCSharp }, 
@@ -427,7 +427,7 @@ namespace ODataConnectedService.Tests
         public static ODataT4CodeGeneratorTestsDescriptor MultiReferenceModel = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxWithMultiReferenceModel,
-            GetReferencedModelReaderFunc = url =>
+            GetReferencedModelReaderFunc = (url,proxy,headers) =>
             {
                 string text;
                 string urlStr = url.OriginalString;

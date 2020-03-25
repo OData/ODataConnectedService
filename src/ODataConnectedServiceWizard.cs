@@ -26,6 +26,7 @@ namespace Microsoft.OData.ConnectedService
 
         public ODataConnectedServiceInstance ServiceInstance => this.serviceInstance ?? (this.serviceInstance = new ODataConnectedServiceInstance());
 
+
         public Version EdmxVersion => this.ConfigODataEndpointViewModel.EdmxVersion;
 
         public UserSettings UserSettings { get; }
@@ -52,8 +53,7 @@ namespace Microsoft.OData.ConnectedService
                 ConfigODataEndpointViewModel.ServiceName = serviceConfig.ServiceName;
                 ConfigODataEndpointViewModel.CustomHttpHeaders = serviceConfig.CustomHttpHeaders;
 
-                if (ConfigODataEndpointViewModel.View is ConfigODataEndpoint configODataEndpoint)
-                    configODataEndpoint.IsEnabled = false;
+
 
                 // The ViewModel should always be filled otherwise if the wizard is completed without visiting this page the generated code becomes wrong
                 AdvancedSettingsViewModel.UseNamespacePrefix = serviceConfig.UseNameSpacePrefix;
@@ -68,6 +68,30 @@ namespace Microsoft.OData.ConnectedService
                     AdvancedSettingsViewModel.IncludeT4File = serviceConfig.IncludeT4File;
                     AdvancedSettingsViewModel.MakeTypesInternal = serviceConfig.MakeTypesInternal;
                 }
+
+
+                ConfigODataEndpointViewModel.PageEntering += (sender, args) =>
+                {
+
+                    var configOdataViewModel = sender as ConfigODataEndpointViewModel;
+                    if (configOdataViewModel != null)
+                    {
+                        var configOdataView = configOdataViewModel.View as ConfigODataEndpoint;
+                        configOdataView.Endpoint.IsEnabled = false;
+                        configOdataView.ServiceName.IsEnabled = false;
+                        configOdataViewModel.IncludeCustomHeaders = serviceConfig.IncludeCustomHeaders;
+                        configOdataViewModel.IncludeWebProxy = serviceConfig.IncludeWebProxy;
+                        configOdataViewModel.WebProxyHost = serviceConfig.WebProxyHost;
+
+                        configOdataViewModel.IncludeWebProxyNetworkCredentials = serviceConfig.IncludeWebProxyNetworkCredentials;
+                        configOdataViewModel.WebProxyNetworkCredentialsDomain = serviceConfig.WebProxyNetworkCredentialsDomain;
+
+                       // don't accept any credentials from the restored settings
+                        configOdataViewModel.WebProxyNetworkCredentialsUsername = null;
+                        configOdataViewModel.WebProxyNetworkCredentialsPassword = null;
+                    }
+                };
+
 
                 //Restore the advanced settings to UI elements.
                 AdvancedSettingsViewModel.PageEntering += (sender, args) =>
@@ -141,12 +165,22 @@ namespace Microsoft.OData.ConnectedService
             serviceConfiguration.Endpoint = ConfigODataEndpointViewModel.Endpoint;
             serviceConfiguration.EdmxVersion = ConfigODataEndpointViewModel.EdmxVersion;
             serviceConfiguration.CustomHttpHeaders = ConfigODataEndpointViewModel.CustomHttpHeaders;
+            serviceConfiguration.IncludeWebProxy = ConfigODataEndpointViewModel.IncludeWebProxy;
+            serviceConfiguration.WebProxyHost = ConfigODataEndpointViewModel.WebProxyHost;
+            serviceConfiguration.IncludeWebProxyNetworkCredentials = ConfigODataEndpointViewModel.IncludeWebProxyNetworkCredentials;
+            serviceConfiguration.WebProxyNetworkCredentialsUsername = ConfigODataEndpointViewModel.WebProxyNetworkCredentialsUsername;
+            serviceConfiguration.WebProxyNetworkCredentialsPassword = ConfigODataEndpointViewModel.WebProxyNetworkCredentialsPassword;
+            serviceConfiguration.WebProxyNetworkCredentialsDomain = ConfigODataEndpointViewModel.WebProxyNetworkCredentialsDomain;
+
+            serviceConfiguration.IncludeCustomHeaders = ConfigODataEndpointViewModel.IncludeCustomHeaders;
+
             serviceConfiguration.UseDataServiceCollection = AdvancedSettingsViewModel.UseDataServiceCollection;
             serviceConfiguration.GeneratedFileNamePrefix = AdvancedSettingsViewModel.GeneratedFileName;
             serviceConfiguration.UseNameSpacePrefix = AdvancedSettingsViewModel.UseNamespacePrefix;
             serviceConfiguration.MakeTypesInternal = AdvancedSettingsViewModel.MakeTypesInternal;
             serviceConfiguration.OpenGeneratedFilesInIDE = AdvancedSettingsViewModel.OpenGeneratedFilesInIDE;
             serviceConfiguration.GenerateMultipleFiles = AdvancedSettingsViewModel.GenerateMultipleFiles;
+
             if (AdvancedSettingsViewModel.UseNamespacePrefix && !string.IsNullOrEmpty(AdvancedSettingsViewModel.NamespacePrefix))
             {
                 serviceConfiguration.NamespacePrefix = AdvancedSettingsViewModel.NamespacePrefix;
