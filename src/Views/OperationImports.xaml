@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="Microsoft.OData.ConnectedService.Views.ObjectSelection"
+﻿<UserControl x:Class="Microsoft.OData.ConnectedService.Views.OperationImports"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Microsoft.OData.ConnectedService.Views"
              xmlns:viewModels="clr-namespace:Microsoft.OData.ConnectedService.ViewModels"
-             d:DataContext="{d:DesignInstance Type=viewModels:ObjectSelectionViewModel}"
+             d:DataContext="{d:DesignInstance Type=viewModels:OperationImportsViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500">
     <StackPanel>
@@ -13,6 +13,23 @@
             Margin="0, 5, 0, 5">
             Select which function and action imports will be included in the generated code.
         </TextBlock>
+        <StackPanel
+            Margin="0, 5, 0, 5"
+            Orientation="Horizontal">
+            <Button
+                x:Name="SelectAll"
+                Margin="0, 0, 2, 0"
+                MinWidth="75"
+                Click="SelectAll_Click">
+                Select All
+            </Button>
+            <Button
+                x:Name="UnselectAll"
+                MinWidth="75"
+                Click="UnselectAll_Click">
+                Unselect All
+            </Button>
+        </StackPanel>
         <ListBox
             x:Name="OperationImportsList"
             ItemsSource="{Binding OperationImports}"
@@ -36,5 +53,11 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <TextBlock
+            Visibility="{Binding VersionWarningVisibility}"
+            Margin="0, 10, 0, 0"
+            FontWeight="Bold">
+            This feature is only available for OData v4 services.
+        </TextBlock>
     </StackPanel>
 </UserControl>

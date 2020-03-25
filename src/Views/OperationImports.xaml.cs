@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.OData.ConnectedService.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +19,21 @@ namespace Microsoft.OData.ConnectedService.Views
     /// <summary>
     /// Interaction logic for ObjectSelection.xaml
     /// </summary>
-    public partial class ObjectSelection : UserControl
+    public partial class OperationImports : UserControl
     {
-        public ObjectSelection()
+        public OperationImports()
         {
             InitializeComponent();
+        }
+
+        private void UnselectAll_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as OperationImportsViewModel).UnselectAll();
+        }
+
+        private void SelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as OperationImportsViewModel).SelectAll();
         }
     }
 }

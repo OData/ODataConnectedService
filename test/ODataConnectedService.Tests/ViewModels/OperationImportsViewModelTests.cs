@@ -10,12 +10,12 @@ using FluentAssertions;
 namespace ODataConnectedService.Tests.ViewModels
 {
     [TestClass]
-    public class ObjectSelectionViewModelTests
+    public class OperationImportsViewModelTests
     {
         [TestMethod]
         public void LoadOperationImports_ShouldSetOperationImportsWithoutDuplicatesAndSelectAll()
         {
-            var objectSelection = new ObjectSelectionViewModel();
+            var objectSelection = new OperationImportsViewModel();
             objectSelection.OperationImports = new List<OperationImportModel>()
             {
                 new OperationImportModel() { Name = "Func1", IsSelected = false },
@@ -49,7 +49,7 @@ namespace ODataConnectedService.Tests.ViewModels
         [TestMethod]
         public void ExcludeOperationImports_ShouldUnselectTheSpecifiedOperations()
         {
-            var objectSelection = new ObjectSelectionViewModel();
+            var objectSelection = new OperationImportsViewModel();
             objectSelection.OperationImports = new List<OperationImportModel>()
             {
                 new OperationImportModel() { Name = "Func1", IsSelected = true },
@@ -72,7 +72,7 @@ namespace ODataConnectedService.Tests.ViewModels
         [TestMethod]
         public void ExcludedOperationImports_ShouldReturnNamesOfUnselectedOperations()
         {
-            var objectSelection = new ObjectSelectionViewModel();
+            var objectSelection = new OperationImportsViewModel();
             objectSelection.OperationImports = new List<OperationImportModel>()
             {
                 new OperationImportModel() { Name = "Func1", IsSelected = false },
@@ -85,5 +85,68 @@ namespace ODataConnectedService.Tests.ViewModels
             excluded.ShouldBeEquivalentTo(new List<string>() { "Func1", "Func3" });
         }
 
+        [TestMethod]
+        public void EmptyList_ShouldResetOperationImportsToAnEmptyCollection()
+        {
+            var objectSelection = new OperationImportsViewModel()
+            {
+                OperationImports = new List<OperationImportModel>()
+                {
+                    new OperationImportModel() { Name = "Func1", IsSelected = false },
+                    new OperationImportModel() { Name = "Func2", IsSelected = true },
+                    new OperationImportModel() { Name = "Func3", IsSelected = false }
+                }
+            };
+
+            objectSelection.EmptyList();
+
+            objectSelection.OperationImports.Count().Should().Be(0);
+        }
+        
+        [TestMethod]
+        public void SelectAll_ShouldMarkAllOperationsAsSelected()
+        {
+            var objectSelection = new OperationImportsViewModel()
+            {
+                OperationImports = new List<OperationImportModel>()
+                {
+                    new OperationImportModel() { Name = "Func1", IsSelected = false },
+                    new OperationImportModel() { Name = "Func2", IsSelected = true },
+                    new OperationImportModel() { Name = "Func3", IsSelected = false }
+                }
+            };
+
+            objectSelection.SelectAll();
+
+            objectSelection.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
+            {
+                new OperationImportModel() { Name = "Func1", IsSelected = true },
+                new OperationImportModel() { Name = "Func2", IsSelected = true },
+                new OperationImportModel() { Name = "Func3", IsSelected = true }
+            });
+        }
+
+        [TestMethod]
+        public void UnSelectAll_ShouldMarkAllOperationsAsNotSelected()
+        {
+            var objectSelection = new OperationImportsViewModel()
+            {
+                OperationImports = new List<OperationImportModel>()
+                {
+                    new OperationImportModel() { Name = "Func1", IsSelected = false },
+                    new OperationImportModel() { Name = "Func2", IsSelected = true },
+                    new OperationImportModel() { Name = "Func3", IsSelected = false }
+                }
+            };
+
+            objectSelection.UnselectAll();
+
+            objectSelection.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
+            {
+                new OperationImportModel() { Name = "Func1", IsSelected = false },
+                new OperationImportModel() { Name = "Func2", IsSelected = false },
+                new OperationImportModel() { Name = "Func3", IsSelected = false }
+            });
+        }
     }
 }

@@ -42,7 +42,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         {
             var wizard = this.Wizard as ODataConnectedServiceWizard;
             UserSettings.AddToTopOfMruList(wizard.UserSettings.MruEndpoints, this.Endpoint);
-            Version version;
+
             try
             {
                 this.MetadataTempPath = GetMetadata(out var version);

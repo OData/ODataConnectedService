@@ -190,15 +190,15 @@
     <Compile Include="Templates\ODataT4CodeGeneratorFactory.cs" />
     <Compile Include="ViewModels\AdvancedSettingsViewModel.cs" />
     <Compile Include="ViewModels\ConfigODataEndpointViewModel.cs" />
-    <Compile Include="ViewModels\ObjectSelectionViewModel.cs" />
+    <Compile Include="ViewModels\OperationImportsViewModel.cs" />
     <Compile Include="Views\AdvancedSettings.xaml.cs">
       <DependentUpon>AdvancedSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConfigODataEndpoint.xaml.cs">
       <DependentUpon>ConfigODataEndpoint.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ObjectSelection.xaml.cs">
-      <DependentUpon>ObjectSelection.xaml</DependentUpon>
+    <Compile Include="Views\OperationImports.xaml.cs">
+      <DependentUpon>OperationImports.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -257,7 +257,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ObjectSelection.xaml">
+    <Page Include="Views\OperationImports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
