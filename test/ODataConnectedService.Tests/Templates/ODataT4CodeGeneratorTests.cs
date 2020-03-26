@@ -52,13 +52,39 @@ namespace ODataConnectedService.Tests
             MetadataUri = Uri.EscapeDataString(MetadataUri);
 
             string commonProgramFiles = Environment.GetEnvironmentVariable("CommonProgramFiles");
+            var programFiles = Environment.GetEnvironmentVariable("ProgramFiles");
             string T4TransformToolPathVer11 = commonProgramFiles + "\\Microsoft Shared\\TextTemplating\\14.0\\TextTransform.exe";
             string T4TransformToolPathVer12 = commonProgramFiles + "\\Microsoft Shared\\TextTemplating\\15.0\\TextTransform.exe";
-            string T4TransformToolPathVSVer2019 = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\IDE\\TextTransform.exe";
-            
-            if (File.Exists(T4TransformToolPathVSVer2019))
+            string T4TransformToolPathVSVer2019Enterprise = programFiles + "\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\IDE\\TextTransform.exe";
+            var T4TransformToolPathVSVer2019Professional = programFiles + "\\Microsoft Visual Studio\\2019\\Professional\\Common7\\IDE\\TextTransform.exe";
+            var T4TransformToolPathVSVer2019Community = programFiles + "\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\\TextTransform.exe";
+            var T4TransformToolPathVSVer2017Enterprise = programFiles + "\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\TextTransform.exe";
+            var T4TransformToolPathVSVer2017Professional = programFiles + "\\Microsoft Visual Studio\\2017\\Professional\\Common7\\IDE\\TextTransform.exe";
+            var T4TransformToolPathVSVer2017Community = programFiles + "\\Microsoft Visual Studio\\2017\\Community\\Common7\\IDE\\TextTransform.exe";
+
+            if (File.Exists(T4TransformToolPathVSVer2019Enterprise))
             {
-                T4TransformToolPath = T4TransformToolPathVSVer2019;
+                T4TransformToolPath = T4TransformToolPathVSVer2019Enterprise;
+            }
+            else if (File.Exists(T4TransformToolPathVSVer2019Professional))
+            {
+                T4TransformToolPath = T4TransformToolPathVSVer2019Professional;
+            }
+            else if (File.Exists(T4TransformToolPathVSVer2019Community))
+            {
+                T4TransformToolPath = T4TransformToolPathVSVer2019Community;
+            }
+            else if (File.Exists(T4TransformToolPathVSVer2017Enterprise))
+            {
+                T4TransformToolPath = T4TransformToolPathVSVer2017Enterprise;
+            }
+            else if (File.Exists(T4TransformToolPathVSVer2017Professional))
+            {
+                T4TransformToolPath = T4TransformToolPathVSVer2017Professional;
+            }
+            else if (File.Exists(T4TransformToolPathVSVer2017Community))
+            {
+                T4TransformToolPath = T4TransformToolPathVSVer2017Community;
             }
             else if(File.Exists(T4TransformToolPathVer11))
             {
@@ -140,7 +166,7 @@ namespace ODataConnectedService.Tests
         {
             string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SimpleMultipleFiles.Metadata, null, true, false, generateMultipleFiles : true);
             ODataT4CodeGeneratorTestDescriptors.SimpleMultipleFiles.Verify(code, true/*isCSharp*/, false/*useDSC*/);
-            
+
             string expectedTestType = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleTestType.cs"));
             string actualTestType = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "TestType.cs")));
 
@@ -149,7 +175,7 @@ namespace ODataConnectedService.Tests
 
             string expectedCity = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleFilesCity.cs"));
             string actualCity = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "City.cs")));
-            
+
             Assert.AreEqual(expectedTestType, actualTestType);
             Assert.AreEqual(expectedPersonGender, actualPersonGender);
             Assert.AreEqual(expectedCity, actualCity);
@@ -173,7 +199,7 @@ namespace ODataConnectedService.Tests
             var invalidEdmxDsvGreaterThanMdsv = @"<?xml version=""1.0"" standalone=""yes"" ?>
 <edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
   <edmx:DataServices>
-    <Schema Namespace=""Test"" xmlns:d=""http://docs.oasis-open.org/odata/ns/data"" 
+    <Schema Namespace=""Test"" xmlns:d=""http://docs.oasis-open.org/odata/ns/data""
             xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
       <EntityType Name=""TestType"">
         <Key>
@@ -195,7 +221,7 @@ namespace ODataConnectedService.Tests
                 Assert.AreEqual(ex.Message, "The value of the 'MaxDataServiceVersion' attribute must always be greater than or equal to the value of the 'OData-Version' attribute in the metadata document.");
             }
         }
-        
+
         [TestMethod]
         public void CodeGenSetNamespacePrefixWithSingleNamespace()
         {
