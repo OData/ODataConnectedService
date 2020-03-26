@@ -1,97 +1,179 @@
-﻿<!--Copyright (c) Microsoft Corporation.  All rights reserved.-->
-<!--Licensed under the MIT License.  See License.txt in the project root for license information.-->
+﻿<!--  Copyright (c) Microsoft Corporation.  All rights reserved.  -->
+<!--  Licensed under the MIT License.  See License.txt in the project root for license information.  -->
 
-<UserControl x:Class="Microsoft.OData.ConnectedService.Views.ConfigODataEndpoint"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Microsoft.OData.ConnectedService.Views"
-             xmlns:viewModels="clr-namespace:Microsoft.OData.ConnectedService.ViewModels"
-             d:DataContext="{d:DesignInstance Type=viewModels:ConfigODataEndpointViewModel}"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500">
+<UserControl
+    x:Class="Microsoft.OData.ConnectedService.Views.ConfigODataEndpoint"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Microsoft.OData.ConnectedService.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Microsoft.OData.ConnectedService.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewModels:ConfigODataEndpointViewModel}"
+    d:DesignHeight="300"
+    d:DesignWidth="500"
+    mc:Ignorable="d">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
-    <StackPanel HorizontalAlignment="Left" Margin="10, 0, 0, 0" VerticalAlignment="Top" Width="490">
-        <TextBlock x:Name="ServiceName1" Text="Service name： "
-                   HorizontalAlignment="Left" Margin="0, 5, 10, 5">
-        </TextBlock>
-        <TextBox x:Name="ServiceName" Text="{Binding Path=ServiceName}"
-                 HorizontalAlignment="Left" Margin="20, 5, 10, 5"  Width="250"/>
-        <TextBlock x:Name="EndpointLabel" Text="Address"
-                   HorizontalAlignment="Left" Margin="0, 5, 10, 5">
-        </TextBlock>
-        <ComboBox x:Name="Endpoint" 
-                  Margin="20, 5, 5, 0" IsEditable="True"
-                  ItemsSource="{Binding Path=UserSettings.MruEndpoints}"
-                  Text="{Binding Path=Endpoint, TargetNullValue='Enter your endpoint...' }"/>
+    <StackPanel
+        Width="490"
+        Margin="10,0,0,0"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top">
+        <TextBlock
+            x:Name="ServiceName1"
+            Margin="0,5,10,5"
+            HorizontalAlignment="Left"
+            Text="Service name： " />
+        <TextBox
+            x:Name="ServiceName"
+            Width="250"
+            Margin="20,5,10,5"
+            HorizontalAlignment="Left"
+            Text="{Binding Path=ServiceName}" />
+        <TextBlock
+            x:Name="EndpointLabel"
+            Margin="0,5,10,5"
+            HorizontalAlignment="Left"
+            Text="Address" />
+        <Grid Margin="20,5,5,0" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ComboBox
+                x:Name="Endpoint"
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                IsEditable="True"
+                ItemsSource="{Binding Path=UserSettings.MruEndpoints}"
+                Text="{Binding Path=Endpoint, TargetNullValue='Enter your endpoint...'}" />
+            <Button
+                x:Name="OpenEndpointFileButton"
+                Grid.Column="1"
+                Width="70"
+                Height="20"
+                Margin="5,0,0,0"
+                HorizontalAlignment="Right"
+                Click="OpenMetadataFileButton_OnClick"
+                IsEnabled="True">
+                <TextBlock Text="Browse" />
+            </Button>
+        </Grid>
+        <CheckBox
+            x:Name="IncludeHttpHeadersElement"
+            Margin="0,15"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Include Custom Http Headers"
+            FontWeight="Medium"
+            IsChecked="{Binding IncludeCustomHeaders}" />
 
-        <CheckBox x:Name="IncludeHttpHeadersElement" Content="Include Custom Http Headers" IsChecked="{Binding IncludeCustomHeaders}"
-                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,15" FontWeight="Medium"/>
-
-        <StackPanel
-                    Visibility="{Binding Path=IsChecked, ElementName=IncludeHttpHeadersElement, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="20, 0, 0, 0">
+        <StackPanel Margin="20,0,0,0" Visibility="{Binding Path=IsChecked, ElementName=IncludeHttpHeadersElement, Converter={StaticResource BooleanToVisibilityConverter}}">
 
             <TextBlock
-            x:Name="CustomHttpHeadersLabel"
-            Text="Custom Headers： "
-            HorizontalAlignment="Left"
-            Margin="0, 5, 10, 5">
-            </TextBlock>
+                x:Name="CustomHttpHeadersLabel"
+                Margin="0,5,10,5"
+                HorizontalAlignment="Left"
+                Text="Custom Headers： " />
             <TextBox
-            x:Name="CustomHttpHeaders"
-            Text="{Binding Path=CustomHttpHeaders}"
-            HorizontalAlignment="Left"
-            TextWrapping="Wrap"
-            AcceptsReturn="True"
-            VerticalScrollBarVisibility="Visible"
-            Margin="20, 5, 10, 5"
-            Width="250">
+                x:Name="CustomHttpHeaders"
+                Width="250"
+                Margin="20,5,10,5"
+                HorizontalAlignment="Left"
+                AcceptsReturn="True"
+                Text="{Binding Path=CustomHttpHeaders}"
+                TextWrapping="Wrap"
+                VerticalScrollBarVisibility="Visible">
                 <TextBox.ToolTip>
                     <ToolTip HorizontalAlignment="Center">
                         <TextBlock>
-                        (Optional) We add Http Headers to our http request as a multiline string e.g <LineBreak/>
-                        HeaderKey1: HeaderValue1<LineBreak/>
-                        HeaderKey2: HeaderValue2<LineBreak/>
+                            (Optional) We add Http Headers to our http request as a multiline string e.g<LineBreak />
+                            HeaderKey1: HeaderValue1<LineBreak />
+                            HeaderKey2: HeaderValue2<LineBreak />
                         </TextBlock>
                     </ToolTip>
                 </TextBox.ToolTip>
             </TextBox>
         </StackPanel>
 
-        <CheckBox x:Name="IncludeWebProxyElement" Content="Include WebProxy" IsChecked="{Binding IncludeWebProxy}"
-                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 15" FontWeight="Medium"/>
+        <CheckBox
+            x:Name="IncludeWebProxyElement"
+            Margin="0,15"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Include WebProxy"
+            FontWeight="Medium"
+            IsChecked="{Binding IncludeWebProxy}" />
 
-        <StackPanel
-                    Visibility="{Binding Path=IsChecked, ElementName=IncludeWebProxyElement, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="20, 0, 0, 0">
+        <StackPanel Margin="20,0,0,0" Visibility="{Binding Path=IsChecked, ElementName=IncludeWebProxyElement, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-            <StackPanel Orientation="Vertical" Margin=" 0, 0, 0,0" >
-                <TextBlock x:Name="HostLabel" Text="Enter the webproxy host with the port (e.g. http://localhost:8080):"
-                           HorizontalAlignment="Left" Margin="0, 0, 5, 0"/>
-                <TextBox x:Name="WebProxyHost" Text="{Binding WebProxyHost}"
-                             HorizontalAlignment="Left" TextWrapping="Wrap" Width="300" Margin="0, 0, 0, 0"/>
+            <StackPanel Margin="0,0,0,0" Orientation="Vertical">
+                <TextBlock
+                    x:Name="HostLabel"
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Text="Enter the webproxy host with the port (e.g. http://localhost:8080):" />
+                <TextBox
+                    x:Name="WebProxyHost"
+                    Width="300"
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Left"
+                    Text="{Binding WebProxyHost}"
+                    TextWrapping="Wrap" />
             </StackPanel>
-            <CheckBox x:Name="IncludeWebProxyNetworkCredentialsElement" Content="Include Proxy Network credentials" IsChecked="{Binding IncludeWebProxyNetworkCredentials}"
-                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 10" FontWeight="Medium"/>
-            <StackPanel Orientation="Vertical"
-                        Visibility="{Binding Path=IsChecked, ElementName=IncludeWebProxyNetworkCredentialsElement, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="20, 0, 0, 0">
+            <CheckBox
+                x:Name="IncludeWebProxyNetworkCredentialsElement"
+                Margin="0,10"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Include Proxy Network credentials"
+                FontWeight="Medium"
+                IsChecked="{Binding IncludeWebProxyNetworkCredentials}" />
+            <StackPanel
+                Margin="20,0,0,0"
+                Orientation="Vertical"
+                Visibility="{Binding Path=IsChecked, ElementName=IncludeWebProxyNetworkCredentialsElement, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-                <TextBlock x:Name="WebProxyNetworkCredentialsUsernameLabel" Text="Username:"
-                           HorizontalAlignment="Left" Margin="0, 10, 0, 0"/>
-                <TextBox x:Name="WebProxyNetworkCredentialsUsername" Text="{Binding WebProxyNetworkCredentialsUsername}"
-                             HorizontalAlignment="Left" TextWrapping="Wrap" Width="300" Margin="0, 5, 0, 0"/>
+                <TextBlock
+                    x:Name="WebProxyNetworkCredentialsUsernameLabel"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Left"
+                    Text="Username:" />
+                <TextBox
+                    x:Name="WebProxyNetworkCredentialsUsername"
+                    Width="300"
+                    Margin="0,5,0,0"
+                    HorizontalAlignment="Left"
+                    Text="{Binding WebProxyNetworkCredentialsUsername}"
+                    TextWrapping="Wrap" />
 
-                <TextBlock x:Name="WebProxyNetworkCredentialsPasswordLabel" Text="Password:"
-                           HorizontalAlignment="Left" Margin="0, 10, 0, 0"/>
-                <TextBox x:Name="WebProxyNetworkCredentialsPassword" Text="{Binding WebProxyNetworkCredentialsPassword}"
-                             HorizontalAlignment="Left" TextWrapping="Wrap" Width="300" Margin="0, 5, 0, 0"/>
+                <TextBlock
+                    x:Name="WebProxyNetworkCredentialsPasswordLabel"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Left"
+                    Text="Password:" />
+                <TextBox
+                    x:Name="WebProxyNetworkCredentialsPassword"
+                    Width="300"
+                    Margin="0,5,0,0"
+                    HorizontalAlignment="Left"
+                    Text="{Binding WebProxyNetworkCredentialsPassword}"
+                    TextWrapping="Wrap" />
 
-                <TextBlock x:Name="WebProxyNetworkCredentialsDomainLabel" Text="Domain:"
-                           HorizontalAlignment="Left" Margin="0, 10, 0, 0"/>
-                <TextBox x:Name="WebProxyNetworkCredentialsDomain" Text="{Binding WebProxyNetworkCredentialsDomain}"
-                             HorizontalAlignment="Left" TextWrapping="Wrap" Width="300" Margin="0, 5, 0, 0"/>
+                <TextBlock
+                    x:Name="WebProxyNetworkCredentialsDomainLabel"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Left"
+                    Text="Domain:" />
+                <TextBox
+                    x:Name="WebProxyNetworkCredentialsDomain"
+                    Width="300"
+                    Margin="0,5,0,0"
+                    HorizontalAlignment="Left"
+                    Text="{Binding WebProxyNetworkCredentialsDomain}"
+                    TextWrapping="Wrap" />
 
             </StackPanel>
         </StackPanel>

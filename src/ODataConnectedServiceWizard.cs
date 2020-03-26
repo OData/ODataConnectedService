@@ -78,6 +78,7 @@ namespace Microsoft.OData.ConnectedService
                     {
                         var configOdataView = configOdataViewModel.View as ConfigODataEndpoint;
                         configOdataView.Endpoint.IsEnabled = false;
+                        configOdataView.OpenEndpointFileButton.IsEnabled = !serviceConfig.Endpoint.StartsWith("http");
                         configOdataView.ServiceName.IsEnabled = false;
                         configOdataViewModel.IncludeCustomHeaders = serviceConfig.IncludeCustomHeaders;
                         configOdataViewModel.IncludeWebProxy = serviceConfig.IncludeWebProxy;
