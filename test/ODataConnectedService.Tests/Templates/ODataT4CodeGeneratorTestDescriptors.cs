@@ -613,5 +613,22 @@ namespace ODataConnectedService.Tests
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, AbstractEntityTypeWithoutKey.ExpectedResults, isCSharp, useDSC, "AbstractEntityTypeWithoutKey"),
         };
         #endregion
+
+        #region EntitiesEnumsFunctionsSelectTypes
+        public static string EdmxEntitiesEnumsFunctionsSelectTypes = LoadContentFromBaseline("EntitiesEnumsFunctions.xml");
+        public static string EntitiesEnumsFunctionsSelectTypesCSharp = LoadContentFromBaseline("EntitiesEnumsFunctionsSelectTypes.cs");
+        public static string EntitiesEnumsFunctionsSelectTypesVB = LoadContentFromBaseline("EntitiesEnumsFunctionsSelectTypes.vb");
+
+        public static ODataT4CodeGeneratorTestsDescriptor EntitiesEnumsFunctionsSelectTypes = new ODataT4CodeGeneratorTestsDescriptor()
+        {
+            Metadata = EdmxEntitiesEnumsFunctionsSelectTypes,
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, EntitiesEnumsFunctionsSelectTypesCSharp },
+                { ExpectedVB, EntitiesEnumsFunctionsSelectTypesVB },
+            },
+            Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, EntitiesEnumsFunctionsSelectTypes.ExpectedResults, isCSharp, useDSC, "EntitiesEnumsFunctionsSelectTypes"),
+        };
+        #endregion
     }
 }
