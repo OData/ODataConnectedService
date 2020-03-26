@@ -20,6 +20,8 @@ namespace Microsoft.OData.ConnectedService
 
         public OperationImportsViewModel OperationImportsViewModel { get; set; }
 
+        public EntityTypesViewModel EntityTypesViewModel { get; set; }
+
         public AdvancedSettingsViewModel AdvancedSettingsViewModel { get; set; }
 
         public ConnectedServiceProviderContext Context { get; set; }
@@ -39,10 +41,13 @@ namespace Microsoft.OData.ConnectedService
             ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(this.UserSettings, this);
             AdvancedSettingsViewModel = new AdvancedSettingsViewModel(this.UserSettings);
             OperationImportsViewModel = new OperationImportsViewModel();
+            EntityTypesViewModel = new EntityTypesViewModel();
 
             ServiceConfigurationV4 serviceConfig = null;
 
             OperationImportsViewModel.PageEntering += ObjectSelectionViewModel_PageEntering;
+
+            EntityTypesViewModel.PageEntering += EntityTypeSelectionViewModel_PageEntering;
 
             if (this.Context.IsUpdating)
             {
@@ -124,6 +129,7 @@ namespace Microsoft.OData.ConnectedService
             }
 
             this.Pages.Add(ConfigODataEndpointViewModel);
+            this.Pages.Add(EntityTypesViewModel);
             this.Pages.Add(OperationImportsViewModel);
             this.Pages.Add(AdvancedSettingsViewModel);
             this.IsFinishEnabled = true;
@@ -151,6 +157,7 @@ namespace Microsoft.OData.ConnectedService
             {
                 var ServiceConfigurationV4 = new ServiceConfigurationV4();
                 ServiceConfigurationV4.ExcludedOperationImports = OperationImportsViewModel.ExcludedOperationImportsNames.ToList();
+                ServiceConfigurationV4.ExcludedEntityTypes = EntityTypesViewModel.ExcludedEntityTypeNames.ToList();
                 ServiceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = AdvancedSettingsViewModel.IgnoreUnexpectedElementsAndAttributes;
                 ServiceConfigurationV4.EnableNamingAlias = AdvancedSettingsViewModel.EnableNamingAlias;
                 ServiceConfigurationV4.IncludeT4File = AdvancedSettingsViewModel.IncludeT4File;
@@ -214,6 +221,22 @@ namespace Microsoft.OData.ConnectedService
             }
         }
 
+        public void EntityTypeSelectionViewModel_PageEntering(object sender, EventArgs args)
+        {
+            if (sender is EntityTypesViewModel entityTypeViewModel)
+            {
+                var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+                var entityTypes = EdmHelper.GetEntityTypes(model);
+                EntityTypesViewModel.LoadEntityTypes(entityTypes);
+
+                if (Context.IsUpdating)
+                {
+                    var serviceConfig = Context.GetExtendedDesignerData<ServiceConfigurationV4>();
+                    entityTypeViewModel.ExcludeEntityTypes(serviceConfig?.ExcludedEntityTypes ?? Enumerable.Empty<string>());
+                }
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -236,6 +259,12 @@ namespace Microsoft.OData.ConnectedService
                     {
                         this.OperationImportsViewModel.Dispose();
                         OperationImportsViewModel = null;
+                    }
+
+                    if (this.EntityTypesViewModel != null)
+                    {
+                        this.EntityTypesViewModel.Dispose();
+                        EntityTypesViewModel = null;
                     }
 
                     if (this.ConfigODataEndpointViewModel != null)

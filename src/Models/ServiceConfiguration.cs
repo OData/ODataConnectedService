@@ -26,7 +26,7 @@ namespace Microsoft.OData.ConnectedService.Models
         public string WebProxyNetworkCredentialsPassword { get; set; }
         public string WebProxyNetworkCredentialsDomain { get; set; }
         public bool IncludeCustomHeaders { get; set; }
-
+        public List<string> ExcludedEntityTypes;
 
     }
 
@@ -36,5 +36,6 @@ namespace Microsoft.OData.ConnectedService.Models
         public bool IgnoreUnexpectedElementsAndAttributes { get; set; }
         public bool IncludeT4File { get; set; }
         public List<string> ExcludedOperationImports;
+        
     }
 }

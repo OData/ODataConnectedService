@@ -132,6 +132,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             t4CodeGenerator.MakeTypesInternal = ServiceConfiguration.MakeTypesInternal;
             t4CodeGenerator.GenerateMultipleFiles = ServiceConfiguration.GenerateMultipleFiles;
             t4CodeGenerator.ExcludedOperationImports = ServiceConfiguration.ExcludedOperationImports;
+            t4CodeGenerator.ExcludedEntityTypes = ServiceConfiguration.ExcludedEntityTypes;
             var headers = new List<string>();
             if (this.ServiceConfiguration.CustomHttpHeaders !=null)
             {

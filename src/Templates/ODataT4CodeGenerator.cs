@@ -77,7 +77,8 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             MakeTypesInternal = this.MakeTypesInternal,
             MultipleFilesManager = FilesManager.Create(this.Host, null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
-            ExcludedOperationImports = this.ExcludedOperationImports
+            ExcludedOperationImports = this.ExcludedOperationImports,
+            ExcludedEntityTypes = this.ExcludedEntityTypes
         };
     }
     else
@@ -113,7 +114,8 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             MakeTypesInternal = this.MakeTypesInternal,
             MultipleFilesManager = FilesManager.Create(this.Host, null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
-            ExcludedOperationImports = this.ExcludedOperationImports
+            ExcludedOperationImports = this.ExcludedOperationImports,
+            ExcludedEntityTypes = this.ExcludedEntityTypes
         };
     }
 
@@ -207,6 +209,8 @@ public static class Configuration
 	// Comma-separated list of the names of operation imports to exclude from the generated code
 	public const string ExcludedOperationImports = "";
 
+    // Comma-separated list of the names of entity types to exclude from the generated code
+	public const string ExcludedEntityTypes = "";
 }
 
 public static class Customization
@@ -403,6 +407,24 @@ public IEnumerable <string> ExcludedOperationImports
     set
     {
         excludedOperationImports = value;
+    }
+}
+
+private IEnumerable<string> excludedEntityTypes = new List<string>();
+
+/// <summary>
+/// list of entity types to exclude from the generated code
+/// </summary>
+public IEnumerable <string> ExcludedEntityTypes
+{
+    get
+    {
+        return excludedEntityTypes;
+    }
+
+    set
+    {
+        excludedEntityTypes = value;
     }
 }
 
@@ -650,6 +672,14 @@ public void ValidateAndSetExcludedOperationImportsFromString(string inputValue)
     this.ExcludedOperationImports = inputValue.Split(',').Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
 }
 
+/// Set the ExcludedEntityTypes property with the given value.
+/// </summary>
+/// <param name="inputValue">Comma-separated list of operation import names</param>
+public void ValidateAndSetExcludedEntityTypesFromString(string inputValue)
+{
+    this.ExcludedEntityTypes = inputValue.Split(',').Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
+}
+
 /// <summary>
 /// Reads the parameter values from the Configuration class and applies them.
 /// </summary>
@@ -666,6 +696,8 @@ private void ApplyParametersFromConfigurationClass()
     this.GenerateMultipleFiles = Configuration.GenerateMultipleFiles;
     this.SetCustomHttpHeadersFromString(Configuration.CustomHttpHeaders);
     this.ExcludedOperationImports = Configuration.ExcludedOperationImports.Split(',')
+        .Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
+    this.ExcludedEntityTypes = Configuration.ExcludedEntityTypes.Split(',')
         .Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
 }
 
@@ -1101,6 +1133,15 @@ public class CodeGenerationContext
 	/// list of operation imports to omit from the generated code
 	/// </summary>
     public IEnumerable<string> ExcludedOperationImports
+    {
+        get;
+        set;
+    }
+
+        /// <summary>
+	/// list of entity types to omit from the generated code
+	/// </summary>
+    public IEnumerable<string> ExcludedEntityTypes
     {
         get;
         set;
@@ -1662,6 +1703,12 @@ public abstract class ODataClientTemplate : TemplateBase
                 }
                 else if (type is IEdmEntityType entityType)
                 {
+
+                    if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(entityType.Name))
+                    {
+                        continue;
+                    }
+
                     if(context.GenerateMultipleFiles) 
                     {
                         context.MultipleFilesManager.StartNewFile($"{entityType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
@@ -1697,6 +1744,12 @@ public abstract class ODataClientTemplate : TemplateBase
             this.WriteExtensionMethodsStart();
             foreach (IEdmEntityType type in schemaElements.OfType<IEdmEntityType>())
             {
+
+                if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(type.Name))
+                {
+                    continue;
+                }
+
                 string entityTypeName = type.Name;
                 entityTypeName = context.EnableNamingAlias ? Customization.CustomizeNaming(entityTypeName) : entityTypeName;
                 string entityTypeFullName = context.GetPrefixedFullName(type, GetFixedName(entityTypeName), this);

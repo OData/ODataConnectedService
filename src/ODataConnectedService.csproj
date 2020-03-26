@@ -178,6 +178,7 @@
     <Compile Include="Common\ProjectHelper.cs" />
     <Compile Include="Common\UserSettingsPersistenceHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Models\EntityTypeModel.cs" />
     <Compile Include="Models\OperationImportModel.cs" />
     <Compile Include="Models\ServiceConfiguration.cs" />
     <Compile Include="Models\UserSettings.cs" />
@@ -195,12 +196,16 @@
     <Compile Include="Templates\ODataT4CodeGeneratorFactory.cs" />
     <Compile Include="ViewModels\AdvancedSettingsViewModel.cs" />
     <Compile Include="ViewModels\ConfigODataEndpointViewModel.cs" />
+    <Compile Include="ViewModels\EntityTypesViewModel.cs" />
     <Compile Include="ViewModels\OperationImportsViewModel.cs" />
     <Compile Include="Views\AdvancedSettings.xaml.cs">
       <DependentUpon>AdvancedSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConfigODataEndpoint.xaml.cs">
       <DependentUpon>ConfigODataEndpoint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EntityTypes.xaml.cs">
+      <DependentUpon>EntityTypes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\OperationImports.xaml.cs">
       <DependentUpon>OperationImports.xaml</DependentUpon>
@@ -259,6 +264,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ConfigODataEndpoint.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EntityTypes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -52,5 +52,15 @@ namespace Microsoft.OData.ConnectedService.Common
                 }
             }
         }
+
+        public static IEnumerable<IEdmEntityType> GetEntityTypes(IEdmModel model)
+        {
+            var entityTypes = model.SchemaElements.OfType<IEdmEntityType>();
+
+            foreach (var entityType in entityTypes)
+            {
+                    yield return entityType;
+            }
+        }
     }
 }
