@@ -64,7 +64,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         private void ResetDataContext()
         {
-            this.ServiceName = Constants.DefaultServiceName;
+            if (this.ServiceName == null)
+                this.ServiceName = Constants.DefaultServiceName;
         }
 
         public event EventHandler<EventArgs> PageLeaving;
