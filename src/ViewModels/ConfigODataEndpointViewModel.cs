@@ -45,16 +45,15 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             this.Title = "Configure endpoint";
             this.Description = "Enter or choose an OData service endpoint to begin";
             this.Legend = "Endpoint";
+            this.View = new ConfigODataEndpoint();
+            this.View.DataContext = this;
+            this.ResetDataContext();
             this.UserSettings = userSettings;
-
         }
 
         public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
             await base.OnPageEnteringAsync(args);
-            this.View = new ConfigODataEndpoint();
-            this.ResetDataContext();
-            this.View.DataContext = this;
 
             if (PageEntering != null)
             {
