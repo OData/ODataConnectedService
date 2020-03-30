@@ -2,6 +2,7 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OData.ConnectedService.Common;
@@ -209,9 +210,10 @@ namespace Microsoft.OData.ConnectedService
                     objectSelectionViewModel.IsSupportedODataVersion = false;
                     return;
                 }
+
                 var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
                 var operations = EdmHelper.GetOperationImports(model);
-                OperationImportsViewModel.LoadOperationImports(operations);
+                OperationImportsViewModel.LoadOperationImports(operations, new HashSet<string>(EntityTypesViewModel.ExcludedEntityTypeNames));
 
                 if (Context.IsUpdating)
                 {

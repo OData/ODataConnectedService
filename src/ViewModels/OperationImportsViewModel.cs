@@ -71,7 +71,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             return await base.OnPageLeavingAsync(args);
         }
 
-        public void LoadOperationImports(IEnumerable<IEdmOperationImport> operationImports)
+        public void LoadOperationImports(IEnumerable<IEdmOperationImport> operationImports, ICollection<string> excludedEntityTypes)
         {
             var toLoad = new List<OperationImportModel>();
             var alreadyAdded = new HashSet<string>();
@@ -83,7 +83,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                     toLoad.Add(new OperationImportModel()
                     {
                         Name = operation.Name,
-                        IsSelected = true
+                        IsSelected = IsOperationImportIncluded(operation, excludedEntityTypes)
                     });
 
                     alreadyAdded.Add(operation.Name);
@@ -91,6 +91,40 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
 
             OperationImports = toLoad.OrderBy(o => o.Name).ToList();
+        }
+
+        public  bool IsOperationImportIncluded(IEdmOperationImport operationImport, ICollection<string> excludedTypes)
+        {
+            IEnumerable<IEdmOperationParameter> parameters = operationImport.Operation.Parameters;
+
+            foreach (var parameter in parameters)
+            {
+                if (excludedTypes.Contains(GetTypeNameFromFullName(parameter.Type.FullName())))
+                {
+                    return false;
+                }
+            }
+
+            string returnType = GetTypeNameFromFullName(operationImport.Operation.ReturnType?.FullName());
+
+            if (excludedTypes.Contains(returnType))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public  string GetTypeNameFromFullName(string fullName)
+        {
+            if(string.IsNullOrEmpty(fullName))
+            {
+                return string.Empty;
+            }
+
+            string[] nameArr = fullName.Split('.');
+
+            return nameArr[nameArr.Length - 1];
         }
 
         public void ExcludeOperationImports(IEnumerable<string> operationsToExclude)
