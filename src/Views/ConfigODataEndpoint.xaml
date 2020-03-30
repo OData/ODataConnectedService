@@ -48,7 +48,8 @@
                 HorizontalAlignment="Stretch"
                 IsEditable="True"
                 ItemsSource="{Binding Path=UserSettings.MruEndpoints}"
-                Text="{Binding Path=Endpoint, TargetNullValue='Enter your endpoint...'}" />
+                Text="{Binding Path=Endpoint, TargetNullValue='Enter your endpoint...'}" 
+				SelectedIndex="0"/>
             <Button
                 x:Name="OpenEndpointFileButton"
                 Grid.Column="1"
