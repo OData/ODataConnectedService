@@ -22,7 +22,10 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             Legend = "Entity Types";
             EntityTypes = new List<EntityTypeModel>();
             IsSupportedODataVersion = true;
+            EntityTypeModel = new Dictionary<string, EntityTypeModel>();
         }
+
+        public IDictionary<string, EntityTypeModel> EntityTypeModel { get; set; }
 
         public IEnumerable<EntityTypeModel> EntityTypes { get; set; }
         /// <summary>
@@ -75,18 +78,37 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         {
             var toLoad = new List<EntityTypeModel>();
             var alreadyAdded = new HashSet<string>();
-            
+
             foreach (var entityType in entityTypes)
             {
-                if (!alreadyAdded.Contains(entityType.Name))
+                if (!alreadyAdded.Contains(entityType.FullName()))
                 {
-                    toLoad.Add(new EntityTypeModel()
+                    var entityTypeModel = new EntityTypeModel()
                     {
                         Name = entityType.Name,
                         IsSelected = true
-                    });
+                    };
 
-                    alreadyAdded.Add(entityType.Name);
+                    entityTypeModel.PropertyChanged += (s, args) => {
+                        if (entityTypeModel.IsSelected)
+                        {
+                            foreach (var navigationProperty in entityType.DeclaredNavigationProperties())
+                            {
+                               bool hasProperty =  EntityTypeModel.TryGetValue(navigationProperty.Type.ToStructuredType().FullTypeName(), out EntityTypeModel navigationPropertyModel);
+
+                                if (hasProperty &&  !navigationPropertyModel.IsSelected)
+                                {
+                                    navigationPropertyModel.IsSelected = true;
+                                }         
+                            }
+                        }                      
+                    };
+
+                    toLoad.Add(entityTypeModel);
+
+                    alreadyAdded.Add(entityType.FullName());
+
+                    EntityTypeModel.Add(entityType.FullName(), entityTypeModel);
                 }
             }
 

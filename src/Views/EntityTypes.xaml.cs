@@ -35,10 +35,5 @@ namespace Microsoft.OData.ConnectedService.Views
         {
             (DataContext as EntityTypesViewModel).SelectAll();
         }
-
-        private void EntityTypesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
