@@ -12,6 +12,7 @@ using EnvDTE;
 using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.Templates;
 using Microsoft.VisualStudio.ConnectedServices;
+using VSLangProj;
 
 namespace Microsoft.OData.ConnectedService.CodeGeneration
 {
@@ -83,6 +84,11 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
 
             tempFile = Path.GetTempFileName();
 
+            var metadataFile = Path.Combine(referenceFolder, Common.Constants.CsdlFileName);
+            await this.Context.HandlerHelper.AddFileAsync(tempFile, metadataFile, new AddFileOptions() { SuppressOverwritePrompt = true });
+            var projectItem = this.GetCsdlFileProjectItem(Common.Constants.CsdlFileName);
+            projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionEmbeddedResource;
+
             using (StreamWriter writer = File.CreateText(tempFile))
             {
                 var text = File.ReadAllText(Path.Combine(t4Folder, "ODataT4CodeGenerator.tt"));
@@ -106,6 +112,8 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 text = Regex.Replace(text, "(public const bool MakeTypesInternal = )false;", "$1" + ServiceConfiguration.MakeTypesInternal.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
                 var customHeaders = ServiceConfiguration.CustomHttpHeaders ?? "";
                 text = Regex.Replace(text, "(public const string CustomHttpHeaders = )\"\";", "$1@\"" + customHeaders + "\";");
+                text = Regex.Replace(text, "(public const string MetadataFilePath = )\"\";", "$1@\"" + metadataFile + "\";");
+                text = Regex.Replace(text, "(public const string MetadataFileRelativePath = )\"\";", "$1@\"" + Common.Constants.CsdlFileName + "\";");
                 await writer.WriteAsync(text);
                 await writer.FlushAsync();
             }
@@ -153,6 +161,23 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             t4CodeGenerator.WebProxyNetworkCredentialsDomain = ServiceConfiguration.WebProxyNetworkCredentialsDomain;
 
             var tempFile = Path.GetTempFileName();
+            var referenceFolder = GetReferenceFileFolder();
+
+            var metadataFile = Path.Combine(referenceFolder, Common.Constants.CsdlFileName);
+            await this.Context.HandlerHelper.AddFileAsync(tempFile, metadataFile, new AddFileOptions() { SuppressOverwritePrompt = true });
+
+            // Hack!
+            // Tests were failing since the test project cannot access ProjectItems
+            // dte == null when running test cases
+            var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+            if(dte != null)
+            {
+                var projectItem = this.GetCsdlFileProjectItem(Common.Constants.CsdlFileName);
+                projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionEmbeddedResource;
+            }
+
+            t4CodeGenerator.MetadataFilePath = metadataFile;
+            t4CodeGenerator.MetadataFileRelativePath = Common.Constants.CsdlFileName;
 
             using (StreamWriter writer = File.CreateText(tempFile))
             {
@@ -167,11 +192,15 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 }
             }
 
-            var referenceFolder = GetReferenceFileFolder();
             var outputFile = Path.Combine(referenceFolder, $"{this.GeneratedFileNamePrefix}{(this.TargetProjectLanguage == LanguageOption.GenerateCSharpCode ? ".cs" : ".vb")}");
             await this.Context.HandlerHelper.AddFileAsync(tempFile, outputFile, new AddFileOptions { OpenOnComplete = this.ServiceConfiguration.OpenGeneratedFilesInIDE });
             t4CodeGenerator.MultipleFilesManager?.GenerateFiles(ServiceConfiguration.GenerateMultipleFiles, this.Context.HandlerHelper, this.Context.Logger, referenceFolder, true, this.ServiceConfiguration.OpenGeneratedFilesInIDE);
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Client Proxy for OData V4 was generated.");
+        }
+
+        private ProjectItem GetCsdlFileProjectItem(string fileName)
+        {
+            return this.Project.ProjectItems.Item("Connected Services").ProjectItems.Item(ServiceConfiguration.ServiceName).ProjectItems.Item(fileName);
         }
     }
 }
