@@ -36,7 +36,7 @@ namespace Microsoft.OData.ConnectedService
             this.Context = context;
             this.UserSettings = UserSettings.Load(context.Logger);
 
-            ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(this.UserSettings);
+            ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(this.UserSettings, this);
             AdvancedSettingsViewModel = new AdvancedSettingsViewModel(this.UserSettings);
             OperationImportsViewModel = new OperationImportsViewModel();
 
@@ -56,7 +56,7 @@ namespace Microsoft.OData.ConnectedService
 
 
                 // The ViewModel should always be filled otherwise if the wizard is completed without visiting this page the generated code becomes wrong
-                AdvancedSettingsViewModel.UseNamespacePrefix = serviceConfig.UseNameSpacePrefix;
+                AdvancedSettingsViewModel.UseNamespacePrefix = serviceConfig.UseNamespacePrefix;
                 AdvancedSettingsViewModel.NamespacePrefix = serviceConfig.NamespacePrefix;
                 AdvancedSettingsViewModel.UseDataServiceCollection = serviceConfig.UseDataServiceCollection;
 
@@ -78,6 +78,7 @@ namespace Microsoft.OData.ConnectedService
                     {
                         var configOdataView = configOdataViewModel.View as ConfigODataEndpoint;
                         configOdataView.Endpoint.IsEnabled = false;
+                        configOdataView.OpenConnectedServiceJsonFileButton.IsEnabled = false;
                         configOdataView.OpenEndpointFileButton.IsEnabled = !serviceConfig.Endpoint.StartsWith("http");
                         configOdataView.ServiceName.IsEnabled = false;
                         configOdataViewModel.IncludeCustomHeaders = serviceConfig.IncludeCustomHeaders;
@@ -101,9 +102,9 @@ namespace Microsoft.OData.ConnectedService
                     {
                         if (advancedSettingsViewModel.View is AdvancedSettings advancedSettings)
                         {
-                            advancedSettingsViewModel.GeneratedFileName = serviceConfig.GeneratedFileNamePrefix;
+                            advancedSettingsViewModel.GeneratedFileNamePrefix = serviceConfig.GeneratedFileNamePrefix;
                             advancedSettings.ReferenceFileName.IsEnabled = false;
-                            advancedSettingsViewModel.UseNamespacePrefix = serviceConfig.UseNameSpacePrefix;
+                            advancedSettingsViewModel.UseNamespacePrefix = serviceConfig.UseNamespacePrefix;
                             advancedSettingsViewModel.NamespacePrefix = serviceConfig.NamespacePrefix;
                             advancedSettingsViewModel.UseDataServiceCollection = serviceConfig.UseDataServiceCollection;
                             advancedSettingsViewModel.GenerateMultipleFiles = serviceConfig.GenerateMultipleFiles;
@@ -131,8 +132,7 @@ namespace Microsoft.OData.ConnectedService
         public override Task<ConnectedServiceInstance> GetFinishedServiceInstanceAsync()
         {
             this.UserSettings.Save();
-
-            this.ServiceInstance.InstanceId = AdvancedSettingsViewModel.GeneratedFileName;
+            this.ServiceInstance.InstanceId = AdvancedSettingsViewModel.GeneratedFileNamePrefix;
             this.ServiceInstance.Name = ConfigODataEndpointViewModel.ServiceName;
             this.ServiceInstance.MetadataTempFilePath = ConfigODataEndpointViewModel.MetadataTempPath;
             this.ServiceInstance.ServiceConfig = this.CreateServiceConfiguration();
@@ -161,7 +161,7 @@ namespace Microsoft.OData.ConnectedService
             {
                 serviceConfiguration = new ServiceConfiguration();
             }
-
+            
             serviceConfiguration.ServiceName = ConfigODataEndpointViewModel.ServiceName;
             serviceConfiguration.Endpoint = ConfigODataEndpointViewModel.Endpoint;
             serviceConfiguration.EdmxVersion = ConfigODataEndpointViewModel.EdmxVersion;
@@ -176,8 +176,8 @@ namespace Microsoft.OData.ConnectedService
             serviceConfiguration.IncludeCustomHeaders = ConfigODataEndpointViewModel.IncludeCustomHeaders;
 
             serviceConfiguration.UseDataServiceCollection = AdvancedSettingsViewModel.UseDataServiceCollection;
-            serviceConfiguration.GeneratedFileNamePrefix = AdvancedSettingsViewModel.GeneratedFileName;
-            serviceConfiguration.UseNameSpacePrefix = AdvancedSettingsViewModel.UseNamespacePrefix;
+            serviceConfiguration.GeneratedFileNamePrefix = AdvancedSettingsViewModel.GeneratedFileNamePrefix;
+            serviceConfiguration.UseNamespacePrefix = AdvancedSettingsViewModel.UseNamespacePrefix;
             serviceConfiguration.MakeTypesInternal = AdvancedSettingsViewModel.MakeTypesInternal;
             serviceConfiguration.OpenGeneratedFilesInIDE = AdvancedSettingsViewModel.OpenGeneratedFilesInIDE;
             serviceConfiguration.GenerateMultipleFiles = AdvancedSettingsViewModel.GenerateMultipleFiles;
