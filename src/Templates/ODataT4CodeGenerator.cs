@@ -1969,6 +1969,12 @@ public abstract class ODataClientTemplate : TemplateBase
         foreach (IEdmEntitySet entitySet in container.EntitySets())
         {
             IEdmEntityType entitySetElementType = entitySet.EntityType();
+
+            if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(entitySetElementType.Name))
+            {
+                continue;
+            }
+
             string entitySetElementTypeName = GetElementTypeName(entitySetElementType, container);
 
             string camelCaseEntitySetName = entitySet.Name;
@@ -1991,6 +1997,11 @@ public abstract class ODataClientTemplate : TemplateBase
         foreach (IEdmEntitySet entitySet in container.EntitySets())
         {
             IEdmEntityType entitySetElementType = entitySet.EntityType();
+
+            if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(entitySetElementType.Name))
+            {
+                continue;
+            }
             
             string entitySetElementTypeName = GetElementTypeName(entitySetElementType, container);
 
@@ -2001,7 +2012,7 @@ public abstract class ODataClientTemplate : TemplateBase
             if (this.context.EnableNamingAlias)
             {
                 camelCaseEntitySetName = Customization.CustomizeNaming(camelCaseEntitySetName);
-        }
+            }
 
             this.WriteContextAddToEntitySetMethod(camelCaseEntitySetName, entitySet.Name, GetFixedName(entitySetElementTypeName), parameterName);
         }
@@ -2009,6 +2020,12 @@ public abstract class ODataClientTemplate : TemplateBase
         foreach (IEdmSingleton singleton in container.Singletons())
         {
             IEdmEntityType singletonElementType = singleton.EntityType();
+
+            if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(singletonElementType.Name))
+            {
+                continue;
+            }
+
             string singletonElementTypeName = GetElementTypeName(singletonElementType, container);
             string camelCaseSingletonName = singleton.Name;
             if (this.context.EnableNamingAlias)
