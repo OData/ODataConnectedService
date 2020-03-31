@@ -229,7 +229,8 @@ namespace Microsoft.OData.ConnectedService
             {
                 var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
                 var entityTypes = EdmHelper.GetEntityTypes(model);
-                EntityTypesViewModel.LoadEntityTypes(entityTypes);
+                var boundOperations = EdmHelper.GetBoundOperations(model);
+                EntityTypesViewModel.LoadEntityTypes(entityTypes, boundOperations);
 
                 if (Context.IsUpdating)
                 {

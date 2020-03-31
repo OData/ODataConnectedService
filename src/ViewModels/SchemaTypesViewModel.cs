@@ -75,7 +75,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             return await base.OnPageLeavingAsync(args);
         }
 
-        public void LoadEntityTypes(IEnumerable<IEdmSchemaType> schemaTypes)
+        public void LoadEntityTypes(
+            IEnumerable<IEdmSchemaType> schemaTypes, IDictionary<IEdmStructuredType, List<IEdmOperation>> boundOperations)
         {
             var toLoad = new List<SchemaTypeModel>();
 
@@ -99,6 +100,30 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                             if (hasProperty && !navigationPropertyModel.IsSelected)
                             {
                                 navigationPropertyModel.IsSelected = true;
+                            }
+                        }
+
+                         if(boundOperations.TryGetValue(structuredType,out List<IEdmOperation> operations))
+                        {
+                            foreach (var operation in operations)
+                            {
+                                string returnTypeName = operation.ReturnType?.FullName();
+
+                                if (returnTypeName != null && SchemaTypeModel.TryGetValue(returnTypeName, out SchemaTypeModel referencedschemaTypeModel)
+                                    && !referencedschemaTypeModel.IsSelected)
+                                {
+                                    referencedschemaTypeModel.IsSelected = true;
+                                }
+
+                                IEnumerable<IEdmOperationParameter> parameters = operation.Parameters;
+
+                                foreach (var parameter in parameters)
+                                {
+                                    if (SchemaTypeModel.TryGetValue(parameter.Type.FullName(), out SchemaTypeModel model) && !model.IsSelected)
+                                    {
+                                        model.IsSelected = true;
+                                    }
+                                }
                             }
                         }
                     }

@@ -71,7 +71,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             return await base.OnPageLeavingAsync(args);
         }
 
-        public void LoadOperationImports(IEnumerable<IEdmOperationImport> operationImports, ICollection<string> excludedSchemaTypes, IDictionary<string,SchemaTypeModel> schemaTypeModels)
+        public void LoadOperationImports(IEnumerable<IEdmOperationImport> operationImports, ICollection<string> excludedSchemaTypes, IDictionary<string, SchemaTypeModel> schemaTypeModels)
         {
             var toLoad = new List<OperationImportModel>();
             var alreadyAdded = new HashSet<string>();
@@ -92,15 +92,15 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
                         foreach (var parameter in parameters)
                         {
-                            if (schemaTypeModels.TryGetValue(parameter.Type.FullName(), out SchemaTypeModel model))
+                            if (schemaTypeModels.TryGetValue(parameter.Type.FullName(), out SchemaTypeModel model) && !model.IsSelected)
                             {
                                 model.IsSelected = true;
                             }
                         }
 
-                        string returnType = operation.Operation.ReturnType?.FullName();
+                        string returnTypeName = operation.Operation.ReturnType?.FullName();
 
-                        if(returnType != null && schemaTypeModels.TryGetValue(returnType, out SchemaTypeModel schemaTypeModel))
+                        if(returnTypeName != null && schemaTypeModels.TryGetValue(returnTypeName, out SchemaTypeModel schemaTypeModel) && !schemaTypeModel.IsSelected)
                         {
                             schemaTypeModel.IsSelected = true;
                         }
