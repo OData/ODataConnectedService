@@ -71,7 +71,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             return await base.OnPageLeavingAsync(args);
         }
 
-        public void LoadOperationImports(IEnumerable<IEdmOperationImport> operationImports, ICollection<string> excludedEntityTypes)
+        public void LoadOperationImports(IEnumerable<IEdmOperationImport> operationImports, ICollection<string> excludedSchemaTypes, IDictionary<string,SchemaTypeModel> schemaTypeModels)
         {
             var toLoad = new List<OperationImportModel>();
             var alreadyAdded = new HashSet<string>();
@@ -80,11 +80,32 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             {
                 if (!alreadyAdded.Contains(operation.Name))
                 {
-                    toLoad.Add(new OperationImportModel()
+                    var operationImportModel = new OperationImportModel()
                     {
                         Name = operation.Name,
-                        IsSelected = IsOperationImportIncluded(operation, excludedEntityTypes)
-                    });
+                        IsSelected = IsOperationImportIncluded(operation, excludedSchemaTypes)
+                    };
+
+                    operationImportModel.PropertyChanged += (s, args) =>
+                    {
+                        IEnumerable<IEdmOperationParameter> parameters = operation.Operation.Parameters;
+
+                        foreach (var parameter in parameters)
+                        {
+                            if (schemaTypeModels.TryGetValue(parameter.Type.FullName(), out SchemaTypeModel model))
+                            {
+                                model.IsSelected = true;
+                            }
+                        }
+
+                        string returnType = operation.Operation.ReturnType?.FullName();
+
+                        if(returnType != null && schemaTypeModels.TryGetValue(returnType, out SchemaTypeModel schemaTypeModel))
+                        {
+                            schemaTypeModel.IsSelected = true;
+                        }
+                    };
+                    toLoad.Add(operationImportModel);
 
                     alreadyAdded.Add(operation.Name);
                 }

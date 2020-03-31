@@ -213,7 +213,7 @@ namespace Microsoft.OData.ConnectedService
 
                 var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
                 var operations = EdmHelper.GetOperationImports(model);
-                OperationImportsViewModel.LoadOperationImports(operations, new HashSet<string>(EntityTypesViewModel.ExcludedEntityTypeNames));
+                OperationImportsViewModel.LoadOperationImports(operations, new HashSet<string>(EntityTypesViewModel.ExcludedEntityTypeNames), EntityTypesViewModel.SchemaTypeModel);
 
                 if (Context.IsUpdating)
                 {

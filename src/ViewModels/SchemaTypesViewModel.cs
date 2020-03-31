@@ -23,10 +23,10 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             Legend = "Entity Types";
             EntityTypes = new List<SchemaTypeModel>();
             IsSupportedODataVersion = true;
-            EntityTypeModel = new Dictionary<string, SchemaTypeModel>();
+            SchemaTypeModel = new Dictionary<string, SchemaTypeModel>();
         }
 
-        public IDictionary<string, SchemaTypeModel> EntityTypeModel { get; set; }
+        public IDictionary<string, SchemaTypeModel> SchemaTypeModel { get; set; }
 
         public IEnumerable<SchemaTypeModel> EntityTypes { get; set; }
         /// <summary>
@@ -81,20 +81,20 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
             foreach (var schemaType in schemaTypes)
             {
-                var entityTypeModel = new SchemaTypeModel()
+                var schemaTypeModel = new SchemaTypeModel()
                 {
                     Name = schemaType.FullTypeName(),
                     ShortName = EdmHelper.GetTypeNameFromFullName(schemaType.FullTypeName()),
                     IsSelected = true
                 };
 
-                entityTypeModel.PropertyChanged += (s, args) => {
-                    if (entityTypeModel.IsSelected && schemaType is IEdmStructuredType structuredType)
+                schemaTypeModel.PropertyChanged += (s, args) => {
+                    if (schemaTypeModel.IsSelected && schemaType is IEdmStructuredType structuredType)
                     {
                         foreach (var property in structuredType.DeclaredProperties)
                         {
                             string propertyName = property is IEdmNavigationProperty ? property.Type.ToStructuredType().FullTypeName() : property.Type.FullName();
-                            bool hasProperty = EntityTypeModel.TryGetValue(propertyName, out SchemaTypeModel navigationPropertyModel);
+                            bool hasProperty = SchemaTypeModel.TryGetValue(propertyName, out SchemaTypeModel navigationPropertyModel);
 
                             if (hasProperty && !navigationPropertyModel.IsSelected)
                             {
@@ -104,9 +104,9 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                     }
                     };
 
-                toLoad.Add(entityTypeModel);
+                toLoad.Add(schemaTypeModel);
 
-                EntityTypeModel.Add(schemaType.FullTypeName(), entityTypeModel);               
+                SchemaTypeModel.Add(schemaType.FullTypeName(), schemaTypeModel);               
             }
 
             EntityTypes = toLoad.OrderBy(o => o.Name).ToList();

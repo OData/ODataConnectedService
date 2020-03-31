@@ -204,8 +204,8 @@
     <Compile Include="Views\ConfigODataEndpoint.xaml.cs">
       <DependentUpon>ConfigODataEndpoint.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EntityTypes.xaml.cs">
-      <DependentUpon>EntityTypes.xaml</DependentUpon>
+    <Compile Include="Views\SchemaTypes.xaml.cs">
+      <DependentUpon>SchemaTypes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\OperationImports.xaml.cs">
       <DependentUpon>OperationImports.xaml</DependentUpon>
@@ -267,7 +267,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\EntityTypes.xaml">
+    <Page Include="Views\SchemaTypes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
