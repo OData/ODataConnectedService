@@ -12,23 +12,23 @@ using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService.ViewModels
 {
-    internal class EntityTypesViewModel: ConnectedServiceWizardPage
+    internal class SchemaTypesViewModel: ConnectedServiceWizardPage
     {
         private bool _isSupportedVersion;
 
-        public EntityTypesViewModel(): base()
+        public SchemaTypesViewModel(): base()
         {
             Title = "Entity Selection";
             Description = "Select Entity Types to include in the generated code.";
             Legend = "Entity Types";
-            EntityTypes = new List<EntityTypeModel>();
+            EntityTypes = new List<SchemaTypeModel>();
             IsSupportedODataVersion = true;
-            EntityTypeModel = new Dictionary<string, EntityTypeModel>();
+            EntityTypeModel = new Dictionary<string, SchemaTypeModel>();
         }
 
-        public IDictionary<string, EntityTypeModel> EntityTypeModel { get; set; }
+        public IDictionary<string, SchemaTypeModel> EntityTypeModel { get; set; }
 
-        public IEnumerable<EntityTypeModel> EntityTypes { get; set; }
+        public IEnumerable<SchemaTypeModel> EntityTypes { get; set; }
         /// <summary>
         /// Whether the connected service supports operation selection feature for the current OData version, default is true
         /// </summary>
@@ -77,11 +77,11 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public void LoadEntityTypes(IEnumerable<IEdmSchemaType> schemaTypes)
         {
-            var toLoad = new List<EntityTypeModel>();
+            var toLoad = new List<SchemaTypeModel>();
 
             foreach (var schemaType in schemaTypes)
             {
-                var entityTypeModel = new EntityTypeModel()
+                var entityTypeModel = new SchemaTypeModel()
                 {
                     Name = schemaType.FullTypeName(),
                     ShortName = EdmHelper.GetTypeNameFromFullName(schemaType.FullTypeName()),
@@ -94,7 +94,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                         foreach (var property in structuredType.DeclaredProperties)
                         {
                             string propertyName = property is IEdmNavigationProperty ? property.Type.ToStructuredType().FullTypeName() : property.Type.FullName();
-                            bool hasProperty = EntityTypeModel.TryGetValue(propertyName, out EntityTypeModel navigationPropertyModel);
+                            bool hasProperty = EntityTypeModel.TryGetValue(propertyName, out SchemaTypeModel navigationPropertyModel);
 
                             if (hasProperty && !navigationPropertyModel.IsSelected)
                             {
@@ -122,7 +122,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public void EmptyList()
         {
-            EntityTypes = Enumerable.Empty<EntityTypeModel>();
+            EntityTypes = Enumerable.Empty<SchemaTypeModel>();
         }
 
         public void SelectAll()

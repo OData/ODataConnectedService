@@ -21,7 +21,7 @@ namespace Microsoft.OData.ConnectedService
 
         public OperationImportsViewModel OperationImportsViewModel { get; set; }
 
-        public EntityTypesViewModel EntityTypesViewModel { get; set; }
+        public SchemaTypesViewModel EntityTypesViewModel { get; set; }
 
         public AdvancedSettingsViewModel AdvancedSettingsViewModel { get; set; }
 
@@ -42,7 +42,7 @@ namespace Microsoft.OData.ConnectedService
             ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(this.UserSettings, this);
             AdvancedSettingsViewModel = new AdvancedSettingsViewModel(this.UserSettings);
             OperationImportsViewModel = new OperationImportsViewModel();
-            EntityTypesViewModel = new EntityTypesViewModel();
+            EntityTypesViewModel = new SchemaTypesViewModel();
 
             ServiceConfigurationV4 serviceConfig = null;
 
@@ -225,7 +225,7 @@ namespace Microsoft.OData.ConnectedService
 
         public void EntityTypeSelectionViewModel_PageEntering(object sender, EventArgs args)
         {
-            if (sender is EntityTypesViewModel entityTypeViewModel)
+            if (sender is SchemaTypesViewModel entityTypeViewModel)
             {
                 var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
                 var entityTypes = EdmHelper.GetEntityTypes(model);

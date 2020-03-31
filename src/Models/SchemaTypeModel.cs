@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 
 namespace Microsoft.OData.ConnectedService.Models
 {
-    class EntityTypeModel: INotifyPropertyChanged
+    class SchemaTypeModel: INotifyPropertyChanged
     {
         private bool _isSelected;
 
         public string Name { get; set; }
+
+        public string ShortName { get; set; }
+
         public bool IsSelected
         {
             get { return _isSelected; }

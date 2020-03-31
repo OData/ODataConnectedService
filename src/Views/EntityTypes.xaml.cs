@@ -28,12 +28,12 @@ namespace Microsoft.OData.ConnectedService.Views
 
         private void UnselectAll_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as EntityTypesViewModel).UnselectAll();
+            (DataContext as SchemaTypesViewModel).UnselectAll();
         }
 
         private void SelectAll_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as EntityTypesViewModel).SelectAll();
+            (DataContext as SchemaTypesViewModel).SelectAll();
         }
     }
 }
