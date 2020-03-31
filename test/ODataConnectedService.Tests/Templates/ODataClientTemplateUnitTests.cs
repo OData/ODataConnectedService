@@ -378,7 +378,7 @@ namespace ODataConnectedService.Tests
 
             internal override string DictionaryConstructor
             {
-                get { return "new {DictionaryTypeName}()"; }
+                get { return "new global::System.Collections.Generic.Dictionary<{0}, {1}>()"; }
             }
 
             internal override string BaseEntityType
