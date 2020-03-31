@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.Views;
 using Microsoft.OData.Edm;
@@ -74,42 +75,38 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             return await base.OnPageLeavingAsync(args);
         }
 
-        public void LoadEntityTypes(IEnumerable<IEdmEntityType> entityTypes)
+        public void LoadEntityTypes(IEnumerable<IEdmSchemaType> schemaTypes)
         {
             var toLoad = new List<EntityTypeModel>();
-            var alreadyAdded = new HashSet<string>();
 
-            foreach (var entityType in entityTypes)
+            foreach (var schemaType in schemaTypes)
             {
-                if (!alreadyAdded.Contains(entityType.FullName()))
+                var entityTypeModel = new EntityTypeModel()
                 {
-                    var entityTypeModel = new EntityTypeModel()
+                    Name = schemaType.FullTypeName(),
+                    ShortName = EdmHelper.GetTypeNameFromFullName(schemaType.FullTypeName()),
+                    IsSelected = true
+                };
+
+                entityTypeModel.PropertyChanged += (s, args) => {
+                    if (entityTypeModel.IsSelected && schemaType is IEdmStructuredType structuredType)
                     {
-                        Name = entityType.Name,
-                        IsSelected = true
-                    };
-
-                    entityTypeModel.PropertyChanged += (s, args) => {
-                        if (entityTypeModel.IsSelected)
+                        foreach (var property in structuredType.DeclaredProperties)
                         {
-                            foreach (var navigationProperty in entityType.DeclaredNavigationProperties())
-                            {
-                               bool hasProperty =  EntityTypeModel.TryGetValue(navigationProperty.Type.ToStructuredType().FullTypeName(), out EntityTypeModel navigationPropertyModel);
+                            string propertyName = property is IEdmNavigationProperty ? property.Type.ToStructuredType().FullTypeName() : property.Type.FullName();
+                            bool hasProperty = EntityTypeModel.TryGetValue(propertyName, out EntityTypeModel navigationPropertyModel);
 
-                                if (hasProperty &&  !navigationPropertyModel.IsSelected)
-                                {
-                                    navigationPropertyModel.IsSelected = true;
-                                }         
+                            if (hasProperty && !navigationPropertyModel.IsSelected)
+                            {
+                                navigationPropertyModel.IsSelected = true;
                             }
-                        }                      
+                        }
+                    }
                     };
 
-                    toLoad.Add(entityTypeModel);
+                toLoad.Add(entityTypeModel);
 
-                    alreadyAdded.Add(entityType.FullName());
-
-                    EntityTypeModel.Add(entityType.FullName(), entityTypeModel);
-                }
+                EntityTypeModel.Add(schemaType.FullTypeName(), entityTypeModel);               
             }
 
             EntityTypes = toLoad.OrderBy(o => o.Name).ToList();

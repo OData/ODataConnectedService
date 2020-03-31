@@ -1669,6 +1669,11 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             if (type is IEdmEnumType enumType)
             {
+                    if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(enumType.FullName()))
+                    {
+                        continue;
+                    }
+
                     if(context.GenerateMultipleFiles) 
                     {
                         context.MultipleFilesManager.StartNewFile($"{enumType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
@@ -1687,6 +1692,12 @@ public abstract class ODataClientTemplate : TemplateBase
             {
                 if (type is IEdmComplexType complexType)
                 {
+
+                    if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(complexType.FullName()))
+                    {
+                        continue;
+                    }
+
                     if(context.GenerateMultipleFiles) 
                     {
                         context.MultipleFilesManager.StartNewFile($"{complexType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
@@ -1704,7 +1715,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 else if (type is IEdmEntityType entityType)
                 {
 
-                    if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(entityType.Name))
+                    if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(entityType.FullName()))
                     {
                         continue;
                     }
@@ -1745,7 +1756,7 @@ public abstract class ODataClientTemplate : TemplateBase
             foreach (IEdmEntityType type in schemaElements.OfType<IEdmEntityType>())
             {
 
-                if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(type.Name))
+                if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(type.FullName()))
                 {
                     continue;
                 }
@@ -1970,7 +1981,7 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             IEdmEntityType entitySetElementType = entitySet.EntityType();
 
-            if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(entitySetElementType.Name))
+            if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(entitySetElementType.FullName()))
             {
                 continue;
             }
@@ -1998,7 +2009,7 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             IEdmEntityType entitySetElementType = entitySet.EntityType();
 
-            if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(entitySetElementType.Name))
+            if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(entitySetElementType.FullName()))
             {
                 continue;
             }
@@ -2021,7 +2032,7 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             IEdmEntityType singletonElementType = singleton.EntityType();
 
-            if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(singletonElementType.Name))
+            if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(singletonElementType.FullName()))
             {
                 continue;
             }

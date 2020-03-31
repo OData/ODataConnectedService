@@ -53,14 +53,27 @@ namespace Microsoft.OData.ConnectedService.Common
             }
         }
 
-        public static IEnumerable<IEdmEntityType> GetEntityTypes(IEdmModel model)
+        public static IEnumerable<IEdmSchemaType> GetEntityTypes(IEdmModel model)
         {
-            var entityTypes = model.SchemaElements.OfType<IEdmEntityType>();
+            var entityTypes = model.SchemaElements.OfType<IEdmSchemaType>();
 
             foreach (var entityType in entityTypes)
             {
                     yield return entityType;
             }
+        }
+
+
+        public static string GetTypeNameFromFullName(string fullName)
+        {
+            if (string.IsNullOrEmpty(fullName))
+            {
+                return string.Empty;
+            }
+
+            string[] nameArr = fullName.Split('.');
+
+            return nameArr[nameArr.Length - 1];
         }
     }
 }

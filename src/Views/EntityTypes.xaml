@@ -48,7 +48,7 @@
                             IsChecked="{Binding IsSelected, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                         <TextBlock
                             VerticalAlignment="Bottom"
-                            Text="{Binding Name}" />
+                            Text="{Binding ShortName}" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

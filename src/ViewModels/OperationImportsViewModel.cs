@@ -99,13 +99,13 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
             foreach (var parameter in parameters)
             {
-                if (excludedTypes.Contains(GetTypeNameFromFullName(parameter.Type.FullName())))
+                if (excludedTypes.Contains(parameter.Type.FullName()))
                 {
                     return false;
                 }
             }
 
-            string returnType = GetTypeNameFromFullName(operationImport.Operation.ReturnType?.FullName());
+            string returnType = operationImport.Operation.ReturnType?.FullName();
 
             if (excludedTypes.Contains(returnType))
             {
@@ -113,18 +113,6 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
 
             return true;
-        }
-
-        public  string GetTypeNameFromFullName(string fullName)
-        {
-            if(string.IsNullOrEmpty(fullName))
-            {
-                return string.Empty;
-            }
-
-            string[] nameArr = fullName.Split('.');
-
-            return nameArr[nameArr.Length - 1];
         }
 
         public void ExcludeOperationImports(IEnumerable<string> operationsToExclude)
