@@ -2667,17 +2667,16 @@ public abstract class ODataClientTemplate : TemplateBase
                 };
         }).ToList();
 
-        System.Reflection.BindingFlags bindingFlags = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance;
-
-        // NOTE: A base type may already have the dynamic properties dictionary            
-        if (structuredType.IsOpen && !structuredType.GetType().GetProperties(bindingFlags).Any(p => typeof(IDictionary<string, object>).IsAssignableFrom(p.PropertyType)))
+        // NOTE: If structured type has a base type and that base type is open, then the dynamic properties property is emitted on the client base type
+        if (structuredType.IsOpen && (structuredType.BaseType == null || (structuredType.BaseType != null && !structuredType.BaseType.IsOpen)))
         {
             // In the odd case that there exists a declared property with a name similar to the preferred name for dynamic properties property
             string dynamicPropertiesPropertyName = DynamicPropertiesPropertyBase;
             string dynamicPropertiesPropertyTemp = dynamicPropertiesPropertyName;
             int suffix = 2;
 
-            // Use GetProperties() to capture inherited properties
+            System.Reflection.BindingFlags bindingFlags = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance;
+            // Using GetProperties() with Public and Instance flags will return all accessible properties (including those inherited from base types)
             while (structuredType.GetType().GetProperties(bindingFlags).Any(p => p.Name.Equals(dynamicPropertiesPropertyTemp, StringComparison.Ordinal)))
             {
                 dynamicPropertiesPropertyTemp = dynamicPropertiesPropertyName + suffix.ToString();

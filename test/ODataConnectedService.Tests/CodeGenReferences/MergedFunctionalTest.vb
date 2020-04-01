@@ -1291,6 +1291,26 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnOrdersChanged()
         End Sub
+        '''<summary>
+        '''There are no comments for Property DynamicProperties in the schema.
+        '''</summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        Public Overridable Property DynamicProperties() As Global.System.Collections.Generic.IDictionary(Of String, Object)
+            Get
+                Return Me._DynamicProperties
+            End Get
+            Set
+                Me.OnDynamicPropertiesChanging(value)
+                Me._DynamicProperties = value
+                Me.OnDynamicPropertiesChanged
+            End Set
+        End Property
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        Private _DynamicProperties As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)
+        Partial Private Sub OnDynamicPropertiesChanging(ByVal value As Global.System.Collections.Generic.IDictionary(Of String, Object))
+        End Sub
+        Partial Private Sub OnDynamicPropertiesChanged()
+        End Sub
         ''' <summary>
         ''' There are no comments for foo2 in the schema.
         ''' </summary>
@@ -7084,6 +7104,26 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBadChanged()
         End Sub
+        '''<summary>
+        '''There are no comments for Property DynamicProperties in the schema.
+        '''</summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        Public Overridable Property DynamicProperties() As Global.System.Collections.Generic.IDictionary(Of String, Object)
+            Get
+                Return Me._DynamicProperties
+            End Get
+            Set
+                Me.OnDynamicPropertiesChanging(value)
+                Me._DynamicProperties = value
+                Me.OnDynamicPropertiesChanged
+            End Set
+        End Property
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        Private _DynamicProperties As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)
+        Partial Private Sub OnDynamicPropertiesChanging(ByVal value As Global.System.Collections.Generic.IDictionary(Of String, Object))
+        End Sub
+        Partial Private Sub OnDynamicPropertiesChanged()
+        End Sub
     End Class
     '''<summary>
     '''There are no comments for PrincipalSingle in the schema.
@@ -8750,6 +8790,26 @@ Namespace MergedFunctionalTest1
         Partial Private Sub OnAddressChanging(ByVal value As MergedFunctionalTest1.Address)
         End Sub
         Partial Private Sub OnAddressChanged()
+        End Sub
+        '''<summary>
+        '''There are no comments for Property DynamicProperties in the schema.
+        '''</summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        Public Overridable Property DynamicProperties() As Global.System.Collections.Generic.IDictionary(Of String, Object)
+            Get
+                Return Me._DynamicProperties
+            End Get
+            Set
+                Me.OnDynamicPropertiesChanging(value)
+                Me._DynamicProperties = value
+                Me.OnDynamicPropertiesChanged
+            End Set
+        End Property
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        Private _DynamicProperties As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)
+        Partial Private Sub OnDynamicPropertiesChanging(ByVal value As Global.System.Collections.Generic.IDictionary(Of String, Object))
+        End Sub
+        Partial Private Sub OnDynamicPropertiesChanged()
         End Sub
     End Class
     '''<summary>

@@ -2223,7 +2223,7 @@ namespace ODataConnectedService.Tests
             Context = new ODataT4CodeGenerator.CodeGenerationContext(OneNamespaceAndEmptyComplexTypeEdmx, namespacePrefix);
             var template = new ODataClientTemplateImp(Context);
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
-            template.WritePropertiesForStructuredType(complexType.DeclaredProperties, complexType.IsOpen);
+            template.WritePropertiesForStructuredType(complexType);
             template.CalledActions.Should().BeEmpty();
         }
 
@@ -2234,7 +2234,7 @@ namespace ODataConnectedService.Tests
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ComplexTypeWithPropertiesEdmx, namespacePrefix);
             var template = new ODataClientTemplateImp(Context);
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
-            template.WritePropertiesForStructuredType(complexType.DeclaredProperties, complexType.IsOpen);
+            template.WritePropertiesForStructuredType(complexType);
 
             var expectedActions = new List<string>
             {
@@ -2254,7 +2254,7 @@ namespace ODataConnectedService.Tests
             };
             var template = new ODataClientTemplateImp(Context);
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
-            template.WritePropertiesForStructuredType(complexType.DeclaredProperties, complexType.IsOpen);
+            template.WritePropertiesForStructuredType(complexType);
 
             var expectedActions = new List<string>
             {
@@ -2331,7 +2331,7 @@ namespace ODataConnectedService.Tests
             Context = new ODataT4CodeGenerator.CodeGenerationContext(PrefixConflictEdmx, namespacePrefix);
             var template = new ODataClientTemplateImp(Context);
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
-            template.WritePropertiesForStructuredType(complexType.DeclaredProperties, complexType.IsOpen);
+            template.WritePropertiesForStructuredType(complexType);
 
             var expectedActions = new List<string>
             {
@@ -2367,7 +2367,7 @@ namespace ODataConnectedService.Tests
             var template = new ODataClientTemplateImp(Context);
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.SetPropertyIdentifierMappingsIfNameConflicts(complexType.Name, complexType);
-            template.WritePropertiesForStructuredType(complexType.DeclaredProperties, complexType.IsOpen);
+            template.WritePropertiesForStructuredType(complexType);
 
             var expectedActions = new List<string>
             {
@@ -2388,7 +2388,7 @@ namespace ODataConnectedService.Tests
             var template = new ODataClientTemplateImp(Context);
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.SetPropertyIdentifierMappingsIfNameConflicts(complexType.Name, complexType);
-            template.WritePropertiesForStructuredType(complexType.DeclaredProperties, complexType.IsOpen);
+            template.WritePropertiesForStructuredType(complexType);
 
             var expectedActions = new List<string>
             {

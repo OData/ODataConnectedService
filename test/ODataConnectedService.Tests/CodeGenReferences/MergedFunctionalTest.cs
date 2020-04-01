@@ -1410,6 +1410,27 @@ namespace MergedFunctionalTest
         partial void OnOrdersChanging(global::System.Collections.ObjectModel.Collection<global::MergedFunctionalTest.Order> value);
         partial void OnOrdersChanged();
         /// <summary>
+        /// There are no comments for Property DynamicProperties in the schema.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        public virtual global::System.Collections.Generic.IDictionary<string, object> DynamicProperties
+        {
+            get
+            {
+                return this._DynamicProperties;
+            }
+            set
+            {
+                this.OnDynamicPropertiesChanging(value);
+                this._DynamicProperties = value;
+                this.OnDynamicPropertiesChanged();
+            }
+        }
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        private global::System.Collections.Generic.IDictionary<string, object> _DynamicProperties = new global::System.Collections.Generic.Dictionary<string, object>();
+        partial void OnDynamicPropertiesChanging(global::System.Collections.Generic.IDictionary<string, object> value);
+        partial void OnDynamicPropertiesChanged();
+        /// <summary>
         /// There are no comments for foo2 in the schema.
         /// </summary>
         public virtual  global::Microsoft.OData.Client.DataServiceQuerySingle<string> foo2(int p2)
@@ -7461,6 +7482,27 @@ namespace MergedFunctionalTest
         private global::MergedFunctionalTest.BadCustomer _Bad;
         partial void OnBadChanging(global::MergedFunctionalTest.BadCustomer value);
         partial void OnBadChanged();
+        /// <summary>
+        /// There are no comments for Property DynamicProperties in the schema.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        public virtual global::System.Collections.Generic.IDictionary<string, object> DynamicProperties
+        {
+            get
+            {
+                return this._DynamicProperties;
+            }
+            set
+            {
+                this.OnDynamicPropertiesChanging(value);
+                this._DynamicProperties = value;
+                this.OnDynamicPropertiesChanged();
+            }
+        }
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        private global::System.Collections.Generic.IDictionary<string, object> _DynamicProperties = new global::System.Collections.Generic.Dictionary<string, object>();
+        partial void OnDynamicPropertiesChanging(global::System.Collections.Generic.IDictionary<string, object> value);
+        partial void OnDynamicPropertiesChanged();
     }
     /// <summary>
     /// There are no comments for PrincipalSingle in the schema.
@@ -9194,6 +9236,27 @@ namespace MergedFunctionalTest1
         private global::MergedFunctionalTest1.Address _Address;
         partial void OnAddressChanging(global::MergedFunctionalTest1.Address value);
         partial void OnAddressChanged();
+        /// <summary>
+        /// There are no comments for Property DynamicProperties in the schema.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        public virtual global::System.Collections.Generic.IDictionary<string, object> DynamicProperties
+        {
+            get
+            {
+                return this._DynamicProperties;
+            }
+            set
+            {
+                this.OnDynamicPropertiesChanging(value);
+                this._DynamicProperties = value;
+                this.OnDynamicPropertiesChanged();
+            }
+        }
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        private global::System.Collections.Generic.IDictionary<string, object> _DynamicProperties = new global::System.Collections.Generic.Dictionary<string, object>();
+        partial void OnDynamicPropertiesChanging(global::System.Collections.Generic.IDictionary<string, object> value);
+        partial void OnDynamicPropertiesChanged();
     }
     /// <summary>
     /// There are no comments for Address in the schema.
