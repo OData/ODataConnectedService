@@ -2335,7 +2335,7 @@ public abstract class ODataClientTemplate : TemplateBase
         this.WriteStructurdTypeDeclaration(entityType, this.BaseEntityType);
         this.SetPropertyIdentifierMappingsIfNameConflicts(entityType.Name, entityType);
         this.WriteTypeStaticCreateMethod(entityType.Name, entityType);
-        this.WritePropertiesForStructuredType(entityType.DeclaredProperties, entityType.IsOpen);
+        this.WritePropertiesForStructuredType(entityType);
 
         if (entityType.BaseType == null && this.context.UseDataServiceCollection)
         {
@@ -2353,7 +2353,7 @@ public abstract class ODataClientTemplate : TemplateBase
         this.WriteStructurdTypeDeclaration(complexType, string.Empty);
         this.SetPropertyIdentifierMappingsIfNameConflicts(complexType.Name, complexType);
         this.WriteTypeStaticCreateMethod(complexType.Name, complexType);
-        this.WritePropertiesForStructuredType(complexType.DeclaredProperties, complexType.IsOpen);
+        this.WritePropertiesForStructuredType(complexType);
 
         if (complexType.BaseType == null && this.context.UseDataServiceCollection)
         {
@@ -2792,9 +2792,10 @@ public abstract class ODataClientTemplate : TemplateBase
         }
     }
 
-    internal void WritePropertiesForStructuredType(IEnumerable<IEdmProperty> properties, bool typeIsOpen)
+    internal void WritePropertiesForStructuredType(IEdmStructuredType structuredType)
     {
          bool useDataServiceCollection = this.context.UseDataServiceCollection;
+         IEnumerable<IEdmProperty> properties = structuredType.DeclaredProperties;
 
         var propertyInfos = properties.Select(property =>
         {
@@ -2812,14 +2813,18 @@ public abstract class ODataClientTemplate : TemplateBase
                 };
         }).ToList();
 
-        if (typeIsOpen)
+        System.Reflection.BindingFlags bindingFlags = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance;
+
+        // NOTE: A base type may already have the dynamic properties dictionary            
+        if (structuredType.IsOpen && !structuredType.GetType().GetProperties(bindingFlags).Any(p => typeof(IDictionary<string, object>).IsAssignableFrom(p.PropertyType)))
         {
             // In the odd case that there exists a declared property with a name similar to the preferred name for dynamic properties property
             string dynamicPropertiesPropertyName = DynamicPropertiesPropertyBase;
             string dynamicPropertiesPropertyTemp = dynamicPropertiesPropertyName;
             int suffix = 2;
 
-            while (properties.Any(property => property.Name.Equals(dynamicPropertiesPropertyTemp, StringComparison.Ordinal)))
+            // Use GetProperties() to capture inherited properties
+            while (structuredType.GetType().GetProperties(bindingFlags).Any(p => p.Name.Equals(dynamicPropertiesPropertyTemp, StringComparison.Ordinal)))
             {
                 dynamicPropertiesPropertyTemp = dynamicPropertiesPropertyName + suffix.ToString();
                 suffix++;
