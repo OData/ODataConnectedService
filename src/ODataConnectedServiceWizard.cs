@@ -158,7 +158,7 @@ namespace Microsoft.OData.ConnectedService
             {
                 var ServiceConfigurationV4 = new ServiceConfigurationV4();
                 ServiceConfigurationV4.ExcludedOperationImports = OperationImportsViewModel.ExcludedOperationImportsNames.ToList();
-                ServiceConfigurationV4.ExcludedEntityTypes = EntityTypesViewModel.ExcludedEntityTypeNames.ToList();
+                ServiceConfigurationV4.ExcludedSchemaTypes = EntityTypesViewModel.ExcludedEntityTypeNames.ToList();
                 ServiceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = AdvancedSettingsViewModel.IgnoreUnexpectedElementsAndAttributes;
                 ServiceConfigurationV4.EnableNamingAlias = AdvancedSettingsViewModel.EnableNamingAlias;
                 ServiceConfigurationV4.IncludeT4File = AdvancedSettingsViewModel.IncludeT4File;
@@ -235,7 +235,7 @@ namespace Microsoft.OData.ConnectedService
                 if (Context.IsUpdating)
                 {
                     var serviceConfig = Context.GetExtendedDesignerData<ServiceConfigurationV4>();
-                    entityTypeViewModel.ExcludeEntityTypes(serviceConfig?.ExcludedEntityTypes ?? Enumerable.Empty<string>());
+                    entityTypeViewModel.ExcludeEntityTypes(serviceConfig?.ExcludedSchemaTypes ?? Enumerable.Empty<string>());
                 }
             }
         }

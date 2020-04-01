@@ -78,7 +78,7 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             MultipleFilesManager = FilesManager.Create(this.Host, null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
-            ExcludedEntityTypes = this.ExcludedEntityTypes
+            ExcludedSchemaTypes = this.ExcludedSchemaTypes
         };
     }
     else
@@ -115,7 +115,7 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             MultipleFilesManager = FilesManager.Create(this.Host, null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
-            ExcludedEntityTypes = this.ExcludedEntityTypes
+            ExcludedSchemaTypes = this.ExcludedSchemaTypes
         };
     }
 
@@ -210,7 +210,7 @@ public static class Configuration
 	public const string ExcludedOperationImports = "";
 
     // Comma-separated list of the names of entity types to exclude from the generated code
-	public const string ExcludedEntityTypes = "";
+	public const string ExcludedSchemaTypes = "";
 }
 
 public static class Customization
@@ -410,21 +410,21 @@ public IEnumerable <string> ExcludedOperationImports
     }
 }
 
-private IEnumerable<string> excludedEntityTypes = new List<string>();
+private IEnumerable<string> excludedSchemaTypes = new List<string>();
 
 /// <summary>
 /// list of entity types to exclude from the generated code
 /// </summary>
-public IEnumerable <string> ExcludedEntityTypes
+public IEnumerable <string> ExcludedSchemaTypes
 {
     get
     {
-        return excludedEntityTypes;
+        return excludedSchemaTypes;
     }
 
     set
     {
-        excludedEntityTypes = value;
+        excludedSchemaTypes = value;
     }
 }
 
@@ -672,12 +672,12 @@ public void ValidateAndSetExcludedOperationImportsFromString(string inputValue)
     this.ExcludedOperationImports = inputValue.Split(',').Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
 }
 
-/// Set the ExcludedEntityTypes property with the given value.
+/// Set the ExcludedSchemaTypes property with the given value.
 /// </summary>
 /// <param name="inputValue">Comma-separated list of operation import names</param>
-public void ValidateAndSetExcludedEntityTypesFromString(string inputValue)
+public void ValidateAndSetExcludedSchemaTypesFromString(string inputValue)
 {
-    this.ExcludedEntityTypes = inputValue.Split(',').Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
+    this.ExcludedSchemaTypes = inputValue.Split(',').Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
 }
 
 /// <summary>
@@ -697,7 +697,7 @@ private void ApplyParametersFromConfigurationClass()
     this.SetCustomHttpHeadersFromString(Configuration.CustomHttpHeaders);
     this.ExcludedOperationImports = Configuration.ExcludedOperationImports.Split(',')
         .Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
-    this.ExcludedEntityTypes = Configuration.ExcludedEntityTypes.Split(',')
+    this.ExcludedSchemaTypes = Configuration.ExcludedSchemaTypes.Split(',')
         .Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
 }
 
@@ -1141,7 +1141,7 @@ public class CodeGenerationContext
         /// <summary>
 	/// list of entity types to omit from the generated code
 	/// </summary>
-    public IEnumerable<string> ExcludedEntityTypes
+    public IEnumerable<string> ExcludedSchemaTypes
     {
         get;
         set;
@@ -1669,7 +1669,7 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             if (type is IEdmEnumType enumType)
             {
-                    if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(enumType.FullName()))
+                    if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(enumType.FullName()))
                     {
                         continue;
                     }
@@ -1693,7 +1693,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 if (type is IEdmComplexType complexType)
                 {
 
-                    if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(complexType.FullName()))
+                    if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(complexType.FullName()))
                     {
                         continue;
                     }
@@ -1715,7 +1715,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 else if (type is IEdmEntityType entityType)
                 {
 
-                    if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(entityType.FullName()))
+                    if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(entityType.FullName()))
                     {
                         continue;
                     }
@@ -1756,7 +1756,7 @@ public abstract class ODataClientTemplate : TemplateBase
             foreach (IEdmEntityType type in schemaElements.OfType<IEdmEntityType>())
             {
 
-                if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(type.FullName()))
+                if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(type.FullName()))
                 {
                     continue;
                 }
@@ -1981,7 +1981,7 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             IEdmEntityType entitySetElementType = entitySet.EntityType();
 
-            if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(entitySetElementType.FullName()))
+            if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(entitySetElementType.FullName()))
             {
                 continue;
             }
@@ -2009,7 +2009,7 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             IEdmEntityType entitySetElementType = entitySet.EntityType();
 
-            if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(entitySetElementType.FullName()))
+            if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(entitySetElementType.FullName()))
             {
                 continue;
             }
@@ -2032,7 +2032,7 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             IEdmEntityType singletonElementType = singleton.EntityType();
 
-            if (this.context.ExcludedEntityTypes != null && this.context.ExcludedEntityTypes.Contains(singletonElementType.FullName()))
+            if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(singletonElementType.FullName()))
             {
                 continue;
             }

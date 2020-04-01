@@ -26,7 +26,7 @@ namespace Microsoft.OData.ConnectedService.Models
         public string WebProxyNetworkCredentialsPassword { get; set; }
         public string WebProxyNetworkCredentialsDomain { get; set; }
         public bool IncludeCustomHeaders { get; set; }
-        public List<string> ExcludedEntityTypes;
+        public List<string> ExcludedSchemaTypes { get; set; }
 
     }
 

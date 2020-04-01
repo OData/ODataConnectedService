@@ -44,7 +44,7 @@ public static class Configuration
 	public const string ExcludedOperationImports = "";
 
     // Comma-separated list of the names of entity types to exclude from the generated code
-	public const string ExcludedEntityTypes = "";
+	public const string ExcludedSchemaTypes = "";
 }
 
 public static class Customization
