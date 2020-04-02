@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.ViewModels;
@@ -88,6 +89,7 @@ namespace Microsoft.OData.ConnectedService.Views
                 this.UserSettings.EnableNamingAlias = microsoftConnectedServiceData.ExtendedData?.EnableNamingAlias ?? this.UserSettings.EnableNamingAlias;
                 this.UserSettings.CustomHttpHeaders = microsoftConnectedServiceData.ExtendedData?.CustomHttpHeaders ?? this.UserSettings.CustomHttpHeaders;
                 this.UserSettings.IncludeCustomHeaders = microsoftConnectedServiceData.ExtendedData?.IncludeCustomHeaders ?? this.UserSettings.IncludeCustomHeaders;
+                this.UserSettings.ExcludedOperationImports = microsoftConnectedServiceData.ExtendedData?.ExcludedOperationImports ?? new List<string>();
                 this.UserSettings.WebProxyHost = microsoftConnectedServiceData.ExtendedData?.WebProxyHost ?? this.UserSettings.WebProxyHost;
                 this.UserSettings.IncludeWebProxy = microsoftConnectedServiceData.ExtendedData?.IncludeWebProxy ?? this.UserSettings.IncludeWebProxy;
                 this.UserSettings.IncludeWebProxyNetworkCredentials = microsoftConnectedServiceData.ExtendedData?.IncludeWebProxyNetworkCredentials ?? this.UserSettings.IncludeWebProxyNetworkCredentials;
@@ -97,6 +99,9 @@ namespace Microsoft.OData.ConnectedService.Views
                 ODataConnectedServiceWizard ServiceWizard = ((ConfigODataEndpointViewModel)this.DataContext).ServiceWizard;
                 ServiceWizard.AdvancedSettingsViewModel.UserSettings = this.UserSettings;
                 ServiceWizard.ConfigODataEndpointViewModel.UserSettings = this.UserSettings;
+                ServiceWizard.OperationImportsViewModel.UserSettings = this.UserSettings;
+                ServiceWizard.AdvancedSettingsViewModel.LoadFromUserSettings();
+                ServiceWizard.OperationImportsViewModel.LoadFromUserSettings();
                 this.Endpoint.Text = microsoftConnectedServiceData.ExtendedData?.Endpoint ?? this.Endpoint.Text;
                 this.ServiceName.Text = microsoftConnectedServiceData.ExtendedData?.ServiceName ?? this.ServiceName.Text;
                 this.CustomHttpHeaders.Text = microsoftConnectedServiceData.ExtendedData?.CustomHttpHeaders ?? this.CustomHttpHeaders.Text;
@@ -109,5 +114,5 @@ namespace Microsoft.OData.ConnectedService.Views
                 this.IncludeWebProxyNetworkCredentialsElement.IsChecked = microsoftConnectedServiceData.ExtendedData?.IncludeWebProxyNetworkCredentials ?? this.IncludeWebProxyNetworkCredentialsElement.IsChecked;
             }
         }
-    } 
+    }
 }

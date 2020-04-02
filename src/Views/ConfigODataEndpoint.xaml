@@ -31,8 +31,13 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="ServiceName" Text="{Binding Path=ServiceName}"
-                 HorizontalAlignment="Left" Margin="0, 5, 10, 5"  Width="230"  Height="20"/>
+            <TextBox
+                x:Name="ServiceName"
+                Width="230"
+                Height="20"
+                Margin="0,5,10,5"
+                HorizontalAlignment="Left"
+                Text="{Binding Path=ServiceName, Mode=TwoWay}" />
             <Button
                 x:Name="OpenConnectedServiceJsonFileButton"
                 Grid.Column="1"
@@ -65,7 +70,7 @@
                 HorizontalAlignment="Stretch"
                 IsEditable="True"
                 ItemsSource="{Binding Path=UserSettings.MruEndpoints}"
-                Text="{Binding Path=Endpoint, TargetNullValue='Enter your endpoint...'}" />
+                Text="{Binding Path=Endpoint, Mode=TwoWay, TargetNullValue='Enter your endpoint...'}" />
             <Button
                 x:Name="OpenEndpointFileButton"
                 Grid.Column="1"
@@ -85,7 +90,7 @@
             VerticalAlignment="Top"
             Content="Include Custom Http Headers"
             FontWeight="Medium"
-            IsChecked="{Binding IncludeCustomHeaders}" />
+            IsChecked="{Binding IncludeCustomHeaders, Mode=TwoWay}" />
 
         <StackPanel Margin="20,0,0,0" Visibility="{Binding Path=IsChecked, ElementName=IncludeHttpHeadersElement, Converter={StaticResource BooleanToVisibilityConverter}}">
 
@@ -100,7 +105,7 @@
                 Margin="20,5,10,5"
                 HorizontalAlignment="Left"
                 AcceptsReturn="True"
-                Text="{Binding Path=CustomHttpHeaders}"
+                Text="{Binding Path=CustomHttpHeaders, Mode=TwoWay}"
                 TextWrapping="Wrap"
                 VerticalScrollBarVisibility="Visible">
                 <TextBox.ToolTip>
@@ -122,7 +127,7 @@
             VerticalAlignment="Top"
             Content="Include WebProxy"
             FontWeight="Medium"
-            IsChecked="{Binding IncludeWebProxy}" />
+            IsChecked="{Binding IncludeWebProxy, Mode=TwoWay}" />
 
         <StackPanel Margin="20,0,0,0" Visibility="{Binding Path=IsChecked, ElementName=IncludeWebProxyElement, Converter={StaticResource BooleanToVisibilityConverter}}">
 
@@ -147,7 +152,7 @@
                 VerticalAlignment="Top"
                 Content="Include Proxy Network credentials"
                 FontWeight="Medium"
-                IsChecked="{Binding IncludeWebProxyNetworkCredentials}" />
+                IsChecked="{Binding IncludeWebProxyNetworkCredentials, Mode=TwoWay}" />
             <StackPanel
                 Margin="20,0,0,0"
                 Orientation="Vertical"
@@ -163,7 +168,7 @@
                     Width="300"
                     Margin="0,5,0,0"
                     HorizontalAlignment="Left"
-                    Text="{Binding WebProxyNetworkCredentialsUsername}"
+                    Text="{Binding WebProxyNetworkCredentialsUsername, Mode=TwoWay}"
                     TextWrapping="Wrap" />
 
                 <TextBlock
@@ -176,7 +181,7 @@
                     Width="300"
                     Margin="0,5,0,0"
                     HorizontalAlignment="Left"
-                    Text="{Binding WebProxyNetworkCredentialsPassword}"
+                    Text="{Binding WebProxyNetworkCredentialsPassword, Mode=TwoWay}"
                     TextWrapping="Wrap" />
 
                 <TextBlock
@@ -189,7 +194,7 @@
                     Width="300"
                     Margin="0,5,0,0"
                     HorizontalAlignment="Left"
-                    Text="{Binding WebProxyNetworkCredentialsDomain}"
+                    Text="{Binding WebProxyNetworkCredentialsDomain, Mode=TwoWay}"
                     TextWrapping="Wrap" />
 
             </StackPanel>

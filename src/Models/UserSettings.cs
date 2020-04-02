@@ -80,6 +80,9 @@ namespace Microsoft.OData.ConnectedService.Models
         [DataMember]
         public bool IncludeCustomHeaders { get; set; }
 
+        [DataMember]
+        public List<string> ExcludedOperationImports { get; set; }
+
         public UserSettings()
         {
             this.MruEndpoints = new ObservableCollection<string>();
