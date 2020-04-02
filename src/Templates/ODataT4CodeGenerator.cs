@@ -1803,6 +1803,12 @@ public abstract class ODataClientTemplate : TemplateBase
                 if (function.IsBound)
                 {
                     IEdmTypeReference edmTypeReference = function.Parameters.First().Type;
+
+                    if(this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(edmTypeReference.FullName()))
+                    {
+                        continue;
+                    }
+
                     string functionName = this.context.EnableNamingAlias ? Customization.CustomizeNaming(function.Name) : function.Name;
                     string parameterString, parameterExpressionString, parameterTypes, parameterValues;
                     bool useEntityReference;
@@ -1873,6 +1879,12 @@ public abstract class ODataClientTemplate : TemplateBase
                 if (action.IsBound)
                 {
                     IEdmTypeReference edmTypeReference = action.Parameters.First().Type;
+
+                    if(this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(edmTypeReference.FullName()))
+                    {
+                        continue;
+                    }
+
                     string actionName = this.context.EnableNamingAlias ? Customization.CustomizeNaming(action.Name) : action.Name;
                     string parameterString, parameterExpressionString, parameterTypes, parameterValues;
                     bool useEntityReference;

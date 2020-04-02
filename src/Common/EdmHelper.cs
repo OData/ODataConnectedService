@@ -16,13 +16,17 @@ namespace Microsoft.OData.ConnectedService.Common
 
         private static IEdmModel _model = null;
 
+        private static string _path;
+
         public static IEdmModel GetEdmModelFromFile(string path, ConnectedServiceContext context = null)
         {
 
-            if(_model != null)
+            if(_model != null && path != null && path.ToString().Equals(_path.ToString()))
             {
                 return _model;
             }
+
+            _path = path;
 
             var xmlSettings = new XmlReaderSettings
             {
@@ -65,7 +69,7 @@ namespace Microsoft.OData.ConnectedService.Common
 
         public static IDictionary<IEdmStructuredType,List<IEdmOperation>> GetBoundOperations(IEdmModel model)
         {
-            if(_boundOperations != null)
+            if(_boundOperations != null && model.ToString().Equals(_model.ToString()))
             {
                 return _boundOperations;
             }

@@ -14,7 +14,6 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 {
     internal class SchemaTypesViewModel: ConnectedServiceWizardPage
     {
-        private bool _isSupportedVersion;
 
         public SchemaTypesViewModel(): base()
         {
@@ -22,36 +21,12 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             Description = "Select Entity Types to include in the generated code.";
             Legend = "Entity Types";
             EntityTypes = new List<SchemaTypeModel>();
-            IsSupportedODataVersion = true;
             SchemaTypeModel = new Dictionary<string, SchemaTypeModel>();
         }
 
         public IDictionary<string, SchemaTypeModel> SchemaTypeModel { get; set; }
 
         public IEnumerable<SchemaTypeModel> EntityTypes { get; set; }
-        /// <summary>
-        /// Whether the connected service supports operation selection feature for the current OData version, default is true
-        /// </summary>
-        public bool IsSupportedODataVersion
-        {
-            get
-            {
-                return _isSupportedVersion;
-            }
-            set
-            {
-                _isSupportedVersion = value;
-                OnPropertyChanged("VersionWarningVisibility");
-            }
-        }
-
-        public Visibility VersionWarningVisibility
-        {
-            get
-            {
-                return IsSupportedODataVersion ? Visibility.Hidden : Visibility.Visible;
-            }
-        }
 
         public IEnumerable<string> ExcludedEntityTypeNames
         {
@@ -79,6 +54,9 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             IEnumerable<IEdmSchemaType> schemaTypes, IDictionary<IEdmStructuredType, List<IEdmOperation>> boundOperations)
         {
             var toLoad = new List<SchemaTypeModel>();
+            SchemaTypeModel.Clear();
+            EntityTypes = toLoad;
+
 
             foreach (var schemaType in schemaTypes)
             {
