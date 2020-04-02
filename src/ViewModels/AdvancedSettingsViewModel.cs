@@ -16,21 +16,19 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public string NamespacePrefix { get; set; }
         public bool EnableNamingAlias { get; set; }
         public bool IgnoreUnexpectedElementsAndAttributes { get; set; }
-        public string GeneratedFileName { get; set; }
+        public string GeneratedFileNamePrefix { get; set; }
         public bool IncludeT4File { get; set; }
         public bool MakeTypesInternal { get; set; }
         public bool OpenGeneratedFilesInIDE { get; set; }
-        public bool GenerateMultipleFiles { get; set; }
-
-        public UserSettings UserSettings { get; }
+        public bool GenerateMultipleFiles { get; set; }      
+        public UserSettings UserSettings { get; set; }
 
         public AdvancedSettingsViewModel(UserSettings userSettings) : base()
         {
-            this.UserSettings = userSettings;
             this.Title = "Settings";
             this.Description = "Advanced settings for generating client proxy";
             this.Legend = "Settings";
-            this.ResetDataContext();
+            this.UserSettings = userSettings;
         }
 
         public event EventHandler<EventArgs> PageEntering;
@@ -40,30 +38,29 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             await base.OnPageEnteringAsync(args);
 
             this.View = new AdvancedSettings();
-            this.ResetDataContext();
+            if (UserSettings != null)
+            {
+                this.GeneratedFileNamePrefix = UserSettings.GeneratedFileNamePrefix ?? Common.Constants.DefaultReferenceFileName;
+                this.OpenGeneratedFilesInIDE = UserSettings.OpenGeneratedFilesInIDE;
+                this.UseNamespacePrefix = UserSettings.UseNamespacePrefix;
+                this.NamespacePrefix = UserSettings.NamespacePrefix ?? Common.Constants.DefaultReferenceFileName;
+                this.UseDataServiceCollection = UserSettings.UseDataServiceCollection;
+                this.MakeTypesInternal = UserSettings.MakeTypesInternal;
+                this.IncludeT4File = UserSettings.IncludeT4File;
+                this.IgnoreUnexpectedElementsAndAttributes = UserSettings.IgnoreUnexpectedElementsAndAttributes;
+                this.EnableNamingAlias = UserSettings.EnableNamingAlias;
+                this.GenerateMultipleFiles = UserSettings.GenerateMultipleFiles;
+            }         
             this.View.DataContext = this;
-            PageEntering?.Invoke(this, EventArgs.Empty);
+            if (PageEntering != null)
+            {
+                this.PageEntering(this, EventArgs.Empty);
+            }
         }
 
         public override Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
         {
             return base.OnPageLeavingAsync(args);
         }
-
-        private void ResetDataContext()
-        {
-            this.UseNamespacePrefix = false;
-            this.NamespacePrefix = null;
-            this.UseDataServiceCollection = true;
-            this.IgnoreUnexpectedElementsAndAttributes = false;
-            this.EnableNamingAlias = false;
-            this.GeneratedFileName = Common.Constants.DefaultReferenceFileName;
-            this.IncludeT4File = false;
-            this.MakeTypesInternal = false;
-            this.OpenGeneratedFilesInIDE = false;
-            this.GenerateMultipleFiles = false;
-
-        }
-
     }
 }

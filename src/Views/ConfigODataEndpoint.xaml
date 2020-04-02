@@ -26,12 +26,29 @@
             Margin="0,5,10,5"
             HorizontalAlignment="Left"
             Text="Service name： " />
-        <TextBox
-            x:Name="ServiceName"
-            Width="250"
-            Margin="20,5,10,5"
-            HorizontalAlignment="Left"
-            Text="{Binding Path=ServiceName}" />
+        <Grid Margin="20,5,10,5" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="ServiceName" Text="{Binding Path=ServiceName}"
+                 HorizontalAlignment="Left" Margin="0, 5, 10, 5"  Width="230"  Height="20"/>
+            <Button
+                x:Name="OpenConnectedServiceJsonFileButton"
+                Grid.Column="1"
+                Width="210"
+                Height="20"
+                MinWidth="210"
+                MinHeight="20"
+                MaxWidth="210"
+                MaxHeight="20"
+                Margin="5,0,0,0"
+                HorizontalAlignment="Right"
+                HorizontalContentAlignment="Center"
+                Click="OpenConnectedServiceJsonFileButton_Click">
+                <TextBlock Text="Load ConnectedService json file" />
+            </Button>
+        </Grid>
         <TextBlock
             x:Name="EndpointLabel"
             Margin="0,5,10,5"

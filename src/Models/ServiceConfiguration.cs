@@ -12,7 +12,7 @@ namespace Microsoft.OData.ConnectedService.Models
         public string Endpoint { get; set; }
         public Version EdmxVersion { get; set; }
         public string GeneratedFileNamePrefix { get; set; }
-        public bool UseNameSpacePrefix { get; set; }
+        public bool UseNamespacePrefix { get; set; }
         public string NamespacePrefix { get; set; }
         public bool UseDataServiceCollection { get; set; }
         public bool MakeTypesInternal { get; set; }
