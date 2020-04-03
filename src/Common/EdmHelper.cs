@@ -12,6 +12,10 @@ namespace Microsoft.OData.ConnectedService.Common
 {
     internal class EdmHelper
     {
+        private static IDictionary<IEdmStructuredType, List<IEdmOperation>> _boundOperations = null;
+
+        private static IEdmModel _model = null;
+
         public static IEdmModel GetEdmModelFromFile(string path, ConnectedServiceContext context = null)
         {
             var xmlSettings = new XmlReaderSettings
@@ -21,11 +25,11 @@ namespace Microsoft.OData.ConnectedService.Common
 
             var reader = XmlReader.Create(path, xmlSettings);
 
-            var result = CsdlReader.TryParse(reader, true /* ignoreUnexpectedAttributes */, out var model, out var errors);
+            var result = CsdlReader.TryParse(reader, true /* ignoreUnexpectedAttributes */, out  _model, out var errors);
 
             if (result)
             {
-                return model;
+                return _model;
             } 
 
             if (context != null)
@@ -51,6 +55,52 @@ namespace Microsoft.OData.ConnectedService.Common
                     yield return operation;
                 }
             }
+        }
+
+        public static IDictionary<IEdmStructuredType,List<IEdmOperation>> GetBoundOperations(IEdmModel model)
+        {
+            _boundOperations = new Dictionary<IEdmStructuredType, List<IEdmOperation>>();
+            foreach (IEdmOperation operation in model.SchemaElements.OfType<IEdmOperation>())
+            {
+                if (operation.IsBound)
+                {
+                    IEdmType edmType = operation.Parameters.First().Type.Definition;
+                    if (edmType is IEdmStructuredType edmStructuredType)
+                    {
+                        if (!_boundOperations.TryGetValue(edmStructuredType, out List<IEdmOperation> operations))
+                        {
+                            operations = new List<IEdmOperation>();
+                        }
+
+                        operations.Add(operation);
+                        _boundOperations[edmStructuredType] = operations;
+                    }
+                }
+            }
+
+            return _boundOperations;
+        }
+
+        public static IEnumerable<IEdmSchemaType> GetEntityTypes(IEdmModel model)
+        {
+            var entityTypes = model.SchemaElements.OfType<IEdmSchemaType>();
+
+            foreach (var entityType in entityTypes)
+            {
+                    yield return entityType;
+            }
+        }
+
+        public static string GetTypeNameFromFullName(string fullName)
+        {
+            if (string.IsNullOrEmpty(fullName))
+            {
+                return string.Empty;
+            }
+
+            string[] nameArr = fullName.Split('.');
+
+            return nameArr[nameArr.Length - 1];
         }
     }
 }

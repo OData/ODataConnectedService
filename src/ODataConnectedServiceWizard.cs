@@ -2,6 +2,7 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OData.ConnectedService.Common;
@@ -19,6 +20,8 @@ namespace Microsoft.OData.ConnectedService
         public ConfigODataEndpointViewModel ConfigODataEndpointViewModel { get; set; }
 
         public OperationImportsViewModel OperationImportsViewModel { get; set; }
+
+        public SchemaTypesViewModel EntityTypesViewModel { get; set; }
 
         public AdvancedSettingsViewModel AdvancedSettingsViewModel { get; set; }
 
@@ -39,10 +42,13 @@ namespace Microsoft.OData.ConnectedService
             ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(this.UserSettings, this);
             AdvancedSettingsViewModel = new AdvancedSettingsViewModel(this.UserSettings);
             OperationImportsViewModel = new OperationImportsViewModel();
+            EntityTypesViewModel = new SchemaTypesViewModel();
 
             ServiceConfigurationV4 serviceConfig = null;
 
             OperationImportsViewModel.PageEntering += ObjectSelectionViewModel_PageEntering;
+
+            EntityTypesViewModel.PageEntering += EntityTypeSelectionViewModel_PageEntering;
 
             if (this.Context.IsUpdating)
             {
@@ -124,6 +130,7 @@ namespace Microsoft.OData.ConnectedService
             }
 
             this.Pages.Add(ConfigODataEndpointViewModel);
+            this.Pages.Add(EntityTypesViewModel);
             this.Pages.Add(OperationImportsViewModel);
             this.Pages.Add(AdvancedSettingsViewModel);
             this.IsFinishEnabled = true;
@@ -151,6 +158,7 @@ namespace Microsoft.OData.ConnectedService
             {
                 var ServiceConfigurationV4 = new ServiceConfigurationV4();
                 ServiceConfigurationV4.ExcludedOperationImports = OperationImportsViewModel.ExcludedOperationImportsNames.ToList();
+                ServiceConfigurationV4.ExcludedSchemaTypes = EntityTypesViewModel.ExcludedEntityTypeNames.ToList();
                 ServiceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = AdvancedSettingsViewModel.IgnoreUnexpectedElementsAndAttributes;
                 ServiceConfigurationV4.EnableNamingAlias = AdvancedSettingsViewModel.EnableNamingAlias;
                 ServiceConfigurationV4.IncludeT4File = AdvancedSettingsViewModel.IncludeT4File;
@@ -202,14 +210,32 @@ namespace Microsoft.OData.ConnectedService
                     objectSelectionViewModel.IsSupportedODataVersion = false;
                     return;
                 }
+
                 var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
                 var operations = EdmHelper.GetOperationImports(model);
-                OperationImportsViewModel.LoadOperationImports(operations);
+                OperationImportsViewModel.LoadOperationImports(operations, new HashSet<string>(EntityTypesViewModel.ExcludedEntityTypeNames), EntityTypesViewModel.SchemaTypeModel);
 
                 if (Context.IsUpdating)
                 {
                     var serviceConfig = Context.GetExtendedDesignerData<ServiceConfigurationV4>();
                     objectSelectionViewModel.ExcludeOperationImports(serviceConfig?.ExcludedOperationImports ?? Enumerable.Empty<string>());
+                }
+            }
+        }
+
+        public void EntityTypeSelectionViewModel_PageEntering(object sender, EventArgs args)
+        {
+            if (sender is SchemaTypesViewModel entityTypeViewModel)
+            {
+                var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+                var entityTypes = EdmHelper.GetEntityTypes(model);
+                var boundOperations = EdmHelper.GetBoundOperations(model);
+                EntityTypesViewModel.LoadEntityTypes(entityTypes, boundOperations);
+
+                if (Context.IsUpdating)
+                {
+                    var serviceConfig = Context.GetExtendedDesignerData<ServiceConfigurationV4>();
+                    entityTypeViewModel.ExcludeEntityTypes(serviceConfig?.ExcludedSchemaTypes ?? Enumerable.Empty<string>());
                 }
             }
         }
@@ -236,6 +262,12 @@ namespace Microsoft.OData.ConnectedService
                     {
                         this.OperationImportsViewModel.Dispose();
                         OperationImportsViewModel = null;
+                    }
+
+                    if (this.EntityTypesViewModel != null)
+                    {
+                        this.EntityTypesViewModel.Dispose();
+                        EntityTypesViewModel = null;
                     }
 
                     if (this.ConfigODataEndpointViewModel != null)
