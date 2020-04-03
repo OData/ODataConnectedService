@@ -20,6 +20,66 @@ namespace Microsoft.OData.ConnectedService.Models
         [DataMember]
         public ObservableCollection<string> MruEndpoints { get; private set; }
 
+        [DataMember]
+        public string ServiceName { get; set; }
+
+        [DataMember]
+        public string Endpoint { get; set; }
+
+        [DataMember]
+        public string GeneratedFileNamePrefix { get; set; }
+
+        [DataMember]
+        public bool UseNamespacePrefix { get; set; }
+
+        [DataMember]
+        public string NamespacePrefix { get; set; }
+
+        [DataMember]
+        public bool UseDataServiceCollection { get; set; }
+
+        [DataMember]
+        public bool MakeTypesInternal { get; set; }
+
+        [DataMember]
+        public bool OpenGeneratedFilesInIDE { get; set; }
+
+        [DataMember]
+        public bool GenerateMultipleFiles { get; set; }
+
+        [DataMember]
+        public string CustomHttpHeaders { get; set; }
+
+        [DataMember]
+        public bool EnableNamingAlias { get; set; }
+
+        [DataMember]
+        public bool IgnoreUnexpectedElementsAndAttributes { get; set; }
+
+        [DataMember]
+        public bool IncludeT4File { get; set; }
+
+        [DataMember]
+        public bool IncludeWebProxy { get; set; }
+
+        [DataMember]
+        public string WebProxyHost { get; set; }
+
+        [DataMember]
+        public bool IncludeWebProxyNetworkCredentials { get; set; }
+
+        [DataMember]
+        public string WebProxyNetworkCredentialsUsername { get; set; }
+
+        [DataMember]
+        public string WebProxyNetworkCredentialsPassword { get; set; }
+
+        [DataMember]
+        public string WebProxyNetworkCredentialsDomain { get; set; }
+
+        [DataMember]
+        public bool IncludeCustomHeaders { get; set; }
+
         public UserSettings()
         {
             this.MruEndpoints = new ObservableCollection<string>();

@@ -15,7 +15,7 @@
 
             <TextBlock x:Name="ReferenceFileNameLabel" Text="Enter the file name (without extension):"
                            HorizontalAlignment="Left" Margin="0, 5, 0, 0"/>
-            <TextBox x:Name="ReferenceFileName" Text="{Binding GeneratedFileName}"
+            <TextBox x:Name="ReferenceFileName" Text="{Binding GeneratedFileNamePrefix}"
                          HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="250" Margin="20, 5, 0, 0"/>
             <StackPanel x:Name="AdvancedSettingsHyperLinkPanel">
                 <TextBlock x:Name="Label" TextWrapping="WrapWithOverflow" Margin="0, 20, 40, 0">
