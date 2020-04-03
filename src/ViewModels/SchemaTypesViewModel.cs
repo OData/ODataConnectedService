@@ -54,9 +54,21 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             IEnumerable<IEdmSchemaType> schemaTypes, IDictionary<IEdmStructuredType, List<IEdmOperation>> boundOperations)
         {
             var toLoad = new List<SchemaTypeModel>();
-            SchemaTypeModel.Clear();
-            EntityTypes = toLoad;
 
+            foreach (var type in schemaTypes)
+            {
+                if (!SchemaTypeModel.ContainsKey(type.FullName()) || SchemaTypeModel.Count() != schemaTypes.Count())
+                {
+                    EntityTypes = toLoad;
+                    SchemaTypeModel.Clear();
+                    break;
+                }
+            }
+
+            if(EntityTypes.Count() > 0)
+            {
+                return;
+            }
 
             foreach (var schemaType in schemaTypes)
             {
@@ -143,6 +155,5 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                 entityType.IsSelected = false;
             }
         }
-
     }
 }

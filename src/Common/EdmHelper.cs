@@ -16,18 +16,8 @@ namespace Microsoft.OData.ConnectedService.Common
 
         private static IEdmModel _model = null;
 
-        private static string _path;
-
         public static IEdmModel GetEdmModelFromFile(string path, ConnectedServiceContext context = null)
         {
-
-            if(_model != null && path != null && path.ToString().Equals(_path.ToString()))
-            {
-                return _model;
-            }
-
-            _path = path;
-
             var xmlSettings = new XmlReaderSettings
             {
                 DtdProcessing = DtdProcessing.Parse
@@ -69,11 +59,6 @@ namespace Microsoft.OData.ConnectedService.Common
 
         public static IDictionary<IEdmStructuredType,List<IEdmOperation>> GetBoundOperations(IEdmModel model)
         {
-            if(_boundOperations != null && model.ToString().Equals(_model.ToString()))
-            {
-                return _boundOperations;
-            }
-
             _boundOperations = new Dictionary<IEdmStructuredType, List<IEdmOperation>>();
             foreach (IEdmOperation operation in model.SchemaElements.OfType<IEdmOperation>())
             {
