@@ -77,8 +77,7 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             MakeTypesInternal = this.MakeTypesInternal,
             MultipleFilesManager = FilesManager.Create(this.Host, null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
-            ExcludedOperationImports = this.ExcludedOperationImports,
-            ExcludedSchemaTypes = this.ExcludedSchemaTypes
+            ExcludedOperationImports = this.ExcludedOperationImports
         };
     }
     else
@@ -114,8 +113,7 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             MakeTypesInternal = this.MakeTypesInternal,
             MultipleFilesManager = FilesManager.Create(this.Host, null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
-            ExcludedOperationImports = this.ExcludedOperationImports,
-            ExcludedSchemaTypes = this.ExcludedSchemaTypes
+            ExcludedOperationImports = this.ExcludedOperationImports
         };
     }
 
@@ -209,8 +207,6 @@ public static class Configuration
 	// Comma-separated list of the names of operation imports to exclude from the generated code
 	public const string ExcludedOperationImports = "";
 
-    // Comma-separated list of the names of entity types to exclude from the generated code
-	public const string ExcludedSchemaTypes = "";
 }
 
 public static class Customization
@@ -407,24 +403,6 @@ public IEnumerable <string> ExcludedOperationImports
     set
     {
         excludedOperationImports = value;
-    }
-}
-
-private IEnumerable<string> excludedSchemaTypes = new List<string>();
-
-/// <summary>
-/// list of entity types to exclude from the generated code
-/// </summary>
-public IEnumerable <string> ExcludedSchemaTypes
-{
-    get
-    {
-        return excludedSchemaTypes;
-    }
-
-    set
-    {
-        excludedSchemaTypes = value;
     }
 }
 
@@ -672,14 +650,6 @@ public void ValidateAndSetExcludedOperationImportsFromString(string inputValue)
     this.ExcludedOperationImports = inputValue.Split(',').Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
 }
 
-/// Set the ExcludedSchemaTypes property with the given value.
-/// </summary>
-/// <param name="inputValue">Comma-separated list of operation import names</param>
-public void ValidateAndSetExcludedSchemaTypesFromString(string inputValue)
-{
-    this.ExcludedSchemaTypes = inputValue.Split(',').Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
-}
-
 /// <summary>
 /// Reads the parameter values from the Configuration class and applies them.
 /// </summary>
@@ -696,8 +666,6 @@ private void ApplyParametersFromConfigurationClass()
     this.GenerateMultipleFiles = Configuration.GenerateMultipleFiles;
     this.SetCustomHttpHeadersFromString(Configuration.CustomHttpHeaders);
     this.ExcludedOperationImports = Configuration.ExcludedOperationImports.Split(',')
-        .Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
-    this.ExcludedSchemaTypes = Configuration.ExcludedSchemaTypes.Split(',')
         .Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
 }
 
@@ -1133,15 +1101,6 @@ public class CodeGenerationContext
 	/// list of operation imports to omit from the generated code
 	/// </summary>
     public IEnumerable<string> ExcludedOperationImports
-    {
-        get;
-        set;
-    }
-
-        /// <summary>
-	/// list of entity types to omit from the generated code
-	/// </summary>
-    public IEnumerable<string> ExcludedSchemaTypes
     {
         get;
         set;
@@ -1669,11 +1628,6 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             if (type is IEdmEnumType enumType)
             {
-                    if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(enumType.FullName()))
-                    {
-                        continue;
-                    }
-
                     if(context.GenerateMultipleFiles) 
                     {
                         context.MultipleFilesManager.StartNewFile($"{enumType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
@@ -1692,12 +1646,6 @@ public abstract class ODataClientTemplate : TemplateBase
             {
                 if (type is IEdmComplexType complexType)
                 {
-
-                    if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(complexType.FullName()))
-                    {
-                        continue;
-                    }
-
                     if(context.GenerateMultipleFiles) 
                     {
                         context.MultipleFilesManager.StartNewFile($"{complexType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
@@ -1714,12 +1662,6 @@ public abstract class ODataClientTemplate : TemplateBase
                 }
                 else if (type is IEdmEntityType entityType)
                 {
-
-                    if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(entityType.FullName()))
-                    {
-                        continue;
-                    }
-
                     if(context.GenerateMultipleFiles) 
                     {
                         context.MultipleFilesManager.StartNewFile($"{entityType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
@@ -1755,12 +1697,6 @@ public abstract class ODataClientTemplate : TemplateBase
             this.WriteExtensionMethodsStart();
             foreach (IEdmEntityType type in schemaElements.OfType<IEdmEntityType>())
             {
-
-                if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(type.FullName()))
-                {
-                    continue;
-                }
-
                 string entityTypeName = type.Name;
                 entityTypeName = context.EnableNamingAlias ? Customization.CustomizeNaming(entityTypeName) : entityTypeName;
                 string entityTypeFullName = context.GetPrefixedFullName(type, GetFixedName(entityTypeName), this);
@@ -1803,12 +1739,6 @@ public abstract class ODataClientTemplate : TemplateBase
                 if (function.IsBound)
                 {
                     IEdmTypeReference edmTypeReference = function.Parameters.First().Type;
-
-                    if(this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(edmTypeReference.FullName()))
-                    {
-                        continue;
-                    }
-
                     string functionName = this.context.EnableNamingAlias ? Customization.CustomizeNaming(function.Name) : function.Name;
                     string parameterString, parameterExpressionString, parameterTypes, parameterValues;
                     bool useEntityReference;
@@ -1879,12 +1809,6 @@ public abstract class ODataClientTemplate : TemplateBase
                 if (action.IsBound)
                 {
                     IEdmTypeReference edmTypeReference = action.Parameters.First().Type;
-
-                    if(this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(edmTypeReference.FullName()))
-                    {
-                        continue;
-                    }
-
                     string actionName = this.context.EnableNamingAlias ? Customization.CustomizeNaming(action.Name) : action.Name;
                     string parameterString, parameterExpressionString, parameterTypes, parameterValues;
                     bool useEntityReference;
@@ -1992,12 +1916,6 @@ public abstract class ODataClientTemplate : TemplateBase
         foreach (IEdmEntitySet entitySet in container.EntitySets())
         {
             IEdmEntityType entitySetElementType = entitySet.EntityType();
-
-            if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(entitySetElementType.FullName()))
-            {
-                continue;
-            }
-
             string entitySetElementTypeName = GetElementTypeName(entitySetElementType, container);
 
             string camelCaseEntitySetName = entitySet.Name;
@@ -2020,11 +1938,6 @@ public abstract class ODataClientTemplate : TemplateBase
         foreach (IEdmEntitySet entitySet in container.EntitySets())
         {
             IEdmEntityType entitySetElementType = entitySet.EntityType();
-
-            if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(entitySetElementType.FullName()))
-            {
-                continue;
-            }
             
             string entitySetElementTypeName = GetElementTypeName(entitySetElementType, container);
 
@@ -2035,7 +1948,7 @@ public abstract class ODataClientTemplate : TemplateBase
             if (this.context.EnableNamingAlias)
             {
                 camelCaseEntitySetName = Customization.CustomizeNaming(camelCaseEntitySetName);
-            }
+        }
 
             this.WriteContextAddToEntitySetMethod(camelCaseEntitySetName, entitySet.Name, GetFixedName(entitySetElementTypeName), parameterName);
         }
@@ -2043,12 +1956,6 @@ public abstract class ODataClientTemplate : TemplateBase
         foreach (IEdmSingleton singleton in container.Singletons())
         {
             IEdmEntityType singletonElementType = singleton.EntityType();
-
-            if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(singletonElementType.FullName()))
-            {
-                continue;
-            }
-
             string singletonElementTypeName = GetElementTypeName(singletonElementType, container);
             string camelCaseSingletonName = singleton.Name;
             if (this.context.EnableNamingAlias)

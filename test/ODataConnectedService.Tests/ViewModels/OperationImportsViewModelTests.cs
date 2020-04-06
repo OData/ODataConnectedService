@@ -37,7 +37,7 @@ namespace ODataConnectedService.Tests.ViewModels
                             new EdmTypeDefinition("Test", "TypeDef", EdmPrimitiveTypeKind.String), false)))
             };
 
-            objectSelection.LoadOperationImports(listToLoad, new HashSet<string>(),new Dictionary<string,SchemaTypeModel>());
+            objectSelection.LoadOperationImports(listToLoad);
 
             objectSelection.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
             {

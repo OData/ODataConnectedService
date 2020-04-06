@@ -464,41 +464,13 @@ namespace ODataConnectedService.Tests
         {
             TempFilePath = "tempMetadata.xml";
             File.Delete(TempFilePath);
-            CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Metadata, null, true, true, false, false, null, true, tempFilePath : TempFilePath);
+            CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Metadata, null, true, true, false, false, null, true, TempFilePath);
             Action action = () => ODataT4CodeGeneratorTestDescriptors.ValidateXMLFile(TempFilePath);
             action.ShouldNotThrow<XmlException>();
             ODataT4CodeGeneratorTestDescriptors.ValidateEdmx(TempFilePath);
         }
 
-        [TestMethod]
-        public void CodeGenSelectingSchemaTypesTest()
-        {
-            string @namespace = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.";
-            List<string> excludedSchemaTypes = new List<string>()
-            {
-                $"{@namespace}AirportLocation",
-                $"{@namespace}Employee",
-                $"{@namespace}Event",
-                $"{@namespace}EventLocation",
-                $"{@namespace}Flight",
-                $"{@namespace}Manager",
-                $"{@namespace}PublicTransportation"
-            };
-
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntitiesEnumsFunctionsSelectTypes.Metadata, null, true, false, false, false, null, true,excludedSchemaTypes : excludedSchemaTypes);
-            ODataT4CodeGeneratorTestDescriptors.EntitiesEnumsFunctionsSelectTypes.Verify(code, true/*isCSharp*/, false/*useDSC*/);
-
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntitiesEnumsFunctionsSelectTypes.Metadata, null, false/*isCSharp*/, false, false, false, null, true, excludedSchemaTypes: excludedSchemaTypes);
-            ODataT4CodeGeneratorTestDescriptors.EntitiesEnumsFunctionsSelectTypes.Verify(code, false/*isCSharp*/, false/*useDSC*/);
-
-        }
-
-        private static string CodeGenWithT4Template(string edmx, string namespacePrefix, bool isCSharp,
-            bool useDataServiceCollection, bool enableNamingAlias = false,
-            bool ignoreUnexpectedElementsAndAttributes = false,
-            Func<Uri, WebProxy, IList<string>, XmlReader> getReferencedModelReaderFunc = null,
-            bool appendDSCSuffix = false, string tempFilePath = null, bool generateMultipleFiles = false,
-            IEnumerable<string> excludedSchemaTypes = default(List<string>))
+        private static string CodeGenWithT4Template(string edmx, string namespacePrefix, bool isCSharp, bool useDataServiceCollection, bool enableNamingAlias = false, bool ignoreUnexpectedElementsAndAttributes = false, Func<Uri,WebProxy, IList<string>, XmlReader> getReferencedModelReaderFunc = null, bool appendDSCSuffix = false, string TempFilePath = null, bool generateMultipleFiles = false)
 
         {
             if (useDataServiceCollection
@@ -523,11 +495,10 @@ namespace ODataConnectedService.Tests
                 TargetLanguage = isCSharp ? ODataT4CodeGenerator.LanguageOption.CSharp : ODataT4CodeGenerator.LanguageOption.VB,
                 EnableNamingAlias = enableNamingAlias,
                 IgnoreUnexpectedElementsAndAttributes = ignoreUnexpectedElementsAndAttributes,
-                GenerateMultipleFiles = generateMultipleFiles,
-                ExcludedSchemaTypes = excludedSchemaTypes
+                GenerateMultipleFiles = generateMultipleFiles
             };
 
-            if (!String.IsNullOrEmpty(tempFilePath))
+            if (!String.IsNullOrEmpty(TempFilePath))
             {
                 t4CodeGenerator.TempFilePath = TempFilePath;
             }
