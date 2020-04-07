@@ -32,7 +32,7 @@ namespace Microsoft.OData.ConnectedService
 
         private readonly ServiceConfigurationV4 _serviceConfig;
 
-        private string _processedEndpointForOperationImports;
+        internal string ProcessedEndpointForOperationImports;
 
         public ODataConnectedServiceWizard(ConnectedServiceProviderContext context)
         {
@@ -190,7 +190,7 @@ namespace Microsoft.OData.ConnectedService
         {
             if (sender is OperationImportsViewModel operationImportsViewModel)
             {
-                if (this._processedEndpointForOperationImports != ConfigODataEndpointViewModel.Endpoint)
+                if (this.ProcessedEndpointForOperationImports != ConfigODataEndpointViewModel.Endpoint)
                 {
                     if (ConfigODataEndpointViewModel.EdmxVersion != Constants.EdmxVersion4)
                     {
@@ -208,7 +208,7 @@ namespace Microsoft.OData.ConnectedService
                     operationImportsViewModel.ExcludeOperationImports(this._serviceConfig?.ExcludedOperationImports ?? Enumerable.Empty<string>());
                 }
 
-                this._processedEndpointForOperationImports = ConfigODataEndpointViewModel.Endpoint;
+                this.ProcessedEndpointForOperationImports = ConfigODataEndpointViewModel.Endpoint;
             }
         }
 

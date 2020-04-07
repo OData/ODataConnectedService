@@ -49,7 +49,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         {
             await base.OnPageEnteringAsync(args);
             this.View = new AdvancedSettings { DataContext = this };
-            PageEntering?.Invoke(this, EventArgs.Empty);
+            this.PageEntering?.Invoke(this, EventArgs.Empty);
         }
 
         public override Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)

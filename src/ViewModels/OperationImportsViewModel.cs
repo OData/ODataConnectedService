@@ -64,8 +64,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
             await base.OnPageEnteringAsync(args);
-            View = new OperationImports { DataContext = this };
-            PageEntering?.Invoke(this, EventArgs.Empty);
+            this.View = new OperationImports { DataContext = this };
+            this.PageEntering?.Invoke(this, EventArgs.Empty);
         }
 
         public override async Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)

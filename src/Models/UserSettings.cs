@@ -18,7 +18,7 @@ namespace Microsoft.OData.ConnectedService.Models
         private ConnectedServiceLogger logger;
 
         [DataMember]
-        public ObservableCollection<string> MruEndpoints { get; private set; }
+        public ObservableCollection<string> MruEndpoints { get; set; }
 
         [DataMember]
         public string ServiceName { get; set; }

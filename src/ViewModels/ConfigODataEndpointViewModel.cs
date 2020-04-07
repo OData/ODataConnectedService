@@ -58,8 +58,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
             await base.OnPageEnteringAsync(args);
-            View = new ConfigODataEndpoint { DataContext = this };
-            PageEntering?.Invoke(this, EventArgs.Empty);
+            this.View = new ConfigODataEndpoint { DataContext = this };
+            this.PageEntering?.Invoke(this, EventArgs.Empty);
         }
 
         public event EventHandler<EventArgs> PageLeaving;
@@ -87,7 +87,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
         }
 
-        private string GetMetadata(out Version edmxVersion)
+        internal string GetMetadata(out Version edmxVersion)
         {
             if (string.IsNullOrEmpty(this.Endpoint))
             {
@@ -192,6 +192,24 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                 UserSettings.IncludeCustomHeaders = this.IncludeCustomHeaders;
                 UserSettings.IncludeWebProxy = this.IncludeWebProxy;
                 UserSettings.IncludeWebProxyNetworkCredentials = this.IncludeWebProxyNetworkCredentials;
+            }
+        }
+
+        public void LoadFromUserSettings()
+        {
+            if (this.UserSettings != null)
+            {
+                this.ServiceName = UserSettings.ServiceName ?? Constants.DefaultServiceName;
+                this.Endpoint = UserSettings.Endpoint;
+                this.WebProxyHost = UserSettings.WebProxyHost;
+                this.IncludeWebProxy = UserSettings.IncludeWebProxy;
+                this.IncludeCustomHeaders = UserSettings.IncludeCustomHeaders;
+                this.CustomHttpHeaders = UserSettings.CustomHttpHeaders;
+                this.IncludeWebProxyNetworkCredentials = UserSettings.IncludeWebProxyNetworkCredentials;
+                this.WebProxyNetworkCredentialsDomain = UserSettings.WebProxyNetworkCredentialsDomain;
+                this.WebProxyNetworkCredentialsPassword = UserSettings.WebProxyNetworkCredentialsPassword;
+                this.WebProxyNetworkCredentialsUsername = UserSettings.WebProxyNetworkCredentialsUsername;
+                this.View = new ConfigODataEndpoint { DataContext = this };
             }
         }
     }
