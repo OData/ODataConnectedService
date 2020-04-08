@@ -110,6 +110,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 text = Regex.Replace(text, "(public const bool EnableNamingAlias = )true;", "$1" + this.ServiceConfiguration.EnableNamingAlias.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
                 text = Regex.Replace(text, "(public const bool IgnoreUnexpectedElementsAndAttributes = )true;", "$1" + this.ServiceConfiguration.IgnoreUnexpectedElementsAndAttributes.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
                 text = Regex.Replace(text, "(public const bool MakeTypesInternal = )false;", "$1" + ServiceConfiguration.MakeTypesInternal.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
+                text = Regex.Replace(text, "(public const bool GenerateMultipleFiles = )false;", "$1" + ServiceConfiguration.GenerateMultipleFiles.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
                 var customHeaders = ServiceConfiguration.CustomHttpHeaders ?? "";
                 text = Regex.Replace(text, "(public const string CustomHttpHeaders = )\"\";", "$1@\"" + customHeaders + "\";");
                 text = Regex.Replace(text, "(public const string MetadataFilePath = )\"\";", "$1@\"" + metadataFile + "\";");
