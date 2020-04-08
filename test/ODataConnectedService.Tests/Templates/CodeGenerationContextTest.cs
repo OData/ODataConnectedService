@@ -19,8 +19,8 @@ namespace ODataConnectedService.Tests
         private const string EdmxSimple = @"<?xml version=""1.0"" standalone=""yes"" ?>
 <edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
   <edmx:DataServices>
-    <Schema Namespace=""Test"" xmlns:d=""http://docs.oasis-open.org/odata/ns/data"" 
-            xmlns:m=""http://docs.oasis-open.org/odata/ns/metadata"" 
+    <Schema Namespace=""Test"" xmlns:d=""http://docs.oasis-open.org/odata/ns/data""
+            xmlns:m=""http://docs.oasis-open.org/odata/ns/metadata""
             xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
       <EntityType Name=""TestType"">
         <Key>
@@ -36,8 +36,8 @@ namespace ODataConnectedService.Tests
         private const string EdmxWithNamespaceInKeywords = @"<?xml version=""1.0"" standalone=""yes"" ?>
 <edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
   <edmx:DataServices>
-    <Schema Namespace=""event.string.int"" xmlns:d=""http://docs.oasis-open.org/odata/ns/data"" 
-            xmlns:m=""http://docs.oasis-open.org/odata/ns/metadata"" 
+    <Schema Namespace=""event.string.int"" xmlns:d=""http://docs.oasis-open.org/odata/ns/data""
+            xmlns:m=""http://docs.oasis-open.org/odata/ns/metadata""
             xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
       <EntityType Name=""TestType"">
         <Key>
@@ -131,137 +131,137 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void NamespacesInModelShouldContainOneNamespaceInOneNamesapceModel()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
             context.NamespacesInModel.Length.Should().Be(1);
         }
 
         [TestMethod]
         public void NamespacesInModelShouldContainTwoNamespacesInTwoNamesapceModel()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithDifferentNamespaces, null);
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithDifferentNamespaces, null);
             context.NamespacesInModel.Length.Should().Be(2);
         }
 
         [TestMethod]
         public void NamespaceMapShouldBeEmptyIfNamespacePrefixIsNull()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
             context.NamespaceMap.Count.Should().Be(0);
         }
 
         [TestMethod]
         public void NamespaceMapShouldNotBeEmptyIfNamespacePrefixIsNotNull()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, "Foo");
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, "Foo");
             context.NamespaceMap.Count.Should().BeGreaterThan(0);
         }
 
         [TestMethod]
         public void ModelHasInheritanceShouldBeFalseIfEdmModelHasnotInheritance()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
             context.ModelHasInheritance.Should().BeFalse();
         }
 
         [TestMethod]
         public void ModelHasInheritanceShouldBeTrueIfEdmModelHasInheritance()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithEntityHierarchy, null);
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithEntityHierarchy, null);
             context.ModelHasInheritance.Should().BeTrue();
         }
 
         [TestMethod]
         public void NeedResolveNameFromTypeShouldBeTrueIfEdmModelHasInheritance()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithEntityHierarchy, null);
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithEntityHierarchy, null);
             context.NeedResolveNameFromType.Should().BeTrue();
         }
 
         [TestMethod]
         public void NeedResolveNameFromTypeShouldBeTrueIfNamespacePrefixIsNotNull()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, "Foo");
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, "Foo");
             context.NeedResolveNameFromType.Should().BeTrue();
         }
 
         [TestMethod]
         public void NeedResolveNameFromTypeShouldFalseTrueIfEdmModeHasNotInheritanceAndNamespacePrefixIsIsNull()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
             context.NeedResolveNameFromType.Should().BeFalse();
         }
 
         [TestMethod]
         public void NeedResolveTypeFromNameShouldBeTrueIfNamespacePrefixIsNotNull()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, "Foo");
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, "Foo");
             context.NeedResolveNameFromType.Should().BeTrue();
         }
 
         [TestMethod]
         public void NeedResolveTypeFromNameShouldBeFalseIfNamespacePrefixIsNull()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
             context.NeedResolveNameFromType.Should().BeFalse();
         }
 
         [TestMethod]
         public void GetPrefixedNamespaceShouldReturnNamespaceWithPrefixIfNamespacePrefixIsNotNull()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, "Foo");
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, "Foo");
             context.GetPrefixedNamespace("Test", new ODataT4CodeGenerator.ODataClientCSharpTemplate(context), false, false).Should().Be("Foo.Test");
         }
 
         [TestMethod]
         public void GetPrefixedNamespaceShouldReturnNamespaceWithoutPrefixIfNamespacePrefixIsNull()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
             context.GetPrefixedNamespace("Test", new ODataT4CodeGenerator.ODataClientCSharpTemplate(context), false, false).Should().Be("Test");
         }
 
         [TestMethod]
         public void GetPrefixedNamespaceShouldReturnFixedNamespaceWithoutPrefixIfNamespacePrefixIsNullAndNamespaceIsKeyword()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithNamespaceInKeywords, null);
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithNamespaceInKeywords, null);
             context.GetPrefixedNamespace("event.string.int", new ODataT4CodeGenerator.ODataClientCSharpTemplate(context), true, false).Should().Be("@event.@string.@int");
         }
 
         [TestMethod]
         public void GetPrefixedNamespaceShouldReturnFixedOriginalNamespaceWithoutPrefixIfNamespacePrefixIsNullAndNamespaceIsKeyword()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithNamespaceInKeywords, null);
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithNamespaceInKeywords, null);
             context.GetPrefixedNamespace("event.string.int", new ODataT4CodeGenerator.ODataClientCSharpTemplate(context), false, false).Should().Be("event.string.int");
         }
 
         [TestMethod]
         public void GetPrefixedNamespaceShouldReturnNamespaceWithoutGlobalAttached()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, "Test.Foo");
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, "Test.Foo");
             context.GetPrefixedNamespace("Test", new ODataT4CodeGenerator.ODataClientCSharpTemplate(context), false, true).Should().Be("global::Test.Foo.Test");
         }
 
         [TestMethod]
         public void GetPrefixedFullNameShouldReturnExpectedFullName()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithEntityHierarchy, null);
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithEntityHierarchy, null);
             IEdmSchemaElement[] schemaElements = context.GetSchemaElements("Namespace1").ToArray();
-            IEdmEntityContainer container = schemaElements.OfType<IEdmEntityContainer>().First();
+            var container = schemaElements.OfType<IEdmEntityContainer>().First();
             context.GetPrefixedFullName(container, container.Name, new ODataT4CodeGenerator.ODataClientCSharpTemplate(context)).Should().Be("global::Namespace1.EntityContainer");
         }
 
         [TestMethod]
         public void GetPrefixedFullNameShouldReturnFullNameWithPrefixNamespaceIfNamespacePrefixIsNotNull()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithKeyAsSegmentAnnotaion, "Foo");
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithKeyAsSegmentAnnotaion, "Foo");
             IEdmSchemaElement[] schemaElements = context.GetSchemaElements("Namespace1").ToArray();
-            IEdmEntityContainer container = schemaElements.OfType<IEdmEntityContainer>().First();
+            var container = schemaElements.OfType<IEdmEntityContainer>().First();
             context.GetPrefixedFullName(container, container.Name, new ODataT4CodeGenerator.ODataClientCSharpTemplate(context)).Should().Be("global::Foo.Namespace1.EntityContainer");
         }
 
         [TestMethod]
         public void NeedToSetKeyAsSegmentShouldBeTureInAnnotaionTargetingNamespaces()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithKeyAsSegmentAnnotaion, null);
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxWithKeyAsSegmentAnnotaion, null);
             IEdmSchemaElement[] schemaElements = context.GetSchemaElements("Namespace1").ToArray();
             context.UseKeyAsSegmentUrlConvention(schemaElements.OfType<IEdmEntityContainer>().First()).Should().BeTrue();
         }
@@ -269,7 +269,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetSchemaElementsShouldReturnIEdmSchemaElementIfInputNamespaceExistInEdmModel()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
             IEdmSchemaElement[] schemaElements = context.GetSchemaElements("Test").ToArray();
             schemaElements.Length.Should().BeGreaterThan(0);
         }
@@ -277,7 +277,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetSchemaElementsShouldReturnEmptyIfInputNamespaceNotExistInEdmModel()
         {
-            ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
+            var context = new ODataT4CodeGenerator.CodeGenerationContext(EdmxSimple, null);
             IEdmSchemaElement[] schemaElements = context.GetSchemaElements("Foo").ToArray();
             schemaElements.Length.Should().Be(0);
         }
@@ -287,8 +287,8 @@ namespace ODataConnectedService.Tests
         {
             try
             {
-                Uri metadataUri = new Uri("ftp://testurl/");
-                ODataT4CodeGenerator.CodeGenerationContext context = new ODataT4CodeGenerator.CodeGenerationContext(metadataUri, null);
+                var metadataUri = new Uri("ftp://testurl/");
+                var context = new ODataT4CodeGenerator.CodeGenerationContext(metadataUri, null);
             }
             catch (Exception ex)
             {
@@ -299,8 +299,8 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void SetOneCustomHeaderCorrectlyShouldNotThrowException()
         {
-            ODataT4CodeGenerator codegen = new ODataT4CodeGenerator();
-            string customHeaderString = @"Authorization:Bearer bearer-token";
+            var codegen = new ODataT4CodeGenerator();
+            var customHeaderString = @"Authorization:Bearer bearer-token";
             codegen.SetCustomHttpHeadersFromString(customHeaderString);
             Assert.IsNotNull(codegen.CustomHttpHeaders);
             Assert.AreEqual(1, codegen.CustomHttpHeaders.Count);
@@ -310,8 +310,8 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void SetMultipleCustomHeadersCorrectlyShouldNotThrowException()
         {
-            ODataT4CodeGenerator codegen = new ODataT4CodeGenerator();
-            string customHeaderString = @"Authorization:Bearer bearer-token
+            var codegen = new ODataT4CodeGenerator();
+            var customHeaderString = @"Authorization:Bearer bearer-token
                                           odata.continue-on-error:true";
             codegen.SetCustomHttpHeadersFromString(customHeaderString);
             Assert.IsNotNull(codegen.CustomHttpHeaders);
@@ -323,8 +323,8 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void SetCustomHeaderInCorrectlyShouldThrowException()
         {
-            ODataT4CodeGenerator codegen = new ODataT4CodeGenerator();
-            string customHeaderString = @"Authorization Bearer bearer-token";
+            var codegen = new ODataT4CodeGenerator();
+            var customHeaderString = @"Authorization Bearer bearer-token";
             Action act = () => codegen.SetCustomHttpHeadersFromString(customHeaderString);
             act.ShouldThrow<ArgumentException>().WithMessage("A http header string must have a colon delimeter");
         }
@@ -332,7 +332,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void SetNullCustomHeaderShouldNotThrowException()
         {
-            ODataT4CodeGenerator codegen = new ODataT4CodeGenerator();
+            var codegen = new ODataT4CodeGenerator();
             string customHeaderString = null;
             codegen.SetCustomHttpHeadersFromString(customHeaderString);
             Assert.IsNull(codegen.CustomHttpHeaders);
@@ -342,8 +342,8 @@ namespace ODataConnectedService.Tests
         public void SetCustomHeadersWithQuotesShouldNotThrowException()
         {
             // Quotes are sent as part of the header value
-            ODataT4CodeGenerator codegen = new ODataT4CodeGenerator();
-            string customHeaderString = @"If-Match:'67ab43'";
+            var codegen = new ODataT4CodeGenerator();
+            var customHeaderString = @"If-Match:'67ab43'";
             codegen.SetCustomHttpHeadersFromString(customHeaderString);
             Assert.IsNotNull(codegen.CustomHttpHeaders);
             Assert.AreEqual(1, codegen.CustomHttpHeaders.Count);
@@ -353,8 +353,8 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void SetMultipleCustomHeadersWithEmptyNewLinesShouldNotThrowError()
         {
-            ODataT4CodeGenerator codegen = new ODataT4CodeGenerator();
-            string customHeaderString = @"Authorization:Bearer bearer-token
+            var codegen = new ODataT4CodeGenerator();
+            var customHeaderString = @"Authorization:Bearer bearer-token
 
 
                                           odata.continue-on-error:true";

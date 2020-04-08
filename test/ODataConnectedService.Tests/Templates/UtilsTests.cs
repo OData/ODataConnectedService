@@ -137,12 +137,12 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void SerializeToStringShouldIgnoreCommentsInXElement()
         {
-            XElement xmlTree = new XElement("Root",
+            var xmlTree = new XElement("Root",
                 new XElement("Child1", 1),
                 new XElement("Child2", 2),
                 new XElement("Child3", 3)
             );
-            XComment comment = new XComment("comment");
+            var comment = new XComment("comment");
             xmlTree.Add(comment);
 
             ODataT4CodeGenerator.Utils.SerializeToString(xmlTree).Should().Be(@"<Root>
@@ -203,7 +203,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetClrTypeNameShouldThrowOnNonIEdmSchemaElement()
         {
-            EdmTypeForTest edmType = new EdmTypeForTest("name");
+            var edmType = new EdmTypeForTest("name");
             IEdmTypeReference edmTypeReference = new EdmTypeReferenceForTest(edmType, false);
             Action getName = () => ODataT4CodeGenerator.Utils.GetClrTypeName(edmTypeReference, false, template, context);
             getName.ShouldThrow<Exception>();
@@ -212,7 +212,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetClrTypeNameShouldReturnPrimitiveTypeNameForNonNullableIEdmPrimitiveType()
         {
-            EdmPrimitiveType edmPrimitiveType = new EdmPrimitiveType(EdmPrimitiveTypeKind.String);
+            var edmPrimitiveType = new EdmPrimitiveType(EdmPrimitiveTypeKind.String);
             IEdmTypeReference edmTypeReference = new EdmTypeReferenceForTest(edmPrimitiveType, false);
             ODataT4CodeGenerator.Utils.GetClrTypeName(edmTypeReference, false, template, context).Should().Be("string");
         }
@@ -220,7 +220,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetClrTypeNameShouldReturnPrimitiveTypeNameForNullableIEdmPrimitiveType()
         {
-            EdmPrimitiveType edmPrimitiveType = new EdmPrimitiveType(EdmPrimitiveTypeKind.String);
+            var edmPrimitiveType = new EdmPrimitiveType(EdmPrimitiveTypeKind.String);
             IEdmTypeReference edmTypeReference = new EdmTypeReferenceForTest(edmPrimitiveType, true);
             ODataT4CodeGenerator.Utils.GetClrTypeName(edmTypeReference, false, template, context).Should().Be("string");
         }
@@ -228,7 +228,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetClrTypeNameShouldReturnSystemNullableStructureTemplate()
         {
-            EdmPrimitiveType edmPrimitiveType = new EdmPrimitiveType(EdmPrimitiveTypeKind.DateTimeOffset);
+            var edmPrimitiveType = new EdmPrimitiveType(EdmPrimitiveTypeKind.DateTimeOffset);
             IEdmTypeReference edmTypeReference = new EdmTypeReferenceForTest(edmPrimitiveType, true);
             ODataT4CodeGenerator.Utils.GetClrTypeName(edmTypeReference, false, template, context).Should().Be("global::System.Nullable<global::System.DateTimeOffset>");
         }
@@ -236,7 +236,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetClrTypeNameShouldReturnComplexTypeNameForComplexType()
         {
-            EdmComplexType complexType = new EdmComplexType("Namespace", "name");
+            var complexType = new EdmComplexType("Namespace", "name");
             IEdmTypeReference edmTypeReference = new EdmTypeReferenceForTest(complexType, false);
             ODataT4CodeGenerator.Utils.GetClrTypeName(edmTypeReference, false, template, context).Should().Be("global::NamespacePrefix.name");
         }
@@ -244,7 +244,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetClrTypeNameShouldReadEntityTypeNameForEntityType()
         {
-            EdmEntityType entityType = new EdmEntityType("Namespace", "name");
+            var entityType = new EdmEntityType("Namespace", "name");
             IEdmTypeReference edmTypeReference = new EdmTypeReferenceForTest(entityType, false);
             ODataT4CodeGenerator.Utils.GetClrTypeName(edmTypeReference, false, template, context).Should().Be("global::NamespacePrefix.name");
         }
@@ -252,7 +252,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetClrTypeNameShouldReadEntitySingleTypeNameForEntityType()
         {
-            EdmEntityType entityType = new EdmEntityType("Namespace", "name");
+            var entityType = new EdmEntityType("Namespace", "name");
             IEdmTypeReference edmTypeReference = new EdmTypeReferenceForTest(entityType, false);
             ODataT4CodeGenerator.Utils.GetClrTypeName(edmTypeReference, false, template, context, isEntitySingleType: true).Should().Be("global::NamespacePrefix.nameSingle");
         }
@@ -260,7 +260,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetClrTypeNameShouldReturnObjectModelCollectionStructureTemplate()
         {
-            EdmPrimitiveType primitiveType = new EdmPrimitiveType(EdmPrimitiveTypeKind.String);
+            var primitiveType = new EdmPrimitiveType(EdmPrimitiveTypeKind.String);
             IEdmTypeReference elementTypeReference = new EdmTypeReferenceForTest(primitiveType, false);
             IEdmCollectionType collectionType = new EdmCollectionType(elementTypeReference);
             IEdmTypeReference collectionTypeReference = new EdmTypeReferenceForTest(collectionType, false);
@@ -270,7 +270,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetClrTypeNameShouldReturnObservableCollectionStructureTemplate()
         {
-            EdmComplexType complexType = new EdmComplexType("Namespace", "elementName");
+            var complexType = new EdmComplexType("Namespace", "elementName");
             IEdmTypeReference elementTypeReference = new EdmTypeReferenceForTest(complexType, false);
             IEdmCollectionType collectionType = new EdmCollectionType(elementTypeReference);
             IEdmTypeReference collectionTypeReference = new EdmTypeReferenceForTest(collectionType, false);
@@ -280,7 +280,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetClrTypeNameShouldReturnDataServiceCollectionStructureTemplate()
         {
-            EdmEntityType entityType = new EdmEntityType("Namespace", "elementName");
+            var entityType = new EdmEntityType("Namespace", "elementName");
             IEdmTypeReference elementTypeReference = new EdmTypeReferenceForTest(entityType, false);
             IEdmCollectionType collectionType = new EdmCollectionType(elementTypeReference);
             IEdmTypeReference collectionTypeReference = new EdmTypeReferenceForTest(collectionType, false);
@@ -290,7 +290,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetClrTypeNameShouldReturnICollectionStructureTemplateForCollectionOfPrimitiveType()
         {
-            EdmPrimitiveType primitiveType = new EdmPrimitiveType(EdmPrimitiveTypeKind.String);
+            var primitiveType = new EdmPrimitiveType(EdmPrimitiveTypeKind.String);
             IEdmTypeReference elementTypeReference = new EdmTypeReferenceForTest(primitiveType, false);
             IEdmCollectionType collectionType = new EdmCollectionType(elementTypeReference);
             IEdmTypeReference collectionTypeReference = new EdmTypeReferenceForTest(collectionType, false);
@@ -301,7 +301,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetClrTypeNameShouldReturnICollectionStructureTemplateForCollectionOfEnumType()
         {
-            EdmEnumType gender = new EdmEnumType("Namespace", "Gender", EdmPrimitiveTypeKind.Byte, true);
+            var gender = new EdmEnumType("Namespace", "Gender", EdmPrimitiveTypeKind.Byte, true);
             gender.AddMember("Male", new EdmEnumMemberValue(1));
             gender.AddMember("Female", new EdmEnumMemberValue(2));
 
@@ -315,7 +315,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetClrTypeNameShouldReturnICollectionStructureTemplateForCollectionOfComplexType()
         {
-            EdmComplexType complexType = new EdmComplexType("Namespace", "elementName");
+            var complexType = new EdmComplexType("Namespace", "elementName");
             IEdmTypeReference elementTypeReference = new EdmTypeReferenceForTest(complexType, false);
             IEdmCollectionType collectionType = new EdmCollectionType(elementTypeReference);
             IEdmTypeReference collectionTypeReference = new EdmTypeReferenceForTest(collectionType, false);
@@ -326,7 +326,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetClrTypeNameShouldReturnICollectionStructureTemplateForCollectionOfEntityType()
         {
-            EdmEntityType entityType = new EdmEntityType("Namespace", "elementName");
+            var entityType = new EdmEntityType("Namespace", "elementName");
             IEdmTypeReference elementTypeReference = new EdmTypeReferenceForTest(entityType, false);
             IEdmCollectionType collectionType = new EdmCollectionType(elementTypeReference);
             IEdmTypeReference collectionTypeReference = new EdmTypeReferenceForTest(collectionType, false);
@@ -370,42 +370,42 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetPropertyInitializationValueShouldNotThrowOnPropertyNotInCollectionType()
         {
-            EdmPrimitiveType primitiveType = new EdmPrimitiveType(EdmPrimitiveTypeKind.String);
+            var primitiveType = new EdmPrimitiveType(EdmPrimitiveTypeKind.String);
             IEdmTypeReference edmTypeReference = new EdmTypeReferenceForTest(primitiveType, false);
-            EdmPropertyForTest property = new EdmPropertyForTest(new EdmStructruedTypeForTest(), "propertyName", edmTypeReference);
+            var property = new EdmPropertyForTest(new EdmStructruedTypeForTest(), "propertyName", edmTypeReference);
             ODataT4CodeGenerator.Utils.GetPropertyInitializationValue(property, false, template, context).Should().BeNull();
         }
 
         [TestMethod]
         public void GetPropertyInitializationValueShouldReturnConstructorWithNoParametersForElementsInPrimitiveType()
         {
-            EdmPrimitiveType primitiveType = new EdmPrimitiveType(EdmPrimitiveTypeKind.String);
+            var primitiveType = new EdmPrimitiveType(EdmPrimitiveTypeKind.String);
             IEdmTypeReference elementTypeReference = new EdmTypeReferenceForTest(primitiveType, false);
             IEdmCollectionType collectionType = new EdmCollectionType(elementTypeReference);
             IEdmCollectionTypeReference collectionTypeReference = new EdmCollectionTypeReference(collectionType);
-            EdmPropertyForTest property = new EdmPropertyForTest(new EdmStructruedTypeForTest(), "propertyName", collectionTypeReference);
+            var property = new EdmPropertyForTest(new EdmStructruedTypeForTest(), "propertyName", collectionTypeReference);
             ODataT4CodeGenerator.Utils.GetPropertyInitializationValue(property, false, template, context).Should().Be("new global::System.Collections.ObjectModel.Collection<string>()");
         }
 
         [TestMethod]
         public void GetPropertyInitializationValueShouldReturnConstructorWithNoParametersForElementsInEntityTypeButNotUseDataServiceCollection()
         {
-            EdmEntityType entityType = new EdmEntityType("Namespace", "elementName");
+            var entityType = new EdmEntityType("Namespace", "elementName");
             IEdmTypeReference elementTypeReference = new EdmTypeReferenceForTest(entityType, false);
             IEdmCollectionType collectionType = new EdmCollectionType(elementTypeReference);
             IEdmCollectionTypeReference collectionTypeReference = new EdmCollectionTypeReference(collectionType);
-            EdmPropertyForTest property = new EdmPropertyForTest(new EdmStructruedTypeForTest(), "propertyName", collectionTypeReference);
+            var property = new EdmPropertyForTest(new EdmStructruedTypeForTest(), "propertyName", collectionTypeReference);
             ODataT4CodeGenerator.Utils.GetPropertyInitializationValue(property, false, template, context).Should().Be("new global::System.Collections.ObjectModel.Collection<global::NamespacePrefix.elementName>()");
         }
 
         [TestMethod]
         public void GetPropertyInitializationValueShouldReturnConstructorWithDataServiceCollectionConstructorParameters()
         {
-            EdmEntityType entityType = new EdmEntityType("Namespace", "elementName");
+            var entityType = new EdmEntityType("Namespace", "elementName");
             IEdmTypeReference elementTypeReference = new EdmTypeReferenceForTest(entityType, false);
             IEdmCollectionType collectionType = new EdmCollectionType(elementTypeReference);
             IEdmCollectionTypeReference collectionTypeReference = new EdmCollectionTypeReference(collectionType);
-            EdmPropertyForTest property = new EdmPropertyForTest(new EdmStructruedTypeForTest(), "propertyName", collectionTypeReference);
+            var property = new EdmPropertyForTest(new EdmStructruedTypeForTest(), "propertyName", collectionTypeReference);
             ODataT4CodeGenerator.Utils.GetPropertyInitializationValue(property, true, template, context).Should().Be("new global::Microsoft.OData.Client.DataServiceCollection<global::NamespacePrefix.elementName>(null, global::Microsoft.OData.Client.TrackingMode.None)");
         }
 

@@ -42,7 +42,7 @@ namespace Microsoft.OData.ConnectedService
         private async Task<BaseCodeGenDescriptor> SaveServiceInstanceAsync(ConnectedServiceHandlerContext context)
         {
             Project project = ProjectHelper.GetProjectFromHierarchy(context.ProjectHierarchy);
-            ODataConnectedServiceInstance serviceInstance = (ODataConnectedServiceInstance)context.ServiceInstance;
+            var serviceInstance = (ODataConnectedServiceInstance)context.ServiceInstance;
 
             var codeGenDescriptor = await GenerateCodeAsync(serviceInstance.ServiceConfig.Endpoint, serviceInstance.ServiceConfig.EdmxVersion, context, project);
             context.SetExtendedDesignerData(serviceInstance.ServiceConfig);

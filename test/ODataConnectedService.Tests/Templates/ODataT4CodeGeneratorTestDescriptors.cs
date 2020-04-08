@@ -52,13 +52,13 @@ namespace ODataConnectedService.Tests
 
         internal static void ValidateXMLFile(string tempFilePath)
         {
-            XmlDocument doc = new XmlDocument();
+            var doc = new XmlDocument();
             doc.Load(tempFilePath);
         }
 
         internal static void ValidateEdmx(string tempFilePath)
         {
-            string edmx = File.ReadAllText(tempFilePath);
+            var edmx = File.ReadAllText(tempFilePath);
             using (var stringReader = new StringReader(edmx))
             {
                 using (var xmlReader = XmlReader.Create(stringReader))
@@ -92,7 +92,7 @@ namespace ODataConnectedService.Tests
             }
 
             string actualBak = actualCode;
-            string normalizedExpectedCode = Regex.Replace(expected, "// Generation date:.*", string.Empty, RegexOptions.Multiline);
+            var normalizedExpectedCode = Regex.Replace(expected, "// Generation date:.*", string.Empty, RegexOptions.Multiline);
             normalizedExpectedCode = Regex.Replace(normalizedExpectedCode, "'Generation date:.*", string.Empty, RegexOptions.Multiline);
             normalizedExpectedCode = Regex.Replace(normalizedExpectedCode, "//     Runtime Version:.*", string.Empty, RegexOptions.Multiline);
             normalizedExpectedCode = Regex.Replace(normalizedExpectedCode, "'     Runtime Version:.*", string.Empty, RegexOptions.Multiline);
@@ -106,13 +106,13 @@ namespace ODataConnectedService.Tests
                 RegexOptions.Multiline);
 
             //Remove the spaces from the string to avoid indentation change errors
-            string rawExpectedCode = Regex.Replace(normalizedExpectedCode, @"\s+", "");
+            var rawExpectedCode = Regex.Replace(normalizedExpectedCode, @"\s+", "");
             actualCode = Regex.Replace(actualCode, "// Generation date:.*", string.Empty);
             actualCode = Regex.Replace(actualCode, "'Generation date:.*", string.Empty);
             actualCode = Regex.Replace(actualCode, "//     Runtime Version:.*", string.Empty);
             actualCode = Regex.Replace(actualCode, "'     Runtime Version:.*", string.Empty);
             //Remove the spaces from the string to avoid indentation change errors
-            string rawActualCode = Regex.Replace(actualCode, @"\s+", "");
+            var rawActualCode = Regex.Replace(actualCode, @"\s+", "");
 
             if (key == null)
             {
@@ -120,15 +120,15 @@ namespace ODataConnectedService.Tests
             }
             else
             {
-                bool equal = rawExpectedCode == rawActualCode;
+                var equal = rawExpectedCode == rawActualCode;
 
                 if (!equal)
                 {
-                    string filename = key + (useDSC ? "DSC" : "") + (isCSharp ? ".cs" : ".vb");
-                    string currentFolder = Directory.GetCurrentDirectory();
-                    string path = Path.Combine(currentFolder, filename);
+                    var filename = key + (useDSC ? "DSC" : "") + (isCSharp ? ".cs" : ".vb");
+                    var currentFolder = Directory.GetCurrentDirectory();
+                    var path = Path.Combine(currentFolder, filename);
                     File.WriteAllText(path, actualBak);
-                    string basePath = Path.Combine(currentFolder, "Expected" + filename);
+                    var basePath = Path.Combine(currentFolder, "Expected" + filename);
                     File.WriteAllText(basePath, expected);
                     equal.Should().Be(true, "Baseline not equal.\n " +
                         "To diff run: \n" +
@@ -225,9 +225,9 @@ namespace ODataConnectedService.Tests
         public static ODataT4CodeGeneratorTestsDescriptor NamespacePrefixWithSingleNamespace = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxNamespacePrefixWithSingleNamespace,
-            ExpectedResults = new Dictionary<string, string>() 
-            { 
-                { ExpectedCSharp, NamespacePrefixWithSingleNamespaceCSharp }, 
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, NamespacePrefixWithSingleNamespaceCSharp },
                 { ExpectedVB, NamespacePrefixWithSingleNamespaceVB }
             },
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, NamespacePrefixWithSingleNamespace.ExpectedResults, isCSharp, useDSC, "NamespacePrefixWithSingleNamespace"),
@@ -240,9 +240,9 @@ namespace ODataConnectedService.Tests
         public static ODataT4CodeGeneratorTestsDescriptor NamespacePrefixWithDoubleNamespaces = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxNamespacePrefixWithDoubleNamespaces,
-            ExpectedResults = new Dictionary<string, string>() 
-            { 
-                { ExpectedCSharp, NamespacePrefixWithDoubleNamespacesCSharp }, 
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, NamespacePrefixWithDoubleNamespacesCSharp },
                 { ExpectedVB, NamespacePrefixWithDoubleNamespacesVB }
             },
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, NamespacePrefixWithDoubleNamespaces.ExpectedResults, isCSharp, useDSC, "NamespacePrefixWithDoubleNamespaces"),
@@ -255,9 +255,9 @@ namespace ODataConnectedService.Tests
         public static ODataT4CodeGeneratorTestsDescriptor NamespacePrefixWithInheritence = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxNamespacePrefixWithInheritence,
-            ExpectedResults = new Dictionary<string, string>() 
+            ExpectedResults = new Dictionary<string, string>()
         {
-                { ExpectedCSharp, NamespacePrefixWithInheritenceCSharp }, 
+                { ExpectedCSharp, NamespacePrefixWithInheritenceCSharp },
                 { ExpectedVB, NamespacePrefixWithInheritenceVB }
             },
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, NamespacePrefixWithInheritence.ExpectedResults, isCSharp, useDSC, "NamespacePrefixWithInheritence"),
@@ -272,10 +272,10 @@ namespace ODataConnectedService.Tests
 
         public static ODataT4CodeGeneratorTestsDescriptor NamespacePrefixRepeatWithSchemaNameSpace = new ODataT4CodeGeneratorTestsDescriptor()
         {
-            Metadata = EdmxNamespacePrefixRepeatWithSchemaNameSpace, 
+            Metadata = EdmxNamespacePrefixRepeatWithSchemaNameSpace,
             ExpectedResults = new Dictionary<string, string>()
             {
-                {ExpectedCSharp, NamespacePrefixRepeatWithSchemaNameSpaceCSharp}, 
+                {ExpectedCSharp, NamespacePrefixRepeatWithSchemaNameSpaceCSharp},
             },
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, NamespacePrefixRepeatWithSchemaNameSpace.ExpectedResults, isCSharp, useDSC, "NamespacePrefixRepeatWithSchemaNameSpace"),
         };
@@ -291,9 +291,9 @@ namespace ODataConnectedService.Tests
         public static ODataT4CodeGeneratorTestsDescriptor KeywordsAsNames = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxKeywordsAsNames,
-            ExpectedResults = new Dictionary<string, string>() 
-            { 
-                { ExpectedCSharp, KeywordsAsNamesCSharp }, 
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, KeywordsAsNamesCSharp },
                 { ExpectedVB, KeywordsAsNamesVB }
             },
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, KeywordsAsNames.ExpectedResults, isCSharp, useDSC, "KeywordsAsNames"),
@@ -311,12 +311,12 @@ namespace ODataConnectedService.Tests
 
         public static ODataT4CodeGeneratorTestsDescriptor MergedFunctionalTest = new ODataT4CodeGeneratorTestsDescriptor()
         {
-            Metadata = EdmxMergedFunctionalTest, 
+            Metadata = EdmxMergedFunctionalTest,
             ExpectedResults = new Dictionary<string, string>()
             {
-                {ExpectedCSharp, MergedFunctionalTestCSharp}, 
-                {ExpectedCSharpUseDSC, MergedFunctionalTestCSharpUseDSC}, 
-                {ExpectedVB, MergedFunctionalTestVB}, 
+                {ExpectedCSharp, MergedFunctionalTestCSharp},
+                {ExpectedCSharpUseDSC, MergedFunctionalTestCSharpUseDSC},
+                {ExpectedVB, MergedFunctionalTestVB},
                 {ExpectedVBUseDSC, MergedFunctionalTestVBUseDSC}
             },
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, MergedFunctionalTest.ExpectedResults, isCSharp, useDSC, "MergedFunctionalTest"),
@@ -375,9 +375,9 @@ namespace ODataConnectedService.Tests
         public static ODataT4CodeGeneratorTestsDescriptor NamespaceInKeywords = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxNamespaceInKeywords,
-            ExpectedResults = new Dictionary<string, string>() 
-            { 
-                { ExpectedCSharp, NamespaceInKeywordsCSharp }, 
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, NamespaceInKeywordsCSharp },
                 { ExpectedVB, NamespaceInKeywordsVB }
             },
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, NamespaceInKeywords.ExpectedResults, isCSharp, useDSC, "NamespaceInKeywords"),
@@ -398,11 +398,11 @@ namespace ODataConnectedService.Tests
         {
             Metadata = EdmxNamespaceInKeywordsWithRefModel,
             GetReferencedModelReaderFunc = (url,proxy,headers) => XmlReader.Create(new MemoryStream(Encoding.UTF8.GetBytes(EdmxNamespaceInKeywordsWithRefModelReferencedEdmx))),
-            ExpectedResults = new Dictionary<string, string>() 
-            { 
-                { ExpectedCSharp, NamespaceInKeywordsWithRefModelCSharp }, 
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, NamespaceInKeywordsWithRefModelCSharp },
                 { ExpectedVB, NamespaceInKeywordsWithRefModelVB },
-                { ExpectedCSharpUseDSC, NamespaceInKeywordsWithRefModelCSharpUseDSC }, 
+                { ExpectedCSharpUseDSC, NamespaceInKeywordsWithRefModelCSharpUseDSC },
                 { ExpectedVBUseDSC, NamespaceInKeywordsWithRefModelVBUseDSC },
             },
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, NamespaceInKeywordsWithRefModel.ExpectedResults, isCSharp, useDSC, "NamespaceInKeywordsWithRefModel"),
@@ -430,7 +430,7 @@ namespace ODataConnectedService.Tests
             GetReferencedModelReaderFunc = (url,proxy,headers) =>
             {
                 string text;
-                string urlStr = url.OriginalString;
+                var urlStr = url.OriginalString;
                 if (urlStr.EndsWith("CoreTerms.csdl"))
                 {
                     text = MultiReferenceModelCoreTermsEdmx;
@@ -452,18 +452,18 @@ namespace ODataConnectedService.Tests
                     text = MultiReferenceModelMapEdmx;
                 }
 
-                XmlReaderSettings setting = new XmlReaderSettings()
+                var setting = new XmlReaderSettings()
                 {
                     IgnoreWhitespace = true
                 };
 
                 return XmlReader.Create(new MemoryStream(Encoding.UTF8.GetBytes(text)), setting);
             },
-            ExpectedResults = new Dictionary<string, string>() 
-            { 
-                { ExpectedCSharp, MultiReferenceModelCSharp }, 
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, MultiReferenceModelCSharp },
                 { ExpectedVB, MultiReferenceModelVB },
-                { ExpectedCSharpUseDSC, MultiReferenceModelCSharpUseDSC }, 
+                { ExpectedCSharpUseDSC, MultiReferenceModelCSharpUseDSC },
                 { ExpectedVBUseDSC, MultiReferenceModelVBUseDSC }
             },
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, MultiReferenceModel.ExpectedResults, isCSharp, useDSC, "MultiReferenceModel"),
@@ -476,13 +476,13 @@ namespace ODataConnectedService.Tests
         public static string EdmxUpperCamelCaseWithNamespacePrefix = LoadContentFromBaseline("UpperCamelCaseWithNamespacePrefix.xml");
         public static string UpperCamelCaseWithNamespacePrefixCSharp = LoadContentFromBaseline("UpperCamelCaseWithNamespacePrefix.cs");
         public static string UpperCamelCaseWithNamespacePrefixVB = LoadContentFromBaseline("UpperCamelCaseWithNamespacePrefix.vb");
-        
+
         public static ODataT4CodeGeneratorTestsDescriptor UpperCamelCaseWithNamespacePrefix = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxUpperCamelCaseWithNamespacePrefix,
-            ExpectedResults = new Dictionary<string, string>() 
-            { 
-                { ExpectedCSharp, UpperCamelCaseWithNamespacePrefixCSharp }, 
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, UpperCamelCaseWithNamespacePrefixCSharp },
                 { ExpectedVB, UpperCamelCaseWithNamespacePrefixVB }
             },
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, UpperCamelCaseWithNamespacePrefix.ExpectedResults, isCSharp, useDSC, "UpperCamelCaseWithNamespacePrefix"),
@@ -501,9 +501,9 @@ namespace ODataConnectedService.Tests
         public static ODataT4CodeGeneratorTestsDescriptor UpperCamelCaseWithoutNamespacePrefix = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxUpperCamelCaseWithoutNamespacePrefix,
-            ExpectedResults = new Dictionary<string, string>() 
-            { 
-                { ExpectedCSharp, UpperCamelCaseWithoutNamespacePrefixCSharp }, 
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, UpperCamelCaseWithoutNamespacePrefixCSharp },
                 { ExpectedVB, UpperCamelCaseWithoutNamespacePrefixVB },
                 { ExpectedCSharpUseDSC, UpperCamelCaseWithoutNamespacePrefixCSharpUseDSC },
                 { ExpectedVBUseDSC, UpperCamelCaseWithoutNamespacePrefixVBUseDSC }
@@ -521,9 +521,9 @@ namespace ODataConnectedService.Tests
         public static ODataT4CodeGeneratorTestsDescriptor IgnoreUnexpectedElementsAndAttributes = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxUnexpectedElementsAndAttributes,
-            ExpectedResults = new Dictionary<string, string>() 
-            { 
-                { ExpectedCSharp, UnexpectedElementsAndAttributesCSharp }, 
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, UnexpectedElementsAndAttributesCSharp },
                 { ExpectedVB, UnexpectedElementsAndAttributesVB }
             },
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, IgnoreUnexpectedElementsAndAttributes.ExpectedResults, isCSharp, useDSC, "UnexpectedElementsAndAttributes"),
@@ -560,7 +560,7 @@ namespace ODataConnectedService.Tests
         {
             Metadata = EdmxDupNames,
             ExpectedResults = new Dictionary<string, string>()
-            { 
+            {
                 { ExpectedCSharp, DupNamesCSharp },
                 { ExpectedVBUseDSC, DupNamesVBUseDSC },
             },
@@ -571,7 +571,7 @@ namespace ODataConnectedService.Tests
         {
             Metadata = EdmxDupNames,
             ExpectedResults = new Dictionary<string, string>()
-            { 
+            {
                 { ExpectedCSharpUseDSC, DupNamesWithCamelCaseCSharpUseDSC },
                 { ExpectedVB, DupNamesWithCamelCaseVB },
             },
@@ -589,7 +589,7 @@ namespace ODataConnectedService.Tests
         {
             Metadata = EdmxOverrideOperations,
             ExpectedResults = new Dictionary<string, string>()
-            { 
+            {
                 { ExpectedCSharpUseDSC, OverrideOperationsCSharpUseDSC },
                 { ExpectedVB, OverrideOperationsVB },
             },
@@ -606,7 +606,7 @@ namespace ODataConnectedService.Tests
         {
             Metadata = EdmxAbstractEntityTypeWithoutKey,
             ExpectedResults = new Dictionary<string, string>()
-            { 
+            {
                 { ExpectedCSharpUseDSC, AbstractEntityTypeWithoutKeyCSharpUseDSC },
                 { ExpectedVB, AbstractEntityTypeWithoutKeyVB },
             },

@@ -95,7 +95,7 @@ namespace Microsoft.OData.ConnectedService.Models
 
         public static UserSettings Load(ConnectedServiceLogger logger)
         {
-            UserSettings userSettings = UserSettingsPersistenceHelper.Load<UserSettings>(
+            var userSettings = UserSettingsPersistenceHelper.Load<UserSettings>(
                 Constants.ProviderId, UserSettings.Name, null, logger) ?? new UserSettings();
             userSettings.logger = logger;
 
@@ -104,11 +104,11 @@ namespace Microsoft.OData.ConnectedService.Models
 
         public static void AddToTopOfMruList<T>(ObservableCollection<T> mruList, T item)
         {
-            int index = mruList.IndexOf(item);
+            var index = mruList.IndexOf(item);
             if (index >= 0)
             {
                 // Ensure there aren't any duplicates in the list.
-                for (int i = mruList.Count - 1; i > index; i--)
+                for (var i = mruList.Count - 1; i > index; i--)
                 {
                     if (EqualityComparer<T>.Default.Equals(mruList[i], item))
                     {
