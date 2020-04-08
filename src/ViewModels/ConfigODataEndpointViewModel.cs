@@ -17,47 +17,57 @@ namespace Microsoft.OData.ConnectedService.ViewModels
     internal class ConfigODataEndpointViewModel : ConnectedServiceWizardPage
     {
         public string Endpoint { get; set; }
+
         public string ServiceName { get; set; }
+
         public Version EdmxVersion { get; set; }
+
         public string MetadataTempPath { get; set; }
+
         public string CustomHttpHeaders { get; set; }
+
         public UserSettings UserSettings { get; set; }
+
         public bool IncludeWebProxy { get; set; }
+
         public string WebProxyHost { get; set; }
+
         public bool IncludeWebProxyNetworkCredentials { get; set; }
+
         public string WebProxyNetworkCredentialsUsername { get; set; }
+
         public string WebProxyNetworkCredentialsPassword { get; set; }
+
         public string WebProxyNetworkCredentialsDomain { get; set; }
+
         public bool IncludeCustomHeaders { get; set; }
+
         public event EventHandler<EventArgs> PageEntering;
+
         public ODataConnectedServiceWizard ServiceWizard { get; set; }
+
         public ConfigODataEndpointViewModel(UserSettings userSettings, ODataConnectedServiceWizard serviceWizard) : base()
         {
             this.Title = "Configure endpoint";
             this.Description = "Enter or choose an OData service endpoint to begin";
             this.Legend = "Endpoint";
-            this.View = new ConfigODataEndpoint
-            {
-                DataContext = this
-            };
             this.ServiceWizard = serviceWizard;
             this.UserSettings = userSettings;
-            this.ServiceName = Constants.DefaultServiceName;          
+            this.ServiceName = Constants.DefaultServiceName;
         }
         public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
             await base.OnPageEnteringAsync(args);
-            if (PageEntering != null)
-            {
-                this.PageEntering(this, EventArgs.Empty);
-            }
+            this.View = new ConfigODataEndpoint { DataContext = this };
+            this.PageEntering?.Invoke(this, EventArgs.Empty);
         }
+
         public event EventHandler<EventArgs> PageLeaving;
         public override Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
         {
-            LoadFromJsonFile();
+            SaveToUserSettings();
             var wizard = this.Wizard as ODataConnectedServiceWizard;
-            UserSettings.AddToTopOfMruList(wizard.UserSettings.MruEndpoints, this.Endpoint);
+            UserSettings.AddToTopOfMruList(wizard?.UserSettings?.MruEndpoints, this.Endpoint);
             try
             {
                 this.MetadataTempPath = GetMetadata(out var version);
@@ -77,7 +87,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
         }
 
-        private string GetMetadata(out Version edmxVersion)
+        internal string GetMetadata(out Version edmxVersion)
         {
             if (string.IsNullOrEmpty(this.Endpoint))
             {
@@ -121,7 +131,6 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
                 WebResponse webResponse = webRequest.GetResponse();
                 metadataStream = webResponse.GetResponseStream();
-                
             }
             else
             {
@@ -138,7 +147,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             string workFile = Path.GetTempFileName();
 
             try
-            {   
+            {
                 using (XmlReader reader = XmlReader.Create(metadataStream))
                 {
                     using (XmlWriter writer = XmlWriter.Create(workFile))
@@ -168,71 +177,39 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                 metadataStream?.Dispose();
             }
         }
-        public void LoadFromJsonFile()
+
+        public void SaveToUserSettings()
         {
             if (this.UserSettings != null)
             {
-                if (this.ServiceName != Constants.DefaultServiceName)
-                {
-                    UserSettings.ServiceName = this.ServiceName;
-                }
-                if (this.Endpoint != null)
-                {
-                    UserSettings.Endpoint = this.Endpoint;
-                }
-                if (this.WebProxyHost != null)
-                {
-                    UserSettings.WebProxyHost = this.WebProxyHost;
-                }
-                if (this.CustomHttpHeaders != null)
-                {
-                    UserSettings.CustomHttpHeaders = this.CustomHttpHeaders;
-                }
-                if (this.WebProxyNetworkCredentialsDomain != null)
-                {
-                    UserSettings.WebProxyNetworkCredentialsDomain = this.WebProxyNetworkCredentialsDomain;
-                }
-                if (this.WebProxyNetworkCredentialsPassword != null)
-                {
-                    UserSettings.WebProxyNetworkCredentialsPassword = this.WebProxyNetworkCredentialsPassword;
-                }
-                if (this.WebProxyNetworkCredentialsUsername != null)
-                {
-                    UserSettings.WebProxyNetworkCredentialsUsername = this.WebProxyNetworkCredentialsUsername;
-                }
-                if (this.IncludeCustomHeaders == true)
-                {
-                    UserSettings.IncludeCustomHeaders = this.IncludeCustomHeaders;
-                }
-                if (this.IncludeCustomHeaders == false && UserSettings.IncludeCustomHeaders == true)
-                {
-                    UserSettings.IncludeCustomHeaders = false;
-                }
-                if (this.IncludeWebProxy == true)
-                {
-                    UserSettings.IncludeWebProxy = true;
-                }
-                if (this.IncludeWebProxy == false && UserSettings.IncludeWebProxy == true)
-                {
-                    UserSettings.IncludeWebProxy = false;
-                }
-                if (this.IncludeWebProxyNetworkCredentials == true)
-                {
-                    UserSettings.IncludeWebProxyNetworkCredentials = true;
-                }
-                if (this.IncludeWebProxyNetworkCredentials == false && UserSettings.IncludeWebProxyNetworkCredentials == true)
-                {
-                    UserSettings.IncludeWebProxyNetworkCredentials = false;
-                }
+                UserSettings.ServiceName = this.ServiceName;
+                UserSettings.Endpoint = this.Endpoint;
+                UserSettings.WebProxyHost = this.WebProxyHost;
+                UserSettings.CustomHttpHeaders = this.CustomHttpHeaders;
+                UserSettings.WebProxyNetworkCredentialsDomain = this.WebProxyNetworkCredentialsDomain;
+                UserSettings.WebProxyNetworkCredentialsPassword = this.WebProxyNetworkCredentialsPassword;
+                UserSettings.WebProxyNetworkCredentialsUsername = this.WebProxyNetworkCredentialsUsername;
+                UserSettings.IncludeCustomHeaders = this.IncludeCustomHeaders;
+                UserSettings.IncludeWebProxy = this.IncludeWebProxy;
+                UserSettings.IncludeWebProxyNetworkCredentials = this.IncludeWebProxyNetworkCredentials;
+            }
+        }
+
+        public void LoadFromUserSettings()
+        {
+            if (this.UserSettings != null)
+            {
                 this.ServiceName = UserSettings.ServiceName ?? Constants.DefaultServiceName;
                 this.Endpoint = UserSettings.Endpoint;
                 this.WebProxyHost = UserSettings.WebProxyHost;
                 this.IncludeWebProxy = UserSettings.IncludeWebProxy;
                 this.IncludeCustomHeaders = UserSettings.IncludeCustomHeaders;
+                this.CustomHttpHeaders = UserSettings.CustomHttpHeaders;
                 this.IncludeWebProxyNetworkCredentials = UserSettings.IncludeWebProxyNetworkCredentials;
                 this.WebProxyNetworkCredentialsDomain = UserSettings.WebProxyNetworkCredentialsDomain;
                 this.WebProxyNetworkCredentialsPassword = UserSettings.WebProxyNetworkCredentialsPassword;
                 this.WebProxyNetworkCredentialsUsername = UserSettings.WebProxyNetworkCredentialsUsername;
+                this.View = new ConfigODataEndpoint { DataContext = this };
             }
         }
     }

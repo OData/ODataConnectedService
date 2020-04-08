@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.OData.ConnectedService.Models;
@@ -15,13 +14,16 @@ namespace Microsoft.OData.ConnectedService.ViewModels
     {
         private bool _isSupportedVersion;
 
-        public OperationImportsViewModel(): base()
+        public UserSettings UserSettings { get; set; }
+
+        public OperationImportsViewModel(UserSettings userSettings = null) : base()
         {
             Title = "Object Selection";
             Description = "Select function and action imports to include in the generated code.";
             Legend = "Function/Action Imports";
             OperationImports = new List<OperationImportModel>();
             IsSupportedODataVersion = true;
+            this.UserSettings = userSettings;
         }
 
         public IEnumerable<OperationImportModel> OperationImports { get; set; }
@@ -62,12 +64,13 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
             await base.OnPageEnteringAsync(args);
-            View = new OperationImports() { DataContext = this };
-            PageEntering?.Invoke(this, EventArgs.Empty);
+            this.View = new OperationImports { DataContext = this };
+            this.PageEntering?.Invoke(this, EventArgs.Empty);
         }
 
         public override async Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
         {
+            SaveToUserSettings();
             return await base.OnPageLeavingAsync(args);
         }
 
@@ -75,7 +78,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         {
             var toLoad = new List<OperationImportModel>();
             var alreadyAdded = new HashSet<string>();
-            
+
             foreach (var operation in operationImports)
             {
                 if (!alreadyAdded.Contains(operation.Name))
@@ -122,5 +125,25 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
         }
 
+        public void SaveToUserSettings()
+        {
+            if (this.UserSettings != null)
+            {
+                UserSettings.ExcludedOperationImports = this.ExcludedOperationImportsNames?.Any() == true
+                    ? this.ExcludedOperationImportsNames.ToList()
+                    : new List<string>();
+            }
+        }
+
+        public void LoadFromUserSettings()
+        {
+            if (UserSettings != null)
+            {
+                if (UserSettings.ExcludedOperationImports?.Any() == true)
+                {
+                    ExcludeOperationImports(UserSettings.ExcludedOperationImports ?? Enumerable.Empty<string>());
+                }
+            }
+        }
     }
 }

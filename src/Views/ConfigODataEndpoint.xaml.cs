@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
 using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.ViewModels;
@@ -88,6 +90,7 @@ namespace Microsoft.OData.ConnectedService.Views
                 this.UserSettings.EnableNamingAlias = microsoftConnectedServiceData.ExtendedData?.EnableNamingAlias ?? this.UserSettings.EnableNamingAlias;
                 this.UserSettings.CustomHttpHeaders = microsoftConnectedServiceData.ExtendedData?.CustomHttpHeaders ?? this.UserSettings.CustomHttpHeaders;
                 this.UserSettings.IncludeCustomHeaders = microsoftConnectedServiceData.ExtendedData?.IncludeCustomHeaders ?? this.UserSettings.IncludeCustomHeaders;
+                this.UserSettings.ExcludedOperationImports = microsoftConnectedServiceData.ExtendedData?.ExcludedOperationImports ?? new List<string>();
                 this.UserSettings.WebProxyHost = microsoftConnectedServiceData.ExtendedData?.WebProxyHost ?? this.UserSettings.WebProxyHost;
                 this.UserSettings.IncludeWebProxy = microsoftConnectedServiceData.ExtendedData?.IncludeWebProxy ?? this.UserSettings.IncludeWebProxy;
                 this.UserSettings.IncludeWebProxyNetworkCredentials = microsoftConnectedServiceData.ExtendedData?.IncludeWebProxyNetworkCredentials ?? this.UserSettings.IncludeWebProxyNetworkCredentials;
@@ -95,19 +98,35 @@ namespace Microsoft.OData.ConnectedService.Views
                 this.UserSettings.WebProxyNetworkCredentialsPassword = microsoftConnectedServiceData.ExtendedData?.WebProxyNetworkCredentialsPassword ?? this.UserSettings.WebProxyNetworkCredentialsPassword;
                 this.UserSettings.WebProxyNetworkCredentialsUsername = microsoftConnectedServiceData.ExtendedData?.WebProxyNetworkCredentialsUsername ?? this.UserSettings.WebProxyNetworkCredentialsUsername;
                 ODataConnectedServiceWizard ServiceWizard = ((ConfigODataEndpointViewModel)this.DataContext).ServiceWizard;
-                ServiceWizard.AdvancedSettingsViewModel.UserSettings = this.UserSettings;
+                this.UserSettings.MruEndpoints = UserSettings.Load(ServiceWizard.Context.Logger)?.MruEndpoints;
+
                 ServiceWizard.ConfigODataEndpointViewModel.UserSettings = this.UserSettings;
-                this.Endpoint.Text = microsoftConnectedServiceData.ExtendedData?.Endpoint ?? this.Endpoint.Text;
-                this.ServiceName.Text = microsoftConnectedServiceData.ExtendedData?.ServiceName ?? this.ServiceName.Text;
-                this.CustomHttpHeaders.Text = microsoftConnectedServiceData.ExtendedData?.CustomHttpHeaders ?? this.CustomHttpHeaders.Text;
-                this.WebProxyHost.Text = microsoftConnectedServiceData.ExtendedData?.WebProxyHost ?? this.WebProxyHost.Text;
-                this.WebProxyNetworkCredentialsDomain.Text = microsoftConnectedServiceData.ExtendedData?.WebProxyNetworkCredentialsDomain ?? this.WebProxyNetworkCredentialsDomain.Text;
-                this.WebProxyNetworkCredentialsPassword.Text = microsoftConnectedServiceData.ExtendedData?.WebProxyNetworkCredentialsPassword ?? this.WebProxyNetworkCredentialsPassword.Text;
-                this.WebProxyNetworkCredentialsUsername.Text = microsoftConnectedServiceData.ExtendedData?.WebProxyNetworkCredentialsUsername ?? this.WebProxyNetworkCredentialsUsername.Text;
-                this.IncludeHttpHeadersElement.IsChecked = microsoftConnectedServiceData.ExtendedData?.IncludeCustomHeaders ?? this.IncludeHttpHeadersElement.IsChecked;
-                this.IncludeWebProxyElement.IsChecked = microsoftConnectedServiceData.ExtendedData?.IncludeWebProxy ?? this.IncludeWebProxyElement.IsChecked;
-                this.IncludeWebProxyNetworkCredentialsElement.IsChecked = microsoftConnectedServiceData.ExtendedData?.IncludeWebProxyNetworkCredentials ?? this.IncludeWebProxyNetworkCredentialsElement.IsChecked;
+                ServiceWizard.ConfigODataEndpointViewModel.LoadFromUserSettings();
+
+                ServiceWizard.AdvancedSettingsViewModel.UserSettings = this.UserSettings;
+                ServiceWizard.AdvancedSettingsViewModel.LoadFromUserSettings();
+
+                ServiceWizard.OperationImportsViewModel.UserSettings = this.UserSettings;
+
+                // get Operation Imports from metadata for excluding ExcludedOperationImports
+                try
+                {
+                    ServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath = ServiceWizard.ConfigODataEndpointViewModel.GetMetadata(out var version);
+                    ServiceWizard.ConfigODataEndpointViewModel.EdmxVersion = version;
+                    if (version == Constants.EdmxVersion4)
+                    {
+                        var model = EdmHelper.GetEdmModelFromFile(ServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath);
+                        var operations = EdmHelper.GetOperationImports(model);
+                        ServiceWizard.OperationImportsViewModel.LoadOperationImports(operations);
+                        ServiceWizard.ProcessedEndpointForOperationImports = this.UserSettings.Endpoint;
+                        ServiceWizard.OperationImportsViewModel.LoadFromUserSettings();
+                    }
+                }
+                catch
+                {
+                    // ignored
+                }
             }
         }
-    } 
+    }
 }

@@ -12,15 +12,25 @@ namespace Microsoft.OData.ConnectedService.ViewModels
     internal class AdvancedSettingsViewModel : ConnectedServiceWizardPage
     {
         public bool UseDataServiceCollection { get; set; }
+
         public bool UseNamespacePrefix { get; set; }
+
         public string NamespacePrefix { get; set; }
+
         public bool EnableNamingAlias { get; set; }
+
         public bool IgnoreUnexpectedElementsAndAttributes { get; set; }
+
         public string GeneratedFileNamePrefix { get; set; }
+
         public bool IncludeT4File { get; set; }
+
         public bool MakeTypesInternal { get; set; }
+
         public bool OpenGeneratedFilesInIDE { get; set; }
-        public bool GenerateMultipleFiles { get; set; }      
+
+        public bool GenerateMultipleFiles { get; set; }
+
         public UserSettings UserSettings { get; set; }
 
         public AdvancedSettingsViewModel(UserSettings userSettings) : base()
@@ -29,6 +39,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             this.Description = "Advanced settings for generating client proxy";
             this.Legend = "Settings";
             this.UserSettings = userSettings;
+            this.GeneratedFileNamePrefix = Common.Constants.DefaultReferenceFileName;
+            this.NamespacePrefix = Common.Constants.DefaultReferenceFileName;
         }
 
         public event EventHandler<EventArgs> PageEntering;
@@ -36,8 +48,35 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
             await base.OnPageEnteringAsync(args);
+            this.View = new AdvancedSettings { DataContext = this };
+            this.PageEntering?.Invoke(this, EventArgs.Empty);
+        }
 
-            this.View = new AdvancedSettings();
+        public override Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
+        {
+            SaveToUserSettings();
+            return base.OnPageLeavingAsync(args);
+        }
+
+        public void SaveToUserSettings()
+        {
+            if (this.UserSettings != null)
+            {
+                UserSettings.GeneratedFileNamePrefix = this.GeneratedFileNamePrefix;
+                UserSettings.OpenGeneratedFilesInIDE = this.OpenGeneratedFilesInIDE;
+                UserSettings.UseNamespacePrefix = this.UseNamespacePrefix;
+                UserSettings.NamespacePrefix = this.NamespacePrefix;
+                UserSettings.UseDataServiceCollection = this.UseDataServiceCollection;
+                UserSettings.MakeTypesInternal = this.MakeTypesInternal;
+                UserSettings.IncludeT4File = this.IncludeT4File;
+                UserSettings.IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes;
+                UserSettings.EnableNamingAlias = this.EnableNamingAlias;
+                UserSettings.GenerateMultipleFiles = this.GenerateMultipleFiles;
+            }
+        }
+
+        public void LoadFromUserSettings()
+        {
             if (UserSettings != null)
             {
                 this.GeneratedFileNamePrefix = UserSettings.GeneratedFileNamePrefix ?? Common.Constants.DefaultReferenceFileName;
@@ -50,17 +89,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                 this.IgnoreUnexpectedElementsAndAttributes = UserSettings.IgnoreUnexpectedElementsAndAttributes;
                 this.EnableNamingAlias = UserSettings.EnableNamingAlias;
                 this.GenerateMultipleFiles = UserSettings.GenerateMultipleFiles;
-            }         
-            this.View.DataContext = this;
-            if (PageEntering != null)
-            {
-                this.PageEntering(this, EventArgs.Empty);
             }
-        }
-
-        public override Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
-        {
-            return base.OnPageLeavingAsync(args);
         }
     }
 }
