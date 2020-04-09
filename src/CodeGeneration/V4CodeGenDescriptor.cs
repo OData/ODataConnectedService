@@ -170,7 +170,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             var referenceFolder = GetReferenceFileFolder();
             var outputFile = Path.Combine(referenceFolder, $"{this.GeneratedFileNamePrefix}{(this.TargetProjectLanguage == LanguageOption.GenerateCSharpCode ? ".cs" : ".vb")}");
             await this.Context.HandlerHelper.AddFileAsync(tempFile, outputFile, new AddFileOptions { OpenOnComplete = this.ServiceConfiguration.OpenGeneratedFilesInIDE });
-            t4CodeGenerator.MultipleFilesManager?.GenerateFiles(ServiceConfiguration.GenerateMultipleFiles, this.Context.HandlerHelper, referenceFolder, true, this.ServiceConfiguration.OpenGeneratedFilesInIDE);
+            t4CodeGenerator.MultipleFilesManager?.GenerateFiles(ServiceConfiguration.GenerateMultipleFiles, this.Context.HandlerHelper, this.Context.Logger, referenceFolder, true, this.ServiceConfiguration.OpenGeneratedFilesInIDE);
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Client Proxy for OData V4 was generated.");
         }
     }

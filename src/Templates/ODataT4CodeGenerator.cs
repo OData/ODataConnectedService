@@ -7,6 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
+
 namespace Microsoft.OData.ConnectedService.Templates
 {
     using System;
@@ -1621,7 +1622,7 @@ public abstract class ODataClientTemplate : TemplateBase
         this.WriteFileHeader();
         context.MultipleFilesManager.EndBlock();
         this.WriteNamespaces();
-        context.MultipleFilesManager.GenerateFiles(context.GenerateMultipleFiles, null, null, false, false);
+        context.MultipleFilesManager.GenerateFiles(context.GenerateMultipleFiles, null, null, null, false, false);
         return context.MultipleFilesManager.Template.ToString();
     }
 
@@ -7761,10 +7762,10 @@ public class FilesManager {
 
     /// <summary> Contains generated text.</summary>
     public StringBuilder Template
-        {
-            get; 
-            set;
-        }
+    {
+        get; 
+        set;
+    }
 
 
     /// <summary> 
@@ -7834,7 +7835,7 @@ public class FilesManager {
     /// <param name="split">If true the function is executed and multiple files generated
     /// otherwoise only a single file is generated.</param>
     [SecurityCritical]
-    public virtual void GenerateFiles(bool split,ConnectedServiceHandlerHelper handlerHelper,string referenceFolder,bool fileCreated,bool OpenGeneratedFilesInIDE) 
+    public virtual void GenerateFiles(bool split, ConnectedServiceHandlerHelper handlerHelper, ConnectedServiceLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE) 
     {
         if (split) 
         {
@@ -7853,7 +7854,13 @@ public class FilesManager {
                 if(fileCreated)
                 {
                     string outputFile = Path.Combine(referenceFolder, block.Name);
-                    handlerHelper.AddFileAsync(fileName, outputFile, new AddFileOptions { OpenOnComplete = OpenGeneratedFilesInIDE });
+                    bool fileExists = File.Exists(outputFile);
+                    handlerHelper.AddFileAsync(fileName, outputFile, new AddFileOptions { OpenOnComplete = OpenGeneratedFilesInIDE, SuppressOverwritePrompt = true }).ContinueWith(
+                        async _ =>
+                        {
+                            await logger?.WriteMessageAsync(LoggerMessageCategory.Information,
+                                "\"{0}\" has been {1}.", new FileInfo(fileName).Name, fileExists ? "updated" : "added");
+                        }, System.Threading.Tasks.TaskContinuationOptions.ExecuteSynchronously);
                 }
                 else
                 {
@@ -7875,7 +7882,7 @@ public class FilesManager {
     {
         if (IsFileContentDifferent(fileName, content))
         {
-                 File.WriteAllText(fileName, content);
+            File.WriteAllText(fileName, content);
         }
            
     }
@@ -7943,9 +7950,9 @@ public class FilesManager {
         /// <param name="split">If true the function is executed and multiple files generated
         /// otherwoise only a single file is generated.</param>
         [SecurityCritical]
-        public override void GenerateFiles(bool split,ConnectedServiceHandlerHelper handlerHelper,string referenceFolder,bool fileCreated,bool OpenGeneratedFilesInIDE) 
+        public override void GenerateFiles(bool split, ConnectedServiceHandlerHelper handlerHelper, ConnectedServiceLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE) 
         {            
-            base.GenerateFiles(split,handlerHelper,referenceFolder, fileCreated,OpenGeneratedFilesInIDE);
+            base.GenerateFiles(split, handlerHelper, logger, referenceFolder, fileCreated, OpenGeneratedFilesInIDE);
         }
 
         /// <summary>
