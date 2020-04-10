@@ -178,7 +178,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
         }
 
-        public void SaveToUserSettings()
+        private void SaveToUserSettings()
         {
             if (this.UserSettings != null)
             {
