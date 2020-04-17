@@ -51,7 +51,7 @@
                 HorizontalAlignment="Right"
                 HorizontalContentAlignment="Center"
                 Click="OpenConnectedServiceJsonFileButton_Click">
-                <TextBlock Text="Load ConnectedService json file" />
+                <TextBlock Text="Load Settings Config file" />
             </Button>
         </Grid>
         <TextBlock
