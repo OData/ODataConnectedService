@@ -33,6 +33,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public UserSettings UserSettings { get; set; }
 
+        internal bool IsEntered;
+
         public AdvancedSettingsViewModel(UserSettings userSettings) : base()
         {
             this.Title = "Settings";
@@ -47,6 +49,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
+            this.IsEntered = true;
             await base.OnPageEnteringAsync(args);
             this.View = new AdvancedSettings { DataContext = this };
             this.PageEntering?.Invoke(this, EventArgs.Empty);
@@ -58,7 +61,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             return base.OnPageLeavingAsync(args);
         }
 
-        public void SaveToUserSettings()
+        private void SaveToUserSettings()
         {
             if (this.UserSettings != null)
             {

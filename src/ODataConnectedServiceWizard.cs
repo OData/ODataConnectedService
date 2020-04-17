@@ -77,15 +77,31 @@ namespace Microsoft.OData.ConnectedService
             this.IsFinishEnabled = true;
         }
 
-        public override Task<ConnectedServiceInstance> GetFinishedServiceInstanceAsync()
+        public override async Task<ConnectedServiceInstance> GetFinishedServiceInstanceAsync()
         {
+            // ensure that the data has been loaded from wizard pages and saved to UserSettings
+            if (this.Context.IsUpdating)
+            {
+                if (!this.OperationImportsViewModel.IsEntered)
+                {
+                    await this.OperationImportsViewModel.OnPageEnteringAsync(null);
+                    await this.OperationImportsViewModel.OnPageLeavingAsync(null);
+                }
+
+                if (!this.AdvancedSettingsViewModel.IsEntered)
+                {
+                    await this.AdvancedSettingsViewModel.OnPageEnteringAsync(null);
+                    await this.AdvancedSettingsViewModel.OnPageLeavingAsync(null);
+                }
+            }
+
             this.UserSettings.Save();
             this.ServiceInstance.InstanceId = AdvancedSettingsViewModel.GeneratedFileNamePrefix;
             this.ServiceInstance.Name = ConfigODataEndpointViewModel.ServiceName;
             this.ServiceInstance.MetadataTempFilePath = ConfigODataEndpointViewModel.MetadataTempPath;
             this.ServiceInstance.ServiceConfig = this.CreateServiceConfiguration();
 
-            return Task.FromResult<ConnectedServiceInstance>(this.ServiceInstance);
+            return await Task.FromResult<ConnectedServiceInstance>(this.ServiceInstance);
         }
 
         /// <summary>
