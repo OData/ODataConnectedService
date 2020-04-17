@@ -20,7 +20,7 @@ namespace Microsoft.OData.ConnectedService.Common
         /// </remarks>
         public static void Save(object userSettings, string providerId, string name, Action onSaved, ConnectedServiceLogger logger)
         {
-            string fileName = UserSettingsPersistenceHelper.GetStorageFileName(providerId, name);
+            var fileName = UserSettingsPersistenceHelper.GetStorageFileName(providerId, name);
 
             UserSettingsPersistenceHelper.ExecuteNoncriticalOperation(
                 () =>
@@ -32,11 +32,11 @@ namespace Microsoft.OData.ConnectedService.Common
                         {
                             // note: this overwrites existing settings file if it exists
                             stream = file.OpenFile(fileName, FileMode.Create);
-                            using (XmlWriter writer = XmlWriter.Create(stream))
+                            using (var writer = XmlWriter.Create(stream))
                             {
                                 stream = null;
 
-                                DataContractSerializer dcs = new DataContractSerializer(userSettings.GetType());
+                                var dcs = new DataContractSerializer(userSettings.GetType());
                                 dcs.WriteObject(writer, userSettings);
 
                                 writer.Flush();
@@ -59,12 +59,12 @@ namespace Microsoft.OData.ConnectedService.Common
         /// Loads user settings from isolated storage.
         /// </summary>
         /// <remarks>
-        /// Non-critical exceptions are handled by writing an error message in the output window and 
+        /// Non-critical exceptions are handled by writing an error message in the output window and
         /// returning null.
         /// </remarks>
         public static T Load<T>(string providerId, string name, Action<T> onLoaded, ConnectedServiceLogger logger) where T : class
         {
-            string fileName = UserSettingsPersistenceHelper.GetStorageFileName(providerId, name);
+            var fileName = UserSettingsPersistenceHelper.GetStorageFileName(providerId, name);
             T result = null;
 
             UserSettingsPersistenceHelper.ExecuteNoncriticalOperation(
@@ -78,16 +78,16 @@ namespace Microsoft.OData.ConnectedService.Common
                             try
                             {
                                 stream = file.OpenFile(fileName, FileMode.Open);
-                                XmlReaderSettings settings = new XmlReaderSettings()
+                                var settings = new XmlReaderSettings()
                                 {
                                     XmlResolver = null
                                 };
 
-                                using (XmlReader reader = XmlReader.Create(stream, settings))
+                                using (var reader = XmlReader.Create(stream, settings))
                                 {
                                     stream = null;
 
-                                    DataContractSerializer dcs = new DataContractSerializer(typeof(T));
+                                    var dcs = new DataContractSerializer(typeof(T));
                                     result = dcs.ReadObject(reader) as T;
                                 }
                             }

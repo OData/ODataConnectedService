@@ -35,29 +35,29 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
         {
             await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Generating Client Proxy ...");
 
-            EntityClassGenerator generator = new EntityClassGenerator(this.TargetProjectLanguage)
+            var generator = new EntityClassGenerator(this.TargetProjectLanguage)
             {
                 UseDataServiceCollection = this.ServiceConfiguration.UseDataServiceCollection,
                 Version = DataServiceCodeVersion.V3
             };
 
             // Set up XML secure resolver
-            XmlUrlResolver xmlUrlResolver = new XmlUrlResolver
+            var xmlUrlResolver = new XmlUrlResolver
             {
                 Credentials = System.Net.CredentialCache.DefaultNetworkCredentials
             };
 
-            PermissionSet permissionSet = new PermissionSet(System.Security.Permissions.PermissionState.Unrestricted);
+            var permissionSet = new PermissionSet(System.Security.Permissions.PermissionState.Unrestricted);
 
-            XmlReaderSettings settings = new XmlReaderSettings
+            var settings = new XmlReaderSettings
             {
                 XmlResolver = new XmlSecureResolver(xmlUrlResolver, permissionSet)
             };
 
-            using (XmlReader reader = XmlReader.Create(this.MetadataUri, settings))
+            using (var reader = XmlReader.Create(this.MetadataUri, settings))
             {
-                string tempFile = Path.GetTempFileName();
-                bool noErrors = true;
+                var tempFile = Path.GetTempFileName();
+                var noErrors = true;
 
                 using (StreamWriter writer = File.CreateText(tempFile))
                 {
@@ -82,7 +82,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                         ? ".cs"
                         : ".vb";
 
-                    string outputFile = Path.Combine(GetReferenceFileFolder(), this.GeneratedFileNamePrefix + ext);
+                    var outputFile = Path.Combine(GetReferenceFileFolder(), this.GeneratedFileNamePrefix + ext);
                     await this.Context.HandlerHelper.AddFileAsync(tempFile, outputFile, new AddFileOptions { OpenOnComplete = this.ServiceConfiguration.OpenGeneratedFilesInIDE });
 
                     await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Client Proxy for OData V3 was generated.");

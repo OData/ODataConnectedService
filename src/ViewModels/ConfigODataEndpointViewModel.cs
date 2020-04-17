@@ -102,14 +102,15 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                     this.Endpoint = this.Endpoint.TrimEnd('/') + "/$metadata";
                 }
             }
+
             Stream metadataStream;
-            Uri metadataUri = new Uri(this.Endpoint);
+            var metadataUri = new Uri(this.Endpoint);
             if (!metadataUri.IsFile)
             {
-                HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(this.Endpoint);
+                var webRequest = (HttpWebRequest)WebRequest.Create(this.Endpoint);
                 if (this.CustomHttpHeaders != null)
                 {
-                    string[] headerElements = this.CustomHttpHeaders.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                    var headerElements = this.CustomHttpHeaders.Split(new [] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                     foreach (var headerElement in headerElements)
                     {
                         // Trim header for empty spaces
@@ -120,7 +121,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
                 if (IncludeWebProxy)
                 {
-                    WebProxy proxy = new WebProxy(WebProxyHost);
+                    var proxy = new WebProxy(WebProxyHost);
                     if (IncludeWebProxyNetworkCredentials)
                     {
                         proxy.Credentials = new NetworkCredential(WebProxyNetworkCredentialsUsername, WebProxyNetworkCredentialsPassword, WebProxyNetworkCredentialsDomain);
@@ -135,22 +136,21 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             else
             {
                 // Set up XML secure resolver
-                XmlUrlResolver xmlUrlResolver = new XmlUrlResolver()
+                var xmlUrlResolver = new XmlUrlResolver
                 {
                     Credentials = CredentialCache.DefaultNetworkCredentials
-
                 };
 
                 metadataStream = (Stream)xmlUrlResolver.GetEntity(metadataUri, null, typeof(Stream));
             }
 
-            string workFile = Path.GetTempFileName();
+            var workFile = Path.GetTempFileName();
 
             try
             {
                 using (XmlReader reader = XmlReader.Create(metadataStream))
                 {
-                    using (XmlWriter writer = XmlWriter.Create(workFile))
+                    using (var writer = XmlWriter.Create(workFile))
                     {
                         while (reader.NodeType != XmlNodeType.Element)
                         {

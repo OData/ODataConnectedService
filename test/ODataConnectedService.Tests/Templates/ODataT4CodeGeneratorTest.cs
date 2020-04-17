@@ -134,7 +134,7 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
 
         public static string NormalizeGeneratedCode(string code)
         {
-            string normalized = Regex.Replace(code, "// Generation date:.*", string.Empty, RegexOptions.Multiline);
+            var normalized = Regex.Replace(code, "// Generation date:.*", string.Empty, RegexOptions.Multiline);
             normalized = Regex.Replace(normalized, "'Generation date:.*", string.Empty, RegexOptions.Multiline);
             normalized = Regex.Replace(normalized, "//     Runtime Version:.*", string.Empty, RegexOptions.Multiline);
             normalized = Regex.Replace(normalized, "'     Runtime Version:.*", string.Empty, RegexOptions.Multiline);

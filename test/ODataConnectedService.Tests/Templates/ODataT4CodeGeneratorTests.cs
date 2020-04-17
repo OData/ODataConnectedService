@@ -51,11 +51,11 @@ namespace ODataConnectedService.Tests
             MetadataUri = "File:\\" + EdmxTestInputFile;
             MetadataUri = Uri.EscapeDataString(MetadataUri);
 
-            string commonProgramFiles = Environment.GetEnvironmentVariable("CommonProgramFiles");
+            var commonProgramFiles = Environment.GetEnvironmentVariable("CommonProgramFiles");
             var programFiles = Environment.GetEnvironmentVariable("ProgramFiles");
-            string T4TransformToolPathVer11 = commonProgramFiles + "\\Microsoft Shared\\TextTemplating\\14.0\\TextTransform.exe";
-            string T4TransformToolPathVer12 = commonProgramFiles + "\\Microsoft Shared\\TextTemplating\\15.0\\TextTransform.exe";
-            string T4TransformToolPathVSVer2019Enterprise = programFiles + "\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\IDE\\TextTransform.exe";
+            var T4TransformToolPathVer11 = commonProgramFiles + "\\Microsoft Shared\\TextTemplating\\14.0\\TextTransform.exe";
+            var T4TransformToolPathVer12 = commonProgramFiles + "\\Microsoft Shared\\TextTemplating\\15.0\\TextTransform.exe";
+            var T4TransformToolPathVSVer2019Enterprise = programFiles + "\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\IDE\\TextTransform.exe";
             var T4TransformToolPathVSVer2019Professional = programFiles + "\\Microsoft Visual Studio\\2019\\Professional\\Common7\\IDE\\TextTransform.exe";
             var T4TransformToolPathVSVer2019Community = programFiles + "\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\\TextTransform.exe";
             var T4TransformToolPathVSVer2017Enterprise = programFiles + "\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\TextTransform.exe";
@@ -95,51 +95,51 @@ namespace ODataConnectedService.Tests
                 T4TransformToolPath = T4TransformToolPathVer12;
             }
 
-            string T4TemplateName = "ODataConnectedService.Tests.Templates.ODataT4CodeGenerator.tt";
-            string T4IncludeTemplateName = "ODataConnectedService.Tests.Templates.ODataT4CodeGenerator.ttinclude";
-            string T4IncludeFileManagerName = "ODataConnectedService.Tests.Templates.ODataT4CodeGenFilesManager.ttinclude";
+            var T4TemplateName = "ODataConnectedService.Tests.Templates.ODataT4CodeGenerator.tt";
+            var T4IncludeTemplateName = "ODataConnectedService.Tests.Templates.ODataT4CodeGenerator.ttinclude";
+            var T4IncludeFileManagerName = "ODataConnectedService.Tests.Templates.ODataT4CodeGenFilesManager.ttinclude";
             T4TemplatePath = AssemblyPath + "\\ODataT4CodeGenerator.tt";
             T4IncludeTemplatePath = AssemblyPath + "\\ODataT4CodeGenerator.ttinclude";
             T4IncludeFileManagePath = AssemblyPath + "\\ODataT4CodeGenFilesManager.ttinclude";
-            string ttSourceCode = string.Empty;
-            string ttinlucdeSourceCode = string.Empty;
-            string ttincludeFileManagerCode = string.Empty;
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            using (Stream stream = assembly.GetManifestResourceStream(T4TemplateName))
+            var ttSourceCode = string.Empty;
+            var ttinlucdeSourceCode = string.Empty;
+            var ttincludeFileManagerCode = string.Empty;
+            var assembly = Assembly.GetExecutingAssembly();
+            using (var stream = assembly.GetManifestResourceStream(T4TemplateName))
             {
-                using (StreamReader reader = new StreamReader(stream))
+                using (var reader = new StreamReader(stream))
                 {
                     ttSourceCode = reader.ReadToEnd();
                 }
             }
 
-            using (StreamWriter writer = new StreamWriter(T4TemplatePath))
+            using (var writer = new StreamWriter(T4TemplatePath))
             {
                 writer.Write(ttSourceCode);
             }
 
-            using (Stream stream = assembly.GetManifestResourceStream(T4IncludeFileManagerName))
+            using (var stream = assembly.GetManifestResourceStream(T4IncludeFileManagerName))
             {
-                using (StreamReader reader = new StreamReader(stream))
+                using (var reader = new StreamReader(stream))
                 {
                     ttincludeFileManagerCode = reader.ReadToEnd();
                 }
             }
 
-            using (StreamWriter writer = new StreamWriter(T4IncludeFileManagePath))
+            using (var writer = new StreamWriter(T4IncludeFileManagePath))
             {
                 writer.Write(ttincludeFileManagerCode);
             }
 
-            using (Stream stream = assembly.GetManifestResourceStream(T4IncludeTemplateName))
+            using (var stream = assembly.GetManifestResourceStream(T4IncludeTemplateName))
             {
-                using (StreamReader reader = new StreamReader(stream))
+                using (var reader = new StreamReader(stream))
                 {
                     ttinlucdeSourceCode = reader.ReadToEnd();
                 }
             }
 
-            using (StreamWriter writer = new StreamWriter(T4IncludeTemplatePath))
+            using (var writer = new StreamWriter(T4IncludeTemplatePath))
             {
                 writer.Write(ttinlucdeSourceCode);
             }
@@ -487,7 +487,7 @@ namespace ODataConnectedService.Tests
                 edmx = Regex.Replace(edmx, pattern, "<Schema $1Namespace=\"$2.DSC\"", RegexOptions.Multiline);
             }
 
-            ODataT4CodeGenerator t4CodeGenerator = new ODataT4CodeGenerator
+            var t4CodeGenerator = new ODataT4CodeGenerator
             {
                 Edmx = edmx,
                 GetReferencedModelReaderFunc = getReferencedModelReaderFunc,
@@ -533,12 +533,12 @@ namespace ODataConnectedService.Tests
                 option = ODataT4CodeGenerator.LanguageOption.VB;
             }
 
-            string arguments = "-out \"" + EdmxTestOutputFile
-                + "\" -a !!MetadataDocumentUri!" + MetadataUri
-                + " -a !!UseDataServiceCollection!" + useDataServiceCollection.ToString()
-                + " -a !!TargetLanguage!" + option.ToString()
-                + (namespacePrefix == null ? string.Empty : (" -a !!NamespacePrefix!" + namespacePrefix))
-                + " -p \"" + AssemblyPath + "\" \"" + T4TemplatePath + "\"";
+            var arguments = "-out \"" + EdmxTestOutputFile
+                                      + "\" -a !!MetadataDocumentUri!" + MetadataUri
+                                      + " -a !!UseDataServiceCollection!" + useDataServiceCollection.ToString()
+                                      + " -a !!TargetLanguage!" + option.ToString()
+                                      + (namespacePrefix == null ? string.Empty : (" -a !!NamespacePrefix!" + namespacePrefix))
+                                      + " -p \"" + AssemblyPath + "\" \"" + T4TemplatePath + "\"";
 
             var returnValue = Execute(T4TransformToolPath, arguments, null);
 
@@ -550,7 +550,7 @@ namespace ODataConnectedService.Tests
             returnValue.Should().BeEmpty();
 
             File.Exists(EdmxTestOutputFile).Should().BeTrue();
-            string code = File.ReadAllText(EdmxTestOutputFile);
+            var code = File.ReadAllText(EdmxTestOutputFile);
 
             if (CompileGeneratedCode)
             {
@@ -565,7 +565,7 @@ namespace ODataConnectedService.Tests
             Assert.IsNotNull(filename, "null filename");
             Assert.IsTrue(File.Exists(filename) && !Directory.Exists(filename), "missing file: {0}", filename);
 
-            Process process = new Process();
+            var process = new Process();
             process.StartInfo.FileName = filename;
             process.StartInfo.Arguments = arguments;
             process.StartInfo.RedirectStandardError = true;
@@ -588,7 +588,7 @@ namespace ODataConnectedService.Tests
 
         private static void GeneratedCodeShouldCompile(string source, bool isCSharp)
         {
-            CompilerParameters compilerOptions = new CompilerParameters
+            var compilerOptions = new CompilerParameters
             {
                 GenerateExecutable = false,
                 GenerateInMemory = true,

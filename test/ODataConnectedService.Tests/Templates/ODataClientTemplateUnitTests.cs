@@ -825,9 +825,9 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void OnlyOneNamespaceShouldCallWriteNamespaceStartJustOnce()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(OneNamespaceAndEmptyComplexTypeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
+            var template = new ODataClientTemplateImp(Context);
             template.WriteNamespaces();
             // Verify WriteNamespaceStart to representing WriteNamepsace
             template.CalledActions.FindAll(act => act == "WriteNamespaceStart(Namespace1)").Count.Should().Be(1);
@@ -836,9 +836,9 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void TwoNamespacesShouldCallWriteNamespaceStartTwice()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(TwoNamespacesEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
+            var template = new ODataClientTemplateImp(Context);
             template.WriteNamespaces();
             // Verify WriteNamespaceStart representing WriteNamepsace
             template.CalledActions.FindAll(act => act.StartsWith("WriteNamespaceStart")).Count.Should().Be(2);
@@ -863,12 +863,12 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void OnlyEntityContainerShouldCallWriteEntityContainer()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EmptyEntityContainerEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
+            var template = new ODataClientTemplateImp(Context);
             template.WriteNamespace("Namespace1");
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteNamespaceStart(Namespace1)",
                 "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer)",
@@ -884,12 +884,12 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void OnlyComplexTypeShouldCallWriteComplexType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(OneNamespaceAndEmptyComplexTypeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
+            var template = new ODataClientTemplateImp(Context);
             template.WriteNamespace("Namespace1");
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteNamespaceStart(Namespace1)",
                 "WriteSummaryCommentForStructuredType(ComplexType)",
@@ -903,12 +903,12 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void OnlyEnumTypeShouldCallWriteEnumType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EmptyEnumTypeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
+            var template = new ODataClientTemplateImp(Context);
             template.WriteNamespace("Namespace1");
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteNamespaceStart(Namespace1)",
                 "WriteSummaryCommentForEnumType(EnumType)",
@@ -922,15 +922,15 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void OnlyEntityTypeShouldCallWriteEntityType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EmptyEntityTypeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
+            var template = new ODataClientTemplateImp(Context);
             template.WriteNamespace("Namespace1");
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteNamespaceStart(Namespace1)",
-                "WriteSummaryCommentForStructuredType(EntityTypeSingle)", 
+                "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(EntityTypeSingle, DataServiceQuerySingle)",
                 "WriteClassEndForStructuredType()",
@@ -948,12 +948,12 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void SimpleEdmxShouldCallMethodsInOrder()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(SimpleEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
+            var template = new ODataClientTemplateImp(Context);
             template.WriteNamespace("Namespace1");
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteNamespaceStart(Namespace1)",
                 "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer)",
@@ -964,7 +964,7 @@ namespace ODataConnectedService.Tests
                 "WriteSummaryCommentForStructuredType(ComplexType)",
                 "WriteClassStartForStructuredType(, ComplexType, ComplexType, )",
                 "WriteClassEndForStructuredType()",
-                "WriteSummaryCommentForStructuredType(EntityTypeSingle)", 
+                "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(EntityTypeSingle, DataServiceQuerySingle)",
                 "WriteClassEndForStructuredType()",
@@ -1005,13 +1005,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEntityContainerWithOneEntitySet()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(BasicEntityContainerEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityContainer container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
             template.WriteEntityContainer(container, "Namespace1");
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer)",
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
@@ -1027,13 +1027,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEntityContainerWithTwoEntitySetUsingDifferentNamespaces()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EntityContainerUsingDifferentNamespacesEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityContainer container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
             template.WriteEntityContainer(container, "Namespace1");
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer)",
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
@@ -1051,13 +1051,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEntityContainerWithNamesapcePrefixAndOneNamespace()
         {
-            string namespacePrefix = "Foo";
+            var namespacePrefix = "Foo";
             Context = new ODataT4CodeGenerator.CodeGenerationContext(BasicEntityContainerEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityContainer container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
             template.WriteEntityContainer(container, "Namespace1");
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer)",
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
@@ -1082,13 +1082,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEntityContainerWithNamesapcePrefixAndTwoNamespaces()
         {
-            string namespacePrefix = "Foo";
+            var namespacePrefix = "Foo";
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EntityContainerUsingDifferentNamespacesEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityContainer container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
             template.WriteEntityContainer(container, "Namespace1");
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer)",
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
@@ -1147,13 +1147,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEntityContainerConstructorWithoutResolveNameAndType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EmptyEntityContainerEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityContainer container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
             template.WriteEntityContainerConstructor(container);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
                 "WriteClassEndForEntityContainerConstructor()"
@@ -1164,13 +1164,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEntityContainerConstructorWithResolveNameWithoutResolveType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ModelHasInheritanceEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityContainer container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
             template.WriteEntityContainerConstructor(container);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
                 "WriteInitializeResolveName()",
@@ -1184,11 +1184,11 @@ namespace ODataConnectedService.Tests
         {
             const string namespacePrefix = "NamespacePrefix";
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ModelHasInheritanceEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityContainer container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
             template.WriteEntityContainerConstructor(container);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
                 "WriteInitializeResolveName()",
@@ -1201,13 +1201,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEntityContainerConstructorWithKeyAsSegment()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(KeyAsSegmentAnnotationEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityContainer container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var container = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First();
             template.WriteEntityContainerConstructor(container);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
                 "WriteKeyAsSegmentUrlConvention()",
@@ -1219,13 +1219,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEntityContainerConstructorWithKeyAsSegmentDefiningDifferentNamespace()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(KeyAsSegmentAnnotationDefiningDifferentNamespaceEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityContainer container = Context.GetSchemaElements("Namespace2").OfType<IEdmEntityContainer>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var container = Context.GetSchemaElements("Namespace2").OfType<IEdmEntityContainer>().First();
             template.WriteEntityContainerConstructor(container);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
                 "WriteKeyAsSegmentUrlConvention()",
@@ -1241,9 +1241,9 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void NoNeedResolveTypeFromNameShouldReturn()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EmptyEntityContainerEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
+            var template = new ODataClientTemplateImp(Context);
             template.WriteResolveTypeFromName();
             template.CalledActions.Should().BeEmpty();
         }
@@ -1253,10 +1253,10 @@ namespace ODataConnectedService.Tests
         {
             const string namespacePrefix = "NamespacePrefix";
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EmptyEntityContainerEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
+            var template = new ODataClientTemplateImp(Context);
             template.WriteResolveTypeFromName();
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteMethodStartForResolveTypeFromName()",
                 "WriteResolveNamespace(SystemType , Namespace1, NamespacePrefix)",
@@ -1270,10 +1270,10 @@ namespace ODataConnectedService.Tests
         {
             const string namespacePrefix = "NamespacePrefix";
             Context = new ODataT4CodeGenerator.CodeGenerationContext(TwoNamespacesEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
+            var template = new ODataClientTemplateImp(Context);
             template.WriteResolveTypeFromName();
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteMethodStartForResolveTypeFromName()",
                 "WriteResolveNamespace(SystemType , Namespace1, NamespacePrefix.Namespace1)",
@@ -1290,9 +1290,9 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void NoNeedResolveNameFromTypeShouldReturn()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EmptyEntityContainerEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
+            var template = new ODataClientTemplateImp(Context);
             template.WriteResolveNameFromType("EntityContainer", "Namespace1");
             template.CalledActions.Should().BeEmpty();
         }
@@ -1302,10 +1302,10 @@ namespace ODataConnectedService.Tests
         {
             const string namespacePrefix = "NamespacePrefix";
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EmptyEntityContainerEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
+            var template = new ODataClientTemplateImp(Context);
             template.WriteResolveNameFromType("EntityContainer", "Namespace1");
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteMethodStartForResolveNameFromType(EntityContainer, Namespace1)",
                 "WriteResolveType(Namespace1, NamespacePrefix)",
@@ -1391,10 +1391,10 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteAbstractEntityTypeWithoutKey()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(AbstractEntityTypeWithoutKeyEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityType entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
             template.WriteEntityType(entityType, boundOperationMap);
 
             template.CalledActions.Should().NotContain(act => act.StartsWith("WriteKeyPropertiesCommentAndAttribute"));
@@ -1403,15 +1403,15 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEmptyEntityType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EmptyEntityTypeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityType entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
             template.WriteEntityType(entityType, boundOperationMap);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForStructuredType(EntityTypeSingle)", 
+                "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(EntityTypeSingle, DataServiceQuerySingle)",
                 "WriteClassEndForStructuredType()",
@@ -1426,18 +1426,18 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEmptyEntityTypeWithUseDataServiceCollection()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EmptyEntityTypeEdmx, namespacePrefix) { UseDataServiceCollection = true };
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityType entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
             template.WriteEntityType(entityType, boundOperationMap);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForStructuredType(EntityTypeSingle)", 
+                "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(EntityTypeSingle, DataServiceQuerySingle)",
-                "WriteClassEndForStructuredType()", 
+                "WriteClassEndForStructuredType()",
                 "WriteSummaryCommentForStructuredType(EntityType)",
                 "WriteEntityTypeAttribute()",
                 "WriteClassStartForStructuredType(AbstractModifier, EntityType, EntityType, global::Microsoft.OData.Client.BaseEntityType, NotifyPropertyChanged)",
@@ -1450,11 +1450,11 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEmptyEntityTypeWithUseDataServiceCollectionAndEntitySet()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(BasicEntityContainerEdmx, namespacePrefix) { UseDataServiceCollection = true };
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEnumerable<IEdmEntitySet> entitySets = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First().EntitySets();
-            IEdmEntityType entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var entitySets = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First().EntitySets();
+            var entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
             foreach (var edmEntitySet in entitySets)
             {
                 List<IEdmNavigationSource> navigationSourceList = null;
@@ -1469,12 +1469,12 @@ namespace ODataConnectedService.Tests
 
             template.WriteEntityType(entityType, boundOperationMap);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(EntityTypeSingle, DataServiceQuerySingle)",
-                "WriteClassEndForStructuredType()", 
+                "WriteClassEndForStructuredType()",
                 "WriteSummaryCommentForStructuredType(EntityType)",
                 "WriteEntityTypeAttribute()",
                 "WriteEntitySetAttribute(Set1)",
@@ -1489,13 +1489,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEmptyEntityTypeWithHasStreamAttribute()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EntityTypeHasStreamAttributeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityType entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
             template.WriteEntityType(entityType, boundOperationMap);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
@@ -1513,13 +1513,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEmptyEntityTypeWithBaseType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ModelHasInheritanceEdmx, namespacePrefix) { UseDataServiceCollection = true };
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityType entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().Last();
+            var template = new ODataClientTemplateImp(Context);
+            var entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().Last();
             template.WriteEntityType(entityType, boundOperationMap);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
@@ -1536,13 +1536,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEntityTypeWithProperty()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EntityTypeWithPropertyEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityType entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
             template.WriteEntityType(entityType, boundOperationMap);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
@@ -1567,11 +1567,11 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEntityTypeForMoreThanTwoEntitySetsWithTheSameEntityTypeInEntityContainer()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(MultipleEntitySetsWithTheSameEntityType, namespacePrefix) { UseDataServiceCollection = true };
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEnumerable<IEdmEntitySet> entitySets = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First().EntitySets();
-            IEdmEntityType entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var entitySets = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First().EntitySets();
+            var entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
             foreach (var edmEntitySet in entitySets)
             {
                 List<IEdmNavigationSource> navigationSourceList = null;
@@ -1586,9 +1586,9 @@ namespace ODataConnectedService.Tests
 
             template.WriteEntityType(entityType, boundOperationMap);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForStructuredType(CustomerSingle)", 
+                "WriteSummaryCommentForStructuredType(CustomerSingle)",
                 "WriteClassStartForStructuredType(, CustomerSingle, CustomerSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(CustomerSingle, DataServiceQuerySingle)",
                 "WriteClassEndForStructuredType()",
@@ -1613,11 +1613,11 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEntityTypeForOneEntitySetInEntityContainer()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(OneSingleEntitySet, namespacePrefix) { UseDataServiceCollection = true };
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEnumerable<IEdmEntitySet> entitySets = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First().EntitySets();
-            IEdmEntityType entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var entitySets = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityContainer>().First().EntitySets();
+            var entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
             foreach (var edmEntitySet in entitySets)
             {
                 List<IEdmNavigationSource> navigationSourceList = null;
@@ -1632,7 +1632,7 @@ namespace ODataConnectedService.Tests
 
             template.WriteEntityType(entityType, boundOperationMap);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForStructuredType(CustomerSingle)",
                 "WriteClassStartForStructuredType(, CustomerSingle, CustomerSingle, ClassInheritDataServiceQuerySingle)",
@@ -1673,13 +1673,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEmptyComplexType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(OneNamespaceAndEmptyComplexTypeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WriteComplexType(complexType, boundOperationMap);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForStructuredType(ComplexType)",
                 "WriteClassStartForStructuredType(, ComplexType, ComplexType, )",
@@ -1691,16 +1691,16 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEmptyComplexTypeWithUseDataServiceCollection()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(OneNamespaceAndEmptyComplexTypeEdmx, namespacePrefix)
             {
                 UseDataServiceCollection = true
             };
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WriteComplexType(complexType, boundOperationMap);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForStructuredType(ComplexType)",
                 "WriteClassStartForStructuredType(, ComplexType, ComplexType, ClassInheritNotifyPropertyChanged)",
@@ -1713,17 +1713,17 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteComplexTypeWithBaseType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ComplexTypeWithBaseType, namespacePrefix)
             {
                 UseDataServiceCollection = true
             };
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().Last();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().Last();
             template.WriteComplexType(complexType, boundOperationMap);
 
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForStructuredType(ComplexType)",
                 "WriteClassStartForStructuredType(, ComplexType, ComplexType, ClassInheritBaseComplexType)",
@@ -1735,13 +1735,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteComplexTypeWithProperty()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ComplexTypeWithPropertyEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WriteComplexType(complexType, boundOperationMap);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForStructuredType(ComplexType)",
                 "WriteClassStartForStructuredType(, ComplexType, ComplexType, )",
@@ -1803,13 +1803,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEmptyEnumType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EmptyEnumTypeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEnumType enumType = Context.GetSchemaElements("Namespace1").OfType<IEdmEnumType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var enumType = Context.GetSchemaElements("Namespace1").OfType<IEdmEnumType>().First();
             template.WriteEnumType(enumType);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForEnumType(EnumType)",
                 "WriteEnumDeclaration(EnumType, EnumType, )",
@@ -1821,13 +1821,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEmptyEnumTypeWithFlags()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EnumTypeWithFlagsEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEnumType enumType = Context.GetSchemaElements("Namespace1").OfType<IEdmEnumType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var enumType = Context.GetSchemaElements("Namespace1").OfType<IEdmEnumType>().First();
             template.WriteEnumType(enumType);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForEnumType(EnumType)",
                 "WriteEnumFlags()",
@@ -1840,13 +1840,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEnumTypeWithUnderlyingTypeInt32()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EnumTypeWithUnderlyingTypeInt32Edmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEnumType enumType = Context.GetSchemaElements("Namespace1").OfType<IEdmEnumType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var enumType = Context.GetSchemaElements("Namespace1").OfType<IEdmEnumType>().First();
             template.WriteEnumType(enumType);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForEnumType(EnumType)",
                 "WriteEnumDeclaration(EnumType, EnumType, )",
@@ -1858,13 +1858,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEnumTypeWithUnderlyingTypeNotInt32()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EnumTypeWithUnderlyingTypeNotInt32Edmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEnumType enumType = Context.GetSchemaElements("Namespace1").OfType<IEdmEnumType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var enumType = Context.GetSchemaElements("Namespace1").OfType<IEdmEnumType>().First();
             template.WriteEnumType(enumType);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForEnumType(EnumType)",
                 "WriteEnumDeclaration(EnumType, EnumType,  : String)",
@@ -1876,13 +1876,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEnumTypeWithMembers()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EnumTypeWithMemberEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEnumType enumType = Context.GetSchemaElements("Namespace1").OfType<IEdmEnumType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var enumType = Context.GetSchemaElements("Namespace1").OfType<IEdmEnumType>().First();
             template.WriteEnumType(enumType);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForEnumType(ContentType)",
                 "WriteEnumFlags()",
@@ -1918,14 +1918,14 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteEmptyStructuredType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(OneNamespaceAndEmptyComplexTypeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WriteStructurdTypeDeclaration(complexType, string.Empty);
 
-            List<string> expectedActions = new List<string>
-            {                
+            var expectedActions = new List<string>
+            {
                 "WriteClassStartForStructuredType(, ComplexType, ComplexType, )"
             };
             template.CalledActions.Should().Equal(expectedActions);
@@ -1934,14 +1934,14 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteAbstractModifier()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(AbstractComplexTypeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WriteStructurdTypeDeclaration(complexType, string.Empty);
 
-            List<string> expectedActions = new List<string>
-            {                
+            var expectedActions = new List<string>
+            {
                 "WriteClassStartForStructuredType(AbstractModifier, ComplexType, ComplexType, )"
             };
             template.CalledActions.Should().Equal(expectedActions);
@@ -1950,17 +1950,17 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteNoBaseTypeStructuredTypeWithUseDataServiceCollection()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(OneNamespaceAndEmptyComplexTypeEdmx, namespacePrefix)
             {
                 UseDataServiceCollection = true
             };
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WriteStructurdTypeDeclaration(complexType, string.Empty);
 
-            List<string> expectedActions = new List<string>
-            {                
+            var expectedActions = new List<string>
+            {
                 "WriteClassStartForStructuredType(, ComplexType, ComplexType, ClassInheritNotifyPropertyChanged)"
             };
             template.CalledActions.Should().Equal(expectedActions);
@@ -1969,14 +1969,14 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteStructuredTypeWithSameNamespaceBaseType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ModelHasInheritanceEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEntityType entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().Last();
+            var template = new ODataClientTemplateImp(Context);
+            var entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().Last();
             template.WriteStructurdTypeDeclaration(entityType, string.Empty);
 
-            List<string> expectedActions = new List<string>
-            {                
+            var expectedActions = new List<string>
+            {
                 "WriteClassStartForStructuredType(, EntityType, EntityType, ClassInheritBaseEntityType)"
             };
             template.CalledActions.Should().Equal(expectedActions);
@@ -1985,14 +1985,14 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteStructuredTypeWithDifferentNamespaceBaseType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(InheritedComplexTypeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WriteStructurdTypeDeclaration(complexType, string.Empty);
 
-            List<string> expectedActions = new List<string>
-            {                
+            var expectedActions = new List<string>
+            {
                 "WriteClassStartForStructuredType(, ComplexType, ComplexType, ClassInheritglobal::Namespace2.BaseComplexType)"
             };
             template.CalledActions.Should().Equal(expectedActions);
@@ -2027,10 +2027,10 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteStaticCreateMethodForAbstractStructuredType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(AbstractComplexTypeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WriteTypeStaticCreateMethod("ComplexType", complexType);
             template.CalledActions.Should().BeEmpty();
         }
@@ -2038,10 +2038,10 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteStaticCreateMethodForEmptyStructuredType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(OneNamespaceAndEmptyComplexTypeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WriteTypeStaticCreateMethod("ComplexType", complexType);
             template.CalledActions.Should().BeEmpty();
         }
@@ -2049,13 +2049,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteStaticCreateMethodForStructuredTypeWithProperty()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ComplexTypeWithPropertyEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WriteTypeStaticCreateMethod("ComplexType", complexType);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForStaticCreateMethod(ComplexType)",
                 "WriteParameterCommentForStaticCreateMethod(value, Value)",
@@ -2071,13 +2071,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteStaticCreateMethodForStructuredTypeWithProperties()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ComplexTypeWithPropertiesEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WriteTypeStaticCreateMethod("ComplexType", complexType);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForStaticCreateMethod(ComplexType)",
                 "WriteParameterCommentForStaticCreateMethod(name, Name)",
@@ -2096,10 +2096,10 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteStaticCreateMethodForStructuredTypeWithNullableProperty()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ComplexTypeWithNullablePropertyEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WriteTypeStaticCreateMethod("ComplexType", complexType);
             template.CalledActions.Should().BeEmpty();
         }
@@ -2107,10 +2107,10 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteStaticCreateMethodForStructuredTypeWithCollectionProperty()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ComplexTypeWithCollectionPropertyEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WriteTypeStaticCreateMethod("ComplexType", complexType);
             template.CalledActions.Should().BeEmpty();
         }
@@ -2138,11 +2138,11 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteStaticCreateMethodParametersForEmptyStructuredType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(OneNamespaceAndEmptyComplexTypeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
-            KeyValuePair<IEdmProperty, string>[] propertyToParameterNamePairs = complexType.Properties().Select(p => new KeyValuePair<IEdmProperty, string>(p, p.Name)).ToArray();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var propertyToParameterNamePairs = complexType.Properties().Select(p => new KeyValuePair<IEdmProperty, string>(p, p.Name)).ToArray();
             template.WriteStaticCreateMethodParameters(propertyToParameterNamePairs);
             template.CalledActions.Should().BeEmpty();
         }
@@ -2150,14 +2150,14 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteStaticCreateMethodParametersForStructuredTypeWithProperties()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ComplexTypeWithPropertiesEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
-            KeyValuePair<IEdmProperty, string>[] propertyToParameterNamePairs = complexType.Properties().Select(p => new KeyValuePair<IEdmProperty, string>(p, p.Name)).ToArray();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var propertyToParameterNamePairs = complexType.Properties().Select(p => new KeyValuePair<IEdmProperty, string>(p, p.Name)).ToArray();
             template.WriteStaticCreateMethodParameters(propertyToParameterNamePairs);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteParameterForStaticCreateMethod(String, Name, , )",
                 "WriteParameterForStaticCreateMethod(String, Value, )"
@@ -2168,14 +2168,14 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteStaticCreateMethodParametersForStructuredTypeWithMoreThan5Properties()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ComplexTypeWithMorethan5PropertiesEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
-            KeyValuePair<IEdmProperty, string>[] propertyToParameterNamePairs = complexType.Properties().Select(p => new KeyValuePair<IEdmProperty, string>(p, p.Name)).ToArray();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var propertyToParameterNamePairs = complexType.Properties().Select(p => new KeyValuePair<IEdmProperty, string>(p, p.Name)).ToArray();
             template.WriteStaticCreateMethodParameters(propertyToParameterNamePairs);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteParameterForStaticCreateMethod(Int32, Id, ParameterSeparator)",
                 "WriteParameterForStaticCreateMethod(String, FirstName, ParameterSeparator)",
@@ -2194,10 +2194,10 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WritePropertiesForEmptyStructuredType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(OneNamespaceAndEmptyComplexTypeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WritePropertiesForStructuredType(complexType.DeclaredProperties);
             template.CalledActions.Should().BeEmpty();
         }
@@ -2205,13 +2205,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WritePropertiesForStructuredTypeWithProperties()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ComplexTypeWithPropertiesEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WritePropertiesForStructuredType(complexType.DeclaredProperties);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WritePropertyForStructuredType(String, Name, Name, Name, _Name, , False)",
                 "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , False)"
@@ -2222,16 +2222,16 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WritePropertiesForStructuredTypeWithPropertyAndUseDataServiceCollection()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ComplexTypeWithPropertyEdmx, namespacePrefix)
             {
                 UseDataServiceCollection = true
             };
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WritePropertiesForStructuredType(complexType.DeclaredProperties);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , True)"
             };
@@ -2257,10 +2257,10 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteMembersForEmptyEnumType()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EmptyEnumTypeEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEnumType enumType = Context.GetSchemaElements("Namespace1").OfType<IEdmEnumType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var enumType = Context.GetSchemaElements("Namespace1").OfType<IEdmEnumType>().First();
             template.WriteMembersForEnumType(enumType.Members);
             template.CalledActions.Should().BeEmpty();
         }
@@ -2268,13 +2268,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteMembersForEnumTypeWithMembers()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(EnumTypeWithMembersEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmEnumType enumType = Context.GetSchemaElements("Namespace1").OfType<IEdmEnumType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var enumType = Context.GetSchemaElements("Namespace1").OfType<IEdmEnumType>().First();
             template.WriteMembersForEnumType(enumType.Members);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WriteMemberForEnumType(Liquid = 0, Liquid, False)",
                 "WriteMemberForEnumType(Perishable = 1, Perishable, True)"
@@ -2302,13 +2302,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WritePrefixConfict()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(PrefixConflictEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WritePropertiesForStructuredType(complexType.DeclaredProperties);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WritePropertyForStructuredType(String, Name, Name, Name, _Name1, , False)",
                 "WritePropertyForStructuredType(String, _Name, _Name, _Name, __Name1, , False)",
@@ -2337,14 +2337,14 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteDupNames()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(DupNamesEdmx, namespacePrefix);
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.SetPropertyIdentifierMappingsIfNameConflicts(complexType.Name, complexType);
             template.WritePropertiesForStructuredType(complexType.DeclaredProperties);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WritePropertyForStructuredType(String, Name, Name2, Name2, _Name21, , False)",
                 "WritePropertyForStructuredType(String, name, name, name, _name, , False)",
@@ -2357,15 +2357,15 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void WriteDupNamesWithCamelCase()
         {
-            string namespacePrefix = string.Empty;
+            var namespacePrefix = string.Empty;
             Context = new ODataT4CodeGenerator.CodeGenerationContext(DupNamesEdmx, namespacePrefix);
             Context.EnableNamingAlias = true;
-            ODataClientTemplateImp template = new ODataClientTemplateImp(Context);
-            IEdmComplexType complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.SetPropertyIdentifierMappingsIfNameConflicts(complexType.Name, complexType);
             template.WritePropertiesForStructuredType(complexType.DeclaredProperties);
 
-            List<string> expectedActions = new List<string>
+            var expectedActions = new List<string>
             {
                 "WritePropertyForStructuredType(String, Name, Name2, Name2, _Name21, , False)",
                 "WritePropertyForStructuredType(String, name, Name3, Name3, _Name3, , False)",
@@ -2380,14 +2380,14 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetFixedNameShouldReadNonKeywords()
         {
-            ODataClientTemplateImp template = new ODataClientTemplateImp(new ODataT4CodeGenerator.CodeGenerationContext(FullEdmx, null));
+            var template = new ODataClientTemplateImp(new ODataT4CodeGenerator.CodeGenerationContext(FullEdmx, null));
             template.GetFixedName("Name").Should().Be("Name");
         }
 
         [TestMethod]
         public void FixParameterNameShouldReadKeywords()
         {
-            ODataClientTemplateImp template = new ODataClientTemplateImp(new ODataT4CodeGenerator.CodeGenerationContext(FullEdmx, null));
+            var template = new ODataClientTemplateImp(new ODataT4CodeGenerator.CodeGenerationContext(FullEdmx, null));
             template.GetFixedName("bool").Should().Be("@bool");
         }
     }
