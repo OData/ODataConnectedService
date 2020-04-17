@@ -35,6 +35,8 @@ namespace Microsoft.OData.ConnectedService
 
         private readonly ServiceConfigurationV4 _serviceConfig;
 
+        public ServiceConfigurationV4 ServiceConfig { get { return _serviceConfig; } }
+
         internal string ProcessedEndpointForOperationImports;
 
         internal string ProcessedEndpointForSchemaTypes;
