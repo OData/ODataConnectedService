@@ -117,9 +117,10 @@ namespace Microsoft.OData.ConnectedService.Views
                     {
                         var model = EdmHelper.GetEdmModelFromFile(ServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath);
                         var operations = EdmHelper.GetOperationImports(model);
-                        ServiceWizard.OperationImportsViewModel.LoadOperationImports(operations);
+                        ServiceWizard.OperationImportsViewModel.LoadOperationImports(operations, new HashSet<string>(), new Dictionary<string, SchemaTypeModel>());
                         ServiceWizard.ProcessedEndpointForOperationImports = this.UserSettings.Endpoint;
                         ServiceWizard.OperationImportsViewModel.LoadFromUserSettings();
+                        ServiceWizard.SchemaTypesViewModel.LoadFromUserSettings();
                     }
                 }
                 catch

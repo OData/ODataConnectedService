@@ -83,6 +83,9 @@ namespace Microsoft.OData.ConnectedService.Models
         [DataMember]
         public List<string> ExcludedOperationImports { get; set; }
 
+        [DataMember]
+        public List<string> ExcludedSchemaTypes { get; set; }
+
         public UserSettings()
         {
             this.MruEndpoints = new ObservableCollection<string>();

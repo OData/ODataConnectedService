@@ -38,6 +38,8 @@ namespace Microsoft.OData.ConnectedService.Common
         public const string DefaultReferenceFileName = "Reference";
         public const string DefaultServiceName = "OData Service";
 
+        public const string SchemaTypesWillAutomaticallyBeIncluded = "type(s) will automatically be included to ensure the generated code compiles successfully.";
+
         public static string[] V3NuGetPackages = {
             V3ClientNuGetPackage,
             V3ODataNuGetPackage,

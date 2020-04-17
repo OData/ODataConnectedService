@@ -2,6 +2,7 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OData.ConnectedService.Common;
@@ -19,6 +20,8 @@ namespace Microsoft.OData.ConnectedService
         public ConfigODataEndpointViewModel ConfigODataEndpointViewModel { get; set; }
 
         public OperationImportsViewModel OperationImportsViewModel { get; set; }
+
+        public SchemaTypesViewModel SchemaTypesViewModel { get; set; }
 
         public AdvancedSettingsViewModel AdvancedSettingsViewModel { get; set; }
 
@@ -44,10 +47,12 @@ namespace Microsoft.OData.ConnectedService
 
             ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(this.UserSettings, this);
             AdvancedSettingsViewModel = new AdvancedSettingsViewModel(this.UserSettings);
+            SchemaTypesViewModel = new SchemaTypesViewModel(this.UserSettings);
             OperationImportsViewModel = new OperationImportsViewModel(this.UserSettings);
 
             OperationImportsViewModel.PageEntering += OperationImportsViewModel_PageEntering;
 
+            SchemaTypesViewModel.PageEntering += SchemaTypeSelectionViewModel_PageEntering;
             if (this.Context.IsUpdating)
             {
                 ConfigODataEndpointViewModel.Endpoint = this._serviceConfig.Endpoint;
@@ -66,6 +71,7 @@ namespace Microsoft.OData.ConnectedService
             }
 
             this.Pages.Add(ConfigODataEndpointViewModel);
+            this.Pages.Add(SchemaTypesViewModel);
             this.Pages.Add(OperationImportsViewModel);
             this.Pages.Add(AdvancedSettingsViewModel);
             this.IsFinishEnabled = true;
@@ -107,6 +113,7 @@ namespace Microsoft.OData.ConnectedService
                 serviceConfiguration = new ServiceConfiguration();
             }
 
+            serviceConfiguration.ExcludedSchemaTypes = SchemaTypesViewModel.ExcludedSchemaTypeNames.ToList();
             serviceConfiguration.ServiceName = ConfigODataEndpointViewModel.ServiceName;
             serviceConfiguration.Endpoint = ConfigODataEndpointViewModel.Endpoint;
             serviceConfiguration.EdmxVersion = ConfigODataEndpointViewModel.EdmxVersion;
@@ -200,7 +207,7 @@ namespace Microsoft.OData.ConnectedService
                     }
                     var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
                     var operations = EdmHelper.GetOperationImports(model);
-                    OperationImportsViewModel.LoadOperationImports(operations);
+                    OperationImportsViewModel.LoadOperationImports(operations, new HashSet<string>(SchemaTypesViewModel.ExcludedSchemaTypeNames), SchemaTypesViewModel.SchemaTypeModelMap);
                 }
 
                 if (Context.IsUpdating)
@@ -209,6 +216,23 @@ namespace Microsoft.OData.ConnectedService
                 }
 
                 this.ProcessedEndpointForOperationImports = ConfigODataEndpointViewModel.Endpoint;
+            }
+        }
+
+        public void SchemaTypeSelectionViewModel_PageEntering(object sender, EventArgs args)
+        {
+            if (sender is SchemaTypesViewModel entityTypeViewModel)
+            {
+                var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+                var entityTypes = EdmHelper.GetSchemaTypes(model);
+                var boundOperations = EdmHelper.GetBoundOperations(model);
+                SchemaTypesViewModel.LoadSchemaTypes(entityTypes, boundOperations);
+
+                if (Context.IsUpdating)
+                {
+                    var serviceConfig = Context.GetExtendedDesignerData<ServiceConfigurationV4>();
+                    entityTypeViewModel.ExcludeSchemaTypes(serviceConfig?.ExcludedSchemaTypes ?? Enumerable.Empty<string>());
+                }
             }
         }
 
@@ -236,6 +260,12 @@ namespace Microsoft.OData.ConnectedService
                     {
                         this.OperationImportsViewModel.Dispose();
                         OperationImportsViewModel = null;
+                    }
+
+                    if (this.SchemaTypesViewModel != null)
+                    {
+                        this.SchemaTypesViewModel.Dispose();
+                        this.SchemaTypesViewModel = null;
                     }
 
                     if (this.ConfigODataEndpointViewModel != null)

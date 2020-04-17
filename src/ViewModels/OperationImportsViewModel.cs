@@ -74,7 +74,13 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             return await base.OnPageLeavingAsync(args);
         }
 
-        public void LoadOperationImports(IEnumerable<IEdmOperationImport> operationImports)
+        /// <summary> 
+        /// Loads operation imports except the ones that require a type that is excluded
+        /// </summary>
+        /// <param name="operationImports">a list of all the operation imports.</param>
+        /// <param name="excludedSchemaTypes">A collection of schema types that will be excluded from generated code.</param>
+        /// <param name="schemaTypeModels">a dictionary of schema type and the associated schematypemodel.</param>
+        public void LoadOperationImports(IEnumerable<IEdmOperationImport> operationImports, ICollection<string> excludedSchemaTypes, IDictionary<string, SchemaTypeModel> schemaTypeModels)
         {
             var toLoad = new List<OperationImportModel>();
             var alreadyAdded = new HashSet<string>();
@@ -83,17 +89,66 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             {
                 if (!alreadyAdded.Contains(operation.Name))
                 {
-                    toLoad.Add(new OperationImportModel()
+                    var operationImportModel = new OperationImportModel()
                     {
                         Name = operation.Name,
-                        IsSelected = true
-                    });
+                        IsSelected = IsOperationImportIncluded(operation, excludedSchemaTypes)
+                    };
+
+                    operationImportModel.PropertyChanged += (s, args) =>
+                    {
+                        IEnumerable<IEdmOperationParameter> parameters = operation.Operation.Parameters;
+
+                        foreach (var parameter in parameters)
+                        {
+                            if (schemaTypeModels.TryGetValue(parameter.Type.FullName(), out SchemaTypeModel model) && !model.IsSelected)
+                            {
+                                model.IsSelected = true;
+                            }
+                        }
+
+                        string returnTypeName = operation.Operation.ReturnType?.FullName();
+
+                        if(returnTypeName != null && schemaTypeModels.TryGetValue(returnTypeName, out SchemaTypeModel schemaTypeModel) && !schemaTypeModel.IsSelected)
+                        {
+                            schemaTypeModel.IsSelected = true;
+                        }
+                    };
+                    toLoad.Add(operationImportModel);
 
                     alreadyAdded.Add(operation.Name);
                 }
             }
 
             OperationImports = toLoad.OrderBy(o => o.Name).ToList();
+        }
+
+        /// <summary> 
+        /// Checks if the operation import should be included
+        /// </summary>
+        /// <param name="operationImport">operation import.</param>
+        /// <param name="excludedTypes">A collection of excluded types.</param>
+        /// <returns>true if the operation import should be included, otherwise false.<returns>
+        public bool IsOperationImportIncluded(IEdmOperationImport operationImport, ICollection<string> excludedTypes)
+        {
+            IEnumerable<IEdmOperationParameter> parameters = operationImport.Operation.Parameters;
+
+            foreach (var parameter in parameters)
+            {
+                if (excludedTypes.Contains(parameter.Type.FullName()))
+                {
+                    return false;
+                }
+            }
+
+            string returnType = operationImport.Operation.ReturnType?.FullName();
+
+            if (excludedTypes.Contains(returnType))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public void ExcludeOperationImports(IEnumerable<string> operationsToExclude)
