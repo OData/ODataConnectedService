@@ -34,6 +34,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public event EventHandler<EventArgs> PageEntering;
 
+        internal bool IsEntered;
+
         public SchemaTypesViewModel(UserSettings userSettings = null) : base()
         {
             Title = "Schema selection";
@@ -45,7 +47,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             this.UserSettings = userSettings;
         }
 
-        /// <summary> 
+        /// <summary>
         /// Executed when entering the page for selecting schema types.
         /// It fires PageEntering event which ensures all types are loaded on the UI.
         /// It also ensures all related entities are computed and cached.
@@ -53,11 +55,12 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// <param name="args">Event arguments being passed to the method.</param>
         public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
+            this.IsEntered = true;
             await base.OnPageEnteringAsync(args);
             View = new SchemaTypes() { DataContext = this };
             PageEntering?.Invoke(this, EventArgs.Empty);
         }
-        /// <summary> 
+        /// <summary>
         /// Executed when leaving the page for selecting schema types.
         /// It checks if there is a type that is required but has not been selected.
         /// If found, these types are automatically selected and the user notified.
@@ -108,10 +111,10 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             else
             {
                 return await base.OnPageLeavingAsync(args);
-            }           
+            }
         }
 
-        /// <summary> 
+        /// <summary>
         /// Creates a list of types that needs to be loaded on the UI.
         /// Initially all the types are loaded
         /// </summary>
@@ -146,7 +149,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                 };
 
                 // Create propertyChange handler.
-                // Anytime a property is selected/unslected, the handler ensures 
+                // Anytime a property is selected/unslected, the handler ensures
                 // all the related types and operations are selected/unselected
                 schemaTypeModel.PropertyChanged += (s, args) =>
                 {
@@ -233,7 +236,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             SchemaTypes = toLoad.OrderBy(o => o.Name).ToList();
         }
 
-        /// <summary> 
+        /// <summary>
         /// Add related type and its relation to the RelatedTypes dictionary
         /// </summary>
         /// <param name="type">the schema type fullname.</param>
@@ -251,7 +254,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
         }
 
-        /// <summary> 
+        /// <summary>
         /// Sets schemaTypeModel isSelected property to be excluded to false
         /// </summary>
         /// <param name="schemaTypesToExclude">A list of all fullnames of schema types to be exclude.</param>
@@ -263,7 +266,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
         }
 
-        /// <summary> 
+        /// <summary>
         /// Empties a list of schema types
         /// </summary>
         public void ClearSchemaTypes()
@@ -271,7 +274,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             SchemaTypes = Enumerable.Empty<SchemaTypeModel>();
         }
 
-        /// <summary> 
+        /// <summary>
         /// Selects all schema types
         /// </summary>
         public void SelectAllSchemaTypes()
@@ -282,7 +285,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
         }
 
-        /// <summary> 
+        /// <summary>
         /// Deselect all schema types
         /// </summary>
         public void DeselectAllSchemaTypes()
@@ -293,7 +296,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
         }
 
-        /// <summary> 
+        /// <summary>
         /// Save the selected schema types to user settings
         /// </summary>
         public void SaveToUserSettings()
@@ -306,7 +309,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
         }
 
-        /// <summary> 
+        /// <summary>
         /// Loads schema type configurations from user settings
         /// </summary>
         public void LoadFromUserSettings()

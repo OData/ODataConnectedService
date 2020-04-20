@@ -37,6 +37,8 @@ namespace Microsoft.OData.ConnectedService
 
         internal string ProcessedEndpointForOperationImports;
 
+        internal string ProcessedEndpointForSchemaTypes;
+
         public ODataConnectedServiceWizard(ConnectedServiceProviderContext context)
         {
             this.Context = context;
@@ -86,6 +88,12 @@ namespace Microsoft.OData.ConnectedService
                 {
                     await this.OperationImportsViewModel.OnPageEnteringAsync(null);
                     await this.OperationImportsViewModel.OnPageLeavingAsync(null);
+                }
+
+                if (!this.SchemaTypesViewModel.IsEntered)
+                {
+                    await this.SchemaTypesViewModel.OnPageEnteringAsync(null);
+                    await this.SchemaTypesViewModel.OnPageLeavingAsync(null);
                 }
 
                 if (!this.AdvancedSettingsViewModel.IsEntered)
@@ -239,16 +247,20 @@ namespace Microsoft.OData.ConnectedService
         {
             if (sender is SchemaTypesViewModel entityTypeViewModel)
             {
-                var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
-                var entityTypes = EdmHelper.GetSchemaTypes(model);
-                var boundOperations = EdmHelper.GetBoundOperations(model);
-                SchemaTypesViewModel.LoadSchemaTypes(entityTypes, boundOperations);
+                if (this.ProcessedEndpointForSchemaTypes != ConfigODataEndpointViewModel.Endpoint)
+                {
+                    var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+                    var entityTypes = EdmHelper.GetSchemaTypes(model);
+                    var boundOperations = EdmHelper.GetBoundOperations(model);
+                    SchemaTypesViewModel.LoadSchemaTypes(entityTypes, boundOperations);
+                }
 
                 if (Context.IsUpdating)
                 {
-                    var serviceConfig = Context.GetExtendedDesignerData<ServiceConfigurationV4>();
-                    entityTypeViewModel.ExcludeSchemaTypes(serviceConfig?.ExcludedSchemaTypes ?? Enumerable.Empty<string>());
+                    entityTypeViewModel.ExcludeSchemaTypes(this._serviceConfig?.ExcludedSchemaTypes ?? Enumerable.Empty<string>());
                 }
+
+                this.ProcessedEndpointForSchemaTypes = ConfigODataEndpointViewModel.Endpoint;
             }
         }
 
