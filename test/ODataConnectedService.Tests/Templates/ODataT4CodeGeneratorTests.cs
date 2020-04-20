@@ -40,7 +40,7 @@ namespace ODataConnectedService.Tests
         private static string T4TemplatePath;
         private static string T4IncludeTemplatePath;
         private static string T4IncludeFileManagePath;
-        private static string TempFilePath;
+        private static string MetadataFilePath;
 
         [TestInitialize]
         public void Init()
@@ -462,12 +462,12 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void CodeGenUsingTempMetadataFileTest()
         {
-            TempFilePath = "tempMetadata.xml";
-            File.Delete(TempFilePath);
-            CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Metadata, null, true, true, false, false, null, true, tempFilePath : TempFilePath);
-            Action action = () => ODataT4CodeGeneratorTestDescriptors.ValidateXMLFile(TempFilePath);
+            MetadataFilePath = "tempMetadata.xml";
+            File.Delete(MetadataFilePath);
+            CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Metadata, null, true, true, false, false, null, true, MetadataFilePath);
+            Action action = () => ODataT4CodeGeneratorTestDescriptors.ValidateXMLFile(MetadataFilePath);
             action.ShouldNotThrow<XmlException>();
-            ODataT4CodeGeneratorTestDescriptors.ValidateEdmx(TempFilePath);
+            ODataT4CodeGeneratorTestDescriptors.ValidateEdmx(MetadataFilePath);
         }
 
         [TestMethod]
@@ -497,7 +497,7 @@ namespace ODataConnectedService.Tests
             bool useDataServiceCollection, bool enableNamingAlias = false,
             bool ignoreUnexpectedElementsAndAttributes = false,
             Func<Uri, WebProxy, IList<string>, XmlReader> getReferencedModelReaderFunc = null,
-            bool appendDSCSuffix = false, string tempFilePath = null, bool generateMultipleFiles = false,
+            bool appendDSCSuffix = false, string MetadataFilePath = null, bool generateMultipleFiles = false,
             IEnumerable<string> excludedSchemaTypes = default(List<string>))
 
         {
@@ -527,9 +527,10 @@ namespace ODataConnectedService.Tests
                 ExcludedSchemaTypes = excludedSchemaTypes
             };
 
-            if (!String.IsNullOrEmpty(tempFilePath))
+            if (!String.IsNullOrEmpty(MetadataFilePath))
             {
-                t4CodeGenerator.TempFilePath = TempFilePath;
+                t4CodeGenerator.MetadataFilePath = MetadataFilePath;
+                t4CodeGenerator.MetadataFileRelativePath = MetadataFilePath;
             }
 
             if (useDataServiceCollection)

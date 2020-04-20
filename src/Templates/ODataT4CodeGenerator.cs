@@ -73,7 +73,8 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             TargetLanguage = this.TargetLanguage,
             EnableNamingAlias = this.EnableNamingAlias,
             IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
-            TempFilePath = this.TempFilePath,
+            MetadataFilePath = this.MetadataFilePath,
+            MetadataFileRelativePath = this.MetadataFileRelativePath,
             MakeTypesInternal = this.MakeTypesInternal,
             MultipleFilesManager = FilesManager.Create(this.Host, null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
@@ -110,7 +111,8 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             TargetLanguage = this.TargetLanguage,
             EnableNamingAlias = this.EnableNamingAlias,
             IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
-            TempFilePath = this.TempFilePath,
+            MetadataFilePath = this.MetadataFilePath,
+            MetadataFileRelativePath = this.MetadataFileRelativePath,
             MakeTypesInternal = this.MakeTypesInternal,
             MultipleFilesManager = FilesManager.Create(this.Host, null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
@@ -186,7 +188,10 @@ public static class Configuration
 
 	// The path for the temporary file where the metadata xml document can be stored. Use this if your metadata is too big to be stored in a string literal. Ensure that you have write permission for this path. 
 	// For example - "C:\\temp\\Test.xml"
-	public const string TempFilePath = "";
+	public const string MetadataFilePath = "";
+
+	// The relative path for the MetadataFilePath.
+	public const string MetadataFileRelativePath = "";
 
 	// This flag indicates whether to enable naming alias. The value must be set to true or false.
 	public const bool EnableNamingAlias = true;
@@ -429,9 +434,18 @@ public IEnumerable <string> ExcludedSchemaTypes
 }
 
 /// <summary>
-/// The path for the temporary file where the metadata xml document can be stored.
+/// The path for the file where the metadata xml document can be stored.
 /// </summary>
-public string TempFilePath
+public string MetadataFilePath
+{
+    get;
+    set;
+}
+
+/// <summary>
+/// The relative path for the file where the metadata xml document can be stored.
+/// </summary>
+public string MetadataFileRelativePath
 {
     get;
     set;
@@ -692,7 +706,8 @@ private void ApplyParametersFromConfigurationClass()
     this.EnableNamingAlias = Configuration.EnableNamingAlias;
     this.IgnoreUnexpectedElementsAndAttributes = Configuration.IgnoreUnexpectedElementsAndAttributes;
     this.MakeTypesInternal = Configuration.MakeTypesInternal;
-    this.TempFilePath = Configuration.TempFilePath;
+    this.MetadataFilePath = Configuration.MetadataFilePath;
+    this.MetadataFileRelativePath = Configuration.MetadataFileRelativePath;
     this.GenerateMultipleFiles = Configuration.GenerateMultipleFiles;
     this.SetCustomHttpHeadersFromString(Configuration.CustomHttpHeaders);
     this.ExcludedOperationImports = Configuration.ExcludedOperationImports.Split(',')
@@ -1184,9 +1199,18 @@ public class CodeGenerationContext
     }
 
     /// <summary>
-    /// The path for the temporary file where the metadata xml document can be stored.
+    /// The path for the file where the metadata xml document can be stored.
     /// </summary>
-    public string TempFilePath
+    public string MetadataFilePath
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
+    /// The relative path for the file where the metadata xml document can be stored.
+    /// </summary>
+    public string MetadataFileRelativePath
     {
         get;
         set;
@@ -1969,7 +1993,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal void WriteEntityContainer(IEdmEntityContainer container, string fullNamespace)
     {
         string camelCaseContainerName = container.Name;
-        string path = this.context.TempFilePath;
+        string path = this.context.MetadataFilePath;
         bool useTempFile = !String.IsNullOrEmpty(path);
         if (this.context.EnableNamingAlias)
         {
@@ -4275,7 +4299,8 @@ this.Write(");\r\n        }\r\n");
 
     internal override void WriteGeneratedEdmModel(string escapedEdmxString)
     {
-        string path = this.context.TempFilePath;
+        string path = this.context.MetadataFilePath;
+        string relativePath = this.context.MetadataFileRelativePath;
         if(!String.IsNullOrEmpty(path))
         {
             using (StreamWriter writer = new StreamWriter(path, false))
@@ -4347,7 +4372,7 @@ this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
 this.Write("\")]\r\n            private const string filePath = @\"");
 
-this.Write(this.ToStringHelper.ToStringWithCulture(path));
+this.Write(this.ToStringHelper.ToStringWithCulture(relativePath));
 
 this.Write("\";\r\n");
 
@@ -4488,20 +4513,33 @@ this.Write("\")]\r\n            private static global::System.Xml.XmlReader Crea
         "der.Create(new global::System.IO.StringReader(edmxToParse));\r\n            }\r\n\r\n");
 
 
-            if (useTempFile)
-            {
+        if (useTempFile)
+        {
 
-this.Write("                [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsof" +
-        "t.OData.Client.Design.T4\", \"");
+this.Write("            [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OD" +
+        "ata.Client.Design.T4\", \"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
-this.Write("\")]\r\n                private static global::System.Xml.XmlReader CreateXmlReader(" +
-        ")\r\n                {\r\n                    return global::System.Xml.XmlReader.Cr" +
-        "eate(new global::System.IO.StreamReader(filePath));\r\n                }\r\n");
-
-
+this.Write(@""")]
+            private static global::System.Xml.XmlReader CreateXmlReader()
+            {
+                try
+                {
+                    var assembly = global::System.Reflection.Assembly.GetExecutingAssembly();
+                    var resourcePath = global::System.Linq.Enumerable.Single(assembly.GetManifestResourceNames(), str => str.EndsWith(filePath));
+                    global::System.IO.Stream stream = assembly.GetManifestResourceStream(resourcePath);
+                    return global::System.Xml.XmlReader.Create(new global::System.IO.StreamReader(stream));
+                }
+                catch(global::System.Xml.XmlException e)
+                {
+                    throw new global::System.Xml.XmlException(""Failed to create an XmlReader from the stream. Check if the resource exists."", e);
+                }
             }
+");
+
+
+        }
 
 this.Write("        }\r\n");
 
