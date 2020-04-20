@@ -232,11 +232,11 @@ namespace Microsoft.OData.ConnectedService
                     var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
                     var operations = EdmHelper.GetOperationImports(model);
                     OperationImportsViewModel.LoadOperationImports(operations, new HashSet<string>(SchemaTypesViewModel.ExcludedSchemaTypeNames), SchemaTypesViewModel.SchemaTypeModelMap);
-                }
 
-                if (Context.IsUpdating)
-                {
-                    operationImportsViewModel.ExcludeOperationImports(this._serviceConfig?.ExcludedOperationImports ?? Enumerable.Empty<string>());
+                    if (Context.IsUpdating)
+                    {
+                        operationImportsViewModel.ExcludeOperationImports(this._serviceConfig?.ExcludedOperationImports ?? Enumerable.Empty<string>());
+                    }
                 }
 
                 this.ProcessedEndpointForOperationImports = ConfigODataEndpointViewModel.Endpoint;
@@ -253,11 +253,11 @@ namespace Microsoft.OData.ConnectedService
                     var entityTypes = EdmHelper.GetSchemaTypes(model);
                     var boundOperations = EdmHelper.GetBoundOperations(model);
                     SchemaTypesViewModel.LoadSchemaTypes(entityTypes, boundOperations);
-                }
 
-                if (Context.IsUpdating)
-                {
-                    entityTypeViewModel.ExcludeSchemaTypes(this._serviceConfig?.ExcludedSchemaTypes ?? Enumerable.Empty<string>());
+                    if (Context.IsUpdating)
+                    {
+                        entityTypeViewModel.ExcludeSchemaTypes(this._serviceConfig?.ExcludedSchemaTypes ?? Enumerable.Empty<string>());
+                    }
                 }
 
                 this.ProcessedEndpointForSchemaTypes = ConfigODataEndpointViewModel.Endpoint;
