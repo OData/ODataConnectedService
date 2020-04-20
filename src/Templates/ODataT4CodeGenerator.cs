@@ -7,7 +7,6 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-
 namespace Microsoft.OData.ConnectedService.Templates
 {
     using System;
@@ -44,7 +43,7 @@ namespace Microsoft.OData.ConnectedService.Templates
 /*
 OData Client T4 Template ver. 2.4.0
 Copyright (c) Microsoft Corporation
-All rights reserved. 
+All rights reserved.
 MIT License
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -56,7 +55,7 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 /*
 OData Client T4 Template ver. #VersionNumber#
 Copyright (c) Microsoft Corporation
-All rights reserved. 
+All rights reserved.
 MIT License
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -210,7 +209,7 @@ public static class Configuration
 	// Comma-separated list of the names of operation imports to exclude from the generated code
 	public const string ExcludedOperationImports = "";
 
-    // Comma-separated list of the names of entity types to exclude from the generated code
+     // Comma-separated list of the names of entity types to exclude from the generated code
 	public const string ExcludedSchemaTypes = "";
 }
 
@@ -414,7 +413,7 @@ public IEnumerable <string> ExcludedOperationImports
 private IEnumerable<string> excludedSchemaTypes = new List<string>();
 
 /// <summary>
-/// list of entity types to exclude from the generated code
+/// List of entity types to exclude from the generated code
 /// </summary>
 public IEnumerable <string> ExcludedSchemaTypes
 {
@@ -465,7 +464,7 @@ public bool GenerateMultipleFiles
     set;
 }
 /// <summary>
-/// Boolean to show if we should include the web proxy 
+/// Boolean to show if we should include the web proxy
 /// </summary>
 public bool IncludeWebProxy
 {
@@ -894,7 +893,7 @@ public class CodeGenerationContext
     {
         get { return this.edmx; }
     }
-    
+
     /// <summary>
     /// The EdmModel to generate code for.
     /// </summary>
@@ -940,9 +939,9 @@ public class CodeGenerationContext
     }
     private static IHttpRequestCreator requestCreator;
     internal static IHttpRequestCreator RequestCreator
-    { 
-        get 
-        { 
+    {
+        get
+        {
              if(requestCreator==null)
              {
                 requestCreator= new DefaultHttpRequestCreator();
@@ -1035,8 +1034,8 @@ public class CodeGenerationContext
             if (!this.modelHasInheritance.HasValue)
             {
                 Debug.Assert(this.EdmModel != null, "this.EdmModel != null");
-                this.modelHasInheritance = this.EdmModel.SchemaElementsAcrossModels().OfType<IEdmStructuredType>().Any(t => !t.FullTypeName().StartsWith("Org.OData.Authorization.V1") && 
-                            !t.FullTypeName().StartsWith("Org.OData.Capabilities.V1") && 
+                this.modelHasInheritance = this.EdmModel.SchemaElementsAcrossModels().OfType<IEdmStructuredType>().Any(t => !t.FullTypeName().StartsWith("Org.OData.Authorization.V1") &&
+                            !t.FullTypeName().StartsWith("Org.OData.Capabilities.V1") &&
                             !t.FullTypeName().StartsWith("Org.OData.Core.V1") && t.BaseType != null);
             }
 
@@ -1119,7 +1118,7 @@ public class CodeGenerationContext
         get;
         set;
     }
-	
+
 	/// <summary>
 	/// true to use internal access modifier for generated classes, otherwise they will be made public.
 	/// This is useful if you don't want the generated classes to be visible outside the assembly
@@ -1317,7 +1316,7 @@ public class CodeGenerationContext
         {
             prefixedNamespace = template.GlobalPrefix + prefixedNamespace;
         }
-        
+
         return prefixedNamespace;
     }
 
@@ -1368,7 +1367,7 @@ public class CodeGenerationContext
 
                 WebResponse webResponse = webRequest.GetResponse();
                 metadataStream = webResponse.GetResponseStream();
-               
+
             }
             catch (WebException e)
             {
@@ -1589,7 +1588,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteBoundActionAsExtension(string actionName, string originalActionName, string boundSourceType, string returnTypeName, string parameters, string fullNamespace, string parameterValues);
     #endregion Language specific write methods.
 
-    internal HashSet<EdmPrimitiveTypeKind> ClrReferenceTypes { get { 
+    internal HashSet<EdmPrimitiveTypeKind> ClrReferenceTypes { get {
         if (clrReferenceTypes == null)
         {
             clrReferenceTypes = new HashSet<EdmPrimitiveTypeKind>()
@@ -1683,7 +1682,7 @@ public abstract class ODataClientTemplate : TemplateBase
 
                     this.WriteEnumType(enumType);
 
-                    if(context.GenerateMultipleFiles) 
+                    if(context.GenerateMultipleFiles)
                     {
                         this.WriteNamespaceEnd();
                         context.MultipleFilesManager.EndBlock();
@@ -1693,7 +1692,6 @@ public abstract class ODataClientTemplate : TemplateBase
             {
                 if (type is IEdmComplexType complexType)
                 {
-
                     if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(complexType.FullName()))
                     {
                         continue;
@@ -1707,7 +1705,7 @@ public abstract class ODataClientTemplate : TemplateBase
 
                     this.WriteComplexType(complexType, boundOperationsMap);
 
-                    if(context.GenerateMultipleFiles) 
+                    if(context.GenerateMultipleFiles)
                     {
                         this.WriteNamespaceEnd();
                         context.MultipleFilesManager.EndBlock();
@@ -1715,7 +1713,6 @@ public abstract class ODataClientTemplate : TemplateBase
                 }
                 else if (type is IEdmEntityType entityType)
                 {
-
                     if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(entityType.FullName()))
                     {
                         continue;
@@ -1729,7 +1726,7 @@ public abstract class ODataClientTemplate : TemplateBase
 
                     this.WriteEntityType(entityType, boundOperationsMap);
 
-                    if(context.GenerateMultipleFiles) 
+                    if(context.GenerateMultipleFiles)
                     {
                         this.WriteNamespaceEnd();
                         context.MultipleFilesManager.EndBlock();
@@ -1955,7 +1952,7 @@ public abstract class ODataClientTemplate : TemplateBase
 
         this.WriteNamespaceEnd();
     }
-    
+
     internal bool HasBoundOperations(IEnumerable<IEdmOperation> operations)
     {
         foreach (IEdmOperation opeartion in operations)
@@ -2026,7 +2023,7 @@ public abstract class ODataClientTemplate : TemplateBase
             {
                 continue;
             }
-            
+
             string entitySetElementTypeName = GetElementTypeName(entitySetElementType, container);
 
             UniqueIdentifierService uniqueIdentifierService = new UniqueIdentifierService(/*IsLanguageCaseSensitive*/true);
@@ -2074,7 +2071,7 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             this.WriteGeneratedEdmModel(Utils.SerializeToString(this.context.Edmx).Replace("\"", "\"\""));
         }
-        
+
         bool hasOperationImport = container.OperationImports().OfType<IEdmOperationImport>().Any();
         foreach (IEdmFunctionImport functionImport in container.OperationImports().OfType<IEdmFunctionImport>())
         {
@@ -2106,7 +2103,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 this.WriteFunctionImportReturnSingleResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, parameterValues, functionImport.Function.IsComposable, functionImport.Function.ReturnType.IsEntity(), useEntityReference);
             }
         }
-        
+
         foreach (IEdmActionImport actionImport in container.OperationImports().OfType<IEdmActionImport>())
         {
             if (this.context.ExcludedOperationImports.Contains(actionImport.Name))
@@ -2157,9 +2154,9 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             camelCaseContainerName = Customization.CustomizeNaming(camelCaseContainerName);
         }
-        
+
         this.WriteMethodStartForEntityContainerConstructor(camelCaseContainerName, GetFixedName(camelCaseContainerName));
-        
+
         if (this.context.UseKeyAsSegmentUrlConvention(container))
         {
             this.WriteKeyAsSegmentUrlConvention();
@@ -2191,7 +2188,7 @@ public abstract class ODataClientTemplate : TemplateBase
         // prefix condition, it's important that the prefix check is done is prefix-length
         // order, starting with the longest prefix.
         IEnumerable<KeyValuePair<string, string>> namespaceToPrefixedNamespacePairs = this.context.NamespaceMap.OrderByDescending(p => p.Key.Length).ThenBy(p => p.Key);
-        
+
         string typeName = this.SystemTypeTypeName + " ";
         foreach(KeyValuePair<string, string> namespaceToPrefixedNamespacePair in namespaceToPrefixedNamespacePairs)
         {
@@ -2321,7 +2318,7 @@ public abstract class ODataClientTemplate : TemplateBase
             this.WriteINotifyPropertyChangedImplementation();
         }
 
-        this.WriteClassEndForStructuredType();    
+        this.WriteClassEndForStructuredType();
     }
 
     internal void WriteBoundOperations(IEdmStructuredType structuredType, Dictionary<IEdmStructuredType, List<IEdmOperation>> boundOperationsMap)
@@ -2387,7 +2384,7 @@ public abstract class ODataClientTemplate : TemplateBase
             }
         }
     }
-    
+
     internal bool CheckMethodsInBaseClass(IEdmStructuredType structuredType, IEdmOperation operation, Dictionary<IEdmStructuredType, List<IEdmOperation>> boundOperationsMap)
     {
         if (structuredType != null)
@@ -2488,7 +2485,7 @@ public abstract class ODataClientTemplate : TemplateBase
             Customization.CustomizeNaming(((IEdmSchemaElement)structuredType).Name) : ((IEdmSchemaElement)structuredType).Name;
         this.WriteClassStartForStructuredType(abstractModifier, GetFixedName(structuredTypeName + typeNameSuffix), ((IEdmSchemaElement)structuredType).Name + typeNameSuffix, baseTypeName);
     }
-    
+
     internal string GetSourceOrReturnTypeName(IEdmTypeReference typeReference, bool isEntitySingleType = false)
     {
         IEdmCollectionType edmCollectionType = typeReference.Definition as IEdmCollectionType;
@@ -2501,7 +2498,7 @@ public abstract class ODataClientTemplate : TemplateBase
 
         return Utils.GetClrTypeName(typeReference, this.context.UseDataServiceCollection, this, this.context, addNullableTemplate, isEntitySingleType:isEntitySingleType);
     }
-    
+
     internal void GetParameterStrings(bool isBound, bool isAction, IEdmOperationParameter[] parameters, out string parameterString, out string parameterTypes, out string parameterExpressionString, out string parameterValues,  out bool useEntityReference)
     {
         parameterString = string.Empty;
@@ -2525,7 +2522,7 @@ public abstract class ODataClientTemplate : TemplateBase
                     parameterExpressionString += "\r\n                            ";
                 }
             }
-            
+
             string typeName = Utils.GetClrTypeName(param.Type, this.context.UseDataServiceCollection, this, this.context, true, true, true);
             if (this.context.TargetLanguage == LanguageOption.CSharp)
             {
@@ -2537,16 +2534,16 @@ public abstract class ODataClientTemplate : TemplateBase
                 parameterString += GetFixedName(param.Name);
                 parameterString += (this.EnumUnderlyingTypeMarker + typeName);
             }
-            
+
             parameterString += i == n - 1 ? string.Empty : ", ";
             parameterTypes += string.Format(CultureInfo.InvariantCulture, this.TypeofFormatter, typeName) + ", ";
             parameterExpressionString += this.GetParameterExpressionString(param, typeName) + ", ";
-            
+
             if (i != (isBound ? 1 : 0))
             {
                 parameterValues += ",\r\n                    ";
             }
-            
+
             if (isAction)
             {
                 parameterValues += string.Format(CultureInfo.InvariantCulture, this.BodyOperationParameterConstructor, param.Name, GetFixedName(param.Name));
@@ -2570,7 +2567,7 @@ public abstract class ODataClientTemplate : TemplateBase
         IEdmPrimitiveType edmPrimitiveType = edmType as IEdmPrimitiveType;
         if (edmPrimitiveType != null)
         {
-            clrTypeName = Utils.GetClrTypeName(edmPrimitiveType, this);                
+            clrTypeName = Utils.GetClrTypeName(edmPrimitiveType, this);
             if (param.Type.IsNullable && !this.ClrReferenceTypes.Contains(edmPrimitiveType.PrimitiveKind))
             {
                 clrTypeName += "?";
@@ -2579,7 +2576,7 @@ public abstract class ODataClientTemplate : TemplateBase
             return string.Format(CultureInfo.InvariantCulture, this.ConstantExpressionConstructorWithType, GetFixedName(param.Name), clrTypeName);
         }
 
-        return string.Format(CultureInfo.InvariantCulture, this.ConstantExpressionConstructorWithType, GetFixedName(param.Name), typeName); 
+        return string.Format(CultureInfo.InvariantCulture, this.ConstantExpressionConstructorWithType, GetFixedName(param.Name), typeName);
     }
 
     // This is to solve duplicate names between property and type
@@ -2614,7 +2611,7 @@ public abstract class ODataClientTemplate : TemplateBase
 
         IdentifierMappings.Clear();
         foreach (IGrouping<string, IEdmProperty> g in propertyToBeRenamedGroups)
-        { 
+        {
             bool hasPropertyNameSameWithCustomizedPropertyName = false;
             int itemCount = g.Count();
             for (int i = 0; i < itemCount; i++)
@@ -2626,7 +2623,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 {
                     hasPropertyNameSameWithCustomizedPropertyName = true;
                 }
-                
+
                 if(isLanguageCaseSensitive)
                 {
                     // If a property name is same as its customized property name, then we don't rename it.
@@ -2710,7 +2707,7 @@ public abstract class ODataClientTemplate : TemplateBase
 
             Debug.Assert(!property.Type.IsCollection(), "!property.Type.IsCollection()");
             Debug.Assert(!property.Type.IsNullable, "!property.Type.IsNullable");
-            
+
             // The static create method only sets non-nullable properties. We should add the null check if the type of the property is not a clr ValueType.
             // For now we add the null check if the property type is non-primitive. We should add the null check for non-ValueType primitives in the future.
             if (!property.Type.IsPrimitive() && !property.Type.IsEnum())
@@ -2947,7 +2944,7 @@ public abstract class TemplateBase
         }
         // If we're starting off, or if the previous text ended with a newline,
         // we have to append the current indent first.
-        if (((this.GenerationEnvironment.Length == 0) 
+        if (((this.GenerationEnvironment.Length == 0)
                     || this.endsWithNewline))
         {
             this.GenerationEnvironment.Append(this.currentIndentField);
@@ -3125,7 +3122,7 @@ public abstract class TemplateBase
 /// </summary>
 internal sealed class UniqueIdentifierService
 {
-    // This is the list of keywords we check against when creating parameter names from propert. 
+    // This is the list of keywords we check against when creating parameter names from propert.
     // If a name matches this keyword we prefix it.
     private static readonly string[] Keywords = new string[] {"class", "event"};
 
@@ -3187,7 +3184,7 @@ internal sealed class UniqueIdentifierService
     internal string GetUniqueParameterName(string name)
     {
         name = Utils.CamelCase(name);
-        
+
         // FxCop consider 'iD' as violation, we will change any property that is 'id'(case insensitive) to 'ID'
         if (StringComparer.OrdinalIgnoreCase.Equals(name, "id"))
         {
@@ -3200,7 +3197,7 @@ internal sealed class UniqueIdentifierService
 
 /// <summary>
 /// Utility class.
-/// </summary>    
+/// </summary>
 internal static class Utils
 {
     /// <summary>
@@ -3342,8 +3339,8 @@ internal static class Utils
                 IEdmSchemaElement schemaElement = (IEdmSchemaElement)elementTypeReference.Definition;
                 clrTypeName = context.GetPrefixedFullName(schemaElement,
                     context.EnableNamingAlias ? clientTemplate.GetFixedName(Customization.CustomizeNaming(schemaElement.Name)) : clientTemplate.GetFixedName(schemaElement.Name), clientTemplate);
-            }    
-    
+            }
+
             string collectionTypeName = isOperationParameter
                                             ? clientTemplate.ICollectionOfTStructureTemplate
                                             : (useDataServiceCollection
@@ -3356,7 +3353,7 @@ internal static class Utils
             return clrTypeName;
         }
 
-        throw new Exception($"Could not get CLR type name for EDM type '{edmTypeReference.FullName()}'");    
+        throw new Exception($"Could not get CLR type name for EDM type '{edmTypeReference.FullName()}'");
     }
 
     /// <summary>
@@ -3415,7 +3412,7 @@ internal static class Utils
                         }
                         else
                         {
-                            return string.Join(" Or ", customizedEnumValues); 
+                            return string.Join(" Or ", customizedEnumValues);
                         }
                     }
 
@@ -3472,7 +3469,7 @@ internal static class Utils
                 }
                 else
                 {
-                    // doesn't have a default value 
+                    // doesn't have a default value
                     return null;
                 }
             }
@@ -3509,7 +3506,7 @@ internal static class Utils
     {
         return string.Format(CultureInfo.InvariantCulture, clientTemplate.SystemNullableStructureTemplate, clrTypeName);
     }
-        
+
     /// <summary>
     /// Gets the clr type name from the give Edm primitive type.
     /// </summary>
@@ -3538,16 +3535,16 @@ internal static class Utils
             type= clientTemplate.DecimalTypeName;
         }
         else if (kind==EdmPrimitiveTypeKind.Int16)
-        { 
-            type= clientTemplate.Int16TypeName; 
+        {
+            type= clientTemplate.Int16TypeName;
         }
         else if(kind==EdmPrimitiveTypeKind.Single)
-        {    
+        {
             type= clientTemplate.SingleTypeName;
         }
         else if (kind==EdmPrimitiveTypeKind.Boolean)
-        {  
-            type= clientTemplate.BooleanTypeName; 
+        {
+            type= clientTemplate.BooleanTypeName;
         }
         else if (kind== EdmPrimitiveTypeKind.Double)
         {
@@ -3572,7 +3569,7 @@ internal static class Utils
         else if (kind == EdmPrimitiveTypeKind.Stream)
         {
             type= clientTemplate.DataServiceStreamLinkTypeName;
-        }        
+        }
         else if (kind== EdmPrimitiveTypeKind.Geography)
         {
             type= clientTemplate.GeographyTypeName;
@@ -3845,12 +3842,12 @@ this.Write("\")]\r\n        public ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(fixedContainerName));
 
-this.Write("(global::System.Uri serviceRoot) : \r\n                base(serviceRoot, global::Mi" +
-        "crosoft.OData.Client.ODataProtocolVersion.V4)\r\n        {\r\n");
+this.Write("(global::System.Uri serviceRoot) :\r\n                base(serviceRoot, global::Mic" +
+        "rosoft.OData.Client.ODataProtocolVersion.V4)\r\n        {\r\n");
 
 
     }
-    
+
     internal override void WriteKeyAsSegmentUrlConvention()
     {
 
@@ -3934,7 +3931,7 @@ this.Write("            return null;\r\n        }\r\n");
 
 
     }
-        
+
     internal override void WritePropertyRootNamespace(string containerName, string fullNamespace)
     {
 
@@ -4886,7 +4883,7 @@ this.Write("    }\r\n");
 
 
     }
-    
+
     internal override void WriteEnumFlags()
     {
 
@@ -4968,7 +4965,7 @@ this.Write("    }\r\n");
 
 
     }
-        
+
     internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference)
     {
 
@@ -5155,7 +5152,7 @@ this.Write(");\r\n        }\r\n");
 
 
         }
-    
+
     internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference)
     {
 
@@ -5345,7 +5342,7 @@ this.Write(");\r\n        }\r\n");
 
 
     }
-    
+
     internal override void WriteExtensionMethodsStart()
     {
 
@@ -5356,7 +5353,7 @@ this.Write(this.ToStringHelper.ToStringWithCulture(ClassAccessModifier));
 
 this.Write(" static class ExtensionMethods\r\n    {\r\n");
 
- 
+
     }
 
     internal override void WriteExtensionMethodsEnd()
@@ -5689,7 +5686,7 @@ this.Write(this.ToStringHelper.ToStringWithCulture(string.IsNullOrEmpty(paramete
 
 this.Write(");\r\n        }\r\n");
 
- 
+
     }
 
     internal override void WriteNamespaceEnd()
@@ -5773,7 +5770,7 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
     internal override string FixPattern { get { return "[{0}]"; } }
     internal override string EnumUnderlyingTypeMarker { get { return " As "; } }
     internal override string ConstantExpressionConstructorWithType { get { return "Global.System.Linq.Expressions.Expression.Constant({0}, GetType({1}))"; } }
-    internal override string TypeofFormatter { get { return "GetType({0})"; } }    
+    internal override string TypeofFormatter { get { return "GetType({0})"; } }
     internal override string UriOperationParameterConstructor { get { return "New Global.Microsoft.OData.Client.UriOperationParameter(\"{0}\", {1})"; } }
     internal override string UriEntityOperationParameterConstructor { get { return "New Global.Microsoft.OData.Client.UriEntityOperationParameter(\"{0}\", {1}, {2})"; } }
     internal override string BodyOperationParameterConstructor { get { return "New Global.Microsoft.OData.Client.BodyOperationParameter(\"{0}\", {1})"; } }
@@ -5782,13 +5779,13 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
     internal override string ODataVersion { get { return "Global.Microsoft.OData.ODataVersion.V4"; } }
     internal override string ParameterDeclarationTemplate { get { return "{1} As {0}"; } }
     internal override string DictionaryItemConstructor { get { return "{{ {0}, {1} }}"; } }
-    internal override HashSet<string> LanguageKeywords { get { 
+    internal override HashSet<string> LanguageKeywords { get {
         if (VBKeywords == null)
         {
             VBKeywords = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
             {
                 "AddHandler", "AddressOf", "Alias", "And", "AndAlso", "As", "Boolean", "ByRef", "Byte", "ByVal",
-                "Call", "Case", "Catch", "CBool", "", "CByte", "CChar", "CDate", "CDbl", "CDec", "Char", 
+                "Call", "Case", "Catch", "CBool", "", "CByte", "CChar", "CDate", "CDbl", "CDec", "Char",
                 "CInt", "Class", "CLng", "CObj", "Const", "Continue", "CSByte", "CShort", "CSng", "CStr",
                 "CType", "CUInt", "CULng", "CUShort", "Date", "Decimal", "Declare", "Default", "Delegate", "Dim",
                 "DirectCast", "Do", "Double", "Each", "Else", "ElseIf", "End", "EndIf", "Enum", "Erase",
@@ -5799,9 +5796,9 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
                 "Not", "Nothing", "NotInheritable", "NotOverridable", "Object", "Of", "On", "Operator", "Option", "Optional",
                 "Or", "OrElse", "Out", "Overloads", "Overridable", "Overrides", "ParamArray", "Partial", "Private", "Property",
                 "Protected", "Public", "RaiseEvent", "ReadOnly", "ReDim", "REM", "RemoveHandler", "Resume", "Return", "SByte",
-                "Select", "Set", "Shadows", "Shared", "Short", "Single", "Static", "Step", "Stop", "String", 
-                "Structure", "Sub", "SyncLock", "Then", "Throw", "To", "True", "Try", "TryCast", "TypeOf", 
-                "UInteger", "ULong", "UShort", "Using", "Variant", "Wend", "When", "While", "Widening", "With", 
+                "Select", "Set", "Shadows", "Shared", "Short", "Single", "Static", "Step", "Stop", "String",
+                "Structure", "Sub", "SyncLock", "Then", "Throw", "To", "True", "Try", "TryCast", "TypeOf",
+                "UInteger", "ULong", "UShort", "Using", "Variant", "Wend", "When", "While", "Widening", "With",
                 "WithEvents", "WriteOnly", "Xor"
             };
         }
@@ -6007,7 +6004,7 @@ this.Write("            Return Nothing\r\n        End Function\r\n");
 
 
     }
-    
+
     internal override void WritePropertyRootNamespace(string containerName, string fullNamespace)
     {
 
@@ -6551,7 +6548,7 @@ this.Write(this.ToStringHelper.ToStringWithCulture(key));
 this.Write("\r\n");
 
 
-        } 
+        }
 
 this.Write("    \'\'\'</KeyProperties>\r\n    <Global.Microsoft.OData.Client.Key(\"");
 
@@ -6900,7 +6897,7 @@ this.Write("    End Class\r\n");
 
 
     }
-    
+
     internal override void WriteEnumFlags()
     {
 
@@ -6980,7 +6977,7 @@ this.Write("    End Enum\r\n");
 
 
     }
-    
+
     internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference)
     {
 
@@ -7241,7 +7238,7 @@ this.Write("\r\n        End Function\r\n");
 
 
     }
-    
+
     internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues)
     {
 
@@ -7292,7 +7289,7 @@ this.Write(")\r\n        End Function\r\n");
 
 
     }
-    
+
     internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues)
     {
 
@@ -7551,7 +7548,7 @@ this.Write(this.ToStringHelper.ToStringWithCulture(isReturnEntity ? returnTypeNa
 
 this.Write("\r\n            If Not source.IsComposable Then\r\n                Throw New Global.S" +
         "ystem.NotSupportedException(\"The previous function is not composable.\")\r\n       " +
-        "     End If\r\n            \r\n            Return ");
+        "     End If\r\n\r\n            Return ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(isReturnEntity ? "New " + returnTypeNameWithSingleSuffix + "(" : string.Empty));
 
@@ -7623,7 +7620,7 @@ this.Write(this.ToStringHelper.ToStringWithCulture(returnTypeName));
 
 this.Write(")\r\n            If Not source.IsComposable Then\r\n                Throw New Global." +
         "System.NotSupportedException(\"The previous function is not composable.\")\r\n      " +
-        "      End If\r\n            \r\n            Return source.CreateFunctionQuery(Of ");
+        "      End If\r\n\r\n            Return source.CreateFunctionQuery(Of ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(returnTypeName));
 
@@ -7722,7 +7719,7 @@ this.Write("End Namespace\r\n");
 /// </summary>
 /// <param name="context">The code generation context.</param>
 public class FilesManager {
-    
+
     /// <summary>
     /// Creates an instance of the FilesManager. The object used to generate and manage
     /// multiple source files.
@@ -7734,7 +7731,7 @@ public class FilesManager {
 
         /// <summary> The line in the template from which the block starts.</summary>
         public int Start;
-        
+
         /// <summary> Length of the block.</summary>
         public int Length;
 
@@ -7755,26 +7752,26 @@ public class FilesManager {
     private Block _header = new Block();
 
     /// <summary> Templating engine host being used.</summary>
-    private ITextTemplatingEngineHost _host; 
-  
+    private ITextTemplatingEngineHost _host;
+
     /// <summary> A list of file names to be generated.</summary>
     protected List<String> generatedFileNames = new List<String>();
 
     /// <summary> Contains generated text.</summary>
     public StringBuilder Template
-    {
-        get; 
-        set;
-    }
+        {
+            get;
+            set;
+        }
 
 
-    /// <summary> 
+    /// <summary>
     /// Creates FilesManager object given <paramref name="host"> and <param name="template">.
     /// </summary>
     /// <param name="host">Templating engine host</param>
     /// <param name="template">Holds generated text</param>
     [SecurityCritical]
-    public static FilesManager Create(ITextTemplatingEngineHost host, StringBuilder template) 
+    public static FilesManager Create(ITextTemplatingEngineHost host, StringBuilder template)
     {
         return (host is IServiceProvider) ? new VSManager(host, template) : new FilesManager(host, template);
     }
@@ -7782,12 +7779,12 @@ public class FilesManager {
     /// <summary>
     /// Marks the start of a new file.
     /// </summary>
-    public void StartNewFile(string name, bool isContainer) 
+    public void StartNewFile(string name, bool isContainer)
     {
         if (name == null)
         {
                 throw new ArgumentNullException("name");
-        } 
+        }
 
         CurrentBlock = new Block { Name = name, IsContainer =  isContainer};
     }
@@ -7795,7 +7792,7 @@ public class FilesManager {
     /// <summary>
     /// Marks the start of the footer for all files.
     /// </summary>
-    public void StartFooter() 
+    public void StartFooter()
     {
         CurrentBlock = _footer;
     }
@@ -7803,22 +7800,22 @@ public class FilesManager {
     /// <summary>
     /// Marks the start of the header for all files.
     /// </summary>
-    public void StartHeader() 
+    public void StartHeader()
     {
         CurrentBlock = _header;
     }
 
-    
+
     /// <summary>
     /// Marks the End of a file.
     /// </summary>
-    public void EndBlock() 
+    public void EndBlock()
     {
         if (CurrentBlock == null)
         {
             return;
         }
-           
+
         CurrentBlock.Length = Template.Length - CurrentBlock.Start;
 
         if (CurrentBlock != _header && CurrentBlock != _footer)
@@ -7835,22 +7832,22 @@ public class FilesManager {
     /// <param name="split">If true the function is executed and multiple files generated
     /// otherwoise only a single file is generated.</param>
     [SecurityCritical]
-    public virtual void GenerateFiles(bool split, ConnectedServiceHandlerHelper handlerHelper, ConnectedServiceLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE) 
+    public virtual void GenerateFiles(bool split, ConnectedServiceHandlerHelper handlerHelper, ConnectedServiceLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE)
     {
-        if (split) 
+        if (split)
         {
             EndBlock();
             string headerText = Template.ToString(_header.Start, _header.Length);
             string footerText = Template.ToString(_footer.Start, _footer.Length);
-            
+
             _files.Reverse();
 
-            foreach(Block block in _files) 
+            foreach(Block block in _files)
             {
 
                 if(block.IsContainer) continue;
                 string fileName = Path.Combine(Path.GetTempPath(),block.Name);
-                
+
                 if(fileCreated)
                 {
                     string outputFile = Path.Combine(referenceFolder, block.Name);
@@ -7868,7 +7865,7 @@ public class FilesManager {
                     generatedFileNames.Add(fileName);
                     CreateFile(fileName, content);
                     Template.Remove(block.Start, block.Length);
-                }               
+                }
             }
         }
     }
@@ -7878,25 +7875,25 @@ public class FilesManager {
     /// </summary>
     /// <param name="fileName">Name of the file to be created</param>
     /// <param name="content">Content of the file to be created</param>
-    protected virtual void CreateFile(string fileName, string content) 
+    protected virtual void CreateFile(string fileName, string content)
     {
         if (IsFileContentDifferent(fileName, content))
         {
             File.WriteAllText(fileName, content);
         }
-           
+
     }
 
-    public virtual string GetCustomToolNamespace(string fileName) 
+    public virtual string GetCustomToolNamespace(string fileName)
     {
         return null;
     }
 
-    public virtual string DefaultProjectNamespace 
+    public virtual string DefaultProjectNamespace
     {
-        get 
-        { 
-            return null; 
+        get
+        {
+            return null;
         }
     }
 
@@ -7906,34 +7903,34 @@ public class FilesManager {
     /// <param name="fileName">Name of the existing file</param>
     /// <param name="newContent">Content of existing file</param>
     /// <returns>true if the file content is different</returns>
-    protected bool IsFileContentDifferent(string fileName, string newContent) 
+    protected bool IsFileContentDifferent(string fileName, string newContent)
     {
         return !(File.Exists(fileName) && File.ReadAllText(fileName) == newContent);
     }
-    
+
     /// <summary>
     /// FilesManager constructor. Initializes the host and template variable.
     /// </summary>
     [SecurityCritical]
-    private FilesManager(ITextTemplatingEngineHost host, StringBuilder template) 
+    private FilesManager(ITextTemplatingEngineHost host, StringBuilder template)
     {
         _host = host;
         Template = template;
     }
 
-    private Block CurrentBlock 
+    private Block CurrentBlock
     {
-        get 
-        { 
-            return _currentBlock; 
+        get
+        {
+            return _currentBlock;
         }
-        set 
+        set
         {
             if (CurrentBlock != null)
             {
                 EndBlock();
             }
-                
+
             if (value != null)
             {
                 value.Start = Template.Length;
@@ -7943,15 +7940,15 @@ public class FilesManager {
     }
 
     private class VSManager : FilesManager {
-        
+
         /// <summary>
         /// Generated multiple files depending on the number of blocks.
         /// </summary>
         /// <param name="split">If true the function is executed and multiple files generated
         /// otherwoise only a single file is generated.</param>
         [SecurityCritical]
-        public override void GenerateFiles(bool split, ConnectedServiceHandlerHelper handlerHelper, ConnectedServiceLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE) 
-        {            
+        public override void GenerateFiles(bool split, ConnectedServiceHandlerHelper handlerHelper, ConnectedServiceLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE)
+        {
             base.GenerateFiles(split, handlerHelper, logger, referenceFolder, fileCreated, OpenGeneratedFilesInIDE);
         }
 
@@ -7960,9 +7957,9 @@ public class FilesManager {
         /// </summary>
         /// <param name="fileName">Name of the file to be created</param>
         /// <param name="content">Content of the file to be created</param>
-        protected override void CreateFile(string fileName, string content) 
+        protected override void CreateFile(string fileName, string content)
         {
-            if (IsFileContentDifferent(fileName, content)) 
+            if (IsFileContentDifferent(fileName, content))
             {
                 File.WriteAllText(fileName, content);
             }
@@ -7972,15 +7969,15 @@ public class FilesManager {
         /// VSManager constructor. Initializes the host and template variable.
         /// </summary>
         internal VSManager(ITextTemplatingEngineHost host, StringBuilder template)
-            : base(host, template) 
+            : base(host, template)
         {
             var hostServiceProvider = host as IServiceProvider;
 
             if (hostServiceProvider == null)
             {
                 throw new ArgumentNullException("Could not obtain IServiceProvider");
-            }                
-        } 
+            }
+        }
     }
 } 
     }
