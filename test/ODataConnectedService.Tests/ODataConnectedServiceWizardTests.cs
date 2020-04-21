@@ -62,6 +62,21 @@ namespace ODataConnectedService.Tests
             initialSettings.Save();
         }
 
+        [TestMethod]
+        public void TestLoadUserSettingsWhenWizardIsCreated()
+        {
+            var settings = new UserSettings();
+            settings.ServiceName = "Some Service";
+            settings.MruEndpoints.Add("Endpoint");
+            settings.Save();
+
+            var context = new TestConnectedServiceProviderContext();
+            var wizard = new ODataConnectedServiceWizard(context);
+
+            Assert.AreEqual("Some Service", wizard.UserSettings.ServiceName);
+            Assert.IsTrue(wizard.UserSettings.MruEndpoints.Contains("Endpoint"));
+        }
+
         
 
         [TestMethod]
@@ -269,6 +284,45 @@ namespace ODataConnectedService.Tests
             Assert.AreEqual("GeneratedFile", config.GeneratedFileNamePrefix);
             Assert.AreEqual(true, config.UseNamespacePrefix);
             Assert.AreEqual("TestNamespace", config.NamespacePrefix);
+            Assert.AreEqual(true, config.EnableNamingAlias);
+            Assert.AreEqual(true, config.MakeTypesInternal);
+            Assert.AreEqual(true, config.IncludeT4File);
+            Assert.AreEqual(true, config.GenerateMultipleFiles);
+            Assert.AreEqual(true, config.OpenGeneratedFilesInIDE);
+        }
+
+        [TestMethod]
+        public void GetFinishedServiceInstanceAsync_WhenUpdating_ShouldUseSavedConfigWhenUserDoesNotVisitPages()
+        {
+            var savedConfig = GetTestConfig();
+            savedConfig.Endpoint = MetadataPath;
+            var context = new TestConnectedServiceProviderContext(true, savedConfig);
+            var wizard = new ODataConnectedServiceWizard(context);
+            var endpointPage = wizard.ConfigODataEndpointViewModel;
+            endpointPage.OnPageEnteringAsync(null).Wait();
+            endpointPage.OnPageLeavingAsync(null).Wait();
+
+            var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+            var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
+
+            Assert.AreEqual("GeneratedCode", serviceInstance.InstanceId);
+            Assert.AreEqual("MyService", serviceInstance.Name);
+            Assert.IsNotNull(serviceInstance.MetadataTempFilePath);
+            Assert.AreEqual("MyService", config.ServiceName);
+            Assert.AreEqual(MetadataPath, config.Endpoint);
+            Assert.AreEqual(Constants.EdmxVersion4, config.EdmxVersion);
+            Assert.AreEqual(true, config.IncludeCustomHeaders);
+            Assert.AreEqual("Key1:Val1\nKey2:Val2", config.CustomHttpHeaders);
+            Assert.AreEqual(true, config.IncludeWebProxy);
+            Assert.AreEqual("http://localhost:8080", config.WebProxyHost);
+            Assert.AreEqual(true, config.IncludeWebProxyNetworkCredentials);
+            Assert.AreEqual("domain", config.WebProxyNetworkCredentialsDomain);
+            Assert.AreEqual(null, config.WebProxyNetworkCredentialsUsername);
+            Assert.AreEqual(null, config.WebProxyNetworkCredentialsPassword);
+            config.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string>() { "GetPersonWithMostFriends", "ResetDataSource" });
+            Assert.AreEqual("GeneratedCode", config.GeneratedFileNamePrefix);
+            Assert.AreEqual(true, config.UseNamespacePrefix);
+            Assert.AreEqual("Namespace", config.NamespacePrefix);
             Assert.AreEqual(true, config.EnableNamingAlias);
             Assert.AreEqual(true, config.MakeTypesInternal);
             Assert.AreEqual(true, config.IncludeT4File);
