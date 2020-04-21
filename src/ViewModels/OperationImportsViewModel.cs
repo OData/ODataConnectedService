@@ -20,9 +20,9 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public OperationImportsViewModel(UserSettings userSettings = null) : base()
         {
-            Title = "Object Selection";
+            Title = "Function/Action Imports";
             Description = "Select function and action imports to include in the generated code.";
-            Legend = "Function/Action Imports";
+            Legend = "Function/Action Imports Selection";
             OperationImports = new List<OperationImportModel>();
             IsSupportedODataVersion = true;
             this.UserSettings = userSettings;

@@ -38,9 +38,9 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public SchemaTypesViewModel(UserSettings userSettings = null) : base()
         {
-            Title = "Schema selection";
+            Title = "Schema Types";
             Description = "Select schema types to include in the generated code.";
-            Legend = "Schema Types";
+            Legend = "Schema Types Selection";
             SchemaTypes = new List<SchemaTypeModel>();
             SchemaTypeModelMap = new Dictionary<string, SchemaTypeModel>();
             RelatedTypes = new Dictionary<string, ICollection<string>>();
