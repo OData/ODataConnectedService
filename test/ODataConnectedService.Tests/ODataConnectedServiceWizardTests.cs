@@ -9,12 +9,16 @@ using Microsoft.OData.ConnectedService.Models;
 using FluentAssertions;
 using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Views;
+using System.IO;
 
 namespace ODataConnectedService.Tests
 {
     [TestClass]
     public class ODataConnectedServiceWizardTests
     {
+
+        UserSettings initialSettings = UserSettings.Load(null);
+        readonly string MetadataPath = Path.GetFullPath("TestMetadataCsdl.xml");
 
         private ServiceConfigurationV4 GetTestConfig()
         {
@@ -40,9 +44,25 @@ namespace ODataConnectedService.Tests
                 OpenGeneratedFilesInIDE = true,
                 MakeTypesInternal = true,
                 IgnoreUnexpectedElementsAndAttributes = true,
-                IncludeT4File = true
+                IncludeT4File = true,
+                ExcludedOperationImports = new List<string>() { "GetPersonWithMostFriends", "ResetDataSource" }
             };
         }
+
+        [TestInitialize]
+        public void ResetUserSettings()
+        {
+            var settings = new UserSettings();
+            settings.Save();
+        }
+
+        [TestCleanup]
+        public void RestoreUserSettings()
+        {
+            initialSettings.Save();
+        }
+
+        
 
         [TestMethod]
         public void TestConstructor_ShouldUseDefaultSettingsWhenNotUpdating()
@@ -66,8 +86,20 @@ namespace ODataConnectedService.Tests
             Assert.IsNull(endpointPage.WebProxyNetworkCredentialsUsername);
             Assert.IsNull(endpointPage.WebProxyNetworkCredentialsPassword);
 
+            var operationsPage = wizard.OperationImportsViewModel;
+            endpointPage.Endpoint = MetadataPath;
+            endpointPage.MetadataTempPath = MetadataPath;
+            endpointPage.EdmxVersion = Constants.EdmxVersion4;
+            operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
+            operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
+            {
+                new OperationImportModel() { Name = "GetNearestAirport", IsSelected = true },
+                new OperationImportModel() { Name = "GetPersonWithMostFriends", IsSelected = true },
+                new OperationImportModel() { Name = "ResetDataSource", IsSelected = true }
+            });
+
             var advancedPage = wizard.AdvancedSettingsViewModel;
-            advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
+            advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(operationsPage)).Wait();
             Assert.AreEqual(Constants.DefaultReferenceFileName, advancedPage.GeneratedFileNamePrefix);
             Assert.IsFalse(advancedPage.UseNamespacePrefix);
             Assert.AreEqual(Constants.DefaultReferenceFileName, advancedPage.NamespacePrefix);
@@ -104,8 +136,19 @@ namespace ODataConnectedService.Tests
             Assert.IsNull(endpointPage.WebProxyNetworkCredentialsUsername);
             Assert.IsNull(endpointPage.WebProxyNetworkCredentialsPassword);
 
+            var operationsPage = wizard.OperationImportsViewModel;
+            endpointPage.MetadataTempPath = MetadataPath;
+            endpointPage.EdmxVersion = Constants.EdmxVersion4;
+            operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
+            operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
+            {
+                new OperationImportModel() { Name = "GetNearestAirport", IsSelected = true },
+                new OperationImportModel() { Name = "GetPersonWithMostFriends", IsSelected = false },
+                new OperationImportModel() { Name = "ResetDataSource", IsSelected = false }
+            });
+
             var advancedPage = wizard.AdvancedSettingsViewModel;
-            advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
+            advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(operationsPage)).Wait();
             Assert.AreEqual("GeneratedCode", advancedPage.GeneratedFileNamePrefix);
             Assert.IsTrue(advancedPage.UseNamespacePrefix);
             Assert.AreEqual("Namespace", advancedPage.NamespacePrefix);
@@ -139,6 +182,98 @@ namespace ODataConnectedService.Tests
             var advancedView = advancedPage.View as AdvancedSettings;
             Assert.IsFalse(advancedView.IncludeT4File.IsEnabled);
             Assert.IsFalse(advancedView.GenerateMultipleFiles.IsEnabled);
+        }
+
+        [TestMethod]
+        public void TestGetFinishedServiceInstanceAsync_SavesUserSettingsAndReturnsServiceInstanceWithConfigFromTheWizard()
+        {
+            var context = new TestConnectedServiceProviderContext(false);
+            var wizard = new ODataConnectedServiceWizard(context);
+            var endpointPage = wizard.ConfigODataEndpointViewModel;
+            endpointPage.ServiceName = "TestService";
+            endpointPage.Endpoint = MetadataPath;
+            endpointPage.EdmxVersion = Constants.EdmxVersion4;
+            endpointPage.IncludeCustomHeaders = true;
+            endpointPage.CustomHttpHeaders = "Key:val";
+            endpointPage.IncludeWebProxy = true;
+            endpointPage.WebProxyHost = "http://localhost:8080";
+            endpointPage.IncludeWebProxyNetworkCredentials = true;
+            endpointPage.WebProxyNetworkCredentialsDomain = "domain";
+            endpointPage.WebProxyNetworkCredentialsUsername = "user";
+            endpointPage.WebProxyNetworkCredentialsPassword = "pass";
+
+            var operationsPage = wizard.OperationImportsViewModel;
+            operationsPage.OperationImports = new List<OperationImportModel>()
+            {
+                new OperationImportModel() { Name = "GetNearestAirport", IsSelected = false },
+                new OperationImportModel() { Name = "GetPersonWithMostFriends", IsSelected = true },
+                new OperationImportModel() { Name = "ResetDataSource", IsSelected = false }
+            };
+
+            var advancedPage = wizard.AdvancedSettingsViewModel;
+            advancedPage.GeneratedFileNamePrefix = "GeneratedFile";
+            advancedPage.UseNamespacePrefix = true;
+            advancedPage.NamespacePrefix = "TestNamespace";
+            advancedPage.UseDataServiceCollection = true;
+            advancedPage.EnableNamingAlias = true;
+            advancedPage.MakeTypesInternal = true;
+            advancedPage.IncludeT4File = true;
+            advancedPage.GenerateMultipleFiles = true;
+            advancedPage.OpenGeneratedFilesInIDE = true;
+
+            endpointPage.OnPageLeavingAsync(new WizardLeavingArgs(operationsPage)).Wait();
+            operationsPage.OnPageLeavingAsync(new WizardLeavingArgs(advancedPage)).Wait();
+            advancedPage.OnPageLeavingAsync(new WizardLeavingArgs(null)).Wait();
+            var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+            var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
+
+            // saved user settings
+            var settings = UserSettings.Load(null);
+            Assert.AreEqual("TestService", settings.ServiceName);
+            Assert.AreEqual(MetadataPath, settings.Endpoint);
+            Assert.AreEqual(true, settings.IncludeCustomHeaders);
+            Assert.AreEqual("Key:val", settings.CustomHttpHeaders);
+            Assert.AreEqual(true, settings.IncludeWebProxy);
+            Assert.AreEqual("http://localhost:8080", settings.WebProxyHost);
+            Assert.AreEqual(true, settings.IncludeWebProxyNetworkCredentials);
+            Assert.AreEqual("domain", settings.WebProxyNetworkCredentialsDomain);
+            Assert.AreEqual("user", settings.WebProxyNetworkCredentialsUsername);
+            Assert.AreEqual("pass", settings.WebProxyNetworkCredentialsPassword);
+            config.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string>() { "GetNearestAirport", "ResetDataSource" });
+            Assert.AreEqual("GeneratedFile", config.GeneratedFileNamePrefix);
+            Assert.AreEqual(true, config.UseNamespacePrefix);
+            Assert.AreEqual("TestNamespace", settings.NamespacePrefix);
+            Assert.AreEqual(true, settings.EnableNamingAlias);
+            Assert.AreEqual(true, settings.MakeTypesInternal);
+            Assert.AreEqual(true, settings.IncludeT4File);
+            Assert.AreEqual(true, settings.GenerateMultipleFiles);
+            Assert.AreEqual(true, settings.OpenGeneratedFilesInIDE);
+
+
+            // service configuration created
+            Assert.AreEqual("GeneratedFile", serviceInstance.InstanceId);
+            Assert.AreEqual("TestService", serviceInstance.Name);
+            Assert.AreEqual(endpointPage.MetadataTempPath, serviceInstance.MetadataTempFilePath);
+            Assert.AreEqual("TestService", config.ServiceName);
+            Assert.AreEqual(MetadataPath, config.Endpoint);
+            Assert.AreEqual(Constants.EdmxVersion4, config.EdmxVersion);
+            Assert.AreEqual(true, config.IncludeCustomHeaders);
+            Assert.AreEqual("Key:val", config.CustomHttpHeaders);
+            Assert.AreEqual(true, config.IncludeWebProxy);
+            Assert.AreEqual("http://localhost:8080", config.WebProxyHost);
+            Assert.AreEqual(true, config.IncludeWebProxyNetworkCredentials);
+            Assert.AreEqual("domain", config.WebProxyNetworkCredentialsDomain);
+            Assert.AreEqual("user", config.WebProxyNetworkCredentialsUsername);
+            Assert.AreEqual("pass", config.WebProxyNetworkCredentialsPassword);
+            config.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string>() { "GetNearestAirport", "ResetDataSource" });
+            Assert.AreEqual("GeneratedFile", config.GeneratedFileNamePrefix);
+            Assert.AreEqual(true, config.UseNamespacePrefix);
+            Assert.AreEqual("TestNamespace", config.NamespacePrefix);
+            Assert.AreEqual(true, config.EnableNamingAlias);
+            Assert.AreEqual(true, config.MakeTypesInternal);
+            Assert.AreEqual(true, config.IncludeT4File);
+            Assert.AreEqual(true, config.GenerateMultipleFiles);
+            Assert.AreEqual(true, config.OpenGeneratedFilesInIDE);
         }
     }
 
@@ -211,17 +346,4 @@ namespace ODataConnectedService.Tests
         public event PropertyChangedEventHandler PropertyChanged;
         public event PropertyChangingEventHandler PropertyChanging;
     }
-
-    //public abstract class Test
-    //{
-    //    public abstract IVsHierarchyItem Stuff();
-    //}
-
-    //public class TestSub : Test
-    //{
-    //    public override IVsHierarchyItem Stuff()
-    //    {
-    //        return new TestVsHierarchyItem();
-    //    }
-    //}
 }
