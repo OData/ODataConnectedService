@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+  <edmx:DataServices>
+    <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="SimpleService.Models">
+      <EntityType Name="Thing">
+        <Key>
+          <PropertyRef Name="Code"/>
+        </Key>
+        <Property Name="Code" Nullable="false" Type="Edm.String"/>
+        <Property Name="Name" Nullable="false" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="OtherThing">
+        <Key>
+          <PropertyRef Name="Code"/>
+        </Key>
+        <Property Name="Code" Nullable="false" Type="Edm.String"/>
+        <Property Name="Name" Nullable="false" Type="Edm.String"/>
+      </EntityType>
+      <Function Name="GetRandomThing">
+        <ReturnType Type="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Thing"/>
+      </Function>
+      <Action Name="ResetThings"/>
+      <EntityContainer Name="Container">
+        <EntitySet Name="Things" EntityType="SimpleService.Models.Thing" />
+        <EntitySet Name="OtherThings" EntityType="SimpleService.Models.OtherThing" />
+        <FunctionImport Name="GetRandomThing" EntitySet="Airports" Function="SimpleService.Models.GetRandomThing"/>
+        <ActionImport Name="ResetThings" Action="SimpleService.Models.ResetThings"/>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
