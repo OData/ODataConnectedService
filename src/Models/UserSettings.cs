@@ -107,6 +107,11 @@ namespace Microsoft.OData.ConnectedService.Models
 
         public static void AddToTopOfMruList<T>(ObservableCollection<T> mruList, T item)
         {
+            if (mruList == null)
+            {
+                return;
+            }
+
             var index = mruList.IndexOf(item);
             if (index >= 0)
             {

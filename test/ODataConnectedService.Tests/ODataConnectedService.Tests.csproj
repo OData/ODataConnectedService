@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ODataConnectedServiceWizardTests.cs" />
+    <Compile Include="ViewModels\ConfigOdataEndPointViewModelTests.cs" />
     <Compile Include="Properties\AssemblyRefs.cs" />
     <Compile Include="Templates\CodeGenerationContextTest.cs" />
     <Compile Include="CodeGeneration\V4CodeGenDescriptorTest.cs" />

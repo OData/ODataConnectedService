@@ -111,7 +111,7 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
         static Assembly Assembly = Assembly.GetExecutingAssembly();
         const string ReferenceResourcePrefix = "ODataConnectedService.Tests.CodeGenReferences.";
 
-        static string LoadReferenceContent(string name)
+        public static string LoadReferenceContent(string name)
         {
             var fullName = $"{ReferenceResourcePrefix}{name}";
             using (var stream = Assembly.GetManifestResourceStream(fullName))

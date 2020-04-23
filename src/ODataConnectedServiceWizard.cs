@@ -44,10 +44,10 @@ namespace Microsoft.OData.ConnectedService
         public ODataConnectedServiceWizard(ConnectedServiceProviderContext context)
         {
             this.Context = context;
-            this.UserSettings = UserSettings.Load(context.Logger);
+            this.UserSettings = UserSettings.Load(context?.Logger);
 
             // Since ServiceConfigurationV4 is a derived type of ServiceConfiguration. So we can deserialize a ServiceConfiguration into a ServiceConfigurationV4.
-            this._serviceConfig = this.Context.GetExtendedDesignerData<ServiceConfigurationV4>();
+            this._serviceConfig = this.Context?.GetExtendedDesignerData<ServiceConfigurationV4>();
 
             ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(this.UserSettings, this);
             AdvancedSettingsViewModel = new AdvancedSettingsViewModel(this.UserSettings);
@@ -57,7 +57,7 @@ namespace Microsoft.OData.ConnectedService
             OperationImportsViewModel.PageEntering += OperationImportsViewModel_PageEntering;
 
             SchemaTypesViewModel.PageEntering += SchemaTypeSelectionViewModel_PageEntering;
-            if (this.Context.IsUpdating)
+            if (this.Context != null && this.Context.IsUpdating)
             {
                 ConfigODataEndpointViewModel.Endpoint = this._serviceConfig.Endpoint;
                 ConfigODataEndpointViewModel.EdmxVersion = this._serviceConfig.EdmxVersion;
