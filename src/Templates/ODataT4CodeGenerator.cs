@@ -1556,6 +1556,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract string ParameterDeclarationTemplate { get; }
     internal abstract string DictionaryItemConstructor { get; }
     internal abstract string DynamicPropertiesPropertyBase { get; }
+    internal abstract string ContainerPropertyAttribute { get; }
     #endregion Get Language specific keyword names.
 
     #region Language specific write methods.
@@ -1592,7 +1593,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteParameterNullCheckForStaticCreateMethod(string parameterName);
     internal abstract void WritePropertyValueAssignmentForStaticCreateMethod(string instanceName, string propertyName, string parameterName);
     internal abstract void WriteMethodEndForStaticCreateMethod(string instanceName);
-    internal abstract void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, bool writeOnPropertyChanged);
+    internal abstract void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, bool writeOnPropertyChanged);
     internal abstract void WriteINotifyPropertyChangedImplementation();
     internal abstract void WriteClassEndForStructuredType();
     internal abstract void WriteNamespaceEnd();
@@ -2809,7 +2810,8 @@ public abstract class ODataClientTemplate : TemplateBase
                     PropertyName = propertyName,
                     FixedPropertyName = GetFixedName(propertyName),
                     PrivatePropertyName = "_" + propertyName,
-                    PropertyInitializationValue = Utils.GetPropertyInitializationValue(property, useDataServiceCollection, this, this.context)
+                    PropertyInitializationValue = Utils.GetPropertyInitializationValue(property, useDataServiceCollection, this, this.context),
+                    PropertyAttribute = ""
                 };
         }).ToList();
 
@@ -2830,6 +2832,11 @@ public abstract class ODataClientTemplate : TemplateBase
             }
 
             dynamicPropertiesPropertyName = dynamicPropertiesPropertyTemp;
+            string containerPropertyAttribute = string.Empty;
+            if (Utils.CheckContainerPropertyAttribute())
+            {
+                containerPropertyAttribute = this.ContainerPropertyAttribute;
+            }
 
             propertyInfos.Add(new
             {
@@ -2838,7 +2845,8 @@ public abstract class ODataClientTemplate : TemplateBase
                 PropertyName = dynamicPropertiesPropertyName,
                 FixedPropertyName = dynamicPropertiesPropertyName,
                 PrivatePropertyName = "_" + dynamicPropertiesPropertyName,
-                PropertyInitializationValue = string.Format(this.DictionaryConstructor, this.StringTypeName, this.ObjectTypeName)
+                PropertyInitializationValue = string.Format(this.DictionaryConstructor, this.StringTypeName, this.ObjectTypeName),
+                PropertyAttribute = containerPropertyAttribute
             });
         }
 
@@ -2857,6 +2865,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 propertyInfo.FixedPropertyName,
                 privatePropertyName,
                 propertyInfo.PropertyInitializationValue,
+                propertyInfo.PropertyAttribute,
                 useDataServiceCollection);
         }
     }
@@ -3729,6 +3738,39 @@ internal static class Utils
 
         return type;
     }
+
+    /// <summary>
+    /// Checks whether ContainerPropertyAttribute type exists in the referenced Microsoft.OData.Client assembly.
+    /// </summary>
+    /// <returns>true if ContainerPropertyAttribute is found in the referenced Microsoft.OData.Client assembly.</returns>
+    internal static bool CheckContainerPropertyAttribute()
+    {
+        try
+        {
+            global::System.Reflection.Assembly executingAssembly = global::System.Reflection.Assembly.GetExecutingAssembly();
+            global::System.Reflection.AssemblyName odataClientAssemblyName = global::System.Linq.Enumerable.FirstOrDefault(executingAssembly.GetReferencedAssemblies(), d => d.Name.Equals("Microsoft.OData.Client", global::System.StringComparison.Ordinal));
+
+            if (odataClientAssemblyName != null)
+            {
+                global::System.Reflection.Assembly odataClientAssembly = global::System.Reflection.Assembly.Load("Microsoft.OData.Client");
+                if (odataClientAssembly.GetType("Microsoft.OData.Client.ContainerPropertyAttribute", false /* throwOnError */) != null)
+                {
+                    return true;
+                }
+            }
+        }
+        catch (global::System.Exception ex)
+        {
+            if (ex is global::System.IO.FileNotFoundException || ex is global::System.IO.FileLoadException || ex is global::System.IO.IOException /* Windows Store App & PCL */)
+            {
+                // Legitimate reasons to conclude we didn't find the attribute
+                return false;
+            }
+            throw;
+        }
+
+        return false;
+    }
 }
 
 public sealed class ODataClientCSharpTemplate : ODataClientTemplate
@@ -3817,6 +3859,7 @@ public sealed class ODataClientCSharpTemplate : ODataClientTemplate
     internal override string ParameterDeclarationTemplate { get { return "{0} {1}"; } }
     internal override string DictionaryItemConstructor { get { return "{{ {0}, {1} }}"; } }
     internal override string DynamicPropertiesPropertyBase { get { return "DynamicProperties"; } }
+    internal override string ContainerPropertyAttribute { get { return "[global::Microsoft.OData.Client.ContainerProperty]"; } }
     internal override HashSet<string> LanguageKeywords { get {
         if (CSharpKeywords == null)
         {
@@ -4837,7 +4880,7 @@ this.Write(";\r\n        }\r\n");
 
     }
 
-    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, bool writeOnPropertyChanged)
+    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, bool writeOnPropertyChanged)
     {
 
 this.Write("        /// <summary>\r\n        /// There are no comments for Property ");
@@ -4860,6 +4903,19 @@ this.Write("        [global::Microsoft.OData.Client.OriginalNameAttribute(\"");
 this.Write(this.ToStringHelper.ToStringWithCulture(originalPropertyName));
 
 this.Write("\")]\r\n");
+
+
+        }
+
+
+        if (!string.IsNullOrEmpty(propertyAttribute))
+        {
+
+this.Write("        ");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(propertyAttribute));
+
+this.Write("\r\n");
 
 
         }
@@ -5875,6 +5931,7 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
     internal override string ParameterDeclarationTemplate { get { return "{1} As {0}"; } }
     internal override string DictionaryItemConstructor { get { return "{{ {0}, {1} }}"; } }
     internal override string DynamicPropertiesPropertyBase { get { return "DynamicProperties"; } }
+    internal override string ContainerPropertyAttribute { get { return "<Global.Microsoft.OData.Client.ContainerProperty>  _"; } }
     internal override HashSet<string> LanguageKeywords { get {
         if (VBKeywords == null)
         {
@@ -6849,7 +6906,7 @@ this.Write("\r\n        End Function\r\n");
 
     }
 
-    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, bool writeOnPropertyChanged)
+    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, bool writeOnPropertyChanged)
     {
 
 this.Write("        \'\'\'<summary>\r\n        \'\'\'There are no comments for Property ");
@@ -6872,6 +6929,19 @@ this.Write("        <Global.Microsoft.OData.Client.OriginalNameAttribute(\"");
 this.Write(this.ToStringHelper.ToStringWithCulture(originalPropertyName));
 
 this.Write("\")>  _\r\n");
+
+
+        }
+
+
+        if (!string.IsNullOrEmpty(propertyAttribute))
+        {
+
+this.Write("        ");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(originalPropertyName));
+
+this.Write("  _\r\n");
 
 
         }

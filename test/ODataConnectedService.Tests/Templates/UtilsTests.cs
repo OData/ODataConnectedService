@@ -613,5 +613,11 @@ namespace ODataConnectedService.Tests
             Action translate = () => ODataT4CodeGenerator.Utils.GetClrTypeName(new EdmPrimitiveType(EdmPrimitiveTypeKind.None), template);
             translate.ShouldThrow<Exception>().WithMessage("Type None is unrecognized");
         }
+
+        [TestMethod]
+        public void CheckContainerPropertyAttributeShouldReturnFalseForReferencedODataClientAssembly()
+        {
+            ODataT4CodeGenerator.Utils.CheckContainerPropertyAttribute().Should().BeFalse();
+        }
     }
 }
