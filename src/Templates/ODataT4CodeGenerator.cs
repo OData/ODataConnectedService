@@ -2811,7 +2811,7 @@ public abstract class ODataClientTemplate : TemplateBase
                     FixedPropertyName = GetFixedName(propertyName),
                     PrivatePropertyName = "_" + propertyName,
                     PropertyInitializationValue = Utils.GetPropertyInitializationValue(property, useDataServiceCollection, this, this.context),
-                    PropertyAttribute = ""
+                    PropertyAttribute = string.Empty
                 };
         }).ToList();
 
@@ -3761,9 +3761,9 @@ internal static class Utils
         }
         catch (global::System.Exception ex)
         {
-            if (ex is global::System.IO.FileNotFoundException || ex is global::System.IO.FileLoadException || ex is global::System.IO.IOException /* Windows Store App & PCL */)
+            if (ex is global::System.IO.FileNotFoundException || ex is global::System.IO.FileLoadException || ex is global::System.IO.IOException /* Windows Store Apps & PCL */)
             {
-                // Legitimate reasons to conclude we didn't find the attribute
+                // Legitimate reasons to conclude we didn't find the attribute?
                 return false;
             }
             throw;
@@ -6939,7 +6939,7 @@ this.Write("\")>  _\r\n");
 
 this.Write("        ");
 
-this.Write(this.ToStringHelper.ToStringWithCulture(originalPropertyName));
+this.Write(this.ToStringHelper.ToStringWithCulture(propertyAttribute));
 
 this.Write("  _\r\n");
 
