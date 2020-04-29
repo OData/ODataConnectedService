@@ -1313,7 +1313,7 @@ Namespace MergedFunctionalTest.DSC
                 Me.OnDynamicPropertiesChanging(value)
                 Me._DynamicProperties = value
                 Me.OnDynamicPropertiesChanged
-                Me.OnPropertyChanged("")
+                Me.OnPropertyChanged("DynamicProperties")
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -7631,7 +7631,7 @@ Namespace MergedFunctionalTest.DSC
                 Me.OnDynamicPropertiesChanging(value)
                 Me._DynamicProperties = value
                 Me.OnDynamicPropertiesChanged
-                Me.OnPropertyChanged("")
+                Me.OnPropertyChanged("DynamicProperties")
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -9428,7 +9428,7 @@ Namespace MergedFunctionalTest1.DSC
                 Me.OnDynamicPropertiesChanging(value)
                 Me._DynamicProperties = value
                 Me.OnDynamicPropertiesChanged
-                Me.OnPropertyChanged("")
+                Me.OnPropertyChanged("DynamicProperties")
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _

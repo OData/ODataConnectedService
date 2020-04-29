@@ -1433,7 +1433,7 @@ namespace MergedFunctionalTest.DSC
                 this.OnDynamicPropertiesChanging(value);
                 this._DynamicProperties = value;
                 this.OnDynamicPropertiesChanged();
-                this.OnPropertyChanged("");
+                this.OnPropertyChanged("DynamicProperties");
             }
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
@@ -8028,7 +8028,7 @@ namespace MergedFunctionalTest.DSC
                 this.OnDynamicPropertiesChanging(value);
                 this._DynamicProperties = value;
                 this.OnDynamicPropertiesChanged();
-                this.OnPropertyChanged("");
+                this.OnPropertyChanged("DynamicProperties");
             }
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
@@ -9897,7 +9897,7 @@ namespace MergedFunctionalTest1.DSC
                 this.OnDynamicPropertiesChanging(value);
                 this._DynamicProperties = value;
                 this.OnDynamicPropertiesChanged();
-                this.OnPropertyChanged("");
+                this.OnPropertyChanged("DynamicProperties");
             }
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]

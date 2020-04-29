@@ -2841,7 +2841,7 @@ public abstract class ODataClientTemplate : TemplateBase
             propertyInfos.Add(new
             {
                 PropertyType = string.Format(this.DictionaryInterfaceName, this.StringTypeName, this.ObjectTypeName),
-                PropertyVanillaName = string.Empty,
+                PropertyVanillaName = dynamicPropertiesPropertyName,
                 PropertyName = dynamicPropertiesPropertyName,
                 FixedPropertyName = dynamicPropertiesPropertyName,
                 PrivatePropertyName = "_" + dynamicPropertiesPropertyName,
