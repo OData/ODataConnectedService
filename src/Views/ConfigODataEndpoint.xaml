@@ -12,6 +12,7 @@
     d:DataContext="{d:DesignInstance Type=viewModels:ConfigODataEndpointViewModel}"
     d:DesignHeight="300"
     d:DesignWidth="500"
+	Loaded="UserControl_Loaded"
     mc:Ignorable="d">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
