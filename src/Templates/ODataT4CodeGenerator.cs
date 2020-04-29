@@ -7907,7 +7907,7 @@ public class FilesManager {
             {
                 if(block.IsContainer) continue;
                 string fileName = Path.Combine(outputPath, block.Name);
-                
+
                 if(fileCreated)
                 {
                     string outputFile = Path.Combine(referenceFolder, block.Name);
