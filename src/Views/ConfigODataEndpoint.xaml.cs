@@ -27,7 +27,7 @@ namespace Microsoft.OData.ConnectedService.Views
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (Endpoint.Items.Count > 0)
+            if (Endpoint.Items.Count > 0 && !((ConfigODataEndpointViewModel)this.DataContext).ServiceWizard.Context.IsUpdating)
             {
                 Endpoint.SelectedItem = Endpoint.Items[0];
             }
