@@ -165,7 +165,6 @@ namespace ODataConnectedService.Tests
         public void CodeGenSimpleEdmxMultipleFiles()
         {
             string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SimpleMultipleFiles.Metadata, null, true, false, generateMultipleFiles : true);
-            ODataT4CodeGeneratorTestDescriptors.SimpleMultipleFiles.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
             string expectedTestType = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleTestType.cs"));
             string actualTestType = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "TestType.cs")));
@@ -176,9 +175,13 @@ namespace ODataConnectedService.Tests
             string expectedCity = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleFilesCity.cs"));
             string actualCity = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "City.cs")));
 
+            string expectedExtensionMethods = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleFilesMain.cs"));
+            string actualExtenisonMethods = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "ExtensionMethods.cs")));
+
             Assert.AreEqual(expectedTestType, actualTestType);
             Assert.AreEqual(expectedPersonGender, actualPersonGender);
             Assert.AreEqual(expectedCity, actualCity);
+            Assert.AreEqual(expectedExtensionMethods, actualExtenisonMethods);
         }
 
         [TestMethod]
