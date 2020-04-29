@@ -99,7 +99,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 var text = File.ReadAllText(Path.Combine(t4Folder, "ODataT4CodeGenerator.tt"));
 
                 text = Regex.Replace(text, "ODataT4CodeGenerator(\\.ttinclude)", this.GeneratedFileNamePrefix + "$1");
-                text = Regex.Replace(text, "(public const string MetadataDocumentUri = )\"\";", "$1\"" + ServiceConfiguration.Endpoint + "\";");
+                text = Regex.Replace(text, "(public const string MetadataDocumentUri = )\"\";", "$1@\"" + ServiceConfiguration.Endpoint + "\";");
                 text = Regex.Replace(text, "(public const bool UseDataServiceCollection = ).*;", "$1" + ServiceConfiguration.UseDataServiceCollection.ToString().ToLower(CultureInfo.InvariantCulture) + ";");
                 text = Regex.Replace(text, "(public const string NamespacePrefix = )\"\\$rootnamespace\\$\";", "$1\"" + ServiceConfiguration.NamespacePrefix + "\";");
                 if (this.TargetProjectLanguage == LanguageOption.GenerateCSharpCode)

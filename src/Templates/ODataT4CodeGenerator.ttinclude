@@ -1580,7 +1580,7 @@ public abstract class ODataClientTemplate : TemplateBase
                         continue;
                     }
 
-                    if(context.GenerateMultipleFiles) 
+                    if(context.GenerateMultipleFiles)
                     {
                         context.MultipleFilesManager.StartNewFile($"{enumType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
@@ -1603,7 +1603,7 @@ public abstract class ODataClientTemplate : TemplateBase
                         continue;
                     }
 
-                    if(context.GenerateMultipleFiles) 
+                    if(context.GenerateMultipleFiles)
                     {
                         context.MultipleFilesManager.StartNewFile($"{complexType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
@@ -1624,7 +1624,7 @@ public abstract class ODataClientTemplate : TemplateBase
                         continue;
                     }
 
-                    if(context.GenerateMultipleFiles) 
+                    if(context.GenerateMultipleFiles)
                     {
                         context.MultipleFilesManager.StartNewFile($"{entityType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
@@ -1656,7 +1656,7 @@ public abstract class ODataClientTemplate : TemplateBase
         if (schemaElements.OfType<IEdmEntityType>().Any() ||
             schemaElements.OfType<IEdmOperation>().Any(o => o.IsBound))
         {
-            if(context.GenerateMultipleFiles) 
+            if(context.GenerateMultipleFiles)
             {
                 context.MultipleFilesManager.StartNewFile($"ExtensionMethods{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
                 this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
@@ -1861,7 +1861,7 @@ public abstract class ODataClientTemplate : TemplateBase
             }
 
             this.WriteExtensionMethodsEnd();
-            if(context.GenerateMultipleFiles) 
+            if(context.GenerateMultipleFiles)
             {
                 this.WriteNamespaceEnd();
                 context.MultipleFilesManager.EndBlock();
