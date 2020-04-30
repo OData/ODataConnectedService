@@ -140,7 +140,7 @@ namespace ODataConnectedService.Tests
             }
         }
 
-        internal static string GetFilecontent(string fileName)
+        internal static string GetFileContent(string fileName)
         {
             return LoadContentFromBaseline(fileName);
         }

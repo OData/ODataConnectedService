@@ -4845,7 +4845,7 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
     internal override string ParameterDeclarationTemplate { get { return "{1} As {0}"; } }
     internal override string DictionaryItemConstructor { get { return "{{ {0}, {1} }}"; } }
     internal override string DynamicPropertiesPropertyBase { get { return "DynamicProperties"; } }
-    internal override string ContainerPropertyAttribute { get { return "<Global.Microsoft.OData.Client.ContainerProperty>  _"; } }
+    internal override string ContainerPropertyAttribute { get { return "<Global.Microsoft.OData.Client.ContainerProperty>"; } }
     internal override HashSet<string> LanguageKeywords { get {
         if (VBKeywords == null)
         {
