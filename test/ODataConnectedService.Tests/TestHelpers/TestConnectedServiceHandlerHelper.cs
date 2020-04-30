@@ -9,6 +9,12 @@ namespace Microsoft.OData.ConnectedService.Tests.TestHelpers
 {
     class TestConnectedServiceHandlerHelper : ConnectedServiceHandlerHelper
     {
+        public TestConnectedServiceHandlerHelper() : base()
+        {
+            AddedFiles = new List<(string CreatedFile, string SourceFile)>();
+        }
+
+        public IList<(string CreatedFile, string SourceFile)> AddedFiles { get; private set; }
         // used to access the temp file that the generated code was written to
         public string AddedFileInputFileName { get; private set; }
         // used to find out which file the final output would be written to
@@ -18,6 +24,7 @@ namespace Microsoft.OData.ConnectedService.Tests.TestHelpers
         {
             AddedFileInputFileName = fileName;
             AddedFileTargetFilePath = targetPath;
+            AddedFiles.Add((targetPath, fileName));
             return Task.FromResult(string.Empty);
         }
         public override IDictionary<string, string> TokenReplacementValues { get; }

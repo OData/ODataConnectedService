@@ -86,8 +86,16 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
 
             var metadataFile = Path.Combine(referenceFolder, Common.Constants.CsdlFileName);
             await this.Context.HandlerHelper.AddFileAsync(tempFile, metadataFile, new AddFileOptions() { SuppressOverwritePrompt = true });
-            var projectItem = this.GetCsdlFileProjectItem(Common.Constants.CsdlFileName);
-            projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionEmbeddedResource;
+
+            // Hack!
+            // Tests were failing since the test project cannot access ProjectItems
+            // dte == null when running test cases
+            var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+            if (dte != null)
+            {
+                var projectItem = this.GetCsdlFileProjectItem(Common.Constants.CsdlFileName);
+                projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionEmbeddedResource;
+            }
 
             using (StreamWriter writer = File.CreateText(tempFile))
             {

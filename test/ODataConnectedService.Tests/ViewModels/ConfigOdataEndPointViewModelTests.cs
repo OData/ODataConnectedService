@@ -10,6 +10,7 @@ using Microsoft.OData.ConnectedService.Tests.Templates;
 using Microsoft.OData.ConnectedService.ViewModels;
 using Microsoft.VisualStudio.ConnectedServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ODataConnectedService.Tests.TestHelpers;
 
 namespace ODataConnectedService.Tests.ViewModels
 {
@@ -31,8 +32,8 @@ namespace ODataConnectedService.Tests.ViewModels
         [TestMethod]
         public void OnPageLeavingConfigODataEndpointPageTest()
         {
-            string edmx = ODataT4CodeGeneratorTest.LoadReferenceContent("Simple.xml");
-            string expectedTempfileContent = ODataT4CodeGeneratorTest.LoadReferenceContent("TempSimple.xml");
+            string edmx = GeneratedCodeHelpers.LoadReferenceContent("Simple.xml");
+            string expectedTempfileContent = GeneratedCodeHelpers.LoadReferenceContent("TempSimple.xml");
             Task<PageNavigationResult> pageNavigationResultTask;
             PageNavigationResult pageNavigationResult;
 
