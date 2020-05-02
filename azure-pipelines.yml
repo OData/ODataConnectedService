@@ -73,7 +73,6 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     searchFolder:  '$(System.DefaultWorkingDirectory)'
-    otherConsoleOptions: '/Framework:Framework47'
 
 - task: Powershell@2
   displayName: 'Re-enable strong name validation'
