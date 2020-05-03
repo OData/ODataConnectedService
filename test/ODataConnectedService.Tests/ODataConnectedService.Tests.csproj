@@ -150,7 +150,6 @@
       <Link>Templates\ODataT4CodeGenFilesManager.ttinclude</Link>
     </EmbeddedResource>
     <None Include="35MSSharedLib1024.snk" />
-    <Fakes Include="Fakes\Microsoft.OData.ConnectedService.fakes" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\..\src\Templates\ODataT4CodeGenerator.tt">

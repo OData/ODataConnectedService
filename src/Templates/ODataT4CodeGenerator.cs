@@ -24,6 +24,7 @@ namespace Microsoft.OData.ConnectedService.Templates
     using Microsoft.OData.Edm.Vocabularies.Community.V1;
     using System.Text;
     using System.Net;
+    using System.Reflection;
     using System.Security;
     using Microsoft.VisualStudio.TextTemplating;
     using Microsoft.VisualStudio.ConnectedServices;
@@ -80,7 +81,8 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             MultipleFilesManager = FilesManager.Create(this.Host, null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
-            ExcludedSchemaTypes = this.ExcludedSchemaTypes
+            ExcludedSchemaTypes = this.ExcludedSchemaTypes,
+            GenerateContainerProperty = this.CheckContainerPropertyAttribute()
         };
     }
     else
@@ -118,7 +120,8 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             MultipleFilesManager = FilesManager.Create(this.Host, null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
-            ExcludedSchemaTypes = this.ExcludedSchemaTypes
+            ExcludedSchemaTypes = this.ExcludedSchemaTypes,
+            GenerateContainerProperty = this.CheckContainerPropertyAttribute()
         };
     }
 
@@ -696,6 +699,39 @@ public void ValidateAndSetExcludedSchemaTypesFromString(string inputValue)
 }
 
 /// <summary>
+/// Checks whether ContainerPropertyAttribute type exists in the referenced Microsoft.OData.Client assembly.
+/// </summary>
+/// <returns>true if ContainerPropertyAttribute is found in the referenced Microsoft.OData.Client assembly.</returns>
+internal virtual bool CheckContainerPropertyAttribute()
+{
+    try
+    {
+        Assembly executingAssembly = Assembly.GetCallingAssembly();
+        AssemblyName odataClientAssemblyName = Enumerable.FirstOrDefault(executingAssembly.GetReferencedAssemblies(), d => d.Name.Equals("Microsoft.OData.Client", StringComparison.Ordinal));
+
+        if (odataClientAssemblyName != null)
+        {
+            Assembly odataClientAssembly = Assembly.Load("Microsoft.OData.Client");
+            if (odataClientAssembly.GetType("Microsoft.OData.Client.ContainerPropertyAttribute", false /* throwOnError */) != null)
+            {
+                return true;
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        if (ex is FileNotFoundException || ex is FileLoadException || ex is IOException /* Windows Store Apps & PCL */)
+        {
+            // Legitimate reasons to conclude we didn't find the attribute?
+            return false;
+        }
+        throw;
+    }
+
+    return false;
+}
+
+/// <summary>
 /// Reads the parameter values from the Configuration class and applies them.
 /// </summary>
 private void ApplyParametersFromConfigurationClass()
@@ -1235,6 +1271,15 @@ public class CodeGenerationContext
         {
             return this.elementTypeToNavigationSourceMap ?? (this.elementTypeToNavigationSourceMap = new Dictionary<IEdmEntityType, List<IEdmNavigationSource>>(EqualityComparer<IEdmEntityType>.Default));
         }
+    }
+
+    /// <summary>
+    /// true to generate container property for dynamic properties, false otherwise.
+    /// </summary>
+    public bool GenerateContainerProperty
+    {
+        get;
+        set;
     }
 
     /// <summary>
@@ -2833,7 +2878,7 @@ public abstract class ODataClientTemplate : TemplateBase
 
             dynamicPropertiesPropertyName = dynamicPropertiesPropertyTemp;
             string containerPropertyAttribute = string.Empty;
-            if (Utils.CheckContainerPropertyAttribute())
+            if (this.context.GenerateContainerProperty)
             {
                 containerPropertyAttribute = this.ContainerPropertyAttribute;
             }
@@ -3737,39 +3782,6 @@ internal static class Utils
         }
 
         return type;
-    }
-
-    /// <summary>
-    /// Checks whether ContainerPropertyAttribute type exists in the referenced Microsoft.OData.Client assembly.
-    /// </summary>
-    /// <returns>true if ContainerPropertyAttribute is found in the referenced Microsoft.OData.Client assembly.</returns>
-    internal static bool CheckContainerPropertyAttribute()
-    {
-        try
-        {
-            global::System.Reflection.Assembly executingAssembly = global::System.Reflection.Assembly.GetExecutingAssembly();
-            global::System.Reflection.AssemblyName odataClientAssemblyName = global::System.Linq.Enumerable.FirstOrDefault(executingAssembly.GetReferencedAssemblies(), d => d.Name.Equals("Microsoft.OData.Client", global::System.StringComparison.Ordinal));
-
-            if (odataClientAssemblyName != null)
-            {
-                global::System.Reflection.Assembly odataClientAssembly = global::System.Reflection.Assembly.Load("Microsoft.OData.Client");
-                if (odataClientAssembly.GetType("Microsoft.OData.Client.ContainerPropertyAttribute", false /* throwOnError */) != null)
-                {
-                    return true;
-                }
-            }
-        }
-        catch (global::System.Exception ex)
-        {
-            if (ex is global::System.IO.FileNotFoundException || ex is global::System.IO.FileLoadException || ex is global::System.IO.IOException /* Windows Store Apps & PCL */)
-            {
-                // Legitimate reasons to conclude we didn't find the attribute?
-                return false;
-            }
-            throw;
-        }
-
-        return false;
     }
 }
 

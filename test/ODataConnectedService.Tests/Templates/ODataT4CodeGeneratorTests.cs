@@ -659,14 +659,18 @@ namespace ODataConnectedService.Tests
             results.Errors.Should().BeEmpty();
         }
 
+        class ODataT4CodeGeneratorForContainerPropertyTest : ODataT4CodeGenerator
+        {
+            internal override bool CheckContainerPropertyAttribute()
+            {
+                return true;
+            }
+        }
+
         [TestMethod]
         public void GenerateDynamicPropertyContainer()
         {
-            using (Microsoft.QualityTools.Testing.Fakes.ShimsContext.Create())
-            {
-                Microsoft.OData.ConnectedService.Templates.Fakes.ShimODataT4CodeGenerator.ShimUtils.CheckContainerPropertyAttribute = () => { return true; };
-
-                var edmx = @"<?xml version=""1.0"" standalone=""yes"" ?>
+            var edmx = @"<?xml version=""1.0"" standalone=""yes"" ?>
 <edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
   <edmx:DataServices>
     <Schema Namespace=""NS"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
@@ -681,7 +685,7 @@ namespace ODataConnectedService.Tests
   </edmx:DataServices>
 </edmx:Edmx>
 ";
-                var languageOptionTargets = new Dictionary<ODataT4CodeGenerator.LanguageOption, Tuple<string, string>>
+            var languageOptionTargets = new Dictionary<ODataT4CodeGenerator.LanguageOption, Tuple<string, string>>
                 {
                     {
                         ODataT4CodeGenerator.LanguageOption.CSharp,
@@ -693,32 +697,31 @@ namespace ODataConnectedService.Tests
                     }
                 };
 
-                foreach (var languageOption in new[] { ODataT4CodeGenerator.LanguageOption.CSharp, ODataT4CodeGenerator.LanguageOption.VB })
+            foreach (var languageOption in new[] { ODataT4CodeGenerator.LanguageOption.CSharp, ODataT4CodeGenerator.LanguageOption.VB })
+            {
+                var expectedCodeFileName = languageOptionTargets[languageOption].Item1;
+                var containerPropertyAttributeSnippet = languageOptionTargets[languageOption].Item2;
+
+                var t4CodeGenerator = new ODataT4CodeGeneratorForContainerPropertyTest
                 {
-                    var expectedCodeFileName = languageOptionTargets[languageOption].Item1;
-                    var containerPropertyAttributeSnippet = languageOptionTargets[languageOption].Item2;
+                    Edmx = edmx,
+                    GetReferencedModelReaderFunc = null,
+                    NamespacePrefix = null,
+                    TargetLanguage = languageOption,
+                    EnableNamingAlias = false,
+                    IgnoreUnexpectedElementsAndAttributes = false,
+                    GenerateMultipleFiles = false,
+                    ExcludedSchemaTypes = null
+                };
 
-                    var t4CodeGenerator = new ODataT4CodeGenerator
-                    {
-                        Edmx = edmx,
-                        GetReferencedModelReaderFunc = null,
-                        NamespacePrefix = null,
-                        TargetLanguage = languageOption,
-                        EnableNamingAlias = false,
-                        IgnoreUnexpectedElementsAndAttributes = false,
-                        GenerateMultipleFiles = false,
-                        ExcludedSchemaTypes = null
-                    };
+                var generatedCode = t4CodeGenerator.TransformText();
+                var expectedCode = ODataT4CodeGeneratorTestDescriptors.GetFileContent(expectedCodeFileName);
 
-                    var generatedCode = t4CodeGenerator.TransformText();
-                    var expectedCode = ODataT4CodeGeneratorTestDescriptors.GetFileContent(expectedCodeFileName);
+                var normalizedGeneratedCode = GeneratedCodeHelpers.NormalizeGeneratedCode(generatedCode);
+                var normalizedExpectedCode = GeneratedCodeHelpers.NormalizeGeneratedCode(expectedCode);
 
-                    var normalizedGeneratedCode = GeneratedCodeHelpers.NormalizeGeneratedCode(generatedCode);
-                    var normalizedExpectedCode = GeneratedCodeHelpers.NormalizeGeneratedCode(expectedCode);
-
-                    Assert.AreEqual(normalizedGeneratedCode, normalizedExpectedCode);
-                    Assert.IsTrue(normalizedGeneratedCode.IndexOf(containerPropertyAttributeSnippet, StringComparison.Ordinal) > 0);
-                }
+                Assert.AreEqual(normalizedGeneratedCode, normalizedExpectedCode);
+                Assert.IsTrue(normalizedGeneratedCode.IndexOf(containerPropertyAttributeSnippet, StringComparison.Ordinal) > 0);
             }
         }
     }
