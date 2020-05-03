@@ -406,7 +406,7 @@ namespace ODataConnectedService.Tests
                 get { return "DictionaryItemConstructor"; }
             }
 
-            internal override string DynamicPropertiesPropertyBase
+            internal override string ContainerPropertyBase
             {
                 get { return "DynamicProperties"; }
             }

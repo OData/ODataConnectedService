@@ -706,7 +706,7 @@ internal virtual bool CheckContainerPropertyAttribute()
 {
     try
     {
-        Assembly executingAssembly = Assembly.GetCallingAssembly();
+        Assembly executingAssembly = Assembly.GetExecutingAssembly();
         AssemblyName odataClientAssemblyName = Enumerable.FirstOrDefault(executingAssembly.GetReferencedAssemblies(), d => d.Name.Equals("Microsoft.OData.Client", StringComparison.Ordinal));
 
         if (odataClientAssemblyName != null)
@@ -1600,7 +1600,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract string ODataVersion { get; }
     internal abstract string ParameterDeclarationTemplate { get; }
     internal abstract string DictionaryItemConstructor { get; }
-    internal abstract string DynamicPropertiesPropertyBase { get; }
+    internal abstract string ContainerPropertyBase { get; }
     internal abstract string ContainerPropertyAttribute { get; }
     #endregion Get Language specific keyword names.
 
@@ -2863,20 +2863,8 @@ public abstract class ODataClientTemplate : TemplateBase
         // NOTE: If structured type has a base type and that base type is open, then the dynamic properties property is emitted on the client base type
         if (structuredType.IsOpen && (structuredType.BaseType == null || (structuredType.BaseType != null && !structuredType.BaseType.IsOpen)))
         {
-            // In the odd case that there exists a declared property with a name similar to the preferred name for dynamic properties property
-            string dynamicPropertiesPropertyName = DynamicPropertiesPropertyBase;
-            string dynamicPropertiesPropertyTemp = dynamicPropertiesPropertyName;
-            int suffix = 2;
+            string containerPropertyName = GetContainerPropertyName(structuredType);
 
-            System.Reflection.BindingFlags bindingFlags = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance;
-            // Using GetProperties() with Public and Instance flags will return all accessible properties (including those inherited from base types)
-            while (structuredType.GetType().GetProperties(bindingFlags).Any(p => p.Name.Equals(dynamicPropertiesPropertyTemp, StringComparison.Ordinal)))
-            {
-                dynamicPropertiesPropertyTemp = dynamicPropertiesPropertyName + suffix.ToString();
-                suffix++;
-            }
-
-            dynamicPropertiesPropertyName = dynamicPropertiesPropertyTemp;
             string containerPropertyAttribute = string.Empty;
             if (this.context.GenerateContainerProperty)
             {
@@ -2886,10 +2874,10 @@ public abstract class ODataClientTemplate : TemplateBase
             propertyInfos.Add(new
             {
                 PropertyType = string.Format(this.DictionaryInterfaceName, this.StringTypeName, this.ObjectTypeName),
-                PropertyVanillaName = dynamicPropertiesPropertyName,
-                PropertyName = dynamicPropertiesPropertyName,
-                FixedPropertyName = dynamicPropertiesPropertyName,
-                PrivatePropertyName = "_" + dynamicPropertiesPropertyName,
+                PropertyVanillaName = containerPropertyName,
+                PropertyName = containerPropertyName,
+                FixedPropertyName = containerPropertyName,
+                PrivatePropertyName = "_" + containerPropertyName,
                 PropertyInitializationValue = string.Format(this.DictionaryConstructor, this.StringTypeName, this.ObjectTypeName),
                 PropertyAttribute = containerPropertyAttribute
             });
@@ -2963,6 +2951,27 @@ public abstract class ODataClientTemplate : TemplateBase
         }
 
         return elementTypeName;
+    }
+
+    /// <summary>
+    /// Returns a non-conflicting name for the container property. 
+    /// The preferred name for the container property will be suffixed with an integer 
+    /// in the odd case that there exists a declared property with a similar name
+    /// </summary>
+    private string GetContainerPropertyName(IEdmStructuredType structuredType)
+    {
+        string containerPropertyTemp = ContainerPropertyBase;
+        int suffix = 2;
+
+        BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance;
+        // Using GetProperties() with Public and Instance flags will return all accessible properties (including those inherited from base types)
+        while (structuredType.GetType().GetProperties(bindingFlags).Any(p => p.Name.Equals(containerPropertyTemp, StringComparison.Ordinal)))
+        {
+            containerPropertyTemp = ContainerPropertyBase + suffix.ToString();
+            suffix++;
+        }
+
+        return containerPropertyTemp;
     }
 }
 
@@ -3870,7 +3879,7 @@ public sealed class ODataClientCSharpTemplate : ODataClientTemplate
     internal override string ODataVersion { get { return "global::Microsoft.OData.ODataVersion.V4"; } }
     internal override string ParameterDeclarationTemplate { get { return "{0} {1}"; } }
     internal override string DictionaryItemConstructor { get { return "{{ {0}, {1} }}"; } }
-    internal override string DynamicPropertiesPropertyBase { get { return "DynamicProperties"; } }
+    internal override string ContainerPropertyBase { get { return "DynamicProperties"; } }
     internal override string ContainerPropertyAttribute { get { return "[global::Microsoft.OData.Client.ContainerProperty]"; } }
     internal override HashSet<string> LanguageKeywords { get {
         if (CSharpKeywords == null)
@@ -5942,7 +5951,7 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
     internal override string ODataVersion { get { return "Global.Microsoft.OData.ODataVersion.V4"; } }
     internal override string ParameterDeclarationTemplate { get { return "{1} As {0}"; } }
     internal override string DictionaryItemConstructor { get { return "{{ {0}, {1} }}"; } }
-    internal override string DynamicPropertiesPropertyBase { get { return "DynamicProperties"; } }
+    internal override string ContainerPropertyBase { get { return "DynamicProperties"; } }
     internal override string ContainerPropertyAttribute { get { return "<Global.Microsoft.OData.Client.ContainerProperty>"; } }
     internal override HashSet<string> LanguageKeywords { get {
         if (VBKeywords == null)
