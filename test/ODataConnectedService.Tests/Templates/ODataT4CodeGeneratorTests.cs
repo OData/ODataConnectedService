@@ -724,5 +724,132 @@ namespace ODataConnectedService.Tests
                 Assert.IsTrue(normalizedGeneratedCode.IndexOf(containerPropertyAttributeSnippet, StringComparison.Ordinal) > 0);
             }
         }
+
+        [TestMethod]
+        public void GenerateDynamicPropertyContainerWithNonConflictingName()
+        {
+            // Edmx with declared property named DynamicProperties
+            var edmx = @"<?xml version=""1.0"" standalone=""yes"" ?>
+<edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
+  <edmx:DataServices>
+    <Schema Namespace=""NS"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
+      <EntityType Name=""Vehicle"">
+        <Key>
+            <PropertyRef Name=""Id"" />
+        </Key>
+        <Property Name=""Id"" Type=""Edm.Int32"" Nullable=""false"" />
+        <Property Name=""DynamicProperties"" Type=""Edm.String"" />
+      </EntityType>
+      <EntityType Name=""Car"" BaseType=""NS.Vehicle"" OpenType=""true"">
+        <Property Name=""Model"" Type=""Edm.String"" />
+        <Property Name=""DynamicProperties2"" Type=""Edm.String"" />
+      </EntityType>
+    </Schema>
+    <Schema xmlns=""http://docs.oasis-open.org/odata/ns/edm"" Namespace=""NS"">
+      <EntityContainer Name=""Container""/>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
+";
+            var languageOptionTargets = new Dictionary<ODataT4CodeGenerator.LanguageOption, string>
+                {
+                    {
+                        ODataT4CodeGenerator.LanguageOption.CSharp,
+                        "[global::Microsoft.OData.Client.ContainerProperty]publicvirtualglobal::System.Collections.Generic.IDictionary<string,object>DynamicProperties3"
+                    },
+                    {
+                        ODataT4CodeGenerator.LanguageOption.VB,
+                        "<Global.Microsoft.OData.Client.ContainerProperty>_PublicOverridablePropertyDynamicProperties3()AsGlobal.System.Collections.Generic.IDictionary(OfString,Object)"
+                    }
+                };
+
+            foreach (var languageOption in new[] { ODataT4CodeGenerator.LanguageOption.CSharp, ODataT4CodeGenerator.LanguageOption.VB })
+            {
+                var containerPropertyAttributeSnippet = languageOptionTargets[languageOption];
+
+                var t4CodeGenerator = new ODataT4CodeGeneratorForContainerPropertyTest
+                {
+                    Edmx = edmx,
+                    GetReferencedModelReaderFunc = null,
+                    NamespacePrefix = null,
+                    TargetLanguage = languageOption,
+                    EnableNamingAlias = false,
+                    IgnoreUnexpectedElementsAndAttributes = false,
+                    GenerateMultipleFiles = false,
+                    ExcludedSchemaTypes = null
+                };
+
+                var generatedCode = t4CodeGenerator.TransformText();
+                var normalizedGeneratedCode = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(generatedCode);
+
+                Assert.IsTrue(normalizedGeneratedCode.IndexOf(containerPropertyAttributeSnippet, StringComparison.Ordinal) > 0);
+            }
+        }
+
+        [TestMethod]
+        public void GenerateDynamicPropertyContainerWithInheritance()
+        {
+            // Edmx with declared property named DynamicProperties
+            var edmx = @"<?xml version=""1.0"" standalone=""yes"" ?>
+<edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
+  <edmx:DataServices>
+    <Schema Namespace=""NS"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
+      <EntityType Name=""Vehicle"" OpenType=""true"">
+        <Key>
+            <PropertyRef Name=""Id"" />
+        </Key>
+        <Property Name=""Id"" Type=""Edm.Int32"" Nullable=""false"" />
+      </EntityType>
+      <EntityType Name=""Car"" BaseType=""NS.Vehicle"" OpenType=""true"">
+        <Property Name=""Model"" Type=""Edm.String"" />
+      </EntityType>
+    </Schema>
+    <Schema xmlns=""http://docs.oasis-open.org/odata/ns/edm"" Namespace=""NS"">
+      <EntityContainer Name=""Container""/>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
+";
+            var languageOptionTargets = new Dictionary<ODataT4CodeGenerator.LanguageOption, string>
+                {
+                    {
+                        ODataT4CodeGenerator.LanguageOption.CSharp,
+                        "[global::Microsoft.OData.Client.ContainerProperty]publicvirtualglobal::System.Collections.Generic.IDictionary<string,object>DynamicProperties"
+                    },
+                    {
+                        ODataT4CodeGenerator.LanguageOption.VB,
+                        "<Global.Microsoft.OData.Client.ContainerProperty>_PublicOverridablePropertyDynamicProperties()AsGlobal.System.Collections.Generic.IDictionary(OfString,Object)"
+                    }
+                };
+
+            foreach (var languageOption in new[] { ODataT4CodeGenerator.LanguageOption.CSharp, ODataT4CodeGenerator.LanguageOption.VB })
+            {
+                var containerPropertyAttributeSnippet = languageOptionTargets[languageOption];
+
+                var t4CodeGenerator = new ODataT4CodeGeneratorForContainerPropertyTest
+                {
+                    Edmx = edmx,
+                    GetReferencedModelReaderFunc = null,
+                    NamespacePrefix = null,
+                    TargetLanguage = languageOption,
+                    EnableNamingAlias = false,
+                    IgnoreUnexpectedElementsAndAttributes = false,
+                    GenerateMultipleFiles = false,
+                    ExcludedSchemaTypes = null
+                };
+
+                var generatedCode = t4CodeGenerator.TransformText();
+                var normalizedGeneratedCode = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(generatedCode);
+
+                Assert.IsTrue(normalizedGeneratedCode.IndexOf(containerPropertyAttributeSnippet, StringComparison.Ordinal) > 0);
+                // Only 1 dynamic property container
+                Assert.AreEqual(
+                    normalizedGeneratedCode.IndexOf(containerPropertyAttributeSnippet, StringComparison.Ordinal),
+                    normalizedGeneratedCode.LastIndexOf(containerPropertyAttributeSnippet, StringComparison.Ordinal));
+                // Foolproofing
+                var otherContainerPropertyAttributeSnippet = containerPropertyAttributeSnippet.Replace("DynamicProperties", "DynamicProperties2");
+                Assert.IsTrue(normalizedGeneratedCode.IndexOf(otherContainerPropertyAttributeSnippet, StringComparison.Ordinal) == -1);
+            }
+        }
     }
 }

@@ -2960,16 +2960,30 @@ public abstract class ODataClientTemplate : TemplateBase
     /// </summary>
     private string GetContainerPropertyName(IEdmStructuredType structuredType)
     {
-        string containerPropertyTemp = ContainerPropertyBase;
         int suffix = 2;
-
-        BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance;
-        // Using GetProperties() with Public and Instance flags will return all accessible properties (including those inherited from base types)
-        while (structuredType.GetType().GetProperties(bindingFlags).Any(p => p.Name.Equals(containerPropertyTemp, StringComparison.Ordinal)))
+        bool conflict = true;
+        string containerPropertyTemp = ContainerPropertyBase;
+        
+        do
         {
-            containerPropertyTemp = ContainerPropertyBase + suffix.ToString();
-            suffix++;
-        }
+            IEdmStructuredType tempType = structuredType;
+
+            while(tempType != null)
+            {
+                conflict = tempType.DeclaredProperties.Any(p => p.Name.Equals(containerPropertyTemp, StringComparison.Ordinal));
+                if (conflict)
+                {
+                    break;
+                }
+                tempType = tempType.BaseType;
+            }
+
+            if (conflict)
+            {
+                containerPropertyTemp = ContainerPropertyBase + suffix.ToString();
+                suffix++;
+            }
+        } while(conflict);
 
         return containerPropertyTemp;
     }
