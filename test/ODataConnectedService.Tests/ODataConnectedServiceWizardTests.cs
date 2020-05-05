@@ -512,6 +512,99 @@ namespace ODataConnectedService.Tests
         }
 
         [Fact]
+        public void ShouldPreserveState_WhenMovingBetweenPagesAndBack_WhenUpdating()
+        {
+            var savedConfig = GetTestConfig();
+            savedConfig.Endpoint = MetadataPath;
+            var context = new TestConnectedServiceProviderContext(true, savedConfig);
+            var wizard = new ODataConnectedServiceWizard(context);
+
+            var endpointPage = wizard.ConfigODataEndpointViewModel;
+            endpointPage.OnPageEnteringAsync(null).Wait();
+            endpointPage.OnPageLeavingAsync(null).Wait();
+
+            var typesPage = wizard.SchemaTypesViewModel;
+            typesPage.OnPageEnteringAsync(null).Wait();
+            var typeGender = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "PersonGender");
+            Assert.False(typeGender.IsSelected);
+            typeGender.IsSelected = true;
+            var typePerson = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Person");
+            Assert.False(typePerson.IsSelected);
+            typesPage.OnPageLeavingAsync(null).Wait();
+
+            var operationsPage = wizard.OperationImportsViewModel;
+            operationsPage.OnPageEnteringAsync(null).Wait();
+            var operationNearestAirport = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport");
+            Assert.True(operationNearestAirport.IsSelected);
+            operationNearestAirport.IsSelected = false;
+            operationsPage.OnPageLeavingAsync(null).Wait();
+
+            var advancedPage = wizard.AdvancedSettingsViewModel;
+            advancedPage.OnPageEnteringAsync(null).Wait();
+            advancedPage.UseDataServiceCollection = true;
+            advancedPage.MakeTypesInternal = true;
+            advancedPage.UseNamespacePrefix = true;
+            advancedPage.OnPageLeavingAsync(null).Wait();
+
+            endpointPage.OnPageEnteringAsync(null).Wait();
+            Assert.Equal(savedConfig.ServiceName, endpointPage.ServiceName);
+            Assert.Equal(savedConfig.Endpoint, endpointPage.Endpoint);
+            endpointPage.IncludeCustomHeaders = true;
+            endpointPage.CustomHttpHeaders = "A:b";
+            endpointPage.OnPageLeavingAsync(null).Wait();
+
+            advancedPage.OnPageEnteringAsync(null).Wait();
+            Assert.True(advancedPage.UseNamespacePrefix);
+            Assert.True(advancedPage.UseDataServiceCollection);
+            Assert.True(advancedPage.MakeTypesInternal);
+            advancedPage.NamespacePrefix = "MyNamespace";
+            advancedPage.GenerateMultipleFiles = true;
+            advancedPage.UseDataServiceCollection = false;
+            advancedPage.OnPageLeavingAsync(null).Wait();
+
+            operationsPage.OnPageEnteringAsync(null).Wait();
+            operationNearestAirport = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport");
+            Assert.False(operationNearestAirport.IsSelected);
+            var operationResetDataSource = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "ResetDataSource");
+            Assert.False(operationResetDataSource.IsSelected);
+            operationResetDataSource.IsSelected = true;
+            operationsPage.OnPageLeavingAsync(null).Wait();
+
+            typesPage.OnPageEnteringAsync(null).Wait();
+            typeGender = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "PersonGender");
+            Assert.True(typeGender.IsSelected);
+            var typeFlight = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Flight");
+            typeFlight.IsSelected = false;
+            typePerson = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Person");
+            Assert.False(typePerson.IsSelected);
+            typesPage.OnPageLeavingAsync(null).Wait();
+
+            var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+            var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
+
+            Assert.Equal(savedConfig.ServiceName, config.ServiceName);
+            Assert.Equal(savedConfig.Endpoint, config.Endpoint);
+            Assert.True(config.IncludeCustomHeaders);
+            Assert.Equal("A:b", config.CustomHttpHeaders);
+            Assert.True(config.GenerateMultipleFiles);
+            Assert.True(config.MakeTypesInternal);
+            Assert.True(config.UseNamespacePrefix);
+            Assert.Equal("MyNamespace", config.NamespacePrefix);
+            Assert.False(config.UseDataServiceCollection);
+            config.ExcludedOperationImports.ShouldAllBeEquivalentTo(new List<string>()
+            {
+                "GetNearestAirport",
+                "GetPersonWithMostFriends"
+            });
+            config.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>()
+            {
+                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee",
+                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Flight",
+                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person",
+            });
+        }
+
+        [Fact]
         public void ShouldReloadOperationsAndTypesForNewEndpoint_WhenEndpointIsChangedBeforeFinishing()
         {
             var context = new TestConnectedServiceProviderContext();
