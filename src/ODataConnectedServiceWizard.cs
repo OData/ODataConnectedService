@@ -51,7 +51,7 @@ namespace Microsoft.OData.ConnectedService
 
             ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(this.UserSettings, this);
             AdvancedSettingsViewModel = new AdvancedSettingsViewModel(this.UserSettings);
-            SchemaTypesViewModel = new SchemaTypesViewModel(this.UserSettings);
+            SchemaTypesViewModel = new SchemaTypesViewModel(this.UserSettings, this);
             OperationImportsViewModel = new OperationImportsViewModel(this.UserSettings);
 
             OperationImportsViewModel.PageEntering += OperationImportsViewModel_PageEntering;
