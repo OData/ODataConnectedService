@@ -34,8 +34,6 @@ namespace Microsoft.OData.ConnectedService.Common
                             stream = file.OpenFile(fileName, FileMode.Create);
                             using (var writer = XmlWriter.Create(stream))
                             {
-                                stream = null;
-
                                 var dcs = new DataContractSerializer(userSettings.GetType());
                                 dcs.WriteObject(writer, userSettings);
 
@@ -85,7 +83,6 @@ namespace Microsoft.OData.ConnectedService.Common
 
                                 using (var reader = XmlReader.Create(stream, settings))
                                 {
-                                    stream = null;
 
                                     var dcs = new DataContractSerializer(typeof(T));
                                     result = dcs.ReadObject(reader) as T;
@@ -133,7 +130,7 @@ namespace Microsoft.OData.ConnectedService.Common
             }
             catch (Exception ex)
             {
-                logger.WriteMessageAsync(LoggerMessageCategory.Warning, failureMessage, failureMessageArg, ex);
+                logger?.WriteMessageAsync(LoggerMessageCategory.Warning, failureMessage, failureMessageArg, ex);
             }
         }
     }

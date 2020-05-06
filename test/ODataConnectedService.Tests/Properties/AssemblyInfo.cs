@@ -1,6 +1,8 @@
+using ODataConnectedService.Tests;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Xunit;
 
 [assembly: AssemblyTitle("ODataConnectedService.Tests")]
 [assembly: AssemblyDescription("")]
@@ -18,3 +20,6 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+// disable pararellization to ensure tests don't touch UI code from background threads
+[assembly: CollectionBehavior(DisableTestParallelization = true)]

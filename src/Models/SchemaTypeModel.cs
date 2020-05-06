@@ -6,6 +6,16 @@ namespace Microsoft.OData.ConnectedService.Models
     {
         private bool _isSelected;
 
+        public SchemaTypeModel(): this(null, null)
+        {
+        }
+
+        public SchemaTypeModel(string name, string shortName)
+        {
+            Name = name;
+            ShortName = shortName;
+        }
+
         public string Name { get; set; }
 
         public string ShortName { get; set; }
