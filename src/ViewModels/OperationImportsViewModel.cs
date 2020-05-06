@@ -106,7 +106,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                         {
                             if (schemaTypeModels.TryGetValue(parameter.Type.FullName(), out SchemaTypeModel model) && !model.IsSelected)
                             {
-                                model.IsSelected = true;
+                                model.IsSelected = (s as OperationImportModel).IsSelected;
                             }
                         }
 
@@ -114,7 +114,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
                         if(returnTypeName != null && schemaTypeModels.TryGetValue(returnTypeName, out SchemaTypeModel schemaTypeModel) && !schemaTypeModel.IsSelected)
                         {
-                            schemaTypeModel.IsSelected = true;
+                            schemaTypeModel.IsSelected = (s as OperationImportModel).IsSelected;
                         }
                     };
                     toLoad.Add(operationImportModel);
