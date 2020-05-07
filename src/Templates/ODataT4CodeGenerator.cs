@@ -706,7 +706,7 @@ internal virtual bool CheckContainerPropertyAttribute()
 {
     try
     {
-        Assembly executingAssembly = Assembly.GetExecutingAssembly();
+        Assembly executingAssembly = Assembly.GetCallingAssembly();
         AssemblyName odataClientAssemblyName = Enumerable.FirstOrDefault(executingAssembly.GetReferencedAssemblies(), d => d.Name.Equals("Microsoft.OData.Client", StringComparison.Ordinal));
 
         if (odataClientAssemblyName != null)
