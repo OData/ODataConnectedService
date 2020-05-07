@@ -91,7 +91,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         {
             if (string.IsNullOrEmpty(this.Endpoint))
             {
-                throw new ArgumentNullException("OData Service Endpoint", "Please input the service endpoint");
+                throw new ArgumentNullException("OData Service Endpoint", Constants.InputServiceEndpointMsg);
             }
 
             if (this.Endpoint.StartsWith("https:", StringComparison.Ordinal)
