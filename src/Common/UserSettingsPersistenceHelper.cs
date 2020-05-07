@@ -83,7 +83,6 @@ namespace Microsoft.OData.ConnectedService.Common
 
                                 using (var reader = XmlReader.Create(stream, settings))
                                 {
-
                                     var dcs = new DataContractSerializer(typeof(T));
                                     result = dcs.ReadObject(reader) as T;
                                 }
