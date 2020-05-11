@@ -40,7 +40,7 @@ namespace Microsoft.OData.ConnectedService.Common
 
         public const string SchemaTypesWillAutomaticallyBeIncluded = "type(s) will automatically be included to ensure the generated code compiles successfully.";
         public const string InputServiceEndpointMsg = "Please input the service endpoint";
-        public const string CsdlFileName = "Csdl.xml";
+        public const string CsdlFileNameSuffix = "Csdl.xml";
 
         public static string[] V3NuGetPackages = {
             V3ClientNuGetPackage,

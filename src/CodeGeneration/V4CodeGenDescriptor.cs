@@ -84,7 +84,10 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
 
             tempFile = Path.GetTempFileName();
 
-            var metadataFile = Path.Combine(referenceFolder, Common.Constants.CsdlFileName);
+            // Csdl file name is this format [ServiceName]Csdl.xml
+            var csdlFileName = string.Concat(ServiceConfiguration.ServiceName, Common.Constants.CsdlFileNameSuffix);
+            var metadataFile = Path.Combine(referenceFolder, csdlFileName);
+
             await this.Context.HandlerHelper.AddFileAsync(tempFile, metadataFile, new AddFileOptions() { SuppressOverwritePrompt = true });
 
             // Hack!
@@ -93,7 +96,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
             if (dte != null)
             {
-                var projectItem = this.GetCsdlFileProjectItem(Common.Constants.CsdlFileName);
+                var projectItem = this.GetCsdlFileProjectItem(csdlFileName);
                 projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionEmbeddedResource;
             }
 
@@ -122,7 +125,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 var customHeaders = ServiceConfiguration.CustomHttpHeaders ?? "";
                 text = Regex.Replace(text, "(public const string CustomHttpHeaders = )\"\";", "$1@\"" + customHeaders + "\";");
                 text = Regex.Replace(text, "(public const string MetadataFilePath = )\"\";", "$1@\"" + metadataFile + "\";");
-                text = Regex.Replace(text, "(public const string MetadataFileRelativePath = )\"\";", "$1@\"" + Common.Constants.CsdlFileName + "\";");
+                text = Regex.Replace(text, "(public const string MetadataFileRelativePath = )\"\";", "$1@\"" + csdlFileName + "\";");
                 await writer.WriteAsync(text);
                 await writer.FlushAsync();
             }
@@ -172,7 +175,9 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             var tempFile = Path.GetTempFileName();
             var referenceFolder = GetReferenceFileFolder();
 
-            var metadataFile = Path.Combine(referenceFolder, Common.Constants.CsdlFileName);
+            // Csdl file name is this format [ServiceName]Csdl.xml
+            var csdlFileName = string.Concat(ServiceConfiguration.ServiceName, Common.Constants.CsdlFileNameSuffix);
+            var metadataFile = Path.Combine(referenceFolder, csdlFileName);
             await this.Context.HandlerHelper.AddFileAsync(tempFile, metadataFile, new AddFileOptions() { SuppressOverwritePrompt = true });
 
             // Hack!
@@ -181,12 +186,12 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
             if(dte != null)
             {
-                var projectItem = this.GetCsdlFileProjectItem(Common.Constants.CsdlFileName);
+                var projectItem = this.GetCsdlFileProjectItem(csdlFileName);
                 projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionEmbeddedResource;
             }
 
             t4CodeGenerator.MetadataFilePath = metadataFile;
-            t4CodeGenerator.MetadataFileRelativePath = Common.Constants.CsdlFileName;
+            t4CodeGenerator.MetadataFileRelativePath = csdlFileName;
 
             using (StreamWriter writer = File.CreateText(tempFile))
             {
