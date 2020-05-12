@@ -1,8 +1,9 @@
-﻿//---------------------------------------------------------------------
-// <copyright file="ODataClientTemplateUnitTests.cs" company="Microsoft">
-//      Copyright (C) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
+﻿//----------------------------------------------------------------------------
+// <copyright file="ODataClientTemplateUnitTest.cs" company=".NET Foundation">
+//      Copyright (c) .NET Foundation and Contributors.  All rights reserved. 
+//      See License.txt in the project root for license information.
 // </copyright>
-//---------------------------------------------------------------------
+//----------------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;

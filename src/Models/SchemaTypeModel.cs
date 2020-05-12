@@ -1,4 +1,11 @@
-﻿using System.ComponentModel;
+﻿//-----------------------------------------------------------------------------
+// <copyright file="SchemaTypeModel.cs" company=".NET Foundation">
+//      Copyright (c) .NET Foundation and Contributors.  All rights reserved. 
+//      See License.txt in the project root for license information.
+// </copyright>
+//----------------------------------------------------------------------------
+
+using System.ComponentModel;
 
 namespace Microsoft.OData.ConnectedService.Models
 {

@@ -1,9 +1,14 @@
-﻿using System;
+﻿//---------------------------------------------------------------------------------
+// <copyright file="SchemaTypesViewModel.cs" company=".NET Foundation">
+//      Copyright (c) .NET Foundation and Contributors.  All rights reserved. 
+//      See License.txt in the project root for license information.
+// </copyright>
+//---------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.Views;

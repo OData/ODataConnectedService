@@ -1,11 +1,15 @@
-﻿using Microsoft.OData.Edm;
+﻿//-----------------------------------------------------------------------------
+// <copyright file="EdmHelper.cs" company=".NET Foundation">
+//      Copyright (c) .NET Foundation and Contributors.  All rights reserved. 
+//      See License.txt in the project root for license information.
+// </copyright>
+//----------------------------------------------------------------------------
+
+using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
 using Microsoft.VisualStudio.ConnectedServices;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace Microsoft.OData.ConnectedService.Common
