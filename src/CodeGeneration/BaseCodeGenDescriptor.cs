@@ -17,8 +17,8 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
 {
     internal abstract class BaseCodeGenDescriptor
     {
-        public IVsPackageInstaller PackageInstaller { get; private set; }
-        public IVsPackageInstallerServices PackageInstallerServices { get; private set; }
+        public IVsPackageInstaller PackageInstaller { get; protected set; }
+        public IVsPackageInstallerServices PackageInstallerServices { get; protected set; }
         public ConnectedServiceHandlerContext Context { get; private set; }
         public ServiceConfiguration ServiceConfiguration { get; set; }
         public Project Project { get; private set; }
@@ -74,16 +74,16 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                     Version packageVersion = null;
                     PackageInstaller.InstallPackage(packageSource, this.Project, nugetPackage, packageVersion, false);
 
-                    await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, $"Nuget Package \"{nugetPackage}\" for OData client was added.");
+                    await this.Context.Logger?.WriteMessageAsync(LoggerMessageCategory.Information, $"Nuget Package \"{nugetPackage}\" for OData client was added.");
                 }
                 else
                 {
-                    await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, $"Nuget Package \"{nugetPackage}\" for OData client already installed.");
+                    await this.Context.Logger?.WriteMessageAsync(LoggerMessageCategory.Information, $"Nuget Package \"{nugetPackage}\" for OData client already installed.");
                 }
             }
             catch (Exception ex)
             {
-                await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Error, $"Nuget Package \"{nugetPackage}\" for OData client not installed. Error: {ex.Message}.");
+                await this.Context.Logger?.WriteMessageAsync(LoggerMessageCategory.Error, $"Nuget Package \"{nugetPackage}\" for OData client not installed. Error: {ex.Message}.");
             }
         }
     }

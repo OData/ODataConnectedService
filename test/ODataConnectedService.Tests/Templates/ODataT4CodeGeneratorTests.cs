@@ -28,6 +28,8 @@ namespace ODataConnectedService.Tests
     using Microsoft.OData.ConnectedService.Tests.Templates;
     using System.Collections.Generic;
     using System.Net;
+    using ODataConnectedService.Tests.TestHelpers;
+
     [TestClass]
     public class ODataT4CodeGeneratorTests
     {
@@ -166,17 +168,17 @@ namespace ODataConnectedService.Tests
         {
             string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SimpleMultipleFiles.Metadata, null, true, false, generateMultipleFiles : true);
 
-            string expectedTestType = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleTestType.cs"));
-            string actualTestType = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "TestType.cs")));
+            string expectedTestType = GeneratedCodeHelpers.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleTestType.cs"));
+            string actualTestType = GeneratedCodeHelpers.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "TestType.cs")));
 
-            string expectedPersonGender = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleFilesPersonGender.cs"));
-            string actualPersonGender = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "PersonGender.cs")));
+            string expectedPersonGender = GeneratedCodeHelpers.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleFilesPersonGender.cs"));
+            string actualPersonGender = GeneratedCodeHelpers.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "PersonGender.cs")));
 
-            string expectedCity = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleFilesCity.cs"));
-            string actualCity = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "City.cs")));
+            string expectedCity = GeneratedCodeHelpers.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleFilesCity.cs"));
+            string actualCity = GeneratedCodeHelpers.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "City.cs")));
 
-            string expectedExtensionMethods = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleFilesMain.cs"));
-            string actualExtenisonMethods = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "ExtensionMethods.cs")));
+            string expectedExtensionMethods = GeneratedCodeHelpers.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFilecontent("SimpleMultipleFilesMain.cs"));
+            string actualExtenisonMethods = GeneratedCodeHelpers.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "ExtensionMethods.cs")));
 
             Assert.AreEqual(expectedTestType, actualTestType);
             Assert.AreEqual(expectedPersonGender, actualPersonGender);
