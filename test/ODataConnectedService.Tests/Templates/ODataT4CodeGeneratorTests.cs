@@ -774,7 +774,7 @@ namespace ODataConnectedService.Tests
                 };
 
                 var generatedCode = t4CodeGenerator.TransformText();
-                var normalizedGeneratedCode = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(generatedCode);
+                var normalizedGeneratedCode = GeneratedCodeHelpers.NormalizeGeneratedCode(generatedCode);
 
                 Assert.IsTrue(normalizedGeneratedCode.IndexOf(containerPropertyAttributeSnippet, StringComparison.Ordinal) > 0);
             }
@@ -834,7 +834,7 @@ namespace ODataConnectedService.Tests
                 };
 
                 var generatedCode = t4CodeGenerator.TransformText();
-                var normalizedGeneratedCode = ODataT4CodeGeneratorTest.NormalizeGeneratedCode(generatedCode);
+                var normalizedGeneratedCode = GeneratedCodeHelpers.NormalizeGeneratedCode(generatedCode);
 
                 Assert.IsTrue(normalizedGeneratedCode.IndexOf(containerPropertyAttributeSnippet, StringComparison.Ordinal) > 0);
                 // Only 1 dynamic property container
