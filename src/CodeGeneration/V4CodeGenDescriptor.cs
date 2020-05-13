@@ -227,7 +227,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 if (reference.SourceProject == null)
                 {
                     // Assembly reference (For project reference, SourceProject != null)
-                    if (reference.Name.Equals("Microsoft.OData.Client") && reference.Version.CompareTo("7.6.4") >= 0)
+                    if (reference.Name.Equals("Microsoft.OData.Client") && reference.Version.CompareTo("7.6.4") > 0)
                     {
                         return true;
                     }
