@@ -54,7 +54,7 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedSchemaTypes = this.ExcludedSchemaTypes,
-            GenerateContainerProperty = this.CheckContainerPropertyAttribute()
+            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute
         };
     }
     else
@@ -93,7 +93,7 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedSchemaTypes = this.ExcludedSchemaTypes,
-            GenerateContainerProperty = this.CheckContainerPropertyAttribute()
+            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute
         };
     }
 
@@ -381,6 +381,15 @@ public string WebProxyNetworkCredentialsPassword
 }
 
 /// <summary>
+/// true to emit container property attribute on dynamic property container, false otherwise
+/// </summary>
+public bool EmitContainerPropertyAttribute
+{
+    get;
+    internal set;
+}
+
+/// <summary>
 /// Generate code targeting a specific .Net Framework language.
 /// </summary>
 public enum LanguageOption
@@ -550,39 +559,6 @@ public void ValidateAndSetExcludedOperationImportsFromString(string inputValue)
 public void ValidateAndSetExcludedSchemaTypesFromString(string inputValue)
 {
     this.ExcludedSchemaTypes = inputValue.Split(',').Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
-}
-
-/// <summary>
-/// Checks whether ContainerPropertyAttribute type exists in the referenced Microsoft.OData.Client assembly.
-/// </summary>
-/// <returns>true if ContainerPropertyAttribute is found in the referenced Microsoft.OData.Client assembly.</returns>
-internal virtual bool CheckContainerPropertyAttribute()
-{
-    try
-    {
-        Assembly executingAssembly = Assembly.GetCallingAssembly();
-        AssemblyName odataClientAssemblyName = Enumerable.FirstOrDefault(executingAssembly.GetReferencedAssemblies(), d => d.Name.Equals("Microsoft.OData.Client", StringComparison.Ordinal));
-
-        if (odataClientAssemblyName != null)
-        {
-            Assembly odataClientAssembly = Assembly.Load("Microsoft.OData.Client");
-            if (odataClientAssembly.GetType("Microsoft.OData.Client.ContainerPropertyAttribute", false /* throwOnError */) != null)
-            {
-                return true;
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        if (ex is FileNotFoundException || ex is FileLoadException || ex is IOException /* Windows Store Apps & PCL */)
-        {
-            // Legitimate reasons to conclude we didn't find the attribute?
-            return false;
-        }
-        throw;
-    }
-
-    return false;
 }
 
 /// <summary>
@@ -1128,9 +1104,9 @@ public class CodeGenerationContext
     }
 
     /// <summary>
-    /// true to generate container property for dynamic properties, false otherwise.
+    /// true to emit container property attribute on dynamic property container, false otherwise.
     /// </summary>
-    public bool GenerateContainerProperty
+    public bool EmitContainerPropertyAttribute
     {
         get;
         set;
@@ -2720,7 +2696,7 @@ public abstract class ODataClientTemplate : TemplateBase
             string containerPropertyName = GetContainerPropertyName(structuredType);
 
             string containerPropertyAttribute = string.Empty;
-            if (this.context.GenerateContainerProperty)
+            if (this.context.EmitContainerPropertyAttribute)
             {
                 containerPropertyAttribute = this.ContainerPropertyAttribute;
             }

@@ -659,14 +659,6 @@ namespace ODataConnectedService.Tests
             results.Errors.Should().BeEmpty();
         }
 
-        class ODataT4CodeGeneratorForContainerPropertyTest : ODataT4CodeGenerator
-        {
-            internal override bool CheckContainerPropertyAttribute()
-            {
-                return true;
-            }
-        }
-
         [TestMethod]
         public void GenerateDynamicPropertyContainer()
         {
@@ -702,7 +694,7 @@ namespace ODataConnectedService.Tests
                 var expectedCodeFileName = languageOptionTargets[languageOption].Item1;
                 var containerPropertyAttributeSnippet = languageOptionTargets[languageOption].Item2;
 
-                var t4CodeGenerator = new ODataT4CodeGeneratorForContainerPropertyTest
+                var t4CodeGenerator = new ODataT4CodeGenerator
                 {
                     Edmx = edmx,
                     GetReferencedModelReaderFunc = null,
@@ -711,9 +703,10 @@ namespace ODataConnectedService.Tests
                     EnableNamingAlias = false,
                     IgnoreUnexpectedElementsAndAttributes = false,
                     GenerateMultipleFiles = false,
-                    ExcludedSchemaTypes = null
+                    ExcludedSchemaTypes = null,
+                    EmitContainerPropertyAttribute = true
                 };
-
+                
                 var generatedCode = t4CodeGenerator.TransformText();
                 var expectedCode = ODataT4CodeGeneratorTestDescriptors.GetFileContent(expectedCodeFileName);
 
@@ -767,7 +760,7 @@ namespace ODataConnectedService.Tests
             {
                 var containerPropertyAttributeSnippet = languageOptionTargets[languageOption];
 
-                var t4CodeGenerator = new ODataT4CodeGeneratorForContainerPropertyTest
+                var t4CodeGenerator = new ODataT4CodeGenerator
                 {
                     Edmx = edmx,
                     GetReferencedModelReaderFunc = null,
@@ -776,7 +769,8 @@ namespace ODataConnectedService.Tests
                     EnableNamingAlias = false,
                     IgnoreUnexpectedElementsAndAttributes = false,
                     GenerateMultipleFiles = false,
-                    ExcludedSchemaTypes = null
+                    ExcludedSchemaTypes = null,
+                    EmitContainerPropertyAttribute = true
                 };
 
                 var generatedCode = t4CodeGenerator.TransformText();
@@ -826,7 +820,7 @@ namespace ODataConnectedService.Tests
             {
                 var containerPropertyAttributeSnippet = languageOptionTargets[languageOption];
 
-                var t4CodeGenerator = new ODataT4CodeGeneratorForContainerPropertyTest
+                var t4CodeGenerator = new ODataT4CodeGenerator
                 {
                     Edmx = edmx,
                     GetReferencedModelReaderFunc = null,
@@ -835,7 +829,8 @@ namespace ODataConnectedService.Tests
                     EnableNamingAlias = false,
                     IgnoreUnexpectedElementsAndAttributes = false,
                     GenerateMultipleFiles = false,
-                    ExcludedSchemaTypes = null
+                    ExcludedSchemaTypes = null,
+                    EmitContainerPropertyAttribute = true
                 };
 
                 var generatedCode = t4CodeGenerator.TransformText();
