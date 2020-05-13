@@ -49,16 +49,16 @@ namespace ODataConnectedService.Tests.ViewModels
             Assert.IsTrue(pageNavigationResult.ShowMessageBoxOnFailure);
 
             //Provide a url without $metadata
-            configOdataEndPointViewModel.Endpoint = "http://localhost/ODataService";
+            configOdataEndPointViewModel.Endpoint = "http://mysite/ODataService";
             pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
             //Check if $metadata is apended if the url does not have it added at the end
-            Assert.AreEqual(configOdataEndPointViewModel.Endpoint, "http://localhost/ODataService/$metadata");
+            Assert.AreEqual(configOdataEndPointViewModel.Endpoint, "http://mysite/ODataService/$metadata");
 
             //Check if an exception is thrown for an invalid url and the user is notified
             pageNavigationResult = pageNavigationResultTask?.Result;
             Assert.IsNotNull(pageNavigationResult.ErrorMessage);
-            Assert.IsTrue(pageNavigationResult.ErrorMessage.Contains("The remote server returned an error: (404) Not Found."));
+            Assert.IsTrue(pageNavigationResult.ErrorMessage.Contains("The remote name could not be resolved"));
             Assert.IsFalse(pageNavigationResult.IsSuccess);
             Assert.IsTrue(pageNavigationResult.ShowMessageBoxOnFailure);
 

@@ -23,7 +23,7 @@ public static class Configuration
 	public const string MetadataFilePath = @"$$CsdlFullPath$$";
 
 	// The relative path for the MetadataFilePath.
-	public const string MetadataFileRelativePath = @"Csdl.xml";
+	public const string MetadataFileRelativePath = @"$$CsdlRelativePath$$";
 
 	// This flag indicates whether to enable naming alias. The value must be set to true or false.
 	public const bool EnableNamingAlias = false;
