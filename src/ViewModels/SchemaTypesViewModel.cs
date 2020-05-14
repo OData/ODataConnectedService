@@ -34,11 +34,11 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public event EventHandler<EventArgs> PageEntering;
 
+        public event EventHandler<EventArgs> PageLeaving;
+
         internal bool IsEntered;
 
-        private readonly ODataConnectedServiceWizard _wizard;
-
-        public SchemaTypesViewModel(UserSettings userSettings = null, ODataConnectedServiceWizard wizard = null) : base()
+        public SchemaTypesViewModel(UserSettings userSettings = null) : base()
         {
             Title = "Schema Types";
             Description = "Select schema types to include in the generated code.";
@@ -47,7 +47,6 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             SchemaTypeModelMap = new Dictionary<string, SchemaTypeModel>();
             RelatedTypes = new Dictionary<string, ICollection<string>>();
             this.UserSettings = userSettings;
-            this._wizard = wizard;
         }
 
         /// <summary>
@@ -77,21 +76,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
             var correctTypeSelection = true;
 
-            // exclude related operationimports for excluded types
-            if (this._wizard != null)
-            {
-                IEdmModel model = EdmHelper.GetEdmModelFromFile(this._wizard.ConfigODataEndpointViewModel.MetadataTempPath);
-                IEnumerable<IEdmOperationImport> operations = EdmHelper.GetOperationImports(model);
-                IEnumerable<IEdmOperationImport> operationsToExclude = operations.Where(x => !this._wizard.OperationImportsViewModel.IsOperationImportIncluded(x,
-                    ExcludedSchemaTypeNames.ToList())).ToList();
-                foreach (var operationImport in this._wizard.OperationImportsViewModel.OperationImports)
-                {
-                    if (operationsToExclude.Any(x => x.Name == operationImport.Name))
-                    {
-                        operationImport.IsSelected = false;
-                    }
-                }
-            }
+            PageLeaving?.Invoke(this, EventArgs.Empty);
 
             //check each excluded schema type and check if they are required. If so, then automatically select them.
             foreach (var schemaType in ExcludedSchemaTypeNames)
