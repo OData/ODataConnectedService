@@ -1419,6 +1419,28 @@ namespace MergedFunctionalTest.DSC
         partial void OnOrdersChanging(global::Microsoft.OData.Client.DataServiceCollection<global::MergedFunctionalTest.DSC.Order> value);
         partial void OnOrdersChanged();
         /// <summary>
+        /// There are no comments for Property DynamicProperties in the schema.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        public virtual global::System.Collections.Generic.IDictionary<string, object> DynamicProperties
+        {
+            get
+            {
+                return this._DynamicProperties;
+            }
+            set
+            {
+                this.OnDynamicPropertiesChanging(value);
+                this._DynamicProperties = value;
+                this.OnDynamicPropertiesChanged();
+                this.OnPropertyChanged("DynamicProperties");
+            }
+        }
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        private global::System.Collections.Generic.IDictionary<string, object> _DynamicProperties = new global::System.Collections.Generic.Dictionary<string, object>();
+        partial void OnDynamicPropertiesChanging(global::System.Collections.Generic.IDictionary<string, object> value);
+        partial void OnDynamicPropertiesChanged();
+        /// <summary>
         /// This event is raised when the value of the property is changed
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
@@ -7992,6 +8014,28 @@ namespace MergedFunctionalTest.DSC
         partial void OnBadChanging(global::MergedFunctionalTest.DSC.BadCustomer value);
         partial void OnBadChanged();
         /// <summary>
+        /// There are no comments for Property DynamicProperties in the schema.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        public virtual global::System.Collections.Generic.IDictionary<string, object> DynamicProperties
+        {
+            get
+            {
+                return this._DynamicProperties;
+            }
+            set
+            {
+                this.OnDynamicPropertiesChanging(value);
+                this._DynamicProperties = value;
+                this.OnDynamicPropertiesChanged();
+                this.OnPropertyChanged("DynamicProperties");
+            }
+        }
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        private global::System.Collections.Generic.IDictionary<string, object> _DynamicProperties = new global::System.Collections.Generic.Dictionary<string, object>();
+        partial void OnDynamicPropertiesChanging(global::System.Collections.Generic.IDictionary<string, object> value);
+        partial void OnDynamicPropertiesChanged();
+        /// <summary>
         /// This event is raised when the value of the property is changed
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
@@ -9838,6 +9882,28 @@ namespace MergedFunctionalTest1.DSC
         private global::MergedFunctionalTest1.DSC.Address _Address;
         partial void OnAddressChanging(global::MergedFunctionalTest1.DSC.Address value);
         partial void OnAddressChanged();
+        /// <summary>
+        /// There are no comments for Property DynamicProperties in the schema.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        public virtual global::System.Collections.Generic.IDictionary<string, object> DynamicProperties
+        {
+            get
+            {
+                return this._DynamicProperties;
+            }
+            set
+            {
+                this.OnDynamicPropertiesChanging(value);
+                this._DynamicProperties = value;
+                this.OnDynamicPropertiesChanged();
+                this.OnPropertyChanged("DynamicProperties");
+            }
+        }
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        private global::System.Collections.Generic.IDictionary<string, object> _DynamicProperties = new global::System.Collections.Generic.Dictionary<string, object>();
+        partial void OnDynamicPropertiesChanging(global::System.Collections.Generic.IDictionary<string, object> value);
+        partial void OnDynamicPropertiesChanged();
         /// <summary>
         /// This event is raised when the value of the property is changed
         /// </summary>

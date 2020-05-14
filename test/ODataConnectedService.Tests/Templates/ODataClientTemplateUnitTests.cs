@@ -133,6 +133,11 @@ namespace ODataConnectedService.Tests
                 get { return "GeoTypeInitializePattern"; }
             }
 
+            internal override string ObjectTypeName
+            {
+                get { return "Object"; }
+            }
+
             internal override string Int32TypeName
             {
                 get { return "Int32"; }
@@ -303,6 +308,16 @@ namespace ODataConnectedService.Tests
                 get { return "XmlConvertClassName"; }
             }
 
+            internal override string DictionaryInterfaceName
+            {
+                get { return "global::System.Collections.Generic.IDictionary<{0}, {1}>"; }
+            }
+
+            internal override string DictionaryTypeName
+            {
+                get { return "global::System.Collections.Generic.Dictionary<{0}, {1}>"; }
+            }
+
             internal override string EnumTypeName
             {
                 get { return "EnumTypeName"; }
@@ -361,6 +376,11 @@ namespace ODataConnectedService.Tests
                 get { return "new global::Microsoft.OData.Client.BodyOperationParameter(\"{0}\", {1})"; }
             }
 
+            internal override string DictionaryConstructor
+            {
+                get { return "new global::System.Collections.Generic.Dictionary<{0}, {1}>()"; }
+            }
+
             internal override string BaseEntityType
             {
                 get { return "global::Microsoft.OData.Client.BaseEntityType"; }
@@ -384,6 +404,16 @@ namespace ODataConnectedService.Tests
             internal override string DictionaryItemConstructor
             {
                 get { return "DictionaryItemConstructor"; }
+            }
+
+            internal override string ContainerPropertyBase
+            {
+                get { return "DynamicProperties"; }
+            }
+
+            internal override string ContainerPropertyAttribute
+            {
+                get { return "[global::Microsoft.OData.Client.ContainerProperty]"; }
             }
 
             internal override string PublicAccessModifier => throw new NotImplementedException();
@@ -561,9 +591,9 @@ namespace ODataConnectedService.Tests
                 this.CalledActions.Add("WriteMethodEndForStaticCreateMethod(" + instanceName + ")");
             }
 
-            internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, bool writeOnPropertyChanged)
+            internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, bool writeOnPropertyChanged)
             {
-                this.CalledActions.Add("WritePropertyForStructuredType(" + propertyType + ", " + originalPropertyName + ", " + propertyName + ", " + fixedPropertyName + ", " + privatePropertyName + ", " + propertyInitializationValue + ", " + writeOnPropertyChanged + ")");
+                this.CalledActions.Add("WritePropertyForStructuredType(" + propertyType + ", " + originalPropertyName + ", " + propertyName + ", " + fixedPropertyName + ", " + privatePropertyName + ", " + propertyInitializationValue + ", " + propertyAttribute + ", " + writeOnPropertyChanged + ")");
             }
 
             internal override void WriteINotifyPropertyChangedImplementation()
@@ -1558,7 +1588,7 @@ namespace ODataConnectedService.Tests
                 "WriteDeclarationEndForStaticCreateMethod(EntityType, entityType)",
                 "WritePropertyValueAssignmentForStaticCreateMethod(entityType, Id, ID)",
                 "WriteMethodEndForStaticCreateMethod(entityType)",
-                "WritePropertyForStructuredType(Guid, Id, Id, Id, _Id, , False)",
+                "WritePropertyForStructuredType(Guid, Id, Id, Id, _Id, , , False)",
                 "WriteClassEndForStructuredType()"
             };
             template.CalledActions.Should().Equal(expectedActions);
@@ -1602,7 +1632,7 @@ namespace ODataConnectedService.Tests
                 "WriteDeclarationEndForStaticCreateMethod(Customer, customer)",
                 "WritePropertyValueAssignmentForStaticCreateMethod(customer, PersonId, personId)",
                 "WriteMethodEndForStaticCreateMethod(customer)",
-                "WritePropertyForStructuredType(Int32, PersonId, PersonId, PersonId, _PersonId, , True)",
+                "WritePropertyForStructuredType(Int32, PersonId, PersonId, PersonId, _PersonId, , , True)",
                 "WriteINotifyPropertyChangedImplementation()",
                 "WriteClassEndForStructuredType()"
             };
@@ -1649,7 +1679,7 @@ namespace ODataConnectedService.Tests
                 "WriteDeclarationEndForStaticCreateMethod(Customer, customer)",
                 "WritePropertyValueAssignmentForStaticCreateMethod(customer, PersonId, personId)",
                 "WriteMethodEndForStaticCreateMethod(customer)",
-                "WritePropertyForStructuredType(Int32, PersonId, PersonId, PersonId, _PersonId, , True)",
+                "WritePropertyForStructuredType(Int32, PersonId, PersonId, PersonId, _PersonId, , , True)",
                 "WriteINotifyPropertyChangedImplementation()",
                 "WriteClassEndForStructuredType()"
             };
@@ -1752,7 +1782,7 @@ namespace ODataConnectedService.Tests
                 "WriteDeclarationEndForStaticCreateMethod(ComplexType, complexType)",
                 "WritePropertyValueAssignmentForStaticCreateMethod(complexType, Value, value)",
                 "WriteMethodEndForStaticCreateMethod(complexType)",
-                "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , False)",
+                "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , , False)",
                 "WriteClassEndForStructuredType()"
             };
             template.CalledActions.Should().Equal(expectedActions);
@@ -2198,7 +2228,7 @@ namespace ODataConnectedService.Tests
             Context = new ODataT4CodeGenerator.CodeGenerationContext(OneNamespaceAndEmptyComplexTypeEdmx, namespacePrefix);
             var template = new ODataClientTemplateImp(Context);
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
-            template.WritePropertiesForStructuredType(complexType.DeclaredProperties);
+            template.WritePropertiesForStructuredType(complexType);
             template.CalledActions.Should().BeEmpty();
         }
 
@@ -2209,12 +2239,12 @@ namespace ODataConnectedService.Tests
             Context = new ODataT4CodeGenerator.CodeGenerationContext(ComplexTypeWithPropertiesEdmx, namespacePrefix);
             var template = new ODataClientTemplateImp(Context);
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
-            template.WritePropertiesForStructuredType(complexType.DeclaredProperties);
+            template.WritePropertiesForStructuredType(complexType);
 
             var expectedActions = new List<string>
             {
-                "WritePropertyForStructuredType(String, Name, Name, Name, _Name, , False)",
-                "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , False)"
+                "WritePropertyForStructuredType(String, Name, Name, Name, _Name, , , False)",
+                "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , , False)"
             };
             template.CalledActions.Should().Equal(expectedActions);
         }
@@ -2229,11 +2259,11 @@ namespace ODataConnectedService.Tests
             };
             var template = new ODataClientTemplateImp(Context);
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
-            template.WritePropertiesForStructuredType(complexType.DeclaredProperties);
+            template.WritePropertiesForStructuredType(complexType);
 
             var expectedActions = new List<string>
             {
-                "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , True)"
+                "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , , True)"
             };
             template.CalledActions.Should().Equal(expectedActions);
         }
@@ -2306,13 +2336,13 @@ namespace ODataConnectedService.Tests
             Context = new ODataT4CodeGenerator.CodeGenerationContext(PrefixConflictEdmx, namespacePrefix);
             var template = new ODataClientTemplateImp(Context);
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
-            template.WritePropertiesForStructuredType(complexType.DeclaredProperties);
+            template.WritePropertiesForStructuredType(complexType);
 
             var expectedActions = new List<string>
             {
-                "WritePropertyForStructuredType(String, Name, Name, Name, _Name1, , False)",
-                "WritePropertyForStructuredType(String, _Name, _Name, _Name, __Name1, , False)",
-                "WritePropertyForStructuredType(String, __Name, __Name, __Name, ___Name, , False)"
+                "WritePropertyForStructuredType(String, Name, Name, Name, _Name1, , , False)",
+                "WritePropertyForStructuredType(String, _Name, _Name, _Name, __Name1, , , False)",
+                "WritePropertyForStructuredType(String, __Name, __Name, __Name, ___Name, , , False)"
             };
             template.CalledActions.Should().Equal(expectedActions);
         }
@@ -2342,14 +2372,14 @@ namespace ODataConnectedService.Tests
             var template = new ODataClientTemplateImp(Context);
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.SetPropertyIdentifierMappingsIfNameConflicts(complexType.Name, complexType);
-            template.WritePropertiesForStructuredType(complexType.DeclaredProperties);
+            template.WritePropertiesForStructuredType(complexType);
 
             var expectedActions = new List<string>
             {
-                "WritePropertyForStructuredType(String, Name, Name2, Name2, _Name21, , False)",
-                "WritePropertyForStructuredType(String, name, name, name, _name, , False)",
-                "WritePropertyForStructuredType(String, Name1, Name1, Name1, _Name1, , False)",
-                "WritePropertyForStructuredType(String, _Name2, _Name2, _Name2, __Name2, , False)",
+                "WritePropertyForStructuredType(String, Name, Name2, Name2, _Name21, , , False)",
+                "WritePropertyForStructuredType(String, name, name, name, _name, , , False)",
+                "WritePropertyForStructuredType(String, Name1, Name1, Name1, _Name1, , , False)",
+                "WritePropertyForStructuredType(String, _Name2, _Name2, _Name2, __Name2, , , False)",
             };
             template.CalledActions.Should().Contain(expectedActions);
         }
@@ -2363,14 +2393,14 @@ namespace ODataConnectedService.Tests
             var template = new ODataClientTemplateImp(Context);
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.SetPropertyIdentifierMappingsIfNameConflicts(complexType.Name, complexType);
-            template.WritePropertiesForStructuredType(complexType.DeclaredProperties);
+            template.WritePropertiesForStructuredType(complexType);
 
             var expectedActions = new List<string>
             {
-                "WritePropertyForStructuredType(String, Name, Name2, Name2, _Name21, , False)",
-                "WritePropertyForStructuredType(String, name, Name3, Name3, _Name3, , False)",
-                "WritePropertyForStructuredType(String, Name1, Name1, Name1, _Name1, , False)",
-                "WritePropertyForStructuredType(String, _Name2, _Name2, _Name2, __Name2, , False)",
+                "WritePropertyForStructuredType(String, Name, Name2, Name2, _Name21, , , False)",
+                "WritePropertyForStructuredType(String, name, Name3, Name3, _Name3, , , False)",
+                "WritePropertyForStructuredType(String, Name1, Name1, Name1, _Name1, , , False)",
+                "WritePropertyForStructuredType(String, _Name2, _Name2, _Name2, __Name2, , , False)",
             };
             template.CalledActions.Should().Contain(expectedActions);
         }

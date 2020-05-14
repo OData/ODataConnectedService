@@ -183,11 +183,12 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             // Hack!
             // Tests were failing since the test project cannot access ProjectItems
             // dte == null when running test cases
-            var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+            var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(DTE)) as DTE;
             if(dte != null)
             {
                 var projectItem = this.GetCsdlFileProjectItem(csdlFileName);
                 projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionEmbeddedResource;
+                t4CodeGenerator.EmitContainerPropertyAttribute = EmitContainerPropertyAttribute();
             }
 
             t4CodeGenerator.MetadataFilePath = metadataFile;
@@ -215,6 +216,25 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
         private ProjectItem GetCsdlFileProjectItem(string fileName)
         {
             return this.Project.ProjectItems.Item("Connected Services").ProjectItems.Item(ServiceConfiguration.ServiceName).ProjectItems.Item(fileName);
+        }
+
+        private bool EmitContainerPropertyAttribute()
+        {
+            var vsProject = this.Project.Object as VSProject;
+            
+            foreach(Reference reference in vsProject.References)
+            {
+                if (reference.SourceProject == null)
+                {
+                    // Assembly reference (For project reference, SourceProject != null)
+                    if (reference.Name.Equals("Microsoft.OData.Client") && reference.Version.CompareTo("7.6.4.0") > 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

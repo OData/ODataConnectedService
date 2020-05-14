@@ -24,6 +24,7 @@ namespace Microsoft.OData.ConnectedService.Templates
     using Microsoft.OData.Edm.Vocabularies.Community.V1;
     using System.Text;
     using System.Net;
+    using System.Reflection;
     using System.Security;
     using Microsoft.VisualStudio.TextTemplating;
     using Microsoft.VisualStudio.ConnectedServices;
@@ -80,7 +81,8 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             MultipleFilesManager = FilesManager.Create(this.Host, null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
-            ExcludedSchemaTypes = this.ExcludedSchemaTypes
+            ExcludedSchemaTypes = this.ExcludedSchemaTypes,
+            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute
         };
     }
     else
@@ -118,7 +120,8 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             MultipleFilesManager = FilesManager.Create(this.Host, null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
-            ExcludedSchemaTypes = this.ExcludedSchemaTypes
+            ExcludedSchemaTypes = this.ExcludedSchemaTypes,
+            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute
         };
     }
 
@@ -521,6 +524,15 @@ public string WebProxyNetworkCredentialsPassword
 {
     get;
     set;
+}
+
+/// <summary>
+/// true to emit container property attribute on dynamic property container, false otherwise
+/// </summary>
+public bool EmitContainerPropertyAttribute
+{
+    get;
+    internal set;
 }
 
 /// <summary>
@@ -1238,6 +1250,15 @@ public class CodeGenerationContext
     }
 
     /// <summary>
+    /// true to emit container property attribute on dynamic property container, false otherwise.
+    /// </summary>
+    public bool EmitContainerPropertyAttribute
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
     /// true if this EntityContainer need to set the UrlConvention to KeyAsSegment, false otherwise.
     /// </summary>
     public bool UseKeyAsSegmentUrlConvention(IEdmEntityContainer currentContainer)
@@ -1503,6 +1524,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract string DataServiceCollectionConstructorParameters { get; }
     internal abstract string NewModifier { get; }
     internal abstract string GeoTypeInitializePattern { get; }
+    internal abstract string ObjectTypeName { get; }
     internal abstract string Int32TypeName { get; }
     internal abstract string StringTypeName { get; }
     internal abstract string BinaryTypeName { get; }
@@ -1538,6 +1560,8 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract string TimeOfDayTypeName { get; }
     internal abstract string XmlConvertClassName { get; }
     internal abstract string EnumTypeName { get; }
+    internal abstract string DictionaryInterfaceName { get; }
+    internal abstract string DictionaryTypeName { get; }
     internal abstract HashSet<string> LanguageKeywords { get; }
     internal abstract string FixPattern { get; }
     internal abstract string EnumUnderlyingTypeMarker { get; }
@@ -1546,11 +1570,14 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract string UriOperationParameterConstructor { get; }
     internal abstract string UriEntityOperationParameterConstructor { get; }
     internal abstract string BodyOperationParameterConstructor { get; }
+    internal abstract string DictionaryConstructor { get; }
     internal abstract string BaseEntityType { get; }
     internal abstract string OverloadsModifier { get; }
     internal abstract string ODataVersion { get; }
     internal abstract string ParameterDeclarationTemplate { get; }
     internal abstract string DictionaryItemConstructor { get; }
+    internal abstract string ContainerPropertyBase { get; }
+    internal abstract string ContainerPropertyAttribute { get; }
     #endregion Get Language specific keyword names.
 
     #region Language specific write methods.
@@ -1587,7 +1614,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteParameterNullCheckForStaticCreateMethod(string parameterName);
     internal abstract void WritePropertyValueAssignmentForStaticCreateMethod(string instanceName, string propertyName, string parameterName);
     internal abstract void WriteMethodEndForStaticCreateMethod(string instanceName);
-    internal abstract void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, bool writeOnPropertyChanged);
+    internal abstract void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, bool writeOnPropertyChanged);
     internal abstract void WriteINotifyPropertyChangedImplementation();
     internal abstract void WriteClassEndForStructuredType();
     internal abstract void WriteNamespaceEnd();
@@ -2330,7 +2357,7 @@ public abstract class ODataClientTemplate : TemplateBase
         this.WriteStructurdTypeDeclaration(entityType, this.BaseEntityType);
         this.SetPropertyIdentifierMappingsIfNameConflicts(entityType.Name, entityType);
         this.WriteTypeStaticCreateMethod(entityType.Name, entityType);
-        this.WritePropertiesForStructuredType(entityType.DeclaredProperties);
+        this.WritePropertiesForStructuredType(entityType);
 
         if (entityType.BaseType == null && this.context.UseDataServiceCollection)
         {
@@ -2348,7 +2375,7 @@ public abstract class ODataClientTemplate : TemplateBase
         this.WriteStructurdTypeDeclaration(complexType, string.Empty);
         this.SetPropertyIdentifierMappingsIfNameConflicts(complexType.Name, complexType);
         this.WriteTypeStaticCreateMethod(complexType.Name, complexType);
-        this.WritePropertiesForStructuredType(complexType.DeclaredProperties);
+        this.WritePropertiesForStructuredType(complexType);
 
         if (complexType.BaseType == null && this.context.UseDataServiceCollection)
         {
@@ -2787,9 +2814,10 @@ public abstract class ODataClientTemplate : TemplateBase
         }
     }
 
-    internal void WritePropertiesForStructuredType(IEnumerable<IEdmProperty> properties)
+    internal void WritePropertiesForStructuredType(IEdmStructuredType structuredType)
     {
          bool useDataServiceCollection = this.context.UseDataServiceCollection;
+         IEnumerable<IEdmProperty> properties = structuredType.DeclaredProperties;
 
         var propertyInfos = properties.Select(property =>
         {
@@ -2803,9 +2831,33 @@ public abstract class ODataClientTemplate : TemplateBase
                     PropertyName = propertyName,
                     FixedPropertyName = GetFixedName(propertyName),
                     PrivatePropertyName = "_" + propertyName,
-                    PropertyInitializationValue = Utils.GetPropertyInitializationValue(property, useDataServiceCollection, this, this.context)
+                    PropertyInitializationValue = Utils.GetPropertyInitializationValue(property, useDataServiceCollection, this, this.context),
+                    PropertyAttribute = string.Empty
                 };
         }).ToList();
+
+        // NOTE: If structured type has a base type and that base type is open, then the dynamic properties property is emitted on the client base type
+        if (structuredType.IsOpen && (structuredType.BaseType == null || (structuredType.BaseType != null && !structuredType.BaseType.IsOpen)))
+        {
+            string containerPropertyName = GetContainerPropertyName(structuredType);
+
+            string containerPropertyAttribute = string.Empty;
+            if (this.context.EmitContainerPropertyAttribute)
+            {
+                containerPropertyAttribute = this.ContainerPropertyAttribute;
+            }
+
+            propertyInfos.Add(new
+            {
+                PropertyType = string.Format(this.DictionaryInterfaceName, this.StringTypeName, this.ObjectTypeName),
+                PropertyVanillaName = containerPropertyName,
+                PropertyName = containerPropertyName,
+                FixedPropertyName = containerPropertyName,
+                PrivatePropertyName = "_" + containerPropertyName,
+                PropertyInitializationValue = string.Format(this.DictionaryConstructor, this.StringTypeName, this.ObjectTypeName),
+                PropertyAttribute = containerPropertyAttribute
+            });
+        }
 
         // Private name should not confict with field name
         UniqueIdentifierService uniqueIdentifierService = new UniqueIdentifierService(propertyInfos.Select(_ => _.FixedPropertyName),
@@ -2822,6 +2874,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 propertyInfo.FixedPropertyName,
                 privatePropertyName,
                 propertyInfo.PropertyInitializationValue,
+                propertyInfo.PropertyAttribute,
                 useDataServiceCollection);
         }
     }
@@ -2874,6 +2927,41 @@ public abstract class ODataClientTemplate : TemplateBase
         }
 
         return elementTypeName;
+    }
+
+    /// <summary>
+    /// Returns a non-conflicting name for the container property. 
+    /// The preferred name for the container property will be suffixed with an integer 
+    /// in the odd case that there exists a declared property with a similar name
+    /// </summary>
+    private string GetContainerPropertyName(IEdmStructuredType structuredType)
+    {
+        int suffix = 2;
+        bool conflict = true;
+        string containerPropertyTemp = ContainerPropertyBase;
+        
+        do
+        {
+            IEdmStructuredType tempType = structuredType;
+
+            while(tempType != null)
+            {
+                conflict = tempType.DeclaredProperties.Any(p => p.Name.Equals(containerPropertyTemp, StringComparison.Ordinal));
+                if (conflict)
+                {
+                    break;
+                }
+                tempType = tempType.BaseType;
+            }
+
+            if (conflict)
+            {
+                containerPropertyTemp = ContainerPropertyBase + suffix.ToString();
+                suffix++;
+            }
+        } while(conflict);
+
+        return containerPropertyTemp;
     }
 }
 
@@ -3730,6 +3818,7 @@ public sealed class ODataClientCSharpTemplate : ODataClientTemplate
     internal override string DataServiceCollectionConstructorParameters { get { return "(null, global::Microsoft.OData.Client.TrackingMode.None)"; } }
     internal override string NewModifier { get { return "new "; } }
     internal override string GeoTypeInitializePattern { get { return "global::Microsoft.Spatial.SpatialImplementation.CurrentImplementation.CreateWellKnownTextSqlFormatter(false).Read<{0}>(new global::System.IO.StringReader(\"{1}\"))"; } }
+    internal override string ObjectTypeName { get { return "object"; } }
     internal override string Int32TypeName { get { return "int"; } }
     internal override string StringTypeName { get { return "string"; } }
     internal override string BinaryTypeName { get { return "byte[]"; } }
@@ -3765,6 +3854,8 @@ public sealed class ODataClientCSharpTemplate : ODataClientTemplate
     internal override string TimeOfDayTypeName { get { return "global::Microsoft.OData.Edm.TimeOfDay"; } }
     internal override string XmlConvertClassName { get { return "global::System.Xml.XmlConvert"; } }
     internal override string EnumTypeName { get { return "global::System.Enum"; } }
+    internal override string DictionaryInterfaceName { get { return "global::System.Collections.Generic.IDictionary<{0}, {1}>"; } }
+    internal override string DictionaryTypeName { get { return "global::System.Collections.Generic.Dictionary<{0}, {1}>"; } }
     internal override string FixPattern { get { return "@{0}"; } }
     internal override string EnumUnderlyingTypeMarker { get { return " : "; } }
     internal override string ConstantExpressionConstructorWithType { get { return "global::System.Linq.Expressions.Expression.Constant({0}, typeof({1}))"; } }
@@ -3772,11 +3863,14 @@ public sealed class ODataClientCSharpTemplate : ODataClientTemplate
     internal override string UriOperationParameterConstructor { get { return "new global::Microsoft.OData.Client.UriOperationParameter(\"{0}\", {1})"; } }
     internal override string UriEntityOperationParameterConstructor { get { return "new global::Microsoft.OData.Client.UriEntityOperationParameter(\"{0}\", {1}, {2})"; } }
     internal override string BodyOperationParameterConstructor { get { return "new global::Microsoft.OData.Client.BodyOperationParameter(\"{0}\", {1})"; } }
+    internal override string DictionaryConstructor { get { return "new global::System.Collections.Generic.Dictionary<{0}, {1}>()"; } }
     internal override string BaseEntityType { get { return " : global::Microsoft.OData.Client.BaseEntityType"; } }
     internal override string OverloadsModifier { get { return "new "; } }
     internal override string ODataVersion { get { return "global::Microsoft.OData.ODataVersion.V4"; } }
     internal override string ParameterDeclarationTemplate { get { return "{0} {1}"; } }
     internal override string DictionaryItemConstructor { get { return "{{ {0}, {1} }}"; } }
+    internal override string ContainerPropertyBase { get { return "DynamicProperties"; } }
+    internal override string ContainerPropertyAttribute { get { return "[global::Microsoft.OData.Client.ContainerProperty]"; } }
     internal override HashSet<string> LanguageKeywords { get {
         if (CSharpKeywords == null)
         {
@@ -4797,7 +4891,7 @@ this.Write(";\r\n        }\r\n");
 
     }
 
-    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, bool writeOnPropertyChanged)
+    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, bool writeOnPropertyChanged)
     {
 
 this.Write("        /// <summary>\r\n        /// There are no comments for Property ");
@@ -4820,6 +4914,19 @@ this.Write("        [global::Microsoft.OData.Client.OriginalNameAttribute(\"");
 this.Write(this.ToStringHelper.ToStringWithCulture(originalPropertyName));
 
 this.Write("\")]\r\n");
+
+
+        }
+
+
+        if (!string.IsNullOrEmpty(propertyAttribute))
+        {
+
+this.Write("        ");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(propertyAttribute));
+
+this.Write("\r\n");
 
 
         }
@@ -5783,6 +5890,7 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
     internal override string DataServiceCollectionConstructorParameters { get { return "(Nothing, Global.Microsoft.OData.Client.TrackingMode.None)"; } }
     internal override string NewModifier { get { return "New "; } }
     internal override string GeoTypeInitializePattern { get { return "Global.Microsoft.Spatial.SpatialImplementation.CurrentImplementation.CreateWellKnownTextSqlFormatter(False).Read(Of {0})(New Global.System.IO.StringReader(\"{1}\"))"; } }
+    internal override string ObjectTypeName { get { return "Object"; } }
     internal override string Int32TypeName { get { return "Integer"; } }
     internal override string StringTypeName { get { return "String"; } }
     internal override string BinaryTypeName { get { return "Byte()"; } }
@@ -5818,6 +5926,8 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
     internal override string TimeOfDayTypeName { get { return "Global.Microsoft.OData.Edm.TimeOfDay"; } }
     internal override string XmlConvertClassName { get { return "Global.System.Xml.XmlConvert"; } }
     internal override string EnumTypeName { get { return "Global.System.Enum"; } }
+    internal override string DictionaryInterfaceName { get { return "Global.System.Collections.Generic.IDictionary(Of {0}, {1})"; } }
+    internal override string DictionaryTypeName { get { return "Global.System.Collections.Generic.Dictionary(Of {0}, {1})"; } }
     internal override string FixPattern { get { return "[{0}]"; } }
     internal override string EnumUnderlyingTypeMarker { get { return " As "; } }
     internal override string ConstantExpressionConstructorWithType { get { return "Global.System.Linq.Expressions.Expression.Constant({0}, GetType({1}))"; } }
@@ -5825,11 +5935,14 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
     internal override string UriOperationParameterConstructor { get { return "New Global.Microsoft.OData.Client.UriOperationParameter(\"{0}\", {1})"; } }
     internal override string UriEntityOperationParameterConstructor { get { return "New Global.Microsoft.OData.Client.UriEntityOperationParameter(\"{0}\", {1}, {2})"; } }
     internal override string BodyOperationParameterConstructor { get { return "New Global.Microsoft.OData.Client.BodyOperationParameter(\"{0}\", {1})"; } }
+    internal override string DictionaryConstructor { get { return "New Global.System.Collections.Generic.Dictionary(Of {0}, {1})"; } }
     internal override string BaseEntityType { get { return "\r\n        Inherits Global.Microsoft.OData.Client.BaseEntityType"; } }
     internal override string OverloadsModifier { get { return "Overloads "; } }
     internal override string ODataVersion { get { return "Global.Microsoft.OData.ODataVersion.V4"; } }
     internal override string ParameterDeclarationTemplate { get { return "{1} As {0}"; } }
     internal override string DictionaryItemConstructor { get { return "{{ {0}, {1} }}"; } }
+    internal override string ContainerPropertyBase { get { return "DynamicProperties"; } }
+    internal override string ContainerPropertyAttribute { get { return "<Global.Microsoft.OData.Client.ContainerProperty>"; } }
     internal override HashSet<string> LanguageKeywords { get {
         if (VBKeywords == null)
         {
@@ -6804,7 +6917,7 @@ this.Write("\r\n        End Function\r\n");
 
     }
 
-    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, bool writeOnPropertyChanged)
+    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, bool writeOnPropertyChanged)
     {
 
 this.Write("        \'\'\'<summary>\r\n        \'\'\'There are no comments for Property ");
@@ -6827,6 +6940,19 @@ this.Write("        <Global.Microsoft.OData.Client.OriginalNameAttribute(\"");
 this.Write(this.ToStringHelper.ToStringWithCulture(originalPropertyName));
 
 this.Write("\")>  _\r\n");
+
+
+        }
+
+
+        if (!string.IsNullOrEmpty(propertyAttribute))
+        {
+
+this.Write("        ");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(propertyAttribute));
+
+this.Write("  _\r\n");
 
 
         }

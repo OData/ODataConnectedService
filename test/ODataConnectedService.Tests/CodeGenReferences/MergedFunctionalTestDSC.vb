@@ -1301,6 +1301,27 @@ Namespace MergedFunctionalTest.DSC
         End Sub
         Partial Private Sub OnOrdersChanged()
         End Sub
+        '''<summary>
+        '''There are no comments for Property DynamicProperties in the schema.
+        '''</summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        Public Overridable Property DynamicProperties() As Global.System.Collections.Generic.IDictionary(Of String, Object)
+            Get
+                Return Me._DynamicProperties
+            End Get
+            Set
+                Me.OnDynamicPropertiesChanging(value)
+                Me._DynamicProperties = value
+                Me.OnDynamicPropertiesChanged
+                Me.OnPropertyChanged("DynamicProperties")
+            End Set
+        End Property
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        Private _DynamicProperties As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)
+        Partial Private Sub OnDynamicPropertiesChanging(ByVal value As Global.System.Collections.Generic.IDictionary(Of String, Object))
+        End Sub
+        Partial Private Sub OnDynamicPropertiesChanged()
+        End Sub
         ''' <summary>
         ''' This event is raised when the value of the property is changed
         ''' </summary>
@@ -7598,6 +7619,27 @@ Namespace MergedFunctionalTest.DSC
         End Sub
         Partial Private Sub OnBadChanged()
         End Sub
+        '''<summary>
+        '''There are no comments for Property DynamicProperties in the schema.
+        '''</summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        Public Overridable Property DynamicProperties() As Global.System.Collections.Generic.IDictionary(Of String, Object)
+            Get
+                Return Me._DynamicProperties
+            End Get
+            Set
+                Me.OnDynamicPropertiesChanging(value)
+                Me._DynamicProperties = value
+                Me.OnDynamicPropertiesChanged
+                Me.OnPropertyChanged("DynamicProperties")
+            End Set
+        End Property
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        Private _DynamicProperties As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)
+        Partial Private Sub OnDynamicPropertiesChanging(ByVal value As Global.System.Collections.Generic.IDictionary(Of String, Object))
+        End Sub
+        Partial Private Sub OnDynamicPropertiesChanged()
+        End Sub
         ''' <summary>
         ''' This event is raised when the value of the property is changed
         ''' </summary>
@@ -9373,6 +9415,27 @@ Namespace MergedFunctionalTest1.DSC
         Partial Private Sub OnAddressChanging(ByVal value As MergedFunctionalTest1.DSC.Address)
         End Sub
         Partial Private Sub OnAddressChanged()
+        End Sub
+        '''<summary>
+        '''There are no comments for Property DynamicProperties in the schema.
+        '''</summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        Public Overridable Property DynamicProperties() As Global.System.Collections.Generic.IDictionary(Of String, Object)
+            Get
+                Return Me._DynamicProperties
+            End Get
+            Set
+                Me.OnDynamicPropertiesChanging(value)
+                Me._DynamicProperties = value
+                Me.OnDynamicPropertiesChanged
+                Me.OnPropertyChanged("DynamicProperties")
+            End Set
+        End Property
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        Private _DynamicProperties As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)
+        Partial Private Sub OnDynamicPropertiesChanging(ByVal value As Global.System.Collections.Generic.IDictionary(Of String, Object))
+        End Sub
+        Partial Private Sub OnDynamicPropertiesChanged()
         End Sub
         ''' <summary>
         ''' This event is raised when the value of the property is changed
