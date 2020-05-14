@@ -1,11 +1,15 @@
-﻿using EnvDTE;
+﻿//-----------------------------------------------------------------------------------
+// <copyright file="TestVsPackageInstaller.cs" company=".NET Foundation">
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      See License.txt in the project root for license information.
+// </copyright>
+//-----------------------------------------------------------------------------------
+
+using EnvDTE;
 using NuGet;
 using NuGet.VisualStudio;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ODataConnectedService.Tests.TestHelpers
 {
