@@ -174,7 +174,7 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 public static class Configuration
 {
-	// The URI of the metadata document. The value must be set to a valid service document URI or a local file path 
+	// The URI of the metadata document. The value must be set to a valid service document URI or a local file path
     // eg : "http://services.odata.org/V4/OData/OData.svc/", "File:///C:/Odata.edmx", or @"C:\Odata.edmx"
     // ### Notice ### If the OData service requires authentication for accessing the metadata document, the value of
     // MetadataDocumentUri has to be set to a local file path, or the client code generation process will fail.
@@ -183,14 +183,14 @@ public static class Configuration
 	// The use of DataServiceCollection enables entity and property tracking. The value must be set to true or false.
 	public const bool UseDataServiceCollection = true;
 
-	// The namespace of the client code generated. It replaces the original namespace in the metadata document, 
+	// The namespace of the client code generated. It replaces the original namespace in the metadata document,
     // unless the model has several namespaces.
 	public const string NamespacePrefix = "$rootnamespace$";
 
 	// The target language of the generated client code. The value must be set to "CSharp" or "VB".
 	public const string TargetLanguage = "OutputLanguage";
 
-	// The path for the temporary file where the metadata xml document can be stored. Use this if your metadata is too big to be stored in a string literal. Ensure that you have write permission for this path. 
+	// The path for the temporary file where the metadata xml document can be stored. Use this if your metadata is too big to be stored in a string literal. Ensure that you have write permission for this path.
 	// For example - "C:\\temp\\Test.xml"
 	public const string MetadataFilePath = "";
 
@@ -214,7 +214,7 @@ public static class Configuration
 
 	// (Optional) Custom http headers as a multiline string
 	public const string CustomHttpHeaders = "";
-	
+
 	// Comma-separated list of the names of operation imports to exclude from the generated code
 	public const string ExcludedOperationImports = "";
 
@@ -1726,7 +1726,7 @@ public abstract class ODataClientTemplate : TemplateBase
                         continue;
                     }
 
-                    if(context.GenerateMultipleFiles) 
+                    if(context.GenerateMultipleFiles)
                     {
                         context.MultipleFilesManager.StartNewFile($"{enumType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
@@ -1749,7 +1749,7 @@ public abstract class ODataClientTemplate : TemplateBase
                         continue;
                     }
 
-                    if(context.GenerateMultipleFiles) 
+                    if(context.GenerateMultipleFiles)
                     {
                         context.MultipleFilesManager.StartNewFile($"{complexType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
@@ -1770,7 +1770,7 @@ public abstract class ODataClientTemplate : TemplateBase
                         continue;
                     }
 
-                    if(context.GenerateMultipleFiles) 
+                    if(context.GenerateMultipleFiles)
                     {
                         context.MultipleFilesManager.StartNewFile($"{entityType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
@@ -1802,7 +1802,7 @@ public abstract class ODataClientTemplate : TemplateBase
         if (schemaElements.OfType<IEdmEntityType>().Any() ||
             schemaElements.OfType<IEdmOperation>().Any(o => o.IsBound))
         {
-            if(context.GenerateMultipleFiles) 
+            if(context.GenerateMultipleFiles)
             {
                 context.MultipleFilesManager.StartNewFile($"ExtensionMethods{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
                 this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
@@ -2007,7 +2007,7 @@ public abstract class ODataClientTemplate : TemplateBase
             }
 
             this.WriteExtensionMethodsEnd();
-            if(context.GenerateMultipleFiles) 
+            if(context.GenerateMultipleFiles)
             {
                 this.WriteNamespaceEnd();
                 context.MultipleFilesManager.EndBlock();

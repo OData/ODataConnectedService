@@ -187,7 +187,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             File.WriteAllText(file1TempPath, "Contents1");
             var file2TempPath = Path.Combine(Path.GetTempPath(), "File2.cs");
             File.WriteAllText(file2TempPath, "Contents2");
-            
+
             codeGenDescriptor.AddGeneratedClientCodeAsync().Wait();
             var expectedMainFilePath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "Main.cs");
             var mainFile = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == expectedMainFilePath);
@@ -440,7 +440,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             installerServices.InstalledPackages.Add(Common.Constants.V4ClientNuGetPackage);
 
             descriptor.AddNugetPackagesAsync().Wait();
-           
+
             var installer = descriptor.PackageInstaller as TestVsPackageInstaller;
             Assert.IsFalse(installer.InstalledPackages.Contains(Common.Constants.V4ClientNuGetPackage));
             Assert.IsFalse(installer.InstalledPackages.Contains(Common.Constants.V4EdmNuGetPackage));
@@ -573,7 +573,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             projectPropertiesMock.Setup(p => p.Item(It.Is<string>(s => s == "FullPath")))
                 .Returns(fullPathPropertyMock.Object);
 
-            
+
 
             var projectMock = new Mock<Project>();
             projectMock.SetupGet(p => p.Properties)
@@ -643,7 +643,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
         }
 
         public ODataT4CodeGenerator LastCreatedInstance { get; private set; }
-        
+
         public ODataT4CodeGenerator Create()
         {
             var generator = generatorToReturn ?? new TestODataT4CodeGenerator();
