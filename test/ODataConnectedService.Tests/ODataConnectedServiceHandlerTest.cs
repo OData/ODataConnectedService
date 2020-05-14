@@ -49,6 +49,62 @@ namespace Microsoft.OData.ConnectedService.Tests
             Assert.AreEqual(serviceConfig, context.SavedExtendedDesignData);
         }
 
+        [DataTestMethod]
+        [DataRow("AddServiceInstanceAsync", 4, "V4")]
+        [DataRow("UpdateServiceInstanceAsync", 4, "V4")]
+        public void TestAddUpdateServiceInstance_DoesnotSaveCustomHttpHeadersToDesignerData(string method, int edmxVersion, string generatorVersion)
+        {
+            var descriptorFactory = new TestCodeGenDescriptorFactory();
+            var serviceHandler = new ODataConnectedServiceHandler(descriptorFactory);
+            var serviceConfig = new ServiceConfiguration()
+            {
+                EdmxVersion = new Version(edmxVersion, 0, 0, 0),
+                ServiceName = "TestService",
+                UseDataServiceCollection = false,
+                MakeTypesInternal = true,
+                IncludeCustomHeaders = true,
+                CustomHttpHeaders = @"Authorization: Bearer xyz12345-randomstring"
+            };
+            var tokenSource = new CancellationTokenSource();
+            var context = SetupContext(serviceConfig);
+            (typeof(ODataConnectedServiceHandler).GetMethod(method).Invoke(
+                serviceHandler, new object[] { context, tokenSource.Token }) as Task).Wait();
+
+            // CustomHttpHeaders should be null since we are not saving them to DesignerData
+            Assert.AreEqual(serviceConfig, context.SavedExtendedDesignData);
+            Assert.AreEqual(serviceConfig.CustomHttpHeaders, null);
+        }
+
+        [DataTestMethod]
+        [DataRow("AddServiceInstanceAsync", 4, "V4")]
+        [DataRow("UpdateServiceInstanceAsync", 4, "V4")]
+        public void TestAddUpdateServiceInstance_DoesnotSaveWebProxyDetailsToDesignerData(string method, int edmxVersion, string generatorVersion)
+        {
+            var descriptorFactory = new TestCodeGenDescriptorFactory();
+            var serviceHandler = new ODataConnectedServiceHandler(descriptorFactory);
+            var serviceConfig = new ServiceConfiguration()
+            {
+                EdmxVersion = new Version(edmxVersion, 0, 0, 0),
+                ServiceName = "TestService",
+                UseDataServiceCollection = false,
+                MakeTypesInternal = true,
+                IncludeWebProxy = true,
+                IncludeWebProxyNetworkCredentials = true,
+                WebProxyHost = "http://example.com:80",
+                WebProxyNetworkCredentialsUsername = "user",
+                WebProxyNetworkCredentialsPassword = "pass"
+            };
+            var tokenSource = new CancellationTokenSource();
+            var context = SetupContext(serviceConfig);
+            (typeof(ODataConnectedServiceHandler).GetMethod(method).Invoke(
+                serviceHandler, new object[] { context, tokenSource.Token }) as Task).Wait();
+
+            // WebProxy username and password should be null since we are not saving them to DesignerData
+            Assert.AreEqual(serviceConfig, context.SavedExtendedDesignData);
+            Assert.AreEqual(serviceConfig.WebProxyNetworkCredentialsUsername, null);
+            Assert.AreEqual(serviceConfig.WebProxyNetworkCredentialsPassword, null);
+        }
+
         static TestConnectedServiceHandlerContext SetupContext(ServiceConfiguration serviceConfig)
         {
             var serviceInstance = new ODataConnectedServiceInstance()

@@ -45,6 +45,11 @@ namespace Microsoft.OData.ConnectedService
             var serviceInstance = (ODataConnectedServiceInstance)context.ServiceInstance;
 
             var codeGenDescriptor = await GenerateCodeAsync(serviceInstance.ServiceConfig.Endpoint, serviceInstance.ServiceConfig.EdmxVersion, context, project);
+            // We don't save headers and proxy details to designer data
+            serviceInstance.ServiceConfig.CustomHttpHeaders = null;
+            serviceInstance.ServiceConfig.WebProxyNetworkCredentialsUsername = null;
+            serviceInstance.ServiceConfig.WebProxyNetworkCredentialsPassword = null;
+
             context.SetExtendedDesignerData(serviceInstance.ServiceConfig);
             return codeGenDescriptor;
         }

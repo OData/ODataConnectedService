@@ -52,12 +52,6 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 await AddGeneratedCodeAsync();
             }
 
-            this.ServiceConfiguration.CustomHttpHeaders = null;
-
-            // Since all the code is generated make sure we don't write the username and password for the network credentials
-            this.ServiceConfiguration.WebProxyNetworkCredentialsUsername = null;
-            this.ServiceConfiguration.WebProxyNetworkCredentialsPassword = null;
-
         }
 
         private async Task AddT4FileAsync()
