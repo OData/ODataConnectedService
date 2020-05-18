@@ -83,6 +83,7 @@
     <Compile Include="TestHelpers\TestVsPackageInstaller.cs" />
     <Compile Include="TestHelpers\TestVsPackageInstallerServices.cs" />
     <Compile Include="ViewModels\OperationImportsViewModelTests.cs" />
+    <Compile Include="ViewModels\SchemaTypesViewModelTests.cs" />
     <Compile Include="Views\UserSettingsTest.cs" />
   </ItemGroup>
   <ItemGroup>

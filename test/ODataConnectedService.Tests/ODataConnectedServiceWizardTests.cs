@@ -61,7 +61,7 @@ namespace ODataConnectedService.Tests
                 IgnoreUnexpectedElementsAndAttributes = true,
                 IncludeT4File = true,
                 ExcludedOperationImports = new List<string>()
-                { 
+                {
                     "GetPersonWithMostFriends",
                     "ResetDataSource"
                 },
@@ -100,7 +100,7 @@ namespace ODataConnectedService.Tests
             Assert.Contains("Endpoint", wizard.UserSettings.MruEndpoints);
         }
 
-        
+
 
         [Fact]
         public void TestConstructor_ShouldUseDefaultSettingsWhenNotUpdating()
@@ -235,7 +235,7 @@ namespace ODataConnectedService.Tests
             ServiceConfigurationV4 savedConfig = GetTestConfig();
             var context = new TestConnectedServiceProviderContext(true, savedConfig);
             var wizard = new ODataConnectedServiceWizard(context);
-            
+
             // endpoint page
             var endpointPage = wizard.ConfigODataEndpointViewModel;
             endpointPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).Wait();
@@ -653,6 +653,42 @@ namespace ODataConnectedService.Tests
             Assert.Equal(MetadataPathSimple, config.Endpoint);
             config.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string>() { "ResetThings" });
             config.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>() { "SimpleService.Models.OtherThing" });
+        }
+
+        [Fact]
+        public void ShouldDeselectOperations_WhenRelatedTypeIsDeselectedBefore()
+        {
+            var context = new TestConnectedServiceProviderContext();
+            var wizard = new ODataConnectedServiceWizard(context);
+
+            var endpointPage = wizard.ConfigODataEndpointViewModel;
+            endpointPage.OnPageEnteringAsync(null).Wait();
+            endpointPage.Endpoint = MetadataPath;
+            endpointPage.OnPageLeavingAsync(null).Wait();
+
+            var typesPage = wizard.SchemaTypesViewModel;
+            typesPage.OnPageEnteringAsync(null).Wait();
+            typesPage.SchemaTypes.First(t => t.ShortName == "Airport").IsSelected = false;
+            typesPage.SchemaTypes.First(t => t.ShortName == "Person").IsSelected = false;
+            typesPage.OnPageLeavingAsync(null).Wait();
+
+            var operationsPage = wizard.OperationImportsViewModel;
+            operationsPage.OnPageEnteringAsync(null).Wait();
+            operationsPage.OperationImports.First(o => o.Name == "GetNearestAirport").IsSelected.Should().BeFalse();
+            operationsPage.OperationImports.First(o => o.Name == "GetPersonWithMostFriends").IsSelected.Should().BeFalse();
+            operationsPage.OnPageLeavingAsync(null).Wait();
+
+            var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+            var config = serviceInstance?.ServiceConfig as ServiceConfigurationV4;
+
+            config?.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string> { "GetNearestAirport", "GetPersonWithMostFriends" });
+            config?.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>
+            {
+                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport",
+                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee",
+                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Flight",
+                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person"
+            });
         }
 
         [Fact]

@@ -34,6 +34,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public event EventHandler<EventArgs> PageEntering;
 
+        public event EventHandler<EventArgs> PageLeaving;
+
         internal bool IsEntered;
 
         public SchemaTypesViewModel(UserSettings userSettings = null) : base()
@@ -74,13 +76,15 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
             var correctTypeSelection = true;
 
+            PageLeaving?.Invoke(this, EventArgs.Empty);
+
             //check each excluded schema type and check if they are required. If so, then automatically select them.
             foreach (var schemaType in ExcludedSchemaTypeNames)
             {
-                if (RelatedTypes.TryGetValue(schemaType, out ICollection<string> relatedtypes))
+                if (RelatedTypes.TryGetValue(schemaType, out ICollection<string> relatedTypes))
                 {
                     //Check if any of the related types has been selected
-                    if (relatedtypes.Any(o =>
+                    if (relatedTypes.Any(o =>
                     {
                         if(SchemaTypeModelMap.TryGetValue(o, out SchemaTypeModel schemaTypeModel))
                         {
@@ -188,7 +192,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                             }
                         }
 
-                        // Check for bound operations and ensure related types re also selected.
+                        // Check for bound operations and ensure related types are also selected.
                         // In this case related types means return types and parameter types.
                         if (boundOperations.TryGetValue(structuredType, out List<IEdmOperation> operations))
                         {
@@ -200,10 +204,10 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                                     string returnTypeFullName = operation.ReturnType.ToStructuredType()?.FullTypeName() ?? operation.ReturnType.FullName();
                                     AddRelatedType(returnTypeFullName, structuredType.FullTypeName());
 
-                                    if (SchemaTypeModelMap.TryGetValue(returnTypeFullName, out SchemaTypeModel referencedschemaTypeModel)
-                                        && !referencedschemaTypeModel.IsSelected)
+                                    if (SchemaTypeModelMap.TryGetValue(returnTypeFullName, out SchemaTypeModel referencedSchemaTypeModel)
+                                        && !referencedSchemaTypeModel.IsSelected)
                                     {
-                                        referencedschemaTypeModel.IsSelected = true;
+                                        referencedSchemaTypeModel.IsSelected = true;
                                     }
                                 }
 
@@ -222,6 +226,21 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                                             model.IsSelected = true;
                                         }
                                     }
+                                }
+                            }
+                        }
+                    }
+                    else if (!schemaTypeModel.IsSelected)
+                    {
+                        // automatically deselect related types for deselected type
+                        if (RelatedTypes.TryGetValue(schemaTypeModel.Name, out ICollection<string> relatedTypes))
+                        {
+                            foreach (var relatedType in relatedTypes)
+                            {
+                                if (SchemaTypeModelMap.TryGetValue(relatedType, out SchemaTypeModel relatedSchemaTypeModel)
+                                    && relatedSchemaTypeModel.IsSelected)
+                                {
+                                    relatedSchemaTypeModel.IsSelected = false;
                                 }
                             }
                         }

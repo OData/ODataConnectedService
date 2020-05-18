@@ -57,12 +57,13 @@ namespace Microsoft.OData.ConnectedService
             OperationImportsViewModel.PageEntering += OperationImportsViewModel_PageEntering;
 
             SchemaTypesViewModel.PageEntering += SchemaTypeSelectionViewModel_PageEntering;
+            SchemaTypesViewModel.PageLeaving += SchemaTypeSelectionViewModel_PageLeaving;
             if (this.Context != null && this.Context.IsUpdating)
             {
-                ConfigODataEndpointViewModel.Endpoint = this._serviceConfig.Endpoint;
-                ConfigODataEndpointViewModel.EdmxVersion = this._serviceConfig.EdmxVersion;
-                ConfigODataEndpointViewModel.ServiceName = this._serviceConfig.ServiceName;
-                ConfigODataEndpointViewModel.CustomHttpHeaders = this._serviceConfig.CustomHttpHeaders;
+                ConfigODataEndpointViewModel.Endpoint = this._serviceConfig?.Endpoint;
+                ConfigODataEndpointViewModel.EdmxVersion = this._serviceConfig?.EdmxVersion;
+                ConfigODataEndpointViewModel.ServiceName = this._serviceConfig?.ServiceName;
+                ConfigODataEndpointViewModel.CustomHttpHeaders = this._serviceConfig?.CustomHttpHeaders;
 
                 // Restore the main settings to UI elements.
                 ConfigODataEndpointViewModel.PageEntering += ConfigODataEndpointViewModel_PageEntering;
@@ -231,6 +232,7 @@ namespace Microsoft.OData.ConnectedService
                         operationImportsViewModel.IsSupportedODataVersion = false;
                         return;
                     }
+
                     var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
                     var operations = EdmHelper.GetOperationImports(model);
                     OperationImportsViewModel.LoadOperationImports(operations, new HashSet<string>(SchemaTypesViewModel.ExcludedSchemaTypeNames), SchemaTypesViewModel.SchemaTypeModelMap);
@@ -263,6 +265,22 @@ namespace Microsoft.OData.ConnectedService
                 }
 
                 this.ProcessedEndpointForSchemaTypes = ConfigODataEndpointViewModel.Endpoint;
+            }
+        }
+
+        public void SchemaTypeSelectionViewModel_PageLeaving(object sender, EventArgs args)
+        {
+            // exclude related operationimports for excluded types
+            var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+            var operations = EdmHelper.GetOperationImports(model);
+            var operationsToExclude = operations.Where(x => !OperationImportsViewModel.IsOperationImportIncluded(x,
+                SchemaTypesViewModel.ExcludedSchemaTypeNames.ToList())).ToList();
+            foreach (var operationImport in OperationImportsViewModel.OperationImports)
+            {
+                if (operationsToExclude.Any(x => x.Name == operationImport.Name))
+                {
+                    operationImport.IsSelected = false;
+                }
             }
         }
 
