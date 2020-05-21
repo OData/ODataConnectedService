@@ -51,6 +51,7 @@
     <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.Data.Services.Design, Version=5.6.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.OData.ConnectedService.Fakes">
       <HintPath>FakesAssemblies\Microsoft.OData.ConnectedService.Fakes.dll</HintPath>
@@ -64,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Common\EdmHelperTests.cs" />
     <Compile Include="ODataConnectedServiceWizardTests.cs" />
+    <Compile Include="Common\ProjectHelperTests.cs" />
     <Compile Include="ViewModels\ConfigOdataEndPointViewModelTests.cs" />
     <Compile Include="Properties\AssemblyRefs.cs" />
     <Compile Include="Templates\CodeGenerationContextTest.cs" />
