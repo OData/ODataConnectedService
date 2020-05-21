@@ -1,4 +1,11 @@
-﻿using System.Collections.Generic;
+﻿//-----------------------------------------------------------------------------------
+// <copyright file="OperationImportsViewModelTests.cs" company=".NET Foundation">
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
+//      See License.txt in the project root for license information.
+// </copyright>
+//-----------------------------------------------------------------------------------
+
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.OData.ConnectedService.Models;
