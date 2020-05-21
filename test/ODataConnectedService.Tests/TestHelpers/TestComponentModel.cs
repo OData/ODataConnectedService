@@ -1,13 +1,16 @@
-﻿using Microsoft.VisualStudio.ComponentModelHost;
+﻿//---------------------------------------------------------------------------------
+// <copyright file="TestComponentModel.cs" company=".NET Foundation">
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      See License.txt in the project root for license information.
+// </copyright>
+//---------------------------------------------------------------------------------
+
+using Microsoft.VisualStudio.ComponentModelHost;
 using NuGet.VisualStudio;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Primitives;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ODataConnectedService.Tests.TestHelpers
 {
