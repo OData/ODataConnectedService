@@ -340,7 +340,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         {
             if (UserSettings != null)
             {
-                if (UserSettings.ExcludedOperationImports?.Any() == true)
+                if (UserSettings.ExcludedSchemaTypes?.Any() == true)
                 {
                     ExcludeSchemaTypes(UserSettings.ExcludedSchemaTypes ?? Enumerable.Empty<string>());
                 }

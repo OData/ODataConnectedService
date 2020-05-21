@@ -46,7 +46,10 @@ public static class Configuration
 	// Comma-separated list of the names of operation imports to exclude from the generated code
 	public const string ExcludedOperationImports = "Operation1;Operation2";
 
-     // Comma-separated list of the names of entity types to exclude from the generated code
+	// Comma-separated list of the names of bound operations to exclude from the generated code
+	public const string ExcludedBoundOperations = "";
+
+    // Comma-separated list of the names of entity types to exclude from the generated code
 	public const string ExcludedSchemaTypes = "Namespace.Type1;Namespace.Type2;Namespace.Type3";
 }
 

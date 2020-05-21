@@ -88,6 +88,9 @@ namespace Microsoft.OData.ConnectedService.Models
         public List<string> ExcludedOperationImports { get; set; }
 
         [DataMember]
+        public List<string> ExcludedBoundOperations { get; set; }
+
+        [DataMember]
         public List<string> ExcludedSchemaTypes { get; set; }
 
         public UserSettings()

@@ -150,6 +150,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             t4CodeGenerator.MakeTypesInternal = ServiceConfiguration.MakeTypesInternal;
             t4CodeGenerator.GenerateMultipleFiles = ServiceConfiguration.GenerateMultipleFiles;
             t4CodeGenerator.ExcludedOperationImports = ServiceConfiguration.ExcludedOperationImports;
+            t4CodeGenerator.ExcludedBoundOperations = ServiceConfiguration.ExcludedBoundOperations;
             t4CodeGenerator.ExcludedSchemaTypes = ServiceConfiguration.ExcludedSchemaTypes;
             var headers = new List<string>();
             if (this.ServiceConfiguration.CustomHttpHeaders !=null)
@@ -219,7 +220,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
         private bool EmitContainerPropertyAttribute()
         {
             var vsProject = this.Project.Object as VSProject;
-            
+
             foreach(Reference reference in vsProject.References)
             {
                 if (reference.SourceProject == null)

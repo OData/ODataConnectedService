@@ -18,7 +18,9 @@ namespace Microsoft.OData.ConnectedService.Common
     {
         private static IDictionary<IEdmStructuredType, List<IEdmOperation>> _boundOperations = null;
 
-        /// <summary> 
+        private static IDictionary<IEdmType, List<IEdmOperation>> _allBoundOperations = null;
+
+        /// <summary>
         /// Gets all the operation imports in the model
         /// </summary>
         /// <param name="path">Edmx file path.</param>
@@ -38,7 +40,7 @@ namespace Microsoft.OData.ConnectedService.Common
             if (result)
             {
                 return model;
-            } 
+            }
 
             if (context != null)
             {
@@ -54,7 +56,7 @@ namespace Microsoft.OData.ConnectedService.Common
         }
 
 
-        /// <summary> 
+        /// <summary>
         /// Gets all the operation imports in the model
         /// </summary>
         /// <param name="model">Edm model.</param>
@@ -71,11 +73,11 @@ namespace Microsoft.OData.ConnectedService.Common
             }
         }
 
-        /// <summary> 
+        /// <summary>
         /// Gets all the bound operations associated with specific structured types
         /// </summary>
         /// <param name="model">Edm model.</param>
-        /// <returns>a dictionary of structured types maped to a list of bound operations</returns>
+        /// <returns>a dictionary of structured types mapped to a list of bound operations</returns>
         public static IDictionary<IEdmStructuredType, List<IEdmOperation>> GetBoundOperations(IEdmModel model)
         {
             _boundOperations = new Dictionary<IEdmStructuredType, List<IEdmOperation>>();
@@ -100,10 +102,37 @@ namespace Microsoft.OData.ConnectedService.Common
             return _boundOperations;
         }
 
-        /// <summary> 
+        /// <summary>
+        /// Gets all the bound operations associated with all specific types
+        /// </summary>
+        /// <param name="model">Edm model.</param>
+        /// <returns>a dictionary of types mapped to a list of bound operations</returns>
+        public static IDictionary<IEdmType, List<IEdmOperation>> GetAllBoundOperations(IEdmModel model)
+        {
+            _allBoundOperations = new Dictionary<IEdmType, List<IEdmOperation>>();
+            foreach (IEdmOperation operation in model.SchemaElements.OfType<IEdmOperation>())
+            {
+                if (operation.IsBound)
+                {
+                    IEdmType edmType = operation.Parameters.First().Type.Definition;
+
+                    if (!_allBoundOperations.TryGetValue(edmType, out List<IEdmOperation> operations))
+                    {
+                        operations = new List<IEdmOperation>();
+                    }
+
+                    operations.Add(operation);
+                    _allBoundOperations[edmType] = operations;
+                }
+            }
+
+            return _allBoundOperations;
+        }
+
+        /// <summary>
         /// Gets the name of the type without the namespace
         /// </summary>
-        /// <param name="fullName">Full type name with namespace.</param>
+        /// <param name="model">Edm model.</param>
         /// <returns>All schema types in the model</returns>
         public static IEnumerable<IEdmSchemaType> GetSchemaTypes(IEdmModel model)
         {
@@ -115,7 +144,7 @@ namespace Microsoft.OData.ConnectedService.Common
             }
         }
 
-        /// <summary> 
+        /// <summary>
         /// Gets the name of the type without the namespace
         /// </summary>
         /// <param name="fullName">Full type name with namespace.</param>

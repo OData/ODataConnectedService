@@ -119,8 +119,11 @@ namespace ODataConnectedService.Tests
 
             var expectedBoundOperations = new List<string>()
             {
+                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFavoriteAirline",
                 "Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFriendsTrips",
+                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.UpdatePersonLastName",
                 "Microsoft.OData.Service.Sample.TrippinInMemory.Models.ShareTrip",
+                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetInvolvedPeople"
             };
 
             // Sort the Lists in ascending order
