@@ -62,6 +62,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\EdmHelperTests.cs" />
     <Compile Include="ODataConnectedServiceWizardTests.cs" />
     <Compile Include="ViewModels\ConfigOdataEndPointViewModelTests.cs" />
     <Compile Include="Properties\AssemblyRefs.cs" />

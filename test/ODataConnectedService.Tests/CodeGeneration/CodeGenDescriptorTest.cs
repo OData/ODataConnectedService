@@ -18,14 +18,7 @@ using System.Collections.Generic;
 using System.Net;
 using ODataConnectedService.Tests;
 using System.Text;
-using Microsoft.VisualStudio.ComponentModelHost;
-using System.ComponentModel.Composition.Primitives;
-using System.ComponentModel.Composition.Hosting;
-using System.ComponentModel.Composition;
-using NuGet.VisualStudio;
-using NuGet;
 using System;
-using System.Reflection;
 using System.Linq;
 using ODataConnectedService.Tests.TestHelpers;
 

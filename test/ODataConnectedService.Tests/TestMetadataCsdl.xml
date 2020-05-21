@@ -64,6 +64,16 @@
         <Parameter Name="lon" Nullable="false" Type="Edm.Double"/>
         <ReturnType Type="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport"/>
       </Function>
+      <Function Name="GetFriendsTrips" IsBound="true">
+        <Parameter Name="person" Type="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person"/>
+        <Parameter Name="userName" Nullable="false" Type="Edm.String" Unicode="false"/>
+        <ReturnType Type="Collection(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)"/>
+      </Function>
+      <Action Name="ShareTrip" IsBound="true">
+        <Parameter Name="personInstance" Type="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person"/>
+        <Parameter Name="userName" Nullable="false" Type="Edm.String" Unicode="false"/>
+        <Parameter Name="tripId" Nullable="false" Type="Edm.Int32"/>
+      </Action>
       <Action Name="ResetDataSource"/>
       <EntityContainer Name="Container">
         <EntitySet Name="People" EntityType="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person">
