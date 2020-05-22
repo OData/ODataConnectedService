@@ -127,7 +127,7 @@ namespace Microsoft.OData.ConnectedService.Views
                         Edm.IEdmModel model = EdmHelper.GetEdmModelFromFile(ServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath);
 
                         IEnumerable<Edm.IEdmSchemaType> entityTypes = EdmHelper.GetSchemaTypes(model);
-                        IDictionary<Edm.IEdmStructuredType, List<Edm.IEdmOperation>> boundOperations = EdmHelper.GetBoundOperations(model);
+                        IDictionary<Edm.IEdmType, List<Edm.IEdmOperation>> boundOperations = EdmHelper.GetBoundOperations(model);
                         ServiceWizard.SchemaTypesViewModel.LoadSchemaTypes(entityTypes, boundOperations);
                         ServiceWizard.ProcessedEndpointForSchemaTypes = this.UserSettings.Endpoint;
                         ServiceWizard.SchemaTypesViewModel.LoadFromUserSettings();
@@ -137,11 +137,11 @@ namespace Microsoft.OData.ConnectedService.Views
                         ServiceWizard.ProcessedEndpointForOperationImports = this.UserSettings.Endpoint;
                         ServiceWizard.OperationImportsViewModel.LoadFromUserSettings();
 
-                        IDictionary<Edm.IEdmType, List<Edm.IEdmOperation>> allBoundOperations = EdmHelper.GetAllBoundOperations(model);
-                        ServiceWizard.BoundOperationsViewModel.LoadBoundOperations(allBoundOperations,
-                            new HashSet<string>(), new Dictionary<string, SchemaTypeModel>());
-                        ServiceWizard.ProcessedEndpointForBoundOperations = this.UserSettings.Endpoint;
-                        ServiceWizard.BoundOperationsViewModel.LoadFromUserSettings();
+                        //IDictionary<Edm.IEdmType, List<Edm.IEdmOperation>> allBoundOperations = EdmHelper.GetBoundOperations(model);
+                        //ServiceWizard.BoundOperationsViewModel.LoadBoundOperations(allBoundOperations,
+                        //    new HashSet<string>(), new Dictionary<string, SchemaTypeModel>());
+                        //ServiceWizard.ProcessedEndpointForBoundOperations = this.UserSettings.Endpoint;
+                        //ServiceWizard.BoundOperationsViewModel.LoadFromUserSettings();
                     }
                 }
                 catch

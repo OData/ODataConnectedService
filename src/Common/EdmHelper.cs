@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------------
 // <copyright file="EdmHelper.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //----------------------------------------------------------------------------
@@ -16,9 +16,7 @@ namespace Microsoft.OData.ConnectedService.Common
 {
     internal class EdmHelper
     {
-        private static IDictionary<IEdmStructuredType, List<IEdmOperation>> _boundOperations = null;
-
-        private static IDictionary<IEdmType, List<IEdmOperation>> _allBoundOperations = null;
+        private static IDictionary<IEdmType, List<IEdmOperation>> _boundOperations = null;
 
         /// <summary>
         /// Gets all the operation imports in the model
@@ -74,59 +72,30 @@ namespace Microsoft.OData.ConnectedService.Common
         }
 
         /// <summary>
-        /// Gets all the bound operations associated with specific structured types
-        /// </summary>
-        /// <param name="model">Edm model.</param>
-        /// <returns>a dictionary of structured types mapped to a list of bound operations</returns>
-        public static IDictionary<IEdmStructuredType, List<IEdmOperation>> GetBoundOperations(IEdmModel model)
-        {
-            _boundOperations = new Dictionary<IEdmStructuredType, List<IEdmOperation>>();
-            foreach (IEdmOperation operation in model.SchemaElements.OfType<IEdmOperation>())
-            {
-                if (operation.IsBound)
-                {
-                    IEdmType edmType = operation.Parameters.First().Type.Definition;
-                    if (edmType is IEdmStructuredType edmStructuredType)
-                    {
-                        if (!_boundOperations.TryGetValue(edmStructuredType, out List<IEdmOperation> operations))
-                        {
-                            operations = new List<IEdmOperation>();
-                        }
-
-                        operations.Add(operation);
-                        _boundOperations[edmStructuredType] = operations;
-                    }
-                }
-            }
-
-            return _boundOperations;
-        }
-
-        /// <summary>
         /// Gets all the bound operations associated with all specific types
         /// </summary>
         /// <param name="model">Edm model.</param>
         /// <returns>a dictionary of types mapped to a list of bound operations</returns>
-        public static IDictionary<IEdmType, List<IEdmOperation>> GetAllBoundOperations(IEdmModel model)
+        public static IDictionary<IEdmType, List<IEdmOperation>> GetBoundOperations(IEdmModel model)
         {
-            _allBoundOperations = new Dictionary<IEdmType, List<IEdmOperation>>();
+            _boundOperations = new Dictionary<IEdmType, List<IEdmOperation>>();
             foreach (IEdmOperation operation in model.SchemaElements.OfType<IEdmOperation>())
             {
                 if (operation.IsBound)
                 {
                     IEdmType edmType = operation.Parameters.First().Type.Definition;
 
-                    if (!_allBoundOperations.TryGetValue(edmType, out List<IEdmOperation> operations))
+                    if (!_boundOperations.TryGetValue(edmType, out List<IEdmOperation> operations))
                     {
                         operations = new List<IEdmOperation>();
                     }
 
                     operations.Add(operation);
-                    _allBoundOperations[edmType] = operations;
+                    _boundOperations[edmType] = operations;
                 }
             }
 
-            return _allBoundOperations;
+            return _boundOperations;
         }
 
         /// <summary>

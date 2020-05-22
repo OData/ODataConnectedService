@@ -1,6 +1,6 @@
 ﻿//---------------------------------------------------------------------------------
 // <copyright file="ODataConnectedServiceWizard.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //---------------------------------------------------------------------------------
@@ -26,8 +26,6 @@ namespace Microsoft.OData.ConnectedService
 
         public OperationImportsViewModel OperationImportsViewModel { get; set; }
 
-        public BoundOperationsViewModel BoundOperationsViewModel { get; set; }
-
         public SchemaTypesViewModel SchemaTypesViewModel { get; set; }
 
         public AdvancedSettingsViewModel AdvancedSettingsViewModel { get; set; }
@@ -46,8 +44,6 @@ namespace Microsoft.OData.ConnectedService
 
         internal string ProcessedEndpointForOperationImports;
 
-        internal string ProcessedEndpointForBoundOperations;
-
         internal string ProcessedEndpointForSchemaTypes;
 
         public ODataConnectedServiceWizard(ConnectedServiceProviderContext context)
@@ -64,9 +60,6 @@ namespace Microsoft.OData.ConnectedService
 
             OperationImportsViewModel = new OperationImportsViewModel(this.UserSettings);
             OperationImportsViewModel.PageEntering += OperationImportsViewModel_PageEntering;
-
-            BoundOperationsViewModel = new BoundOperationsViewModel(this.UserSettings);
-            BoundOperationsViewModel.PageEntering += BoundOperationsViewModel_PageEntering;
 
             SchemaTypesViewModel.PageEntering += SchemaTypeSelectionViewModel_PageEntering;
             SchemaTypesViewModel.PageLeaving += SchemaTypeSelectionViewModel_PageLeaving;
@@ -89,7 +82,6 @@ namespace Microsoft.OData.ConnectedService
 
             this.Pages.Add(ConfigODataEndpointViewModel);
             this.Pages.Add(SchemaTypesViewModel);
-            this.Pages.Add(BoundOperationsViewModel);
             this.Pages.Add(OperationImportsViewModel);
             this.Pages.Add(AdvancedSettingsViewModel);
             this.IsFinishEnabled = true;
@@ -104,12 +96,6 @@ namespace Microsoft.OData.ConnectedService
                 {
                     await this.OperationImportsViewModel.OnPageEnteringAsync(null);
                     await this.OperationImportsViewModel.OnPageLeavingAsync(null);
-                }
-
-                if (!this.BoundOperationsViewModel.IsEntered)
-                {
-                    await this.BoundOperationsViewModel.OnPageEnteringAsync(null);
-                    await this.BoundOperationsViewModel.OnPageLeavingAsync(null);
                 }
 
                 if (!this.SchemaTypesViewModel.IsEntered)
@@ -146,7 +132,7 @@ namespace Microsoft.OData.ConnectedService
                 var serviceConfigurationV4 = new ServiceConfigurationV4
                 {
                     ExcludedOperationImports = OperationImportsViewModel.ExcludedOperationImportsNames.ToList(),
-                    ExcludedBoundOperations = BoundOperationsViewModel.ExcludedBoundOperationsNames.ToList(),
+                    ExcludedBoundOperations = SchemaTypesViewModel.ExcludedBoundOperationsNames.ToList(),
                     IgnoreUnexpectedElementsAndAttributes =
                         AdvancedSettingsViewModel.IgnoreUnexpectedElementsAndAttributes,
                     EnableNamingAlias = AdvancedSettingsViewModel.EnableNamingAlias,
@@ -267,34 +253,6 @@ namespace Microsoft.OData.ConnectedService
             }
         }
 
-        public void BoundOperationsViewModel_PageEntering(object sender, EventArgs args)
-        {
-            if (sender is BoundOperationsViewModel boundOperationsViewModel)
-            {
-                if (this.ProcessedEndpointForBoundOperations != ConfigODataEndpointViewModel.Endpoint)
-                {
-                    if (ConfigODataEndpointViewModel.EdmxVersion != Constants.EdmxVersion4)
-                    {
-                        boundOperationsViewModel.View.IsEnabled = false;
-                        boundOperationsViewModel.IsSupportedODataVersion = false;
-                        return;
-                    }
-
-                    var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
-                    var boundOperations = EdmHelper.GetAllBoundOperations(model);
-                    BoundOperationsViewModel.LoadBoundOperations(boundOperations,
-                        new HashSet<string>(SchemaTypesViewModel.ExcludedSchemaTypeNames), SchemaTypesViewModel.SchemaTypeModelMap);
-
-                    if (Context.IsUpdating)
-                    {
-                        boundOperationsViewModel.ExcludeBoundOperations(this._serviceConfig?.ExcludedBoundOperations ?? Enumerable.Empty<string>());
-                    }
-                }
-
-                this.ProcessedEndpointForBoundOperations = ConfigODataEndpointViewModel.Endpoint;
-            }
-        }
-
         public void SchemaTypeSelectionViewModel_PageEntering(object sender, EventArgs args)
         {
             if (sender is SchemaTypesViewModel entityTypeViewModel)
@@ -333,19 +291,11 @@ namespace Microsoft.OData.ConnectedService
             }
 
             // exclude bound operations for excluded types
-            var boundOperations = EdmHelper.GetAllBoundOperations(model);
+            var boundOperations = EdmHelper.GetBoundOperations(model);
             var boundOperationsToExclude = boundOperations.SelectMany(x => x.Value)
-                .Where(x => !BoundOperationsViewModel.IsBoundOperationIncluded(x,
+                .Where(x => !SchemaTypesViewModel.IsBoundOperationIncluded(x,
                     SchemaTypesViewModel.ExcludedSchemaTypeNames.ToList())).ToList();
-
-            // ensure that bound operations was loaded before excluding
-            if (!BoundOperationsViewModel.IsEntered)
-            {
-                BoundOperationsViewModel.OnPageEnteringAsync(new WizardEnteringArgs(ConfigODataEndpointViewModel)).Wait();
-                BoundOperationsViewModel.OnPageLeavingAsync(new WizardLeavingArgs(ConfigODataEndpointViewModel)).Wait();
-            }
-
-            foreach (var boundOperation in BoundOperationsViewModel.BoundOperations)
+            foreach (var boundOperation in SchemaTypesViewModel.SchemaTypes.SelectMany(x => x.BoundOperations))
             {
                 if (boundOperationsToExclude.Any(x => $"{x.Name}({x.Parameters.First().Type.Definition.FullTypeName()})" == boundOperation.Name))
                 {
@@ -378,12 +328,6 @@ namespace Microsoft.OData.ConnectedService
                     {
                         this.OperationImportsViewModel.Dispose();
                         OperationImportsViewModel = null;
-                    }
-
-                    if (this.BoundOperationsViewModel != null)
-                    {
-                        this.BoundOperationsViewModel.Dispose();
-                        BoundOperationsViewModel = null;
                     }
 
                     if (this.SchemaTypesViewModel != null)

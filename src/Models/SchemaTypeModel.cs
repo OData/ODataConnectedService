@@ -1,10 +1,11 @@
 ﻿//-----------------------------------------------------------------------------
 // <copyright file="SchemaTypeModel.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //----------------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Microsoft.OData.ConnectedService.Models
@@ -27,9 +28,12 @@ namespace Microsoft.OData.ConnectedService.Models
 
         public string ShortName { get; set; }
 
+        public IEnumerable<BoundOperationModel> BoundOperations { get; set; }
+            = new List<BoundOperationModel>();
+
         public bool IsSelected
         {
-            get { return _isSelected; }
+            get => _isSelected;
             set
             {
                 _isSelected = value;

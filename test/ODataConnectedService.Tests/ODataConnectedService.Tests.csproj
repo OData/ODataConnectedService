@@ -66,7 +66,6 @@
     <Compile Include="Common\EdmHelperTests.cs" />
     <Compile Include="ODataConnectedServiceWizardTests.cs" />
     <Compile Include="Common\ProjectHelperTests.cs" />
-    <Compile Include="ViewModels\BoundOperationsViewModelTests.cs" />
     <Compile Include="ViewModels\ConfigOdataEndPointViewModelTests.cs" />
     <Compile Include="Properties\AssemblyRefs.cs" />
     <Compile Include="Templates\CodeGenerationContextTest.cs" />
