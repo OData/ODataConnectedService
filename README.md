@@ -2,7 +2,7 @@ ODataConnectedService
  ============= 
  Component | Build  | Status 
 --------|--------- |---------
-Connected Service|Rolling | [![Build Status](https://dev.azure.com/dotnet/OData/_apis/build/status/paulodero.ODataConnectedService?branchName=master)](https://dev.azure.com/dotnet/OData/_build/latest?definitionId=134&branchName=master)
+Connected Service|Rolling | [![Build Status](https://dev.azure.com/dotnet/OData/_apis/build/status/OData.ODataConnectedService?branchName=master)](https://dev.azure.com/dotnet/OData/_build/latest?definitionId=136&branchName=master)
 
  ## Introduction 
 This is the official OData Connected Service repository which allows users to generate proxy classes from the OData Metadata.
