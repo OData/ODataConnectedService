@@ -186,21 +186,25 @@ namespace ODataConnectedService.Tests
                         new BoundOperationModel
                         {
                             Name = "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                            ShortName = "GetFavoriteAirline",
                             IsSelected = true
                         },
                         new BoundOperationModel
                         {
                             Name = "GetFriendsTrips(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                            ShortName = "GetFriendsTrips",
                             IsSelected = true
                         },
                         new BoundOperationModel
                         {
                             Name = "ShareTrip(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                            ShortName = "ShareTrip",
                             IsSelected = true
                         },
                         new BoundOperationModel
                         {
                             Name = "UpdatePersonLastName(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                            ShortName = "UpdatePersonLastName",
                             IsSelected = true
                         }
                     }
@@ -215,6 +219,7 @@ namespace ODataConnectedService.Tests
                         new BoundOperationModel
                         {
                             Name = "GetInvolvedPeople(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)",
+                            ShortName = "GetInvolvedPeople",
                             IsSelected = true
                         }
                     }
@@ -312,21 +317,25 @@ namespace ODataConnectedService.Tests
                         new BoundOperationModel
                         {
                             Name = "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                            ShortName = "GetFavoriteAirline",
                             IsSelected = false
                         },
                         new BoundOperationModel
                         {
                             Name = "GetFriendsTrips(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                            ShortName = "GetFriendsTrips",
                             IsSelected = false
                         },
                         new BoundOperationModel
                         {
                             Name = "ShareTrip(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                            ShortName = "ShareTrip",
                             IsSelected = false
                         },
                         new BoundOperationModel
                         {
                             Name = "UpdatePersonLastName(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                            ShortName = "UpdatePersonLastName",
                             IsSelected = false
                         }
                     }
@@ -345,6 +354,7 @@ namespace ODataConnectedService.Tests
                         new BoundOperationModel
                         {
                             Name = "GetInvolvedPeople(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)",
+                            ShortName = "GetInvolvedPeople",
                             IsSelected = false
                         }
                     }

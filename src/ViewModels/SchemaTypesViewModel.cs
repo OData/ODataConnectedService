@@ -165,7 +165,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             {
                 if (UserSettings.ExcludedSchemaTypes?.Any() == true)
                 {
-                    ExcludeSchemaTypes(UserSettings.ExcludedSchemaTypes ?? Enumerable.Empty<string>());
+                    ExcludeSchemaTypes(UserSettings.ExcludedSchemaTypes ?? Enumerable.Empty<string>(), UserSettings.ExcludedBoundOperations ?? Enumerable.Empty<string>());
                 }
 
                 if (UserSettings.ExcludedBoundOperations?.Any() == true)
@@ -376,10 +376,16 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// Sets schemaTypeModel isSelected property to be excluded to false
         /// </summary>
         /// <param name="schemaTypesToExclude">A list of all fullnames of schema types to be exclude.</param>
-        public void ExcludeSchemaTypes(IEnumerable<string> schemaTypesToExclude)
+        /// <param name="boundOperationsToExclude">A list of all fullnames of bound operations to be exclude.</param>
+        public void ExcludeSchemaTypes(IEnumerable<string> schemaTypesToExclude, IEnumerable<string> boundOperationsToExclude)
         {
             foreach (var schemaTypeModel in SchemaTypes)
             {
+                foreach (var boundOperationModel in schemaTypeModel.BoundOperations)
+                {
+                    boundOperationModel.IsSelected = !boundOperationsToExclude.Contains(boundOperationModel.Name);
+                }
+
                 schemaTypeModel.IsSelected = !schemaTypesToExclude.Contains(schemaTypeModel.Name);
             }
         }
@@ -452,6 +458,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                         var boundOperationModel = new BoundOperationModel
                         {
                             Name = name,
+                            ShortName = operation.Name,
                             IsSelected = IsBoundOperationIncluded(operation, excludedSchemaTypes)
                         };
 

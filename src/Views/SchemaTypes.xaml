@@ -117,7 +117,7 @@
                                 <TextBlock
                                     Grid.Column="1"
                                     VerticalAlignment="Bottom"
-                                    Text="{Binding Name}" />
+                                    Text="{Binding ShortName}" />
                             </Grid>
                         </DataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>

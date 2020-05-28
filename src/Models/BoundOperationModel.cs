@@ -14,6 +14,9 @@ namespace Microsoft.OData.ConnectedService.Models
         private bool _isSelected;
 
         public string Name { get; set; }
+
+        public string ShortName { get; set; }
+
         public bool IsSelected
         {
             get => _isSelected;

@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------------
 // <copyright file="V4CodeGenDescriptor.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //----------------------------------------------------------------------------
@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Data.Services.Design;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using EnvDTE;
@@ -124,6 +125,18 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 text = Regex.Replace(text, "(public const string CustomHttpHeaders = )\"\";", "$1@\"" + customHeaders + "\";");
                 text = Regex.Replace(text, "(public const string MetadataFilePath = )\"\";", "$1@\"" + metadataFile + "\";");
                 text = Regex.Replace(text, "(public const string MetadataFileRelativePath = )\"\";", "$1@\"" + csdlFileName + "\";");
+                if (ServiceConfiguration.ExcludedOperationImports?.Any() == true)
+                {
+                    text = Regex.Replace(text, "(public const string ExcludedOperationImports = )\"\";", "$1\"" + string.Join(",", ServiceConfiguration.ExcludedOperationImports) + "\";");
+                }
+                if (ServiceConfiguration.ExcludedBoundOperations?.Any() == true)
+                {
+                    text = Regex.Replace(text, "(public const string ExcludedBoundOperations = )\"\";", "$1\"" + string.Join(",", ServiceConfiguration.ExcludedBoundOperations) + "\";");
+                }
+                if (ServiceConfiguration.ExcludedSchemaTypes?.Any() == true)
+                {
+                    text = Regex.Replace(text, "(public const string ExcludedSchemaTypes = )\"\";", "$1\"" + string.Join(",", ServiceConfiguration.ExcludedSchemaTypes) + "\";");
+                }
                 await writer.WriteAsync(text);
                 await writer.FlushAsync();
             }

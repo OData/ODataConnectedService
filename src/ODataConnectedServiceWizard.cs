@@ -266,7 +266,9 @@ namespace Microsoft.OData.ConnectedService
 
                     if (Context.IsUpdating)
                     {
-                        entityTypeViewModel.ExcludeSchemaTypes(this._serviceConfig?.ExcludedSchemaTypes ?? Enumerable.Empty<string>());
+                        entityTypeViewModel.ExcludeSchemaTypes(
+                            this._serviceConfig?.ExcludedSchemaTypes ?? Enumerable.Empty<string>(),
+                            this._serviceConfig?.ExcludedBoundOperations ?? Enumerable.Empty<string>());
                     }
                 }
 

@@ -143,7 +143,7 @@ namespace ODataConnectedService.Tests.ViewModels
             var boundOperation = new EdmAction("Test", "BoundOperation",
                 new EdmPrimitiveTypeReference(new EdmPrimitiveType(EdmPrimitiveTypeKind.Boolean), false), true,
                 new EdmPathExpression(string.Empty));
-            boundOperation.AddParameter("relatedEntityType",
+            boundOperation.AddParameter("relatedEntityTypeParameter",
                 new EdmEntityTypeReference(relatedEntityType, false));
 
             objectSelection.LoadSchemaTypes(listToLoad, new Dictionary<IEdmType, List<IEdmOperation>>
@@ -184,6 +184,7 @@ namespace ODataConnectedService.Tests.ViewModels
                         new BoundOperationModel
                         {
                             Name = "BoundOperation(Test.RelatedEntityType)",
+                            ShortName = "BoundOperation",
                             IsSelected = true
                         }
                     }
@@ -261,11 +262,13 @@ namespace ODataConnectedService.Tests.ViewModels
                     new BoundOperationModel
                     {
                         Name = "BoundOperation1(Test.BaseEntityType)",
+                        ShortName = "BoundOperation1",
                         IsSelected = true
                     },
                     new BoundOperationModel
                     {
                         Name = "BoundOperation2(Test.BaseEntityType)",
+                        ShortName = "BoundOperation2",
                         IsSelected = true
                     }
                 }},
@@ -281,11 +284,13 @@ namespace ODataConnectedService.Tests.ViewModels
                     new BoundOperationModel
                     {
                         Name = "BoundOperation1(Test.BaseEntityType)",
+                        ShortName = "BoundOperation1",
                         IsSelected = false
                     },
                     new BoundOperationModel
                     {
                         Name = "BoundOperation2(Test.BaseEntityType)",
+                        ShortName = "BoundOperation2",
                         IsSelected = false
                     }
                 }},
@@ -294,24 +299,50 @@ namespace ODataConnectedService.Tests.ViewModels
         }
 
         [TestMethod]
-        public void ExcludeSchemaTypes_ShouldDeselectTheSpecifiedTypes()
+        public void ExcludeSchemaTypes_ShouldDeselectTheSpecifiedTypesWithSpecifiedBoundOperations()
         {
             var objectSelection = new SchemaTypesViewModel
             {
                 SchemaTypes = new List<SchemaTypeModel>
                 {
-                    new SchemaTypeModel {ShortName = "Type1", Name = "Test.Type1", IsSelected = true},
+                    new SchemaTypeModel
+                    {
+                        ShortName = "Type1",
+                        Name = "Test.Type1",
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>
+                        {
+                            new BoundOperationModel
+                            {
+                                IsSelected = true,
+                                Name = "BoundOperation1(Type1)"
+                            }
+                        }
+                    },
                     new SchemaTypeModel {ShortName = "Type2", Name = "Test.Type2", IsSelected = true},
                     new SchemaTypeModel {ShortName = "Type3", Name = "Test.Type3", IsSelected = false},
                     new SchemaTypeModel {ShortName = "Type4", Name = "Test.Type4", IsSelected = true}
                 }
             };
 
-            objectSelection.ExcludeSchemaTypes(new string[] { "Test.Type1", "Test.Type3", "Test.Type4" });
+            objectSelection.ExcludeSchemaTypes(new string[] { "Test.Type1", "Test.Type3", "Test.Type4" }, new string[] { "BoundOperation1(Type1)" });
 
             objectSelection.SchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>()
             {
-                new SchemaTypeModel { ShortName = "Type1", Name = "Test.Type1", IsSelected = false },
+                new SchemaTypeModel
+                {
+                    ShortName = "Type1",
+                    Name = "Test.Type1",
+                    IsSelected = false,
+                    BoundOperations = new List<BoundOperationModel>
+                    {
+                        new BoundOperationModel
+                        {
+                            IsSelected = false,
+                            Name = "BoundOperation1(Type1)"
+                        }
+                    }
+                },
                 new SchemaTypeModel { ShortName = "Type2", Name = "Test.Type2", IsSelected = true },
                 new SchemaTypeModel { ShortName = "Type3", Name = "Test.Type3", IsSelected = false },
                 new SchemaTypeModel { ShortName = "Type4", Name = "Test.Type4", IsSelected = false }
