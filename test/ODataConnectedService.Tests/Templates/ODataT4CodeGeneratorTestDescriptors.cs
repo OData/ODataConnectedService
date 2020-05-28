@@ -175,6 +175,27 @@ namespace ODataConnectedService.Tests
             }
         }
 
+        #region EntityBooleanPropertyWithDefaultValue
+        public static string EdmxEntityBooleanPropertyWithDefaultValue = LoadContentFromBaseline("EntityBooleanPropertyWithDefaultValue.xml");
+        public static string EntityBooleanPropertyWithDefaultValueCSharp = LoadContentFromBaseline("EntityBooleanPropertyWithDefaultValue.cs");
+        public static string EntityBooleanPropertyWithDefaultValueCSharpUseDSC = LoadContentFromBaseline("EntityBooleanPropertyWithDefaultValueDSC.cs");
+        public static string EntityBooleanPropertyWithDefaultValueVB = LoadContentFromBaseline("EntityBooleanPropertyWithDefaultValue.vb");
+        public static string EntityBooleanPropertyWithDefaultValueVBUseDSC = LoadContentFromBaseline("EntityBooleanPropertyWithDefaultValueDSC.vb");
+
+        public static ODataT4CodeGeneratorTestsDescriptor EntityBooleanPropertyWithDefaultValue = new ODataT4CodeGeneratorTestsDescriptor()
+        {
+            Metadata = EdmxEntityBooleanPropertyWithDefaultValue,
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, EntityBooleanPropertyWithDefaultValueCSharp },
+                { ExpectedCSharpUseDSC, EntityBooleanPropertyWithDefaultValueCSharpUseDSC },
+                { ExpectedVB, EntityBooleanPropertyWithDefaultValueVB },
+                { ExpectedVBUseDSC, EntityBooleanPropertyWithDefaultValueVBUseDSC }
+            },
+            Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, EntityBooleanPropertyWithDefaultValue.ExpectedResults, isCSharp, useDSC, "EntityBooleanPropertyWithDefaultValue"),
+        };
+        #endregion
+
         #region EntityHierarchyWithIDAndId
 
         public static string EdmxEntityHierarchyWithIDAndId = LoadContentFromBaseline("EntityHierarchyWithIDAndId.xml");

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:DataServices>
+    <Schema Namespace="Namespace1" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="EntityType">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TestBoolean" Type="Edm.Boolean" Nullable="false" DefaultValue="False" />
+      </EntityType>
+      <EntityContainer Name="EntityContainer">
+        <EntitySet Name="Set1" EntityType="Namespace1.EntityType" />
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
