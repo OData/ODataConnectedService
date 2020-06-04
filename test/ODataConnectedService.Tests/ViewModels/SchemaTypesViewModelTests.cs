@@ -86,6 +86,40 @@ namespace ODataConnectedService.Tests.ViewModels
         }
 
         [TestMethod]
+        public void LoadSchemaTypes_ShouldAddRelatedPropertyTypeForStructuredType_WherePropertyIsCollectionOfEnum()
+        {
+            var objectSelection = new SchemaTypesViewModel
+            {
+                SchemaTypes = new List<SchemaTypeModel>
+                {
+                    new SchemaTypeModel {Name = "Type1", IsSelected = false},
+                    new SchemaTypeModel {Name = "Type2", IsSelected = true},
+                    new SchemaTypeModel {Name = "Type3", IsSelected = false}
+                }
+            };
+
+            var enumType = new EdmEnumType("Test", "EnumType");
+            var entityType = new EdmEntityType("Test", "EntityType");
+            entityType.AddStructuralProperty("collectionOfEnumProperty",
+                new EdmCollectionTypeReference(
+                    new EdmCollectionType(new EdmEnumTypeReference(enumType, false))));
+            var listToLoad = new List<IEdmSchemaType>
+            {
+                entityType,
+                enumType
+            };
+
+            objectSelection.LoadSchemaTypes(listToLoad, new Dictionary<IEdmType, List<IEdmOperation>>());
+
+            var expectedRelatedTypes = new Dictionary<string, ICollection<string>>
+            {
+                {"Test.EnumType", new List<string> {"Test.EntityType"}},
+            };
+
+            objectSelection.RelatedTypes.ShouldBeEquivalentTo(expectedRelatedTypes);
+        }
+
+        [TestMethod]
         public void SelectSchemaType_ShouldSelectItsRelatedTypes()
         {
             var objectSelection = new SchemaTypesViewModel
