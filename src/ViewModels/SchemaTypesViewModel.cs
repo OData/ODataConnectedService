@@ -1,12 +1,13 @@
 ﻿//---------------------------------------------------------------------------------
 // <copyright file="SchemaTypesViewModel.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //---------------------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OData.ConnectedService.Common;
@@ -24,6 +25,12 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public IDictionary<string, SchemaTypeModel> SchemaTypeModelMap { get; set; }
 
         public IEnumerable<SchemaTypeModel> SchemaTypes { get; set; }
+
+        private long _schemaTypesCount = 0;
+        public long SchemaTypesCount => this._schemaTypesCount;
+
+        private long _boundOperationsCount = 0;
+        public long BoundOperationsCount => this._boundOperationsCount;
 
         /// <summary>Contains a collection of entities that would depend on another entity</summary>
         public IDictionary<string, ICollection<string>> RelatedTypes { get; set; }
@@ -46,7 +53,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public SchemaTypesViewModel(UserSettings userSettings = null) : base()
         {
             Title = "Schema Types";
-            Description = "Select schema types to include in the generated code.";
+            Description = "Select schema types with its bound operations to include in the generated code.";
             Legend = "Schema Types Selection";
             SchemaTypes = new List<SchemaTypeModel>();
             SchemaTypeModelMap = new Dictionary<string, SchemaTypeModel>();
@@ -64,9 +71,17 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         {
             this.IsEntered = true;
             await base.OnPageEnteringAsync(args);
-            View = new SchemaTypes() { DataContext = this };
+            View = new SchemaTypes() {DataContext = this};
             PageEntering?.Invoke(this, EventArgs.Empty);
+            if (this.View is SchemaTypes view)
+            {
+                view.SelectedSchemaTypesCount.Text = SchemaTypes.Count(x => x.IsSelected).ToString();
+                view.SelectedBoundOperationsCount.Text = SchemaTypes
+                    .Where(x => x.IsSelected && x.BoundOperations?.Any() == true).SelectMany(x => x.BoundOperations)
+                    .Count(x => x.IsSelected).ToString();
+            }
         }
+
         /// <summary>
         /// Executed when leaving the page for selecting schema types.
         /// It checks if there is a type that is required but has not been selected.
@@ -91,12 +106,13 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                     //Check if any of the related types has been selected
                     if (relatedTypes.Any(o =>
                     {
-                        if(SchemaTypeModelMap.TryGetValue(o, out SchemaTypeModel schemaTypeModel))
+                        if (SchemaTypeModelMap.TryGetValue(o, out SchemaTypeModel schemaTypeModel))
                         {
                             return schemaTypeModel.IsSelected;
                         }
+
                         return false;
-                         }))
+                    }))
                     {
                         if (SchemaTypeModelMap.TryGetValue(schemaType, out SchemaTypeModel schemaTypeModel))
                         {
@@ -110,7 +126,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
             if (!correctTypeSelection)
             {
-                return await Task.FromResult( new PageNavigationResult
+                return await Task.FromResult(new PageNavigationResult
                 {
                     ErrorMessage = $"{numberOfTypesToBeIncluded} {Constants.SchemaTypesWillAutomaticallyBeIncluded}",
                     IsSuccess = correctTypeSelection,
@@ -124,19 +140,62 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         }
 
         /// <summary>
+        /// Save the selected schema types to user settings
+        /// </summary>
+        public void SaveToUserSettings()
+        {
+            if (this.UserSettings != null)
+            {
+                UserSettings.ExcludedSchemaTypes = this.ExcludedSchemaTypeNames?.Any() == true
+                    ? this.ExcludedSchemaTypeNames.ToList()
+                    : new List<string>();
+
+                UserSettings.ExcludedBoundOperations = this.ExcludedBoundOperationsNames?.Any() == true
+                    ? this.ExcludedBoundOperationsNames.ToList()
+                    : new List<string>();
+            }
+        }
+
+        /// <summary>
+        /// Loads schema type configurations from user settings
+        /// </summary>
+        public void LoadFromUserSettings()
+        {
+            if (UserSettings != null)
+            {
+                if (UserSettings.ExcludedSchemaTypes?.Any() == true)
+                {
+                    ExcludeSchemaTypes(UserSettings.ExcludedSchemaTypes ?? Enumerable.Empty<string>(), UserSettings.ExcludedBoundOperations ?? Enumerable.Empty<string>());
+                }
+
+                if (UserSettings.ExcludedBoundOperations?.Any() == true)
+                {
+                    foreach (var schemaType in SchemaTypes)
+                    {
+                        ExcludeBoundOperations(schemaType,
+                            UserSettings.ExcludedBoundOperations ?? Enumerable.Empty<string>());
+                    }
+                }
+            }
+        }
+
+        #region SchemaTypes
+
+        /// <summary>
         /// Creates a list of types that needs to be loaded on the UI.
         /// Initially all the types are loaded
         /// </summary>
         /// <param name="schemaTypes">A list of schema types that need to be laoded.</param>
         /// <param name="boundOperations">The associated bound operations.</param>
         public void LoadSchemaTypes(
-            IEnumerable<IEdmSchemaType> schemaTypes, IDictionary<IEdmStructuredType, List<IEdmOperation>> boundOperations)
+            IEnumerable<IEdmSchemaType> schemaTypes, IDictionary<IEdmType, List<IEdmOperation>> boundOperations)
         {
             var toLoad = new List<SchemaTypeModel>();
 
             foreach (var type in schemaTypes)
             {
-                if (!SchemaTypeModelMap.ContainsKey(type.FullName()) || SchemaTypeModelMap.Count() != schemaTypes.Count())
+                if (!SchemaTypeModelMap.ContainsKey(type.FullName()) ||
+                    SchemaTypeModelMap.Count() != schemaTypes.Count())
                 {
                     SchemaTypes = toLoad;
                     SchemaTypeModelMap.Clear();
@@ -151,7 +210,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
             foreach (var schemaType in schemaTypes)
             {
-                var schemaTypeModel = new SchemaTypeModel()
+                var schemaTypeModel = new SchemaTypeModel
                 {
                     Name = schemaType.FullTypeName(),
                     ShortName = EdmHelper.GetTypeNameFromFullName(schemaType.FullTypeName())
@@ -171,8 +230,9 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                         {
                             AddRelatedType(baseTypeFullName, structuredType.FullTypeName());
 
-                            if (SchemaTypeModelMap.TryGetValue(baseTypeFullName, out SchemaTypeModel baseTypeSchemaTypeModel)
-                                  && !baseTypeSchemaTypeModel.IsSelected)
+                            if (SchemaTypeModelMap.TryGetValue(baseTypeFullName,
+                                    out SchemaTypeModel baseTypeSchemaTypeModel)
+                                && !baseTypeSchemaTypeModel.IsSelected)
                             {
                                 baseTypeSchemaTypeModel.IsSelected = true;
                             }
@@ -181,14 +241,18 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                         // Check the required navigational property types and ensure they are selected as well
                         foreach (var property in structuredType.DeclaredProperties)
                         {
-                            string propertyName = property is IEdmNavigationProperty ? property.Type.ToStructuredType().FullTypeName() : property.Type.FullName();
+                            string propertyName = property is IEdmNavigationProperty
+                                ? property.Type.ToStructuredType().FullTypeName()
+                                : property.Type.FullName();
 
                             if (property.Type.ToStructuredType() != null || property.Type.IsEnum())
                             {
-                                propertyName = property.Type.ToStructuredType()?.FullTypeName() ?? property.Type.FullName();
+                                propertyName = property.Type.ToStructuredType()?.FullTypeName() ??
+                                               property.Type.FullName();
                                 AddRelatedType(propertyName, structuredType.FullTypeName());
 
-                                bool hasProperty = SchemaTypeModelMap.TryGetValue(propertyName, out SchemaTypeModel navigationPropertyModel);
+                                bool hasProperty = SchemaTypeModelMap.TryGetValue(propertyName,
+                                    out SchemaTypeModel navigationPropertyModel);
 
                                 if (hasProperty && !navigationPropertyModel.IsSelected)
                                 {
@@ -204,12 +268,16 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                             foreach (var operation in operations)
                             {
                                 // Check if return type of associated bound operation has been selected.
-                                if (operation.ReturnType != null && (operation.ReturnType.ToStructuredType() != null || operation.ReturnType.IsEnum()))
+                                if (operation.ReturnType != null &&
+                                    (operation.ReturnType.ToStructuredType() != null || operation.ReturnType.IsEnum()))
                                 {
-                                    string returnTypeFullName = operation.ReturnType.ToStructuredType()?.FullTypeName() ?? operation.ReturnType.FullName();
+                                    string returnTypeFullName =
+                                        operation.ReturnType.ToStructuredType()?.FullTypeName() ??
+                                        operation.ReturnType.FullName();
                                     AddRelatedType(returnTypeFullName, structuredType.FullTypeName());
 
-                                    if (SchemaTypeModelMap.TryGetValue(returnTypeFullName, out SchemaTypeModel referencedSchemaTypeModel)
+                                    if (SchemaTypeModelMap.TryGetValue(returnTypeFullName,
+                                            out SchemaTypeModel referencedSchemaTypeModel)
                                         && !referencedSchemaTypeModel.IsSelected)
                                     {
                                         referencedSchemaTypeModel.IsSelected = true;
@@ -223,10 +291,13 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                                 {
                                     if (parameter.Type.ToStructuredType() != null || parameter.Type.IsEnum())
                                     {
-                                        string parameterFullName = parameter.Type.ToStructuredType()?.FullTypeName() ?? parameter.Type.FullName();
+                                        string parameterFullName =
+                                            parameter.Type.ToStructuredType()?.FullTypeName() ??
+                                            parameter.Type.FullName();
                                         AddRelatedType(parameterFullName, structuredType.FullTypeName());
 
-                                        if (SchemaTypeModelMap.TryGetValue(parameterFullName, out SchemaTypeModel model) && !model.IsSelected)
+                                        if (SchemaTypeModelMap.TryGetValue(parameterFullName,
+                                            out SchemaTypeModel model) && !model.IsSelected)
                                         {
                                             model.IsSelected = true;
                                         }
@@ -242,15 +313,34 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                         {
                             foreach (var relatedType in relatedTypes)
                             {
-                                if (SchemaTypeModelMap.TryGetValue(relatedType, out SchemaTypeModel relatedSchemaTypeModel)
+                                if (SchemaTypeModelMap.TryGetValue(relatedType,
+                                        out SchemaTypeModel relatedSchemaTypeModel)
                                     && relatedSchemaTypeModel.IsSelected)
                                 {
                                     relatedSchemaTypeModel.IsSelected = false;
                                 }
                             }
                         }
+
+                        // deselect all related bound operations
+                        foreach (var boundOperation in schemaTypeModel.BoundOperations)
+                        {
+                            boundOperation.IsSelected = false;
+                        }
+                    }
+
+                    if (this.View is SchemaTypes view)
+                    {
+                        view.SelectedSchemaTypesCount.Text = SchemaTypes.Count(x => x.IsSelected).ToString();
                     }
                 };
+
+                // load bound operations that require the schema type
+                var boundOperationsToLoad = boundOperations
+                    .Where(x => x.Key == schemaType || x.Key.AsElementType() == schemaType)
+                    .ToDictionary(x => x.Key, x => x.Value);
+                LoadBoundOperations(schemaTypeModel, boundOperationsToLoad,
+                    ExcludedSchemaTypeNames.ToList(), SchemaTypeModelMap);
 
                 toLoad.Add(schemaTypeModel);
                 schemaTypeModel.IsSelected = true;
@@ -258,6 +348,10 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
 
             SchemaTypes = toLoad.OrderBy(o => o.Name).ToList();
+
+            _schemaTypesCount = SchemaTypes.Count();
+            _boundOperationsCount = SchemaTypes.Where(x => x?.BoundOperations?.Any() == true)
+                .SelectMany(x => x.BoundOperations).Count();
         }
 
         /// <summary>
@@ -282,10 +376,16 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// Sets schemaTypeModel isSelected property to be excluded to false
         /// </summary>
         /// <param name="schemaTypesToExclude">A list of all fullnames of schema types to be exclude.</param>
-        public void ExcludeSchemaTypes(IEnumerable<string> schemaTypesToExclude)
+        /// <param name="boundOperationsToExclude">A list of all fullnames of bound operations to be exclude.</param>
+        public void ExcludeSchemaTypes(IEnumerable<string> schemaTypesToExclude, IEnumerable<string> boundOperationsToExclude)
         {
             foreach (var schemaTypeModel in SchemaTypes)
             {
+                foreach (var boundOperationModel in schemaTypeModel.BoundOperations)
+                {
+                    boundOperationModel.IsSelected = !boundOperationsToExclude.Contains(boundOperationModel.Name);
+                }
+
                 schemaTypeModel.IsSelected = !schemaTypesToExclude.Contains(schemaTypeModel.Name);
             }
         }
@@ -296,6 +396,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public void ClearSchemaTypes()
         {
             SchemaTypes = Enumerable.Empty<SchemaTypeModel>();
+            _schemaTypesCount = 0;
         }
 
         /// <summary>
@@ -320,31 +421,176 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
         }
 
-        /// <summary>
-        /// Save the selected schema types to user settings
-        /// </summary>
-        public void SaveToUserSettings()
+        #endregion
+
+        #region BoundOperations
+
+        public IEnumerable<string> ExcludedBoundOperationsNames
         {
-            if (this.UserSettings != null)
+            get
             {
-                UserSettings.ExcludedSchemaTypes = this.ExcludedSchemaTypeNames?.Any() == true
-                    ? this.ExcludedSchemaTypeNames.ToList()
-                    : new List<string>();
+                return SchemaTypes.SelectMany(x => x.BoundOperations)
+                    .Where(o => !o.IsSelected).Select(o => o.Name).OrderBy(x => x);
             }
         }
 
         /// <summary>
-        /// Loads schema type configurations from user settings
+        /// Loads bound operations except the ones that require a type that is excluded
         /// </summary>
-        public void LoadFromUserSettings()
+        /// <param name="schemaType">a schema type model.</param>
+        /// <param name="boundOperations">a list of all the bound operations.</param>
+        /// <param name="excludedSchemaTypes">A collection of schema types that will be excluded from generated code.</param>
+        /// <param name="schemaTypeModels">a dictionary of schema type and the associated schematypemodel.</param>
+        private void LoadBoundOperations(SchemaTypeModel schemaType,
+            IDictionary<IEdmType, List<IEdmOperation>> boundOperations, ICollection<string> excludedSchemaTypes,
+            IDictionary<string, SchemaTypeModel> schemaTypeModels)
         {
-            if (UserSettings != null)
+            var toLoad = new ObservableCollection<BoundOperationModel>();
+            var alreadyAdded = new HashSet<string>();
+            foreach (KeyValuePair<IEdmType, List<IEdmOperation>> boundOperation in boundOperations)
             {
-                if (UserSettings.ExcludedOperationImports?.Any() == true)
+                IEdmType edmType = boundOperation.Key;
+                foreach (IEdmOperation operation in boundOperation.Value)
                 {
-                    ExcludeSchemaTypes(UserSettings.ExcludedSchemaTypes ?? Enumerable.Empty<string>());
+                    string name = $"{operation.Name}({edmType.FullTypeName()})";
+                    if (!alreadyAdded.Contains(name))
+                    {
+                        var boundOperationModel = new BoundOperationModel
+                        {
+                            Name = name,
+                            ShortName = operation.Name,
+                            IsSelected = IsBoundOperationIncluded(operation, excludedSchemaTypes)
+                        };
+
+                        boundOperationModel.PropertyChanged += (s, args) =>
+                        {
+                            if (s is BoundOperationModel currentBoundOperationModel)
+                            {
+                                IEnumerable<IEdmOperationParameter> parameters = operation.Parameters;
+
+                                foreach (var parameter in parameters)
+                                {
+                                    var parameterTypeName = parameter.Type.IsCollection()
+                                        ? parameter.Type.AsCollection()?.ElementType()?.FullName()
+                                        : parameter.Type.FullName();
+
+                                    if (parameterTypeName != null &&
+                                        schemaTypeModels.TryGetValue(parameterTypeName, out SchemaTypeModel model) &&
+                                        !model.IsSelected && model.IsSelected != currentBoundOperationModel.IsSelected)
+                                    {
+                                        model.IsSelected = currentBoundOperationModel.IsSelected;
+                                    }
+                                }
+
+                                string returnTypeName = operation.ReturnType?.IsCollection() == true
+                                    ? operation.ReturnType?.AsCollection()?.ElementType()?.FullName()
+                                    : operation.ReturnType?.FullName();
+
+                                if (returnTypeName != null &&
+                                    schemaTypeModels.TryGetValue(returnTypeName, out SchemaTypeModel schemaTypeModel) &&
+                                    !schemaTypeModel.IsSelected &&
+                                    schemaTypeModel.IsSelected != currentBoundOperationModel.IsSelected)
+                                {
+                                    schemaTypeModel.IsSelected = currentBoundOperationModel.IsSelected;
+                                }
+
+                                if (this.View is SchemaTypes view)
+                                {
+                                    view.SelectedBoundOperationsCount.Text = SchemaTypes
+                                        .Where(x => x.IsSelected && x.BoundOperations?.Any() == true)
+                                        .SelectMany(x => x.BoundOperations).Count(x => x.IsSelected).ToString();
+                                }
+                            }
+                        };
+                        toLoad.Add(boundOperationModel);
+
+                        alreadyAdded.Add(name);
+                    }
                 }
             }
+
+            schemaType.BoundOperations = toLoad.OrderBy(o => o.Name).ToList();
         }
+
+        /// <summary>
+        /// Checks if the bound operation should be included
+        /// </summary>
+        /// <param name="operation">bound operation.</param>
+        /// <param name="excludedTypes">A collection of excluded types.</param>
+        /// <returns>true if the bound operation should be included, otherwise false.</returns>
+        public bool IsBoundOperationIncluded(IEdmOperation operation, ICollection<string> excludedTypes)
+        {
+            IEnumerable<IEdmOperationParameter> parameters = operation.Parameters;
+
+            foreach (var parameter in parameters)
+            {
+                var parameterType = parameter.Type?.IsCollection() == true
+                    ? parameter.Type?.AsCollection()?.ElementType()?.FullName()
+                    : parameter.Type?.FullName();
+
+                if (excludedTypes.Contains(parameterType))
+                {
+                    return false;
+                }
+            }
+
+            var returnType = operation.ReturnType?.IsCollection() == true
+                ? operation.ReturnType?.AsCollection()?.ElementType()?.FullName()
+                : operation.ReturnType?.FullName();
+
+            if (excludedTypes.Contains(returnType))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public void ExcludeBoundOperations(SchemaTypeModel schemaType, IEnumerable<string> operationsToExclude)
+        {
+            foreach (var operationModel in schemaType.BoundOperations)
+            {
+                operationModel.IsSelected = !operationsToExclude.Contains(operationModel.Name);
+            }
+        }
+
+        public void ClearBoundOperationList(SchemaTypeModel schemaType)
+        {
+            schemaType.BoundOperations = new List<BoundOperationModel>();
+        }
+
+        public void SelectAllBoundOperations()
+        {
+            foreach (var boundOperation in SchemaTypes.SelectMany(x => x.BoundOperations))
+            {
+                boundOperation.IsSelected = true;
+            }
+        }
+
+        public void DeselectAllBoundOperations()
+        {
+            foreach (var boundOperation in SchemaTypes.SelectMany(x => x.BoundOperations))
+            {
+                boundOperation.IsSelected = false;
+            }
+        }
+
+        public void SelectAllBoundOperationsForSchemaType(SchemaTypeModel schemaType)
+        {
+            foreach (var boundOperation in schemaType.BoundOperations)
+            {
+                boundOperation.IsSelected = true;
+            }
+        }
+
+        public void DeselectAllBoundOperationsForSchemaType(SchemaTypeModel schemaType)
+        {
+            foreach (var boundOperation in schemaType.BoundOperations)
+            {
+                boundOperation.IsSelected = false;
+            }
+        }
+
+        #endregion
     }
 }

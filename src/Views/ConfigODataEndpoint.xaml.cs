@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Models;
@@ -72,12 +71,12 @@ namespace Microsoft.OData.ConnectedService.Views
             var jsonFileText = File.ReadAllText(openFileDialog.FileName);
             if (string.IsNullOrWhiteSpace(jsonFileText))
             {
-              MessageBox.Show("File have not content.", "Open OData Connected Service json-file", MessageBoxButton.OK, MessageBoxImage.Warning);
+               MessageBox.Show("File have not content.", "Open OData Connected Service json-file", MessageBoxButton.OK, MessageBoxImage.Warning);
                return;
             }
             if (JObject.Parse(jsonFileText) == null)
             {
-               MessageBox.Show("Can't convert file content to JObject.", "Open OData Connected Service json-file", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Can't convert file content to JObject.", "Open OData Connected Service json-file", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             var microsoftConnectedServiceData = JsonConvert.DeserializeObject<ConnectedServiceJsonFileData>(jsonFileText);
@@ -99,6 +98,8 @@ namespace Microsoft.OData.ConnectedService.Views
                 this.UserSettings.CustomHttpHeaders = microsoftConnectedServiceData.ExtendedData?.CustomHttpHeaders ?? this.UserSettings.CustomHttpHeaders;
                 this.UserSettings.IncludeCustomHeaders = microsoftConnectedServiceData.ExtendedData?.IncludeCustomHeaders ?? this.UserSettings.IncludeCustomHeaders;
                 this.UserSettings.ExcludedOperationImports = microsoftConnectedServiceData.ExtendedData?.ExcludedOperationImports ?? new List<string>();
+                this.UserSettings.ExcludedBoundOperations = microsoftConnectedServiceData.ExtendedData?.ExcludedBoundOperations ?? new List<string>();
+                this.UserSettings.ExcludedSchemaTypes = microsoftConnectedServiceData.ExtendedData?.ExcludedSchemaTypes ?? new List<string>();
                 this.UserSettings.WebProxyHost = microsoftConnectedServiceData.ExtendedData?.WebProxyHost ?? this.UserSettings.WebProxyHost;
                 this.UserSettings.IncludeWebProxy = microsoftConnectedServiceData.ExtendedData?.IncludeWebProxy ?? this.UserSettings.IncludeWebProxy;
                 this.UserSettings.IncludeWebProxyNetworkCredentials = microsoftConnectedServiceData.ExtendedData?.IncludeWebProxyNetworkCredentials ?? this.UserSettings.IncludeWebProxyNetworkCredentials;
@@ -116,19 +117,31 @@ namespace Microsoft.OData.ConnectedService.Views
 
                 ServiceWizard.OperationImportsViewModel.UserSettings = this.UserSettings;
 
-                // get Operation Imports from metadata for excluding ExcludedOperationImports
+                // get Operation Imports and bound operations from metadata for excluding ExcludedOperationImports and ExcludedBoundOperations
                 try
                 {
                     ServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath = ServiceWizard.ConfigODataEndpointViewModel.GetMetadata(out var version);
                     ServiceWizard.ConfigODataEndpointViewModel.EdmxVersion = version;
                     if (version == Constants.EdmxVersion4)
                     {
-                        var model = EdmHelper.GetEdmModelFromFile(ServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath);
-                        var operations = EdmHelper.GetOperationImports(model);
+                        Edm.IEdmModel model = EdmHelper.GetEdmModelFromFile(ServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath);
+
+                        IEnumerable<Edm.IEdmSchemaType> entityTypes = EdmHelper.GetSchemaTypes(model);
+                        IDictionary<Edm.IEdmType, List<Edm.IEdmOperation>> boundOperations = EdmHelper.GetBoundOperations(model);
+                        ServiceWizard.SchemaTypesViewModel.LoadSchemaTypes(entityTypes, boundOperations);
+                        ServiceWizard.ProcessedEndpointForSchemaTypes = this.UserSettings.Endpoint;
+                        ServiceWizard.SchemaTypesViewModel.LoadFromUserSettings();
+
+                        IEnumerable<Edm.IEdmOperationImport> operations = EdmHelper.GetOperationImports(model);
                         ServiceWizard.OperationImportsViewModel.LoadOperationImports(operations, new HashSet<string>(), new Dictionary<string, SchemaTypeModel>());
                         ServiceWizard.ProcessedEndpointForOperationImports = this.UserSettings.Endpoint;
                         ServiceWizard.OperationImportsViewModel.LoadFromUserSettings();
-                        ServiceWizard.SchemaTypesViewModel.LoadFromUserSettings();
+
+                        //IDictionary<Edm.IEdmType, List<Edm.IEdmOperation>> allBoundOperations = EdmHelper.GetBoundOperations(model);
+                        //ServiceWizard.BoundOperationsViewModel.LoadBoundOperations(allBoundOperations,
+                        //    new HashSet<string>(), new Dictionary<string, SchemaTypeModel>());
+                        //ServiceWizard.ProcessedEndpointForBoundOperations = this.UserSettings.Endpoint;
+                        //ServiceWizard.BoundOperationsViewModel.LoadFromUserSettings();
                     }
                 }
                 catch

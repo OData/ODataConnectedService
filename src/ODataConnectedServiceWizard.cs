@@ -1,6 +1,6 @@
 ﻿//---------------------------------------------------------------------------------
 // <copyright file="ODataConnectedServiceWizard.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //---------------------------------------------------------------------------------
@@ -13,6 +13,7 @@ using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.ViewModels;
 using Microsoft.OData.ConnectedService.Views;
+using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService
@@ -56,8 +57,8 @@ namespace Microsoft.OData.ConnectedService
             ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(this.UserSettings, this);
             AdvancedSettingsViewModel = new AdvancedSettingsViewModel(this.UserSettings);
             SchemaTypesViewModel = new SchemaTypesViewModel(this.UserSettings);
-            OperationImportsViewModel = new OperationImportsViewModel(this.UserSettings);
 
+            OperationImportsViewModel = new OperationImportsViewModel(this.UserSettings);
             OperationImportsViewModel.PageEntering += OperationImportsViewModel_PageEntering;
 
             SchemaTypesViewModel.PageEntering += SchemaTypeSelectionViewModel_PageEntering;
@@ -131,6 +132,7 @@ namespace Microsoft.OData.ConnectedService
                 var serviceConfigurationV4 = new ServiceConfigurationV4
                 {
                     ExcludedOperationImports = OperationImportsViewModel.ExcludedOperationImportsNames.ToList(),
+                    ExcludedBoundOperations = SchemaTypesViewModel.ExcludedBoundOperationsNames.ToList(),
                     IgnoreUnexpectedElementsAndAttributes =
                         AdvancedSettingsViewModel.IgnoreUnexpectedElementsAndAttributes,
                     EnableNamingAlias = AdvancedSettingsViewModel.EnableNamingAlias,
@@ -264,7 +266,9 @@ namespace Microsoft.OData.ConnectedService
 
                     if (Context.IsUpdating)
                     {
-                        entityTypeViewModel.ExcludeSchemaTypes(this._serviceConfig?.ExcludedSchemaTypes ?? Enumerable.Empty<string>());
+                        entityTypeViewModel.ExcludeSchemaTypes(
+                            this._serviceConfig?.ExcludedSchemaTypes ?? Enumerable.Empty<string>(),
+                            this._serviceConfig?.ExcludedBoundOperations ?? Enumerable.Empty<string>());
                     }
                 }
 
@@ -274,8 +278,9 @@ namespace Microsoft.OData.ConnectedService
 
         public void SchemaTypeSelectionViewModel_PageLeaving(object sender, EventArgs args)
         {
-            // exclude related operationimports for excluded types
             var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+
+            // exclude related operation imports for excluded types
             var operations = EdmHelper.GetOperationImports(model);
             var operationsToExclude = operations.Where(x => !OperationImportsViewModel.IsOperationImportIncluded(x,
                 SchemaTypesViewModel.ExcludedSchemaTypeNames.ToList())).ToList();
@@ -284,6 +289,19 @@ namespace Microsoft.OData.ConnectedService
                 if (operationsToExclude.Any(x => x.Name == operationImport.Name))
                 {
                     operationImport.IsSelected = false;
+                }
+            }
+
+            // exclude bound operations for excluded types
+            var boundOperations = EdmHelper.GetBoundOperations(model);
+            var boundOperationsToExclude = boundOperations.SelectMany(x => x.Value)
+                .Where(x => !SchemaTypesViewModel.IsBoundOperationIncluded(x,
+                    SchemaTypesViewModel.ExcludedSchemaTypeNames.ToList())).ToList();
+            foreach (var boundOperation in SchemaTypesViewModel.SchemaTypes.SelectMany(x => x.BoundOperations))
+            {
+                if (boundOperationsToExclude.Any(x => $"{x.Name}({x.Parameters.First().Type.Definition.FullTypeName()})" == boundOperation.Name))
+                {
+                    boundOperation.IsSelected = false;
                 }
             }
         }

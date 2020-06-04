@@ -186,7 +186,9 @@
     <Compile Include="Common\ExtensionsHelper.cs" />
     <Compile Include="Common\ProjectHelper.cs" />
     <Compile Include="Common\UserSettingsPersistenceHelper.cs" />
+    <Compile Include="Converters\SchemaTypeModelToVisibilityConverter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Models\BoundOperationModel.cs" />
     <Compile Include="Models\SchemaTypeModel.cs" />
     <Compile Include="Models\OperationImportModel.cs" />
     <Compile Include="Models\ServiceConfiguration.cs" />

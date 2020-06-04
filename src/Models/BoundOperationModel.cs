@@ -1,35 +1,21 @@
 ﻿//-----------------------------------------------------------------------------
-// <copyright file="SchemaTypeModel.cs" company=".NET Foundation">
+// <copyright file="BoundOperationModel.cs" company=".NET Foundation">
 //      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //----------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Microsoft.OData.ConnectedService.Models
 {
-    class SchemaTypeModel : INotifyPropertyChanged
+    class BoundOperationModel : INotifyPropertyChanged
     {
         private bool _isSelected;
-
-        public SchemaTypeModel(): this(null, null)
-        {
-        }
-
-        public SchemaTypeModel(string name, string shortName)
-        {
-            Name = name;
-            ShortName = shortName;
-        }
 
         public string Name { get; set; }
 
         public string ShortName { get; set; }
-
-        public IEnumerable<BoundOperationModel> BoundOperations { get; set; }
-            = new List<BoundOperationModel>();
 
         public bool IsSelected
         {

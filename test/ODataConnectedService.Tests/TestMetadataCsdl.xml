@@ -64,17 +64,30 @@
         <Parameter Name="lon" Nullable="false" Type="Edm.Double"/>
         <ReturnType Type="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport"/>
       </Function>
+      <Function Name="GetFavoriteAirline" IsBound="true" EntitySetPath="person">
+	      <Parameter Name="person" Type="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person"/>
+	      <ReturnType Type="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline"/>
+      </Function>
       <Function Name="GetFriendsTrips" IsBound="true">
-        <Parameter Name="person" Type="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person"/>
-        <Parameter Name="userName" Nullable="false" Type="Edm.String" Unicode="false"/>
-        <ReturnType Type="Collection(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)"/>
+	      <Parameter Name="person" Type="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person"/>
+	      <Parameter Name="userName" Type="Edm.String" Nullable="false" Unicode="false"/>
+	      <ReturnType Type="Collection(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)"/>
+      </Function>
+      <Function Name="GetInvolvedPeople" IsBound="true">
+	      <Parameter Name="trip" Type="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip"/>
+	      <ReturnType Type="Collection(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)"/>
+      </Function>
+      <Action Name="ResetDataSource"/>
+      <Function Name="UpdatePersonLastName" IsBound="true">
+	      <Parameter Name="person" Type="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person"/>
+	      <Parameter Name="lastName" Type="Edm.String" Nullable="false" Unicode="false"/>
+	      <ReturnType Type="Edm.Boolean" Nullable="false"/>
       </Function>
       <Action Name="ShareTrip" IsBound="true">
-        <Parameter Name="personInstance" Type="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person"/>
-        <Parameter Name="userName" Nullable="false" Type="Edm.String" Unicode="false"/>
-        <Parameter Name="tripId" Nullable="false" Type="Edm.Int32"/>
+	      <Parameter Name="personInstance" Type="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person"/>
+	      <Parameter Name="userName" Type="Edm.String" Nullable="false" Unicode="false"/>
+	      <Parameter Name="tripId" Type="Edm.Int32" Nullable="false"/>
       </Action>
-      <Action Name="ResetDataSource"/>
       <EntityContainer Name="Container">
         <EntitySet Name="People" EntityType="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person">
           <NavigationPropertyBinding Target="People" Path="Friends"/>

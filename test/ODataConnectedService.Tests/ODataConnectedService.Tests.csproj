@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\EdmHelperTests.cs" />
+    <Compile Include="Converters\SchemaTypeModelToVisibilityConverterTests.cs" />
     <Compile Include="ODataConnectedServiceWizardTests.cs" />
     <Compile Include="Common\ProjectHelperTests.cs" />
     <Compile Include="ViewModels\ConfigOdataEndPointViewModelTests.cs" />
@@ -186,6 +187,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

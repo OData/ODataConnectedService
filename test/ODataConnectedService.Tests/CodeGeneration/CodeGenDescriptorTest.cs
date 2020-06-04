@@ -1,6 +1,6 @@
 ﻿//---------------------------------------------------------------------------
 // <copyright file="CodeGenDescriptorTest.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors.  All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors.  All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //---------------------------------------------------------------------------
@@ -20,6 +20,7 @@ using ODataConnectedService.Tests;
 using System.Text;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using ODataConnectedService.Tests.TestHelpers;
 
 namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
@@ -400,6 +401,157 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             Assert.IsNotNull(tt);
             var ttExpectedText = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "CodeGeneration", "TestConfigAllOptionsSet.txt"));
             ttExpectedText = ttExpectedText.Replace("$$CsdlFullPath$$", Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "Csdl.xml"));
+            var ttSavedText = File.ReadAllText(tt.SourceFile);
+            Assert.AreEqual(ttExpectedText, ttSavedText);
+        }
+
+        [DataTestMethod]
+        [DataRow("cs", "TestConfigBasic.txt")]
+        [DataRow("vb", "TestConfigBasicVB.txt")]
+        public void TestAddGeneratedClientCode_GeneratesT4TemplateFiles_WithIncludeT4File_WithExcludedSchemaTypes(string lang, string referenceFile)
+        {
+            var serviceName = "MyService";
+            ServiceConfiguration serviceConfig = new ServiceConfigurationV4()
+            {
+                ServiceName = serviceName,
+                Endpoint = "https://service/$metadata",
+                GeneratedFileNamePrefix = "Reference",
+                IncludeT4File = true,
+                ExcludedSchemaTypes = new List<string>()
+                {
+                    "Type1",
+                    "Type2"
+                }
+            };
+
+            var codeGenFactory = new TestODataT4CodeGeneratorFactory();
+            var handlerHelper = new TestConnectedServiceHandlerHelper();
+            var codeGenDescriptor = SetupCodeGenDescriptor(serviceConfig, serviceName, codeGenFactory, handlerHelper,
+                lang == "cs" ? ODataT4CodeGenerator.LanguageOption.CSharp : ODataT4CodeGenerator.LanguageOption.VB);
+
+            codeGenDescriptor.AddGeneratedClientCodeAsync().Wait();
+
+            var ttIncludeSourcePath = Path.Combine(Directory.GetCurrentDirectory(), "Templates", "ODataT4CodeGenerator.ttinclude");
+            var ttIncludeOutputPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "Reference.ttinclude");
+            var fileManagerSourcePath = Path.Combine(Directory.GetCurrentDirectory(), "Templates", "ODataT4CodeGenFilesManager.ttinclude");
+            var fileManagerOutputPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "ODataT4CodeGenFilesManager.ttinclude");
+            var ttOutputPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "Reference.tt");
+            var csdlFileName = String.Concat(serviceName, "Csdl.xml");
+
+            Assert.IsTrue(handlerHelper.AddedFiles.Contains((fileManagerOutputPath, fileManagerSourcePath)));
+            var ttInclude = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == ttIncludeOutputPath);
+            Assert.IsNotNull(ttInclude);
+            var ttIncludeOriginalText = File.ReadAllText(ttIncludeSourcePath);
+            var ttIncludeExpectedText = ttIncludeOriginalText.Replace("output extension=\".cs\"", $"output extension=\".{lang}\"");
+            var ttIncludeSavedText = File.ReadAllText(ttInclude.SourceFile);
+            Assert.AreEqual(ttIncludeExpectedText, ttIncludeSavedText);
+            var tt = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == ttOutputPath);
+            Assert.IsNotNull(tt);
+            var ttExpectedText = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "CodeGeneration", referenceFile));
+            ttExpectedText = ttExpectedText.Replace("$$CsdlFullPath$$", Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, csdlFileName));
+            ttExpectedText = ttExpectedText.Replace("$$CsdlRelativePath$$", csdlFileName);
+            ttExpectedText = Regex.Replace(ttExpectedText, "(public const string ExcludedSchemaTypes = )\"\";", "$1\"" + string.Join(",", serviceConfig.ExcludedSchemaTypes) + "\";");
+            var ttSavedText = File.ReadAllText(tt.SourceFile);
+            Assert.AreEqual(ttExpectedText, ttSavedText);
+        }
+
+        [DataTestMethod]
+        [DataRow("cs", "TestConfigBasic.txt")]
+        [DataRow("vb", "TestConfigBasicVB.txt")]
+        public void TestAddGeneratedClientCode_GeneratesT4TemplateFiles_WithIncludeT4File_WithExcludedOperationImports(string lang, string referenceFile)
+        {
+            var serviceName = "MyService";
+            ServiceConfiguration serviceConfig = new ServiceConfigurationV4()
+            {
+                ServiceName = serviceName,
+                Endpoint = "https://service/$metadata",
+                GeneratedFileNamePrefix = "Reference",
+                IncludeT4File = true,
+                ExcludedOperationImports = new List<string>()
+                {
+                    "OperationImport1",
+                    "OperationImport2"
+                }
+            };
+
+            var codeGenFactory = new TestODataT4CodeGeneratorFactory();
+            var handlerHelper = new TestConnectedServiceHandlerHelper();
+            var codeGenDescriptor = SetupCodeGenDescriptor(serviceConfig, serviceName, codeGenFactory, handlerHelper,
+                lang == "cs" ? ODataT4CodeGenerator.LanguageOption.CSharp : ODataT4CodeGenerator.LanguageOption.VB);
+
+            codeGenDescriptor.AddGeneratedClientCodeAsync().Wait();
+
+            var ttIncludeSourcePath = Path.Combine(Directory.GetCurrentDirectory(), "Templates", "ODataT4CodeGenerator.ttinclude");
+            var ttIncludeOutputPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "Reference.ttinclude");
+            var fileManagerSourcePath = Path.Combine(Directory.GetCurrentDirectory(), "Templates", "ODataT4CodeGenFilesManager.ttinclude");
+            var fileManagerOutputPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "ODataT4CodeGenFilesManager.ttinclude");
+            var ttOutputPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "Reference.tt");
+            var csdlFileName = String.Concat(serviceName, "Csdl.xml");
+
+            Assert.IsTrue(handlerHelper.AddedFiles.Contains((fileManagerOutputPath, fileManagerSourcePath)));
+            var ttInclude = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == ttIncludeOutputPath);
+            Assert.IsNotNull(ttInclude);
+            var ttIncludeOriginalText = File.ReadAllText(ttIncludeSourcePath);
+            var ttIncludeExpectedText = ttIncludeOriginalText.Replace("output extension=\".cs\"", $"output extension=\".{lang}\"");
+            var ttIncludeSavedText = File.ReadAllText(ttInclude.SourceFile);
+            Assert.AreEqual(ttIncludeExpectedText, ttIncludeSavedText);
+            var tt = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == ttOutputPath);
+            Assert.IsNotNull(tt);
+            var ttExpectedText = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "CodeGeneration", referenceFile));
+            ttExpectedText = ttExpectedText.Replace("$$CsdlFullPath$$", Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, csdlFileName));
+            ttExpectedText = ttExpectedText.Replace("$$CsdlRelativePath$$", csdlFileName);
+            ttExpectedText = Regex.Replace(ttExpectedText, "(public const string ExcludedOperationImports = )\"\";", "$1\"" + string.Join(",", (serviceConfig as ServiceConfigurationV4).ExcludedOperationImports) + "\";");
+            var ttSavedText = File.ReadAllText(tt.SourceFile);
+            Assert.AreEqual(ttExpectedText, ttSavedText);
+        }
+
+        [DataTestMethod]
+        [DataRow("cs", "TestConfigBasic.txt")]
+        [DataRow("vb", "TestConfigBasicVB.txt")]
+        public void TestAddGeneratedClientCode_GeneratesT4TemplateFiles_WithIncludeT4File_WithExcludedBoundOperations(string lang, string referenceFile)
+        {
+            var serviceName = "MyService";
+            ServiceConfiguration serviceConfig = new ServiceConfigurationV4()
+            {
+                ServiceName = serviceName,
+                Endpoint = "https://service/$metadata",
+                GeneratedFileNamePrefix = "Reference",
+                IncludeT4File = true,
+                ExcludedBoundOperations = new List<string>()
+                {
+                    "BoundOperation1(Type1)",
+                    "BoundOperation2(Type2)",
+                    "BoundOperation3(Type1)"
+                }
+            };
+
+            var codeGenFactory = new TestODataT4CodeGeneratorFactory();
+            var handlerHelper = new TestConnectedServiceHandlerHelper();
+            var codeGenDescriptor = SetupCodeGenDescriptor(serviceConfig, serviceName, codeGenFactory, handlerHelper,
+                lang == "cs" ? ODataT4CodeGenerator.LanguageOption.CSharp : ODataT4CodeGenerator.LanguageOption.VB);
+
+            codeGenDescriptor.AddGeneratedClientCodeAsync().Wait();
+
+            var ttIncludeSourcePath = Path.Combine(Directory.GetCurrentDirectory(), "Templates", "ODataT4CodeGenerator.ttinclude");
+            var ttIncludeOutputPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "Reference.ttinclude");
+            var fileManagerSourcePath = Path.Combine(Directory.GetCurrentDirectory(), "Templates", "ODataT4CodeGenFilesManager.ttinclude");
+            var fileManagerOutputPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "ODataT4CodeGenFilesManager.ttinclude");
+            var ttOutputPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "Reference.tt");
+            var csdlFileName = String.Concat(serviceName, "Csdl.xml");
+
+            Assert.IsTrue(handlerHelper.AddedFiles.Contains((fileManagerOutputPath, fileManagerSourcePath)));
+            var ttInclude = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == ttIncludeOutputPath);
+            Assert.IsNotNull(ttInclude);
+            var ttIncludeOriginalText = File.ReadAllText(ttIncludeSourcePath);
+            var ttIncludeExpectedText = ttIncludeOriginalText.Replace("output extension=\".cs\"", $"output extension=\".{lang}\"");
+            var ttIncludeSavedText = File.ReadAllText(ttInclude.SourceFile);
+            Assert.AreEqual(ttIncludeExpectedText, ttIncludeSavedText);
+            var tt = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == ttOutputPath);
+            Assert.IsNotNull(tt);
+            var ttExpectedText = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "CodeGeneration", referenceFile));
+            ttExpectedText = ttExpectedText.Replace("$$CsdlFullPath$$", Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, csdlFileName));
+            ttExpectedText = ttExpectedText.Replace("$$CsdlRelativePath$$", csdlFileName);
+            ttExpectedText = Regex.Replace(ttExpectedText, "(public const string ExcludedBoundOperations = )\"\";", "$1\"" + string.Join(",", (serviceConfig as ServiceConfigurationV4).ExcludedBoundOperations) + "\";");
             var ttSavedText = File.ReadAllText(tt.SourceFile);
             Assert.AreEqual(ttExpectedText, ttSavedText);
         }

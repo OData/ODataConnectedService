@@ -1,18 +1,9 @@
-﻿using Microsoft.OData.ConnectedService.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using Microsoft.OData.ConnectedService.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.OData.ConnectedService.Models;
 
 namespace Microsoft.OData.ConnectedService.Views
 {
@@ -26,14 +17,56 @@ namespace Microsoft.OData.ConnectedService.Views
             InitializeComponent();
         }
 
-        private void UnselectAll_Click(object sender, RoutedEventArgs e)
+        private void DeselectAllSchemaTypes_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as SchemaTypesViewModel).DeselectAllSchemaTypes();
+            (DataContext as SchemaTypesViewModel)?.DeselectAllSchemaTypes();
         }
 
-        private void SelectAll_Click(object sender, RoutedEventArgs e)
+        private void SelectAllSchemaTypes_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as SchemaTypesViewModel).SelectAllSchemaTypes();
+            (DataContext as SchemaTypesViewModel)?.SelectAllSchemaTypes();
+        }
+
+        //public static RoutedCommand SelectAllBoundOperationsForSchemaTypeCmd = new RoutedCommand();
+
+        private void SelectAllBoundOperationsForSchemaTypeCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Parameter is SchemaTypeModel schemaTypeModel)
+            {
+                (DataContext as SchemaTypesViewModel)?.SelectAllBoundOperationsForSchemaType(schemaTypeModel);
+            }
+        }
+
+        private void SelectAllBoundOperationsForSchemaTypeCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = e.Parameter is SchemaTypeModel schemaTypeModel &&
+                           schemaTypeModel.BoundOperations.Any(x => !x.IsSelected);
+        }
+
+        //public static RoutedCommand DeselectAllBoundOperationsForSchemaTypeCmd = new RoutedCommand();
+
+        private void DeselectAllBoundOperationsForSchemaTypeCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Parameter is SchemaTypeModel schemaTypeModel)
+            {
+                (DataContext as SchemaTypesViewModel)?.DeselectAllBoundOperationsForSchemaType(schemaTypeModel);
+            }
+        }
+
+        private void DeselectAllBoundOperationsForSchemaTypeCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = e.Parameter is SchemaTypeModel schemaTypeModel &&
+                           schemaTypeModel.BoundOperations.Any(x => x.IsSelected);
+        }
+
+        private void SelectAllBoundOperations_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as SchemaTypesViewModel)?.SelectAllBoundOperations();
+        }
+
+        private void DeselectAllBoundOperations_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as SchemaTypesViewModel)?.DeselectAllBoundOperations();
         }
     }
 }

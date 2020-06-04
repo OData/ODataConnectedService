@@ -56,6 +56,13 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
+        public void ValidateAndSetExcludedBoundOperationsFromStringShouldReturnListOfstring()
+        {
+            codeGenerator.ValidateAndSetExcludedBoundOperationsFromString("Func1(Type1), Func2(Type2),      Func3(Type3), ,Func4(Type4)  ");
+            codeGenerator.ExcludedBoundOperations.ShouldBeEquivalentTo(new List<string>() { "Func1(Type1)", "Func2(Type2)", "Func3(Type3)", "Func4(Type4)" });
+        }
+
+        [TestMethod]
         public void ValidateAndSetTargetLanguageFromStringShouldSetTargetLanguageToCSharp()
         {
             codeGenerator.ValidateAndSetTargetLanguageFromString("CSharp");

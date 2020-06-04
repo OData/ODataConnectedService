@@ -78,6 +78,7 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             MultipleFilesManager = FilesManager.Create(this.Host, null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
+            ExcludedBoundOperations = this.ExcludedBoundOperations,
             ExcludedSchemaTypes = this.ExcludedSchemaTypes,
             EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute
         };
@@ -117,6 +118,7 @@ THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             MultipleFilesManager = FilesManager.Create(this.Host, null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
+            ExcludedBoundOperations = this.ExcludedBoundOperations,
             ExcludedSchemaTypes = this.ExcludedSchemaTypes,
             EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute
         };
@@ -215,7 +217,10 @@ public static class Configuration
 	// Comma-separated list of the names of operation imports to exclude from the generated code
 	public const string ExcludedOperationImports = "";
 
-     // Comma-separated list of the names of entity types to exclude from the generated code
+	// Comma-separated list of the names of bound operations to exclude from the generated code
+	public const string ExcludedBoundOperations = "";
+
+    // Comma-separated list of the names of entity types to exclude from the generated code
 	public const string ExcludedSchemaTypes = "";
 }
 
@@ -413,6 +418,24 @@ public IEnumerable <string> ExcludedOperationImports
     set
     {
         excludedOperationImports = value;
+    }
+}
+
+private IEnumerable<string> excludedBoundOperations = new List<string>();
+
+/// <summary>
+/// list of bound operations to exclude from the generated code
+/// </summary>
+public IEnumerable <string> ExcludedBoundOperations
+{
+    get
+    {
+        return excludedBoundOperations;
+    }
+
+    set
+    {
+        excludedBoundOperations = value;
     }
 }
 
@@ -696,6 +719,14 @@ public void ValidateAndSetExcludedOperationImportsFromString(string inputValue)
     this.ExcludedOperationImports = inputValue.Split(',').Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
 }
 
+/// Set the ExcludedBoundOperations property with the given value.
+/// </summary>
+/// <param name="inputValue">Comma-separated list of bound operation names</param>
+public void ValidateAndSetExcludedBoundOperationsFromString(string inputValue)
+{
+    this.ExcludedBoundOperations = inputValue.Split(',').Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
+}
+
 /// Set the ExcludedSchemaTypes property with the given value.
 /// </summary>
 /// <param name="inputValue">Comma-separated list of operation import names</param>
@@ -721,6 +752,8 @@ private void ApplyParametersFromConfigurationClass()
     this.GenerateMultipleFiles = Configuration.GenerateMultipleFiles;
     this.SetCustomHttpHeadersFromString(Configuration.CustomHttpHeaders);
     this.ExcludedOperationImports = Configuration.ExcludedOperationImports.Split(',')
+        .Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
+    this.ExcludedBoundOperations = Configuration.ExcludedBoundOperations.Split(',')
         .Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
     this.ExcludedSchemaTypes = Configuration.ExcludedSchemaTypes.Split(',')
         .Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
@@ -1163,7 +1196,16 @@ public class CodeGenerationContext
         set;
     }
 
-        /// <summary>
+    /// <summary>
+	/// list of bound operations to omit from the generated code
+	/// </summary>
+    public IEnumerable<string> ExcludedBoundOperations
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
 	/// list of entity types to omit from the generated code
 	/// </summary>
     public IEnumerable<string> ExcludedSchemaTypes
@@ -1858,6 +1900,11 @@ public abstract class ODataClientTemplate : TemplateBase
                 {
                     IEdmTypeReference edmTypeReference = function.Parameters.First().Type;
 
+                    if (this.context.ExcludedBoundOperations.Contains($"{function.Name}({edmTypeReference.Definition.FullTypeName()})"))
+                    {
+                        continue;
+                    }
+
                     if(this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(edmTypeReference.FullName()))
                     {
                         continue;
@@ -1933,6 +1980,11 @@ public abstract class ODataClientTemplate : TemplateBase
                 if (action.IsBound)
                 {
                     IEdmTypeReference edmTypeReference = action.Parameters.First().Type;
+
+                    if (this.context.ExcludedBoundOperations.Contains($"{action.Name}({edmTypeReference.Definition.FullTypeName()})"))
+                    {
+                        continue;
+                    }
 
                     if(this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(edmTypeReference.FullName()))
                     {
@@ -2389,6 +2441,13 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             foreach (IEdmFunction function in operations.OfType<IEdmFunction>())
             {
+                IEdmTypeReference edmTypeReference = function.Parameters.First().Type;
+
+                if (this.context.ExcludedBoundOperations.Contains($"{function.Name}({edmTypeReference.Definition.FullTypeName()})"))
+                {
+                    continue;
+                }
+
                 string parameterString, parameterExpressionString, parameterTypes, parameterValues;
                 bool useEntityReference;
                 bool hideBaseMethod = this.CheckMethodsInBaseClass(structuredType.BaseType, function, boundOperationsMap);
@@ -2413,6 +2472,13 @@ public abstract class ODataClientTemplate : TemplateBase
 
             foreach (IEdmAction action in operations.OfType<IEdmAction>())
             {
+                IEdmTypeReference edmTypeReference = action.Parameters.First().Type;
+
+                if (this.context.ExcludedBoundOperations.Contains($"{action.Name}({edmTypeReference.Definition.FullTypeName()})"))
+                {
+                    continue;
+                }
+
                 string parameterString, parameterExpressionString, parameterTypes, parameterValues;
                 bool useEntityReference;
                 bool hideBaseMethod = this.CheckMethodsInBaseClass(structuredType.BaseType, action, boundOperationsMap);
@@ -2927,8 +2993,8 @@ public abstract class ODataClientTemplate : TemplateBase
     }
 
     /// <summary>
-    /// Returns a non-conflicting name for the container property. 
-    /// The preferred name for the container property will be suffixed with an integer 
+    /// Returns a non-conflicting name for the container property.
+    /// The preferred name for the container property will be suffixed with an integer
     /// in the odd case that there exists a declared property with a similar name
     /// </summary>
     private string GetContainerPropertyName(IEdmStructuredType structuredType)
@@ -2936,7 +3002,7 @@ public abstract class ODataClientTemplate : TemplateBase
         int suffix = 2;
         bool conflict = true;
         string containerPropertyTemp = ContainerPropertyBase;
-        
+
         do
         {
             IEdmStructuredType tempType = structuredType;

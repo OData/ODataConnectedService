@@ -40,6 +40,6 @@ namespace Microsoft.OData.ConnectedService.Models
         public bool IgnoreUnexpectedElementsAndAttributes { get; set; }
         public bool IncludeT4File { get; set; }
         public List<string> ExcludedOperationImports;
-        
+        public List<string> ExcludedBoundOperations;
     }
 }
