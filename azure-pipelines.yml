@@ -197,3 +197,11 @@ stages:
               --description "OData Connected Service" `
               --descriptionUrl "https://github.com/OData/ODataConnectedService" 
             displayName: Code signing - VSIX
+
+          # publish the vsix as an artifact so we can download it after the build
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact: SignedVSIX'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)/VSIX'
+              ArtifactName: 'SignedVSIX'
+              publishLocation: 'Container'
