@@ -1,6 +1,6 @@
 ﻿//---------------------------------------------------------------------------------
 // <copyright file="ODataT4CodeGeneratorTests.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //---------------------------------------------------------------------------------
@@ -164,6 +164,8 @@ namespace ODataConnectedService.Tests
             ODataT4CodeGeneratorTestDescriptors.Simple.Verify(code, false/*isCSharp*/, true/*useDSC*/);
         }
 
+
+
         [TestMethod]
         public void CodeGenSimpleEdmxMultipleFiles()
         {
@@ -185,6 +187,22 @@ namespace ODataConnectedService.Tests
             Assert.AreEqual(expectedPersonGender, actualPersonGender);
             Assert.AreEqual(expectedCity, actualCity);
             Assert.AreEqual(expectedExtensionMethods, actualExtenisonMethods);
+        }
+
+        [TestMethod]
+        public void CodeGenEntityBooleanPropertyWithDefaultValueEdmx()
+        {
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Metadata, null, true, false);
+            ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Verify(code, true/*isCSharp*/, false/*useDSC*/);
+
+            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Metadata, null, true, true, false, false, null, true);
+            ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Verify(code, true/*isCSharp*/, true/*useDSC*/);
+
+            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Metadata, null, false, false);
+            ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Verify(code, false/*isCSharp*/, false/*useDSC*/);
+
+            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Metadata, null, false, true, false, false, null, true);
+            ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Verify(code, false/*isCSharp*/, true/*useDSC*/);
         }
 
         [TestMethod]
@@ -707,7 +725,7 @@ namespace ODataConnectedService.Tests
                     ExcludedSchemaTypes = null,
                     EmitContainerPropertyAttribute = true
                 };
-                
+
                 var generatedCode = t4CodeGenerator.TransformText();
                 var expectedCode = ODataT4CodeGeneratorTestDescriptors.GetFileContent(expectedCodeFileName);
 

@@ -2,7 +2,7 @@
 /*
 //---------------------------------------------------------------------------------
 // <copyright file="ODataT4CodeGenerator.ttinclude" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors.  All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors.  All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //---------------------------------------------------------------------------------
@@ -3458,6 +3458,12 @@ internal static class Utils
                     if (valueClrType.Equals(clientTemplate.StringTypeName))
                     {
                         defaultValue = "\"" + defaultValue + "\"";
+                    }
+                    else if (valueClrType.Equals(clientTemplate.BooleanTypeName))
+                    {
+                        // EDMX specifies boolean defaults with capital letter, C# needs this string to be lower case.
+                        if (isCSharpTemplate)
+                            defaultValue = defaultValue.ToLower();
                     }
                     else if (valueClrType.Equals(clientTemplate.BinaryTypeName))
                     {
