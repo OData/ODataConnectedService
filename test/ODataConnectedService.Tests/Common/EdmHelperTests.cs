@@ -62,6 +62,8 @@ namespace ODataConnectedService.Tests
                 "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Location",
                 "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person",
                 "Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender",
+                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.PlanItem",
+                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.PublicTransportation",
                 "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip",
             };
 

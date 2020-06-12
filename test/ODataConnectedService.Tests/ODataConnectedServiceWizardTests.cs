@@ -213,6 +213,14 @@ namespace ODataConnectedService.Tests
                     IsSelected = true,
                     BoundOperations = new List<BoundOperationModel>()
                 },
+                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PlanItem", "PlanItem") {
+                    IsSelected = true,
+                    BoundOperations = new List<BoundOperationModel>()
+                },
+                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PublicTransportation", "PublicTransportation") {
+                    IsSelected = true,
+                    BoundOperations = new List<BoundOperationModel>()
+                },
                 new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip", "Trip") {
                     IsSelected = true,
                     BoundOperations = new List<BoundOperationModel>{
@@ -344,6 +352,14 @@ namespace ODataConnectedService.Tests
                     "PersonGender")
                 {
                     IsSelected = false,
+                    BoundOperations = new List<BoundOperationModel>()
+                },
+                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PlanItem", "PlanItem") {
+                    IsSelected = true,
+                    BoundOperations = new List<BoundOperationModel>()
+                },
+                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PublicTransportation", "PublicTransportation") {
+                    IsSelected = true,
                     BoundOperations = new List<BoundOperationModel>()
                 },
                 new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip", "Trip")
