@@ -617,17 +617,33 @@ namespace ODataConnectedService.Tests
 
             var typesPage = wizard.SchemaTypesViewModel;
             typesPage.OnPageEnteringAsync(null).Wait();
+            var typesPageView = typesPage.View as SchemaTypes;
+            Assert.Equal(typesPage.SchemaTypesCount, typesPage.SchemaTypes.Count());
+            Assert.Equal(typesPage.BoundOperationsCount, typesPage.SchemaTypes.SelectMany(x => x.BoundOperations).Count());
+            Assert.Equal(typesPageView?.SelectedSchemaTypesCount.Text, typesPage.SchemaTypes.Count().ToString());
+            Assert.Equal(typesPageView?.SelectedBoundOperationsCount.Text, typesPage.SchemaTypes.SelectMany(x => x.BoundOperations).Count().ToString());
             var typeEmployee = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Employee");
             typeEmployee.IsSelected = false;
+            Assert.Equal(typesPageView?.SelectedSchemaTypesCount.Text,
+                (typesPage.SchemaTypesCount - typesPage.ExcludedSchemaTypeNames.Count()).ToString());
             var boundOperationGetInvolvedPeople = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Trip")
                 ?.BoundOperations.FirstOrDefault(o => o.Name.Contains("GetInvolvedPeople"));
             boundOperationGetInvolvedPeople.IsSelected = false;
+            Assert.Equal(typesPageView?.SelectedBoundOperationsCount.Text,
+                (typesPage.BoundOperationsCount -
+                 typesPage.ExcludedBoundOperationsNames.Count()).ToString());
             typesPage.OnPageLeavingAsync(null).Wait();
 
             var operationsPage = wizard.OperationImportsViewModel;
             operationsPage.OnPageEnteringAsync(null).Wait();
+            var operationsPageView = operationsPage.View as OperationImports;
+            Assert.Equal(operationsPage.OperationImportsCount, operationsPage.OperationImports.Count());
+            Assert.Equal(operationsPageView?.SelectedOperationImportsCount.Text, operationsPage.OperationImportsCount.ToString());
             var operationNearestAirport = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport");
             operationNearestAirport.IsSelected = false;
+            Assert.Equal(operationsPageView?.SelectedOperationImportsCount.Text,
+                (operationsPage.OperationImportsCount - operationsPage.ExcludedOperationImportsNames.Count())
+                .ToString());
             operationsPage.OnPageLeavingAsync(null).Wait();
 
             var advancedPage = wizard.AdvancedSettingsViewModel;
@@ -657,6 +673,9 @@ namespace ODataConnectedService.Tests
             operationsPage.OnPageEnteringAsync(null).Wait();
             operationNearestAirport = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport");
             Assert.False(operationNearestAirport.IsSelected);
+            Assert.Equal(operationsPageView?.SelectedOperationImportsCount.Text,
+                (operationsPage.OperationImportsCount - operationsPage.ExcludedOperationImportsNames.Count())
+                .ToString());
             var operationResetDataSource = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "ResetDataSource");
             operationResetDataSource.IsSelected = false;
             operationsPage.OnPageLeavingAsync(null).Wait();
@@ -664,6 +683,8 @@ namespace ODataConnectedService.Tests
             typesPage.OnPageEnteringAsync(null).Wait();
             typeEmployee = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Employee");
             Assert.False(typeEmployee.IsSelected);
+            Assert.Equal(typesPageView?.SelectedSchemaTypesCount.Text,
+                (typesPage.SchemaTypesCount - typesPage.ExcludedSchemaTypeNames.Count()).ToString());
             typeEmployee.IsSelected = true;
             var typeFlight = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Flight");
             typeFlight.IsSelected = false;
