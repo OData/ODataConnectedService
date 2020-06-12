@@ -238,25 +238,23 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                             }
                         }
 
-                        // Check the required navigational property types and ensure they are selected as well
+                        // Check the required property types and ensure they are selected as well
                         foreach (var property in structuredType.DeclaredProperties)
                         {
-                            string propertyName = property is IEdmNavigationProperty
-                                ? property.Type.ToStructuredType().FullTypeName()
-                                : property.Type.FullName();
+                            IEdmTypeReference propertyType = property.Type.IsCollection()
+                                ? property.Type.AsCollection().ElementType()
+                                : property.Type;
 
-                            if (property.Type.ToStructuredType() != null || property.Type.IsEnum())
+                            if (propertyType.ToStructuredType() != null || propertyType.IsEnum())
                             {
-                                propertyName = property.Type.ToStructuredType()?.FullTypeName() ??
-                                               property.Type.FullName();
-                                AddRelatedType(propertyName, structuredType.FullTypeName());
+                                string propertyTypeName = propertyType.ToStructuredType()?.FullTypeName() ?? propertyType.FullName();
+                                AddRelatedType(propertyTypeName, structuredType.FullTypeName());
 
-                                bool hasProperty = SchemaTypeModelMap.TryGetValue(propertyName,
-                                    out SchemaTypeModel navigationPropertyModel);
+                                bool hasProperty = SchemaTypeModelMap.TryGetValue(propertyTypeName, out SchemaTypeModel propertySchemaTypeModel);
 
-                                if (hasProperty && !navigationPropertyModel.IsSelected)
+                                if (hasProperty && !propertySchemaTypeModel.IsSelected)
                                 {
-                                    navigationPropertyModel.IsSelected = true;
+                                    propertySchemaTypeModel.IsSelected = true;
                                 }
                             }
                         }
