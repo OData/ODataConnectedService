@@ -193,60 +193,60 @@ namespace Microsoft.OData.TestService
         /// <summary>
         /// Get an entity of type global::Microsoft.OData.TestService.Person as global::Microsoft.OData.TestService.PersonSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.TestService.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Person> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::Microsoft.OData.TestService.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Person> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::Microsoft.OData.TestService.PersonSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Microsoft.OData.TestService.PersonSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Microsoft.OData.TestService.Person as global::Microsoft.OData.TestService.PersonSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="userName">The value of userName</param>
-        public static global::Microsoft.OData.TestService.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Person> source,
+        public static global::Microsoft.OData.TestService.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Person> _source,
             string userName)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "UserName", userName }
             };
-            return new global::Microsoft.OData.TestService.PersonSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Microsoft.OData.TestService.PersonSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Microsoft.OData.TestService.Reminder as global::Microsoft.OData.TestService.ReminderSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.TestService.ReminderSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Reminder> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::Microsoft.OData.TestService.ReminderSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Reminder> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::Microsoft.OData.TestService.ReminderSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Microsoft.OData.TestService.ReminderSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Microsoft.OData.TestService.Reminder as global::Microsoft.OData.TestService.ReminderSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="id">The value of id</param>
-        public static global::Microsoft.OData.TestService.ReminderSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Reminder> source,
+        public static global::Microsoft.OData.TestService.ReminderSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Reminder> _source,
             global::System.Nullable<int> id)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
-            return new global::Microsoft.OData.TestService.ReminderSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Microsoft.OData.TestService.ReminderSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// There are no comments for ReminderView in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Person> ReminderView(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.TestService.Person> source, string StartDateTime, string EndDateTime, global::System.Nullable<int> MaxCount)
+        public static global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.TestService.Person> ReminderView(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.TestService.Person> _source, string StartDateTime, string EndDateTime, global::System.Nullable<int> MaxCount)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuery<global::Microsoft.OData.TestService.Person>("Microsoft.OData.TestService.ReminderView", false, new global::Microsoft.OData.Client.UriOperationParameter("StartDateTime", StartDateTime),
+            return _source.CreateFunctionQuery<global::Microsoft.OData.TestService.Person>("Microsoft.OData.TestService.ReminderView", false, new global::Microsoft.OData.Client.UriOperationParameter("StartDateTime", StartDateTime),
                     new global::Microsoft.OData.Client.UriOperationParameter("EndDateTime", EndDateTime),
                     new global::Microsoft.OData.Client.UriOperationParameter("MaxCount", MaxCount));
         }

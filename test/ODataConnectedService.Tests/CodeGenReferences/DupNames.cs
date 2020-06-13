@@ -686,48 +686,48 @@ namespace DupNames
         /// <summary>
         /// Get an entity of type global::DupNames.DupWithTypeName as global::DupNames.DupWithTypeNameSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::DupNames.DupWithTypeNameSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DupWithTypeName> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::DupNames.DupWithTypeNameSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DupWithTypeName> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::DupNames.DupWithTypeNameSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::DupNames.DupWithTypeNameSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::DupNames.DupWithTypeName as global::DupNames.DupWithTypeNameSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="dupWithTypeName">The value of dupWithTypeName</param>
-        public static global::DupNames.DupWithTypeNameSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DupWithTypeName> source,
+        public static global::DupNames.DupWithTypeNameSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DupWithTypeName> _source,
             global::System.Guid dupWithTypeName)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "DupWithTypeName", dupWithTypeName }
             };
-            return new global::DupNames.DupWithTypeNameSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::DupNames.DupWithTypeNameSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::DupNames.DupWithTypeName1 as global::DupNames.DupWithTypeName1Single specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::DupNames.DupWithTypeName1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DupWithTypeName1> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::DupNames.DupWithTypeName1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DupWithTypeName1> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::DupNames.DupWithTypeName1Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::DupNames.DupWithTypeName1Single(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::DupNames.DupWithTypeName1 as global::DupNames.DupWithTypeName1Single specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="dupWithTypeName">The value of dupWithTypeName</param>
-        public static global::DupNames.DupWithTypeName1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DupWithTypeName1> source,
+        public static global::DupNames.DupWithTypeName1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DupWithTypeName1> _source,
             global::System.Nullable<int> dupWithTypeName)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "DupWithTypeName", dupWithTypeName }
             };
-            return new global::DupNames.DupWithTypeName1Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::DupNames.DupWithTypeName1Single(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
     }
 }

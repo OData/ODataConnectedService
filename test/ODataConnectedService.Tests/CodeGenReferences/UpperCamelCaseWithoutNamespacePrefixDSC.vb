@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 15:34:26
+'Generation date: 13.06.2020 13:31:03
 Namespace [Namespace].Foo.DSC
     '''<summary>
     '''There are no comments for BaseTypeSingle in the schema.
@@ -370,91 +370,91 @@ Namespace [Namespace].Foo.DSC
         ''' <summary>
         ''' Get an entity of type [Namespace].Foo.DSC.BaseType as [Namespace].Foo.DSC.BaseTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Namespace].Foo.DSC.BaseType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As [Namespace].Foo.DSC.BaseTypeSingle
-            Return New [Namespace].Foo.DSC.BaseTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Namespace].Foo.DSC.BaseType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As [Namespace].Foo.DSC.BaseTypeSingle
+            Return New [Namespace].Foo.DSC.BaseTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type [Namespace].Foo.DSC.BaseType as [Namespace].Foo.DSC.BaseTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Namespace].Foo.DSC.BaseType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Namespace].Foo.DSC.BaseType),
             keyProp As Integer) As [Namespace].Foo.DSC.BaseTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "keyProp", keyProp }
             }
-            Return New [Namespace].Foo.DSC.BaseTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New [Namespace].Foo.DSC.BaseTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type [Namespace].Foo.DSC.TestType as [Namespace].Foo.DSC.TestTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Namespace].Foo.DSC.TestType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As [Namespace].Foo.DSC.TestTypeSingle
-            Return New [Namespace].Foo.DSC.TestTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Namespace].Foo.DSC.TestType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As [Namespace].Foo.DSC.TestTypeSingle
+            Return New [Namespace].Foo.DSC.TestTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type [Namespace].Foo.DSC.TestType as [Namespace].Foo.DSC.TestTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Namespace].Foo.DSC.TestType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Namespace].Foo.DSC.TestType),
             keyProp As Integer) As [Namespace].Foo.DSC.TestTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "keyProp", keyProp }
             }
-            Return New [Namespace].Foo.DSC.TestTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New [Namespace].Foo.DSC.TestTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Cast an entity of type [Namespace].Foo.DSC.BaseType to its derived type [Namespace].Foo.DSC.TestType
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToTestType(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of [Namespace].Foo.DSC.BaseType)) As [Namespace].Foo.DSC.TestTypeSingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of [Namespace].Foo.DSC.TestType) = source.CastTo(Of [Namespace].Foo.DSC.TestType)()
-            Return New [Namespace].Foo.DSC.TestTypeSingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToTestType(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of [Namespace].Foo.DSC.BaseType)) As [Namespace].Foo.DSC.TestTypeSingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of [Namespace].Foo.DSC.TestType) = _source.CastTo(Of [Namespace].Foo.DSC.TestType)()
+            Return New [Namespace].Foo.DSC.TestTypeSingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Get an entity of type [Namespace].Foo.DSC.SingleType as [Namespace].Foo.DSC.SingleTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Namespace].Foo.DSC.SingleType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As [Namespace].Foo.DSC.SingleTypeSingle
-            Return New [Namespace].Foo.DSC.SingleTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Namespace].Foo.DSC.SingleType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As [Namespace].Foo.DSC.SingleTypeSingle
+            Return New [Namespace].Foo.DSC.SingleTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type [Namespace].Foo.DSC.SingleType as [Namespace].Foo.DSC.SingleTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Namespace].Foo.DSC.SingleType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Namespace].Foo.DSC.SingleType),
             keyProp As Integer) As [Namespace].Foo.DSC.SingleTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "keyProp", keyProp }
             }
-            Return New [Namespace].Foo.DSC.SingleTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New [Namespace].Foo.DSC.SingleTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' There are no comments for Foo7 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("foo7")>  _
-        Public Function Foo7(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of [Namespace].Foo.DSC.SingleType)) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Global.System.Nullable(Of Integer))
-            If Not source.IsComposable Then
+        Public Function Foo7(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of [Namespace].Foo.DSC.SingleType)) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Global.System.Nullable(Of Integer))
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Global.System.Nullable(Of Integer))(source.Context, source.AppendRequestUri("namespace.foo.DSC.foo7"))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Global.System.Nullable(Of Integer))(_source.Context, _source.AppendRequestUri("namespace.foo.DSC.foo7"))
         End Function
     End Module
 End Namespace

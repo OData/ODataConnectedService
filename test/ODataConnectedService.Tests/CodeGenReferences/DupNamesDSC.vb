@@ -707,48 +707,48 @@ Namespace DupNames.DSC
         ''' <summary>
         ''' Get an entity of type DupNames.DSC.DupWithTypeName as DupNames.DSC.DupWithTypeNameSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DSC.DupWithTypeName), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As DupNames.DSC.DupWithTypeNameSingle
-            Return New DupNames.DSC.DupWithTypeNameSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DSC.DupWithTypeName), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As DupNames.DSC.DupWithTypeNameSingle
+            Return New DupNames.DSC.DupWithTypeNameSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type DupNames.DSC.DupWithTypeName as DupNames.DSC.DupWithTypeNameSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="dupWithTypeName">The value of dupWithTypeName</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DSC.DupWithTypeName),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DSC.DupWithTypeName),
             dupWithTypeName As Global.System.Guid) As DupNames.DSC.DupWithTypeNameSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "DupWithTypeName", dupWithTypeName }
+                {"DupWithTypeName", dupWithTypeName}
             }
-            Return New DupNames.DSC.DupWithTypeNameSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New DupNames.DSC.DupWithTypeNameSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type DupNames.DSC.DupWithTypeName1 as DupNames.DSC.DupWithTypeName1Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DSC.DupWithTypeName1), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As DupNames.DSC.DupWithTypeName1Single
-            Return New DupNames.DSC.DupWithTypeName1Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DSC.DupWithTypeName1), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As DupNames.DSC.DupWithTypeName1Single
+            Return New DupNames.DSC.DupWithTypeName1Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type DupNames.DSC.DupWithTypeName1 as DupNames.DSC.DupWithTypeName1Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="dupWithTypeName">The value of dupWithTypeName</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DSC.DupWithTypeName1),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DSC.DupWithTypeName1),
             dupWithTypeName As Global.System.Nullable(Of Integer)) As DupNames.DSC.DupWithTypeName1Single
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "DupWithTypeName", dupWithTypeName }
+                {"DupWithTypeName", dupWithTypeName}
             }
-            Return New DupNames.DSC.DupWithTypeName1Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New DupNames.DSC.DupWithTypeName1Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
     End Module
 End Namespace

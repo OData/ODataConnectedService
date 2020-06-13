@@ -4718,16 +4718,16 @@ namespace <#= fullNamespace #>
         /// <summary>
         /// Get an entity of type <#= entityTypeName #> as <#= returnTypeName #> specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static <#= returnTypeName #> ByKey(this global::Microsoft.OData.Client.DataServiceQuery<<#= entityTypeName #>> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static <#= returnTypeName #> ByKey(this global::Microsoft.OData.Client.DataServiceQuery<<#= entityTypeName #>> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new <#= returnTypeName #>(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new <#= returnTypeName #>(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type <#= entityTypeName #> as <#= returnTypeName #> specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
 <#+
         foreach (var key in keys)
         {
@@ -4736,14 +4736,14 @@ namespace <#= fullNamespace #>
 <#+
         }
 #>
-        public static <#= returnTypeName #> ByKey(this global::Microsoft.OData.Client.DataServiceQuery<<#= entityTypeName #>> source,
+        public static <#= returnTypeName #> ByKey(this global::Microsoft.OData.Client.DataServiceQuery<<#= entityTypeName #>> _source,
             <#= keyParameters #>)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 <#= keyDictionaryItems #>
             };
-            return new <#= returnTypeName #>(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new <#= returnTypeName #>(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
 <#+
     }
@@ -4754,11 +4754,11 @@ namespace <#= fullNamespace #>
         /// <summary>
         /// Cast an entity of type <#= baseTypeName #> to its derived type <#= derivedTypeFullName #>
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static <#= returnTypeName #> CastTo<#= derivedTypeName #>(this global::Microsoft.OData.Client.DataServiceQuerySingle<<#= baseTypeName #>> source)
+        /// <param name="_source">source entity</param>
+        public static <#= returnTypeName #> CastTo<#= derivedTypeName #>(this global::Microsoft.OData.Client.DataServiceQuerySingle<<#= baseTypeName #>> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<<#= derivedTypeFullName #>> query = source.CastTo<<#= derivedTypeFullName #>>();
-            return new <#= returnTypeName #>(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<<#= derivedTypeFullName #>> query = _source.CastTo<<#= derivedTypeFullName #>>();
+            return new <#= returnTypeName #>(_source.Context, query.GetPath(null));
         }
 <#+
     }
@@ -4777,14 +4777,14 @@ namespace <#= fullNamespace #>
 <#+
         }
 #>
-        public static <#= isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName) #> <#= functionName #>(this <#= boundTypeName #> source<#= string.IsNullOrEmpty(parameters) ? string.Empty : ", " + parameters #><#= useEntityReference ? ", bool useEntityReference = false" : string.Empty #>)
+        public static <#= isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName) #> <#= functionName #>(this <#= boundTypeName #> _source<#= string.IsNullOrEmpty(parameters) ? string.Empty : ", " + parameters #><#= useEntityReference ? ", bool useEntityReference = false" : string.Empty #>)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return <#= isReturnEntity ? "new " + returnTypeNameWithSingleSuffix + "(" : string.Empty #>source.CreateFunctionQuerySingle<<#= returnTypeName #>>("<#= fullNamespace #>.<#= originalFunctionName #>", <#= isComposable.ToString().ToLower(CultureInfo.InvariantCulture) #><#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>)<#= isReturnEntity ? ")" : string.Empty #>;
+            return <#= isReturnEntity ? "new " + returnTypeNameWithSingleSuffix + "(" : string.Empty #>_source.CreateFunctionQuerySingle<<#= returnTypeName #>>("<#= fullNamespace #>.<#= originalFunctionName #>", <#= isComposable.ToString().ToLower(CultureInfo.InvariantCulture) #><#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>)<#= isReturnEntity ? ")" : string.Empty #>;
         }
 <#+
     }
@@ -4803,14 +4803,14 @@ namespace <#= fullNamespace #>
 <#+
         }
 #>
-        public static global::Microsoft.OData.Client.DataServiceQuery<<#= returnTypeName #>> <#= functionName #>(this <#= boundTypeName #> source<#= string.IsNullOrEmpty(parameters) ? string.Empty : ", " + parameters #><#= useEntityReference ? ", bool useEntityReference = true" : string.Empty #>)
+        public static global::Microsoft.OData.Client.DataServiceQuery<<#= returnTypeName #>> <#= functionName #>(this <#= boundTypeName #> _source<#= string.IsNullOrEmpty(parameters) ? string.Empty : ", " + parameters #><#= useEntityReference ? ", bool useEntityReference = true" : string.Empty #>)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuery<<#= returnTypeName #>>("<#= fullNamespace #>.<#= originalFunctionName #>", <#= isComposable.ToString().ToLower(CultureInfo.InvariantCulture) #><#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>);
+            return _source.CreateFunctionQuery<<#= returnTypeName #>>("<#= fullNamespace #>.<#= originalFunctionName #>", <#= isComposable.ToString().ToLower(CultureInfo.InvariantCulture) #><#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>);
         }
 <#+
     }
@@ -4829,14 +4829,14 @@ namespace <#= fullNamespace #>
 <#+
         }
 #>
-        public static <#= returnTypeName #> <#= actionName #>(this <#= boundSourceType #> source<#= string.IsNullOrEmpty(parameters) ? string.Empty : ", " + parameters #>)
+        public static <#= returnTypeName #> <#= actionName #>(this <#= boundSourceType #> _source<#= string.IsNullOrEmpty(parameters) ? string.Empty : ", " + parameters #>)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new <#= returnTypeName #>(source.Context, source.AppendRequestUri("<#= fullNamespace #>.<#= originalActionName #>")<#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>);
+            return new <#= returnTypeName #>(_source.Context, _source.AppendRequestUri("<#= fullNamespace #>.<#= originalActionName #>")<#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>);
         }
 <#+
     }
@@ -5768,16 +5768,16 @@ Namespace <#= fullNamespace #>
         ''' <summary>
         ''' Get an entity of type <#= entityTypeName #> as <#= returnTypeName #> specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of <#= entityTypeName #>), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As <#= returnTypeName #>
-            Return New <#= returnTypeName #>(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of <#= entityTypeName #>), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As <#= returnTypeName #>
+            Return New <#= returnTypeName #>(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type <#= entityTypeName #> as <#= returnTypeName #> specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
 <#+
         foreach (var key in keys)
         {
@@ -5787,13 +5787,13 @@ Namespace <#= fullNamespace #>
         }
 #>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of <#= entityTypeName #>),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of <#= entityTypeName #>),
             <#= keyParameters #>) As <#= returnTypeName #>
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 <#= keyDictionaryItems #>
             }
-            Return New <#= returnTypeName #>(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New <#= returnTypeName #>(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
 <#+
     }
@@ -5804,11 +5804,11 @@ Namespace <#= fullNamespace #>
         ''' <summary>
         ''' Cast an entity of type <#= baseTypeName #> to its derived type <#= derivedTypeFullName #>
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastTo<#= derivedTypeName #>(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of <#= baseTypeName #>)) As <#= returnTypeName #>
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of <#= derivedTypeFullName #>) = source.CastTo(Of <#= derivedTypeFullName #>)()
-            Return New <#= returnTypeName #>(source.Context, query.GetPath(Nothing))
+        Public Function CastTo<#= derivedTypeName #>(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of <#= baseTypeName #>)) As <#= returnTypeName #>
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of <#= derivedTypeFullName #>) = _source.CastTo(Of <#= derivedTypeFullName #>)()
+            Return New <#= returnTypeName #>(_source.Context, query.GetPath(Nothing))
         End Function
 <#+
     }
@@ -5828,12 +5828,12 @@ Namespace <#= fullNamespace #>
 <#+
         }
 #>
-        Public Function <#= functionName #>(ByVal source As <#= boundTypeName #><#= string.IsNullOrEmpty(parameters) ? string.Empty : ", " + parameters #><#= useEntityReference ? ", Optional ByVal useEntityReference As Boolean = False" : string.Empty #>) As <#= isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName) #>
-            If Not source.IsComposable Then
+        Public Function <#= functionName #>(ByVal _source As <#= boundTypeName #><#= string.IsNullOrEmpty(parameters) ? string.Empty : ", " + parameters #><#= useEntityReference ? ", Optional ByVal useEntityReference As Boolean = False" : string.Empty #>) As <#= isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName) #>
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
 
-            Return <#= isReturnEntity ? "New " + returnTypeNameWithSingleSuffix + "(" : string.Empty #>source.CreateFunctionQuerySingle(<#= "Of " + returnTypeName #>)("<#= fullNamespace #>.<#= originalFunctionName #>", <#= isComposable #><#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>)<#= isReturnEntity ? ")" : string.Empty #>
+            Return <#= isReturnEntity ? "New " + returnTypeNameWithSingleSuffix + "(" : string.Empty #>_source.CreateFunctionQuerySingle(<#= "Of " + returnTypeName #>)("<#= fullNamespace #>.<#= originalFunctionName #>", <#= isComposable #><#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>)<#= isReturnEntity ? ")" : string.Empty #>
         End Function
 <#+
     }
@@ -5853,12 +5853,12 @@ Namespace <#= fullNamespace #>
 <#+
         }
 #>
-        Public Function <#= functionName #>(ByVal source As <#= boundTypeName #><#= string.IsNullOrEmpty(parameters) ? string.Empty : ", " + parameters #><#= useEntityReference ? ", Optional ByVal useEntityReference As Boolean = False" : string.Empty #>) As Global.Microsoft.OData.Client.DataServiceQuery(Of <#= returnTypeName #>)
-            If Not source.IsComposable Then
+        Public Function <#= functionName #>(ByVal _source As <#= boundTypeName #><#= string.IsNullOrEmpty(parameters) ? string.Empty : ", " + parameters #><#= useEntityReference ? ", Optional ByVal useEntityReference As Boolean = False" : string.Empty #>) As Global.Microsoft.OData.Client.DataServiceQuery(Of <#= returnTypeName #>)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
 
-            Return source.CreateFunctionQuery(Of <#= returnTypeName #>)("<#= fullNamespace #>.<#= originalFunctionName #>", <#= isComposable #><#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>)
+            Return _source.CreateFunctionQuery(Of <#= returnTypeName #>)("<#= fullNamespace #>.<#= originalFunctionName #>", <#= isComposable #><#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>)
         End Function
 <#+
     }
@@ -5878,11 +5878,11 @@ Namespace <#= fullNamespace #>
 <#+
         }
 #>
-        Public Function <#= actionName #>(ByVal source As <#= boundSourceType #><#= string.IsNullOrEmpty(parameters) ? string.Empty : ", " + parameters #>) As <#= returnTypeName #>
-            If Not source.IsComposable Then
+        Public Function <#= actionName #>(ByVal _source As <#= boundSourceType #><#= string.IsNullOrEmpty(parameters) ? string.Empty : ", " + parameters #>) As <#= returnTypeName #>
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New <#= returnTypeName #>(source.Context, source.AppendRequestUri("<#= fullNamespace #>.<#= originalActionName #>")<#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>)
+            Return New <#= returnTypeName #>(_source.Context, _source.AppendRequestUri("<#= fullNamespace #>.<#= originalActionName #>")<#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>)
         End Function
 <#+
     }

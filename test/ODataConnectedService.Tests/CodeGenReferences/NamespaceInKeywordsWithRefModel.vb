@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 15:29:37
+'Generation date: 13.06.2020 13:23:13
 Namespace [Event].[String].Int
     '''<summary>
     '''There are no comments for ComplexType in the schema.
@@ -150,25 +150,25 @@ Namespace [Event].[String].Int
         ''' <summary>
         ''' Get an entity of type [Event].[String].Int.TestType1 as [Event].[String].Int.TestType1Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Event].[String].Int.TestType1), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As [Event].[String].Int.TestType1Single
-            Return New [Event].[String].Int.TestType1Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Event].[String].Int.TestType1), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As [Event].[String].Int.TestType1Single
+            Return New [Event].[String].Int.TestType1Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type [Event].[String].Int.TestType1 as [Event].[String].Int.TestType1Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Event].[String].Int.TestType1),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of [Event].[String].Int.TestType1),
             keyProp As Integer) As [Event].[String].Int.TestType1Single
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "keyProp", keyProp }
             }
-            Return New [Event].[String].Int.TestType1Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New [Event].[String].Int.TestType1Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
     End Module
 End Namespace
@@ -477,25 +477,25 @@ Namespace Simple.[Double]
         ''' <summary>
         ''' Get an entity of type Simple.[Double].TestType2 as Simple.[Double].TestType2Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Simple.[Double].TestType2), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Simple.[Double].TestType2Single
-            Return New Simple.[Double].TestType2Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Simple.[Double].TestType2), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Simple.[Double].TestType2Single
+            Return New Simple.[Double].TestType2Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Simple.[Double].TestType2 as Simple.[Double].TestType2Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Simple.[Double].TestType2),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Simple.[Double].TestType2),
             keyProp As Integer) As Simple.[Double].TestType2Single
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "keyProp", keyProp }
             }
-            Return New Simple.[Double].TestType2Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New Simple.[Double].TestType2Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
     End Module
 End Namespace

@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 15:36:17
+'Generation date: 13.06.2020 13:26:26
 Namespace MergedFunctionalTest.DSC
     '''<summary>
     '''There are no comments for TestContainer in the schema.
@@ -8389,853 +8389,853 @@ Namespace MergedFunctionalTest.DSC
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Customer as MergedFunctionalTest.DSC.CustomerSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Customer), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.CustomerSingle
-            Return New MergedFunctionalTest.DSC.CustomerSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Customer), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.CustomerSingle
+            Return New MergedFunctionalTest.DSC.CustomerSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Customer as MergedFunctionalTest.DSC.CustomerSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="customerId">The value of customerId</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Customer),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Customer),
             customerId As Integer) As MergedFunctionalTest.DSC.CustomerSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "CustomerId", customerId }
             }
-            Return New MergedFunctionalTest.DSC.CustomerSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.CustomerSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.GoodCustomer as MergedFunctionalTest.DSC.GoodCustomerSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.GoodCustomer), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.GoodCustomerSingle
-            Return New MergedFunctionalTest.DSC.GoodCustomerSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.GoodCustomer), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.GoodCustomerSingle
+            Return New MergedFunctionalTest.DSC.GoodCustomerSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.GoodCustomer as MergedFunctionalTest.DSC.GoodCustomerSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="customerId">The value of customerId</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.GoodCustomer),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.GoodCustomer),
             customerId As Integer) As MergedFunctionalTest.DSC.GoodCustomerSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "CustomerId", customerId }
             }
-            Return New MergedFunctionalTest.DSC.GoodCustomerSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.GoodCustomerSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Cast an entity of type MergedFunctionalTest.DSC.Customer to its derived type MergedFunctionalTest.DSC.GoodCustomer
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToGoodCustomer(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Customer)) As MergedFunctionalTest.DSC.GoodCustomerSingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.GoodCustomer) = source.CastTo(Of MergedFunctionalTest.DSC.GoodCustomer)()
-            Return New MergedFunctionalTest.DSC.GoodCustomerSingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToGoodCustomer(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Customer)) As MergedFunctionalTest.DSC.GoodCustomerSingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.GoodCustomer) = _source.CastTo(Of MergedFunctionalTest.DSC.GoodCustomer)()
+            Return New MergedFunctionalTest.DSC.GoodCustomerSingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.BadCustomer as MergedFunctionalTest.DSC.BadCustomerSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.BadCustomer), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.BadCustomerSingle
-            Return New MergedFunctionalTest.DSC.BadCustomerSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.BadCustomer), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.BadCustomerSingle
+            Return New MergedFunctionalTest.DSC.BadCustomerSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.BadCustomer as MergedFunctionalTest.DSC.BadCustomerSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="customerId">The value of customerId</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.BadCustomer),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.BadCustomer),
             customerId As Integer) As MergedFunctionalTest.DSC.BadCustomerSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "CustomerId", customerId }
             }
-            Return New MergedFunctionalTest.DSC.BadCustomerSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.BadCustomerSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Cast an entity of type MergedFunctionalTest.DSC.Customer to its derived type MergedFunctionalTest.DSC.BadCustomer
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToBadCustomer(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Customer)) As MergedFunctionalTest.DSC.BadCustomerSingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.BadCustomer) = source.CastTo(Of MergedFunctionalTest.DSC.BadCustomer)()
-            Return New MergedFunctionalTest.DSC.BadCustomerSingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToBadCustomer(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Customer)) As MergedFunctionalTest.DSC.BadCustomerSingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.BadCustomer) = _source.CastTo(Of MergedFunctionalTest.DSC.BadCustomer)()
+            Return New MergedFunctionalTest.DSC.BadCustomerSingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.CustomerInfo as MergedFunctionalTest.DSC.CustomerInfoSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.CustomerInfo), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.CustomerInfoSingle
-            Return New MergedFunctionalTest.DSC.CustomerInfoSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.CustomerInfo), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.CustomerInfoSingle
+            Return New MergedFunctionalTest.DSC.CustomerInfoSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.CustomerInfo as MergedFunctionalTest.DSC.CustomerInfoSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="customerInfoId">The value of customerInfoId</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.CustomerInfo),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.CustomerInfo),
             customerInfoId As Integer) As MergedFunctionalTest.DSC.CustomerInfoSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "CustomerInfoId", customerInfoId }
             }
-            Return New MergedFunctionalTest.DSC.CustomerInfoSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.CustomerInfoSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Order as MergedFunctionalTest.DSC.OrderSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Order), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.OrderSingle
-            Return New MergedFunctionalTest.DSC.OrderSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Order), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.OrderSingle
+            Return New MergedFunctionalTest.DSC.OrderSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Order as MergedFunctionalTest.DSC.OrderSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="orderId">The value of orderId</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Order),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Order),
             orderId As Integer) As MergedFunctionalTest.DSC.OrderSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "OrderId", orderId }
             }
-            Return New MergedFunctionalTest.DSC.OrderSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.OrderSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Company as MergedFunctionalTest.DSC.CompanySingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Company), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.CompanySingle
-            Return New MergedFunctionalTest.DSC.CompanySingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Company), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.CompanySingle
+            Return New MergedFunctionalTest.DSC.CompanySingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Company as MergedFunctionalTest.DSC.CompanySingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="companyId">The value of companyId</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Company),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Company),
             companyId As Integer) As MergedFunctionalTest.DSC.CompanySingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "CompanyId", companyId }
             }
-            Return New MergedFunctionalTest.DSC.CompanySingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.CompanySingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Product as MergedFunctionalTest.DSC.ProductSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Product), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.ProductSingle
-            Return New MergedFunctionalTest.DSC.ProductSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Product), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.ProductSingle
+            Return New MergedFunctionalTest.DSC.ProductSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Product as MergedFunctionalTest.DSC.ProductSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="iD">The value of iD</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Product),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Product),
             iD As String) As MergedFunctionalTest.DSC.ProductSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "ID", iD }
             }
-            Return New MergedFunctionalTest.DSC.ProductSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.ProductSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.ProductDetail as MergedFunctionalTest.DSC.ProductDetailSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.ProductDetail), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.ProductDetailSingle
-            Return New MergedFunctionalTest.DSC.ProductDetailSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.ProductDetail), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.ProductDetailSingle
+            Return New MergedFunctionalTest.DSC.ProductDetailSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.ProductDetail as MergedFunctionalTest.DSC.ProductDetailSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="productId">The value of productId</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.ProductDetail),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.ProductDetail),
             productId As Integer) As MergedFunctionalTest.DSC.ProductDetailSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "ProductId", productId }
             }
-            Return New MergedFunctionalTest.DSC.ProductDetailSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.ProductDetailSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacet as MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacetSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacet), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacetSingle
-            Return New MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacetSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacet), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacetSingle
+            Return New MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacetSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacet as MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacetSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="id">The value of id</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacet),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacet),
             id As Integer) As MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacetSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "Id", id }
             }
-            Return New MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacetSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.SpecialTypeWithPrecisionFacetSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.BlobType as MergedFunctionalTest.DSC.BlobTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.BlobType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.BlobTypeSingle
-            Return New MergedFunctionalTest.DSC.BlobTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.BlobType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.BlobTypeSingle
+            Return New MergedFunctionalTest.DSC.BlobTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.BlobType as MergedFunctionalTest.DSC.BlobTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.BlobType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.BlobType),
             keyProp As Integer) As MergedFunctionalTest.DSC.BlobTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "KeyProp", keyProp }
             }
-            Return New MergedFunctionalTest.DSC.BlobTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.BlobTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Child as MergedFunctionalTest.DSC.ChildSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Child), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.ChildSingle
-            Return New MergedFunctionalTest.DSC.ChildSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Child), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.ChildSingle
+            Return New MergedFunctionalTest.DSC.ChildSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Child as MergedFunctionalTest.DSC.ChildSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="iD">The value of iD</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Child),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Child),
             iD As Global.System.Guid) As MergedFunctionalTest.DSC.ChildSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "ID", iD }
             }
-            Return New MergedFunctionalTest.DSC.ChildSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.ChildSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Cast an entity of type MergedFunctionalTest.DSC.Person to its derived type MergedFunctionalTest.DSC.Child
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToChild(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Person)) As MergedFunctionalTest.DSC.ChildSingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Child) = source.CastTo(Of MergedFunctionalTest.DSC.Child)()
-            Return New MergedFunctionalTest.DSC.ChildSingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToChild(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Person)) As MergedFunctionalTest.DSC.ChildSingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Child) = _source.CastTo(Of MergedFunctionalTest.DSC.Child)()
+            Return New MergedFunctionalTest.DSC.ChildSingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Person as MergedFunctionalTest.DSC.PersonSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Person), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.PersonSingle
-            Return New MergedFunctionalTest.DSC.PersonSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Person), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.PersonSingle
+            Return New MergedFunctionalTest.DSC.PersonSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Person as MergedFunctionalTest.DSC.PersonSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="iD">The value of iD</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Person),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Person),
             iD As Global.System.Guid) As MergedFunctionalTest.DSC.PersonSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "ID", iD }
             }
-            Return New MergedFunctionalTest.DSC.PersonSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.PersonSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.TestType as MergedFunctionalTest.DSC.TestTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.TestType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.TestTypeSingle
-            Return New MergedFunctionalTest.DSC.TestTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.TestType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.TestTypeSingle
+            Return New MergedFunctionalTest.DSC.TestTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.TestType as MergedFunctionalTest.DSC.TestTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="id">The value of id</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.TestType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.TestType),
             id As Global.System.DateTimeOffset) As MergedFunctionalTest.DSC.TestTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "Id", id }
             }
-            Return New MergedFunctionalTest.DSC.TestTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.TestTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.TestCollectionType as MergedFunctionalTest.DSC.TestCollectionTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.TestCollectionType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.TestCollectionTypeSingle
-            Return New MergedFunctionalTest.DSC.TestCollectionTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.TestCollectionType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.TestCollectionTypeSingle
+            Return New MergedFunctionalTest.DSC.TestCollectionTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.TestCollectionType as MergedFunctionalTest.DSC.TestCollectionTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.TestCollectionType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.TestCollectionType),
             keyProp As Integer) As MergedFunctionalTest.DSC.TestCollectionTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "KeyProp", keyProp }
             }
-            Return New MergedFunctionalTest.DSC.TestCollectionTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.TestCollectionTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.DefaultValueTestType as MergedFunctionalTest.DSC.DefaultValueTestTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.DefaultValueTestType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.DefaultValueTestTypeSingle
-            Return New MergedFunctionalTest.DSC.DefaultValueTestTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.DefaultValueTestType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.DefaultValueTestTypeSingle
+            Return New MergedFunctionalTest.DSC.DefaultValueTestTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.DefaultValueTestType as MergedFunctionalTest.DSC.DefaultValueTestTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.DefaultValueTestType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.DefaultValueTestType),
             keyProp As Integer) As MergedFunctionalTest.DSC.DefaultValueTestTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "KeyProp", keyProp }
             }
-            Return New MergedFunctionalTest.DSC.DefaultValueTestTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.DefaultValueTestTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.MultiKeyTestType as MergedFunctionalTest.DSC.MultiKeyTestTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.MultiKeyTestType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.MultiKeyTestTypeSingle
-            Return New MergedFunctionalTest.DSC.MultiKeyTestTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.MultiKeyTestType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.MultiKeyTestTypeSingle
+            Return New MergedFunctionalTest.DSC.MultiKeyTestTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.MultiKeyTestType as MergedFunctionalTest.DSC.MultiKeyTestTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="int64Id">The value of int64Id</param>
         ''' <param name="stringId">The value of stringId</param>
         ''' <param name="dateTimeOffsetId">The value of dateTimeOffsetId</param>
         ''' <param name="guidId">The value of guidId</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.MultiKeyTestType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.MultiKeyTestType),
             int64Id As Long,  _
             stringId As String,  _
             dateTimeOffsetId As Global.System.DateTimeOffset,  _
             guidId As Global.System.Guid) As MergedFunctionalTest.DSC.MultiKeyTestTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "Int64Id", int64Id },  _
                 { "StringId", stringId },  _
                 { "DateTimeOffsetId", dateTimeOffsetId },  _
                 { "GuidId", guidId }
             }
-            Return New MergedFunctionalTest.DSC.MultiKeyTestTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.MultiKeyTestTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.BaseType as MergedFunctionalTest.DSC.BaseTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.BaseType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.BaseTypeSingle
-            Return New MergedFunctionalTest.DSC.BaseTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.BaseType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.BaseTypeSingle
+            Return New MergedFunctionalTest.DSC.BaseTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.BaseType as MergedFunctionalTest.DSC.BaseTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.BaseType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.BaseType),
             keyProp As Long) As MergedFunctionalTest.DSC.BaseTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "KeyProp", keyProp }
             }
-            Return New MergedFunctionalTest.DSC.BaseTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.BaseTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.KatmaiType as MergedFunctionalTest.DSC.KatmaiTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.KatmaiType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.KatmaiTypeSingle
-            Return New MergedFunctionalTest.DSC.KatmaiTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.KatmaiType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.KatmaiTypeSingle
+            Return New MergedFunctionalTest.DSC.KatmaiTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.KatmaiType as MergedFunctionalTest.DSC.KatmaiTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.KatmaiType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.KatmaiType),
             keyProp As Integer) As MergedFunctionalTest.DSC.KatmaiTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "KeyProp", keyProp }
             }
-            Return New MergedFunctionalTest.DSC.KatmaiTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.KatmaiTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Level0 as MergedFunctionalTest.DSC.Level0Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Level0), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.Level0Single
-            Return New MergedFunctionalTest.DSC.Level0Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Level0), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.Level0Single
+            Return New MergedFunctionalTest.DSC.Level0Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Level0 as MergedFunctionalTest.DSC.Level0Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="level0Prop">The value of level0Prop</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Level0),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Level0),
             level0Prop As String) As MergedFunctionalTest.DSC.Level0Single
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "Level0Prop", level0Prop }
             }
-            Return New MergedFunctionalTest.DSC.Level0Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.Level0Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Level1 as MergedFunctionalTest.DSC.Level1Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Level1), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.Level1Single
-            Return New MergedFunctionalTest.DSC.Level1Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Level1), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.Level1Single
+            Return New MergedFunctionalTest.DSC.Level1Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Level1 as MergedFunctionalTest.DSC.Level1Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="level1Id">The value of level1Id</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Level1),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Level1),
             level1Id As Integer) As MergedFunctionalTest.DSC.Level1Single
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "Level1Id", level1Id }
             }
-            Return New MergedFunctionalTest.DSC.Level1Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.Level1Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Cast an entity of type MergedFunctionalTest.DSC.Level0 to its derived type MergedFunctionalTest.DSC.Level1
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToLevel1(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Level0)) As MergedFunctionalTest.DSC.Level1Single
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Level1) = source.CastTo(Of MergedFunctionalTest.DSC.Level1)()
-            Return New MergedFunctionalTest.DSC.Level1Single(source.Context, query.GetPath(Nothing))
+        Public Function CastToLevel1(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Level0)) As MergedFunctionalTest.DSC.Level1Single
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Level1) = _source.CastTo(Of MergedFunctionalTest.DSC.Level1)()
+            Return New MergedFunctionalTest.DSC.Level1Single(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Level2 as MergedFunctionalTest.DSC.Level2Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Level2), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.Level2Single
-            Return New MergedFunctionalTest.DSC.Level2Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Level2), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.Level2Single
+            Return New MergedFunctionalTest.DSC.Level2Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Level2 as MergedFunctionalTest.DSC.Level2Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="level1Id">The value of level1Id</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Level2),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Level2),
             level1Id As Integer) As MergedFunctionalTest.DSC.Level2Single
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "Level1Id", level1Id }
             }
-            Return New MergedFunctionalTest.DSC.Level2Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.Level2Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Cast an entity of type MergedFunctionalTest.DSC.Level1 to its derived type MergedFunctionalTest.DSC.Level2
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToLevel2(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Level1)) As MergedFunctionalTest.DSC.Level2Single
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Level2) = source.CastTo(Of MergedFunctionalTest.DSC.Level2)()
-            Return New MergedFunctionalTest.DSC.Level2Single(source.Context, query.GetPath(Nothing))
+        Public Function CastToLevel2(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Level1)) As MergedFunctionalTest.DSC.Level2Single
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Level2) = _source.CastTo(Of MergedFunctionalTest.DSC.Level2)()
+            Return New MergedFunctionalTest.DSC.Level2Single(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Cast an entity of type MergedFunctionalTest.DSC.Level0 to its derived type MergedFunctionalTest.DSC.Level2
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToLevel2(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Level0)) As MergedFunctionalTest.DSC.Level2Single
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Level2) = source.CastTo(Of MergedFunctionalTest.DSC.Level2)()
-            Return New MergedFunctionalTest.DSC.Level2Single(source.Context, query.GetPath(Nothing))
+        Public Function CastToLevel2(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Level0)) As MergedFunctionalTest.DSC.Level2Single
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Level2) = _source.CastTo(Of MergedFunctionalTest.DSC.Level2)()
+            Return New MergedFunctionalTest.DSC.Level2Single(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.SingleType as MergedFunctionalTest.DSC.SingleTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.SingleType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.SingleTypeSingle
-            Return New MergedFunctionalTest.DSC.SingleTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.SingleType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.SingleTypeSingle
+            Return New MergedFunctionalTest.DSC.SingleTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.SingleType as MergedFunctionalTest.DSC.SingleTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.SingleType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.SingleType),
             keyProp As Global.Microsoft.Spatial.GeographyPoint) As MergedFunctionalTest.DSC.SingleTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "KeyProp", keyProp }
             }
-            Return New MergedFunctionalTest.DSC.SingleTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.SingleTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Group as MergedFunctionalTest.DSC.GroupSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Group), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.GroupSingle
-            Return New MergedFunctionalTest.DSC.GroupSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Group), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.GroupSingle
+            Return New MergedFunctionalTest.DSC.GroupSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Group as MergedFunctionalTest.DSC.GroupSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="id">The value of id</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Group),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Group),
             id As Integer) As MergedFunctionalTest.DSC.GroupSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "Id", id }
             }
-            Return New MergedFunctionalTest.DSC.GroupSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.GroupSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Principal as MergedFunctionalTest.DSC.PrincipalSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Principal), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.PrincipalSingle
-            Return New MergedFunctionalTest.DSC.PrincipalSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Principal), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest.DSC.PrincipalSingle
+            Return New MergedFunctionalTest.DSC.PrincipalSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest.DSC.Principal as MergedFunctionalTest.DSC.PrincipalSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="id">The value of id</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Principal),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Principal),
             id As Integer) As MergedFunctionalTest.DSC.PrincipalSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "Id", id }
             }
-            Return New MergedFunctionalTest.DSC.PrincipalSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest.DSC.PrincipalSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' There are no comments for foo2 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo2(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Customer), p2 As Integer) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of String)
-            If Not source.IsComposable Then
+        Public Function foo2(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Customer), p2 As Integer) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of String)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return source.CreateFunctionQuerySingle(Of String)("MergedFunctionalTest.DSC.foo2", False, New Global.Microsoft.OData.Client.UriOperationParameter("p2", p2))
+
+            Return _source.CreateFunctionQuerySingle(Of String)("MergedFunctionalTest.DSC.foo2", False, New Global.Microsoft.OData.Client.UriOperationParameter("p2", p2))
         End Function
         ''' <summary>
         ''' There are no comments for foo2 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo2(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.GoodCustomer), p2 As Integer) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of String)
-            If Not source.IsComposable Then
+        Public Function foo2(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.GoodCustomer), p2 As Integer) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of String)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return source.CreateFunctionQuerySingle(Of String)("MergedFunctionalTest.DSC.foo2", False, New Global.Microsoft.OData.Client.UriOperationParameter("p2", p2))
+
+            Return _source.CreateFunctionQuerySingle(Of String)("MergedFunctionalTest.DSC.foo2", False, New Global.Microsoft.OData.Client.UriOperationParameter("p2", p2))
         End Function
         ''' <summary>
         ''' There are no comments for foo2 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo2(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.BadCustomer), p2 As Integer) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of String)
-            If Not source.IsComposable Then
+        Public Function foo2(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.BadCustomer), p2 As Integer) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of String)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return source.CreateFunctionQuerySingle(Of String)("MergedFunctionalTest.DSC.foo2", False, New Global.Microsoft.OData.Client.UriOperationParameter("p2", p2))
+
+            Return _source.CreateFunctionQuerySingle(Of String)("MergedFunctionalTest.DSC.foo2", False, New Global.Microsoft.OData.Client.UriOperationParameter("p2", p2))
         End Function
         ''' <summary>
         ''' There are no comments for foo7 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo7(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Customer), p1 As Global.System.Collections.Generic.ICollection(Of Integer), p2 As MergedFunctionalTest.DSC.Address) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Global.System.Nullable(Of Integer))
-            If Not source.IsComposable Then
+        Public Function foo7(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Customer), p1 As Global.System.Collections.Generic.ICollection(Of Integer), p2 As MergedFunctionalTest.DSC.Address) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Global.System.Nullable(Of Integer))
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return source.CreateFunctionQuerySingle(Of Global.System.Nullable(Of Integer))("MergedFunctionalTest.DSC.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1),
+
+            Return _source.CreateFunctionQuerySingle(Of Global.System.Nullable(Of Integer))("MergedFunctionalTest.DSC.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1),
                     New Global.Microsoft.OData.Client.UriOperationParameter("p2", p2))
         End Function
         ''' <summary>
         ''' There are no comments for foo7 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo7(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.GoodCustomer), p1 As Global.System.Collections.Generic.ICollection(Of Integer), p2 As MergedFunctionalTest.DSC.Address) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Global.System.Nullable(Of Integer))
-            If Not source.IsComposable Then
+        Public Function foo7(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.GoodCustomer), p1 As Global.System.Collections.Generic.ICollection(Of Integer), p2 As MergedFunctionalTest.DSC.Address) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Global.System.Nullable(Of Integer))
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return source.CreateFunctionQuerySingle(Of Global.System.Nullable(Of Integer))("MergedFunctionalTest.DSC.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1),
+
+            Return _source.CreateFunctionQuerySingle(Of Global.System.Nullable(Of Integer))("MergedFunctionalTest.DSC.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1),
                     New Global.Microsoft.OData.Client.UriOperationParameter("p2", p2))
         End Function
         ''' <summary>
         ''' There are no comments for foo7 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo7(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.BadCustomer), p1 As Global.System.Collections.Generic.ICollection(Of Integer), p2 As MergedFunctionalTest.DSC.Address) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Global.System.Nullable(Of Integer))
-            If Not source.IsComposable Then
+        Public Function foo7(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.BadCustomer), p1 As Global.System.Collections.Generic.ICollection(Of Integer), p2 As MergedFunctionalTest.DSC.Address) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Global.System.Nullable(Of Integer))
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return source.CreateFunctionQuerySingle(Of Global.System.Nullable(Of Integer))("MergedFunctionalTest.DSC.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1),
+
+            Return _source.CreateFunctionQuerySingle(Of Global.System.Nullable(Of Integer))("MergedFunctionalTest.DSC.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1),
                     New Global.Microsoft.OData.Client.UriOperationParameter("p2", p2))
         End Function
         ''' <summary>
         ''' There are no comments for foo7 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo7(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Customer), p1 As MergedFunctionalTest.DSC.Address) As MergedFunctionalTest.DSC.CustomerSingle
-            If Not source.IsComposable Then
+        Public Function foo7(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Customer), p1 As MergedFunctionalTest.DSC.Address) As MergedFunctionalTest.DSC.CustomerSingle
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return New MergedFunctionalTest.DSC.CustomerSingle(source.CreateFunctionQuerySingle(Of MergedFunctionalTest.DSC.Customer)("MergedFunctionalTest.DSC.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1)))
+
+            Return New MergedFunctionalTest.DSC.CustomerSingle(_source.CreateFunctionQuerySingle(Of MergedFunctionalTest.DSC.Customer)("MergedFunctionalTest.DSC.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1)))
         End Function
         ''' <summary>
         ''' There are no comments for foo7 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo7(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.GoodCustomer), p1 As MergedFunctionalTest.DSC.Address) As MergedFunctionalTest.DSC.CustomerSingle
-            If Not source.IsComposable Then
+        Public Function foo7(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.GoodCustomer), p1 As MergedFunctionalTest.DSC.Address) As MergedFunctionalTest.DSC.CustomerSingle
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return New MergedFunctionalTest.DSC.CustomerSingle(source.CreateFunctionQuerySingle(Of MergedFunctionalTest.DSC.Customer)("MergedFunctionalTest.DSC.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1)))
+
+            Return New MergedFunctionalTest.DSC.CustomerSingle(_source.CreateFunctionQuerySingle(Of MergedFunctionalTest.DSC.Customer)("MergedFunctionalTest.DSC.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1)))
         End Function
         ''' <summary>
         ''' There are no comments for foo7 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo7(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.BadCustomer), p1 As MergedFunctionalTest.DSC.Address) As MergedFunctionalTest.DSC.CustomerSingle
-            If Not source.IsComposable Then
+        Public Function foo7(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.BadCustomer), p1 As MergedFunctionalTest.DSC.Address) As MergedFunctionalTest.DSC.CustomerSingle
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return New MergedFunctionalTest.DSC.CustomerSingle(source.CreateFunctionQuerySingle(Of MergedFunctionalTest.DSC.Customer)("MergedFunctionalTest.DSC.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1)))
+
+            Return New MergedFunctionalTest.DSC.CustomerSingle(_source.CreateFunctionQuerySingle(Of MergedFunctionalTest.DSC.Customer)("MergedFunctionalTest.DSC.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1)))
         End Function
         ''' <summary>
         ''' There are no comments for foo7 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo7(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Product), p1 As MergedFunctionalTest.DSC.Address) As MergedFunctionalTest.DSC.CustomerSingle
-            If Not source.IsComposable Then
+        Public Function foo7(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Product), p1 As MergedFunctionalTest.DSC.Address) As MergedFunctionalTest.DSC.CustomerSingle
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return New MergedFunctionalTest.DSC.CustomerSingle(source.CreateFunctionQuerySingle(Of MergedFunctionalTest.DSC.Customer)("MergedFunctionalTest.DSC.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1)))
+
+            Return New MergedFunctionalTest.DSC.CustomerSingle(_source.CreateFunctionQuerySingle(Of MergedFunctionalTest.DSC.Customer)("MergedFunctionalTest.DSC.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1)))
         End Function
         ''' <summary>
         ''' There are no comments for foo7 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo7(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Product)) As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Customer)
-            If Not source.IsComposable Then
+        Public Function foo7(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Product)) As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Customer)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return source.CreateFunctionQuery(Of MergedFunctionalTest.DSC.Customer)("MergedFunctionalTest.DSC.foo7", False)
+
+            Return _source.CreateFunctionQuery(Of MergedFunctionalTest.DSC.Customer)("MergedFunctionalTest.DSC.foo7", False)
         End Function
         ''' <summary>
         ''' There are no comments for foo12 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo12(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Product)) As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Customer)
-            If Not source.IsComposable Then
+        Public Function foo12(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Product)) As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Customer)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return source.CreateFunctionQuery(Of MergedFunctionalTest.DSC.Customer)("MergedFunctionalTest.DSC.foo12", False)
+
+            Return _source.CreateFunctionQuery(Of MergedFunctionalTest.DSC.Customer)("MergedFunctionalTest.DSC.foo12", False)
         End Function
         ''' <summary>
         ''' There are no comments for foo12 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo12(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Product), p1 As MergedFunctionalTest.DSC.Address) As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Customer)
-            If Not source.IsComposable Then
+        Public Function foo12(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Product), p1 As MergedFunctionalTest.DSC.Address) As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Customer)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return source.CreateFunctionQuery(Of MergedFunctionalTest.DSC.Customer)("MergedFunctionalTest.DSC.foo12", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1))
+
+            Return _source.CreateFunctionQuery(Of MergedFunctionalTest.DSC.Customer)("MergedFunctionalTest.DSC.foo12", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1))
         End Function
         ''' <summary>
         ''' There are no comments for foo9 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo9(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Customer), p2 As Global.System.Collections.Generic.ICollection(Of MergedFunctionalTest.DSC.Address)) As Global.Microsoft.OData.Client.DataServiceActionQuery(Of MergedFunctionalTest.DSC.Address)
-            If Not source.IsComposable Then
+        Public Function foo9(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Customer), p2 As Global.System.Collections.Generic.ICollection(Of MergedFunctionalTest.DSC.Address)) As Global.Microsoft.OData.Client.DataServiceActionQuery(Of MergedFunctionalTest.DSC.Address)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of MergedFunctionalTest.DSC.Address)(source.Context, source.AppendRequestUri("MergedFunctionalTest.DSC.foo9"), New Global.Microsoft.OData.Client.BodyOperationParameter("p2", p2))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of MergedFunctionalTest.DSC.Address)(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.DSC.foo9"), New Global.Microsoft.OData.Client.BodyOperationParameter("p2", p2))
         End Function
         ''' <summary>
         ''' There are no comments for foo9 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo9(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.GoodCustomer), p2 As Global.System.Collections.Generic.ICollection(Of MergedFunctionalTest.DSC.Address)) As Global.Microsoft.OData.Client.DataServiceActionQuery(Of MergedFunctionalTest.DSC.Address)
-            If Not source.IsComposable Then
+        Public Function foo9(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.GoodCustomer), p2 As Global.System.Collections.Generic.ICollection(Of MergedFunctionalTest.DSC.Address)) As Global.Microsoft.OData.Client.DataServiceActionQuery(Of MergedFunctionalTest.DSC.Address)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of MergedFunctionalTest.DSC.Address)(source.Context, source.AppendRequestUri("MergedFunctionalTest.DSC.foo9"), New Global.Microsoft.OData.Client.BodyOperationParameter("p2", p2))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of MergedFunctionalTest.DSC.Address)(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.DSC.foo9"), New Global.Microsoft.OData.Client.BodyOperationParameter("p2", p2))
         End Function
         ''' <summary>
         ''' There are no comments for foo9 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo9(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.BadCustomer), p2 As Global.System.Collections.Generic.ICollection(Of MergedFunctionalTest.DSC.Address)) As Global.Microsoft.OData.Client.DataServiceActionQuery(Of MergedFunctionalTest.DSC.Address)
-            If Not source.IsComposable Then
+        Public Function foo9(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.BadCustomer), p2 As Global.System.Collections.Generic.ICollection(Of MergedFunctionalTest.DSC.Address)) As Global.Microsoft.OData.Client.DataServiceActionQuery(Of MergedFunctionalTest.DSC.Address)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of MergedFunctionalTest.DSC.Address)(source.Context, source.AppendRequestUri("MergedFunctionalTest.DSC.foo9"), New Global.Microsoft.OData.Client.BodyOperationParameter("p2", p2))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of MergedFunctionalTest.DSC.Address)(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.DSC.foo9"), New Global.Microsoft.OData.Client.BodyOperationParameter("p2", p2))
         End Function
         ''' <summary>
         ''' There are no comments for foo10 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo10(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Customer)) As Global.Microsoft.OData.Client.DataServiceActionQuery
-            If Not source.IsComposable Then
+        Public Function foo10(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Customer)) As Global.Microsoft.OData.Client.DataServiceActionQuery
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(source.Context, source.AppendRequestUri("MergedFunctionalTest.DSC.foo10"))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.DSC.foo10"))
         End Function
         ''' <summary>
         ''' There are no comments for foo10 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo10(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.GoodCustomer)) As Global.Microsoft.OData.Client.DataServiceActionQuery
-            If Not source.IsComposable Then
+        Public Function foo10(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.GoodCustomer)) As Global.Microsoft.OData.Client.DataServiceActionQuery
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(source.Context, source.AppendRequestUri("MergedFunctionalTest.DSC.foo10"))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.DSC.foo10"))
         End Function
         ''' <summary>
         ''' There are no comments for foo10 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo10(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.BadCustomer)) As Global.Microsoft.OData.Client.DataServiceActionQuery
-            If Not source.IsComposable Then
+        Public Function foo10(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.BadCustomer)) As Global.Microsoft.OData.Client.DataServiceActionQuery
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(source.Context, source.AppendRequestUri("MergedFunctionalTest.DSC.foo10"))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.DSC.foo10"))
         End Function
         ''' <summary>
         ''' There are no comments for foo10 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo10(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Customer)) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of MergedFunctionalTest.DSC.Address)
-            If Not source.IsComposable Then
+        Public Function foo10(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.Customer)) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of MergedFunctionalTest.DSC.Address)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of MergedFunctionalTest.DSC.Address)(source.Context, source.AppendRequestUri("MergedFunctionalTest.DSC.foo10"))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of MergedFunctionalTest.DSC.Address)(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.DSC.foo10"))
         End Function
         ''' <summary>
         ''' There are no comments for foo10 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo10(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.GoodCustomer)) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of MergedFunctionalTest.DSC.Address)
-            If Not source.IsComposable Then
+        Public Function foo10(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.GoodCustomer)) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of MergedFunctionalTest.DSC.Address)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of MergedFunctionalTest.DSC.Address)(source.Context, source.AppendRequestUri("MergedFunctionalTest.DSC.foo10"))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of MergedFunctionalTest.DSC.Address)(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.DSC.foo10"))
         End Function
         ''' <summary>
         ''' There are no comments for foo10 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function foo10(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.BadCustomer)) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of MergedFunctionalTest.DSC.Address)
-            If Not source.IsComposable Then
+        Public Function foo10(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.BadCustomer)) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of MergedFunctionalTest.DSC.Address)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of MergedFunctionalTest.DSC.Address)(source.Context, source.AppendRequestUri("MergedFunctionalTest.DSC.foo10"))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of MergedFunctionalTest.DSC.Address)(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.DSC.foo10"))
         End Function
     End Module
 End Namespace
@@ -9502,57 +9502,57 @@ Namespace MergedFunctionalTest1.DSC
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest1.DSC.DerivedType as MergedFunctionalTest1.DSC.DerivedTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest1.DSC.DerivedType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest1.DSC.DerivedTypeSingle
-            Return New MergedFunctionalTest1.DSC.DerivedTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest1.DSC.DerivedType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest1.DSC.DerivedTypeSingle
+            Return New MergedFunctionalTest1.DSC.DerivedTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest1.DSC.DerivedType as MergedFunctionalTest1.DSC.DerivedTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest1.DSC.DerivedType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest1.DSC.DerivedType),
             keyProp As Long) As MergedFunctionalTest1.DSC.DerivedTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "KeyProp", keyProp }
             }
-            Return New MergedFunctionalTest1.DSC.DerivedTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest1.DSC.DerivedTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Cast an entity of type MergedFunctionalTest.DSC.BaseType to its derived type MergedFunctionalTest1.DSC.DerivedType
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToDerivedType(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.BaseType)) As MergedFunctionalTest1.DSC.DerivedTypeSingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest1.DSC.DerivedType) = source.CastTo(Of MergedFunctionalTest1.DSC.DerivedType)()
-            Return New MergedFunctionalTest1.DSC.DerivedTypeSingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToDerivedType(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest.DSC.BaseType)) As MergedFunctionalTest1.DSC.DerivedTypeSingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MergedFunctionalTest1.DSC.DerivedType) = _source.CastTo(Of MergedFunctionalTest1.DSC.DerivedType)()
+            Return New MergedFunctionalTest1.DSC.DerivedTypeSingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest1.DSC.Customer as MergedFunctionalTest1.DSC.CustomerSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest1.DSC.Customer), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest1.DSC.CustomerSingle
-            Return New MergedFunctionalTest1.DSC.CustomerSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest1.DSC.Customer), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As MergedFunctionalTest1.DSC.CustomerSingle
+            Return New MergedFunctionalTest1.DSC.CustomerSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type MergedFunctionalTest1.DSC.Customer as MergedFunctionalTest1.DSC.CustomerSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="customerId">The value of customerId</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest1.DSC.Customer),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest1.DSC.Customer),
             customerId As Integer) As MergedFunctionalTest1.DSC.CustomerSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "CustomerId", customerId }
             }
-            Return New MergedFunctionalTest1.DSC.CustomerSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New MergedFunctionalTest1.DSC.CustomerSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
     End Module
 End Namespace

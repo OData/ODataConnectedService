@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 15:14:36
+'Generation date: 13.06.2020 13:06:59
 Namespace OverrideOperations
     '''<summary>
     '''There are no comments for OverrideOperationsContainer in the schema.
@@ -444,149 +444,149 @@ Namespace OverrideOperations
         ''' <summary>
         ''' Get an entity of type OverrideOperations.ET as OverrideOperations.ETSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.ET), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As OverrideOperations.ETSingle
-            Return New OverrideOperations.ETSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.ET), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As OverrideOperations.ETSingle
+            Return New OverrideOperations.ETSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type OverrideOperations.ET as OverrideOperations.ETSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="userName">The value of userName</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.ET),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.ET),
             userName As String) As OverrideOperations.ETSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "UserName", userName }
             }
-            Return New OverrideOperations.ETSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New OverrideOperations.ETSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type OverrideOperations.DerivedET as OverrideOperations.DerivedETSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.DerivedET), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As OverrideOperations.DerivedETSingle
-            Return New OverrideOperations.DerivedETSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.DerivedET), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As OverrideOperations.DerivedETSingle
+            Return New OverrideOperations.DerivedETSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type OverrideOperations.DerivedET as OverrideOperations.DerivedETSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="userName">The value of userName</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.DerivedET),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.DerivedET),
             userName As String) As OverrideOperations.DerivedETSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "UserName", userName }
             }
-            Return New OverrideOperations.DerivedETSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New OverrideOperations.DerivedETSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Cast an entity of type OverrideOperations.ET to its derived type OverrideOperations.DerivedET
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToDerivedET(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.ET)) As OverrideOperations.DerivedETSingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.DerivedET) = source.CastTo(Of OverrideOperations.DerivedET)()
-            Return New OverrideOperations.DerivedETSingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToDerivedET(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.ET)) As OverrideOperations.DerivedETSingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.DerivedET) = _source.CastTo(Of OverrideOperations.DerivedET)()
+            Return New OverrideOperations.DerivedETSingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' There are no comments for FunctionWithoutParameter in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("FunctionWithoutParameter")>  _
-        Public Function FunctionWithoutParameter(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.ET)) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.CT)
-            If Not source.IsComposable Then
+        Public Function FunctionWithoutParameter(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.ET)) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.CT)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return source.CreateFunctionQuerySingle(Of OverrideOperations.CT)("OverrideOperations.FunctionWithoutParameter", False)
+
+            Return _source.CreateFunctionQuerySingle(Of OverrideOperations.CT)("OverrideOperations.FunctionWithoutParameter", False)
         End Function
         ''' <summary>
         ''' There are no comments for FunctionWithoutParameter in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("FunctionWithoutParameter")>  _
-        Public Function FunctionWithoutParameter(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.DerivedET)) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.CT)
-            If Not source.IsComposable Then
+        Public Function FunctionWithoutParameter(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.DerivedET)) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.CT)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return source.CreateFunctionQuerySingle(Of OverrideOperations.CT)("OverrideOperations.FunctionWithoutParameter", False)
+
+            Return _source.CreateFunctionQuerySingle(Of OverrideOperations.CT)("OverrideOperations.FunctionWithoutParameter", False)
         End Function
         ''' <summary>
         ''' There are no comments for FunctionBoundToCollectionOfEntity in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("FunctionBoundToCollectionOfEntity")>  _
-        Public Function FunctionBoundToCollectionOfEntity(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.ET), p1 As String) As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.ET)
-            If Not source.IsComposable Then
+        Public Function FunctionBoundToCollectionOfEntity(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.ET), p1 As String) As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.ET)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return source.CreateFunctionQuery(Of OverrideOperations.ET)("OverrideOperations.FunctionBoundToCollectionOfEntity", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1))
+
+            Return _source.CreateFunctionQuery(Of OverrideOperations.ET)("OverrideOperations.FunctionBoundToCollectionOfEntity", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1))
         End Function
         ''' <summary>
         ''' There are no comments for FunctionBoundToCollectionOfEntity in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("FunctionBoundToCollectionOfEntity")>  _
-        Public Function FunctionBoundToCollectionOfEntity(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.DerivedET), p1 As String) As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.ET)
-            If Not source.IsComposable Then
+        Public Function FunctionBoundToCollectionOfEntity(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.DerivedET), p1 As String) As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.ET)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return source.CreateFunctionQuery(Of OverrideOperations.ET)("OverrideOperations.FunctionBoundToCollectionOfEntity", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1))
+
+            Return _source.CreateFunctionQuery(Of OverrideOperations.ET)("OverrideOperations.FunctionBoundToCollectionOfEntity", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1))
         End Function
         ''' <summary>
         ''' There are no comments for ActionWithParameter in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("ActionWithParameter")>  _
-        Public Function ActionWithParameter(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.ET), p1 As String) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)
-            If Not source.IsComposable Then
+        Public Function ActionWithParameter(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.ET), p1 As String) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)(source.Context, source.AppendRequestUri("OverrideOperations.ActionWithParameter"), New Global.Microsoft.OData.Client.BodyOperationParameter("p1", p1))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)(_source.Context, _source.AppendRequestUri("OverrideOperations.ActionWithParameter"), New Global.Microsoft.OData.Client.BodyOperationParameter("p1", p1))
         End Function
         ''' <summary>
         ''' There are no comments for ActionWithParameter in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("ActionWithParameter")>  _
-        Public Function ActionWithParameter(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.DerivedET), p1 As String) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)
-            If Not source.IsComposable Then
+        Public Function ActionWithParameter(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of OverrideOperations.DerivedET), p1 As String) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)(source.Context, source.AppendRequestUri("OverrideOperations.ActionWithParameter"), New Global.Microsoft.OData.Client.BodyOperationParameter("p1", p1))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)(_source.Context, _source.AppendRequestUri("OverrideOperations.ActionWithParameter"), New Global.Microsoft.OData.Client.BodyOperationParameter("p1", p1))
         End Function
         ''' <summary>
         ''' There are no comments for ActionBoundToCollectionOfEntity in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("ActionBoundToCollectionOfEntity")>  _
-        Public Function ActionBoundToCollectionOfEntity(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.ET), p1 As String) As Global.Microsoft.OData.Client.DataServiceActionQuery(Of OverrideOperations.ET)
-            If Not source.IsComposable Then
+        Public Function ActionBoundToCollectionOfEntity(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.ET), p1 As String) As Global.Microsoft.OData.Client.DataServiceActionQuery(Of OverrideOperations.ET)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of OverrideOperations.ET)(source.Context, source.AppendRequestUri("OverrideOperations.ActionBoundToCollectionOfEntity"), New Global.Microsoft.OData.Client.BodyOperationParameter("p1", p1))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of OverrideOperations.ET)(_source.Context, _source.AppendRequestUri("OverrideOperations.ActionBoundToCollectionOfEntity"), New Global.Microsoft.OData.Client.BodyOperationParameter("p1", p1))
         End Function
         ''' <summary>
         ''' There are no comments for ActionBoundToCollectionOfEntity in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("ActionBoundToCollectionOfEntity")>  _
-        Public Function ActionBoundToCollectionOfEntity(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.DerivedET), p1 As String) As Global.Microsoft.OData.Client.DataServiceActionQuery(Of OverrideOperations.ET)
-            If Not source.IsComposable Then
+        Public Function ActionBoundToCollectionOfEntity(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of OverrideOperations.DerivedET), p1 As String) As Global.Microsoft.OData.Client.DataServiceActionQuery(Of OverrideOperations.ET)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of OverrideOperations.ET)(source.Context, source.AppendRequestUri("OverrideOperations.ActionBoundToCollectionOfEntity"), New Global.Microsoft.OData.Client.BodyOperationParameter("p1", p1))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of OverrideOperations.ET)(_source.Context, _source.AppendRequestUri("OverrideOperations.ActionBoundToCollectionOfEntity"), New Global.Microsoft.OData.Client.BodyOperationParameter("p1", p1))
         End Function
     End Module
 End Namespace

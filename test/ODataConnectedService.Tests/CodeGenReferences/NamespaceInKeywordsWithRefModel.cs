@@ -152,25 +152,25 @@ namespace Event.String.Int
         /// <summary>
         /// Get an entity of type global::Event.String.Int.TestType1 as global::Event.String.Int.TestType1Single specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Event.String.Int.TestType1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Event.String.Int.TestType1> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::Event.String.Int.TestType1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Event.String.Int.TestType1> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::Event.String.Int.TestType1Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Event.String.Int.TestType1Single(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Event.String.Int.TestType1 as global::Event.String.Int.TestType1Single specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="keyProp">The value of keyProp</param>
-        public static global::Event.String.Int.TestType1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Event.String.Int.TestType1> source,
+        public static global::Event.String.Int.TestType1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Event.String.Int.TestType1> _source,
             int keyProp)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "keyProp", keyProp }
             };
-            return new global::Event.String.Int.TestType1Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Event.String.Int.TestType1Single(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
     }
 }
@@ -507,25 +507,25 @@ namespace Simple.Double
         /// <summary>
         /// Get an entity of type global::Simple.Double.TestType2 as global::Simple.Double.TestType2Single specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Simple.Double.TestType2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Simple.Double.TestType2> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::Simple.Double.TestType2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Simple.Double.TestType2> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::Simple.Double.TestType2Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Simple.Double.TestType2Single(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Simple.Double.TestType2 as global::Simple.Double.TestType2Single specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="keyProp">The value of keyProp</param>
-        public static global::Simple.Double.TestType2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Simple.Double.TestType2> source,
+        public static global::Simple.Double.TestType2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Simple.Double.TestType2> _source,
             int keyProp)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "keyProp", keyProp }
             };
-            return new global::Simple.Double.TestType2Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Simple.Double.TestType2Single(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
     }
 }

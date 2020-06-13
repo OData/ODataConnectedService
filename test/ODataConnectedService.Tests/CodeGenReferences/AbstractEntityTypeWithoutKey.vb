@@ -584,175 +584,175 @@ Namespace AbstractEntityTypeWithoutKey
         ''' <summary>
         ''' Cast an entity of type AbstractEntityTypeWithoutKey.AbstractET to its derived type AbstractEntityTypeWithoutKey.DerivedAbstractET
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToDerivedAbstractET(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.AbstractET)) As AbstractEntityTypeWithoutKey.DerivedAbstractETSingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedAbstractET) = source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedAbstractET)()
-            Return New AbstractEntityTypeWithoutKey.DerivedAbstractETSingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToDerivedAbstractET(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.AbstractET)) As AbstractEntityTypeWithoutKey.DerivedAbstractETSingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedAbstractET) = _source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedAbstractET)()
+            Return New AbstractEntityTypeWithoutKey.DerivedAbstractETSingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Get an entity of type AbstractEntityTypeWithoutKey.DerivedBaseET as AbstractEntityTypeWithoutKey.DerivedBaseETSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedBaseET), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As AbstractEntityTypeWithoutKey.DerivedBaseETSingle
-            Return New AbstractEntityTypeWithoutKey.DerivedBaseETSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedBaseET), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As AbstractEntityTypeWithoutKey.DerivedBaseETSingle
+            Return New AbstractEntityTypeWithoutKey.DerivedBaseETSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type AbstractEntityTypeWithoutKey.DerivedBaseET as AbstractEntityTypeWithoutKey.DerivedBaseETSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="id">The value of id</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedBaseET),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedBaseET),
             id As String) As AbstractEntityTypeWithoutKey.DerivedBaseETSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "Id", id }
+                {"Id", id}
             }
-            Return New AbstractEntityTypeWithoutKey.DerivedBaseETSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New AbstractEntityTypeWithoutKey.DerivedBaseETSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Cast an entity of type AbstractEntityTypeWithoutKey.DerivedAbstractET to its derived type AbstractEntityTypeWithoutKey.DerivedBaseET
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToDerivedBaseET(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedAbstractET)) As AbstractEntityTypeWithoutKey.DerivedBaseETSingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedBaseET) = source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedBaseET)()
-            Return New AbstractEntityTypeWithoutKey.DerivedBaseETSingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToDerivedBaseET(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedAbstractET)) As AbstractEntityTypeWithoutKey.DerivedBaseETSingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedBaseET) = _source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedBaseET)()
+            Return New AbstractEntityTypeWithoutKey.DerivedBaseETSingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Cast an entity of type AbstractEntityTypeWithoutKey.AbstractET to its derived type AbstractEntityTypeWithoutKey.DerivedBaseET
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToDerivedBaseET(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.AbstractET)) As AbstractEntityTypeWithoutKey.DerivedBaseETSingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedBaseET) = source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedBaseET)()
-            Return New AbstractEntityTypeWithoutKey.DerivedBaseETSingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToDerivedBaseET(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.AbstractET)) As AbstractEntityTypeWithoutKey.DerivedBaseETSingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedBaseET) = _source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedBaseET)()
+            Return New AbstractEntityTypeWithoutKey.DerivedBaseETSingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Get an entity of type AbstractEntityTypeWithoutKey.DerivedET as AbstractEntityTypeWithoutKey.DerivedETSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedET), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As AbstractEntityTypeWithoutKey.DerivedETSingle
-            Return New AbstractEntityTypeWithoutKey.DerivedETSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedET), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As AbstractEntityTypeWithoutKey.DerivedETSingle
+            Return New AbstractEntityTypeWithoutKey.DerivedETSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type AbstractEntityTypeWithoutKey.DerivedET as AbstractEntityTypeWithoutKey.DerivedETSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="id">The value of id</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedET),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedET),
             id As String) As AbstractEntityTypeWithoutKey.DerivedETSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "Id", id }
+                {"Id", id}
             }
-            Return New AbstractEntityTypeWithoutKey.DerivedETSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New AbstractEntityTypeWithoutKey.DerivedETSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Cast an entity of type AbstractEntityTypeWithoutKey.DerivedBaseET to its derived type AbstractEntityTypeWithoutKey.DerivedET
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToDerivedET(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedBaseET)) As AbstractEntityTypeWithoutKey.DerivedETSingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedET) = source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedET)()
-            Return New AbstractEntityTypeWithoutKey.DerivedETSingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToDerivedET(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedBaseET)) As AbstractEntityTypeWithoutKey.DerivedETSingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedET) = _source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedET)()
+            Return New AbstractEntityTypeWithoutKey.DerivedETSingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Cast an entity of type AbstractEntityTypeWithoutKey.DerivedAbstractET to its derived type AbstractEntityTypeWithoutKey.DerivedET
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToDerivedET(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedAbstractET)) As AbstractEntityTypeWithoutKey.DerivedETSingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedET) = source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedET)()
-            Return New AbstractEntityTypeWithoutKey.DerivedETSingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToDerivedET(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedAbstractET)) As AbstractEntityTypeWithoutKey.DerivedETSingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedET) = _source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedET)()
+            Return New AbstractEntityTypeWithoutKey.DerivedETSingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Cast an entity of type AbstractEntityTypeWithoutKey.AbstractET to its derived type AbstractEntityTypeWithoutKey.DerivedET
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToDerivedET(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.AbstractET)) As AbstractEntityTypeWithoutKey.DerivedETSingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedET) = source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedET)()
-            Return New AbstractEntityTypeWithoutKey.DerivedETSingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToDerivedET(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.AbstractET)) As AbstractEntityTypeWithoutKey.DerivedETSingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedET) = _source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedET)()
+            Return New AbstractEntityTypeWithoutKey.DerivedETSingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Get an entity of type AbstractEntityTypeWithoutKey.DerivedAbstractETWithKey as AbstractEntityTypeWithoutKey.DerivedAbstractETWithKeySingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedAbstractETWithKey), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As AbstractEntityTypeWithoutKey.DerivedAbstractETWithKeySingle
-            Return New AbstractEntityTypeWithoutKey.DerivedAbstractETWithKeySingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedAbstractETWithKey), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As AbstractEntityTypeWithoutKey.DerivedAbstractETWithKeySingle
+            Return New AbstractEntityTypeWithoutKey.DerivedAbstractETWithKeySingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type AbstractEntityTypeWithoutKey.DerivedAbstractETWithKey as AbstractEntityTypeWithoutKey.DerivedAbstractETWithKeySingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="id">The value of id</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedAbstractETWithKey),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedAbstractETWithKey),
             id As String) As AbstractEntityTypeWithoutKey.DerivedAbstractETWithKeySingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "Id", id }
+                {"Id", id}
             }
-            Return New AbstractEntityTypeWithoutKey.DerivedAbstractETWithKeySingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New AbstractEntityTypeWithoutKey.DerivedAbstractETWithKeySingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Cast an entity of type AbstractEntityTypeWithoutKey.AbstractET to its derived type AbstractEntityTypeWithoutKey.DerivedAbstractETWithKey
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToDerivedAbstractETWithKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.AbstractET)) As AbstractEntityTypeWithoutKey.DerivedAbstractETWithKeySingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedAbstractETWithKey) = source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedAbstractETWithKey)()
-            Return New AbstractEntityTypeWithoutKey.DerivedAbstractETWithKeySingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToDerivedAbstractETWithKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.AbstractET)) As AbstractEntityTypeWithoutKey.DerivedAbstractETWithKeySingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedAbstractETWithKey) = _source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedAbstractETWithKey)()
+            Return New AbstractEntityTypeWithoutKey.DerivedAbstractETWithKeySingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Get an entity of type AbstractEntityTypeWithoutKey.DerivedET2 as AbstractEntityTypeWithoutKey.DerivedET2Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedET2), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As AbstractEntityTypeWithoutKey.DerivedET2Single
-            Return New AbstractEntityTypeWithoutKey.DerivedET2Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedET2), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As AbstractEntityTypeWithoutKey.DerivedET2Single
+            Return New AbstractEntityTypeWithoutKey.DerivedET2Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type AbstractEntityTypeWithoutKey.DerivedET2 as AbstractEntityTypeWithoutKey.DerivedET2Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="id">The value of id</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedET2),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of AbstractEntityTypeWithoutKey.DerivedET2),
             id As String) As AbstractEntityTypeWithoutKey.DerivedET2Single
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "Id", id }
+                {"Id", id}
             }
-            Return New AbstractEntityTypeWithoutKey.DerivedET2Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New AbstractEntityTypeWithoutKey.DerivedET2Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Cast an entity of type AbstractEntityTypeWithoutKey.DerivedAbstractETWithKey to its derived type AbstractEntityTypeWithoutKey.DerivedET2
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToDerivedET2(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedAbstractETWithKey)) As AbstractEntityTypeWithoutKey.DerivedET2Single
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedET2) = source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedET2)()
-            Return New AbstractEntityTypeWithoutKey.DerivedET2Single(source.Context, query.GetPath(Nothing))
+        Public Function CastToDerivedET2(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedAbstractETWithKey)) As AbstractEntityTypeWithoutKey.DerivedET2Single
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedET2) = _source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedET2)()
+            Return New AbstractEntityTypeWithoutKey.DerivedET2Single(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Cast an entity of type AbstractEntityTypeWithoutKey.AbstractET to its derived type AbstractEntityTypeWithoutKey.DerivedET2
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToDerivedET2(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.AbstractET)) As AbstractEntityTypeWithoutKey.DerivedET2Single
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedET2) = source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedET2)()
-            Return New AbstractEntityTypeWithoutKey.DerivedET2Single(source.Context, query.GetPath(Nothing))
+        Public Function CastToDerivedET2(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.AbstractET)) As AbstractEntityTypeWithoutKey.DerivedET2Single
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractEntityTypeWithoutKey.DerivedET2) = _source.CastTo(Of AbstractEntityTypeWithoutKey.DerivedET2)()
+            Return New AbstractEntityTypeWithoutKey.DerivedET2Single(_source.Context, query.GetPath(Nothing))
         End Function
     End Module
 End Namespace

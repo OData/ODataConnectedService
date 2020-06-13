@@ -383,93 +383,93 @@ namespace Namespace.Foo.DSC
         /// <summary>
         /// Get an entity of type global::Namespace.Foo.DSC.BaseType as global::Namespace.Foo.DSC.BaseTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Namespace.Foo.DSC.BaseTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace.Foo.DSC.BaseType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::Namespace.Foo.DSC.BaseTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace.Foo.DSC.BaseType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::Namespace.Foo.DSC.BaseTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Namespace.Foo.DSC.BaseTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Namespace.Foo.DSC.BaseType as global::Namespace.Foo.DSC.BaseTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="keyProp">The value of keyProp</param>
-        public static global::Namespace.Foo.DSC.BaseTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace.Foo.DSC.BaseType> source,
+        public static global::Namespace.Foo.DSC.BaseTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace.Foo.DSC.BaseType> _source,
             int keyProp)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "keyProp", keyProp }
             };
-            return new global::Namespace.Foo.DSC.BaseTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Namespace.Foo.DSC.BaseTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Namespace.Foo.DSC.TestType as global::Namespace.Foo.DSC.TestTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Namespace.Foo.DSC.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace.Foo.DSC.TestType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::Namespace.Foo.DSC.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace.Foo.DSC.TestType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::Namespace.Foo.DSC.TestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Namespace.Foo.DSC.TestTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Namespace.Foo.DSC.TestType as global::Namespace.Foo.DSC.TestTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="keyProp">The value of keyProp</param>
-        public static global::Namespace.Foo.DSC.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace.Foo.DSC.TestType> source,
+        public static global::Namespace.Foo.DSC.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace.Foo.DSC.TestType> _source,
             int keyProp)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "keyProp", keyProp }
             };
-            return new global::Namespace.Foo.DSC.TestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Namespace.Foo.DSC.TestTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Cast an entity of type global::Namespace.Foo.DSC.BaseType to its derived type global::Namespace.Foo.DSC.TestType
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::Namespace.Foo.DSC.TestTypeSingle CastToTestType(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Namespace.Foo.DSC.BaseType> source)
+        /// <param name="_source">source entity</param>
+        public static global::Namespace.Foo.DSC.TestTypeSingle CastToTestType(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Namespace.Foo.DSC.BaseType> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::Namespace.Foo.DSC.TestType> query = source.CastTo<global::Namespace.Foo.DSC.TestType>();
-            return new global::Namespace.Foo.DSC.TestTypeSingle(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::Namespace.Foo.DSC.TestType> query = _source.CastTo<global::Namespace.Foo.DSC.TestType>();
+            return new global::Namespace.Foo.DSC.TestTypeSingle(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Get an entity of type global::Namespace.Foo.DSC.SingleType as global::Namespace.Foo.DSC.SingleTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Namespace.Foo.DSC.SingleTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace.Foo.DSC.SingleType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::Namespace.Foo.DSC.SingleTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace.Foo.DSC.SingleType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::Namespace.Foo.DSC.SingleTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Namespace.Foo.DSC.SingleTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Namespace.Foo.DSC.SingleType as global::Namespace.Foo.DSC.SingleTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="keyProp">The value of keyProp</param>
-        public static global::Namespace.Foo.DSC.SingleTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace.Foo.DSC.SingleType> source,
+        public static global::Namespace.Foo.DSC.SingleTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace.Foo.DSC.SingleType> _source,
             int keyProp)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "keyProp", keyProp }
             };
-            return new global::Namespace.Foo.DSC.SingleTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Namespace.Foo.DSC.SingleTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// There are no comments for Foo7 in the schema.
         /// </summary>
         [global::Microsoft.OData.Client.OriginalNameAttribute("foo7")]
-        public static global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::System.Nullable<int>> Foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Namespace.Foo.DSC.SingleType> source)
+        public static global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::System.Nullable<int>> Foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Namespace.Foo.DSC.SingleType> _source)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::System.Nullable<int>>(source.Context, source.AppendRequestUri("namespace.foo.DSC.foo7"));
+            return new global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::System.Nullable<int>>(_source.Context, _source.AppendRequestUri("namespace.foo.DSC.foo7"));
         }
     }
 }
