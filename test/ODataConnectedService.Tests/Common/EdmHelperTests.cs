@@ -7,9 +7,11 @@
 
 using System.Collections.Generic;
 using System.IO;
+using FluentAssertions;
 using Microsoft.OData.ConnectedService.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.OData.Edm;
+using Microsoft.OData.Edm.Vocabularies;
 
 namespace ODataConnectedService.Tests
 {
@@ -134,6 +136,47 @@ namespace ODataConnectedService.Tests
 
             //In order to get compare lists you should use the CollectionAssert
             CollectionAssert.AreEqual(expectedBoundOperations, actualBoundOperations);
+        }
+
+        [TestMethod]
+        public void TestGetParametersString_WithEmptyParameters()
+        {
+            string actualResult = EdmHelper.GetParametersString(new List<IEdmOperationParameter>());
+
+            string expectedResult = "()";
+
+            actualResult.ShouldBeEquivalentTo(expectedResult);
+        }
+
+        [TestMethod]
+        public void TestGetParametersString_WithSingleParameter()
+        {
+            var typeReference = new EdmTypeReferenceForTest(new EdmSchemaTypeForTest("Type1", "Test"), false);
+            List<IEdmOperationParameter> parameters = new List<IEdmOperationParameter>
+            {
+                new EdmOperationParameter(new EdmAction("Test", "Action", typeReference, false, new EdmPropertyPathExpression("TestPath")), "par1", typeReference)
+            };
+            string actualResult = EdmHelper.GetParametersString(parameters);
+
+            string expectedResult = "(Test.Type1 par1)";
+
+            actualResult.ShouldBeEquivalentTo(expectedResult);
+        }
+
+        [TestMethod]
+        public void TestGetParametersString_WithAFewParameters()
+        {
+            var typeReference = new EdmTypeReferenceForTest(new EdmSchemaTypeForTest("Type1", "Test"), false);
+            List<IEdmOperationParameter> parameters = new List<IEdmOperationParameter>
+            {
+                new EdmOperationParameter(new EdmAction("Test", "Action", typeReference, false, new EdmPropertyPathExpression("TestPath")), "par1", typeReference),
+                new EdmOperationParameter(new EdmAction("Test", "Action", typeReference, false, new EdmPropertyPathExpression("TestPath")), "par2", typeReference)
+            };
+            string actualResult = EdmHelper.GetParametersString(parameters);
+
+            string expectedResult = "(Test.Type1 par1, Test.Type1 par2)";
+
+            actualResult.ShouldBeEquivalentTo(expectedResult);
         }
     }
 }

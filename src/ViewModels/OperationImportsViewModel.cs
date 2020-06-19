@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.Views;
 using Microsoft.OData.Edm;
@@ -109,6 +110,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                     var operationImportModel = new OperationImportModel()
                     {
                         Name = operation.Name,
+                        ReturnType = operation.Operation?.ReturnType?.FullName() ?? "void",
+                        ParametersString = EdmHelper.GetParametersString(operation.Operation?.Parameters),
                         IsSelected = IsOperationImportIncluded(operation, excludedSchemaTypes)
                     };
 

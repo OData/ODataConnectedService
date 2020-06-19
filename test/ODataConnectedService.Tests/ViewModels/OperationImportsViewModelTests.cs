@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------------------
 // <copyright file="OperationImportsViewModelTests.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //-----------------------------------------------------------------------------------
@@ -47,8 +47,20 @@ namespace ODataConnectedService.Tests.ViewModels
 
             objectSelection.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
             {
-                new OperationImportModel() { Name = "GetTotal", IsSelected = true },
-                new OperationImportModel() { Name = "Update", IsSelected = true }
+                new OperationImportModel
+                {
+                    ReturnType = "Test.TypeDef",
+                    ParametersString = "()",
+                    Name = "GetTotal",
+                    IsSelected = true
+                },
+                new OperationImportModel
+                {
+                    ReturnType = "void",
+                    ParametersString = "()",
+                    Name = "Update",
+                    IsSelected = true
+                }
             });
         }
 
@@ -108,7 +120,7 @@ namespace ODataConnectedService.Tests.ViewModels
 
             objectSelection.OperationImports.Count().Should().Be(0);
         }
-        
+
         [TestMethod]
         public void SelectAll_ShouldMarkAllOperationsAsSelected()
         {

@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------------
 // <copyright file="OperationImportModel.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //----------------------------------------------------------------------------
@@ -14,9 +14,15 @@ namespace Microsoft.OData.ConnectedService.Models
         private bool _isSelected;
 
         public string Name { get; set; }
+
+        public string ReturnType { get; set; }
+
+        public string ParametersString { get; set; }
+
+
         public bool IsSelected
         {
-            get { return _isSelected; }
+            get => _isSelected;
             set
             {
                 _isSelected = value;

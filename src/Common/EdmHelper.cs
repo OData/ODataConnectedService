@@ -10,6 +10,7 @@ using Microsoft.OData.Edm.Csdl;
 using Microsoft.VisualStudio.ConnectedServices;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Xml;
 
 namespace Microsoft.OData.ConnectedService.Common
@@ -128,6 +129,33 @@ namespace Microsoft.OData.ConnectedService.Common
             string[] nameArr = fullName.Split('.');
 
             return nameArr[nameArr.Length - 1];
+        }
+
+        /// <summary>
+        /// Gets the operation parameters string like '(Type1 par1, Type2 par2)'
+        /// </summary>
+        /// <param name="parameters">Collection of parameters.</param>
+        /// <returns>An operation parameters string like '(Type1 par1, Type2, par2)'</returns>
+        public static string GetParametersString(IEnumerable<IEdmOperationParameter> parameters)
+        {
+            var result = new StringBuilder("(");
+            var isFirst = true;
+            foreach (var parameter in parameters)
+            {
+                if (!isFirst)
+                {
+                    result.Append(", ");
+                }
+                else
+                {
+                    isFirst = false;
+                }
+                result.Append(parameter.Type?.Definition?.FullTypeName() ?? "void");
+                result.Append($" {parameter.Name}");
+            }
+
+            result.Append(")");
+            return result.ToString();
         }
     }
 }

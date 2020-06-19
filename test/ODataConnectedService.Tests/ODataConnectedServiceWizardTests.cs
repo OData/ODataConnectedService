@@ -145,9 +145,27 @@ namespace ODataConnectedService.Tests
             operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
             operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
             {
-                new OperationImportModel() { Name = "GetNearestAirport", IsSelected = true },
-                new OperationImportModel() { Name = "GetPersonWithMostFriends", IsSelected = true },
-                new OperationImportModel() { Name = "ResetDataSource", IsSelected = true }
+                new OperationImportModel
+                {
+                    ReturnType = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport",
+                    ParametersString = "(Edm.Double lat, Edm.Double lon)",
+                    Name = "GetNearestAirport",
+                    IsSelected = true
+                },
+                new OperationImportModel
+                {
+                    ReturnType = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person",
+                    ParametersString = "()",
+                    Name = "GetPersonWithMostFriends",
+                    IsSelected = true
+                },
+                new OperationImportModel
+                {
+                    ReturnType = "void",
+                    ParametersString = "()",
+                    Name = "ResetDataSource",
+                    IsSelected = true
+                }
             });
 
             var typesPage = wizard.SchemaTypesViewModel;
@@ -278,9 +296,27 @@ namespace ODataConnectedService.Tests
             operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
             operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
             {
-                new OperationImportModel() { Name = "GetNearestAirport", IsSelected = true },
-                new OperationImportModel() { Name = "GetPersonWithMostFriends", IsSelected = false },
-                new OperationImportModel() { Name = "ResetDataSource", IsSelected = false }
+                new OperationImportModel
+                {
+                    ReturnType = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport",
+                    ParametersString = "(Edm.Double lat, Edm.Double lon)",
+                    Name = "GetNearestAirport",
+                    IsSelected = true
+                },
+                new OperationImportModel
+                {
+                    ReturnType = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person",
+                    ParametersString = "()",
+                    Name = "GetPersonWithMostFriends",
+                    IsSelected = false
+                },
+                new OperationImportModel
+                {
+                    ReturnType = "void",
+                    ParametersString = "()",
+                    Name = "ResetDataSource",
+                    IsSelected = false
+                }
             });
 
             var typesPage = wizard.SchemaTypesViewModel;
@@ -878,8 +914,20 @@ namespace ODataConnectedService.Tests
             operationsPage.OnPageEnteringAsync(null).Wait();
             operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
             {
-                new OperationImportModel() { Name = "GetRandomThing", IsSelected = true },
-                new OperationImportModel() { Name = "ResetThings", IsSelected = true }
+                new OperationImportModel
+                {
+                    ReturnType = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Thing",
+                    ParametersString = "()",
+                    Name = "GetRandomThing",
+                    IsSelected = true
+                },
+                new OperationImportModel
+                {
+                    ReturnType = "void",
+                    ParametersString = "()",
+                    Name = "ResetThings",
+                    IsSelected = true
+                }
             });
             operationsPage.OperationImports.FirstOrDefault(o => o.Name == "ResetThings").IsSelected = false;
 
