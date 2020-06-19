@@ -32,7 +32,7 @@ namespace ODataConnectedService.Tests.ViewModels
             userSettings = new UserSettings();
             serviceWizard = new ODataConnectedServiceWizard(null);
             configOdataEndPointViewModel = new ConfigODataEndpointViewModel(userSettings, serviceWizard);
-            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo("en-US");
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
         }
 
         [TestMethod]

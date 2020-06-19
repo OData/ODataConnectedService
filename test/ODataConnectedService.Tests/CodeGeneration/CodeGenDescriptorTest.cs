@@ -36,7 +36,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
         [TestInitialize]
         public void Init()
         {
-            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo("en-US");
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
         }
 
         [TestCleanup]
