@@ -1,6 +1,6 @@
 ﻿//---------------------------------------------------------------------------------
 // <copyright file="OperationImportsViewModel.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //---------------------------------------------------------------------------------
@@ -22,6 +22,9 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         private bool _isSupportedVersion;
 
         public UserSettings UserSettings { get; set; }
+
+        private long _operationImportsCount = 0;
+        public long OperationImportsCount => this._operationImportsCount;
 
         internal bool IsEntered;
 
@@ -76,6 +79,10 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             await base.OnPageEnteringAsync(args);
             this.View = new OperationImports { DataContext = this };
             this.PageEntering?.Invoke(this, EventArgs.Empty);
+            if (this.View is OperationImports view)
+            {
+                view.SelectedOperationImportsCount.Text = OperationImports.Count(x => x.IsSelected).ToString();
+            }
         }
 
         public override async Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
@@ -126,6 +133,11 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                                 schemaTypeModel.IsSelected = currentOperationImportModel.IsSelected;
                             }
                         }
+
+                        if (this.View is OperationImports view)
+                        {
+                            view.SelectedOperationImportsCount.Text = OperationImports.Count(x => x.IsSelected).ToString();
+                        }
                     };
                     toLoad.Add(operationImportModel);
 
@@ -134,6 +146,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
 
             OperationImports = toLoad.OrderBy(o => o.Name).ToList();
+
+            _operationImportsCount = OperationImports.Count();
         }
 
         /// <summary>
@@ -175,6 +189,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public void EmptyList()
         {
             OperationImports = Enumerable.Empty<OperationImportModel>();
+            _operationImportsCount = 0;
         }
 
         public void SelectAll()
