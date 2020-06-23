@@ -92,7 +92,7 @@ OData Connected Service is considered a stable product. Below are some planned i
 
 ### Contribution
 
-There are many ways for you to contribute to OData Connected services. The easiest way is to participate in discussion of features and issues. You can also contribute by sending pull requests of features or bug fixes to us. Contribution to the documentations is also highly welcomed. Please refer to the [CONTRIBUTING.md](https://github.com/OData/ODataConnectedService/CONTRIBUTING.md) for more details.
+There are many ways for you to contribute to OData Connected services. The easiest way is to participate in discussion of features and issues. You can also contribute by sending pull requests of features or bug fixes to us. Contribution to the documentations is also highly welcomed. Please refer to the [CONTRIBUTING.md](https://github.com/OData/ODataConnectedService/blob/master/CONTRIBUTING.MD) for more details.
 
 ###  Support
 
