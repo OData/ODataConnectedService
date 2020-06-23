@@ -12,6 +12,7 @@
         <Property Name="HomeAddress" Type="Microsoft.OData.Service.Sample.TrippinInMemory.Models.Location"/>
         <NavigationProperty Name="Friends" Type="Collection(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)"/>
         <NavigationProperty Name="Trips" Type="Collection(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)"/>
+        <NavigationProperty Name="PlanItems" Type="Collection(Microsoft.OData.Service.Sample.TrippinInMemory.Models.PlanItem)"/>
       </EntityType>
       <EntityType Name="Airline">
         <Key>
@@ -40,6 +41,19 @@
         </Key>
         <Property Name="TripId" Nullable="false" Type="Edm.Int32"/>
         <Property Name="Name" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="PlanItem">
+        <Key>
+          <PropertyRef Name="PlanItemId"/>
+        </Key>
+        <Property Name="PlanItemId" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="ConfirmationCode" Type="Edm.String"/>
+        <Property Name="StartsAt" Type="Edm.DateTimeOffset" Nullable="false"/>
+        <Property Name="EndsAt" Type="Edm.DateTimeOffset" Nullable="false"/>
+        <Property Name="Duration" Type="Edm.Duration" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="PublicTransportation" BaseType="Microsoft.OData.Service.Sample.TrippinInMemory.Models.PlanItem">
+        <Property Name="SeatNumber" Type="Edm.String"/>
       </EntityType>
       <EntityType Name="Flight" BaseType="Microsoft.OData.Service.Sample.TrippinInMemory.Models.PublicTransportation">
         <Property Name="FlightNumber" Type="Edm.String"/>
