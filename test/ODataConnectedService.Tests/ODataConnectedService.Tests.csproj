@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\EdmHelperTests.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverterTests.cs" />
     <Compile Include="Converters\SchemaTypeModelToVisibilityConverterTests.cs" />
     <Compile Include="ODataConnectedServiceWizardTests.cs" />
     <Compile Include="Common\ProjectHelperTests.cs" />
