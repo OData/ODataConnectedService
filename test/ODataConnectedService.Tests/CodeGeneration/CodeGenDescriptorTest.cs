@@ -19,6 +19,7 @@ using System.Net;
 using ODataConnectedService.Tests;
 using System.Text;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ODataConnectedService.Tests.TestHelpers;
@@ -31,6 +32,12 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
         readonly static string TestProjectRootPath = Path.Combine(Directory.GetCurrentDirectory(), "TempODataConnectedServiceTest");
         readonly static string ServicesRootFolder = "ConnectedServicesRoot";
         readonly static string MetadataUri = "http://service/$metadata";
+
+        [TestInitialize]
+        public void Init()
+        {
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
+        }
 
         [TestCleanup]
         public void CleanUp()

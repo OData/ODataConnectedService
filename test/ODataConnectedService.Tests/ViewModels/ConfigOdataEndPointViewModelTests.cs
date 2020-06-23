@@ -5,6 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------------------
 
+using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.OData.ConnectedService;
@@ -31,6 +32,7 @@ namespace ODataConnectedService.Tests.ViewModels
             userSettings = new UserSettings();
             serviceWizard = new ODataConnectedServiceWizard(null);
             configOdataEndPointViewModel = new ConfigODataEndpointViewModel(userSettings, serviceWizard);
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
         }
 
         [TestMethod]
