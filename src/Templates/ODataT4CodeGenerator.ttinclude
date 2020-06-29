@@ -4194,7 +4194,20 @@ namespace <#= fullNamespace #>
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
             private static global::Microsoft.OData.Edm.IEdmModel LoadModelFromString()
             {
+                <#+
+                if (useTempFile)
+                {
+#>
+                global::System.Xml.XmlReader reader = CreateXmlReader();
+<#+
+                }
+                else
+                {
+#>
                 global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);
+<#+
+                }
+#>
                 try
                 {
                     return global::Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader, getReferencedModelFromMap);

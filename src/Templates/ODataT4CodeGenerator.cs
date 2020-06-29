@@ -4600,11 +4600,26 @@ this.Write(@""")]
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
-this.Write(@""")]
-            private static global::Microsoft.OData.Edm.IEdmModel LoadModelFromString()
-            {
-                global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);
-                try
+this.Write("\")]\r\n            private static global::Microsoft.OData.Edm.IEdmModel LoadModelFr" +
+        "omString()\r\n            {\r\n                ");
+
+
+                if (useTempFile)
+                {
+
+this.Write("                global::System.Xml.XmlReader reader = CreateXmlReader();\r\n");
+
+
+                }
+                else
+                {
+
+this.Write("                global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);\r\n");
+
+
+                }
+
+this.Write(@"                try
                 {
                     return global::Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader, getReferencedModelFromMap);
                 }
