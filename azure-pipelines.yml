@@ -11,7 +11,7 @@ variables:
   buildConfiguration: 'Release'
   connectedServiceDir: '$(Build.SourcesDirectory)\ODataConnectedService'
   sln: '$(connectedServiceDir)\ODataConnectedService.sln'
-  signigConfigPath: '$(connectedServiceDir)\configs'
+  signigConfigPath: '$(Build.SourcesDirectory)\configs'
   signingConfigFiles: '*.*'
   productBinPath: '$(connectedServiceDir)\src\bin\$(BuildConfiguration)'
   productFiles: 'Microsoft.OData.ConnectedService.*?(*.dll|*.config|*.pdb)'
