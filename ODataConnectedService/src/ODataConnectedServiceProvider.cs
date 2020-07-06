@@ -20,7 +20,7 @@ namespace Microsoft.OData.ConnectedService
             this.Description = "OData Connected Service for V1-V4";
             this.Icon = new BitmapImage(new Uri("pack://application:,,/" + this.GetType().Assembly.ToString() + ";component/Resources/Icon.png"));
             this.CreatedBy = "OData";
-            this.Version = new Version(0, 2, 0);
+            this.Version = new Version(0, 3, 1);
             this.MoreInfoUri = new Uri("https://github.com/odata/lab");
         }
 
