@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -52,7 +53,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             set
             {
                 _isSupportedVersion = value;
-                OnPropertyChanged("VersionWarningVisibility");
+                OnPropertyChanged(nameof(VersionWarningVisibility));
             }
         }
 
@@ -77,19 +78,19 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
             this.IsEntered = true;
-            await base.OnPageEnteringAsync(args);
+            await base.OnPageEnteringAsync(args).ConfigureAwait(false);
             this.View = new OperationImports { DataContext = this };
             this.PageEntering?.Invoke(this, EventArgs.Empty);
             if (this.View is OperationImports view)
             {
-                view.SelectedOperationImportsCount.Text = OperationImports.Count(x => x.IsSelected).ToString();
+                view.SelectedOperationImportsCount.Text = OperationImports.Count(x => x.IsSelected).ToString(CultureInfo.InvariantCulture);
             }
         }
 
         public override async Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
         {
             SaveToUserSettings();
-            return await base.OnPageLeavingAsync(args);
+            return await base.OnPageLeavingAsync(args).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -139,7 +140,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
                         if (this.View is OperationImports view)
                         {
-                            view.SelectedOperationImportsCount.Text = OperationImports.Count(x => x.IsSelected).ToString();
+                            view.SelectedOperationImportsCount.Text = OperationImports.Count(x => x.IsSelected).ToString(CultureInfo.InvariantCulture);
                         }
                     };
                     toLoad.Add(operationImportModel);

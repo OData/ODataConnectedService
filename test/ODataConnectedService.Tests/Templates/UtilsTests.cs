@@ -11,6 +11,7 @@ using FluentAssertions;
 using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.OData.ConnectedService.Templates;
+using System.Globalization;
 
 namespace ODataConnectedService.Tests
 {
@@ -168,13 +169,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void CamelCaseShouldReturnOneLowerCaseWithTextLengthEqualsOne()
         {
-            ODataT4CodeGenerator.Utils.CamelCase("A").Should().Be("a");
+            ODataT4CodeGenerator.Utils.CamelCase(string.Format(CultureInfo.InvariantCulture, "A")).Should().Be("a");
         }
 
         [TestMethod]
         public void CamelCaseShouldReturnTextWithFirstCharacterSetToLowerCase()
         {
-            ODataT4CodeGenerator.Utils.CamelCase("Text").Should().Be("text");
+            ODataT4CodeGenerator.Utils.CamelCase(string.Format(CultureInfo.InvariantCulture, "Text")).Should().Be("text");
         }
 
         [TestMethod]
@@ -192,13 +193,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void PascalCaseShouldReturnOneUpperCaseWithTextLengthEqualsOne()
         {
-            ODataT4CodeGenerator.Utils.PascalCase("a").Should().Be("A");
+            ODataT4CodeGenerator.Utils.PascalCase(string.Format(CultureInfo.InvariantCulture, "a")).Should().Be("A");
         }
 
         [TestMethod]
         public void PascalCaseShouldReturnTextWithFirstCharacterSetToUpperCase()
         {
-            ODataT4CodeGenerator.Utils.PascalCase("text").Should().Be("Text");
+            ODataT4CodeGenerator.Utils.PascalCase(string.Format(CultureInfo.InvariantCulture, "text")).Should().Be("Text");
         }
 
         [TestMethod]

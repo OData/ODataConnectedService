@@ -32,25 +32,23 @@ namespace Microsoft.OData.ConnectedService.Common
                 DtdProcessing = DtdProcessing.Parse
             };
 
-            var reader = XmlReader.Create(path, xmlSettings);
-
-            var result = CsdlReader.TryParse(reader, true /* ignoreUnexpectedAttributes */, out  var model, out var errors);
-
-            if (result)
+            using (var reader = XmlReader.Create(path, xmlSettings))
             {
-                return model;
-            }
-
-            if (context != null)
-            {
-                foreach (var error in errors)
+                var result = CsdlReader.TryParse(reader, true /* ignoreUnexpectedAttributes */, out var model, out var errors);
+                if (result)
                 {
-                    var task = context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning,
-                        error.ErrorMessage);
-                    task.RunSynchronously();
+                    return model;
+                }
+                if (context != null)
+                {
+                    foreach (var error in errors)
+                    {
+                        var task = context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning,
+                            error.ErrorMessage);
+                        task.RunSynchronously();
+                    }
                 }
             }
-
             return null;
         }
 

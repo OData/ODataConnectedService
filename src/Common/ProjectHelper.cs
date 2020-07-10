@@ -7,6 +7,7 @@
 
 using System;
 using System.Data.Services.Design;
+using System.Globalization;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell.Interop;
 
@@ -30,7 +31,7 @@ namespace Microsoft.OData.ConnectedService.Common
                 out projectObject);
             if (result != VSConstans_S_OK)
             {
-                throw new InvalidOperationException("Cannot find the project from VsHierarchy");
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "Cannot find the project from VsHierarchy"));
             }
 
             return (Project)projectObject;

@@ -54,7 +54,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
             this.IsEntered = true;
-            await base.OnPageEnteringAsync(args);
+            await base.OnPageEnteringAsync(args).ConfigureAwait(false);
             this.View = new AdvancedSettings { DataContext = this };
             this.PageEntering?.Invoke(this, EventArgs.Empty);
         }

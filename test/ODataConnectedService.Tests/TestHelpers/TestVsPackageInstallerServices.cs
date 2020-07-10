@@ -21,7 +21,7 @@ namespace ODataConnectedService.Tests.TestHelpers
             PackagesQueried = new HashSet<string>();
         }
 
-        public HashSet<string> InstalledPackages = new HashSet<string>();
+        internal HashSet<string> InstalledPackages = new HashSet<string>();
         public HashSet<string> PackagesQueried { get; private set; }
         public IEnumerable<IVsPackageMetadata> GetInstalledPackages()
         {

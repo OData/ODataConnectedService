@@ -30,7 +30,7 @@ namespace Microsoft.OData.ConnectedService
 
         public override async Task<AddServiceInstanceResult> AddServiceInstanceAsync(ConnectedServiceHandlerContext context, CancellationToken ct)
         {
-            var codeGenDescriptor = await SaveServiceInstanceAsync(context);
+            var codeGenDescriptor = await SaveServiceInstanceAsync(context).ConfigureAwait(false);
             var result = new AddServiceInstanceResult(
                 context.ServiceInstance.Name,
                 new Uri(codeGenDescriptor.ClientDocUri));
@@ -39,7 +39,7 @@ namespace Microsoft.OData.ConnectedService
 
         public override async Task<UpdateServiceInstanceResult> UpdateServiceInstanceAsync(ConnectedServiceHandlerContext context, CancellationToken ct)
         {
-            await SaveServiceInstanceAsync(context);
+            await SaveServiceInstanceAsync(context).ConfigureAwait(false);
             return new UpdateServiceInstanceResult();
         }
 
@@ -48,7 +48,7 @@ namespace Microsoft.OData.ConnectedService
             Project project = ProjectHelper.GetProjectFromHierarchy(context.ProjectHierarchy);
             var serviceInstance = (ODataConnectedServiceInstance)context.ServiceInstance;
 
-            var codeGenDescriptor = await GenerateCodeAsync(serviceInstance.ServiceConfig.Endpoint, serviceInstance.ServiceConfig.EdmxVersion, context, project);
+            var codeGenDescriptor = await GenerateCodeAsync(serviceInstance.ServiceConfig.Endpoint, serviceInstance.ServiceConfig.EdmxVersion, context, project).ConfigureAwait(false);
             // We don't save headers and proxy details to designer data
             serviceInstance.ServiceConfig.CustomHttpHeaders = null;
             serviceInstance.ServiceConfig.WebProxyNetworkCredentialsUsername = null;
@@ -61,8 +61,8 @@ namespace Microsoft.OData.ConnectedService
         private async Task<BaseCodeGenDescriptor> GenerateCodeAsync(string metadataUri, Version edmxVersion, ConnectedServiceHandlerContext context, Project project)
         {
             BaseCodeGenDescriptor codeGenDescriptor = codeGenDescriptorFactory.Create(edmxVersion, metadataUri, context, project);
-            await codeGenDescriptor.AddNugetPackagesAsync();
-            await codeGenDescriptor.AddGeneratedClientCodeAsync();
+            await codeGenDescriptor.AddNugetPackagesAsync().ConfigureAwait(false);
+            await codeGenDescriptor.AddGeneratedClientCodeAsync().ConfigureAwait(false);
             return codeGenDescriptor;
         }
     }

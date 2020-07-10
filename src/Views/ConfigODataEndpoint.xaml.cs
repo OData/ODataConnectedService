@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Globalization;
 
 namespace Microsoft.OData.ConnectedService.Views
 {
@@ -64,19 +65,19 @@ namespace Microsoft.OData.ConnectedService.Views
                 return;
             if (!File.Exists(openFileDialog.FileName))
             {
-               MessageBox.Show($"File \"{openFileDialog.FileName}\" does not exists.", "Open OData Connected Service json-file", MessageBoxButton.OK, MessageBoxImage.Warning);
+               MessageBox.Show($"File \"{openFileDialog.FileName}\" does not exists.", string.Format(CultureInfo.InvariantCulture, "Open OData Connected Service json-file"), MessageBoxButton.OK, MessageBoxImage.Warning);
                return;
             }
 
             var jsonFileText = File.ReadAllText(openFileDialog.FileName);
             if (string.IsNullOrWhiteSpace(jsonFileText))
             {
-               MessageBox.Show("File have not content.", "Open OData Connected Service json-file", MessageBoxButton.OK, MessageBoxImage.Warning);
+               MessageBox.Show("File have not content.", string.Format(CultureInfo.InvariantCulture, "Open OData Connected Service json-file"), MessageBoxButton.OK, MessageBoxImage.Warning);
                return;
             }
             if (JObject.Parse(jsonFileText) == null)
             {
-                MessageBox.Show("Can't convert file content to JObject.", "Open OData Connected Service json-file", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Can't convert file content to JObject.", string.Format(CultureInfo.InvariantCulture, "Open OData Connected Service json-file"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             var microsoftConnectedServiceData = JsonConvert.DeserializeObject<ConnectedServiceJsonFileData>(jsonFileText);

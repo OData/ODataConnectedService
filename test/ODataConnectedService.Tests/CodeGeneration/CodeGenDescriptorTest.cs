@@ -30,8 +30,8 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
     public class CodeGenDescriptorTest
     {
         readonly static string TestProjectRootPath = Path.Combine(Directory.GetCurrentDirectory(), "TempODataConnectedServiceTest");
-        readonly static string ServicesRootFolder = "ConnectedServicesRoot";
-        readonly static string MetadataUri = "http://service/$metadata";
+        const string ServicesRootFolder = "ConnectedServicesRoot";
+        const string MetadataUri = "http://service/$metadata";
 
         [TestInitialize]
         public void Init()
@@ -115,6 +115,10 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
         {
             var handlerHelper = new TestConnectedServiceHandlerHelper();
             var codeGenFactory = new TestODataT4CodeGeneratorFactory();
+            if (configObject == null)
+            {
+                throw new ArgumentNullException(string.Format(CultureInfo.InvariantCulture, "configObject"));
+            }
             var serviceConfig = configObject as ServiceConfigurationV4;
             serviceConfig.IncludeT4File = false;
 

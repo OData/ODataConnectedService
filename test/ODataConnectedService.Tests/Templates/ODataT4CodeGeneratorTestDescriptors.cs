@@ -20,7 +20,7 @@ using System.Net;
 
 namespace ODataConnectedService.Tests
 {
-    public partial class ODataT4CodeGeneratorTestDescriptors
+    public static partial class ODataT4CodeGeneratorTestDescriptors
     {
         private const string ExpectedCSharpUseDSC = "ExpectedCSharpUseDSC";
         private const string ExpectedCSharp = "ExpectedCSharp";
@@ -453,19 +453,19 @@ namespace ODataConnectedService.Tests
             {
                 string text;
                 var urlStr = url.OriginalString;
-                if (urlStr.EndsWith("CoreTerms.csdl"))
+                if (urlStr.EndsWith("CoreTerms.csdl", StringComparison.Ordinal))
                 {
                     text = MultiReferenceModelCoreTermsEdmx;
                 }
-                else if (urlStr.EndsWith("DeviceModelTerms.csdl"))
+                else if (urlStr.EndsWith("DeviceModelTerms.csdl", StringComparison.Ordinal))
                 {
                     text = MultiReferenceModelDeviceModelTermsEdmx;
                 }
-                else if (urlStr.EndsWith("GPS.csdl"))
+                else if (urlStr.EndsWith("GPS.csdl", StringComparison.Ordinal))
                 {
                     text = MultiReferenceModelGPSEdmx;
                 }
-                else if (urlStr.EndsWith("Location.csdl"))
+                else if (urlStr.EndsWith("Location.csdl", StringComparison.Ordinal))
                 {
                     text = MultiReferenceModelLocationEdmx;
                 }
