@@ -872,7 +872,7 @@ namespace ODataConnectedService.Tests
             var template = new ODataClientTemplateImp(Context);
             template.WriteNamespaces();
             // Verify WriteNamespaceStart representing WriteNamepsace
-            template.CalledActions.FindAll(act => act.StartsWith("WriteNamespaceStart")).Count.Should().Be(2);
+            template.CalledActions.FindAll(act => act.StartsWith("WriteNamespaceStart", StringComparison.Ordinal)).Count.Should().Be(2);
         }
 
         #endregion
@@ -1428,7 +1428,7 @@ namespace ODataConnectedService.Tests
             var entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
             template.WriteEntityType(entityType, boundOperationMap);
 
-            template.CalledActions.Should().NotContain(act => act.StartsWith("WriteKeyPropertiesCommentAndAttribute"));
+            template.CalledActions.Should().NotContain(act => act.StartsWith("WriteKeyPropertiesCommentAndAttribute", StringComparison.Ordinal));
         }
 
         [TestMethod]

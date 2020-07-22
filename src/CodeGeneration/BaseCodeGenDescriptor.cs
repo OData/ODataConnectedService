@@ -78,16 +78,16 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                     Version packageVersion = null;
                     PackageInstaller.InstallPackage(packageSource, this.Project, nugetPackage, packageVersion, false);
 
-                    await this.Context.Logger?.WriteMessageAsync(LoggerMessageCategory.Information, $"Nuget Package \"{nugetPackage}\" for OData client was added.");
+                    await (Context.Logger?.WriteMessageAsync(LoggerMessageCategory.Information, $"Nuget Package \"{nugetPackage}\" for OData client was added.")).ConfigureAwait(false);
                 }
                 else
                 {
-                    await this.Context.Logger?.WriteMessageAsync(LoggerMessageCategory.Information, $"Nuget Package \"{nugetPackage}\" for OData client already installed.");
+                    await (Context.Logger?.WriteMessageAsync(LoggerMessageCategory.Information, $"Nuget Package \"{nugetPackage}\" for OData client already installed.")).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
             {
-                await this.Context.Logger?.WriteMessageAsync(LoggerMessageCategory.Error, $"Nuget Package \"{nugetPackage}\" for OData client not installed. Error: {ex.Message}.");
+                await (Context.Logger?.WriteMessageAsync(LoggerMessageCategory.Error, $"Nuget Package \"{nugetPackage}\" for OData client not installed. Error: {ex.Message}.")).ConfigureAwait(false);
             }
         }
     }

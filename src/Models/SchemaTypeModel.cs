@@ -37,7 +37,7 @@ namespace Microsoft.OData.ConnectedService.Models
             set
             {
                 _isSelected = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsSelected"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
             }
         }
 

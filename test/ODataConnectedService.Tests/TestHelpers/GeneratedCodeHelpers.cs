@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 
 namespace ODataConnectedService.Tests.TestHelpers
 {
-    public class GeneratedCodeHelpers
+    public static class GeneratedCodeHelpers
     {
         static Assembly Assembly = Assembly.GetExecutingAssembly();
         const string ReferenceResourcePrefix = "ODataConnectedService.Tests.CodeGenReferences.";
@@ -28,8 +28,10 @@ namespace ODataConnectedService.Tests.TestHelpers
                 {
                     throw new Exception($"Embedded resource '{name}' not found.");
                 }
-                var reader = new StreamReader(stream);
-                return reader.ReadToEnd();
+                using (var reader = new StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
             }
         }
 

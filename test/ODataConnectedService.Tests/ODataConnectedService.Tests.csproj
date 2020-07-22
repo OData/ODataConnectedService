@@ -98,6 +98,11 @@
     <PackageReference Include="FluentAssertions">
       <Version>2.0.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
+      <Version>2.9.6</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.OData.Client">
       <Version>7.6.3</Version>
     </PackageReference>

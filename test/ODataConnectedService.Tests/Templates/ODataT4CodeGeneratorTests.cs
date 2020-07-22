@@ -30,6 +30,7 @@ namespace ODataConnectedService.Tests
     using System.Collections.Generic;
     using System.Net;
     using ODataConnectedService.Tests.TestHelpers;
+    using System.Globalization;
 
     [TestClass]
     public class ODataT4CodeGeneratorTests
@@ -589,7 +590,7 @@ namespace ODataConnectedService.Tests
 
             var arguments = "-out \"" + EdmxTestOutputFile
                                       + "\" -a !!MetadataDocumentUri!" + MetadataUri
-                                      + " -a !!UseDataServiceCollection!" + useDataServiceCollection.ToString()
+                                      + " -a !!UseDataServiceCollection!" + useDataServiceCollection.ToString(CultureInfo.InvariantCulture)
                                       + " -a !!TargetLanguage!" + option.ToString()
                                       + (namespacePrefix == null ? string.Empty : (" -a !!NamespacePrefix!" + namespacePrefix))
                                       + " -p \"" + AssemblyPath + "\" \"" + T4TemplatePath + "\"";
@@ -619,25 +620,27 @@ namespace ODataConnectedService.Tests
             Assert.IsNotNull(filename, "null filename");
             Assert.IsTrue(File.Exists(filename) && !Directory.Exists(filename), "missing file: {0}", filename);
 
-            var process = new Process();
-            process.StartInfo.FileName = filename;
-            process.StartInfo.Arguments = arguments;
-            process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
-
-            process.Start();
-            string output = process.StandardOutput.ReadToEnd();
-            string error = process.StandardError.ReadToEnd();
-            process.WaitForExit();
-
-            if (expectedExitCode.HasValue)
+            using(var process = new Process())
             {
-                Assert.AreEqual(expectedExitCode.Value, process.ExitCode, "ExitCode for {0}", filename);
-            }
+                process.StartInfo.FileName = filename;
+                process.StartInfo.Arguments = arguments;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.CreateNoWindow = true;
 
-            return output + error;
+                process.Start();
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+                process.WaitForExit();
+
+                if (expectedExitCode.HasValue)
+                {
+                    Assert.AreEqual(expectedExitCode.Value, process.ExitCode, "ExitCode for {0}", filename);
+                }
+
+                return output + error;
+            }
         }
 
         private static void GeneratedCodeShouldCompile(string source, bool isCSharp)
@@ -667,11 +670,15 @@ namespace ODataConnectedService.Tests
             CodeDomProvider codeProvider = null;
             if (isCSharp)
             {
-                codeProvider = new CSharpCodeProvider();
+                using (codeProvider = new CSharpCodeProvider())
+                {
+                }
             }
             else
             {
-                codeProvider = new VBCodeProvider();
+                using (codeProvider = new VBCodeProvider())
+                {
+                }
             }
 
             var results = codeProvider.CompileAssemblyFromSource(compilerOptions, source);

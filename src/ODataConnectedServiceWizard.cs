@@ -94,20 +94,20 @@ namespace Microsoft.OData.ConnectedService
             {
                 if (!this.OperationImportsViewModel.IsEntered)
                 {
-                    await this.OperationImportsViewModel.OnPageEnteringAsync(null);
-                    await this.OperationImportsViewModel.OnPageLeavingAsync(null);
+                    await OperationImportsViewModel.OnPageEnteringAsync(null).ConfigureAwait(false);
+                    await OperationImportsViewModel.OnPageLeavingAsync(null).ConfigureAwait(false);
                 }
 
                 if (!this.SchemaTypesViewModel.IsEntered)
                 {
-                    await this.SchemaTypesViewModel.OnPageEnteringAsync(null);
-                    await this.SchemaTypesViewModel.OnPageLeavingAsync(null);
+                    await SchemaTypesViewModel.OnPageEnteringAsync(null).ConfigureAwait(false);
+                    await SchemaTypesViewModel.OnPageLeavingAsync(null).ConfigureAwait(false);
                 }
 
                 if (!this.AdvancedSettingsViewModel.IsEntered)
                 {
-                    await this.AdvancedSettingsViewModel.OnPageEnteringAsync(null);
-                    await this.AdvancedSettingsViewModel.OnPageLeavingAsync(null);
+                    await AdvancedSettingsViewModel.OnPageEnteringAsync(null).ConfigureAwait(false);
+                    await AdvancedSettingsViewModel.OnPageLeavingAsync(null).ConfigureAwait(false);
                 }
             }
 
@@ -117,7 +117,7 @@ namespace Microsoft.OData.ConnectedService
             this.ServiceInstance.MetadataTempFilePath = ConfigODataEndpointViewModel.MetadataTempPath;
             this.ServiceInstance.ServiceConfig = this.CreateServiceConfiguration();
 
-            return await Task.FromResult<ConnectedServiceInstance>(this.ServiceInstance);
+            return await Task.FromResult<ConnectedServiceInstance>(ServiceInstance).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Microsoft.OData.ConnectedService
                 {
                     configOdataView.Endpoint.IsEnabled = false;
                     configOdataView.OpenConnectedServiceJsonFileButton.IsEnabled = false;
-                    configOdataView.OpenEndpointFileButton.IsEnabled = !this._serviceConfig.Endpoint.StartsWith("http");
+                    configOdataView.OpenEndpointFileButton.IsEnabled = !this._serviceConfig.Endpoint.StartsWith("http", StringComparison.OrdinalIgnoreCase);
                     configOdataView.ServiceName.IsEnabled = false;
                 }
 

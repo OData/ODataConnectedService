@@ -20,6 +20,7 @@ using System.Windows.Documents;
 using System.Windows;
 using System.Linq;
 using Xunit;
+using System.Globalization;
 
 namespace ODataConnectedService.Tests
 {
@@ -110,10 +111,11 @@ namespace ODataConnectedService.Tests
             settings.Save();
 
             var context = new TestConnectedServiceProviderContext();
-            var wizard = new ODataConnectedServiceWizard(context);
-
-            Assert.Equal("Some Service", wizard.UserSettings.ServiceName);
-            Assert.Contains("Endpoint", wizard.UserSettings.MruEndpoints);
+            using (var wizard = new ODataConnectedServiceWizard(context))
+            {
+                Assert.Equal("Some Service", wizard.UserSettings.ServiceName);
+                Assert.Contains("Endpoint", wizard.UserSettings.MruEndpoints);
+            }
         }
 
         [Fact]
@@ -122,148 +124,149 @@ namespace ODataConnectedService.Tests
             var savedConfig = GetTestConfig();
             var context = new TestConnectedServiceProviderContext(false, savedConfig);
 
-            var wizard = new ODataConnectedServiceWizard(context);
-
-            var endpointPage = wizard.ConfigODataEndpointViewModel;
-            endpointPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).Wait();
-            Assert.Equal(Constants.DefaultServiceName, endpointPage.ServiceName);
-            Assert.Null(endpointPage.Endpoint);
-            Assert.Null(endpointPage.EdmxVersion);
-            Assert.False(endpointPage.IncludeCustomHeaders);
-            Assert.Null(endpointPage.CustomHttpHeaders);
-            Assert.False(endpointPage.IncludeWebProxy);
-            Assert.Null(endpointPage.WebProxyHost);
-            Assert.False(endpointPage.IncludeWebProxyNetworkCredentials);
-            Assert.Null(endpointPage.WebProxyNetworkCredentialsDomain);
-            Assert.Null(endpointPage.WebProxyNetworkCredentialsUsername);
-            Assert.Null(endpointPage.WebProxyNetworkCredentialsPassword);
-
-            var operationsPage = wizard.OperationImportsViewModel;
-            endpointPage.Endpoint = MetadataPath;
-            endpointPage.MetadataTempPath = MetadataPath;
-            endpointPage.EdmxVersion = Constants.EdmxVersion4;
-            operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
-            operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
+            using (var wizard = new ODataConnectedServiceWizard(context))
             {
-                new OperationImportModel
-                {
-                    ReturnType = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport",
-                    ParametersString = "(Edm.Double lat, Edm.Double lon)",
-                    Name = "GetNearestAirport",
-                    IsSelected = true
-                },
-                new OperationImportModel
-                {
-                    ReturnType = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person",
-                    ParametersString = "()",
-                    Name = "GetPersonWithMostFriends",
-                    IsSelected = true
-                },
-                new OperationImportModel
-                {
-                    ReturnType = "void",
-                    ParametersString = "()",
-                    Name = "ResetDataSource",
-                    IsSelected = true
-                }
-            });
+                var endpointPage = wizard.ConfigODataEndpointViewModel;
+                endpointPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).Wait();
+                Assert.Equal(Constants.DefaultServiceName, endpointPage.ServiceName);
+                Assert.Null(endpointPage.Endpoint);
+                Assert.Null(endpointPage.EdmxVersion);
+                Assert.False(endpointPage.IncludeCustomHeaders);
+                Assert.Null(endpointPage.CustomHttpHeaders);
+                Assert.False(endpointPage.IncludeWebProxy);
+                Assert.Null(endpointPage.WebProxyHost);
+                Assert.False(endpointPage.IncludeWebProxyNetworkCredentials);
+                Assert.Null(endpointPage.WebProxyNetworkCredentialsDomain);
+                Assert.Null(endpointPage.WebProxyNetworkCredentialsUsername);
+                Assert.Null(endpointPage.WebProxyNetworkCredentialsPassword);
 
-            var typesPage = wizard.SchemaTypesViewModel;
-            typesPage.OnPageEnteringAsync(new WizardEnteringArgs(operationsPage)).Wait();
-            typesPage.SchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>
-            {
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline", "Airline")
+                var operationsPage = wizard.OperationImportsViewModel;
+                endpointPage.Endpoint = MetadataPath;
+                endpointPage.MetadataTempPath = MetadataPath;
+                endpointPage.EdmxVersion = Constants.EdmxVersion4;
+                operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
+                operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
                 {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport", "Airport") {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.City", "City") {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee", "Employee") {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Flight", "Flight") {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Location", "Location") {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person", "Person") {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>
+                    new OperationImportModel
                     {
-                        new BoundOperationModel
-                        {
-                            Name = "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                            ShortName = "GetFavoriteAirline",
-                            IsSelected = true
-                        },
-                        new BoundOperationModel
-                        {
-                            Name = "GetFriendsTrips(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                            ShortName = "GetFriendsTrips",
-                            IsSelected = true
-                        },
-                        new BoundOperationModel
-                        {
-                            Name = "ShareTrip(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                            ShortName = "ShareTrip",
-                            IsSelected = true
-                        },
-                        new BoundOperationModel
-                        {
-                            Name = "UpdatePersonLastName(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                            ShortName = "UpdatePersonLastName",
-                            IsSelected = true
-                        }
+                        ReturnType = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport",
+                        ParametersString = "(Edm.Double lat, Edm.Double lon)",
+                        Name = "GetNearestAirport",
+                        IsSelected = true
+                    },
+                    new OperationImportModel
+                    {
+                        ReturnType = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person",
+                        ParametersString = "()",
+                        Name = "GetPersonWithMostFriends",
+                        IsSelected = true
+                    },
+                    new OperationImportModel
+                    {
+                        ReturnType = "void",
+                        ParametersString = "()",
+                        Name = "ResetDataSource",
+                        IsSelected = true
                     }
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender", "PersonGender") {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PlanItem", "PlanItem") {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PublicTransportation", "PublicTransportation") {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip", "Trip") {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>{
-                        new BoundOperationModel
-                        {
-                            Name = "GetInvolvedPeople(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)",
-                            ShortName = "GetInvolvedPeople",
-                            IsSelected = true
-                        }
-                    }
-                },
-            });
+                });
 
-            var advancedPage = wizard.AdvancedSettingsViewModel;
-            advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(typesPage)).Wait();
-            Assert.Equal(Constants.DefaultReferenceFileName, advancedPage.GeneratedFileNamePrefix);
-            Assert.False(advancedPage.UseNamespacePrefix);
-            Assert.Equal(Constants.DefaultReferenceFileName, advancedPage.NamespacePrefix);
-            Assert.False(advancedPage.UseDataServiceCollection);
-            Assert.False(advancedPage.EnableNamingAlias);
-            Assert.False(advancedPage.OpenGeneratedFilesInIDE);
-            Assert.False(advancedPage.IncludeT4File);
-            Assert.False(advancedPage.GenerateMultipleFiles);
-            Assert.False(advancedPage.IgnoreUnexpectedElementsAndAttributes);
-            Assert.False(advancedPage.MakeTypesInternal);
+                var typesPage = wizard.SchemaTypesViewModel;
+                typesPage.OnPageEnteringAsync(new WizardEnteringArgs(operationsPage)).Wait();
+                typesPage.SchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>
+                {
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline", "Airline")
+                    {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport", "Airport") {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.City", "City") {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee", "Employee") {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Flight", "Flight") {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Location", "Location") {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person", "Person") {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>
+                        {
+                            new BoundOperationModel
+                            {
+                                Name = "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                                ShortName = "GetFavoriteAirline",
+                                IsSelected = true
+                            },
+                            new BoundOperationModel
+                            {
+                                Name = "GetFriendsTrips(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                                ShortName = "GetFriendsTrips",
+                                IsSelected = true
+                            },
+                            new BoundOperationModel
+                            {
+                                Name = "ShareTrip(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                                ShortName = "ShareTrip",
+                                IsSelected = true
+                            },
+                            new BoundOperationModel
+                            {
+                                Name = "UpdatePersonLastName(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                                ShortName = "UpdatePersonLastName",
+                                IsSelected = true
+                            }
+                        }
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender", "PersonGender") {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PlanItem", "PlanItem") {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PublicTransportation", "PublicTransportation") {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip", "Trip") {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>{
+                            new BoundOperationModel
+                            {
+                                Name = "GetInvolvedPeople(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)",
+                                ShortName = "GetInvolvedPeople",
+                                IsSelected = true
+                            }
+                        }
+                    },
+                });
+
+                var advancedPage = wizard.AdvancedSettingsViewModel;
+                advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(typesPage)).Wait();
+                Assert.Equal(Constants.DefaultReferenceFileName, advancedPage.GeneratedFileNamePrefix);
+                Assert.False(advancedPage.UseNamespacePrefix);
+                Assert.Equal(Constants.DefaultReferenceFileName, advancedPage.NamespacePrefix);
+                Assert.False(advancedPage.UseDataServiceCollection);
+                Assert.False(advancedPage.EnableNamingAlias);
+                Assert.False(advancedPage.OpenGeneratedFilesInIDE);
+                Assert.False(advancedPage.IncludeT4File);
+                Assert.False(advancedPage.GenerateMultipleFiles);
+                Assert.False(advancedPage.IgnoreUnexpectedElementsAndAttributes);
+                Assert.False(advancedPage.MakeTypesInternal);
+            }
         }
 
         [Fact]
@@ -272,159 +275,160 @@ namespace ODataConnectedService.Tests
             var savedConfig = GetTestConfig();
             var context = new TestConnectedServiceProviderContext(true, savedConfig);
 
-            var wizard = new ODataConnectedServiceWizard(context);
-
-            Assert.Equal(savedConfig, wizard.ServiceConfig);
-
-            var endpointPage = wizard.ConfigODataEndpointViewModel;
-            endpointPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).Wait();
-            Assert.Equal("https://service/$metadata", endpointPage.Endpoint);
-            Assert.Equal("MyService", endpointPage.ServiceName);
-            Assert.True(endpointPage.IncludeCustomHeaders);
-            Assert.Equal("Key1:Val1\nKey2:Val2", endpointPage.CustomHttpHeaders);
-            Assert.True(endpointPage.IncludeWebProxy);
-            Assert.Equal("http://localhost:8080", endpointPage.WebProxyHost);
-            Assert.True(endpointPage.IncludeWebProxyNetworkCredentials);
-            Assert.Equal("domain", endpointPage.WebProxyNetworkCredentialsDomain);
-            // username and password are not restored from the config
-            Assert.Null(endpointPage.WebProxyNetworkCredentialsUsername);
-            Assert.Null(endpointPage.WebProxyNetworkCredentialsPassword);
-
-            var operationsPage = wizard.OperationImportsViewModel;
-            endpointPage.MetadataTempPath = MetadataPath;
-            endpointPage.EdmxVersion = Constants.EdmxVersion4;
-            operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
-            operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
+            using (var wizard = new ODataConnectedServiceWizard(context))
             {
-                new OperationImportModel
-                {
-                    ReturnType = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport",
-                    ParametersString = "(Edm.Double lat, Edm.Double lon)",
-                    Name = "GetNearestAirport",
-                    IsSelected = true
-                },
-                new OperationImportModel
-                {
-                    ReturnType = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person",
-                    ParametersString = "()",
-                    Name = "GetPersonWithMostFriends",
-                    IsSelected = false
-                },
-                new OperationImportModel
-                {
-                    ReturnType = "void",
-                    ParametersString = "()",
-                    Name = "ResetDataSource",
-                    IsSelected = false
-                }
-            });
+                Assert.Equal(savedConfig, wizard.ServiceConfig);
 
-            var typesPage = wizard.SchemaTypesViewModel;
-            typesPage.OnPageEnteringAsync(new WizardEnteringArgs(operationsPage)).Wait();
-            typesPage.SchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>
-            {
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline", "Airline")
-                {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport", "Airport")
-                {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.City", "City")
-                {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee", "Employee")
-                {
-                    IsSelected = false,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Flight", "Flight")
-                {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Location", "Location")
-                {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person", "Person")
-                {
-                    IsSelected = false,
-                    BoundOperations = new List<BoundOperationModel>
-                    {
-                        new BoundOperationModel
-                        {
-                            Name = "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                            ShortName = "GetFavoriteAirline",
-                            IsSelected = false
-                        },
-                        new BoundOperationModel
-                        {
-                            Name = "GetFriendsTrips(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                            ShortName = "GetFriendsTrips",
-                            IsSelected = false
-                        },
-                        new BoundOperationModel
-                        {
-                            Name = "ShareTrip(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                            ShortName = "ShareTrip",
-                            IsSelected = false
-                        },
-                        new BoundOperationModel
-                        {
-                            Name = "UpdatePersonLastName(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                            ShortName = "UpdatePersonLastName",
-                            IsSelected = false
-                        }
-                    }
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender",
-                    "PersonGender")
-                {
-                    IsSelected = false,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PlanItem", "PlanItem") {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PublicTransportation", "PublicTransportation") {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip", "Trip")
-                {
-                    IsSelected = false,
-                    BoundOperations = new List<BoundOperationModel>
-                    {
-                        new BoundOperationModel
-                        {
-                            Name = "GetInvolvedPeople(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)",
-                            ShortName = "GetInvolvedPeople",
-                            IsSelected = false
-                        }
-                    }
-                },
-            });
+                var endpointPage = wizard.ConfigODataEndpointViewModel;
+                endpointPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).Wait();
+                Assert.Equal("https://service/$metadata", endpointPage.Endpoint);
+                Assert.Equal("MyService", endpointPage.ServiceName);
+                Assert.True(endpointPage.IncludeCustomHeaders);
+                Assert.Equal("Key1:Val1\nKey2:Val2", endpointPage.CustomHttpHeaders);
+                Assert.True(endpointPage.IncludeWebProxy);
+                Assert.Equal("http://localhost:8080", endpointPage.WebProxyHost);
+                Assert.True(endpointPage.IncludeWebProxyNetworkCredentials);
+                Assert.Equal("domain", endpointPage.WebProxyNetworkCredentialsDomain);
+                // username and password are not restored from the config
+                Assert.Null(endpointPage.WebProxyNetworkCredentialsUsername);
+                Assert.Null(endpointPage.WebProxyNetworkCredentialsPassword);
 
-            var advancedPage = wizard.AdvancedSettingsViewModel;
-            advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(typesPage)).Wait();
-            Assert.Equal("GeneratedCode", advancedPage.GeneratedFileNamePrefix);
-            Assert.True(advancedPage.UseNamespacePrefix);
-            Assert.Equal("Namespace", advancedPage.NamespacePrefix);
-            Assert.True(advancedPage.UseDataServiceCollection);
-            Assert.True(advancedPage.EnableNamingAlias);
-            Assert.True(advancedPage.OpenGeneratedFilesInIDE);
-            Assert.True(advancedPage.IncludeT4File);
-            Assert.True(advancedPage.GenerateMultipleFiles);
-            Assert.True(advancedPage.IgnoreUnexpectedElementsAndAttributes);
-            Assert.True(advancedPage.MakeTypesInternal);
+                var operationsPage = wizard.OperationImportsViewModel;
+                endpointPage.MetadataTempPath = MetadataPath;
+                endpointPage.EdmxVersion = Constants.EdmxVersion4;
+                operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
+                operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
+                {
+                    new OperationImportModel
+                    {
+                        ReturnType = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport",
+                        ParametersString = "(Edm.Double lat, Edm.Double lon)",
+                        Name = "GetNearestAirport",
+                        IsSelected = true
+                    },
+                    new OperationImportModel
+                    {
+                        ReturnType = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person",
+                        ParametersString = "()",
+                        Name = "GetPersonWithMostFriends",
+                        IsSelected = false
+                    },
+                    new OperationImportModel
+                    {
+                        ReturnType = "void",
+                        ParametersString = "()",
+                        Name = "ResetDataSource",
+                        IsSelected = false
+                    }
+                });
+
+                var typesPage = wizard.SchemaTypesViewModel;
+                typesPage.OnPageEnteringAsync(new WizardEnteringArgs(operationsPage)).Wait();
+                typesPage.SchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>
+                {
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline", "Airline")
+                    {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport", "Airport")
+                    {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.City", "City")
+                    {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee", "Employee")
+                    {
+                        IsSelected = false,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Flight", "Flight")
+                    {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Location", "Location")
+                    {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person", "Person")
+                    {
+                        IsSelected = false,
+                        BoundOperations = new List<BoundOperationModel>
+                        {
+                            new BoundOperationModel
+                            {
+                                Name = "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                                ShortName = "GetFavoriteAirline",
+                                IsSelected = false
+                            },
+                            new BoundOperationModel
+                            {
+                                Name = "GetFriendsTrips(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                                ShortName = "GetFriendsTrips",
+                                IsSelected = false
+                            },
+                            new BoundOperationModel
+                            {
+                                Name = "ShareTrip(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                                ShortName = "ShareTrip",
+                                IsSelected = false
+                            },
+                            new BoundOperationModel
+                            {
+                                Name = "UpdatePersonLastName(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                                ShortName = "UpdatePersonLastName",
+                                IsSelected = false
+                            }
+                        }
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender",
+                        "PersonGender")
+                    {
+                        IsSelected = false,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PlanItem", "PlanItem") {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PublicTransportation", "PublicTransportation") {
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip", "Trip")
+                    {
+                        IsSelected = false,
+                        BoundOperations = new List<BoundOperationModel>
+                        {
+                            new BoundOperationModel
+                            {
+                                Name = "GetInvolvedPeople(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)",
+                                ShortName = "GetInvolvedPeople",
+                                IsSelected = false
+                            }
+                        }
+                    },
+                });
+
+                var advancedPage = wizard.AdvancedSettingsViewModel;
+                advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(typesPage)).Wait();
+                Assert.Equal("GeneratedCode", advancedPage.GeneratedFileNamePrefix);
+                Assert.True(advancedPage.UseNamespacePrefix);
+                Assert.Equal("Namespace", advancedPage.NamespacePrefix);
+                Assert.True(advancedPage.UseDataServiceCollection);
+                Assert.True(advancedPage.EnableNamingAlias);
+                Assert.True(advancedPage.OpenGeneratedFilesInIDE);
+                Assert.True(advancedPage.IncludeT4File);
+                Assert.True(advancedPage.GenerateMultipleFiles);
+                Assert.True(advancedPage.IgnoreUnexpectedElementsAndAttributes);
+                Assert.True(advancedPage.MakeTypesInternal);
+            }
         }
 
         [Fact]
@@ -432,174 +436,177 @@ namespace ODataConnectedService.Tests
         {
             ServiceConfigurationV4 savedConfig = GetTestConfig();
             var context = new TestConnectedServiceProviderContext(true, savedConfig);
-            var wizard = new ODataConnectedServiceWizard(context);
+            using (var wizard = new ODataConnectedServiceWizard(context))
+            {
+                // endpoint page
+                var endpointPage = wizard.ConfigODataEndpointViewModel;
+                endpointPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).Wait();
+                var endpointView = endpointPage.View as ConfigODataEndpoint;
 
-            // endpoint page
-            var endpointPage = wizard.ConfigODataEndpointViewModel;
-            endpointPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).Wait();
-            var endpointView = endpointPage.View as ConfigODataEndpoint;
+                Assert.False(endpointView.ServiceName.IsEnabled);
+                Assert.False(endpointView.Endpoint.IsEnabled);
+                Assert.False(endpointView.OpenConnectedServiceJsonFileButton.IsEnabled);
 
-            Assert.False(endpointView.ServiceName.IsEnabled);
-            Assert.False(endpointView.Endpoint.IsEnabled);
-            Assert.False(endpointView.OpenConnectedServiceJsonFileButton.IsEnabled);
+                // if endpoint is a http address, then file dialog should be disabled
+                savedConfig.Endpoint = "http://service";
+                endpointPage.OnPageEnteringAsync(null).Wait();
+                Assert.False(endpointView.OpenEndpointFileButton.IsEnabled);
 
-            // if endpoint is a http address, then file dialog should be disabled
-            savedConfig.Endpoint = "http://service";
-            endpointPage.OnPageEnteringAsync(null).Wait();
-            Assert.False(endpointView.OpenEndpointFileButton.IsEnabled);
-
-            // advanced settings page
-            var advancedPage = wizard.AdvancedSettingsViewModel;
-            advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
-            var advancedView = advancedPage.View as AdvancedSettings;
-            Assert.False(advancedView.IncludeT4File.IsEnabled);
-            Assert.False(advancedView.GenerateMultipleFiles.IsEnabled);
+                // advanced settings page
+                var advancedPage = wizard.AdvancedSettingsViewModel;
+                advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
+                var advancedView = advancedPage.View as AdvancedSettings;
+                Assert.False(advancedView.IncludeT4File.IsEnabled);
+                Assert.False(advancedView.GenerateMultipleFiles.IsEnabled);
+            }
         }
 
         [Fact]
         public void TestGetFinishedServiceInstanceAsync_SavesUserSettingsAndReturnsServiceInstanceWithConfigFromTheWizard()
         {
             var context = new TestConnectedServiceProviderContext(false);
-            var wizard = new ODataConnectedServiceWizard(context);
-            var endpointPage = wizard.ConfigODataEndpointViewModel;
-            endpointPage.ServiceName = "TestService";
-            endpointPage.Endpoint = MetadataPath;
-            endpointPage.EdmxVersion = Constants.EdmxVersion4;
-            endpointPage.IncludeCustomHeaders = true;
-            endpointPage.CustomHttpHeaders = "Key:val";
-            endpointPage.IncludeWebProxy = true;
-            endpointPage.WebProxyHost = "http://localhost:8080";
-            endpointPage.IncludeWebProxyNetworkCredentials = true;
-            endpointPage.WebProxyNetworkCredentialsDomain = "domain";
-            endpointPage.WebProxyNetworkCredentialsUsername = "user";
-            endpointPage.WebProxyNetworkCredentialsPassword = "pass";
-
-            var operationsPage = wizard.OperationImportsViewModel;
-            endpointPage.OnPageLeavingAsync(new WizardLeavingArgs(operationsPage)).Wait();
-            operationsPage.OperationImports = new List<OperationImportModel>()
+            using(var wizard = new ODataConnectedServiceWizard(context))
             {
-                new OperationImportModel() { Name = "GetNearestAirport", IsSelected = false },
-                new OperationImportModel() { Name = "GetPersonWithMostFriends", IsSelected = true },
-                new OperationImportModel() { Name = "ResetDataSource", IsSelected = false }
-            };
+                var endpointPage = wizard.ConfigODataEndpointViewModel;
+                endpointPage.ServiceName = "TestService";
+                endpointPage.Endpoint = MetadataPath;
+                endpointPage.EdmxVersion = Constants.EdmxVersion4;
+                endpointPage.IncludeCustomHeaders = true;
+                endpointPage.CustomHttpHeaders = "Key:val";
+                endpointPage.IncludeWebProxy = true;
+                endpointPage.WebProxyHost = "http://localhost:8080";
+                endpointPage.IncludeWebProxyNetworkCredentials = true;
+                endpointPage.WebProxyNetworkCredentialsDomain = "domain";
+                endpointPage.WebProxyNetworkCredentialsUsername = "user";
+                endpointPage.WebProxyNetworkCredentialsPassword = "pass";
 
-            var typesPage = wizard.SchemaTypesViewModel;
-            typesPage.OnPageEnteringAsync(new WizardEnteringArgs(operationsPage)).Wait();
-            typesPage.SchemaTypes = new List<SchemaTypeModel>()
-            {
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline", "Airline") { IsSelected = false },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport", "Airport") { IsSelected = false },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.City", "City") { IsSelected = true },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee", "Employee") { IsSelected = false },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Flight", "Flight") { IsSelected = true },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Location", "Location") { IsSelected = true },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person", "Person")
+                var operationsPage = wizard.OperationImportsViewModel;
+                endpointPage.OnPageLeavingAsync(new WizardLeavingArgs(operationsPage)).Wait();
+                operationsPage.OperationImports = new List<OperationImportModel>()
                 {
-                    IsSelected = true,
-                    BoundOperations = new List<BoundOperationModel>()
+                    new OperationImportModel() { Name = "GetNearestAirport", IsSelected = false },
+                    new OperationImportModel() { Name = "GetPersonWithMostFriends", IsSelected = true },
+                    new OperationImportModel() { Name = "ResetDataSource", IsSelected = false }
+                };
+
+                var typesPage = wizard.SchemaTypesViewModel;
+                typesPage.OnPageEnteringAsync(new WizardEnteringArgs(operationsPage)).Wait();
+                typesPage.SchemaTypes = new List<SchemaTypeModel>()
+                {
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline", "Airline") { IsSelected = false },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport", "Airport") { IsSelected = false },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.City", "City") { IsSelected = true },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee", "Employee") { IsSelected = false },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Flight", "Flight") { IsSelected = true },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Location", "Location") { IsSelected = true },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person", "Person")
                     {
-                        new BoundOperationModel
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel>()
                         {
-                            Name = "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                            IsSelected = false
-                        },
-                        new BoundOperationModel
-                        {
-                            Name = "GetFriendsTrips(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                            IsSelected = true
+                            new BoundOperationModel
+                            {
+                                Name = "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                                IsSelected = false
+                            },
+                            new BoundOperationModel
+                            {
+                                Name = "GetFriendsTrips(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                                IsSelected = true
+                            }
                         }
-                    }
-                },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender", "PersonGender") { IsSelected = true },
-                new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip", "Trip") { IsSelected = true },
-            };
+                    },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender", "PersonGender") { IsSelected = true },
+                    new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip", "Trip") { IsSelected = true },
+                };
 
-            var advancedPage = wizard.AdvancedSettingsViewModel;
-            advancedPage.GeneratedFileNamePrefix = "GeneratedFile";
-            advancedPage.UseNamespacePrefix = true;
-            advancedPage.NamespacePrefix = "TestNamespace";
-            advancedPage.UseDataServiceCollection = true;
-            advancedPage.EnableNamingAlias = true;
-            advancedPage.MakeTypesInternal = true;
-            advancedPage.IncludeT4File = true;
-            advancedPage.GenerateMultipleFiles = true;
-            advancedPage.OpenGeneratedFilesInIDE = true;
+                var advancedPage = wizard.AdvancedSettingsViewModel;
+                advancedPage.GeneratedFileNamePrefix = "GeneratedFile";
+                advancedPage.UseNamespacePrefix = true;
+                advancedPage.NamespacePrefix = "TestNamespace";
+                advancedPage.UseDataServiceCollection = true;
+                advancedPage.EnableNamingAlias = true;
+                advancedPage.MakeTypesInternal = true;
+                advancedPage.IncludeT4File = true;
+                advancedPage.GenerateMultipleFiles = true;
+                advancedPage.OpenGeneratedFilesInIDE = true;
 
-            operationsPage.OnPageLeavingAsync(new WizardLeavingArgs(typesPage)).Wait();
-            typesPage.OnPageLeavingAsync(new WizardLeavingArgs(advancedPage)).Wait();
-            advancedPage.OnPageLeavingAsync(new WizardLeavingArgs(null)).Wait();
-            var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
-            var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
+                operationsPage.OnPageLeavingAsync(new WizardLeavingArgs(typesPage)).Wait();
+                typesPage.OnPageLeavingAsync(new WizardLeavingArgs(advancedPage)).Wait();
+                advancedPage.OnPageLeavingAsync(new WizardLeavingArgs(null)).Wait();
+                var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+                var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
 
-            // saved user settings
-            var settings = UserSettings.Load(null);
-            Assert.Equal("TestService", settings.ServiceName);
-            Assert.Equal(MetadataPath, settings.Endpoint);
-            // moves endpoint to top of mru list
-            Assert.Equal(MetadataPath, settings.MruEndpoints.First());
-            Assert.Equal(1, settings.MruEndpoints.Count(e => e == MetadataPath));
-            Assert.True(settings.IncludeCustomHeaders);
-            Assert.Equal("Key:val", settings.CustomHttpHeaders);
-            Assert.True(settings.IncludeWebProxy);
-            Assert.Equal("http://localhost:8080", settings.WebProxyHost);
-            Assert.True(settings.IncludeWebProxyNetworkCredentials);
-            Assert.Equal("domain", settings.WebProxyNetworkCredentialsDomain);
-            Assert.Equal("user", settings.WebProxyNetworkCredentialsUsername);
-            Assert.Equal("pass", settings.WebProxyNetworkCredentialsPassword);
-            settings.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string>() { "GetNearestAirport", "ResetDataSource" });
-            settings.ExcludedBoundOperations.ShouldBeEquivalentTo(new List<string>()
-            {
-                "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)"
-            });
-            settings.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>()
-            {
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline",
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport",
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee"
-            });
-            Assert.Equal("GeneratedFile", config.GeneratedFileNamePrefix);
-            Assert.True(config.UseNamespacePrefix);
-            Assert.Equal("TestNamespace", settings.NamespacePrefix);
-            Assert.True(settings.EnableNamingAlias);
-            Assert.True(settings.MakeTypesInternal);
-            Assert.True(settings.IncludeT4File);
-            Assert.True(settings.GenerateMultipleFiles);
-            Assert.True(settings.OpenGeneratedFilesInIDE);
+                // saved user settings
+                var settings = UserSettings.Load(null);
+                Assert.Equal("TestService", settings.ServiceName);
+                Assert.Equal(MetadataPath, settings.Endpoint);
+                // moves endpoint to top of mru list
+                Assert.Equal(MetadataPath, settings.MruEndpoints.First());
+                Assert.Equal(1, settings.MruEndpoints.Count(e => e == MetadataPath));
+                Assert.True(settings.IncludeCustomHeaders);
+                Assert.Equal("Key:val", settings.CustomHttpHeaders);
+                Assert.True(settings.IncludeWebProxy);
+                Assert.Equal("http://localhost:8080", settings.WebProxyHost);
+                Assert.True(settings.IncludeWebProxyNetworkCredentials);
+                Assert.Equal("domain", settings.WebProxyNetworkCredentialsDomain);
+                Assert.Equal("user", settings.WebProxyNetworkCredentialsUsername);
+                Assert.Equal("pass", settings.WebProxyNetworkCredentialsPassword);
+                settings.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string>() { "GetNearestAirport", "ResetDataSource" });
+                settings.ExcludedBoundOperations.ShouldBeEquivalentTo(new List<string>()
+                {
+                    "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)"
+                });
+                settings.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>()
+                {
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline",
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport",
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee"
+                });
+                Assert.Equal("GeneratedFile", config.GeneratedFileNamePrefix);
+                Assert.True(config.UseNamespacePrefix);
+                Assert.Equal("TestNamespace", settings.NamespacePrefix);
+                Assert.True(settings.EnableNamingAlias);
+                Assert.True(settings.MakeTypesInternal);
+                Assert.True(settings.IncludeT4File);
+                Assert.True(settings.GenerateMultipleFiles);
+                Assert.True(settings.OpenGeneratedFilesInIDE);
 
-            // service configuration created
-            Assert.Equal("GeneratedFile", serviceInstance.InstanceId);
-            Assert.Equal("TestService", serviceInstance.Name);
-            Assert.Equal(endpointPage.MetadataTempPath, serviceInstance.MetadataTempFilePath);
-            Assert.Equal("TestService", config.ServiceName);
-            Assert.Equal(MetadataPath, config.Endpoint);
-            Assert.Equal(Constants.EdmxVersion4, config.EdmxVersion);
-            Assert.True(config.IncludeCustomHeaders);
-            Assert.Equal("Key:val", config.CustomHttpHeaders);
-            Assert.True(config.IncludeWebProxy);
-            Assert.Equal("http://localhost:8080", config.WebProxyHost);
-            Assert.True(config.IncludeWebProxyNetworkCredentials);
-            Assert.Equal("domain", config.WebProxyNetworkCredentialsDomain);
-            Assert.Equal("user", config.WebProxyNetworkCredentialsUsername);
-            Assert.Equal("pass", config.WebProxyNetworkCredentialsPassword);
-            config.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string>() { "GetNearestAirport", "ResetDataSource" });
-            config.ExcludedBoundOperations.ShouldBeEquivalentTo(new List<string>()
-            {
-                "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)"
-            });
-            config.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>()
-            {
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline",
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport",
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee"
-            });
-            Assert.Equal("GeneratedFile", config.GeneratedFileNamePrefix);
-            Assert.True(config.UseNamespacePrefix);
-            Assert.Equal("TestNamespace", config.NamespacePrefix);
-            Assert.True(config.EnableNamingAlias);
-            Assert.True(config.MakeTypesInternal);
-            Assert.True(config.IncludeT4File);
-            Assert.True(config.GenerateMultipleFiles);
-            Assert.True(config.OpenGeneratedFilesInIDE);
+                // service configuration created
+                Assert.Equal("GeneratedFile", serviceInstance.InstanceId);
+                Assert.Equal("TestService", serviceInstance.Name);
+                Assert.Equal(endpointPage.MetadataTempPath, serviceInstance.MetadataTempFilePath);
+                Assert.Equal("TestService", config.ServiceName);
+                Assert.Equal(MetadataPath, config.Endpoint);
+                Assert.Equal(Constants.EdmxVersion4, config.EdmxVersion);
+                Assert.True(config.IncludeCustomHeaders);
+                Assert.Equal("Key:val", config.CustomHttpHeaders);
+                Assert.True(config.IncludeWebProxy);
+                Assert.Equal("http://localhost:8080", config.WebProxyHost);
+                Assert.True(config.IncludeWebProxyNetworkCredentials);
+                Assert.Equal("domain", config.WebProxyNetworkCredentialsDomain);
+                Assert.Equal("user", config.WebProxyNetworkCredentialsUsername);
+                Assert.Equal("pass", config.WebProxyNetworkCredentialsPassword);
+                config.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string>() { "GetNearestAirport", "ResetDataSource" });
+                config.ExcludedBoundOperations.ShouldBeEquivalentTo(new List<string>()
+                {
+                    "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)"
+                });
+                config.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>()
+                {
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline",
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport",
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee"
+                });
+                Assert.Equal("GeneratedFile", config.GeneratedFileNamePrefix);
+                Assert.True(config.UseNamespacePrefix);
+                Assert.Equal("TestNamespace", config.NamespacePrefix);
+                Assert.True(config.EnableNamingAlias);
+                Assert.True(config.MakeTypesInternal);
+                Assert.True(config.IncludeT4File);
+                Assert.True(config.GenerateMultipleFiles);
+                Assert.True(config.OpenGeneratedFilesInIDE);
+            }
         }
 
         [Fact]
@@ -608,165 +615,168 @@ namespace ODataConnectedService.Tests
             var savedConfig = GetTestConfig();
             savedConfig.Endpoint = MetadataPath;
             var context = new TestConnectedServiceProviderContext(true, savedConfig);
-            var wizard = new ODataConnectedServiceWizard(context);
-            var endpointPage = wizard.ConfigODataEndpointViewModel;
-            endpointPage.OnPageEnteringAsync(null).Wait();
-            endpointPage.OnPageLeavingAsync(null).Wait();
-
-            var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
-            var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
-
-            Assert.Equal("GeneratedCode", serviceInstance.InstanceId);
-            Assert.Equal("MyService", serviceInstance.Name);
-            Assert.NotNull(serviceInstance.MetadataTempFilePath);
-            Assert.Equal("MyService", config.ServiceName);
-            Assert.Equal(MetadataPath, config.Endpoint);
-            Assert.Equal(Constants.EdmxVersion4, config.EdmxVersion);
-            Assert.True(config.IncludeCustomHeaders);
-            Assert.Equal("Key1:Val1\nKey2:Val2", config.CustomHttpHeaders);
-            Assert.True(config.IncludeWebProxy);
-            Assert.Equal("http://localhost:8080", config.WebProxyHost);
-            Assert.True(config.IncludeWebProxyNetworkCredentials);
-            Assert.Equal("domain", config.WebProxyNetworkCredentialsDomain);
-            Assert.Null(config.WebProxyNetworkCredentialsUsername);
-            Assert.Null(config.WebProxyNetworkCredentialsPassword);
-            config.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string>() { "GetPersonWithMostFriends", "ResetDataSource" });
-            config.ExcludedBoundOperations.ShouldBeEquivalentTo(new List<string>()
+            using(var wizard = new ODataConnectedServiceWizard(context))
             {
-                "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                "GetFriendsTrips(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                "GetInvolvedPeople(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)",
-                "ShareTrip(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                "UpdatePersonLastName(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)"
-            });
-            config.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>()
-            {
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee",
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person",
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender",
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip"
-            });
-            Assert.Equal("GeneratedCode", config.GeneratedFileNamePrefix);
-            Assert.True(config.UseNamespacePrefix);
-            Assert.Equal("Namespace", config.NamespacePrefix);
-            Assert.True(config.EnableNamingAlias);
-            Assert.True(config.MakeTypesInternal);
-            Assert.True(config.IncludeT4File);
-            Assert.True(config.GenerateMultipleFiles);
-            Assert.True(config.OpenGeneratedFilesInIDE);
+                var endpointPage = wizard.ConfigODataEndpointViewModel;
+                endpointPage.OnPageEnteringAsync(null).Wait();
+                endpointPage.OnPageLeavingAsync(null).Wait();
+
+                var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+                var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
+
+                Assert.Equal("GeneratedCode", serviceInstance.InstanceId);
+                Assert.Equal("MyService", serviceInstance.Name);
+                Assert.NotNull(serviceInstance.MetadataTempFilePath);
+                Assert.Equal("MyService", config.ServiceName);
+                Assert.Equal(MetadataPath, config.Endpoint);
+                Assert.Equal(Constants.EdmxVersion4, config.EdmxVersion);
+                Assert.True(config.IncludeCustomHeaders);
+                Assert.Equal("Key1:Val1\nKey2:Val2", config.CustomHttpHeaders);
+                Assert.True(config.IncludeWebProxy);
+                Assert.Equal("http://localhost:8080", config.WebProxyHost);
+                Assert.True(config.IncludeWebProxyNetworkCredentials);
+                Assert.Equal("domain", config.WebProxyNetworkCredentialsDomain);
+                Assert.Null(config.WebProxyNetworkCredentialsUsername);
+                Assert.Null(config.WebProxyNetworkCredentialsPassword);
+                config.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string>() { "GetPersonWithMostFriends", "ResetDataSource" });
+                config.ExcludedBoundOperations.ShouldBeEquivalentTo(new List<string>()
+                {
+                    "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                    "GetFriendsTrips(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                    "GetInvolvedPeople(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)",
+                    "ShareTrip(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                    "UpdatePersonLastName(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)"
+                });
+                config.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>()
+                {
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee",
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person",
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender",
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip"
+                });
+                Assert.Equal("GeneratedCode", config.GeneratedFileNamePrefix);
+                Assert.True(config.UseNamespacePrefix);
+                Assert.Equal("Namespace", config.NamespacePrefix);
+                Assert.True(config.EnableNamingAlias);
+                Assert.True(config.MakeTypesInternal);
+                Assert.True(config.IncludeT4File);
+                Assert.True(config.GenerateMultipleFiles);
+                Assert.True(config.OpenGeneratedFilesInIDE);
+            }
         }
 
         [Fact]
         public void ShouldPreserveState_WhenMovingBetweenPagesAndBack()
         {
             var context = new TestConnectedServiceProviderContext();
-            var wizard = new ODataConnectedServiceWizard(context);
-
-            var endpointPage = wizard.ConfigODataEndpointViewModel;
-            endpointPage.OnPageEnteringAsync(null).Wait();
-            endpointPage.Endpoint = MetadataPath;
-            endpointPage.OnPageLeavingAsync(null).Wait();
-
-            var typesPage = wizard.SchemaTypesViewModel;
-            typesPage.OnPageEnteringAsync(null).Wait();
-            var typesPageView = typesPage.View as SchemaTypes;
-            Assert.Equal(typesPage.SchemaTypesCount, typesPage.SchemaTypes.Count());
-            Assert.Equal(typesPage.BoundOperationsCount, typesPage.SchemaTypes.SelectMany(x => x.BoundOperations).Count());
-            Assert.Equal(typesPageView?.SelectedSchemaTypesCount.Text, typesPage.SchemaTypes.Count().ToString());
-            Assert.Equal(typesPageView?.SelectedBoundOperationsCount.Text, typesPage.SchemaTypes.SelectMany(x => x.BoundOperations).Count().ToString());
-            var typeEmployee = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Employee");
-            typeEmployee.IsSelected = false;
-            Assert.Equal(typesPageView?.SelectedSchemaTypesCount.Text,
-                (typesPage.SchemaTypesCount - typesPage.ExcludedSchemaTypeNames.Count()).ToString());
-            var boundOperationGetInvolvedPeople = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Trip")
-                ?.BoundOperations.FirstOrDefault(o => o.Name.Contains("GetInvolvedPeople"));
-            boundOperationGetInvolvedPeople.IsSelected = false;
-            Assert.Equal(typesPageView?.SelectedBoundOperationsCount.Text,
-                (typesPage.BoundOperationsCount -
-                 typesPage.ExcludedBoundOperationsNames.Count()).ToString());
-            typesPage.OnPageLeavingAsync(null).Wait();
-
-            var operationsPage = wizard.OperationImportsViewModel;
-            operationsPage.OnPageEnteringAsync(null).Wait();
-            var operationsPageView = operationsPage.View as OperationImports;
-            Assert.Equal(operationsPage.OperationImportsCount, operationsPage.OperationImports.Count());
-            Assert.Equal(operationsPageView?.SelectedOperationImportsCount.Text, operationsPage.OperationImportsCount.ToString());
-            var operationNearestAirport = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport");
-            operationNearestAirport.IsSelected = false;
-            Assert.Equal(operationsPageView?.SelectedOperationImportsCount.Text,
-                (operationsPage.OperationImportsCount - operationsPage.ExcludedOperationImportsNames.Count())
-                .ToString());
-            operationsPage.OnPageLeavingAsync(null).Wait();
-
-            var advancedPage = wizard.AdvancedSettingsViewModel;
-            advancedPage.OnPageEnteringAsync(null).Wait();
-            advancedPage.UseDataServiceCollection = true;
-            advancedPage.MakeTypesInternal = true;
-            advancedPage.UseNamespacePrefix = true;
-            advancedPage.OnPageLeavingAsync(null).Wait();
-
-            endpointPage.OnPageEnteringAsync(null).Wait();
-            Assert.Equal(Constants.DefaultServiceName, endpointPage.ServiceName);
-            Assert.Equal(MetadataPath, endpointPage.Endpoint);
-            endpointPage.ServiceName = "Service";
-            endpointPage.IncludeCustomHeaders = true;
-            endpointPage.CustomHttpHeaders = "A:b";
-            endpointPage.OnPageLeavingAsync(null).Wait();
-
-            advancedPage.OnPageEnteringAsync(null).Wait();
-            Assert.True(advancedPage.UseNamespacePrefix);
-            Assert.True(advancedPage.UseDataServiceCollection);
-            Assert.True(advancedPage.MakeTypesInternal);
-            advancedPage.NamespacePrefix = "MyNamespace";
-            advancedPage.GenerateMultipleFiles = true;
-            advancedPage.UseDataServiceCollection = false;
-            advancedPage.OnPageLeavingAsync(null).Wait();
-
-            operationsPage.OnPageEnteringAsync(null).Wait();
-            operationNearestAirport = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport");
-            Assert.False(operationNearestAirport.IsSelected);
-            Assert.Equal(operationsPageView?.SelectedOperationImportsCount.Text,
-                (operationsPage.OperationImportsCount - operationsPage.ExcludedOperationImportsNames.Count())
-                .ToString());
-            var operationResetDataSource = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "ResetDataSource");
-            operationResetDataSource.IsSelected = false;
-            operationsPage.OnPageLeavingAsync(null).Wait();
-
-            typesPage.OnPageEnteringAsync(null).Wait();
-            typeEmployee = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Employee");
-            Assert.False(typeEmployee.IsSelected);
-            Assert.Equal(typesPageView?.SelectedSchemaTypesCount.Text,
-                (typesPage.SchemaTypesCount - typesPage.ExcludedSchemaTypeNames.Count()).ToString());
-            typeEmployee.IsSelected = true;
-            var typeFlight = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Flight");
-            typeFlight.IsSelected = false;
-            typesPage.OnPageLeavingAsync(null).Wait();
-
-            var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
-            var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
-
-            Assert.Equal("Service", config.ServiceName);
-            Assert.Equal(MetadataPath, config.Endpoint);
-            Assert.True(config.IncludeCustomHeaders);
-            Assert.Equal("A:b", config.CustomHttpHeaders);
-            Assert.True(config.GenerateMultipleFiles);
-            Assert.True(config.MakeTypesInternal);
-            Assert.True(config.UseNamespacePrefix);
-            Assert.Equal("MyNamespace", config.NamespacePrefix);
-            Assert.False(config.UseDataServiceCollection);
-            config.ExcludedOperationImports.ShouldAllBeEquivalentTo(new List<string>()
+            using(var wizard = new ODataConnectedServiceWizard(context))
             {
-                "GetNearestAirport",
-                "ResetDataSource"
-            });
-            config.ExcludedBoundOperations.ShouldBeEquivalentTo(new List<string>()
-            {
-                "GetInvolvedPeople(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)"
-            });
-            config.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>()
-            {
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Flight"
-            });
+                var endpointPage = wizard.ConfigODataEndpointViewModel;
+                endpointPage.OnPageEnteringAsync(null).Wait();
+                endpointPage.Endpoint = MetadataPath;
+                endpointPage.OnPageLeavingAsync(null).Wait();
+
+                var typesPage = wizard.SchemaTypesViewModel;
+                typesPage.OnPageEnteringAsync(null).Wait();
+                var typesPageView = typesPage.View as SchemaTypes;
+                Assert.Equal(typesPage.SchemaTypesCount, typesPage.SchemaTypes.Count());
+                Assert.Equal(typesPage.BoundOperationsCount, typesPage.SchemaTypes.SelectMany(x => x.BoundOperations).Count());
+                Assert.Equal(typesPageView?.SelectedSchemaTypesCount.Text, typesPage.SchemaTypes.Count().ToString(CultureInfo.InvariantCulture));
+                Assert.Equal(typesPageView?.SelectedBoundOperationsCount.Text, typesPage.SchemaTypes.SelectMany(x => x.BoundOperations).Count().ToString(CultureInfo.InvariantCulture));
+                var typeEmployee = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Employee");
+                typeEmployee.IsSelected = false;
+                Assert.Equal(typesPageView?.SelectedSchemaTypesCount.Text,
+                    (typesPage.SchemaTypesCount - typesPage.ExcludedSchemaTypeNames.Count()).ToString(CultureInfo.InvariantCulture));
+                var boundOperationGetInvolvedPeople = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Trip")
+                    ?.BoundOperations.FirstOrDefault(o => o.Name.Contains("GetInvolvedPeople"));
+                boundOperationGetInvolvedPeople.IsSelected = false;
+                Assert.Equal(typesPageView?.SelectedBoundOperationsCount.Text,
+                    (typesPage.BoundOperationsCount -
+                     typesPage.ExcludedBoundOperationsNames.Count()).ToString(CultureInfo.InvariantCulture));
+                typesPage.OnPageLeavingAsync(null).Wait();
+
+                var operationsPage = wizard.OperationImportsViewModel;
+                operationsPage.OnPageEnteringAsync(null).Wait();
+                var operationsPageView = operationsPage.View as OperationImports;
+                Assert.Equal(operationsPage.OperationImportsCount, operationsPage.OperationImports.Count());
+                Assert.Equal(operationsPageView?.SelectedOperationImportsCount.Text, operationsPage.OperationImportsCount.ToString(CultureInfo.InvariantCulture));
+                var operationNearestAirport = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport");
+                operationNearestAirport.IsSelected = false;
+                Assert.Equal(operationsPageView?.SelectedOperationImportsCount.Text,
+                    (operationsPage.OperationImportsCount - operationsPage.ExcludedOperationImportsNames.Count())
+                    .ToString(CultureInfo.InvariantCulture));
+                operationsPage.OnPageLeavingAsync(null).Wait();
+
+                var advancedPage = wizard.AdvancedSettingsViewModel;
+                advancedPage.OnPageEnteringAsync(null).Wait();
+                advancedPage.UseDataServiceCollection = true;
+                advancedPage.MakeTypesInternal = true;
+                advancedPage.UseNamespacePrefix = true;
+                advancedPage.OnPageLeavingAsync(null).Wait();
+
+                endpointPage.OnPageEnteringAsync(null).Wait();
+                Assert.Equal(Constants.DefaultServiceName, endpointPage.ServiceName);
+                Assert.Equal(MetadataPath, endpointPage.Endpoint);
+                endpointPage.ServiceName = "Service";
+                endpointPage.IncludeCustomHeaders = true;
+                endpointPage.CustomHttpHeaders = "A:b";
+                endpointPage.OnPageLeavingAsync(null).Wait();
+
+                advancedPage.OnPageEnteringAsync(null).Wait();
+                Assert.True(advancedPage.UseNamespacePrefix);
+                Assert.True(advancedPage.UseDataServiceCollection);
+                Assert.True(advancedPage.MakeTypesInternal);
+                advancedPage.NamespacePrefix = "MyNamespace";
+                advancedPage.GenerateMultipleFiles = true;
+                advancedPage.UseDataServiceCollection = false;
+                advancedPage.OnPageLeavingAsync(null).Wait();
+
+                operationsPage.OnPageEnteringAsync(null).Wait();
+                operationNearestAirport = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport");
+                Assert.False(operationNearestAirport.IsSelected);
+                Assert.Equal(operationsPageView?.SelectedOperationImportsCount.Text,
+                    (operationsPage.OperationImportsCount - operationsPage.ExcludedOperationImportsNames.Count())
+                    .ToString(CultureInfo.InvariantCulture));
+                var operationResetDataSource = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "ResetDataSource");
+                operationResetDataSource.IsSelected = false;
+                operationsPage.OnPageLeavingAsync(null).Wait();
+
+                typesPage.OnPageEnteringAsync(null).Wait();
+                typeEmployee = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Employee");
+                Assert.False(typeEmployee.IsSelected);
+                Assert.Equal(typesPageView?.SelectedSchemaTypesCount.Text,
+                    (typesPage.SchemaTypesCount - typesPage.ExcludedSchemaTypeNames.Count()).ToString(CultureInfo.InvariantCulture));
+                typeEmployee.IsSelected = true;
+                var typeFlight = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Flight");
+                typeFlight.IsSelected = false;
+                typesPage.OnPageLeavingAsync(null).Wait();
+
+                var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+                var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
+
+                Assert.Equal("Service", config.ServiceName);
+                Assert.Equal(MetadataPath, config.Endpoint);
+                Assert.True(config.IncludeCustomHeaders);
+                Assert.Equal("A:b", config.CustomHttpHeaders);
+                Assert.True(config.GenerateMultipleFiles);
+                Assert.True(config.MakeTypesInternal);
+                Assert.True(config.UseNamespacePrefix);
+                Assert.Equal("MyNamespace", config.NamespacePrefix);
+                Assert.False(config.UseDataServiceCollection);
+                config.ExcludedOperationImports.ShouldAllBeEquivalentTo(new List<string>()
+                {
+                    "GetNearestAirport",
+                    "ResetDataSource"
+                });
+                config.ExcludedBoundOperations.ShouldBeEquivalentTo(new List<string>()
+                {
+                    "GetInvolvedPeople(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)"
+                });
+                config.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>()
+                {
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Flight"
+                });
+            }
         }
 
         [Fact]
@@ -775,264 +785,270 @@ namespace ODataConnectedService.Tests
             var savedConfig = GetTestConfig();
             savedConfig.Endpoint = MetadataPath;
             var context = new TestConnectedServiceProviderContext(true, savedConfig);
-            var wizard = new ODataConnectedServiceWizard(context);
-
-            var endpointPage = wizard.ConfigODataEndpointViewModel;
-            endpointPage.OnPageEnteringAsync(null).Wait();
-            endpointPage.OnPageLeavingAsync(null).Wait();
-
-            var typesPage = wizard.SchemaTypesViewModel;
-            typesPage.OnPageEnteringAsync(null).Wait();
-            var typeGender = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "PersonGender");
-            Assert.False(typeGender.IsSelected);
-            typeGender.IsSelected = true;
-            var typePerson = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Person");
-            Assert.False(typePerson.IsSelected);
-            typesPage.OnPageLeavingAsync(null).Wait();
-
-            var operationsPage = wizard.OperationImportsViewModel;
-            operationsPage.OnPageEnteringAsync(null).Wait();
-            var operationNearestAirport = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport");
-            Assert.True(operationNearestAirport.IsSelected);
-            operationNearestAirport.IsSelected = false;
-            operationsPage.OnPageLeavingAsync(null).Wait();
-
-            var boundOperationGetFavoriteAirline = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Person").BoundOperations.FirstOrDefault(o => o.Name == "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)");
-            Assert.False(boundOperationGetFavoriteAirline.IsSelected);
-
-            var advancedPage = wizard.AdvancedSettingsViewModel;
-            advancedPage.OnPageEnteringAsync(null).Wait();
-            advancedPage.UseDataServiceCollection = true;
-            advancedPage.MakeTypesInternal = true;
-            advancedPage.UseNamespacePrefix = true;
-            advancedPage.OnPageLeavingAsync(null).Wait();
-
-            endpointPage.OnPageEnteringAsync(null).Wait();
-            Assert.Equal(savedConfig.ServiceName, endpointPage.ServiceName);
-            Assert.Equal(savedConfig.Endpoint, endpointPage.Endpoint);
-            endpointPage.IncludeCustomHeaders = true;
-            endpointPage.CustomHttpHeaders = "A:b";
-            endpointPage.OnPageLeavingAsync(null).Wait();
-
-            advancedPage.OnPageEnteringAsync(null).Wait();
-            Assert.True(advancedPage.UseNamespacePrefix);
-            Assert.True(advancedPage.UseDataServiceCollection);
-            Assert.True(advancedPage.MakeTypesInternal);
-            advancedPage.NamespacePrefix = "MyNamespace";
-            advancedPage.GenerateMultipleFiles = true;
-            advancedPage.UseDataServiceCollection = false;
-            advancedPage.OnPageLeavingAsync(null).Wait();
-
-            operationsPage.OnPageEnteringAsync(null).Wait();
-            operationNearestAirport = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport");
-            Assert.False(operationNearestAirport.IsSelected);
-            var operationResetDataSource = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "ResetDataSource");
-            Assert.False(operationResetDataSource.IsSelected);
-            operationResetDataSource.IsSelected = true;
-            operationsPage.OnPageLeavingAsync(null).Wait();
-
-            typesPage.OnPageEnteringAsync(null).Wait();
-            typeGender = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "PersonGender");
-            Assert.True(typeGender.IsSelected);
-            var typeFlight = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Flight");
-            typeFlight.IsSelected = false;
-            typePerson = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Person");
-            Assert.False(typePerson.IsSelected);
-            boundOperationGetFavoriteAirline = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Person").BoundOperations.FirstOrDefault(o => o.Name == "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)");
-            Assert.False(boundOperationGetFavoriteAirline.IsSelected);
-            typesPage.OnPageLeavingAsync(null).Wait();
-
-            var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
-            var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
-
-            Assert.Equal(savedConfig.ServiceName, config.ServiceName);
-            Assert.Equal(savedConfig.Endpoint, config.Endpoint);
-            Assert.True(config.IncludeCustomHeaders);
-            Assert.Equal("A:b", config.CustomHttpHeaders);
-            Assert.True(config.GenerateMultipleFiles);
-            Assert.True(config.MakeTypesInternal);
-            Assert.True(config.UseNamespacePrefix);
-            Assert.Equal("MyNamespace", config.NamespacePrefix);
-            Assert.False(config.UseDataServiceCollection);
-            config.ExcludedOperationImports.ShouldAllBeEquivalentTo(new List<string>()
+            using(var wizard = new ODataConnectedServiceWizard(context))
             {
-                "GetNearestAirport",
-                "GetPersonWithMostFriends"
-            });
-            config.ExcludedBoundOperations.ShouldBeEquivalentTo(new List<string>()
-            {
-                "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                "GetFriendsTrips(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                "GetInvolvedPeople(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)",
-                "ShareTrip(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                "UpdatePersonLastName(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)"
-            });
-            config.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>()
-            {
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee",
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Flight",
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person",
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip"
-            });
+                var endpointPage = wizard.ConfigODataEndpointViewModel;
+                endpointPage.OnPageEnteringAsync(null).Wait();
+                endpointPage.OnPageLeavingAsync(null).Wait();
+
+                var typesPage = wizard.SchemaTypesViewModel;
+                typesPage.OnPageEnteringAsync(null).Wait();
+                var typeGender = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "PersonGender");
+                Assert.False(typeGender.IsSelected);
+                typeGender.IsSelected = true;
+                var typePerson = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Person");
+                Assert.False(typePerson.IsSelected);
+                typesPage.OnPageLeavingAsync(null).Wait();
+
+                var operationsPage = wizard.OperationImportsViewModel;
+                operationsPage.OnPageEnteringAsync(null).Wait();
+                var operationNearestAirport = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport");
+                Assert.True(operationNearestAirport.IsSelected);
+                operationNearestAirport.IsSelected = false;
+                operationsPage.OnPageLeavingAsync(null).Wait();
+
+                var boundOperationGetFavoriteAirline = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Person").BoundOperations.FirstOrDefault(o => o.Name == "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)");
+                Assert.False(boundOperationGetFavoriteAirline.IsSelected);
+
+                var advancedPage = wizard.AdvancedSettingsViewModel;
+                advancedPage.OnPageEnteringAsync(null).Wait();
+                advancedPage.UseDataServiceCollection = true;
+                advancedPage.MakeTypesInternal = true;
+                advancedPage.UseNamespacePrefix = true;
+                advancedPage.OnPageLeavingAsync(null).Wait();
+
+                endpointPage.OnPageEnteringAsync(null).Wait();
+                Assert.Equal(savedConfig.ServiceName, endpointPage.ServiceName);
+                Assert.Equal(savedConfig.Endpoint, endpointPage.Endpoint);
+                endpointPage.IncludeCustomHeaders = true;
+                endpointPage.CustomHttpHeaders = "A:b";
+                endpointPage.OnPageLeavingAsync(null).Wait();
+
+                advancedPage.OnPageEnteringAsync(null).Wait();
+                Assert.True(advancedPage.UseNamespacePrefix);
+                Assert.True(advancedPage.UseDataServiceCollection);
+                Assert.True(advancedPage.MakeTypesInternal);
+                advancedPage.NamespacePrefix = "MyNamespace";
+                advancedPage.GenerateMultipleFiles = true;
+                advancedPage.UseDataServiceCollection = false;
+                advancedPage.OnPageLeavingAsync(null).Wait();
+
+                operationsPage.OnPageEnteringAsync(null).Wait();
+                operationNearestAirport = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport");
+                Assert.False(operationNearestAirport.IsSelected);
+                var operationResetDataSource = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "ResetDataSource");
+                Assert.False(operationResetDataSource.IsSelected);
+                operationResetDataSource.IsSelected = true;
+                operationsPage.OnPageLeavingAsync(null).Wait();
+
+                typesPage.OnPageEnteringAsync(null).Wait();
+                typeGender = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "PersonGender");
+                Assert.True(typeGender.IsSelected);
+                var typeFlight = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Flight");
+                typeFlight.IsSelected = false;
+                typePerson = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Person");
+                Assert.False(typePerson.IsSelected);
+                boundOperationGetFavoriteAirline = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Person").BoundOperations.FirstOrDefault(o => o.Name == "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)");
+                Assert.False(boundOperationGetFavoriteAirline.IsSelected);
+                typesPage.OnPageLeavingAsync(null).Wait();
+
+                var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+                var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
+
+                Assert.Equal(savedConfig.ServiceName, config.ServiceName);
+                Assert.Equal(savedConfig.Endpoint, config.Endpoint);
+                Assert.True(config.IncludeCustomHeaders);
+                Assert.Equal("A:b", config.CustomHttpHeaders);
+                Assert.True(config.GenerateMultipleFiles);
+                Assert.True(config.MakeTypesInternal);
+                Assert.True(config.UseNamespacePrefix);
+                Assert.Equal("MyNamespace", config.NamespacePrefix);
+                Assert.False(config.UseDataServiceCollection);
+                config.ExcludedOperationImports.ShouldAllBeEquivalentTo(new List<string>()
+                {
+                    "GetNearestAirport",
+                    "GetPersonWithMostFriends"
+                });
+                config.ExcludedBoundOperations.ShouldBeEquivalentTo(new List<string>()
+                {
+                    "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                    "GetFriendsTrips(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                    "GetInvolvedPeople(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)",
+                    "ShareTrip(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                    "UpdatePersonLastName(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)"
+                });
+                config.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>()
+                {
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee",
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Flight",
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person",
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip"
+                });
+            }
         }
 
         [Fact]
         public void ShouldReloadOperationsAndTypesForNewEndpoint_WhenEndpointIsChangedBeforeFinishing()
         {
             var context = new TestConnectedServiceProviderContext();
-            var wizard = new ODataConnectedServiceWizard(context);
-
-            var endpointPage = wizard.ConfigODataEndpointViewModel;
-            endpointPage.OnPageEnteringAsync(null).Wait();
-            endpointPage.Endpoint = MetadataPath;
-            endpointPage.OnPageLeavingAsync(null).Wait();
-
-            var typesPage = wizard.SchemaTypesViewModel;
-            typesPage.OnPageEnteringAsync(null).Wait();
-            typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Employee").IsSelected = false;
-            typesPage.OnPageLeavingAsync(null).Wait();
-
-            var operationsPage = wizard.OperationImportsViewModel;
-            operationsPage.OnPageEnteringAsync(null).Wait();
-            operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport").IsSelected = false;
-            operationsPage.OnPageLeavingAsync(null).Wait();
-
-            // go back to first page and change endpoint
-            endpointPage.OnPageEnteringAsync(null).Wait();
-            endpointPage.Endpoint = MetadataPathSimple;
-            endpointPage.OnPageLeavingAsync(null).Wait();
-
-            typesPage.OnPageEnteringAsync(null).Wait();
-            typesPage.SchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>()
+            using(var wizard = new ODataConnectedServiceWizard(context))
             {
-                new SchemaTypeModel("SimpleService.Models.OtherThing", "OtherThing") { IsSelected = true },
-                new SchemaTypeModel("SimpleService.Models.Thing", "Thing") { IsSelected = true }
-            });
-            typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "OtherThing").IsSelected = false;
-            typesPage.OnPageLeavingAsync(null).Wait();
+                var endpointPage = wizard.ConfigODataEndpointViewModel;
+                endpointPage.OnPageEnteringAsync(null).Wait();
+                endpointPage.Endpoint = MetadataPath;
+                endpointPage.OnPageLeavingAsync(null).Wait();
 
-            operationsPage.OnPageEnteringAsync(null).Wait();
-            operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
-            {
-                new OperationImportModel
+                var typesPage = wizard.SchemaTypesViewModel;
+                typesPage.OnPageEnteringAsync(null).Wait();
+                typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Employee").IsSelected = false;
+                typesPage.OnPageLeavingAsync(null).Wait();
+
+                var operationsPage = wizard.OperationImportsViewModel;
+                operationsPage.OnPageEnteringAsync(null).Wait();
+                operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport").IsSelected = false;
+                operationsPage.OnPageLeavingAsync(null).Wait();
+
+                // go back to first page and change endpoint
+                endpointPage.OnPageEnteringAsync(null).Wait();
+                endpointPage.Endpoint = MetadataPathSimple;
+                endpointPage.OnPageLeavingAsync(null).Wait();
+
+                typesPage.OnPageEnteringAsync(null).Wait();
+                typesPage.SchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>()
                 {
-                    ReturnType = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Thing",
-                    ParametersString = "()",
-                    Name = "GetRandomThing",
-                    IsSelected = true
-                },
-                new OperationImportModel
+                    new SchemaTypeModel("SimpleService.Models.OtherThing", "OtherThing") { IsSelected = true },
+                    new SchemaTypeModel("SimpleService.Models.Thing", "Thing") { IsSelected = true }
+                });
+                typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "OtherThing").IsSelected = false;
+                typesPage.OnPageLeavingAsync(null).Wait();
+
+                operationsPage.OnPageEnteringAsync(null).Wait();
+                operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
                 {
-                    ReturnType = "void",
-                    ParametersString = "()",
-                    Name = "ResetThings",
-                    IsSelected = true
-                }
-            });
-            operationsPage.OperationImports.FirstOrDefault(o => o.Name == "ResetThings").IsSelected = false;
+                    new OperationImportModel
+                    {
+                        ReturnType = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Thing",
+                        ParametersString = "()",
+                        Name = "GetRandomThing",
+                        IsSelected = true
+                    },
+                    new OperationImportModel
+                    {
+                        ReturnType = "void",
+                        ParametersString = "()",
+                        Name = "ResetThings",
+                        IsSelected = true
+                    }
+                });
+                operationsPage.OperationImports.FirstOrDefault(o => o.Name == "ResetThings").IsSelected = false;
 
-            var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
-            var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
+                var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+                var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
 
-            Assert.Equal(MetadataPathSimple, config.Endpoint);
-            config.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string>() { "ResetThings" });
-            config.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>() { "SimpleService.Models.OtherThing" });
+                Assert.Equal(MetadataPathSimple, config.Endpoint);
+                config.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string>() { "ResetThings" });
+                config.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>() { "SimpleService.Models.OtherThing" });
+            }
         }
 
         [Fact]
         public void ShouldDeselectOperations_WhenRelatedTypeIsDeselectedBefore()
         {
             var context = new TestConnectedServiceProviderContext();
-            var wizard = new ODataConnectedServiceWizard(context);
-
-            var endpointPage = wizard.ConfigODataEndpointViewModel;
-            endpointPage.OnPageEnteringAsync(null).Wait();
-            endpointPage.Endpoint = MetadataPath;
-            endpointPage.OnPageLeavingAsync(null).Wait();
-
-            var typesPage = wizard.SchemaTypesViewModel;
-            typesPage.OnPageEnteringAsync(null).Wait();
-            typesPage.SchemaTypes.First(t => t.ShortName == "Airport").IsSelected = false;
-            typesPage.OnPageLeavingAsync(null).Wait();
-
-            var operationsPage = wizard.OperationImportsViewModel;
-            operationsPage.OnPageEnteringAsync(null).Wait();
-            operationsPage.OperationImports.First(o => o.Name == "GetNearestAirport").IsSelected.Should().BeFalse();
-            operationsPage.OnPageLeavingAsync(null).Wait();
-
-            var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
-            var config = serviceInstance?.ServiceConfig as ServiceConfigurationV4;
-
-            config?.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string> { "GetNearestAirport" });
-            config?.ExcludedBoundOperations.ShouldBeEquivalentTo(new List<string>());
-            config?.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>
+            using(var wizard = new ODataConnectedServiceWizard(context))
             {
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport",
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Flight"
-            });
+                var endpointPage = wizard.ConfigODataEndpointViewModel;
+                endpointPage.OnPageEnteringAsync(null).Wait();
+                endpointPage.Endpoint = MetadataPath;
+                endpointPage.OnPageLeavingAsync(null).Wait();
+
+                var typesPage = wizard.SchemaTypesViewModel;
+                typesPage.OnPageEnteringAsync(null).Wait();
+                typesPage.SchemaTypes.First(t => t.ShortName == "Airport").IsSelected = false;
+                typesPage.OnPageLeavingAsync(null).Wait();
+
+                var operationsPage = wizard.OperationImportsViewModel;
+                operationsPage.OnPageEnteringAsync(null).Wait();
+                operationsPage.OperationImports.First(o => o.Name == "GetNearestAirport").IsSelected.Should().BeFalse();
+                operationsPage.OnPageLeavingAsync(null).Wait();
+
+                var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+                var config = serviceInstance?.ServiceConfig as ServiceConfigurationV4;
+
+                config?.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string> { "GetNearestAirport" });
+                config?.ExcludedBoundOperations.ShouldBeEquivalentTo(new List<string>());
+                config?.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>
+                {
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport",
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Flight"
+                });
+            }
         }
 
         [Fact]
         public void ShouldDeselectBoundOperations_WhenRelatedTypeIsDeselectedBefore()
         {
             var context = new TestConnectedServiceProviderContext();
-            var wizard = new ODataConnectedServiceWizard(context);
-
-            var endpointPage = wizard.ConfigODataEndpointViewModel;
-            endpointPage.OnPageEnteringAsync(null).Wait();
-            endpointPage.Endpoint = MetadataPath;
-            endpointPage.OnPageLeavingAsync(null).Wait();
-
-            var typesPage = wizard.SchemaTypesViewModel;
-            typesPage.OnPageEnteringAsync(null).Wait();
-            typesPage.SchemaTypes.First(t => t.ShortName == "Person").IsSelected = false;
-            typesPage.OnPageLeavingAsync(null).Wait();
-
-            var operationsPage = wizard.OperationImportsViewModel;
-            operationsPage.OnPageEnteringAsync(null).Wait();
-            operationsPage.OperationImports.First(o => o.Name == "GetPersonWithMostFriends").IsSelected.Should().BeFalse();
-            operationsPage.OnPageLeavingAsync(null).Wait();
-
-            var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
-            var config = serviceInstance?.ServiceConfig as ServiceConfigurationV4;
-
-            config?.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string> { "GetPersonWithMostFriends" });
-            config?.ExcludedBoundOperations.ShouldBeEquivalentTo(new List<string>
+            using(var wizard = new ODataConnectedServiceWizard(context))
             {
-                "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                "GetFriendsTrips(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                "GetInvolvedPeople(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)",
-                "ShareTrip(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
-                "UpdatePersonLastName(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)"
-            });
-            config?.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>
-            {
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee",
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person",
-                "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip"
-            });
+                var endpointPage = wizard.ConfigODataEndpointViewModel;
+                endpointPage.OnPageEnteringAsync(null).Wait();
+                endpointPage.Endpoint = MetadataPath;
+                endpointPage.OnPageLeavingAsync(null).Wait();
+
+                var typesPage = wizard.SchemaTypesViewModel;
+                typesPage.OnPageEnteringAsync(null).Wait();
+                typesPage.SchemaTypes.First(t => t.ShortName == "Person").IsSelected = false;
+                typesPage.OnPageLeavingAsync(null).Wait();
+
+                var operationsPage = wizard.OperationImportsViewModel;
+                operationsPage.OnPageEnteringAsync(null).Wait();
+                operationsPage.OperationImports.First(o => o.Name == "GetPersonWithMostFriends").IsSelected.Should().BeFalse();
+                operationsPage.OnPageLeavingAsync(null).Wait();
+
+                var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+                var config = serviceInstance?.ServiceConfig as ServiceConfigurationV4;
+
+                config?.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string> { "GetPersonWithMostFriends" });
+                config?.ExcludedBoundOperations.ShouldBeEquivalentTo(new List<string>
+                {
+                    "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                    "GetFriendsTrips(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                    "GetInvolvedPeople(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)",
+                    "ShareTrip(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)",
+                    "UpdatePersonLastName(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)"
+                });
+                config?.ExcludedSchemaTypes.ShouldBeEquivalentTo(new List<string>
+                {
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Employee",
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person",
+                    "Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip"
+                });
+            }
         }
 
         [Fact]
         public void UnsupportedFeaturesAreDisabledOrHidden_WhenServiceIsV3OrLess()
         {
             var context = new TestConnectedServiceProviderContext();
-            var wizard = new ODataConnectedServiceWizard(context);
-            var endpointPage = wizard.ConfigODataEndpointViewModel;
-            endpointPage.Endpoint = MetadataPathV3;
-            endpointPage.OnPageLeavingAsync(null).Wait();
-            Assert.Equal(Constants.EdmxVersion1, endpointPage.EdmxVersion);
+            using(var wizard = new ODataConnectedServiceWizard(context))
+            {
+                var endpointPage = wizard.ConfigODataEndpointViewModel;
+                endpointPage.Endpoint = MetadataPathV3;
+                endpointPage.OnPageLeavingAsync(null).Wait();
+                Assert.Equal(Constants.EdmxVersion1, endpointPage.EdmxVersion);
 
-            var operationsPage = wizard.OperationImportsViewModel;
-            operationsPage.OnPageEnteringAsync(null).Wait();
-            Assert.False(operationsPage.View.IsEnabled);
-            Assert.False(operationsPage.IsSupportedODataVersion);
+                var operationsPage = wizard.OperationImportsViewModel;
+                operationsPage.OnPageEnteringAsync(null).Wait();
+                Assert.False(operationsPage.View.IsEnabled);
+                Assert.False(operationsPage.IsSupportedODataVersion);
 
-            var advancedPage = wizard.AdvancedSettingsViewModel;
-            advancedPage.OnPageEnteringAsync(null).Wait();
-            var advancedView = advancedPage.View as AdvancedSettings;
-            advancedView.settings.RaiseEvent(new RoutedEventArgs(Hyperlink.ClickEvent));
-            Assert.Equal(Visibility.Hidden, advancedView.AdvancedSettingsForv4.Visibility);
+                var advancedPage = wizard.AdvancedSettingsViewModel;
+                advancedPage.OnPageEnteringAsync(null).Wait();
+                var advancedView = advancedPage.View as AdvancedSettings;
+                advancedView.settings.RaiseEvent(new RoutedEventArgs(Hyperlink.ClickEvent));
+                Assert.Equal(Visibility.Hidden, advancedView.AdvancedSettingsForv4.Visibility);
+            }
         }
     }
 

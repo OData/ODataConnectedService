@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OData.ConnectedService.Common;
@@ -70,15 +71,15 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
             this.IsEntered = true;
-            await base.OnPageEnteringAsync(args);
+            await base.OnPageEnteringAsync(args).ConfigureAwait(false);
             View = new SchemaTypes() {DataContext = this};
             PageEntering?.Invoke(this, EventArgs.Empty);
             if (this.View is SchemaTypes view)
             {
-                view.SelectedSchemaTypesCount.Text = SchemaTypes.Count(x => x.IsSelected).ToString();
+                view.SelectedSchemaTypesCount.Text = SchemaTypes.Count(x => x.IsSelected).ToString(CultureInfo.InvariantCulture);
                 view.SelectedBoundOperationsCount.Text = SchemaTypes
                     .Where(x => x.IsSelected && x.BoundOperations?.Any() == true).SelectMany(x => x.BoundOperations)
-                    .Count(x => x.IsSelected).ToString();
+                    .Count(x => x.IsSelected).ToString(CultureInfo.InvariantCulture);
             }
         }
 
@@ -131,11 +132,11 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                     ErrorMessage = $"{numberOfTypesToBeIncluded} {Constants.SchemaTypesWillAutomaticallyBeIncluded}",
                     IsSuccess = correctTypeSelection,
                     ShowMessageBoxOnFailure = true
-                });
+                }).ConfigureAwait(false);
             }
             else
             {
-                return await base.OnPageLeavingAsync(args);
+                return await base.OnPageLeavingAsync(args).ConfigureAwait(false);
             }
         }
 
@@ -195,7 +196,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             foreach (var type in schemaTypes)
             {
                 if (!SchemaTypeModelMap.ContainsKey(type.FullName()) ||
-                    SchemaTypeModelMap.Count() != schemaTypes.Count())
+                    SchemaTypeModelMap.Count != schemaTypes.Count())
                 {
                     SchemaTypes = toLoad;
                     SchemaTypeModelMap.Clear();
@@ -329,7 +330,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
                     if (this.View is SchemaTypes view)
                     {
-                        view.SelectedSchemaTypesCount.Text = SchemaTypes.Count(x => x.IsSelected).ToString();
+                        view.SelectedSchemaTypesCount.Text = SchemaTypes.Count(x => x.IsSelected).ToString(CultureInfo.InvariantCulture);
                     }
                 };
 
@@ -496,7 +497,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                                 {
                                     view.SelectedBoundOperationsCount.Text = SchemaTypes
                                         .Where(x => x.IsSelected && x.BoundOperations?.Any() == true)
-                                        .SelectMany(x => x.BoundOperations).Count(x => x.IsSelected).ToString();
+                                        .SelectMany(x => x.BoundOperations).Count(x => x.IsSelected).ToString(CultureInfo.InvariantCulture);
                                 }
                             }
                         };

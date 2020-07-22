@@ -61,7 +61,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         }
         public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
-            await base.OnPageEnteringAsync(args);
+            await base.OnPageEnteringAsync(args).ConfigureAwait(false);
             this.View = new ConfigODataEndpoint { DataContext = this };
             this.PageEntering?.Invoke(this, EventArgs.Empty);
         }
@@ -95,7 +95,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         {
             if (string.IsNullOrEmpty(this.Endpoint))
             {
-                throw new ArgumentNullException("OData Service Endpoint", Constants.InputServiceEndpointMsg);
+                throw new ArgumentNullException("OData Service Endpoint", string.Format(CultureInfo.InvariantCulture, Constants.InputServiceEndpointMsg));
             }
 
             if (this.Endpoint.StartsWith("https:", StringComparison.Ordinal)
@@ -111,7 +111,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             var metadataUri = new Uri(this.Endpoint);
             if (!metadataUri.IsFile)
             {
-                var webRequest = (HttpWebRequest)WebRequest.Create(this.Endpoint);
+                var webRequest = (HttpWebRequest)WebRequest.Create(metadataUri);
                 if (this.CustomHttpHeaders != null)
                 {
                     var headerElements = this.CustomHttpHeaders.Split(new [] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
@@ -163,7 +163,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
                         if (reader.EOF)
                         {
-                            throw new InvalidOperationException("The metadata is an empty file");
+                            throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "The metadata is an empty file"));
                         }
 
                         Common.Constants.SupportedEdmxNamespaces.TryGetValue(reader.NamespaceURI, out edmxVersion);

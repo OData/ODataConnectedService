@@ -27,17 +27,17 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
 
         public override async Task AddNugetPackagesAsync()
         {
-            await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Adding Nuget Packages...");
+            await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Adding Nuget Packages...").ConfigureAwait(false);
 
             foreach (var nugetPackage in Common.Constants.V3NuGetPackages)
-                await CheckAndInstallNuGetPackageAsync(Common.Constants.NuGetOnlineRepository, nugetPackage);
+                await CheckAndInstallNuGetPackageAsync(Common.Constants.NuGetOnlineRepository, nugetPackage).ConfigureAwait(false);
 
-            await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Nuget Packages were installed.");
+            await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Nuget Packages were installed.").ConfigureAwait(false);
         }
 
         public override async Task AddGeneratedClientCodeAsync()
         {
-            await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Generating Client Proxy ...");
+            await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Generating Client Proxy ...").ConfigureAwait(false);
 
             var generator = new EntityClassGenerator(this.TargetProjectLanguage)
             {
@@ -66,17 +66,17 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 using (StreamWriter writer = File.CreateText(tempFile))
                 {
                     var errors = generator.GenerateCode(reader, writer, this.ServiceConfiguration.NamespacePrefix);
-                    await writer.FlushAsync();
+                    await writer.FlushAsync().ConfigureAwait(false);
                     if (errors != null && errors.Any())
                     {
                         noErrors = false;
 
                         foreach (var err in errors)
                         {
-                            await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, err.Message);
+                            await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, err.Message).ConfigureAwait(false);
                         }
 
-                        await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, "Client Proxy for OData V3 was not generated.");
+                        await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, "Client Proxy for OData V3 was not generated.").ConfigureAwait(false);
                     }
                 }
 
@@ -87,9 +87,9 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                         : ".vb";
 
                     var outputFile = Path.Combine(GetReferenceFileFolder(), this.GeneratedFileNamePrefix + ext);
-                    await this.Context.HandlerHelper.AddFileAsync(tempFile, outputFile, new AddFileOptions { OpenOnComplete = this.ServiceConfiguration.OpenGeneratedFilesInIDE });
+                    await Context.HandlerHelper.AddFileAsync(tempFile, outputFile, new AddFileOptions { OpenOnComplete = ServiceConfiguration.OpenGeneratedFilesInIDE }).ConfigureAwait(false);
 
-                    await this.Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Client Proxy for OData V3 was generated.");
+                    await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Client Proxy for OData V3 was generated.").ConfigureAwait(false);
                 }
             }
         }
