@@ -27,6 +27,29 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public IEnumerable<SchemaTypeModel> SchemaTypes { get; set; }
 
+        private string _searchText;
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                _searchText = value;
+
+                this.OnPropertyChanged(nameof(SearchText));
+                this.OnPropertyChanged(nameof(FilteredSchemaTypes));
+            }
+        }
+
+        public IEnumerable<SchemaTypeModel> FilteredSchemaTypes
+        {
+            get
+            {
+                return SearchText == null
+                    ? SchemaTypes
+                    : SchemaTypes.Where(x => x.ShortName.StartsWith(SearchText, StringComparison.InvariantCultureIgnoreCase));
+            }
+        }
+
         private long _schemaTypesCount = 0;
         public long SchemaTypesCount => this._schemaTypesCount;
 

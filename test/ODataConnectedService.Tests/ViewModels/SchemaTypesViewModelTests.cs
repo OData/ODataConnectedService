@@ -825,5 +825,48 @@ namespace ODataConnectedService.Tests.ViewModels
                 });
             }
         }
+
+        [TestMethod]
+        public void FillingSearchText_ShouldFilterSchemaTypes()
+        {
+            using (var objectSelection = new SchemaTypesViewModel
+            {
+                SchemaTypes = new List<SchemaTypeModel>()
+            })
+            {
+                var listToLoad = new List<IEdmSchemaType>
+                {
+                    new EdmEntityType("Test", "EntityType", new EdmEntityType("Test", "BaseEntityType")),
+                    new EdmEntityType("Test", "BaseEntityType")
+                };
+
+                objectSelection.LoadSchemaTypes(listToLoad, new Dictionary<IEdmType, List<IEdmOperation>>());
+
+                objectSelection.FilteredSchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>
+                {
+                    new SchemaTypeModel { ShortName = "BaseEntityType", Name = "Test.BaseEntityType", IsSelected = true },
+                    new SchemaTypeModel { ShortName = "EntityType", Name = "Test.EntityType", IsSelected = true }
+                });
+
+                objectSelection.SearchText = "e";
+
+                objectSelection.FilteredSchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>
+                {
+                    new SchemaTypeModel { ShortName = "EntityType", Name = "Test.EntityType", IsSelected = true }
+                });
+
+                objectSelection.SearchText = "wrong";
+
+                objectSelection.FilteredSchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>());
+
+                objectSelection.SearchText = string.Empty;
+
+                objectSelection.FilteredSchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>
+                {
+                    new SchemaTypeModel { ShortName = "BaseEntityType", Name = "Test.BaseEntityType", IsSelected = true },
+                    new SchemaTypeModel { ShortName = "EntityType", Name = "Test.EntityType", IsSelected = true }
+                });
+            }
+        }
     }
 }

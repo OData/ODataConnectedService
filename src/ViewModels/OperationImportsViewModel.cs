@@ -41,6 +41,30 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         }
 
         public IEnumerable<OperationImportModel> OperationImports { get; set; }
+
+        private string _searchText;
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                _searchText = value;
+
+                this.OnPropertyChanged(nameof(SearchText));
+                this.OnPropertyChanged(nameof(FilteredOperationImports));
+            }
+        }
+
+        public IEnumerable<OperationImportModel> FilteredOperationImports
+        {
+            get
+            {
+                return SearchText == null
+                    ? OperationImports
+                    : OperationImports.Where(x => x.Name.StartsWith(SearchText, StringComparison.InvariantCultureIgnoreCase));
+            }
+        }
+
         /// <summary>
         /// Whether the connected service supports operation selection feature for the current OData version, default is true
         /// </summary>
