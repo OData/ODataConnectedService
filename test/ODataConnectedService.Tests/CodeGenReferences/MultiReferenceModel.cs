@@ -40,7 +40,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
             return clientType.FullName;
         }
         /// <summary>
-        /// There are no comments for Trucks in the schema.
+        /// Our Trucks
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual global::Microsoft.OData.Client.DataServiceQuery<TruckType> Trucks
@@ -441,7 +441,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         partial void OnLocationChanged();
     }
     /// <summary>
-    /// There are no comments for TruckStoppedAlarmType in the schema.
+    /// Alarm: Truck Stopped!
     /// </summary>
     public partial class TruckStoppedAlarmType
     {
@@ -851,7 +851,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         partial void OnVehicleGPSChanging(global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType value);
         partial void OnVehicleGPSChanged();
         /// <summary>
-        /// There are no comments for SetACState in the schema.
+        /// Set the AC state
         /// </summary>
         public virtual global::Microsoft.OData.Client.DataServiceActionQuery SetACState(global::System.Nullable<bool> state)
         {
@@ -864,7 +864,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
             return new global::Microsoft.OData.Client.DataServiceActionQuery(this.Context, resource.EditLink.OriginalString.Trim('/') + "/Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.SetACState", new global::Microsoft.OData.Client.BodyOperationParameter("state", state));
         }
         /// <summary>
-        /// There are no comments for TurnOffAC in the schema.
+        /// Turn off AC
         /// </summary>
         public virtual global::Microsoft.OData.Client.DataServiceActionQuery TurnOffAC()
         {
@@ -1027,7 +1027,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
             return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle(_source.Context, query.GetPath(null));
         }
         /// <summary>
-        /// There are no comments for SetACState in the schema.
+        /// Set the AC state
         /// </summary>
         public static global::Microsoft.OData.Client.DataServiceActionQuery SetACState(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType> _source, global::System.Nullable<bool> state)
         {
@@ -1039,7 +1039,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
             return new global::Microsoft.OData.Client.DataServiceActionQuery(_source.Context, _source.AppendRequestUri("Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.SetACState"), new global::Microsoft.OData.Client.BodyOperationParameter("state", state));
         }
         /// <summary>
-        /// There are no comments for TurnOffAC in the schema.
+        /// Turn off AC
         /// </summary>
         public static global::Microsoft.OData.Client.DataServiceActionQuery TurnOffAC(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType> _source)
         {
@@ -1609,7 +1609,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
             return this.Context.CreateFunctionQuerySingle<double>(string.Join("/", global::System.Linq.Enumerable.Select(global::System.Linq.Enumerable.Skip(requestUri.Segments, this.Context.BaseUri.Segments.Length), s => s.Trim('/'))), "Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.GetVehicleSpeed", false);
         }
         /// <summary>
-        /// There are no comments for ResetVehicleSpeed in the schema.
+        /// Reset VehicleSpeed to Zero
         /// </summary>
         public virtual global::Microsoft.OData.Client.DataServiceActionQuery ResetVehicleSpeed(global::System.Nullable<double> targetValue)
         {
@@ -1663,7 +1663,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
             return _source.CreateFunctionQuerySingle<double>("Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.GetVehicleSpeed", false);
         }
         /// <summary>
-        /// There are no comments for ResetVehicleSpeed in the schema.
+        /// Reset VehicleSpeed to Zero
         /// </summary>
         public static global::Microsoft.OData.Client.DataServiceActionQuery ResetVehicleSpeed(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType> _source, global::System.Nullable<double> targetValue)
         {

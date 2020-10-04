@@ -431,10 +431,9 @@ namespace ODataConnectedService.Tests
                 this.CalledActions.Add("WriteNamespaceStart(" + fullNamespace + ")");
             }
 
-            internal override void WriteClassStartForEntityContainer(string originalContainerName, string containerName, string fixedContainerName)
+            internal override void WriteClassStartForEntityContainer(string originalContainerName, string containerName, string fixedContainerName, string description)
             {
-
-                this.CalledActions.Add("WriteClassStartForEntityContainer(" + originalContainerName + ", " + containerName + ", " + fixedContainerName + ")");
+                this.CalledActions.Add("WriteClassStartForEntityContainer(" + originalContainerName + ", " + containerName + ", " + fixedContainerName + ", " + description + ")");
             }
 
             internal override void WriteMethodStartForEntityContainerConstructor(string containerName, string fixedContainerName)
@@ -497,14 +496,14 @@ namespace ODataConnectedService.Tests
                 this.CalledActions.Add("WriteMethodEndForResolveNameFromType(" + modelHasInheritance + ")");
             }
 
-            internal override void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, bool inContext = true)
+            internal override void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, string description, bool inContext = true)
             {
-                this.CalledActions.Add("WriteContextEntitySetProperty(" + entitySetName + ", " + entitySetFixedName + ", " + originalEntitySetName + ", " + entitySetElementTypeName + ", " + inContext + ")");
+                this.CalledActions.Add("WriteContextEntitySetProperty(" + entitySetName + ", " + entitySetFixedName + ", " + originalEntitySetName + ", " + entitySetElementTypeName + ", " + description + ", " + inContext + ")");
             }
 
-            internal override void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, bool inContext = true)
+            internal override void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, string description, bool inContext = true)
             {
-                this.CalledActions.Add("WriteContextsSingletonProperty(" + singletonName + ", " + singletonFixedName + ", " + originalSingletonName + ", " + singletonElementTypeName + ", " + inContext + ")");
+                this.CalledActions.Add("WriteContextsSingletonProperty(" + singletonName + ", " + singletonFixedName + ", " + originalSingletonName + ", " + singletonElementTypeName + ", " + description + ", " + inContext + ")");
             }
 
             internal override void WriteContextAddToEntitySetMethod(string entitySetName, string originalEntitySetName, string typeName, string parameterName)
@@ -522,9 +521,9 @@ namespace ODataConnectedService.Tests
                 this.CalledActions.Add("WriteClassEndForEntityContainer()");
             }
 
-            internal override void WriteSummaryCommentForStructuredType(string typeName)
+            internal override void WriteSummaryCommentForStructuredType(string typeName, string description)
             {
-                this.CalledActions.Add("WriteSummaryCommentForStructuredType(" + typeName + ")");
+                this.CalledActions.Add("WriteSummaryCommentForStructuredType(" + typeName + ", " + description + ")");
             }
 
             internal override void WriteKeyPropertiesCommentAndAttribute(IEnumerable<string> keyProperties, string keyString)
@@ -592,7 +591,7 @@ namespace ODataConnectedService.Tests
                 this.CalledActions.Add("WriteMethodEndForStaticCreateMethod(" + instanceName + ")");
             }
 
-            internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, bool writeOnPropertyChanged)
+            internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged)
             {
                 this.CalledActions.Add("WritePropertyForStructuredType(" + propertyType + ", " + originalPropertyName + ", " + propertyName + ", " + fixedPropertyName + ", " + privatePropertyName + ", " + propertyInitializationValue + ", " + propertyAttribute + ", " + writeOnPropertyChanged + ")");
             }
@@ -617,9 +616,9 @@ namespace ODataConnectedService.Tests
                 this.CalledActions.Add("WriteEnumFlags()");
             }
 
-            internal override void WriteSummaryCommentForEnumType(string enumName)
+            internal override void WriteSummaryCommentForEnumType(string enumName, string description)
             {
-                this.CalledActions.Add("WriteSummaryCommentForEnumType(" + enumName + ")");
+                this.CalledActions.Add("WriteSummaryCommentForEnumType(" + enumName + ", " + description + ")");
             }
 
             internal override void WriteEnumDeclaration(string enumName, string originalEnumName, string underlyingType)
@@ -642,33 +641,33 @@ namespace ODataConnectedService.Tests
                 this.CalledActions.Add("WritePropertyRootNamespace(" + containerName + ", " + fullNamespace + ")");
             }
 
-            internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference)
+            internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description)
             {
-                this.CalledActions.Add("WriteFunctionImportReturnCollectionResult(" + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + parameters + ", " + parameterValues + ", " + isComposable + ", " + useEntityReference + ")");
+                this.CalledActions.Add("WriteFunctionImportReturnCollectionResult(" + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + parameters + ", " + parameterValues + ", " + isComposable + ", " + useEntityReference + ", " + description + ")");
             }
 
-            internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference)
+            internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description)
             {
-                this.CalledActions.Add("WriteFunctionImportReturnSingleResult(" + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + returnTypeNameWithSingleSuffix + ", " + parameters + ", " + parameterValues + ", " + isComposable + ", " + useEntityReference + ")");
+                this.CalledActions.Add("WriteFunctionImportReturnSingleResult(" + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + returnTypeNameWithSingleSuffix + ", " + parameters + ", " + parameterValues + ", " + isComposable + ", " + useEntityReference + ", " + description + ")");
             }
-            internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference)
+            internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description)
             {
-                this.CalledActions.Add("WriteBoundFunctionInEntityTypeReturnCollectionResult(" + hideBaseMethod + ", " + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + isComposable + ", " + useEntityReference + ")");
-            }
-
-            internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference)
-            {
-                this.CalledActions.Add("WriteBoundFunctionInEntityTypeReturnSingleResult(" + hideBaseMethod + ", " + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + returnTypeNameWithSingleSuffix + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + isComposable + ", " + isReturnEntity + ", " + useEntityReference + ")");
+                this.CalledActions.Add("WriteBoundFunctionInEntityTypeReturnCollectionResult(" + hideBaseMethod + ", " + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + isComposable + ", " + useEntityReference + ", " + description + ")");
             }
 
-            internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues)
+            internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description)
             {
-                this.CalledActions.Add("WriteActionImport(" + actionName + ", " + originalActionName + ", " + returnTypeName + ", " + parameters + ", " + parameterValues + ")");
+                this.CalledActions.Add("WriteBoundFunctionInEntityTypeReturnSingleResult(" + hideBaseMethod + ", " + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + returnTypeNameWithSingleSuffix + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + isComposable + ", " + isReturnEntity + ", " + useEntityReference + ", " + description + ")");
             }
 
-            internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues)
+            internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description)
             {
-                this.CalledActions.Add("WriteBoundActionInEntityType(" + hideBaseMethod + ", " + actionName + ", " + originalActionName + ", " + returnTypeName + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ")");
+                this.CalledActions.Add("WriteActionImport(" + actionName + ", " + originalActionName + ", " + returnTypeName + ", " + parameters + ", " + parameterValues + ", " + description + ")");
+            }
+
+            internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description)
+            {
+                this.CalledActions.Add("WriteBoundActionInEntityType(" + hideBaseMethod + ", " + actionName + ", " + originalActionName + ", " + returnTypeName + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + description + ")");
             }
 
             internal override void WriteConstructorForSingleType(string singleTypeName, string baseTypeName)
@@ -698,21 +697,26 @@ namespace ODataConnectedService.Tests
 
             internal override void WriteBoundFunctionReturnSingleResultAsExtension(string functionName, string originalFunctionName,
                 string boundTypeName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues,
-                bool isComposable, bool isReturnEntity, bool useEntityReference)
+                bool isComposable, bool isReturnEntity, bool useEntityReference, string description)
             {
-                this.CalledActions.Add("WriteBoundFunctionInSingleTypeReturnCollectionResult(" + functionName + ", " + originalFunctionName + ", " + boundTypeName + ", " + returnTypeName + ", " + returnTypeNameWithSingleSuffix + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + isComposable + ", " + isReturnEntity + ", " + useEntityReference + ")");
+                this.CalledActions.Add("WriteBoundFunctionInSingleTypeReturnSingleResult(" + functionName + ", " + originalFunctionName + ", " + boundTypeName + ", " + returnTypeName + ", " + returnTypeNameWithSingleSuffix + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + isComposable + ", " + isReturnEntity + ", " + useEntityReference + ", " + description + ")");
             }
 
             internal override void WriteBoundFunctionReturnCollectionResultAsExtension(string functionName, string originalFunctionName,
                 string boundTypeName, string returnTypeName, string parameters, string fullNamespace, string parameterValues,
-                bool isComposable, bool useEntityReference)
+                bool isComposable, bool useEntityReference, string description)
             {
-                this.CalledActions.Add("WriteBoundFunctionInSingleTypeReturnCollectionResult(" + functionName + ", " + originalFunctionName + ", " + boundTypeName + ", " + returnTypeName + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + isComposable + ", " + useEntityReference + ")");
+                this.CalledActions.Add("WriteBoundFunctionInSingleTypeReturnCollectionResult(" + functionName + ", " + originalFunctionName + ", " + boundTypeName + ", " + returnTypeName + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + isComposable + ", " + useEntityReference + ", " + description + ")");
             }
 
-            internal override void WriteBoundActionAsExtension(string actionName, string originalActionName, string boundTypeName, string returnTypeName, string parameters, string fullNamespace, string parameterValues)
+            internal override void WriteBoundActionAsExtension(string actionName, string originalActionName, string boundTypeName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description)
             {
-                this.CalledActions.Add("WriteBoundActionAsExtension(" + actionName + ", " + originalActionName + ", " + boundTypeName + ", " + returnTypeName + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ")");
+                this.CalledActions.Add("WriteBoundActionAsExtension(" + actionName + ", " + originalActionName + ", " + boundTypeName + ", " + returnTypeName + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + description + ")");
+            }
+
+            protected override void WriteDescriptionSummary(string description)
+            {
+                // this method is called internally by other language specific write methods
             }
         }
 
@@ -902,7 +906,7 @@ namespace ODataConnectedService.Tests
             var expectedActions = new List<string>
             {
                 "WriteNamespaceStart(Namespace1)",
-                "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer)",
+                "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer, )",
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
                 "WriteClassEndForEntityContainerConstructor()",
                 "WriteGeneratedEdmModel(<edmx:Edmx Version=\"\"4.0\"\" xmlns:edmx=\"\"http://docs.oasis-open.org/odata/ns/edmx\"\">\r\n  <edmx:DataServices>\r\n    <Schema Namespace=\"\"Namespace1\"\" xmlns=\"\"http://docs.oasis-open.org/odata/ns/edm\"\">\r\n      <EntityContainer Name=\"\"EntityContainer\"\" />\r\n    </Schema>\r\n  </edmx:DataServices>\r\n</edmx:Edmx>)",
@@ -923,7 +927,7 @@ namespace ODataConnectedService.Tests
             var expectedActions = new List<string>
             {
                 "WriteNamespaceStart(Namespace1)",
-                "WriteSummaryCommentForStructuredType(ComplexType)",
+                "WriteSummaryCommentForStructuredType(ComplexType, )",
                 "WriteClassStartForStructuredType(, ComplexType, ComplexType, )",
                 "WriteClassEndForStructuredType()",
                 "WriteNamespaceEnd()"
@@ -942,7 +946,7 @@ namespace ODataConnectedService.Tests
             var expectedActions = new List<string>
             {
                 "WriteNamespaceStart(Namespace1)",
-                "WriteSummaryCommentForEnumType(EnumType)",
+                "WriteSummaryCommentForEnumType(EnumType, )",
                 "WriteEnumDeclaration(EnumType, EnumType, )",
                 "WriteEnumEnd()",
                 "WriteNamespaceEnd()"
@@ -961,11 +965,11 @@ namespace ODataConnectedService.Tests
             var expectedActions = new List<string>
             {
                 "WriteNamespaceStart(Namespace1)",
-                "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
+                "WriteSummaryCommentForStructuredType(EntityTypeSingle, )",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(EntityTypeSingle, DataServiceQuerySingle)",
                 "WriteClassEndForStructuredType()",
-                "WriteSummaryCommentForStructuredType(EntityType)",
+                "WriteSummaryCommentForStructuredType(EntityType, )",
                 "WriteEntityTypeAttribute()",
                 "WriteClassStartForStructuredType(AbstractModifier, EntityType, EntityType, global::Microsoft.OData.Client.BaseEntityType)",
                 "WriteClassEndForStructuredType()",
@@ -987,23 +991,23 @@ namespace ODataConnectedService.Tests
             var expectedActions = new List<string>
             {
                 "WriteNamespaceStart(Namespace1)",
-                "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer)",
+                "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer, )",
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
                 "WriteClassEndForEntityContainerConstructor()",
                 "WriteGeneratedEdmModel(<edmx:Edmx Version=\"\"4.0\"\" xmlns:edmx=\"\"http://docs.oasis-open.org/odata/ns/edmx\"\">\r\n  <edmx:DataServices>\r\n    <Schema Namespace=\"\"Namespace1\"\" xmlns=\"\"http://docs.oasis-open.org/odata/ns/edm\"\">\r\n      <ComplexType Name=\"\"ComplexType\"\" />\r\n      <EnumType Name=\"\"EnumType\"\" />\r\n      <EntityType Name=\"\"EntityType\"\" Abstract=\"\"true\"\" />\r\n      <EntityContainer Name=\"\"EntityContainer\"\" />\r\n    </Schema>\r\n  </edmx:DataServices>\r\n</edmx:Edmx>)",
                 "WriteClassEndForEntityContainer()",
-                "WriteSummaryCommentForStructuredType(ComplexType)",
+                "WriteSummaryCommentForStructuredType(ComplexType, )",
                 "WriteClassStartForStructuredType(, ComplexType, ComplexType, )",
                 "WriteClassEndForStructuredType()",
-                "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
+                "WriteSummaryCommentForStructuredType(EntityTypeSingle, )",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(EntityTypeSingle, DataServiceQuerySingle)",
                 "WriteClassEndForStructuredType()",
-                "WriteSummaryCommentForStructuredType(EntityType)",
+                "WriteSummaryCommentForStructuredType(EntityType, )",
                 "WriteEntityTypeAttribute()",
                 "WriteClassStartForStructuredType(AbstractModifier, EntityType, EntityType, global::Microsoft.OData.Client.BaseEntityType)",
                 "WriteClassEndForStructuredType()",
-                "WriteSummaryCommentForEnumType(EnumType)",
+                "WriteSummaryCommentForEnumType(EnumType, )",
                 "WriteEnumDeclaration(EnumType, EnumType, )",
                 "WriteEnumEnd()",
                 "WriteExtensionMethodsStart()",
@@ -1044,10 +1048,10 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer)",
+                "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer, )",
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
                 "WriteClassEndForEntityContainerConstructor()",
-                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, True)",
+                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, , True)",
                 "WriteContextAddToEntitySetMethod(Set1, Set1, EntityType, entityType)",
                 "WriteGeneratedEdmModel(<edmx:Edmx Version=\"\"4.0\"\" xmlns:edmx=\"\"http://docs.oasis-open.org/odata/ns/edmx\"\">\r\n  <edmx:DataServices>\r\n    <Schema Namespace=\"\"Namespace1\"\" xmlns=\"\"http://docs.oasis-open.org/odata/ns/edm\"\">\r\n      <EntityType Name=\"\"EntityType\"\" />\r\n      <EntityContainer Name=\"\"EntityContainer\"\">\r\n        <EntitySet Name=\"\"Set1\"\" EntityType=\"\"Namespace1.EntityType\"\" />\r\n      </EntityContainer>\r\n    </Schema>\r\n  </edmx:DataServices>\r\n</edmx:Edmx>)",
                 "WriteClassEndForEntityContainer()"
@@ -1066,11 +1070,11 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer)",
+                "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer, )",
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
                 "WriteClassEndForEntityContainerConstructor()",
-                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, True)",
-                "WriteContextEntitySetProperty(Set2, Set2, Set2, global::Namespace2.EntityType, True)",
+                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, , True)",
+                "WriteContextEntitySetProperty(Set2, Set2, Set2, global::Namespace2.EntityType, , True)",
                 "WriteContextAddToEntitySetMethod(Set1, Set1, EntityType, entityType)",
                 "WriteContextAddToEntitySetMethod(Set2, Set2, global::Namespace2.EntityType, entityType)",
                 "WriteGeneratedEdmModel(<edmx:Edmx Version=\"\"4.0\"\" xmlns:edmx=\"\"http://docs.oasis-open.org/odata/ns/edmx\"\">\r\n  <edmx:DataServices>\r\n    <Schema Namespace=\"\"Namespace1\"\" xmlns=\"\"http://docs.oasis-open.org/odata/ns/edm\"\">\r\n      <EntityType Name=\"\"EntityType\"\" />\r\n      <EntityContainer Name=\"\"EntityContainer\"\">\r\n        <EntitySet Name=\"\"Set1\"\" EntityType=\"\"Namespace1.EntityType\"\" />\r\n        <EntitySet Name=\"\"Set2\"\" EntityType=\"\"Namespace2.EntityType\"\" />\r\n      </EntityContainer>\r\n    </Schema>\r\n    <Schema Namespace=\"\"Namespace2\"\" xmlns=\"\"http://docs.oasis-open.org/odata/ns/edm\"\">\r\n      <EntityType Name=\"\"EntityType\"\" />\r\n    </Schema>\r\n  </edmx:DataServices>\r\n</edmx:Edmx>)",
@@ -1090,7 +1094,7 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer)",
+                "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer, )",
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
                 "WriteInitializeResolveName()",
                 "WriteInitializeResolveType()",
@@ -1102,7 +1106,7 @@ namespace ODataConnectedService.Tests
                 "WriteMethodStartForResolveNameFromType(EntityContainer, Namespace1)",
                 "WriteResolveType(Namespace1, Foo)",
                 "WriteMethodEndForResolveNameFromType(False)",
-                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, True)",
+                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, , True)",
                 "WriteContextAddToEntitySetMethod(Set1, Set1, EntityType, entityType)",
                 "WriteGeneratedEdmModel(<edmx:Edmx Version=\"\"4.0\"\" xmlns:edmx=\"\"http://docs.oasis-open.org/odata/ns/edmx\"\">\r\n  <edmx:DataServices>\r\n    <Schema Namespace=\"\"Namespace1\"\" xmlns=\"\"http://docs.oasis-open.org/odata/ns/edm\"\">\r\n      <EntityType Name=\"\"EntityType\"\" />\r\n      <EntityContainer Name=\"\"EntityContainer\"\">\r\n        <EntitySet Name=\"\"Set1\"\" EntityType=\"\"Namespace1.EntityType\"\" />\r\n      </EntityContainer>\r\n    </Schema>\r\n  </edmx:DataServices>\r\n</edmx:Edmx>)",
                 "WriteClassEndForEntityContainer()"
@@ -1121,7 +1125,7 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer)",
+                "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer, )",
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
                 "WriteInitializeResolveName()",
                 "WriteInitializeResolveType()",
@@ -1135,8 +1139,8 @@ namespace ODataConnectedService.Tests
                 "WriteResolveType(Namespace1, Foo.Namespace1)",
                 "WriteResolveType(Namespace2, Foo.Namespace2)",
                 "WriteMethodEndForResolveNameFromType(False)",
-                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, True)",
-                "WriteContextEntitySetProperty(Set2, Set2, Set2, global::Foo.Namespace2.EntityType, True)",
+                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, , True)",
+                "WriteContextEntitySetProperty(Set2, Set2, Set2, global::Foo.Namespace2.EntityType, , True)",
                 "WriteContextAddToEntitySetMethod(Set1, Set1, EntityType, entityType)",
                 "WriteContextAddToEntitySetMethod(Set2, Set2, global::Foo.Namespace2.EntityType, entityType)",
                 "WriteGeneratedEdmModel(<edmx:Edmx Version=\"\"4.0\"\" xmlns:edmx=\"\"http://docs.oasis-open.org/odata/ns/edmx\"\">\r\n  <edmx:DataServices>\r\n    <Schema Namespace=\"\"Namespace1\"\" xmlns=\"\"http://docs.oasis-open.org/odata/ns/edm\"\">\r\n      <EntityType Name=\"\"EntityType\"\" />\r\n      <EntityContainer Name=\"\"EntityContainer\"\">\r\n        <EntitySet Name=\"\"Set1\"\" EntityType=\"\"Namespace1.EntityType\"\" />\r\n        <EntitySet Name=\"\"Set2\"\" EntityType=\"\"Namespace2.EntityType\"\" />\r\n      </EntityContainer>\r\n    </Schema>\r\n    <Schema Namespace=\"\"Namespace2\"\" xmlns=\"\"http://docs.oasis-open.org/odata/ns/edm\"\">\r\n      <EntityType Name=\"\"EntityType\"\" />\r\n    </Schema>\r\n  </edmx:DataServices>\r\n</edmx:Edmx>)",
@@ -1442,11 +1446,11 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
+                "WriteSummaryCommentForStructuredType(EntityTypeSingle, )",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(EntityTypeSingle, DataServiceQuerySingle)",
                 "WriteClassEndForStructuredType()",
-                "WriteSummaryCommentForStructuredType(EntityType)",
+                "WriteSummaryCommentForStructuredType(EntityType, )",
                 "WriteEntityTypeAttribute()",
                 "WriteClassStartForStructuredType(AbstractModifier, EntityType, EntityType, global::Microsoft.OData.Client.BaseEntityType)",
                 "WriteClassEndForStructuredType()"
@@ -1465,11 +1469,11 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
+                "WriteSummaryCommentForStructuredType(EntityTypeSingle, )",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(EntityTypeSingle, DataServiceQuerySingle)",
                 "WriteClassEndForStructuredType()",
-                "WriteSummaryCommentForStructuredType(EntityType)",
+                "WriteSummaryCommentForStructuredType(EntityType, )",
                 "WriteEntityTypeAttribute()",
                 "WriteClassStartForStructuredType(AbstractModifier, EntityType, EntityType, global::Microsoft.OData.Client.BaseEntityType, NotifyPropertyChanged)",
                 "WriteINotifyPropertyChangedImplementation()",
@@ -1502,11 +1506,11 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
+                "WriteSummaryCommentForStructuredType(EntityTypeSingle, )",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(EntityTypeSingle, DataServiceQuerySingle)",
                 "WriteClassEndForStructuredType()",
-                "WriteSummaryCommentForStructuredType(EntityType)",
+                "WriteSummaryCommentForStructuredType(EntityType, )",
                 "WriteEntityTypeAttribute()",
                 "WriteEntitySetAttribute(Set1)",
                 "WriteClassStartForStructuredType(, EntityType, EntityType, global::Microsoft.OData.Client.BaseEntityType, NotifyPropertyChanged)",
@@ -1528,11 +1532,11 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
+                "WriteSummaryCommentForStructuredType(EntityTypeSingle, )",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(EntityTypeSingle, DataServiceQuerySingle)",
                 "WriteClassEndForStructuredType()",
-                "WriteSummaryCommentForStructuredType(EntityType)",
+                "WriteSummaryCommentForStructuredType(EntityType, )",
                 "WriteEntityTypeAttribute()",
                 "WriteEntityHasStreamAttribute()",
                 "WriteClassStartForStructuredType(, EntityType, EntityType, global::Microsoft.OData.Client.BaseEntityType)",
@@ -1552,11 +1556,11 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
+                "WriteSummaryCommentForStructuredType(EntityTypeSingle, )",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(EntityTypeSingle, DataServiceQuerySingle)",
                 "WriteClassEndForStructuredType()",
-                "WriteSummaryCommentForStructuredType(EntityType)",
+                "WriteSummaryCommentForStructuredType(EntityType, )",
                 "WriteEntityTypeAttribute()",
                 "WriteClassStartForStructuredType(, EntityType, EntityType, ClassInheritBaseEntityType)",
                 "WriteClassEndForStructuredType()"
@@ -1575,11 +1579,11 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForStructuredType(EntityTypeSingle)",
+                "WriteSummaryCommentForStructuredType(EntityTypeSingle, )",
                 "WriteClassStartForStructuredType(, EntityTypeSingle, EntityTypeSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(EntityTypeSingle, DataServiceQuerySingle)",
                 "WriteClassEndForStructuredType()",
-                "WriteSummaryCommentForStructuredType(EntityType)",
+                "WriteSummaryCommentForStructuredType(EntityType, )",
                 "WriteKeyPropertiesCommentAndAttribute(Id)",
                 "WriteClassStartForStructuredType(, EntityType, EntityType, global::Microsoft.OData.Client.BaseEntityType)",
                 "WriteSummaryCommentForStaticCreateMethod(EntityType)",
@@ -1619,11 +1623,11 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForStructuredType(CustomerSingle)",
+                "WriteSummaryCommentForStructuredType(CustomerSingle, )",
                 "WriteClassStartForStructuredType(, CustomerSingle, CustomerSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(CustomerSingle, DataServiceQuerySingle)",
                 "WriteClassEndForStructuredType()",
-                "WriteSummaryCommentForStructuredType(Customer)",
+                "WriteSummaryCommentForStructuredType(Customer, )",
                 "WriteKeyPropertiesCommentAndAttribute(PersonId)",
                 "WriteClassStartForStructuredType(, Customer, Customer, global::Microsoft.OData.Client.BaseEntityType, NotifyPropertyChanged)",
                 "WriteSummaryCommentForStaticCreateMethod(Customer)",
@@ -1665,11 +1669,11 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForStructuredType(CustomerSingle)",
+                "WriteSummaryCommentForStructuredType(CustomerSingle, )",
                 "WriteClassStartForStructuredType(, CustomerSingle, CustomerSingle, ClassInheritDataServiceQuerySingle)",
                 "WriteConstructorForSingleType(CustomerSingle, DataServiceQuerySingle)",
                 "WriteClassEndForStructuredType()",
-                "WriteSummaryCommentForStructuredType(Customer)",
+                "WriteSummaryCommentForStructuredType(Customer, )",
                 "WriteKeyPropertiesCommentAndAttribute(PersonId)",
                 "WriteEntitySetAttribute(CustomerSet1)",
                 "WriteClassStartForStructuredType(, Customer, Customer, global::Microsoft.OData.Client.BaseEntityType, NotifyPropertyChanged)",
@@ -1712,7 +1716,7 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForStructuredType(ComplexType)",
+                "WriteSummaryCommentForStructuredType(ComplexType, )",
                 "WriteClassStartForStructuredType(, ComplexType, ComplexType, )",
                 "WriteClassEndForStructuredType()"
             };
@@ -1733,7 +1737,7 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForStructuredType(ComplexType)",
+                "WriteSummaryCommentForStructuredType(ComplexType, )",
                 "WriteClassStartForStructuredType(, ComplexType, ComplexType, ClassInheritNotifyPropertyChanged)",
                 "WriteINotifyPropertyChangedImplementation()",
                 "WriteClassEndForStructuredType()"
@@ -1756,7 +1760,7 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForStructuredType(ComplexType)",
+                "WriteSummaryCommentForStructuredType(ComplexType, )",
                 "WriteClassStartForStructuredType(, ComplexType, ComplexType, ClassInheritBaseComplexType)",
                 "WriteClassEndForStructuredType()"
             };
@@ -1774,7 +1778,7 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForStructuredType(ComplexType)",
+                "WriteSummaryCommentForStructuredType(ComplexType, )",
                 "WriteClassStartForStructuredType(, ComplexType, ComplexType, )",
                 "WriteSummaryCommentForStaticCreateMethod(ComplexType)",
                 "WriteParameterCommentForStaticCreateMethod(value, Value)",
@@ -1842,7 +1846,7 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForEnumType(EnumType)",
+                "WriteSummaryCommentForEnumType(EnumType, )",
                 "WriteEnumDeclaration(EnumType, EnumType, )",
                 "WriteEnumEnd()"
             };
@@ -1860,7 +1864,7 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForEnumType(EnumType)",
+                "WriteSummaryCommentForEnumType(EnumType, )",
                 "WriteEnumFlags()",
                 "WriteEnumDeclaration(EnumType, EnumType, )",
                 "WriteEnumEnd()"
@@ -1879,7 +1883,7 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForEnumType(EnumType)",
+                "WriteSummaryCommentForEnumType(EnumType, )",
                 "WriteEnumDeclaration(EnumType, EnumType, )",
                 "WriteEnumEnd()"
             };
@@ -1897,7 +1901,7 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForEnumType(EnumType)",
+                "WriteSummaryCommentForEnumType(EnumType, )",
                 "WriteEnumDeclaration(EnumType, EnumType,  : String)",
                 "WriteEnumEnd()"
             };
@@ -1915,7 +1919,7 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WriteSummaryCommentForEnumType(ContentType)",
+                "WriteSummaryCommentForEnumType(ContentType, )",
                 "WriteEnumFlags()",
                 "WriteEnumDeclaration(ContentType, ContentType, )",
                 "WriteMemberForEnumType(Liquid = 0, Liquid, True)",

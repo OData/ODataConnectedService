@@ -44,7 +44,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
             Return clientType.FullName.Substring(ROOTNAMESPACE.Length)
         End Function
         '''<summary>
-        '''There are no comments for Trucks in the schema.
+        '''Our Trucks
         '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Trucks() As Global.Microsoft.OData.Client.DataServiceQuery(Of TruckType)
@@ -411,7 +411,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         End Sub
     End Class
     '''<summary>
-    '''There are no comments for TruckStoppedAlarmType in the schema.
+    '''Alarm: Truck Stopped!
     '''</summary>
     Partial Public Class TruckStoppedAlarmType
         '''<summary>
@@ -801,7 +801,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         Partial Private Sub OnVehicleGPSChanged()
         End Sub
         ''' <summary>
-        ''' There are no comments for SetACState in the schema.
+        ''' Set the AC state
         ''' </summary>
         Public Overridable Function SetACState(state As Global.System.Nullable(Of Boolean)) As Global.Microsoft.OData.Client.DataServiceActionQuery
             Dim resource As Global.Microsoft.OData.Client.EntityDescriptor = Context.EntityTracker.TryGetEntityDescriptor(Me)
@@ -812,7 +812,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
             Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Me.Context, resource.EditLink.OriginalString.Trim("/"C) + "/Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.SetACState", New Global.Microsoft.OData.Client.BodyOperationParameter("state", state))
         End Function
         ''' <summary>
-        ''' There are no comments for TurnOffAC in the schema.
+        ''' Turn off AC
         ''' </summary>
         Public Overridable Function TurnOffAC() As Global.Microsoft.OData.Client.DataServiceActionQuery
             Dim resource As Global.Microsoft.OData.Client.EntityDescriptor = Context.EntityTracker.TryGetEntityDescriptor(Me)
@@ -972,7 +972,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
             Return New Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
-        ''' There are no comments for SetACState in the schema.
+        ''' Set the AC state
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
         Public Function SetACState(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType), state As Global.System.Nullable(Of Boolean)) As Global.Microsoft.OData.Client.DataServiceActionQuery
@@ -982,7 +982,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
             Return New Global.Microsoft.OData.Client.DataServiceActionQuery(_source.Context, _source.AppendRequestUri("Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.SetACState"), New Global.Microsoft.OData.Client.BodyOperationParameter("state", state))
         End Function
         ''' <summary>
-        ''' There are no comments for TurnOffAC in the schema.
+        ''' Turn off AC
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
         Public Function TurnOffAC(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType)) As Global.Microsoft.OData.Client.DataServiceActionQuery
@@ -1519,7 +1519,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
             Return Me.Context.CreateFunctionQuerySingle(Of Double)(String.Join("/", Global.System.Linq.Enumerable.Select(Global.System.Linq.Enumerable.Skip(requestUri.Segments, Me.Context.BaseUri.Segments.Length), Function(s) s.Trim("/"C))), "/Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.GetVehicleSpeed", False)
         End Function
         ''' <summary>
-        ''' There are no comments for ResetVehicleSpeed in the schema.
+        ''' Reset VehicleSpeed to Zero
         ''' </summary>
         Public Overridable Function ResetVehicleSpeed(targetValue As Global.System.Nullable(Of Double)) As Global.Microsoft.OData.Client.DataServiceActionQuery
             Dim resource As Global.Microsoft.OData.Client.EntityDescriptor = Context.EntityTracker.TryGetEntityDescriptor(Me)
@@ -1569,7 +1569,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
             Return _source.CreateFunctionQuerySingle(Of Double)("Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.GetVehicleSpeed", False)
         End Function
         ''' <summary>
-        ''' There are no comments for ResetVehicleSpeed in the schema.
+        ''' Reset VehicleSpeed to Zero
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
         Public Function ResetVehicleSpeed(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType), targetValue As Global.System.Nullable(Of Double)) As Global.Microsoft.OData.Client.DataServiceActionQuery
