@@ -1473,7 +1473,7 @@ public abstract class ODataClientTemplate : TemplateBase
     #region Language specific write methods.
     internal abstract void WriteFileHeader();
     internal abstract void WriteNamespaceStart(string fullNamespace);
-    internal abstract void WriteClassStartForEntityContainer(string originalContainerName, string containerName, string fixedContainerName);
+    internal abstract void WriteClassStartForEntityContainer(string originalContainerName, string containerName, string fixedContainerName, string description);
     internal abstract void WriteMethodStartForEntityContainerConstructor(string containerName, string fixedContainerName);
     internal abstract void WriteKeyAsSegmentUrlConvention();
     internal abstract void WriteInitializeResolveName();
@@ -1485,12 +1485,12 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteMethodStartForResolveNameFromType(string containerName, string fullNamespace);
     internal abstract void WriteResolveType(string fullNamespace, string languageDependentNamespace);
     internal abstract void WriteMethodEndForResolveNameFromType(bool modelHasInheritance);
-    internal abstract void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, bool inContext = true);
-    internal abstract void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, bool inContext = true);
+    internal abstract void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, string description, bool inContext = true);
+    internal abstract void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, string description, bool inContext = true);
     internal abstract void WriteContextAddToEntitySetMethod(string entitySetName, string originalEntitySetName, string typeName, string parameterName);
     internal abstract void WriteGeneratedEdmModel(string escapedEdmxString);
     internal abstract void WriteClassEndForEntityContainer();
-    internal abstract void WriteSummaryCommentForStructuredType(string typeName);
+    internal abstract void WriteSummaryCommentForStructuredType(string typeName, string description);
     internal abstract void WriteKeyPropertiesCommentAndAttribute(IEnumerable<string> keyProperties, string keyString);
     internal abstract void WriteEntityTypeAttribute();
     internal abstract void WriteEntitySetAttribute(string entitySetName);
@@ -1504,30 +1504,31 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteParameterNullCheckForStaticCreateMethod(string parameterName);
     internal abstract void WritePropertyValueAssignmentForStaticCreateMethod(string instanceName, string propertyName, string parameterName);
     internal abstract void WriteMethodEndForStaticCreateMethod(string instanceName);
-    internal abstract void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, bool writeOnPropertyChanged);
+    internal abstract void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged);
     internal abstract void WriteINotifyPropertyChangedImplementation();
     internal abstract void WriteClassEndForStructuredType();
     internal abstract void WriteNamespaceEnd();
     internal abstract void WriteEnumFlags();
-    internal abstract void WriteSummaryCommentForEnumType(string enumName);
+    internal abstract void WriteSummaryCommentForEnumType(string enumName, string description);
     internal abstract void WriteEnumDeclaration(string enumName, string originalEnumName, string underlyingType);
     internal abstract void WriteMemberForEnumType(string member, string originalMemberName, bool last);
     internal abstract void WriteEnumEnd();
     internal abstract void WritePropertyRootNamespace(string containerName, string fullNamespace);
-    internal abstract void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference);
-    internal abstract void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference);
-    internal abstract void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference);
-    internal abstract void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference);
-    internal abstract void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues);
-    internal abstract void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues);
+    internal abstract void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description);
+    internal abstract void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description);
+    internal abstract void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description);
+    internal abstract void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description);
+    internal abstract void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description);
+    internal abstract void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description);
     internal abstract void WriteConstructorForSingleType(string singleTypeName, string baseTypeName);
     internal abstract void WriteExtensionMethodsStart();
     internal abstract void WriteExtensionMethodsEnd();
     internal abstract void WriteByKeyMethods(string entityTypeName, string returnTypeName, IEnumerable<string> keys, string keyParameters, string keyDictionaryItems);
     internal abstract void WriteCastToMethods(string baseTypeName, string derivedTypeName, string derivedTypeFullName, string returnTypeName);
-    internal abstract void WriteBoundFunctionReturnSingleResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference);
-    internal abstract void WriteBoundFunctionReturnCollectionResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference);
-    internal abstract void WriteBoundActionAsExtension(string actionName, string originalActionName, string boundSourceType, string returnTypeName, string parameters, string fullNamespace, string parameterValues);
+    internal abstract void WriteBoundFunctionReturnSingleResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description);
+    internal abstract void WriteBoundFunctionReturnCollectionResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description);
+    internal abstract void WriteBoundActionAsExtension(string actionName, string originalActionName, string boundSourceType, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description);
+    protected abstract void WriteDescriptionSummary(string description);
     #endregion Language specific write methods.
 
     internal HashSet<EdmPrimitiveTypeKind> ClrReferenceTypes { get {
@@ -1778,11 +1779,11 @@ public abstract class ODataClientTemplate : TemplateBase
 
                         if (function.ReturnType.IsCollection())
                         {
-                            this.WriteBoundFunctionReturnCollectionResultAsExtension(fixedFunctionName, function.Name, sourceTypeName, returnTypeName, parameterString, function.Namespace, parameterValues, function.IsComposable, useEntityReference);
+                            this.WriteBoundFunctionReturnCollectionResultAsExtension(fixedFunctionName, function.Name, sourceTypeName, returnTypeName, parameterString, function.Namespace, parameterValues, function.IsComposable, useEntityReference, GetDescriptionAnnotation(function)?.Value);
                         }
                         else
                         {
-                            this.WriteBoundFunctionReturnSingleResultAsExtension(fixedFunctionName, function.Name, sourceTypeName, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, function.Namespace, parameterValues, function.IsComposable, function.ReturnType.IsEntity(), useEntityReference);
+                            this.WriteBoundFunctionReturnSingleResultAsExtension(fixedFunctionName, function.Name, sourceTypeName, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, function.Namespace, parameterValues, function.IsComposable, function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(function)?.Value);
                         }
                     }
 
@@ -1814,11 +1815,11 @@ public abstract class ODataClientTemplate : TemplateBase
 
                                 if (function.ReturnType.IsCollection())
                                 {
-                                    this.WriteBoundFunctionReturnCollectionResultAsExtension(fixedFunctionName, function.Name, sourceTypeName, returnTypeName, parameterString, function.Namespace, parameterValues, function.IsComposable, useEntityReference);
+                                    this.WriteBoundFunctionReturnCollectionResultAsExtension(fixedFunctionName, function.Name, sourceTypeName, returnTypeName, parameterString, function.Namespace, parameterValues, function.IsComposable, useEntityReference, GetDescriptionAnnotation(function)?.Value);
                                 }
                                 else
                                 {
-                                    this.WriteBoundFunctionReturnSingleResultAsExtension(fixedFunctionName, function.Name, sourceTypeName, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, function.Namespace, parameterValues, function.IsComposable, function.ReturnType.IsEntity(), useEntityReference);
+                                    this.WriteBoundFunctionReturnSingleResultAsExtension(fixedFunctionName, function.Name, sourceTypeName, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, function.Namespace, parameterValues, function.IsComposable, function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(function)?.Value);
                                 }
                             }
                         }
@@ -1871,7 +1872,7 @@ public abstract class ODataClientTemplate : TemplateBase
                     if (!boundOperations.Contains(ac))
                     {
                         boundOperations.Add(ac);
-                        this.WriteBoundActionAsExtension(fixedActionName, action.Name, sourceTypeName, returnTypeName, parameterString, action.Namespace, parameterValues);
+                        this.WriteBoundActionAsExtension(fixedActionName, action.Name, sourceTypeName, returnTypeName, parameterString, action.Namespace, parameterValues, GetDescriptionAnnotation(action)?.Value);
                     }
 
                     IEdmStructuredType structuredType;
@@ -1899,7 +1900,7 @@ public abstract class ODataClientTemplate : TemplateBase
                             if (!boundOperations.Contains(currentAc))
                             {
                                 boundOperations.Add(currentAc);
-                                this.WriteBoundActionAsExtension(fixedActionName, action.Name, sourceTypeName, returnTypeName, parameterString, action.Namespace, parameterValues);
+                                this.WriteBoundActionAsExtension(fixedActionName, action.Name, sourceTypeName, returnTypeName, parameterString, action.Namespace, parameterValues, GetDescriptionAnnotation(action)?.Value);
                             }
                         }
                     }
@@ -1940,7 +1941,7 @@ public abstract class ODataClientTemplate : TemplateBase
             camelCaseContainerName = Customization.CustomizeNaming(camelCaseContainerName);
         }
 
-        this.WriteClassStartForEntityContainer(container.Name, camelCaseContainerName, GetFixedName(camelCaseContainerName));
+        this.WriteClassStartForEntityContainer(container.Name, camelCaseContainerName, GetFixedName(camelCaseContainerName), GetDescriptionAnnotation(container)?.Value);
         this.WriteEntityContainerConstructor(container);
 
         if (this.context.NeedResolveNameFromType)
@@ -1968,7 +1969,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 camelCaseEntitySetName = Customization.CustomizeNaming(camelCaseEntitySetName);
             }
 
-            this.WriteContextEntitySetProperty(camelCaseEntitySetName, GetFixedName(camelCaseEntitySetName), entitySet.Name, GetFixedName(entitySetElementTypeName));
+            this.WriteContextEntitySetProperty(camelCaseEntitySetName, GetFixedName(camelCaseEntitySetName), entitySet.Name, GetFixedName(entitySetElementTypeName), GetDescriptionAnnotation(entitySet)?.Value);
             List<IEdmNavigationSource> edmNavigationSourceList = null;
             if (!this.context.ElementTypeToNavigationSourceMap.TryGetValue(entitySet.EntityType(), out edmNavigationSourceList))
             {
@@ -2018,7 +2019,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 camelCaseSingletonName = Customization.CustomizeNaming(camelCaseSingletonName);
             }
 
-            this.WriteContextSingletonProperty(camelCaseSingletonName, GetFixedName(camelCaseSingletonName), singleton.Name, singletonElementTypeName + "Single");
+            this.WriteContextSingletonProperty(camelCaseSingletonName, GetFixedName(camelCaseSingletonName), singleton.Name, singletonElementTypeName + "Single", GetDescriptionAnnotation(singleton)?.Value);
 
             List<IEdmNavigationSource> edmNavigationSourceList = null;
             if (this.context.ElementTypeToNavigationSourceMap.TryGetValue(singleton.EntityType(), out edmNavigationSourceList))
@@ -2060,11 +2061,11 @@ public abstract class ODataClientTemplate : TemplateBase
 
             if (functionImport.Function.ReturnType.IsCollection())
             {
-                this.WriteFunctionImportReturnCollectionResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, parameterString, parameterValues, functionImport.Function.IsComposable, useEntityReference);
+                this.WriteFunctionImportReturnCollectionResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, parameterString, parameterValues, functionImport.Function.IsComposable, useEntityReference, GetDescriptionAnnotation(functionImport)?.Value);
             }
             else
             {
-                this.WriteFunctionImportReturnSingleResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, parameterValues, functionImport.Function.IsComposable, functionImport.Function.ReturnType.IsEntity(), useEntityReference);
+                this.WriteFunctionImportReturnSingleResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, parameterValues, functionImport.Function.IsComposable, functionImport.Function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(functionImport)?.Value);
             }
         }
 
@@ -2105,7 +2106,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 fixedContainerName = Customization.CustomizeNaming(fixedContainerName);
             }
 
-            this.WriteActionImport(this.GetFixedName(actionImportName), actionImport.Name, returnTypeName, parameterString, parameterValues);
+            this.WriteActionImport(this.GetFixedName(actionImportName), actionImport.Name, returnTypeName, parameterString, parameterValues, GetDescriptionAnnotation(actionImport)?.Value);
         }
 
         this.WriteClassEndForEntityContainer();
@@ -2193,12 +2194,12 @@ public abstract class ODataClientTemplate : TemplateBase
             if (property.Type is Microsoft.OData.Edm.EdmCollectionTypeReference)
             {
                 propertyType = GetSourceOrReturnTypeName(property.Type);
-                WriteContextEntitySetProperty(propertyName, GetFixedName(propertyName), property.Name, propertyType, false);
+                WriteContextEntitySetProperty(propertyName, GetFixedName(propertyName), property.Name, propertyType, GetDescriptionAnnotation(property)?.Value, false);
             }
             else
             {
                 propertyType = Utils.GetClrTypeName(property.Type, true, this, this.context, true, isEntitySingleType : true);
-                WriteContextSingletonProperty(propertyName, GetFixedName(propertyName), property.Name, propertyType, false);
+                WriteContextSingletonProperty(propertyName, GetFixedName(propertyName), property.Name, propertyType, GetDescriptionAnnotation(property)?.Value, false);
             }
         }
     }
@@ -2207,7 +2208,7 @@ public abstract class ODataClientTemplate : TemplateBase
     {
         string entityTypeName = ((IEdmSchemaElement)entityType).Name;
         entityTypeName = this.context.EnableNamingAlias ? Customization.CustomizeNaming(entityTypeName) : entityTypeName;
-        this.WriteSummaryCommentForStructuredType(entityTypeName + this.SingleSuffix);
+        this.WriteSummaryCommentForStructuredType(entityTypeName + this.SingleSuffix, GetDescriptionAnnotation(entityType)?.Value);
         this.WriteStructurdTypeDeclaration(entityType,
             this.ClassInheritMarker + string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, GetFixedName(entityTypeName)),
             this.SingleSuffix);
@@ -2223,7 +2224,7 @@ public abstract class ODataClientTemplate : TemplateBase
 
         this.WriteClassEndForStructuredType();
 
-        this.WriteSummaryCommentForStructuredType(this.context.EnableNamingAlias ? Customization.CustomizeNaming(entityType.Name) : entityType.Name);
+        this.WriteSummaryCommentForStructuredType(this.context.EnableNamingAlias ? Customization.CustomizeNaming(entityType.Name) : entityType.Name, GetDescriptionAnnotation(entityType)?.Value);
 
         if (entityType.Key().Any())
         {
@@ -2271,7 +2272,7 @@ public abstract class ODataClientTemplate : TemplateBase
 
     internal void WriteComplexType(IEdmComplexType complexType, Dictionary<IEdmStructuredType, List<IEdmOperation>> boundOperationsMap)
     {
-        this.WriteSummaryCommentForStructuredType(this.context.EnableNamingAlias ? Customization.CustomizeNaming(complexType.Name) : complexType.Name);
+        this.WriteSummaryCommentForStructuredType(this.context.EnableNamingAlias ? Customization.CustomizeNaming(complexType.Name) : complexType.Name, GetDescriptionAnnotation(complexType)?.Value);
         this.WriteStructurdTypeDeclaration(complexType, string.Empty);
         this.SetPropertyIdentifierMappingsIfNameConflicts(complexType.Name, complexType);
         this.WriteTypeStaticCreateMethod(complexType.Name, complexType);
@@ -2313,11 +2314,11 @@ public abstract class ODataClientTemplate : TemplateBase
 
                 if (function.ReturnType.IsCollection())
                 {
-                    this.WriteBoundFunctionInEntityTypeReturnCollectionResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, parameterString, function.Namespace, parameterValues, function.IsComposable, useEntityReference);
+                    this.WriteBoundFunctionInEntityTypeReturnCollectionResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, parameterString, function.Namespace, parameterValues, function.IsComposable, useEntityReference, GetDescriptionAnnotation(function)?.Value);
                 }
                 else
                 {
-                    this.WriteBoundFunctionInEntityTypeReturnSingleResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, function.Namespace, parameterValues, function.IsComposable, function.ReturnType.IsEntity(), useEntityReference);
+                    this.WriteBoundFunctionInEntityTypeReturnSingleResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, function.Namespace, parameterValues, function.IsComposable, function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(function)?.Value);
                 }
             }
 
@@ -2358,7 +2359,7 @@ public abstract class ODataClientTemplate : TemplateBase
                     actionName = Customization.CustomizeNaming(actionName);
                 }
 
-                this.WriteBoundActionInEntityType(hideBaseMethod, GetFixedName(actionName), action.Name, returnTypeName, parameterString, action.Namespace, parameterValues);
+                this.WriteBoundActionInEntityType(hideBaseMethod, GetFixedName(actionName), action.Name, returnTypeName, parameterString, action.Namespace, parameterValues, GetDescriptionAnnotation(action)?.Value);
             }
         }
     }
@@ -2413,7 +2414,7 @@ public abstract class ODataClientTemplate : TemplateBase
 
     internal void WriteEnumType(IEdmEnumType enumType)
     {
-        this.WriteSummaryCommentForEnumType(this.context.EnableNamingAlias ? Customization.CustomizeNaming(enumType.Name) : enumType.Name);
+        this.WriteSummaryCommentForEnumType(this.context.EnableNamingAlias ? Customization.CustomizeNaming(enumType.Name) : enumType.Name, GetDescriptionAnnotation(enumType)?.Value);
         if (enumType.IsFlags)
         {
             this.WriteEnumFlags();
@@ -2746,7 +2747,8 @@ public abstract class ODataClientTemplate : TemplateBase
                     FixedPropertyName = GetFixedName(propertyName),
                     PrivatePropertyName = "_" + propertyName,
                     PropertyInitializationValue = Utils.GetPropertyInitializationValue(property, useDataServiceCollection, this, this.context),
-                    PropertyAttribute = string.Empty
+                    PropertyAttribute = string.Empty,
+                    PropertyDescription = GetDescriptionAnnotation(property)?.Value
                 };
         }).ToList();
 
@@ -2769,7 +2771,8 @@ public abstract class ODataClientTemplate : TemplateBase
                 FixedPropertyName = containerPropertyName,
                 PrivatePropertyName = "_" + containerPropertyName,
                 PropertyInitializationValue = string.Format(this.DictionaryConstructor, this.StringTypeName, this.ObjectTypeName),
-                PropertyAttribute = containerPropertyAttribute
+                PropertyAttribute = containerPropertyAttribute,
+                PropertyDescription = string.Empty
             });
         }
 
@@ -2789,6 +2792,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 privatePropertyName,
                 propertyInfo.PropertyInitializationValue,
                 propertyInfo.PropertyAttribute,
+                propertyInfo.PropertyDescription,
                 useDataServiceCollection);
         }
     }
@@ -2876,6 +2880,15 @@ public abstract class ODataClientTemplate : TemplateBase
         } while(conflict);
 
         return containerPropertyTemp;
+    }
+
+    /// <summary>
+    /// Searches through model's vocabulary annotations and returns annotation of term 'Description' if present
+    /// </summary>
+    private IEdmStringConstantExpression GetDescriptionAnnotation(IEdmVocabularyAnnotatable model)
+    {
+        return model.VocabularyAnnotations(this.context.EdmModel).Where(x => x.Term.Name == "Description")
+            .Select(x => x.Value).FirstOrDefault() as IEdmStringConstantExpression;
     }
 }
 
@@ -3833,13 +3846,9 @@ namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteClassStartForEntityContainer(string originalContainerName, string containerName, string fixedContainerName)
+    internal override void WriteClassStartForEntityContainer(string originalContainerName, string containerName, string fixedContainerName, string description)
     {
-#>
-    /// <summary>
-    /// There are no comments for <#= containerName #> in the schema.
-    /// </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {containerName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -4017,12 +4026,10 @@ namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, bool inContext)
+    internal override void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, string description, bool inContext)
     {
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {entitySetName} in the schema." : description);
 #>
-        /// <summary>
-        /// There are no comments for <#= entitySetName #> in the schema.
-        /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
 <#+
         if (this.context.EnableNamingAlias)
@@ -4059,12 +4066,10 @@ namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, bool inContext)
+    internal override void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, string description, bool inContext)
     {
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {singletonName} in the schema." : description);
 #>
-        /// <summary>
-        /// There are no comments for <#= singletonName #> in the schema.
-        /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
 <#+
         if (this.context.EnableNamingAlias)
@@ -4103,10 +4108,8 @@ namespace <#= fullNamespace #>
 
     internal override void WriteContextAddToEntitySetMethod(string entitySetName, string originalEntitySetName, string typeName, string parameterName)
     {
+        WriteDescriptionSummary($"There are no comments for {entitySetName} in the schema.");
 #>
-        /// <summary>
-        /// There are no comments for <#= entitySetName #> in the schema.
-        /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
         public virtual void AddTo<#= entitySetName #>(<#= typeName #> <#= parameterName #>)
         {
@@ -4304,13 +4307,9 @@ namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteSummaryCommentForStructuredType(string typeName)
+    internal override void WriteSummaryCommentForStructuredType(string typeName, string description)
     {
-#>
-    /// <summary>
-    /// There are no comments for <#= typeName #> in the schema.
-    /// </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {typeName} in the schema." : description);
     }
 
     internal override void WriteKeyPropertiesCommentAndAttribute(IEnumerable<string> keyProperties, string keyString)
@@ -4426,12 +4425,10 @@ namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, bool writeOnPropertyChanged)
+    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged)
     {
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(propertyDescription) ? $"There are no comments for Property {propertyName} in the schema." : propertyDescription);
 #>
-        /// <summary>
-        /// There are no comments for Property <#= propertyName #> in the schema.
-        /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
 <#+
         if (this.context.EnableNamingAlias || IdentifierMappings.ContainsKey(originalPropertyName))
@@ -4514,13 +4511,9 @@ namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteSummaryCommentForEnumType(string enumName)
+    internal override void WriteSummaryCommentForEnumType(string enumName, string description)
     {
-#>
-    /// <summary>
-    /// There are no comments for <#= enumName #> in the schema.
-    /// </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {enumName} in the schema." : description);
     }
 
     internal override void WriteEnumDeclaration(string enumName, string originalEnumName, string underlyingType)
@@ -4557,13 +4550,9 @@ namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference)
+    internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description)
     {
-#>
-        /// <summary>
-        /// There are no comments for <#= functionName #> in the schema.
-        /// </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -4578,13 +4567,9 @@ namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference)
+    internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description)
     {
-#>
-        /// <summary>
-        /// There are no comments for <#= functionName #> in the schema.
-        /// </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -4599,13 +4584,9 @@ namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference)
-        {
-#>
-        /// <summary>
-        /// There are no comments for <#= functionName #> in the schema.
-        /// </summary>
-<#+
+    internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description)
+    {
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -4620,15 +4601,11 @@ namespace <#= fullNamespace #>
             return this.Context.CreateFunctionQuery<<#= returnTypeName #>>(string.Join("/", global::System.Linq.Enumerable.Select(global::System.Linq.Enumerable.Skip(requestUri.Segments, this.Context.BaseUri.Segments.Length), s => s.Trim('/'))), "<#= fullNamespace #>.<#= originalFunctionName #>", <#= isComposable.ToString().ToLower(CultureInfo.InvariantCulture) #><#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #><#= useEntityReference ? ", bool useEntityReference = false" : string.Empty #>);
         }
 <#+
-        }
+    }
 
-    internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference)
+    internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description)
     {
-#>
-        /// <summary>
-        /// There are no comments for <#= functionName #> in the schema.
-        /// </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -4646,13 +4623,9 @@ namespace <#= fullNamespace #>
 <#+
         }
 
-    internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues)
+    internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description)
     {
-#>
-        /// <summary>
-        /// There are no comments for <#= actionName #> in the schema.
-        /// </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -4667,13 +4640,9 @@ namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues)
+    internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description)
     {
-#>
-        /// <summary>
-        /// There are no comments for <#= actionName #> in the schema.
-        /// </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -4763,13 +4732,9 @@ namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteBoundFunctionReturnSingleResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference)
+    internal override void WriteBoundFunctionReturnSingleResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description)
     {
-#>
-        /// <summary>
-        /// There are no comments for <#= functionName #> in the schema.
-        /// </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -4789,13 +4754,9 @@ namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteBoundFunctionReturnCollectionResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference)
+    internal override void WriteBoundFunctionReturnCollectionResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description)
     {
-#>
-        /// <summary>
-        /// There are no comments for <#= functionName #> in the schema.
-        /// </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -4815,13 +4776,9 @@ namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteBoundActionAsExtension(string actionName, string originalActionName, string boundSourceType, string returnTypeName, string parameters, string fullNamespace, string parameterValues)
+    internal override void WriteBoundActionAsExtension(string actionName, string originalActionName, string boundSourceType, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description)
     {
-#>
-        /// <summary>
-        /// There are no comments for <#= actionName #> in the schema.
-        /// </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -4838,6 +4795,15 @@ namespace <#= fullNamespace #>
 
             return new <#= returnTypeName #>(source.Context, source.AppendRequestUri("<#= fullNamespace #>.<#= originalActionName #>")<#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>);
         }
+<#+
+    }
+
+    protected override void WriteDescriptionSummary(string description)
+    {
+#>
+        /// <summary>
+        /// <#= description #>
+        /// </summary>
 <#+
     }
 
@@ -4990,13 +4956,9 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteClassStartForEntityContainer(string originalContainerName, string containerName, string fixedContainerName)
+    internal override void WriteClassStartForEntityContainer(string originalContainerName, string containerName, string fixedContainerName, string description)
     {
-#>
-    '''<summary>
-    '''There are no comments for <#= containerName #> in the schema.
-    '''</summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {containerName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -5012,9 +4974,9 @@ Namespace <#= fullNamespace #>
     internal override void WriteMethodStartForEntityContainerConstructor(string containerName, string fixedContainerName)
     {
 #>
-        '''<summary>
-        '''Initialize a new <#= containerName #> object.
-        '''</summary>
+        ''' <summary>
+        ''' Initialize a new <#= containerName #> object.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
@@ -5057,11 +5019,11 @@ Namespace <#= fullNamespace #>
     internal override void WriteMethodStartForResolveTypeFromName()
     {
 #>
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")>  _
         Protected Function ResolveTypeFromName(ByVal typeName As String) As Global.System.Type
 <#+
@@ -5107,11 +5069,11 @@ Namespace <#= fullNamespace #>
     internal override void WriteMethodStartForResolveNameFromType(string containerName, string fullNamespace)
     {
 #>
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")>  _
         Protected Function ResolveNameFromType(ByVal clientType As Global.System.Type) As String
 <#+
@@ -5186,12 +5148,10 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, bool inContext)
+    internal override void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, string description, bool inContext)
     {
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {entitySetName} in the schema." : description);
 #>
-        '''<summary>
-        '''There are no comments for <#= entitySetName #> in the schema.
-        '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")>  _
 <#+
         if (this.context.EnableNamingAlias)
@@ -5224,12 +5184,10 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, bool inContext)
+    internal override void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, string description, bool inContext)
     {
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {singletonName} in the schema." : description);
 #>
-        '''<summary>
-        '''There are no comments for <#= singletonName #> in the schema.
-        '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")>  _
 <#+
         if (this.context.EnableNamingAlias)
@@ -5264,10 +5222,8 @@ Namespace <#= fullNamespace #>
 
     internal override void WriteContextAddToEntitySetMethod(string entitySetName, string originalEntitySetName, string typeName, string parameterName)
     {
+        WriteDescriptionSummary($"There are no comments for {entitySetName} in the schema.");
 #>
-        '''<summary>
-        '''There are no comments for <#= entitySetName #> in the schema.
-        '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")>  _
         Public Overridable Sub AddTo<#= entitySetName #>(ByVal <#= parameterName #> As <#= typeName #>)
             MyBase.AddObject("<#= originalEntitySetName #>", <#= parameterName #>)
@@ -5362,28 +5318,24 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteSummaryCommentForStructuredType(string typeName)
+    internal override void WriteSummaryCommentForStructuredType(string typeName, string description)
     {
-#>
-    '''<summary>
-    '''There are no comments for <#= typeName #> in the schema.
-    '''</summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {typeName} in the schema." : description);
     }
 
     internal override void WriteKeyPropertiesCommentAndAttribute(IEnumerable<string> keyProperties, string keyString)
     {
 #>
-    '''<KeyProperties>
+    ''' <KeyProperties>
 <#+
         foreach (string key in keyProperties)
         {
 #>
-    '''<#= key #>
+    ''' <#= key #>
 <#+
         }
 #>
-    '''</KeyProperties>
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("<#= keyString #>")>  _
 <#+
     }
@@ -5425,16 +5377,16 @@ Namespace <#= fullNamespace #>
     internal override void WriteSummaryCommentForStaticCreateMethod(string typeName)
     {
 #>
-        '''<summary>
-        '''Create a new <#= typeName #> object.
-        '''</summary>
+        ''' <summary>
+        ''' Create a new <#= typeName #> object.
+        ''' </summary>
 <#+
     }
 
     internal override void WriteParameterCommentForStaticCreateMethod(string parameterName, string propertyName)
     {
 #>
-        '''<param name="<#= parameterName #>">Initial value of <#= propertyName #>.</param>
+        ''' <param name="<#= parameterName #>">Initial value of <#= propertyName #>.</param>
 <#+
     }
 
@@ -5482,12 +5434,10 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, bool writeOnPropertyChanged)
+    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged)
     {
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(propertyDescription) ? $"There are no comments for Property {propertyName} in the schema." : propertyDescription);
 #>
-        '''<summary>
-        '''There are no comments for Property <#= propertyName #> in the schema.
-        '''</summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")>  _
 <#+
         if (this.context.EnableNamingAlias || IdentifierMappings.ContainsKey(originalPropertyName))
@@ -5574,13 +5524,9 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteSummaryCommentForEnumType(string enumName)
+    internal override void WriteSummaryCommentForEnumType(string enumName, string description)
     {
-#>
-    '''<summary>
-    '''There are no comments for <#= enumName #> in the schema.
-    '''</summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {enumName} in the schema." : description);
     }
 
     internal override void WriteEnumDeclaration(string enumName, string originalEnumName, string underlyingType)
@@ -5616,13 +5562,9 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference)
+    internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description)
     {
-#>
-        ''' <summary>
-        ''' There are no comments for <#= functionName #> in the schema.
-        ''' </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -5636,13 +5578,9 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference)
+    internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description)
     {
-#>
-        ''' <summary>
-        ''' There are no comments for <#= functionName #> in the schema.
-        ''' </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -5656,13 +5594,9 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference)
+    internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description)
     {
-#>
-        ''' <summary>
-        ''' There are no comments for <#= functionName #> in the schema.
-        ''' </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -5678,13 +5612,9 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference)
+    internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description)
     {
-#>
-        ''' <summary>
-        ''' There are no comments for <#= functionName #> in the schema.
-        ''' </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -5700,13 +5630,9 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues)
+    internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description)
     {
-#>
-        ''' <summary>
-        ''' There are no comments for <#= actionName #> in the schema.
-        ''' </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -5720,13 +5646,9 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues)
+    internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description)
     {
-#>
-        ''' <summary>
-        ''' There are no comments for <#= actionName #> in the schema.
-        ''' </summary>
-<#+
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -5813,12 +5735,10 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteBoundFunctionReturnSingleResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference)
+    internal override void WriteBoundFunctionReturnSingleResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description)
     {
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
 #>
-        ''' <summary>
-        ''' There are no comments for <#= functionName #> in the schema.
-        ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
 <#+
         if (this.context.EnableNamingAlias)
@@ -5838,12 +5758,10 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteBoundFunctionReturnCollectionResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference)
+    internal override void WriteBoundFunctionReturnCollectionResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description)
     {
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
 #>
-        ''' <summary>
-        ''' There are no comments for <#= functionName #> in the schema.
-        ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
 <#+
         if (this.context.EnableNamingAlias)
@@ -5863,12 +5781,10 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WriteBoundActionAsExtension(string actionName, string originalActionName, string boundSourceType, string returnTypeName, string parameters, string fullNamespace, string parameterValues)
+    internal override void WriteBoundActionAsExtension(string actionName, string originalActionName, string boundSourceType, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description)
     {
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
 #>
-        ''' <summary>
-        ''' There are no comments for <#= actionName #> in the schema.
-        ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
 <#+
         if (this.context.EnableNamingAlias)
@@ -5884,6 +5800,15 @@ Namespace <#= fullNamespace #>
             End If
             Return New <#= returnTypeName #>(source.Context, source.AppendRequestUri("<#= fullNamespace #>.<#= originalActionName #>")<#= string.IsNullOrEmpty(parameterValues) ? string.Empty : ", " + parameterValues #>)
         End Function
+<#+
+    }
+
+    protected override void WriteDescriptionSummary(string description)
+    {
+#>
+        ''' <summary>
+        ''' <#= description #>
+        ''' </summary>
 <#+
     }
 
