@@ -5850,7 +5850,7 @@ this.Write(");\r\n        }\r\n");
 
 this.Write("        /// <summary>\r\n        /// ");
 
-this.Write(this.ToStringHelper.ToStringWithCulture(description));
+this.Write(this.ToStringHelper.ToStringWithCulture(description.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n        ///")));
 
 this.Write("\r\n        /// </summary>\r\n");
 
@@ -7808,7 +7808,7 @@ this.Write(")\r\n        End Function\r\n");
 
 this.Write("        \'\'\' <summary>\r\n        \'\'\' ");
 
-this.Write(this.ToStringHelper.ToStringWithCulture(description));
+this.Write(this.ToStringHelper.ToStringWithCulture(description.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n        \'\'\'")));
 
 this.Write("\r\n        \'\'\' </summary>\r\n");
 

@@ -4802,7 +4802,7 @@ namespace <#= fullNamespace #>
     {
 #>
         /// <summary>
-        /// <#= description #>
+        /// <#= description.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n        ///") #>
         /// </summary>
 <#+
     }
@@ -5807,7 +5807,7 @@ Namespace <#= fullNamespace #>
     {
 #>
         ''' <summary>
-        ''' <#= description #>
+        ''' <#= description.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n        \'\'\'") #>
         ''' </summary>
 <#+
     }
