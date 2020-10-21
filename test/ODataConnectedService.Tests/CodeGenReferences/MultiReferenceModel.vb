@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 15:28:38
+'Generation date: 13.06.2020 13:20:07
 Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
     '''<summary>
     '''There are no comments for TruckDemoService in the schema.
@@ -896,100 +896,100 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType as Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle
-            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle
+            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType as Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="serialNo">The value of serialNo</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType),
             serialNo As String) As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "SerialNo", serialNo }
             }
-            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType as Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle
-            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle
+            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType as Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="key">The value of key</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType),
             key As String) As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "Key", key }
             }
-            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType as Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle
-            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle
+            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType as Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="key">The value of key</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType),
             key As String) As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "Key", key }
             }
-            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Cast an entity of type Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType to its derived type Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToDerivedVehicleGPSType(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)) As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType) = source.CastTo(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType)()
-            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToDerivedVehicleGPSType(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)) As Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType) = _source.CastTo(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType)()
+            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' There are no comments for SetACState in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function SetACState(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType), state As Global.System.Nullable(Of Boolean)) As Global.Microsoft.OData.Client.DataServiceActionQuery
-            If Not source.IsComposable Then
+        Public Function SetACState(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType), state As Global.System.Nullable(Of Boolean)) As Global.Microsoft.OData.Client.DataServiceActionQuery
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(source.Context, source.AppendRequestUri("Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.SetACState"), New Global.Microsoft.OData.Client.BodyOperationParameter("state", state))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(_source.Context, _source.AppendRequestUri("Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.SetACState"), New Global.Microsoft.OData.Client.BodyOperationParameter("state", state))
         End Function
         ''' <summary>
         ''' There are no comments for TurnOffAC in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function TurnOffAC(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType)) As Global.Microsoft.OData.Client.DataServiceActionQuery
-            If Not source.IsComposable Then
+        Public Function TurnOffAC(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType)) As Global.Microsoft.OData.Client.DataServiceActionQuery
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(source.Context, source.AppendRequestUri("Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TurnOffAC"))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(_source.Context, _source.AppendRequestUri("Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TurnOffAC"))
         End Function
     End Module
 End Namespace
@@ -1537,46 +1537,46 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType as Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle
-            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle
+            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType as Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="key">The value of key</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType),
             key As String) As Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "Key", key }
             }
-            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' There are no comments for GetVehicleSpeed in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function GetVehicleSpeed(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Double)
-            If Not source.IsComposable Then
+        Public Function GetVehicleSpeed(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Double)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return source.CreateFunctionQuerySingle(Of Double)("Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.GetVehicleSpeed", False)
+
+            Return _source.CreateFunctionQuerySingle(Of Double)("Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.GetVehicleSpeed", False)
         End Function
         ''' <summary>
         ''' There are no comments for ResetVehicleSpeed in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ResetVehicleSpeed(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType), targetValue As Global.System.Nullable(Of Double)) As Global.Microsoft.OData.Client.DataServiceActionQuery
-            If Not source.IsComposable Then
+        Public Function ResetVehicleSpeed(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType), targetValue As Global.System.Nullable(Of Double)) As Global.Microsoft.OData.Client.DataServiceActionQuery
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(source.Context, source.AppendRequestUri("Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.ResetVehicleSpeed"), New Global.Microsoft.OData.Client.BodyOperationParameter("targetValue", targetValue))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuery(_source.Context, _source.AppendRequestUri("Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.ResetVehicleSpeed"), New Global.Microsoft.OData.Client.BodyOperationParameter("targetValue", targetValue))
         End Function
     End Module
 End Namespace

@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 15:30:47
+'Generation date: 13.06.2020 13:21:31
 Namespace NamespaceInKeywords.[event].[string].int
     '''<summary>
     '''There are no comments for ComplexType in the schema.
@@ -144,25 +144,25 @@ Namespace NamespaceInKeywords.[event].[string].int
         ''' <summary>
         ''' Get an entity of type NamespaceInKeywords.[event].[string].int.TestType1 as NamespaceInKeywords.[event].[string].int.TestType1Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of NamespaceInKeywords.[event].[string].int.TestType1), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As NamespaceInKeywords.[event].[string].int.TestType1Single
-            Return New NamespaceInKeywords.[event].[string].int.TestType1Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of NamespaceInKeywords.[event].[string].int.TestType1), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As NamespaceInKeywords.[event].[string].int.TestType1Single
+            Return New NamespaceInKeywords.[event].[string].int.TestType1Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type NamespaceInKeywords.[event].[string].int.TestType1 as NamespaceInKeywords.[event].[string].int.TestType1Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of NamespaceInKeywords.[event].[string].int.TestType1),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of NamespaceInKeywords.[event].[string].int.TestType1),
             keyProp As Integer) As NamespaceInKeywords.[event].[string].int.TestType1Single
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "KeyProp", keyProp }
             }
-            Return New NamespaceInKeywords.[event].[string].int.TestType1Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New NamespaceInKeywords.[event].[string].int.TestType1Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
     End Module
 End Namespace
@@ -400,25 +400,25 @@ Namespace NamespaceInKeywords.[double]
         ''' <summary>
         ''' Get an entity of type NamespaceInKeywords.[double].TestType2 as NamespaceInKeywords.[double].TestType2Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of NamespaceInKeywords.[double].TestType2), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As NamespaceInKeywords.[double].TestType2Single
-            Return New NamespaceInKeywords.[double].TestType2Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of NamespaceInKeywords.[double].TestType2), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As NamespaceInKeywords.[double].TestType2Single
+            Return New NamespaceInKeywords.[double].TestType2Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type NamespaceInKeywords.[double].TestType2 as NamespaceInKeywords.[double].TestType2Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of NamespaceInKeywords.[double].TestType2),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of NamespaceInKeywords.[double].TestType2),
             keyProp As Integer) As NamespaceInKeywords.[double].TestType2Single
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "KeyProp", keyProp }
             }
-            Return New NamespaceInKeywords.[double].TestType2Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New NamespaceInKeywords.[double].TestType2Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
     End Module
 End Namespace

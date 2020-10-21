@@ -589,175 +589,175 @@ namespace AbstractEntityTypeWithoutKey.DSC
         /// <summary>
         /// Cast an entity of type global::AbstractEntityTypeWithoutKey.DSC.AbstractET to its derived type global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractET
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETSingle CastToDerivedAbstractET(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.AbstractET> source)
+        /// <param name="_source">source entity</param>
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETSingle CastToDerivedAbstractET(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.AbstractET> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractET> query = source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractET>();
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETSingle(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractET> query = _source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractET>();
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETSingle(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Get an entity of type global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET as global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET as global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="id">The value of id</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> source,
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> _source,
             string id)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Cast an entity of type global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractET to its derived type global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle CastToDerivedBaseET(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractET> source)
+        /// <param name="_source">source entity</param>
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle CastToDerivedBaseET(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractET> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> query = source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET>();
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> query = _source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET>();
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Cast an entity of type global::AbstractEntityTypeWithoutKey.DSC.AbstractET to its derived type global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle CastToDerivedBaseET(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.AbstractET> source)
+        /// <param name="_source">source entity</param>
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle CastToDerivedBaseET(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.AbstractET> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> query = source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET>();
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> query = _source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET>();
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseETSingle(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Get an entity of type global::AbstractEntityTypeWithoutKey.DSC.DerivedET as global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::AbstractEntityTypeWithoutKey.DSC.DerivedET as global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="id">The value of id</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> source,
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> _source,
             string id)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Cast an entity of type global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET to its derived type global::AbstractEntityTypeWithoutKey.DSC.DerivedET
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle CastToDerivedET(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> source)
+        /// <param name="_source">source entity</param>
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle CastToDerivedET(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedBaseET> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> query = source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedET>();
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> query = _source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedET>();
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Cast an entity of type global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractET to its derived type global::AbstractEntityTypeWithoutKey.DSC.DerivedET
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle CastToDerivedET(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractET> source)
+        /// <param name="_source">source entity</param>
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle CastToDerivedET(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractET> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> query = source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedET>();
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> query = _source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedET>();
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Cast an entity of type global::AbstractEntityTypeWithoutKey.DSC.AbstractET to its derived type global::AbstractEntityTypeWithoutKey.DSC.DerivedET
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle CastToDerivedET(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.AbstractET> source)
+        /// <param name="_source">source entity</param>
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle CastToDerivedET(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.AbstractET> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> query = source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedET>();
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedET> query = _source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedET>();
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedETSingle(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Get an entity of type global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey as global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey as global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="id">The value of id</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey> source,
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey> _source,
             string id)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Cast an entity of type global::AbstractEntityTypeWithoutKey.DSC.AbstractET to its derived type global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle CastToDerivedAbstractETWithKey(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.AbstractET> source)
+        /// <param name="_source">source entity</param>
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle CastToDerivedAbstractETWithKey(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.AbstractET> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey> query = source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey>();
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey> query = _source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey>();
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKeySingle(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Get an entity of type global::AbstractEntityTypeWithoutKey.DSC.DerivedET2 as global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::AbstractEntityTypeWithoutKey.DSC.DerivedET2 as global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="id">The value of id</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2> source,
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2> _source,
             string id)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Cast an entity of type global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey to its derived type global::AbstractEntityTypeWithoutKey.DSC.DerivedET2
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single CastToDerivedET2(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey> source)
+        /// <param name="_source">source entity</param>
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single CastToDerivedET2(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedAbstractETWithKey> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2> query = source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2>();
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2> query = _source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2>();
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Cast an entity of type global::AbstractEntityTypeWithoutKey.DSC.AbstractET to its derived type global::AbstractEntityTypeWithoutKey.DSC.DerivedET2
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single CastToDerivedET2(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.AbstractET> source)
+        /// <param name="_source">source entity</param>
+        public static global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single CastToDerivedET2(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.AbstractET> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2> query = source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2>();
-            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2> query = _source.CastTo<global::AbstractEntityTypeWithoutKey.DSC.DerivedET2>();
+            return new global::AbstractEntityTypeWithoutKey.DSC.DerivedET2Single(_source.Context, query.GetPath(null));
         }
     }
 }

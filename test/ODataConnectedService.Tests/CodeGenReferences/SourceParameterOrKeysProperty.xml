@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+  <edmx:DataServices>
+    <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Microsoft.OData.TestService">
+      <EntityType Name="Person">
+        <Key>
+          <PropertyRef Name="Keys" />
+        </Key>
+        <Property Name="Keys" Nullable="false" Type="Edm.String"/>
+      </EntityType>
+      <Function Name="TestFunction" IsBound="true">
+        <Parameter Name="bindingParameter" Type="Microsoft.OData.TestService.Person"/>
+        <Parameter Name="source" Type="Edm.String" Nullable="false"/>
+        <ReturnType Type="Collection(Microsoft.OData.TestService.Person)" Nullable="false"/>
+      </Function>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

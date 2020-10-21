@@ -1,6 +1,6 @@
 ﻿//---------------------------------------------------------------------------------
 // <copyright file="ODataT4CodeGeneratorTestDescriptors.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //---------------------------------------------------------------------------------
@@ -650,6 +650,22 @@ namespace ODataConnectedService.Tests
                 { ExpectedVB, EntitiesEnumsFunctionsSelectTypesVB },
             },
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, EntitiesEnumsFunctionsSelectTypes.ExpectedResults, isCSharp, useDSC, "EntitiesEnumsFunctionsSelectTypes"),
+        };
+        #endregion
+
+        #region SourceParameterOrKeysProperty
+
+        public static string EdmxSourceParameterOrKeysProperty = LoadContentFromBaseline("SourceParameterOrKeysProperty.xml");
+        public static string SourceParameterOrKeysPropertyCSharp = LoadContentFromBaseline("SourceParameterOrKeysProperty.cs");
+        public static string SourceParameterOrKeysPropertyCSharpUseDSC = LoadContentFromBaseline("SourceParameterOrKeysPropertyDSC.cs");
+        public static string SourceParameterOrKeysPropertyVB = LoadContentFromBaseline("SourceParameterOrKeysProperty.vb");
+        public static string SourceParameterOrKeysPropertyVBUseDSC = LoadContentFromBaseline("SourceParameterOrKeysPropertyDSC.vb");
+
+        public static ODataT4CodeGeneratorTestsDescriptor SourceParameterOrKeysProperty = new ODataT4CodeGeneratorTestsDescriptor()
+        {
+            Metadata = EdmxSourceParameterOrKeysProperty,
+            ExpectedResults = new Dictionary<string, string>() { { ExpectedCSharp, SourceParameterOrKeysPropertyCSharp }, { ExpectedCSharpUseDSC, SourceParameterOrKeysPropertyCSharpUseDSC }, { ExpectedVB, SourceParameterOrKeysPropertyVB }, { ExpectedVBUseDSC, SourceParameterOrKeysPropertyVBUseDSC } },
+            Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, SourceParameterOrKeysProperty.ExpectedResults, isCSharp, useDSC, nameof(SourceParameterOrKeysProperty)),
         };
         #endregion
     }

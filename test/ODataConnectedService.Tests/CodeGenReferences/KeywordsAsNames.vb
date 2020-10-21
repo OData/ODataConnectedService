@@ -258,46 +258,46 @@ Namespace Namespace1
         ''' <summary>
         ''' Get an entity of type Namespace1.[event] as Namespace1.eventSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Namespace1.[event]), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Namespace1.eventSingle
-            Return New Namespace1.eventSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Namespace1.[event]), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Namespace1.eventSingle
+            Return New Namespace1.eventSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Namespace1.[event] as Namespace1.eventSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="string">The value of string</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Namespace1.[event]),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Namespace1.[event]),
             [string] As String) As Namespace1.eventSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "string", [string] }
+                {"string", [string]}
             }
-            Return New Namespace1.eventSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New Namespace1.eventSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' There are no comments for [const] in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function [const](ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Namespace1.[event])) As Namespace1.eventSingle
-            If Not source.IsComposable Then
+        Public Function [const](ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Namespace1.[event])) As Namespace1.eventSingle
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return New Namespace1.eventSingle(source.CreateFunctionQuerySingle(Of Namespace1.[event])("Namespace1.const", False))
+
+            Return New Namespace1.eventSingle(_source.CreateFunctionQuerySingle(Of Namespace1.[event])("Namespace1.const", False))
         End Function
         ''' <summary>
         ''' There are no comments for [as] in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function [as](ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Namespace1.[event])) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Namespace1.[event])
-            If Not source.IsComposable Then
+        Public Function [as](ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Namespace1.[event])) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Namespace1.[event])
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Namespace1.[event])(source.Context, source.AppendRequestUri("Namespace1.as"))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Namespace1.[event])(_source.Context, _source.AppendRequestUri("Namespace1.as"))
         End Function
     End Module
 End Namespace

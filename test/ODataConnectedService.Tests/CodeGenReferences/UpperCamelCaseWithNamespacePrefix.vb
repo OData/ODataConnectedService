@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 15:31:53
+'Generation date: 13.06.2020 13:28:23
 Namespace namespacePrefix.[Namespace].Foo
     '''<summary>
     '''There are no comments for BaseTypeSingle in the schema.
@@ -403,92 +403,92 @@ Namespace namespacePrefix.[Namespace].Foo
         ''' <summary>
         ''' Get an entity of type namespacePrefix.[Namespace].Foo.BaseType as namespacePrefix.[Namespace].Foo.BaseTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.BaseType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As namespacePrefix.[Namespace].Foo.BaseTypeSingle
-            Return New namespacePrefix.[Namespace].Foo.BaseTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.BaseType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As namespacePrefix.[Namespace].Foo.BaseTypeSingle
+            Return New namespacePrefix.[Namespace].Foo.BaseTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type namespacePrefix.[Namespace].Foo.BaseType as namespacePrefix.[Namespace].Foo.BaseTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.BaseType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.BaseType),
             keyProp As Integer) As namespacePrefix.[Namespace].Foo.BaseTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "keyProp", keyProp }
             }
-            Return New namespacePrefix.[Namespace].Foo.BaseTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New namespacePrefix.[Namespace].Foo.BaseTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type namespacePrefix.[Namespace].Foo.TestType as namespacePrefix.[Namespace].Foo.TestTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.TestType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As namespacePrefix.[Namespace].Foo.TestTypeSingle
-            Return New namespacePrefix.[Namespace].Foo.TestTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.TestType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As namespacePrefix.[Namespace].Foo.TestTypeSingle
+            Return New namespacePrefix.[Namespace].Foo.TestTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type namespacePrefix.[Namespace].Foo.TestType as namespacePrefix.[Namespace].Foo.TestTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.TestType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.TestType),
             keyProp As Integer) As namespacePrefix.[Namespace].Foo.TestTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "keyProp", keyProp }
             }
-            Return New namespacePrefix.[Namespace].Foo.TestTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New namespacePrefix.[Namespace].Foo.TestTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Cast an entity of type namespacePrefix.[Namespace].Foo.BaseType to its derived type namespacePrefix.[Namespace].Foo.TestType
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToTestType(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of namespacePrefix.[Namespace].Foo.BaseType)) As namespacePrefix.[Namespace].Foo.TestTypeSingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of namespacePrefix.[Namespace].Foo.TestType) = source.CastTo(Of namespacePrefix.[Namespace].Foo.TestType)()
-            Return New namespacePrefix.[Namespace].Foo.TestTypeSingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToTestType(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of namespacePrefix.[Namespace].Foo.BaseType)) As namespacePrefix.[Namespace].Foo.TestTypeSingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of namespacePrefix.[Namespace].Foo.TestType) = _source.CastTo(Of namespacePrefix.[Namespace].Foo.TestType)()
+            Return New namespacePrefix.[Namespace].Foo.TestTypeSingle(_source.Context, query.GetPath(Nothing))
         End Function
         ''' <summary>
         ''' Get an entity of type namespacePrefix.[Namespace].Foo.SingleType as namespacePrefix.[Namespace].Foo.SingleTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.SingleType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As namespacePrefix.[Namespace].Foo.SingleTypeSingle
-            Return New namespacePrefix.[Namespace].Foo.SingleTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.SingleType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As namespacePrefix.[Namespace].Foo.SingleTypeSingle
+            Return New namespacePrefix.[Namespace].Foo.SingleTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type namespacePrefix.[Namespace].Foo.SingleType as namespacePrefix.[Namespace].Foo.SingleTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="keyProp">The value of keyProp</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.SingleType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.SingleType),
             keyProp As Integer) As namespacePrefix.[Namespace].Foo.SingleTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
                 { "keyProp", keyProp }
             }
-            Return New namespacePrefix.[Namespace].Foo.SingleTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New namespacePrefix.[Namespace].Foo.SingleTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' There are no comments for Foo7 in the schema.
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("foo7")>  _
-        Public Function Foo7(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of namespacePrefix.[Namespace].Foo.TestType), p1 As namespacePrefix.[Namespace].Foo.Color, p2 As namespacePrefix.[Namespace].Foo.Complex) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of String)
-            If Not source.IsComposable Then
+        Public Function Foo7(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of namespacePrefix.[Namespace].Foo.TestType), p1 As namespacePrefix.[Namespace].Foo.Color, p2 As namespacePrefix.[Namespace].Foo.Complex) As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of String)
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            
-            Return source.CreateFunctionQuerySingle(Of String)("namespace.foo.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1),
+
+            Return _source.CreateFunctionQuerySingle(Of String)("namespace.foo.foo7", False, New Global.Microsoft.OData.Client.UriOperationParameter("p1", p1),
                     New Global.Microsoft.OData.Client.UriOperationParameter("p2", p2))
         End Function
         ''' <summary>
@@ -496,11 +496,11 @@ Namespace namespacePrefix.[Namespace].Foo
         ''' </summary>
         <Global.System.Runtime.CompilerServices.Extension()>
         <Global.Microsoft.OData.Client.OriginalNameAttribute("foo8")>  _
-        Public Function Foo8(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of namespacePrefix.[Namespace].Foo.SingleType)) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Global.System.Nullable(Of Integer))
-            If Not source.IsComposable Then
+        Public Function Foo8(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of namespacePrefix.[Namespace].Foo.SingleType)) As Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Global.System.Nullable(Of Integer))
+            If Not _source.IsComposable Then
                 Throw New Global.System.NotSupportedException("The previous function is not composable.")
             End If
-            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Global.System.Nullable(Of Integer))(source.Context, source.AppendRequestUri("namespace.foo.foo8"))
+            Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Global.System.Nullable(Of Integer))(_source.Context, _source.AppendRequestUri("namespace.foo.foo8"))
         End Function
     End Module
 End Namespace

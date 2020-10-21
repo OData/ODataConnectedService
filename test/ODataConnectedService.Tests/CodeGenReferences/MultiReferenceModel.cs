@@ -951,104 +951,104 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         /// <summary>
         /// Get an entity of type global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType as global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType as global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="serialNo">The value of serialNo</param>
-        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType> source,
+        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitType> _source,
             string serialNo)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "SerialNo", serialNo }
             };
-            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.HeadUnitTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType as global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType as global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="key">The value of key</param>
-        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType> source,
+        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType> _source,
             string key)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Key", key }
             };
-            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType as global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType as global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="key">The value of key</param>
-        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType> source,
+        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType> _source,
             string key)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Key", key }
             };
-            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Cast an entity of type global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType to its derived type global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle CastToDerivedVehicleGPSType(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType> source)
+        /// <param name="_source">source entity</param>
+        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle CastToDerivedVehicleGPSType(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType> query = source.CastTo<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType>();
-            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType> query = _source.CastTo<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSType>();
+            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.DerivedVehicleGPSTypeSingle(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// There are no comments for SetACState in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuery SetACState(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType> source, global::System.Nullable<bool> state)
+        public static global::Microsoft.OData.Client.DataServiceActionQuery SetACState(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType> _source, global::System.Nullable<bool> state)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuery(source.Context, source.AppendRequestUri("Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.SetACState"), new global::Microsoft.OData.Client.BodyOperationParameter("state", state));
+            return new global::Microsoft.OData.Client.DataServiceActionQuery(_source.Context, _source.AppendRequestUri("Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.SetACState"), new global::Microsoft.OData.Client.BodyOperationParameter("state", state));
         }
         /// <summary>
         /// There are no comments for TurnOffAC in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuery TurnOffAC(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType> source)
+        public static global::Microsoft.OData.Client.DataServiceActionQuery TurnOffAC(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TruckType> _source)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuery(source.Context, source.AppendRequestUri("Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TurnOffAC"));
+            return new global::Microsoft.OData.Client.DataServiceActionQuery(_source.Context, _source.AppendRequestUri("Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TurnOffAC"));
         }
     }
 }
@@ -1630,49 +1630,49 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         /// <summary>
         /// Get an entity of type global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType as global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType as global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="key">The value of key</param>
-        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType> source,
+        public static global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType> _source,
             string key)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Key", key }
             };
-            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// There are no comments for GetVehicleSpeed in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceQuerySingle<double> GetVehicleSpeed(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType> source)
+        public static global::Microsoft.OData.Client.DataServiceQuerySingle<double> GetVehicleSpeed(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType> _source)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuerySingle<double>("Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.GetVehicleSpeed", false);
+            return _source.CreateFunctionQuerySingle<double>("Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.GetVehicleSpeed", false);
         }
         /// <summary>
         /// There are no comments for ResetVehicleSpeed in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuery ResetVehicleSpeed(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType> source, global::System.Nullable<double> targetValue)
+        public static global::Microsoft.OData.Client.DataServiceActionQuery ResetVehicleSpeed(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType> _source, global::System.Nullable<double> targetValue)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuery(source.Context, source.AppendRequestUri("Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.ResetVehicleSpeed"), new global::Microsoft.OData.Client.BodyOperationParameter("targetValue", targetValue));
+            return new global::Microsoft.OData.Client.DataServiceActionQuery(_source.Context, _source.AppendRequestUri("Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.ResetVehicleSpeed"), new global::Microsoft.OData.Client.BodyOperationParameter("targetValue", targetValue));
         }
     }
 }

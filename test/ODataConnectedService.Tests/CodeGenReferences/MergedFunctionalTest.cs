@@ -8180,884 +8180,884 @@ namespace MergedFunctionalTest
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Customer as global::MergedFunctionalTest.CustomerSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.CustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Customer> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.CustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Customer> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.CustomerSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.CustomerSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Customer as global::MergedFunctionalTest.CustomerSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="customerId">The value of customerId</param>
-        public static global::MergedFunctionalTest.CustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Customer> source,
+        public static global::MergedFunctionalTest.CustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Customer> _source,
             int customerId)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "CustomerId", customerId }
             };
-            return new global::MergedFunctionalTest.CustomerSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.CustomerSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.GoodCustomer as global::MergedFunctionalTest.GoodCustomerSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.GoodCustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.GoodCustomer> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.GoodCustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.GoodCustomer> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.GoodCustomerSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.GoodCustomerSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.GoodCustomer as global::MergedFunctionalTest.GoodCustomerSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="customerId">The value of customerId</param>
-        public static global::MergedFunctionalTest.GoodCustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.GoodCustomer> source,
+        public static global::MergedFunctionalTest.GoodCustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.GoodCustomer> _source,
             int customerId)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "CustomerId", customerId }
             };
-            return new global::MergedFunctionalTest.GoodCustomerSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.GoodCustomerSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Cast an entity of type global::MergedFunctionalTest.Customer to its derived type global::MergedFunctionalTest.GoodCustomer
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::MergedFunctionalTest.GoodCustomerSingle CastToGoodCustomer(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Customer> source)
+        /// <param name="_source">source entity</param>
+        public static global::MergedFunctionalTest.GoodCustomerSingle CastToGoodCustomer(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Customer> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.GoodCustomer> query = source.CastTo<global::MergedFunctionalTest.GoodCustomer>();
-            return new global::MergedFunctionalTest.GoodCustomerSingle(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.GoodCustomer> query = _source.CastTo<global::MergedFunctionalTest.GoodCustomer>();
+            return new global::MergedFunctionalTest.GoodCustomerSingle(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.BadCustomer as global::MergedFunctionalTest.BadCustomerSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.BadCustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.BadCustomer> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.BadCustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.BadCustomer> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.BadCustomerSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.BadCustomerSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.BadCustomer as global::MergedFunctionalTest.BadCustomerSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="customerId">The value of customerId</param>
-        public static global::MergedFunctionalTest.BadCustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.BadCustomer> source,
+        public static global::MergedFunctionalTest.BadCustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.BadCustomer> _source,
             int customerId)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "CustomerId", customerId }
             };
-            return new global::MergedFunctionalTest.BadCustomerSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.BadCustomerSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Cast an entity of type global::MergedFunctionalTest.Customer to its derived type global::MergedFunctionalTest.BadCustomer
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::MergedFunctionalTest.BadCustomerSingle CastToBadCustomer(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Customer> source)
+        /// <param name="_source">source entity</param>
+        public static global::MergedFunctionalTest.BadCustomerSingle CastToBadCustomer(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Customer> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.BadCustomer> query = source.CastTo<global::MergedFunctionalTest.BadCustomer>();
-            return new global::MergedFunctionalTest.BadCustomerSingle(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.BadCustomer> query = _source.CastTo<global::MergedFunctionalTest.BadCustomer>();
+            return new global::MergedFunctionalTest.BadCustomerSingle(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.CustomerInfo as global::MergedFunctionalTest.CustomerInfoSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.CustomerInfoSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.CustomerInfo> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.CustomerInfoSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.CustomerInfo> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.CustomerInfoSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.CustomerInfoSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.CustomerInfo as global::MergedFunctionalTest.CustomerInfoSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="customerInfoId">The value of customerInfoId</param>
-        public static global::MergedFunctionalTest.CustomerInfoSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.CustomerInfo> source,
+        public static global::MergedFunctionalTest.CustomerInfoSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.CustomerInfo> _source,
             int customerInfoId)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "CustomerInfoId", customerInfoId }
             };
-            return new global::MergedFunctionalTest.CustomerInfoSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.CustomerInfoSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Order as global::MergedFunctionalTest.OrderSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.OrderSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Order> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.OrderSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Order> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.OrderSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.OrderSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Order as global::MergedFunctionalTest.OrderSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="orderId">The value of orderId</param>
-        public static global::MergedFunctionalTest.OrderSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Order> source,
+        public static global::MergedFunctionalTest.OrderSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Order> _source,
             int orderId)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "OrderId", orderId }
             };
-            return new global::MergedFunctionalTest.OrderSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.OrderSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Company as global::MergedFunctionalTest.CompanySingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.CompanySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Company> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.CompanySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Company> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.CompanySingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.CompanySingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Company as global::MergedFunctionalTest.CompanySingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="companyId">The value of companyId</param>
-        public static global::MergedFunctionalTest.CompanySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Company> source,
+        public static global::MergedFunctionalTest.CompanySingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Company> _source,
             int companyId)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "CompanyId", companyId }
             };
-            return new global::MergedFunctionalTest.CompanySingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.CompanySingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Product as global::MergedFunctionalTest.ProductSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.ProductSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Product> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.ProductSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Product> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.ProductSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.ProductSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Product as global::MergedFunctionalTest.ProductSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="iD">The value of iD</param>
-        public static global::MergedFunctionalTest.ProductSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Product> source,
+        public static global::MergedFunctionalTest.ProductSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Product> _source,
             string iD)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "ID", iD }
             };
-            return new global::MergedFunctionalTest.ProductSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.ProductSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.ProductDetail as global::MergedFunctionalTest.ProductDetailSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.ProductDetailSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.ProductDetail> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.ProductDetailSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.ProductDetail> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.ProductDetailSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.ProductDetailSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.ProductDetail as global::MergedFunctionalTest.ProductDetailSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="productId">The value of productId</param>
-        public static global::MergedFunctionalTest.ProductDetailSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.ProductDetail> source,
+        public static global::MergedFunctionalTest.ProductDetailSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.ProductDetail> _source,
             int productId)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "ProductId", productId }
             };
-            return new global::MergedFunctionalTest.ProductDetailSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.ProductDetailSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.SpecialTypeWithPrecisionFacet as global::MergedFunctionalTest.SpecialTypeWithPrecisionFacetSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.SpecialTypeWithPrecisionFacetSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.SpecialTypeWithPrecisionFacet> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.SpecialTypeWithPrecisionFacetSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.SpecialTypeWithPrecisionFacet> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.SpecialTypeWithPrecisionFacetSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.SpecialTypeWithPrecisionFacetSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.SpecialTypeWithPrecisionFacet as global::MergedFunctionalTest.SpecialTypeWithPrecisionFacetSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="id">The value of id</param>
-        public static global::MergedFunctionalTest.SpecialTypeWithPrecisionFacetSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.SpecialTypeWithPrecisionFacet> source,
+        public static global::MergedFunctionalTest.SpecialTypeWithPrecisionFacetSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.SpecialTypeWithPrecisionFacet> _source,
             int id)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
-            return new global::MergedFunctionalTest.SpecialTypeWithPrecisionFacetSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.SpecialTypeWithPrecisionFacetSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.BlobType as global::MergedFunctionalTest.BlobTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.BlobTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.BlobType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.BlobTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.BlobType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.BlobTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.BlobTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.BlobType as global::MergedFunctionalTest.BlobTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="keyProp">The value of keyProp</param>
-        public static global::MergedFunctionalTest.BlobTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.BlobType> source,
+        public static global::MergedFunctionalTest.BlobTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.BlobType> _source,
             int keyProp)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
-            return new global::MergedFunctionalTest.BlobTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.BlobTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Child as global::MergedFunctionalTest.ChildSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.ChildSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Child> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.ChildSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Child> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.ChildSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.ChildSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Child as global::MergedFunctionalTest.ChildSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="iD">The value of iD</param>
-        public static global::MergedFunctionalTest.ChildSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Child> source,
+        public static global::MergedFunctionalTest.ChildSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Child> _source,
             global::System.Guid iD)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "ID", iD }
             };
-            return new global::MergedFunctionalTest.ChildSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.ChildSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Cast an entity of type global::MergedFunctionalTest.Person to its derived type global::MergedFunctionalTest.Child
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::MergedFunctionalTest.ChildSingle CastToChild(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Person> source)
+        /// <param name="_source">source entity</param>
+        public static global::MergedFunctionalTest.ChildSingle CastToChild(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Person> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Child> query = source.CastTo<global::MergedFunctionalTest.Child>();
-            return new global::MergedFunctionalTest.ChildSingle(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Child> query = _source.CastTo<global::MergedFunctionalTest.Child>();
+            return new global::MergedFunctionalTest.ChildSingle(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Person as global::MergedFunctionalTest.PersonSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Person> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Person> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.PersonSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.PersonSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Person as global::MergedFunctionalTest.PersonSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="iD">The value of iD</param>
-        public static global::MergedFunctionalTest.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Person> source,
+        public static global::MergedFunctionalTest.PersonSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Person> _source,
             global::System.Guid iD)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "ID", iD }
             };
-            return new global::MergedFunctionalTest.PersonSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.PersonSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.TestType as global::MergedFunctionalTest.TestTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.TestType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.TestType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.TestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.TestTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.TestType as global::MergedFunctionalTest.TestTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="id">The value of id</param>
-        public static global::MergedFunctionalTest.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.TestType> source,
+        public static global::MergedFunctionalTest.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.TestType> _source,
             global::System.DateTimeOffset id)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
-            return new global::MergedFunctionalTest.TestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.TestTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.TestCollectionType as global::MergedFunctionalTest.TestCollectionTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.TestCollectionTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.TestCollectionType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.TestCollectionTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.TestCollectionType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.TestCollectionTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.TestCollectionTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.TestCollectionType as global::MergedFunctionalTest.TestCollectionTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="keyProp">The value of keyProp</param>
-        public static global::MergedFunctionalTest.TestCollectionTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.TestCollectionType> source,
+        public static global::MergedFunctionalTest.TestCollectionTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.TestCollectionType> _source,
             int keyProp)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
-            return new global::MergedFunctionalTest.TestCollectionTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.TestCollectionTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.DefaultValueTestType as global::MergedFunctionalTest.DefaultValueTestTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.DefaultValueTestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DefaultValueTestType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.DefaultValueTestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DefaultValueTestType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.DefaultValueTestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.DefaultValueTestTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.DefaultValueTestType as global::MergedFunctionalTest.DefaultValueTestTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="keyProp">The value of keyProp</param>
-        public static global::MergedFunctionalTest.DefaultValueTestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DefaultValueTestType> source,
+        public static global::MergedFunctionalTest.DefaultValueTestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.DefaultValueTestType> _source,
             int keyProp)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
-            return new global::MergedFunctionalTest.DefaultValueTestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.DefaultValueTestTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.MultiKeyTestType as global::MergedFunctionalTest.MultiKeyTestTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.MultiKeyTestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.MultiKeyTestType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.MultiKeyTestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.MultiKeyTestType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.MultiKeyTestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.MultiKeyTestTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.MultiKeyTestType as global::MergedFunctionalTest.MultiKeyTestTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="int64Id">The value of int64Id</param>
         /// <param name="stringId">The value of stringId</param>
         /// <param name="dateTimeOffsetId">The value of dateTimeOffsetId</param>
         /// <param name="guidId">The value of guidId</param>
-        public static global::MergedFunctionalTest.MultiKeyTestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.MultiKeyTestType> source,
+        public static global::MergedFunctionalTest.MultiKeyTestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.MultiKeyTestType> _source,
             long int64Id, 
             string stringId, 
             global::System.DateTimeOffset dateTimeOffsetId, 
             global::System.Guid guidId)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Int64Id", int64Id }, 
                 { "StringId", stringId }, 
                 { "DateTimeOffsetId", dateTimeOffsetId }, 
                 { "GuidId", guidId }
             };
-            return new global::MergedFunctionalTest.MultiKeyTestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.MultiKeyTestTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.BaseType as global::MergedFunctionalTest.BaseTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.BaseTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.BaseType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.BaseTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.BaseType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.BaseTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.BaseTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.BaseType as global::MergedFunctionalTest.BaseTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="keyProp">The value of keyProp</param>
-        public static global::MergedFunctionalTest.BaseTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.BaseType> source,
+        public static global::MergedFunctionalTest.BaseTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.BaseType> _source,
             long keyProp)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
-            return new global::MergedFunctionalTest.BaseTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.BaseTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.KatmaiType as global::MergedFunctionalTest.KatmaiTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.KatmaiTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.KatmaiType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.KatmaiTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.KatmaiType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.KatmaiTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.KatmaiTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.KatmaiType as global::MergedFunctionalTest.KatmaiTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="keyProp">The value of keyProp</param>
-        public static global::MergedFunctionalTest.KatmaiTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.KatmaiType> source,
+        public static global::MergedFunctionalTest.KatmaiTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.KatmaiType> _source,
             int keyProp)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
-            return new global::MergedFunctionalTest.KatmaiTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.KatmaiTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Level0 as global::MergedFunctionalTest.Level0Single specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.Level0Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Level0> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.Level0Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Level0> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.Level0Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.Level0Single(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Level0 as global::MergedFunctionalTest.Level0Single specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="level0Prop">The value of level0Prop</param>
-        public static global::MergedFunctionalTest.Level0Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Level0> source,
+        public static global::MergedFunctionalTest.Level0Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Level0> _source,
             string level0Prop)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Level0Prop", level0Prop }
             };
-            return new global::MergedFunctionalTest.Level0Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.Level0Single(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Level1 as global::MergedFunctionalTest.Level1Single specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.Level1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Level1> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.Level1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Level1> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.Level1Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.Level1Single(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Level1 as global::MergedFunctionalTest.Level1Single specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="level1Id">The value of level1Id</param>
-        public static global::MergedFunctionalTest.Level1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Level1> source,
+        public static global::MergedFunctionalTest.Level1Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Level1> _source,
             int level1Id)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Level1Id", level1Id }
             };
-            return new global::MergedFunctionalTest.Level1Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.Level1Single(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Cast an entity of type global::MergedFunctionalTest.Level0 to its derived type global::MergedFunctionalTest.Level1
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::MergedFunctionalTest.Level1Single CastToLevel1(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Level0> source)
+        /// <param name="_source">source entity</param>
+        public static global::MergedFunctionalTest.Level1Single CastToLevel1(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Level0> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Level1> query = source.CastTo<global::MergedFunctionalTest.Level1>();
-            return new global::MergedFunctionalTest.Level1Single(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Level1> query = _source.CastTo<global::MergedFunctionalTest.Level1>();
+            return new global::MergedFunctionalTest.Level1Single(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Level2 as global::MergedFunctionalTest.Level2Single specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.Level2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Level2> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.Level2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Level2> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.Level2Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.Level2Single(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Level2 as global::MergedFunctionalTest.Level2Single specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="level1Id">The value of level1Id</param>
-        public static global::MergedFunctionalTest.Level2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Level2> source,
+        public static global::MergedFunctionalTest.Level2Single ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Level2> _source,
             int level1Id)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Level1Id", level1Id }
             };
-            return new global::MergedFunctionalTest.Level2Single(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.Level2Single(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Cast an entity of type global::MergedFunctionalTest.Level1 to its derived type global::MergedFunctionalTest.Level2
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::MergedFunctionalTest.Level2Single CastToLevel2(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Level1> source)
+        /// <param name="_source">source entity</param>
+        public static global::MergedFunctionalTest.Level2Single CastToLevel2(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Level1> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Level2> query = source.CastTo<global::MergedFunctionalTest.Level2>();
-            return new global::MergedFunctionalTest.Level2Single(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Level2> query = _source.CastTo<global::MergedFunctionalTest.Level2>();
+            return new global::MergedFunctionalTest.Level2Single(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Cast an entity of type global::MergedFunctionalTest.Level0 to its derived type global::MergedFunctionalTest.Level2
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::MergedFunctionalTest.Level2Single CastToLevel2(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Level0> source)
+        /// <param name="_source">source entity</param>
+        public static global::MergedFunctionalTest.Level2Single CastToLevel2(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Level0> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Level2> query = source.CastTo<global::MergedFunctionalTest.Level2>();
-            return new global::MergedFunctionalTest.Level2Single(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Level2> query = _source.CastTo<global::MergedFunctionalTest.Level2>();
+            return new global::MergedFunctionalTest.Level2Single(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.SingleType as global::MergedFunctionalTest.SingleTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.SingleTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.SingleType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.SingleTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.SingleType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.SingleTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.SingleTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.SingleType as global::MergedFunctionalTest.SingleTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="keyProp">The value of keyProp</param>
-        public static global::MergedFunctionalTest.SingleTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.SingleType> source,
+        public static global::MergedFunctionalTest.SingleTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.SingleType> _source,
             global::Microsoft.Spatial.GeographyPoint keyProp)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
-            return new global::MergedFunctionalTest.SingleTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.SingleTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Group as global::MergedFunctionalTest.GroupSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.GroupSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Group> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.GroupSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Group> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.GroupSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.GroupSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Group as global::MergedFunctionalTest.GroupSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="id">The value of id</param>
-        public static global::MergedFunctionalTest.GroupSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Group> source,
+        public static global::MergedFunctionalTest.GroupSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Group> _source,
             int id)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
-            return new global::MergedFunctionalTest.GroupSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.GroupSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Principal as global::MergedFunctionalTest.PrincipalSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest.PrincipalSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Principal> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest.PrincipalSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Principal> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest.PrincipalSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.PrincipalSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest.Principal as global::MergedFunctionalTest.PrincipalSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="id">The value of id</param>
-        public static global::MergedFunctionalTest.PrincipalSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Principal> source,
+        public static global::MergedFunctionalTest.PrincipalSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Principal> _source,
             int id)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "Id", id }
             };
-            return new global::MergedFunctionalTest.PrincipalSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest.PrincipalSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// There are no comments for foo2 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceQuerySingle<string> foo2(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Customer> source, int p2)
+        public static global::Microsoft.OData.Client.DataServiceQuerySingle<string> foo2(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Customer> _source, int p2)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuerySingle<string>("MergedFunctionalTest.foo2", false, new global::Microsoft.OData.Client.UriOperationParameter("p2", p2));
+            return _source.CreateFunctionQuerySingle<string>("MergedFunctionalTest.foo2", false, new global::Microsoft.OData.Client.UriOperationParameter("p2", p2));
         }
         /// <summary>
         /// There are no comments for foo2 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceQuerySingle<string> foo2(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.GoodCustomer> source, int p2)
+        public static global::Microsoft.OData.Client.DataServiceQuerySingle<string> foo2(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.GoodCustomer> _source, int p2)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuerySingle<string>("MergedFunctionalTest.foo2", false, new global::Microsoft.OData.Client.UriOperationParameter("p2", p2));
+            return _source.CreateFunctionQuerySingle<string>("MergedFunctionalTest.foo2", false, new global::Microsoft.OData.Client.UriOperationParameter("p2", p2));
         }
         /// <summary>
         /// There are no comments for foo2 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceQuerySingle<string> foo2(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.BadCustomer> source, int p2)
+        public static global::Microsoft.OData.Client.DataServiceQuerySingle<string> foo2(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.BadCustomer> _source, int p2)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuerySingle<string>("MergedFunctionalTest.foo2", false, new global::Microsoft.OData.Client.UriOperationParameter("p2", p2));
+            return _source.CreateFunctionQuerySingle<string>("MergedFunctionalTest.foo2", false, new global::Microsoft.OData.Client.UriOperationParameter("p2", p2));
         }
         /// <summary>
         /// There are no comments for foo7 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceQuerySingle<global::System.Nullable<int>> foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Customer> source, global::System.Collections.Generic.ICollection<int> p1, global::MergedFunctionalTest.Address p2)
+        public static global::Microsoft.OData.Client.DataServiceQuerySingle<global::System.Nullable<int>> foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Customer> _source, global::System.Collections.Generic.ICollection<int> p1, global::MergedFunctionalTest.Address p2)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuerySingle<global::System.Nullable<int>>("MergedFunctionalTest.foo7", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1),
+            return _source.CreateFunctionQuerySingle<global::System.Nullable<int>>("MergedFunctionalTest.foo7", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1),
                     new global::Microsoft.OData.Client.UriOperationParameter("p2", p2));
         }
         /// <summary>
         /// There are no comments for foo7 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceQuerySingle<global::System.Nullable<int>> foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.GoodCustomer> source, global::System.Collections.Generic.ICollection<int> p1, global::MergedFunctionalTest.Address p2)
+        public static global::Microsoft.OData.Client.DataServiceQuerySingle<global::System.Nullable<int>> foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.GoodCustomer> _source, global::System.Collections.Generic.ICollection<int> p1, global::MergedFunctionalTest.Address p2)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuerySingle<global::System.Nullable<int>>("MergedFunctionalTest.foo7", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1),
+            return _source.CreateFunctionQuerySingle<global::System.Nullable<int>>("MergedFunctionalTest.foo7", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1),
                     new global::Microsoft.OData.Client.UriOperationParameter("p2", p2));
         }
         /// <summary>
         /// There are no comments for foo7 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceQuerySingle<global::System.Nullable<int>> foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.BadCustomer> source, global::System.Collections.Generic.ICollection<int> p1, global::MergedFunctionalTest.Address p2)
+        public static global::Microsoft.OData.Client.DataServiceQuerySingle<global::System.Nullable<int>> foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.BadCustomer> _source, global::System.Collections.Generic.ICollection<int> p1, global::MergedFunctionalTest.Address p2)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuerySingle<global::System.Nullable<int>>("MergedFunctionalTest.foo7", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1),
+            return _source.CreateFunctionQuerySingle<global::System.Nullable<int>>("MergedFunctionalTest.foo7", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1),
                     new global::Microsoft.OData.Client.UriOperationParameter("p2", p2));
         }
         /// <summary>
         /// There are no comments for foo7 in the schema.
         /// </summary>
-        public static global::MergedFunctionalTest.CustomerSingle foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Customer> source, global::MergedFunctionalTest.Address p1)
+        public static global::MergedFunctionalTest.CustomerSingle foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Customer> _source, global::MergedFunctionalTest.Address p1)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::MergedFunctionalTest.CustomerSingle(source.CreateFunctionQuerySingle<global::MergedFunctionalTest.Customer>("MergedFunctionalTest.foo7", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1)));
+            return new global::MergedFunctionalTest.CustomerSingle(_source.CreateFunctionQuerySingle<global::MergedFunctionalTest.Customer>("MergedFunctionalTest.foo7", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1)));
         }
         /// <summary>
         /// There are no comments for foo7 in the schema.
         /// </summary>
-        public static global::MergedFunctionalTest.CustomerSingle foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.GoodCustomer> source, global::MergedFunctionalTest.Address p1)
+        public static global::MergedFunctionalTest.CustomerSingle foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.GoodCustomer> _source, global::MergedFunctionalTest.Address p1)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::MergedFunctionalTest.CustomerSingle(source.CreateFunctionQuerySingle<global::MergedFunctionalTest.Customer>("MergedFunctionalTest.foo7", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1)));
+            return new global::MergedFunctionalTest.CustomerSingle(_source.CreateFunctionQuerySingle<global::MergedFunctionalTest.Customer>("MergedFunctionalTest.foo7", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1)));
         }
         /// <summary>
         /// There are no comments for foo7 in the schema.
         /// </summary>
-        public static global::MergedFunctionalTest.CustomerSingle foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.BadCustomer> source, global::MergedFunctionalTest.Address p1)
+        public static global::MergedFunctionalTest.CustomerSingle foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.BadCustomer> _source, global::MergedFunctionalTest.Address p1)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::MergedFunctionalTest.CustomerSingle(source.CreateFunctionQuerySingle<global::MergedFunctionalTest.Customer>("MergedFunctionalTest.foo7", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1)));
+            return new global::MergedFunctionalTest.CustomerSingle(_source.CreateFunctionQuerySingle<global::MergedFunctionalTest.Customer>("MergedFunctionalTest.foo7", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1)));
         }
         /// <summary>
         /// There are no comments for foo7 in the schema.
         /// </summary>
-        public static global::MergedFunctionalTest.CustomerSingle foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Product> source, global::MergedFunctionalTest.Address p1)
+        public static global::MergedFunctionalTest.CustomerSingle foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Product> _source, global::MergedFunctionalTest.Address p1)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::MergedFunctionalTest.CustomerSingle(source.CreateFunctionQuerySingle<global::MergedFunctionalTest.Customer>("MergedFunctionalTest.foo7", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1)));
+            return new global::MergedFunctionalTest.CustomerSingle(_source.CreateFunctionQuerySingle<global::MergedFunctionalTest.Customer>("MergedFunctionalTest.foo7", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1)));
         }
         /// <summary>
         /// There are no comments for foo7 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Customer> foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Product> source)
+        public static global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Customer> foo7(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Product> _source)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuery<global::MergedFunctionalTest.Customer>("MergedFunctionalTest.foo7", false);
+            return _source.CreateFunctionQuery<global::MergedFunctionalTest.Customer>("MergedFunctionalTest.foo7", false);
         }
         /// <summary>
         /// There are no comments for foo12 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Customer> foo12(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Product> source)
+        public static global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Customer> foo12(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Product> _source)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuery<global::MergedFunctionalTest.Customer>("MergedFunctionalTest.foo12", false);
+            return _source.CreateFunctionQuery<global::MergedFunctionalTest.Customer>("MergedFunctionalTest.foo12", false);
         }
         /// <summary>
         /// There are no comments for foo12 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Customer> foo12(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Product> source, global::MergedFunctionalTest.Address p1)
+        public static global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Customer> foo12(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Product> _source, global::MergedFunctionalTest.Address p1)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuery<global::MergedFunctionalTest.Customer>("MergedFunctionalTest.foo12", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1));
+            return _source.CreateFunctionQuery<global::MergedFunctionalTest.Customer>("MergedFunctionalTest.foo12", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1));
         }
         /// <summary>
         /// There are no comments for foo9 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuery<global::MergedFunctionalTest.Address> foo9(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Customer> source, global::System.Collections.Generic.ICollection<global::MergedFunctionalTest.Address> p2)
+        public static global::Microsoft.OData.Client.DataServiceActionQuery<global::MergedFunctionalTest.Address> foo9(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Customer> _source, global::System.Collections.Generic.ICollection<global::MergedFunctionalTest.Address> p2)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuery<global::MergedFunctionalTest.Address>(source.Context, source.AppendRequestUri("MergedFunctionalTest.foo9"), new global::Microsoft.OData.Client.BodyOperationParameter("p2", p2));
+            return new global::Microsoft.OData.Client.DataServiceActionQuery<global::MergedFunctionalTest.Address>(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.foo9"), new global::Microsoft.OData.Client.BodyOperationParameter("p2", p2));
         }
         /// <summary>
         /// There are no comments for foo9 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuery<global::MergedFunctionalTest.Address> foo9(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.GoodCustomer> source, global::System.Collections.Generic.ICollection<global::MergedFunctionalTest.Address> p2)
+        public static global::Microsoft.OData.Client.DataServiceActionQuery<global::MergedFunctionalTest.Address> foo9(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.GoodCustomer> _source, global::System.Collections.Generic.ICollection<global::MergedFunctionalTest.Address> p2)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuery<global::MergedFunctionalTest.Address>(source.Context, source.AppendRequestUri("MergedFunctionalTest.foo9"), new global::Microsoft.OData.Client.BodyOperationParameter("p2", p2));
+            return new global::Microsoft.OData.Client.DataServiceActionQuery<global::MergedFunctionalTest.Address>(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.foo9"), new global::Microsoft.OData.Client.BodyOperationParameter("p2", p2));
         }
         /// <summary>
         /// There are no comments for foo9 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuery<global::MergedFunctionalTest.Address> foo9(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.BadCustomer> source, global::System.Collections.Generic.ICollection<global::MergedFunctionalTest.Address> p2)
+        public static global::Microsoft.OData.Client.DataServiceActionQuery<global::MergedFunctionalTest.Address> foo9(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.BadCustomer> _source, global::System.Collections.Generic.ICollection<global::MergedFunctionalTest.Address> p2)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuery<global::MergedFunctionalTest.Address>(source.Context, source.AppendRequestUri("MergedFunctionalTest.foo9"), new global::Microsoft.OData.Client.BodyOperationParameter("p2", p2));
+            return new global::Microsoft.OData.Client.DataServiceActionQuery<global::MergedFunctionalTest.Address>(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.foo9"), new global::Microsoft.OData.Client.BodyOperationParameter("p2", p2));
         }
         /// <summary>
         /// There are no comments for foo10 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuery foo10(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Customer> source)
+        public static global::Microsoft.OData.Client.DataServiceActionQuery foo10(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.Customer> _source)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuery(source.Context, source.AppendRequestUri("MergedFunctionalTest.foo10"));
+            return new global::Microsoft.OData.Client.DataServiceActionQuery(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.foo10"));
         }
         /// <summary>
         /// There are no comments for foo10 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuery foo10(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.GoodCustomer> source)
+        public static global::Microsoft.OData.Client.DataServiceActionQuery foo10(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.GoodCustomer> _source)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuery(source.Context, source.AppendRequestUri("MergedFunctionalTest.foo10"));
+            return new global::Microsoft.OData.Client.DataServiceActionQuery(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.foo10"));
         }
         /// <summary>
         /// There are no comments for foo10 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuery foo10(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.BadCustomer> source)
+        public static global::Microsoft.OData.Client.DataServiceActionQuery foo10(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.BadCustomer> _source)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuery(source.Context, source.AppendRequestUri("MergedFunctionalTest.foo10"));
+            return new global::Microsoft.OData.Client.DataServiceActionQuery(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.foo10"));
         }
         /// <summary>
         /// There are no comments for foo10 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::MergedFunctionalTest.Address> foo10(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Customer> source)
+        public static global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::MergedFunctionalTest.Address> foo10(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.Customer> _source)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::MergedFunctionalTest.Address>(source.Context, source.AppendRequestUri("MergedFunctionalTest.foo10"));
+            return new global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::MergedFunctionalTest.Address>(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.foo10"));
         }
         /// <summary>
         /// There are no comments for foo10 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::MergedFunctionalTest.Address> foo10(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.GoodCustomer> source)
+        public static global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::MergedFunctionalTest.Address> foo10(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.GoodCustomer> _source)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::MergedFunctionalTest.Address>(source.Context, source.AppendRequestUri("MergedFunctionalTest.foo10"));
+            return new global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::MergedFunctionalTest.Address>(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.foo10"));
         }
         /// <summary>
         /// There are no comments for foo10 in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::MergedFunctionalTest.Address> foo10(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.BadCustomer> source)
+        public static global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::MergedFunctionalTest.Address> foo10(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.BadCustomer> _source)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::MergedFunctionalTest.Address>(source.Context, source.AppendRequestUri("MergedFunctionalTest.foo10"));
+            return new global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::MergedFunctionalTest.Address>(_source.Context, _source.AppendRequestUri("MergedFunctionalTest.foo10"));
         }
     }
 }
@@ -9293,57 +9293,57 @@ namespace MergedFunctionalTest1
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest1.DerivedType as global::MergedFunctionalTest1.DerivedTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest1.DerivedTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest1.DerivedType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest1.DerivedTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest1.DerivedType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest1.DerivedTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest1.DerivedTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest1.DerivedType as global::MergedFunctionalTest1.DerivedTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="keyProp">The value of keyProp</param>
-        public static global::MergedFunctionalTest1.DerivedTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest1.DerivedType> source,
+        public static global::MergedFunctionalTest1.DerivedTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest1.DerivedType> _source,
             long keyProp)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
-            return new global::MergedFunctionalTest1.DerivedTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest1.DerivedTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Cast an entity of type global::MergedFunctionalTest.BaseType to its derived type global::MergedFunctionalTest1.DerivedType
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::MergedFunctionalTest1.DerivedTypeSingle CastToDerivedType(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.BaseType> source)
+        /// <param name="_source">source entity</param>
+        public static global::MergedFunctionalTest1.DerivedTypeSingle CastToDerivedType(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest.BaseType> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest1.DerivedType> query = source.CastTo<global::MergedFunctionalTest1.DerivedType>();
-            return new global::MergedFunctionalTest1.DerivedTypeSingle(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::MergedFunctionalTest1.DerivedType> query = _source.CastTo<global::MergedFunctionalTest1.DerivedType>();
+            return new global::MergedFunctionalTest1.DerivedTypeSingle(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest1.Customer as global::MergedFunctionalTest1.CustomerSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::MergedFunctionalTest1.CustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest1.Customer> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::MergedFunctionalTest1.CustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest1.Customer> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::MergedFunctionalTest1.CustomerSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest1.CustomerSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::MergedFunctionalTest1.Customer as global::MergedFunctionalTest1.CustomerSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="customerId">The value of customerId</param>
-        public static global::MergedFunctionalTest1.CustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest1.Customer> source,
+        public static global::MergedFunctionalTest1.CustomerSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest1.Customer> _source,
             int customerId)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "CustomerId", customerId }
             };
-            return new global::MergedFunctionalTest1.CustomerSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::MergedFunctionalTest1.CustomerSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
     }
 }

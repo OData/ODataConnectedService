@@ -219,6 +219,22 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
+        public void CodeGenSourceParameterOrKeysPropertyEdmx()
+        {
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Metadata, null, true, false);
+            ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Verify(code, true/*isCSharp*/, false/*useDSC*/);
+
+            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Metadata, null, true, true, false, false, null, true);
+            ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Verify(code, true/*isCSharp*/, true/*useDSC*/);
+
+            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Metadata, null, false, false);
+            ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Verify(code, false/*isCSharp*/, false/*useDSC*/);
+
+            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Metadata, null, false, true, false, false, null, true);
+            ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Verify(code, false/*isCSharp*/, true/*useDSC*/);
+        }
+
+        [TestMethod]
         public void CodeGen_DSVGreaterThanMDSV()
         {
             var invalidEdmxDsvGreaterThanMdsv = @"<?xml version=""1.0"" standalone=""yes"" ?>

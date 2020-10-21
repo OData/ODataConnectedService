@@ -264,57 +264,57 @@ Namespace Foo
         ''' <summary>
         ''' Get an entity of type Foo.EntityBase as Foo.EntityBaseSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Foo.EntityBase), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Foo.EntityBaseSingle
-            Return New Foo.EntityBaseSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Foo.EntityBase), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Foo.EntityBaseSingle
+            Return New Foo.EntityBaseSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Foo.EntityBase as Foo.EntityBaseSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="idKey">The value of idKey</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Foo.EntityBase),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Foo.EntityBase),
             idKey As Integer) As Foo.EntityBaseSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "IdKey", idKey }
+                {"IdKey", idKey}
             }
-            Return New Foo.EntityBaseSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New Foo.EntityBaseSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Foo.EntityType as Foo.EntityTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Foo.EntityType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Foo.EntityTypeSingle
-            Return New Foo.EntityTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Foo.EntityType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Foo.EntityTypeSingle
+            Return New Foo.EntityTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Foo.EntityType as Foo.EntityTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="idKey">The value of idKey</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Foo.EntityType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Foo.EntityType),
             idKey As Integer) As Foo.EntityTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "IdKey", idKey }
+                {"IdKey", idKey}
             }
-            Return New Foo.EntityTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New Foo.EntityTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Cast an entity of type Foo.EntityBase to its derived type Foo.EntityType
         ''' </summary>
-        ''' <param name="source">source entity</param>
+        ''' <param name="_source">source entity</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function CastToEntityType(ByVal source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Foo.EntityBase)) As Foo.EntityTypeSingle
-            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Foo.EntityType) = source.CastTo(Of Foo.EntityType)()
-            Return New Foo.EntityTypeSingle(source.Context, query.GetPath(Nothing))
+        Public Function CastToEntityType(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Foo.EntityBase)) As Foo.EntityTypeSingle
+            Dim query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Foo.EntityType) = _source.CastTo(Of Foo.EntityType)()
+            Return New Foo.EntityTypeSingle(_source.Context, query.GetPath(Nothing))
         End Function
     End Module
 End Namespace

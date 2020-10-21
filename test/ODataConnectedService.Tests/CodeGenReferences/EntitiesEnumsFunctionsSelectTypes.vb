@@ -788,94 +788,94 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person as Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonSingle
-            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonSingle
+            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person as Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="userName">The value of userName</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person),
             userName As String) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "UserName", userName }
+                {"UserName", userName}
             }
-            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline as Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirlineSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirlineSingle
-            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirlineSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirlineSingle
+            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirlineSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline as Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirlineSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="airlineCode">The value of airlineCode</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline),
             airlineCode As String) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirlineSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "AirlineCode", airlineCode }
+                {"AirlineCode", airlineCode}
             }
-            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirlineSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirlineSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport as Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirportSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirportSingle
-            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirportSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirportSingle
+            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirportSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport as Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirportSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="icaoCode">The value of icaoCode</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airport),
             icaoCode As String) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirportSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "IcaoCode", icaoCode }
+                {"IcaoCode", icaoCode}
             }
-            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirportSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirportSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip as Microsoft.OData.Service.Sample.TrippinInMemory.Models.TripSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.TripSingle
-            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.TripSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.TripSingle
+            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.TripSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip as Microsoft.OData.Service.Sample.TrippinInMemory.Models.TripSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="tripId">The value of tripId</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip),
             tripId As Integer) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.TripSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "TripId", tripId }
+                {"TripId", tripId}
             }
-            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.TripSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.TripSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
     End Module
 End Namespace

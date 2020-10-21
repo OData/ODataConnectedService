@@ -297,49 +297,49 @@ namespace Namespace1
         /// <summary>
         /// Get an entity of type global::Namespace1.@event as global::Namespace1.eventSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::Namespace1.eventSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace1.@event> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::Namespace1.eventSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace1.@event> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::Namespace1.eventSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Namespace1.eventSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::Namespace1.@event as global::Namespace1.eventSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="string">The value of string</param>
-        public static global::Namespace1.eventSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace1.@event> source,
+        public static global::Namespace1.eventSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::Namespace1.@event> _source,
             string @string)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "string", @string }
             };
-            return new global::Namespace1.eventSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::Namespace1.eventSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// There are no comments for @const in the schema.
         /// </summary>
-        public static global::Namespace1.eventSingle @const(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Namespace1.@event> source)
+        public static global::Namespace1.eventSingle @const(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Namespace1.@event> _source)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Namespace1.eventSingle(source.CreateFunctionQuerySingle<global::Namespace1.@event>("Namespace1.const", false));
+            return new global::Namespace1.eventSingle(_source.CreateFunctionQuerySingle<global::Namespace1.@event>("Namespace1.const", false));
         }
         /// <summary>
         /// There are no comments for @as in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::Namespace1.@event> @as(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Namespace1.@event> source)
+        public static global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::Namespace1.@event> @as(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::Namespace1.@event> _source)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::Namespace1.@event>(source.Context, source.AppendRequestUri("Namespace1.as"));
+            return new global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::Namespace1.@event>(_source.Context, _source.AppendRequestUri("Namespace1.as"));
         }
     }
 }
