@@ -174,5 +174,44 @@ namespace ODataConnectedService.Tests.ViewModels
                 });
             }
         }
+
+        [TestMethod]
+        public void FillingSearchText_ShouldFilterOperationImports()
+        {
+            using (var objectSelection = new OperationImportsViewModel
+            {
+                OperationImports = new List<OperationImportModel>
+                {
+                    new OperationImportModel { Name = "Func1", IsSelected = true },
+                    new OperationImportModel { Name = "AnotherFunc2", IsSelected = true }
+                }
+            })
+            {
+                objectSelection.FilteredOperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>
+                {
+                    new OperationImportModel { Name = "Func1", IsSelected = true },
+                    new OperationImportModel { Name = "AnotherFunc2", IsSelected = true }
+                });
+
+                objectSelection.SearchText = "fun";
+
+                objectSelection.FilteredOperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>
+                {
+                    new OperationImportModel { Name = "Func1", IsSelected = true }
+                });
+
+                objectSelection.SearchText = "wrong";
+
+                objectSelection.FilteredOperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>());
+
+                objectSelection.SearchText = string.Empty;
+
+                objectSelection.FilteredOperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>
+                {
+                    new OperationImportModel { Name = "Func1", IsSelected = true },
+                    new OperationImportModel { Name = "AnotherFunc2", IsSelected = true }
+                });
+            }
+        }
     }
 }
