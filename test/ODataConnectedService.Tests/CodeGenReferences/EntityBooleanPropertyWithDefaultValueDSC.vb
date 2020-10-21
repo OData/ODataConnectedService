@@ -204,25 +204,25 @@ Namespace Namespace1.DSC
         ''' <summary>
         ''' Get an entity of type Namespace1.DSC.EntityType as Namespace1.DSC.EntityTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Namespace1.DSC.EntityType), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Namespace1.DSC.EntityTypeSingle
-            Return New Namespace1.DSC.EntityTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Namespace1.DSC.EntityType), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As Namespace1.DSC.EntityTypeSingle
+            Return New Namespace1.DSC.EntityTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type Namespace1.DSC.EntityType as Namespace1.DSC.EntityTypeSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="id">The value of id</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of Namespace1.DSC.EntityType),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of Namespace1.DSC.EntityType),
             id As Integer) As Namespace1.DSC.EntityTypeSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "Id", id }
+                {"Id", id}
             }
-            Return New Namespace1.DSC.EntityTypeSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New Namespace1.DSC.EntityTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
     End Module
 End Namespace

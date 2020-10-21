@@ -287,25 +287,25 @@ namespace NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePre
         /// <summary>
         /// Get an entity of type global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestType as global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestType as global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="keyProp">The value of keyProp</param>
-        public static global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestType> source,
+        public static global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestType> _source,
             int keyProp)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
-            return new global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.TestTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
     }
 }
@@ -408,25 +408,25 @@ namespace NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePre
         /// <summary>
         /// Get an entity of type global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestType as global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestType> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestType> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestType as global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestTypeSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="keyProp">The value of keyProp</param>
-        public static global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestType> source,
+        public static global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestType> _source,
             int keyProp)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "KeyProp", keyProp }
             };
-            return new global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestTypeSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo11.Foo12.NamespacePrefixRepeatWithSchemaNameSpace.Foo1.Foo12.TestTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
     }
 }

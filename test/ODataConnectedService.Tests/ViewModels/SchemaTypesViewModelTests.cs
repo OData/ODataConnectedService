@@ -825,5 +825,104 @@ namespace ODataConnectedService.Tests.ViewModels
                 });
             }
         }
+
+        [TestMethod]
+        public void FillingSearchText_ShouldFilterSchemaTypes()
+        {
+            using (var objectSelection = new SchemaTypesViewModel
+            {
+                SchemaTypes = new List<SchemaTypeModel>()
+            })
+            {
+                var entityTypeWithBoundOperation = new EdmEntityType("Test", "WithBoundOperationEntityType");
+                var boundOperation = new EdmAction("Test", "Enter",
+                    new EdmPrimitiveTypeReference(new EdmPrimitiveType(EdmPrimitiveTypeKind.Boolean), false), true,
+                    new EdmPathExpression(string.Empty));
+
+                var listToLoad = new List<IEdmSchemaType>
+                {
+                    new EdmEntityType("Test", "EntityType", new EdmEntityType("Test", "BaseEntityType")),
+                    new EdmEntityType("Test", "BaseEntityType"),
+                    entityTypeWithBoundOperation
+                };
+
+                objectSelection.LoadSchemaTypes(listToLoad, new Dictionary<IEdmType, List<IEdmOperation>> 
+                {
+                    {
+                        entityTypeWithBoundOperation, new List<IEdmOperation>
+                        {
+                            boundOperation
+                        }
+                    }
+                });
+
+                objectSelection.FilteredSchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>
+                {
+                    new SchemaTypeModel { ShortName = "BaseEntityType", Name = "Test.BaseEntityType", IsSelected = true },
+                    new SchemaTypeModel { ShortName = "EntityType", Name = "Test.EntityType", IsSelected = true },
+                    new SchemaTypeModel
+                    {
+                        ShortName = "WithBoundOperationEntityType",
+                        Name = "Test.WithBoundOperationEntityType",
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel> {
+                            new BoundOperationModel
+                            {
+                                Name = "Enter(Test.WithBoundOperationEntityType)",
+                                ShortName = "Enter",
+                                IsSelected = true
+                            }
+                        }
+                    }
+                });
+
+                objectSelection.SearchText = "e";
+
+                objectSelection.FilteredSchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>
+                {
+                    new SchemaTypeModel { ShortName = "EntityType", Name = "Test.EntityType", IsSelected = true },
+                    new SchemaTypeModel
+                    {
+                        ShortName = "WithBoundOperationEntityType",
+                        Name = "Test.WithBoundOperationEntityType",
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel> {
+                            new BoundOperationModel
+                            {
+                                Name = "Enter(Test.WithBoundOperationEntityType)",
+                                ShortName = "Enter",
+                                IsSelected = true
+                            }
+                        }
+                    }
+                });
+
+                objectSelection.SearchText = "wrong";
+
+                objectSelection.FilteredSchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>());
+
+                objectSelection.SearchText = string.Empty;
+
+                objectSelection.FilteredSchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>
+                {
+                    new SchemaTypeModel { ShortName = "BaseEntityType", Name = "Test.BaseEntityType", IsSelected = true },
+                    new SchemaTypeModel { ShortName = "EntityType", Name = "Test.EntityType", IsSelected = true },
+                    new SchemaTypeModel
+                    {
+                        ShortName = "WithBoundOperationEntityType",
+                        Name = "Test.WithBoundOperationEntityType",
+                        IsSelected = true,
+                        BoundOperations = new List<BoundOperationModel> {
+                            new BoundOperationModel
+                            {
+                                Name = "Enter(Test.WithBoundOperationEntityType)",
+                                ShortName = "Enter",
+                                IsSelected = true
+                            }
+                        }
+                    }
+                });
+            }
+        }
     }
 }

@@ -694,48 +694,48 @@ Namespace DupNames
         ''' <summary>
         ''' Get an entity of type DupNames.DupWithTypeName as DupNames.DupWithTypeNameSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As DupNames.DupWithTypeNameSingle
-            Return New DupNames.DupWithTypeNameSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As DupNames.DupWithTypeNameSingle
+            Return New DupNames.DupWithTypeNameSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type DupNames.DupWithTypeName as DupNames.DupWithTypeNameSingle specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="dupWithTypeName">The value of dupWithTypeName</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName),
             dupWithTypeName As Global.System.Guid) As DupNames.DupWithTypeNameSingle
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "DupWithTypeName", dupWithTypeName }
+                {"DupWithTypeName", dupWithTypeName}
             }
-            Return New DupNames.DupWithTypeNameSingle(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New DupNames.DupWithTypeNameSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type DupNames.DupWithTypeName1 as DupNames.DupWithTypeName1Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
-        ''' <param name="keys">dictionary with the names and values of keys</param>
+        ''' <param name="_source">source entity set</param>
+        ''' <param name="_keys">dictionary with the names and values of keys</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName1), ByVal keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As DupNames.DupWithTypeName1Single
-            Return New DupNames.DupWithTypeName1Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName1), ByVal _keys As Global.System.Collections.Generic.IDictionary(Of String, Object)) As DupNames.DupWithTypeName1Single
+            Return New DupNames.DupWithTypeName1Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
         ''' <summary>
         ''' Get an entity of type DupNames.DupWithTypeName1 as DupNames.DupWithTypeName1Single specified by key from an entity set
         ''' </summary>
-        ''' <param name="source">source entity set</param>
+        ''' <param name="_source">source entity set</param>
         ''' <param name="dupWithTypeName">The value of dupWithTypeName</param>
         <Global.System.Runtime.CompilerServices.Extension()>
-        Public Function ByKey(ByVal source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName1),
+        Public Function ByKey(ByVal _source As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName1),
             dupWithTypeName As Global.System.Nullable(Of Integer)) As DupNames.DupWithTypeName1Single
-            Dim keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
+            Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                { "DupWithTypeName", dupWithTypeName }
+                {"DupWithTypeName", dupWithTypeName}
             }
-            Return New DupNames.DupWithTypeName1Single(source.Context, source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)))
+            Return New DupNames.DupWithTypeName1Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
     End Module
 End Namespace

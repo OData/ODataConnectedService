@@ -479,153 +479,153 @@ namespace OverrideOperations.DSC
         /// <summary>
         /// Get an entity of type global::OverrideOperations.DSC.ET as global::OverrideOperations.DSC.ETSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::OverrideOperations.DSC.ETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.ET> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::OverrideOperations.DSC.ETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.ET> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::OverrideOperations.DSC.ETSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::OverrideOperations.DSC.ETSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::OverrideOperations.DSC.ET as global::OverrideOperations.DSC.ETSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="userName">The value of userName</param>
-        public static global::OverrideOperations.DSC.ETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.ET> source,
+        public static global::OverrideOperations.DSC.ETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.ET> _source,
             string userName)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "UserName", userName }
             };
-            return new global::OverrideOperations.DSC.ETSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::OverrideOperations.DSC.ETSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::OverrideOperations.DSC.DerivedET as global::OverrideOperations.DSC.DerivedETSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
-        /// <param name="keys">dictionary with the names and values of keys</param>
-        public static global::OverrideOperations.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.DerivedET> source, global::System.Collections.Generic.IDictionary<string, object> keys)
+        /// <param name="_source">source entity set</param>
+        /// <param name="_keys">dictionary with the names and values of keys</param>
+        public static global::OverrideOperations.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.DerivedET> _source, global::System.Collections.Generic.IDictionary<string, object> _keys)
         {
-            return new global::OverrideOperations.DSC.DerivedETSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::OverrideOperations.DSC.DerivedETSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Get an entity of type global::OverrideOperations.DSC.DerivedET as global::OverrideOperations.DSC.DerivedETSingle specified by key from an entity set
         /// </summary>
-        /// <param name="source">source entity set</param>
+        /// <param name="_source">source entity set</param>
         /// <param name="userName">The value of userName</param>
-        public static global::OverrideOperations.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.DerivedET> source,
+        public static global::OverrideOperations.DSC.DerivedETSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.DerivedET> _source,
             string userName)
         {
-            global::System.Collections.Generic.IDictionary<string, object> keys = new global::System.Collections.Generic.Dictionary<string, object>
+            global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
                 { "UserName", userName }
             };
-            return new global::OverrideOperations.DSC.DerivedETSingle(source.Context, source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(source.Context, keys)));
+            return new global::OverrideOperations.DSC.DerivedETSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
         }
         /// <summary>
         /// Cast an entity of type global::OverrideOperations.DSC.ET to its derived type global::OverrideOperations.DSC.DerivedET
         /// </summary>
-        /// <param name="source">source entity</param>
-        public static global::OverrideOperations.DSC.DerivedETSingle CastToDerivedET(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.ET> source)
+        /// <param name="_source">source entity</param>
+        public static global::OverrideOperations.DSC.DerivedETSingle CastToDerivedET(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.ET> _source)
         {
-            global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.DerivedET> query = source.CastTo<global::OverrideOperations.DSC.DerivedET>();
-            return new global::OverrideOperations.DSC.DerivedETSingle(source.Context, query.GetPath(null));
+            global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.DerivedET> query = _source.CastTo<global::OverrideOperations.DSC.DerivedET>();
+            return new global::OverrideOperations.DSC.DerivedETSingle(_source.Context, query.GetPath(null));
         }
         /// <summary>
         /// There are no comments for FunctionWithoutParameter in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.CT> FunctionWithoutParameter(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.ET> source)
+        public static global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.CT> FunctionWithoutParameter(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.ET> _source)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuerySingle<global::OverrideOperations.DSC.CT>("OverrideOperations.DSC.FunctionWithoutParameter", false);
+            return _source.CreateFunctionQuerySingle<global::OverrideOperations.DSC.CT>("OverrideOperations.DSC.FunctionWithoutParameter", false);
         }
         /// <summary>
         /// There are no comments for FunctionWithoutParameter in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.CT> FunctionWithoutParameter(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.DerivedET> source)
+        public static global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.CT> FunctionWithoutParameter(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.DerivedET> _source)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuerySingle<global::OverrideOperations.DSC.CT>("OverrideOperations.DSC.FunctionWithoutParameter", false);
+            return _source.CreateFunctionQuerySingle<global::OverrideOperations.DSC.CT>("OverrideOperations.DSC.FunctionWithoutParameter", false);
         }
         /// <summary>
         /// There are no comments for FunctionBoundToCollectionOfEntity in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.ET> FunctionBoundToCollectionOfEntity(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.ET> source, string p1)
+        public static global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.ET> FunctionBoundToCollectionOfEntity(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.ET> _source, string p1)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuery<global::OverrideOperations.DSC.ET>("OverrideOperations.DSC.FunctionBoundToCollectionOfEntity", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1));
+            return _source.CreateFunctionQuery<global::OverrideOperations.DSC.ET>("OverrideOperations.DSC.FunctionBoundToCollectionOfEntity", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1));
         }
         /// <summary>
         /// There are no comments for FunctionBoundToCollectionOfEntity in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.ET> FunctionBoundToCollectionOfEntity(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.DerivedET> source, string p1)
+        public static global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.ET> FunctionBoundToCollectionOfEntity(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.DerivedET> _source, string p1)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return source.CreateFunctionQuery<global::OverrideOperations.DSC.ET>("OverrideOperations.DSC.FunctionBoundToCollectionOfEntity", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1));
+            return _source.CreateFunctionQuery<global::OverrideOperations.DSC.ET>("OverrideOperations.DSC.FunctionBoundToCollectionOfEntity", false, new global::Microsoft.OData.Client.UriOperationParameter("p1", p1));
         }
         /// <summary>
         /// There are no comments for ActionWithParameter in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::OverrideOperations.DSC.ET> ActionWithParameter(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.ET> source, string p1)
+        public static global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::OverrideOperations.DSC.ET> ActionWithParameter(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.ET> _source, string p1)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::OverrideOperations.DSC.ET>(source.Context, source.AppendRequestUri("OverrideOperations.DSC.ActionWithParameter"), new global::Microsoft.OData.Client.BodyOperationParameter("p1", p1));
+            return new global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::OverrideOperations.DSC.ET>(_source.Context, _source.AppendRequestUri("OverrideOperations.DSC.ActionWithParameter"), new global::Microsoft.OData.Client.BodyOperationParameter("p1", p1));
         }
         /// <summary>
         /// There are no comments for ActionWithParameter in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::OverrideOperations.DSC.ET> ActionWithParameter(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.DerivedET> source, string p1)
+        public static global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::OverrideOperations.DSC.ET> ActionWithParameter(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.DerivedET> _source, string p1)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::OverrideOperations.DSC.ET>(source.Context, source.AppendRequestUri("OverrideOperations.DSC.ActionWithParameter"), new global::Microsoft.OData.Client.BodyOperationParameter("p1", p1));
+            return new global::Microsoft.OData.Client.DataServiceActionQuerySingle<global::OverrideOperations.DSC.ET>(_source.Context, _source.AppendRequestUri("OverrideOperations.DSC.ActionWithParameter"), new global::Microsoft.OData.Client.BodyOperationParameter("p1", p1));
         }
         /// <summary>
         /// There are no comments for ActionBoundToCollectionOfEntity in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuery<global::OverrideOperations.DSC.ET> ActionBoundToCollectionOfEntity(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.ET> source, string p1)
+        public static global::Microsoft.OData.Client.DataServiceActionQuery<global::OverrideOperations.DSC.ET> ActionBoundToCollectionOfEntity(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.ET> _source, string p1)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuery<global::OverrideOperations.DSC.ET>(source.Context, source.AppendRequestUri("OverrideOperations.DSC.ActionBoundToCollectionOfEntity"), new global::Microsoft.OData.Client.BodyOperationParameter("p1", p1));
+            return new global::Microsoft.OData.Client.DataServiceActionQuery<global::OverrideOperations.DSC.ET>(_source.Context, _source.AppendRequestUri("OverrideOperations.DSC.ActionBoundToCollectionOfEntity"), new global::Microsoft.OData.Client.BodyOperationParameter("p1", p1));
         }
         /// <summary>
         /// There are no comments for ActionBoundToCollectionOfEntity in the schema.
         /// </summary>
-        public static global::Microsoft.OData.Client.DataServiceActionQuery<global::OverrideOperations.DSC.ET> ActionBoundToCollectionOfEntity(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.DerivedET> source, string p1)
+        public static global::Microsoft.OData.Client.DataServiceActionQuery<global::OverrideOperations.DSC.ET> ActionBoundToCollectionOfEntity(this global::Microsoft.OData.Client.DataServiceQuery<global::OverrideOperations.DSC.DerivedET> _source, string p1)
         {
-            if (!source.IsComposable)
+            if (!_source.IsComposable)
             {
                 throw new global::System.NotSupportedException("The previous function is not composable.");
             }
 
-            return new global::Microsoft.OData.Client.DataServiceActionQuery<global::OverrideOperations.DSC.ET>(source.Context, source.AppendRequestUri("OverrideOperations.DSC.ActionBoundToCollectionOfEntity"), new global::Microsoft.OData.Client.BodyOperationParameter("p1", p1));
+            return new global::Microsoft.OData.Client.DataServiceActionQuery<global::OverrideOperations.DSC.ET>(_source.Context, _source.AppendRequestUri("OverrideOperations.DSC.ActionBoundToCollectionOfEntity"), new global::Microsoft.OData.Client.BodyOperationParameter("p1", p1));
         }
     }
 }
