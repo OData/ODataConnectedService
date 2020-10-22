@@ -18,18 +18,18 @@ To learn more about Microsoft OData Libraries see [documention here](https://doc
 ## Why OData Connected Service
 Do you have an OData service you would like to integrate in your Microsoft .NET application? OData Connected service makes your life easier since you can use it to automatically 
 generate proxy classes which are much easier to call. The ability of OData Connected service to rapidly generate and update these classes makes your development faster.
-Please check on the [documentation on how to install and use Connected service to generate these classes](https://docs.microsoft.com/odata/client/code-generation-tool).
+Please check on the [documentation on how to install and use Connected service to generate these classes](https://docs.microsoft.com/odata/connectedservice/getting-started).
 
 ## Getting started
 
-To get started with Microsoft OData Connected Service, please [check on the documentation](https://docs.microsoft.com/odata/client/code-generation-tool).
+To get started with Microsoft OData Connected Service, please [check on the documentation](https://docs.microsoft.com/odata/connectedservice/getting-started).
 
 ### OData Connected Service Extension
 The OData Connected Service documentation and other artifacts can be found in the two following places:
 * [Source Code](https://github.com/OData/ODataConnectedService)
-* [Visual Studio Extension](https://marketplace.visualstudio.com/items?itemName=laylaliu.ODataConnectedService)
+* [Visual Studio Extension](https://marketplace.visualstudio.com/items?itemName=marketplace.ODataConnectedService)
 * [Releases](https://github.com/OData/ODataConnectedService/releases)
-* [Documentation](https://docs.microsoft.com/odata/client/code-generation-tool)
+* [Documentation](https://docs.microsoft.com/odata/connectedservice/getting-started)
 
 ### Building
 In order to build the application Visual Studio 2019/2017 is the recommended development environment with the VSIX development tools installed.
