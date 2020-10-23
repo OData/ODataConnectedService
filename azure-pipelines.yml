@@ -207,3 +207,10 @@ stages:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)/VSIX'
               ArtifactName: 'SignedVSIX'
               publishLocation: 'Container'
+          
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifcat: SignedVSIXStaging'
+            inputs:
+              PathtoPublish: '$(Pipeline.Workspace)/VSIXStaging'
+              ArtifactName: 'VSIXStagingSigned'
+              publishLocation: 'Container'
