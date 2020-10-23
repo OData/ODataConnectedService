@@ -153,29 +153,30 @@ stages:
               custom: tool
               arguments: install --tool-path . SignClient
             displayName: Install SignTool tool
+          
+          # Don't sign DLL in isolation, signing the vsix archive will also sign the DLLs it includes
+          # - pwsh: |
+          #     .\SignClient "Sign" `
+          #     --baseDirectory "$(Pipeline.Workspace)/VSIXStaging" `
+          #     --input "$(signingFiles)" `
+          #     --config "$(Pipeline.Workspace)/configs/SignClient.json" `
+          #     --filelist "$(Pipeline.Workspace)/configs/filelist.txt" `
+          #     --user "$(SignClientUser)" `
+          #     --secret "$(SignClientSecret)" `
+          #     --name "OData Connected Service" `
+          #     --description "OData Connected Service" `
+          #     --descriptionUrl "https://github.com/OData/ODataConnectedService" 
+          #   displayName: Code signing - DLL
 
-          - pwsh: |
-              .\SignClient "Sign" `
-              --baseDirectory "$(Pipeline.Workspace)/VSIXStaging" `
-              --input "$(signingFiles)" `
-              --config "$(Pipeline.Workspace)/configs/SignClient.json" `
-              --filelist "$(Pipeline.Workspace)/configs/filelist.txt" `
-              --user "$(SignClientUser)" `
-              --secret "$(SignClientSecret)" `
-              --name "OData Connected Service" `
-              --description "OData Connected Service" `
-              --descriptionUrl "https://github.com/OData/ODataConnectedService" 
-            displayName: Code signing - DLL
-
-            # repackage the vsix that now contains the signed assembly
-          - task: ArchiveFiles@2
-            displayName: 'Archive files - Pack VSIX'
-            inputs:
-              rootFolderOrFile: '$(Pipeline.Workspace)\VSIXStaging'
-              includeRootFolder: false
-              archiveType: 'zip'
-              archiveFile: '$(Build.ArtifactStagingDirectory)\VSIX\$(vsixFile)'
-              replaceExistingArchive: true
+          #   # repackage the vsix that now contains the signed assembly
+          # - task: ArchiveFiles@2
+          #   displayName: 'Archive files - Pack VSIX'
+          #   inputs:
+          #     rootFolderOrFile: '$(Pipeline.Workspace)\VSIXStaging'
+          #     includeRootFolder: false
+          #     archiveType: 'zip'
+          #     archiveFile: '$(Build.ArtifactStagingDirectory)\VSIX\$(vsixFile)'
+          #     replaceExistingArchive: true
 
             # publish the vsix as an artifact so we can download it after the build
           - task: PublishBuildArtifacts@1
