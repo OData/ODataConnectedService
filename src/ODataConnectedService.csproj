@@ -51,7 +51,7 @@
     <StartProgram>$(DevEnvDir)devenv.exe</StartProgram>
     <StartArguments>/rootSuffix exp</StartArguments>
     <SignAssembly>true</SignAssembly>
-    <DelaySign>true</DelaySign>
+    <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>$(DFRootPath)\tools\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
