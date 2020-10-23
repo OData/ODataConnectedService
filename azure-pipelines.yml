@@ -157,7 +157,7 @@ stages:
           - pwsh: |
               .\SignClient "Sign" `
               --baseDirectory "$(Pipeline.Workspace)/VSIXStaging" `
-              --input "**/*.dll" `
+              --input "$(signingFiles)" `
               --config "$(Pipeline.Workspace)/configs/SignClient.json" `
               --filelist "$(Pipeline.Workspace)/configs/filelist.txt" `
               --user "$(SignClientUser)" `

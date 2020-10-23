@@ -1,2 +1,3 @@
-**/*.dll
-**/*.vsix
+**/Microsoft.OData.ConnectedService.dll
+**/ODataConnectedService.Tests.dll
+**/Microsoft.OData.ConnectedService.vsix
