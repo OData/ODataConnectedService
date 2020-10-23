@@ -186,12 +186,12 @@ stages:
           #     replaceExistingArchive: true
 
             # publish the vsix as an artifact so we can download it after the build
-          - task: PublishBuildArtifacts@1
-            displayName: 'Publish Artifact: VSIX'
-            inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)/VSIX'
-              ArtifactName: 'VSIX'
-              publishLocation: 'Container'
+          # - task: PublishBuildArtifacts@1
+          #   displayName: 'Publish Artifact: VSIX'
+          #   inputs:
+          #     PathtoPublish: '$(Build.ArtifactStagingDirectory)/VSIX'
+          #     ArtifactName: 'VSIX'
+          #     publishLocation: 'Container'
 
           - pwsh: |
               .\SignClient "Sign" `
