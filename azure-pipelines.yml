@@ -98,6 +98,7 @@ stages:
         SourceFolder: '$(productBinPath)'
         Contents: 'Microsoft.OData.ConnectedService.vsix'
         TargetFolder: '$(Build.ArtifactStagingDirectory)\VSIX'
+        OverWrite: true
 
     - task: CopyFiles@2
       displayName: 'Copy Files - Stage Product'
@@ -105,6 +106,7 @@ stages:
         SourceFolder: '$(productBinPath)'
         Contents: '$(productFiles)'
         TargetFolder: '$(Build.ArtifactStagingDirectory)\Product'
+        OverWrite: true
 
       # extract the vsix so that we can replace the .dll inside the vsix with a signed version
     - task: ExtractFiles@1
@@ -127,13 +129,6 @@ stages:
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)\VSIXStaging'
         ArtifactName: 'VSIXStaging'
-        publishLocation: 'Container'
-    
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact - VSIX'
-      inputs:
-        PathToPublish: '$(Build.ArtifactStagingDirectory)\VSIX'
-        ArtifactName: 'VSIX'
         publishLocation: 'Container'
 
     - publish: configs
@@ -160,42 +155,41 @@ stages:
               custom: tool
               arguments: install --tool-path . SignClient
             displayName: Install SignTool tool
-          
-          # Don't sign DLL in isolation, signing the vsix archive will also sign the DLLs it includes
-          # - pwsh: |
-          #     .\SignClient "Sign" `
-          #     --baseDirectory "$(Pipeline.Workspace)/VSIXStaging" `
-          #     --input "$(signingFiles)" `
-          #     --config "$(Pipeline.Workspace)/configs/SignClient.json" `
-          #     --filelist "$(Pipeline.Workspace)/configs/filelist.txt" `
-          #     --user "$(SignClientUser)" `
-          #     --secret "$(SignClientSecret)" `
-          #     --name "OData Connected Service" `
-          #     --description "OData Connected Service" `
-          #     --descriptionUrl "https://github.com/OData/ODataConnectedService" 
-          #   displayName: Code signing - DLL
-
-          #   # repackage the vsix that now contains the signed assembly
-          # - task: ArchiveFiles@2
-          #   displayName: 'Archive files - Pack VSIX'
-          #   inputs:
-          #     rootFolderOrFile: '$(Pipeline.Workspace)\VSIXStaging'
-          #     includeRootFolder: false
-          #     archiveType: 'zip'
-          #     archiveFile: '$(Build.ArtifactStagingDirectory)\VSIX\$(vsixFile)'
-          #     replaceExistingArchive: true
-
-            # publish the vsix as an artifact so we can download it after the build
-          # - task: PublishBuildArtifacts@1
-          #   displayName: 'Publish Artifact: VSIX'
-          #   inputs:
-          #     PathtoPublish: '$(Build.ArtifactStagingDirectory)/VSIX'
-          #     ArtifactName: 'VSIX'
-          #     publishLocation: 'Container'
 
           - pwsh: |
               .\SignClient "Sign" `
-              --baseDirectory "$(Pipeline.Workspace)/VSIX" `
+              --baseDirectory "$(Pipeline.Workspace)/VSIXStaging" `
+              --input "$(signingFiles)" `
+              --config "$(Pipeline.Workspace)/configs/SignClient.json" `
+              --filelist "$(Pipeline.Workspace)/configs/filelist.txt" `
+              --user "$(SignClientUser)" `
+              --secret "$(SignClientSecret)" `
+              --name "OData Connected Service" `
+              --description "OData Connected Service" `
+              --descriptionUrl "https://github.com/OData/ODataConnectedService" 
+            displayName: Code signing - DLL
+
+            # repackage the vsix that now contains the signed assembly
+          - task: ArchiveFiles@2
+            displayName: 'Archive files - Pack VSIX'
+            inputs:
+              rootFolderOrFile: '$(Pipeline.Workspace)\VSIXStaging'
+              includeRootFolder: false
+              archiveType: 'zip'
+              archiveFile: '$(Build.ArtifactStagingDirectory)\VSIX\$(vsixFile)'
+              replaceExistingArchive: true
+
+            # publish the vsix as an artifact so we can download it after the build
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact: VSIX'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)/VSIX'
+              ArtifactName: 'VSIX'
+              publishLocation: 'Container'
+
+          - pwsh: |
+              .\SignClient "Sign" `
+              --baseDirectory "$(Build.ArtifactStagingDirectory)/VSIX" `
               --input "$(vsixFile)" `
               --config "$(Pipeline.Workspace)/configs/SignClient.json" `
               --filelist "$(Pipeline.Workspace)/configs/filelist.txt" `
@@ -210,6 +204,6 @@ stages:
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifact: SignedVSIX'
             inputs:
-              PathtoPublish: '$(Pipeline.Workspace)/VSIX'
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)/VSIX'
               ArtifactName: 'SignedVSIX'
               publishLocation: 'Container'
