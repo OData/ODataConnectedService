@@ -63,15 +63,15 @@ stages:
     # because the assemblies are delay-signed, we need to disable
     # strong name validation so that the tests may run,
     # otherwise our assemblies will fail to load
-    # - task: Powershell@2
-    #   displayName: 'Skip strong name validation'
-    #   inputs:
-    #     targetType: 'inline'
-    #     script: |
-    #         & "$(snExe)" /Vr $(productBinPath)\$(mainDll)
-    #         & "$(snExe64)" /Vr $(productBinPath)\$(mainDll)
-    #         & "$(snExe)" /Vr $(testBinPath)\$(testDll)
-    #         & "$(snExe64)" /Vr $(testBinPath)\$(testDll)
+    - task: Powershell@2
+      displayName: 'Skip strong name validation'
+      inputs:
+        targetType: 'inline'
+        script: |
+            & "$(snExe)" /Vr $(productBinPath)\$(mainDll)
+            & "$(snExe64)" /Vr $(productBinPath)\$(mainDll)
+            & "$(snExe)" /Vr $(testBinPath)\$(testDll)
+            & "$(snExe64)" /Vr $(testBinPath)\$(testDll)
 
     - task: VSTest@2
       displayName: 'Run tests'
@@ -82,15 +82,15 @@ stages:
         configuration: '$(buildConfiguration)'
         searchFolder:  '$(System.DefaultWorkingDirectory)'
 
-    # - task: Powershell@2
-    #   displayName: 'Re-enable strong name validation'
-    #   inputs:
-    #     targetType: 'inline'
-    #     script: |
-    #         & "$(snExe)" /Vu $(productBinPath)\$(mainDll)
-    #         & "$(snExe64)" /Vu $(productBinPath)\$(mainDll)
-    #         & "$(snExe)" /Vu $(testBinPath)\$(testDll)
-    #         & "$(snExe64)" /Vu $(testBinPath)\$(testDll)
+    - task: Powershell@2
+      displayName: 'Re-enable strong name validation'
+      inputs:
+        targetType: 'inline'
+        script: |
+            & "$(snExe)" /Vu $(productBinPath)\$(mainDll)
+            & "$(snExe64)" /Vu $(productBinPath)\$(mainDll)
+            & "$(snExe)" /Vu $(testBinPath)\$(testDll)
+            & "$(snExe64)" /Vu $(testBinPath)\$(testDll)
 
     - task: CopyFiles@2
       displayName: 'Copy Files - VSIX to Artifacts Staging'
