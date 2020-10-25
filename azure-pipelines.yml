@@ -160,6 +160,7 @@ stages:
               .\SignClient "Sign" `
               --baseDirectory "$(Pipeline.Workspace)/VSIXStaging" `
               --input "$(signingFiles)" `
+              --output $(Pipeline.ArtifactsStagingDirectory)/SignedDLL
               --config "$(Pipeline.Workspace)/configs/SignClient.json" `
               --filelist "$(Pipeline.Workspace)/configs/filelist.txt" `
               --user "$(SignClientUser)" `
@@ -184,6 +185,13 @@ stages:
             displayName: 'Publish Artifact: VSIX'
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)/VSIX'
+              ArtifactName: 'VSIX'
+              publishLocation: 'Container'
+          
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact: SignedDLL'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)/SignedDLL'
               ArtifactName: 'VSIX'
               publishLocation: 'Container'
 
