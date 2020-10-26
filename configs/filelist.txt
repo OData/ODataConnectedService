@@ -1,1 +1,1 @@
-**/*.dll
+Microsoft.OData.ConnectedService.dll
