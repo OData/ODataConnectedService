@@ -60,19 +60,6 @@ stages:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
 
-    # because the assemblies are delay-signed, we need to disable
-    # strong name validation so that the tests may run,
-    # otherwise our assemblies will fail to load
-    # - task: Powershell@2
-    #   displayName: 'Skip strong name validation'
-    #   inputs:
-    #     targetType: 'inline'
-    #     script: |
-    #         & "$(snExe)" /Vr $(productBinPath)\$(mainDll)
-    #         & "$(snExe64)" /Vr $(productBinPath)\$(mainDll)
-    #         & "$(snExe)" /Vr $(testBinPath)\$(testDll)
-    #         & "$(snExe64)" /Vr $(testBinPath)\$(testDll)
-
     - task: VSTest@2
       displayName: 'Run tests'
       inputs:
@@ -81,16 +68,6 @@ stages:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
         searchFolder:  '$(System.DefaultWorkingDirectory)'
-
-    # - task: Powershell@2
-    #   displayName: 'Re-enable strong name validation'
-    #   inputs:
-    #     targetType: 'inline'
-    #     script: |
-    #         & "$(snExe)" /Vu $(productBinPath)\$(mainDll)
-    #         & "$(snExe64)" /Vu $(productBinPath)\$(mainDll)
-    #         & "$(snExe)" /Vu $(testBinPath)\$(testDll)
-    #         & "$(snExe64)" /Vu $(testBinPath)\$(testDll)
 
     - task: CopyFiles@2
       displayName: 'Copy Files - VSIX to Artifacts Staging'
@@ -107,22 +84,6 @@ stages:
         Contents: '$(productFiles)'
         TargetFolder: '$(Build.ArtifactStagingDirectory)\Product'
         OverWrite: true
-
-      # extract the vsix so that we can replace the .dll inside the vsix with a signed version
-    # - task: ExtractFiles@1
-    #   displayName: 'Extract Files - Unpack VSIX copy'
-    #   inputs:
-    #     archiveFilePatterns: '$(vsixPath)\$(vsixFile)'
-    #     destinationFolder: '$(Build.ArtifactStagingDirectory)\VSIXStaging'
-    #     cleanDestinationFolder: true
-
-    # this allows to download the built dll as an artifact (without the vsix)
-    # - task: PublishBuildArtifacts@1
-    #   displayName: 'Publish Artifact - Product'
-    #   inputs:
-    #     PathtoPublish: '$(Build.ArtifactStagingDirectory)\Product'
-    #     ArtifactName: 'Product'
-    #     publishLocation: 'Container'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact - VSIX'
@@ -155,7 +116,9 @@ stages:
               custom: tool
               arguments: install --tool-path . SignClient
             displayName: Install SignTool tool
-
+          
+          # Sign the vsix archive as well as files contained in the vsix that are listed in config/filelist.txt
+          # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
           - pwsh: |
               .\SignClient "Sign" `
               --baseDirectory "$(Pipeline.Workspace)/VSIX" `
@@ -170,17 +133,7 @@ stages:
               --descriptionUrl "https://github.com/OData/ODataConnectedService" 
             displayName: Code signing - VSIX
 
-            # repackage the vsix that now contains the signed assembly
-          # - task: ArchiveFiles@2
-          #   displayName: 'Archive files - Pack VSIX'
-          #   inputs:
-          #     rootFolderOrFile: '$(Pipeline.Workspace)\VSIXStaging'
-          #     includeRootFolder: false
-          #     archiveType: 'zip'
-          #     archiveFile: '$(Build.ArtifactStagingDirectory)\VSIX\$(vsixFile)'
-          #     replaceExistingArchive: true
-
-            # publish the vsix as an artifact so we can download it after the build
+          # publish the signed vsix as an artifact so we can download it after the build
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifact: SignedVSIX'
             inputs:
