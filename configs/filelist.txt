@@ -1,2 +1,1 @@
-**/*.dll
-**/*.vsix
+Microsoft.OData.ConnectedService.dll

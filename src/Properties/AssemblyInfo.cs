@@ -39,8 +39,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.11.0.0")]
-[assembly: AssemblyFileVersion("0.11.0.0")]
+[assembly: AssemblyVersion("0.12.0.0")]
+[assembly: AssemblyFileVersion("0.12.0.0")]
 [assembly: NeutralResourcesLanguageAttribute("en")]
 
-[assembly: InternalsVisibleTo("ODataConnectedService.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100b5fc90e7027f67871e773a8fde8938c81dd402ba65b9201d60593e96c492651e889cc13f1415ebb53fac1131ae0bd333c5ee6021672d9718ea31a8aebd0da0072f25d87dba6fc90ffd598ed4da35e44c398c454307e8e33b8426143daec9f596836f97c8f74750e5975c64e2189f45def46b2a2b1247adc3652bf5c308055da9")]
+[assembly: InternalsVisibleTo("ODataConnectedService.Tests, PublicKey=00240000048000009400000006020000002400005253413100040000010001003d2fbcc3c5595b4212227a5ca0fb1c45cb9c942096831420563dc169dd847a8a5fe068170bd10802dea50bc4d8342c1f8aa2ab9f27e3ceccdb21ce8c1415c3ea33eb7bc09059ca50b3e8607fa34bb9925466525ceffc3edac84ac1863afc28ef935c8db7a6430771fa41aa3de8a8d399990b02cae85e834e5d29d2cc0109b8cb")]
