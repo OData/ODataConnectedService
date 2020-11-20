@@ -12,12 +12,13 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using EnvDTE;
 using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.Templates;
 using Microsoft.VisualStudio.ConnectedServices;
+using Microsoft.VisualStudio.Shell;
 using VSLangProj;
+using Task = System.Threading.Tasks.Task;
 
 namespace Microsoft.OData.ConnectedService.CodeGeneration
 {
@@ -66,7 +67,16 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             var tempFile = Path.GetTempFileName();
             var t4Folder = Path.Combine(this.CurrentAssemblyPath, "Templates");
 
-            var referenceFolder = GetReferenceFileFolder();
+            // Hack!
+            // Tests were failing since the test project cannot access JoinableTaskContext
+            // dte == null when running test cases
+            var dte = Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+            if (dte != null)
+            {
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            }
+
+            var referenceFolder = this.GetReferenceFileFolder();
 
             // generate .ttinclude
             using (StreamWriter writer = File.CreateText(tempFile))
@@ -92,7 +102,6 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             // Hack!
             // Tests were failing since the test project cannot access ProjectItems
             // dte == null when running test cases
-            var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
             if (dte != null)
             {
                 var projectItem = this.GetCsdlFileProjectItem(csdlFileName);
@@ -185,7 +194,17 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             t4CodeGenerator.WebProxyNetworkCredentialsDomain = ServiceConfiguration.WebProxyNetworkCredentialsDomain;
 
             var tempFile = Path.GetTempFileName();
-            var referenceFolder = GetReferenceFileFolder();
+
+            // Hack!
+            // Tests were failing since the test project cannot access JoinableTaskContext
+            // dte == null when running test cases
+            var dte = Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+            if (dte != null)
+            {
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            }
+
+            var referenceFolder = this.GetReferenceFileFolder();
 
             // Csdl file name is this format [ServiceName]Csdl.xml
             var csdlFileName = string.Concat(ServiceConfiguration.ServiceName, Common.Constants.CsdlFileNameSuffix);
@@ -195,7 +214,6 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             // Hack!
             // Tests were failing since the test project cannot access ProjectItems
             // dte == null when running test cases
-            var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(DTE)) as DTE;
             if(dte != null)
             {
                 var projectItem = this.GetCsdlFileProjectItem(csdlFileName);

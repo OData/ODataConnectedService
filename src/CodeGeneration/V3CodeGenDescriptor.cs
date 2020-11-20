@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------------
 // <copyright file="V3CodeGenDescriptor.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //----------------------------------------------------------------------------
@@ -9,10 +9,11 @@ using System.Data.Services.Design;
 using System.IO;
 using System.Linq;
 using System.Security;
-using System.Threading.Tasks;
 using System.Xml;
 using EnvDTE;
 using Microsoft.VisualStudio.ConnectedServices;
+using Microsoft.VisualStudio.Shell;
+using Task = System.Threading.Tasks.Task;
 
 namespace Microsoft.OData.ConnectedService.CodeGeneration
 {
@@ -86,7 +87,16 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                         ? ".cs"
                         : ".vb";
 
-                    var outputFile = Path.Combine(GetReferenceFileFolder(), this.GeneratedFileNamePrefix + ext);
+                    // Hack!
+                    // Tests were failing since the test project cannot access JoinableTaskContext
+                    // dte == null when running test cases
+                    var dte = Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+                    if (dte != null)
+                    {
+                        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                    }
+
+                    var outputFile = Path.Combine(this.GetReferenceFileFolder(), this.GeneratedFileNamePrefix + ext);
                     await Context.HandlerHelper.AddFileAsync(tempFile, outputFile, new AddFileOptions { OpenOnComplete = ServiceConfiguration.OpenGeneratedFilesInIDE }).ConfigureAwait(false);
 
                     await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Client Proxy for OData V3 was generated.").ConfigureAwait(false);

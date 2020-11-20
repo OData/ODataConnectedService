@@ -641,6 +641,74 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
         }
 
         [TestMethod]
+        public void TestV2AddGeneratedClientCode_GeneratesCodeForv2()
+        {
+            var serviceName = "MyService";
+            var referenceFolderPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName);
+            Directory.CreateDirectory(referenceFolderPath);
+            Project project = CreateTestProject(TestProjectRootPath, ODataT4CodeGenerator.LanguageOption.CSharp);
+            var serviceConfig = new ServiceConfiguration()
+            {
+                Endpoint = Path.Combine(Directory.GetCurrentDirectory(), "CodeGeneration", "SampleServiceV2.xml"),
+                GeneratedFileNamePrefix = "Reference",
+                EdmxVersion = Common.Constants.EdmxVersion2
+            };
+            var serviceInstance = new ODataConnectedServiceInstance()
+            {
+                ServiceConfig = serviceConfig,
+                Name = serviceName
+            };
+
+            var handlerHelper = new TestConnectedServiceHandlerHelper();
+            handlerHelper.ServicesRootFolder = ServicesRootFolder;
+            ConnectedServiceHandlerContext context = new TestConnectedServiceHandlerContext(serviceInstance, handlerHelper);
+
+            var descriptor = new TestV3CodeGenDescriptor(serviceConfig.Endpoint, context, project);
+            descriptor.AddGeneratedClientCodeAsync().Wait();
+            var addedFile = handlerHelper.AddedFiles.FirstOrDefault();
+            var generatedCode = File.ReadAllText(addedFile.SourceFile);
+            var expectedCode = GeneratedCodeHelpers.LoadReferenceContent("SampleServiceV2.cs");
+
+            Assert.IsNotNull(addedFile);
+            Assert.AreEqual(Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "Reference.cs"), addedFile.CreatedFile);
+            GeneratedCodeHelpers.VerifyGeneratedCode(expectedCode, generatedCode);
+        }
+
+        [TestMethod]
+        public void TestV2AddGeneratedClientCode_GeneratesCodeForv2_ForVB()
+        {
+            var serviceName = "MyService";
+            var referenceFolderPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName);
+            Directory.CreateDirectory(referenceFolderPath);
+            Project project = CreateTestProject(TestProjectRootPath, ODataT4CodeGenerator.LanguageOption.VB);
+            var serviceConfig = new ServiceConfiguration()
+            {
+                Endpoint = Path.Combine(Directory.GetCurrentDirectory(), "CodeGeneration", "SampleServiceV2.xml"),
+                GeneratedFileNamePrefix = "Reference",
+                EdmxVersion = Common.Constants.EdmxVersion2
+            };
+            var serviceInstance = new ODataConnectedServiceInstance()
+            {
+                ServiceConfig = serviceConfig,
+                Name = serviceName
+            };
+
+            var handlerHelper = new TestConnectedServiceHandlerHelper();
+            handlerHelper.ServicesRootFolder = ServicesRootFolder;
+            ConnectedServiceHandlerContext context = new TestConnectedServiceHandlerContext(serviceInstance, handlerHelper);
+
+            var descriptor = new TestV3CodeGenDescriptor(serviceConfig.Endpoint, context, project);
+            descriptor.AddGeneratedClientCodeAsync().Wait();
+            var addedFile = handlerHelper.AddedFiles.FirstOrDefault();
+            var generatedCode = File.ReadAllText(addedFile.SourceFile);
+            var expectedCode = GeneratedCodeHelpers.LoadReferenceContent("SampleServiceV2.vb");
+
+            Assert.IsNotNull(addedFile);
+            Assert.AreEqual(Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "Reference.vb"), addedFile.CreatedFile);
+            GeneratedCodeHelpers.VerifyGeneratedCode(expectedCode, generatedCode);
+        }
+
+        [TestMethod]
         public void TestV3AddGeneratedClientCode_GeneratesCodeForv3()
         {
             var serviceName = "MyService";

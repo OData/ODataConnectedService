@@ -78,6 +78,14 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
+        public void TestGetSchemaTypesWithNullModel()
+        {
+            var schemaTypes = EdmHelper.GetSchemaTypes(null);
+
+            schemaTypes.Should().BeEmpty();
+        }
+
+        [TestMethod]
         public void TestGetOperationImports()
         {
             var model = EdmHelper.GetEdmModelFromFile(MetadataPath);
@@ -103,6 +111,14 @@ namespace ODataConnectedService.Tests
 
             //In order to get compare lists you should use the CollectionAssert
             CollectionAssert.AreEqual(expectedOperationImports, actualOperationImports);
+        }
+
+        [TestMethod]
+        public void TestGetOperationImportsWithNullModel()
+        {
+            var operationImports = EdmHelper.GetOperationImports(null);
+
+            operationImports.Should().BeEmpty();
         }
 
         [TestMethod]
@@ -136,6 +152,14 @@ namespace ODataConnectedService.Tests
 
             //In order to get compare lists you should use the CollectionAssert
             CollectionAssert.AreEqual(expectedBoundOperations, actualBoundOperations);
+        }
+
+        [TestMethod]
+        public void TestGetBoundOperationsWithNullModel()
+        {
+            var boundOperations = EdmHelper.GetBoundOperations(null);
+
+            boundOperations.Should().BeEmpty();
         }
 
         [TestMethod]
