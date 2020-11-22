@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.Views;
@@ -21,6 +22,11 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 {
     internal class SchemaTypesViewModel : ConnectedServiceWizardPage
     {
+        /// <summary>
+        /// Whether SchemaTypes is supported for the given OData version.
+        /// </summary>
+        private bool _isSupportedVersion;
+        
         /// <summary>
         /// User settings.
         /// </summary>
@@ -116,6 +122,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             SchemaTypes = new List<SchemaTypeModel>();
             SchemaTypeModelMap = new Dictionary<string, SchemaTypeModel>();
             RelatedTypes = new Dictionary<string, ICollection<string>>();
+            IsSupportedODataVersion = true;
             this.UserSettings = userSettings;
         }
 
@@ -138,6 +145,27 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                     .Where(x => x.IsSelected && x.BoundOperations?.Any() == true).SelectMany(x => x.BoundOperations)
                     .Count(x => x.IsSelected).ToString(CultureInfo.InvariantCulture);
             }
+        }
+
+        /// <summary>
+        /// Whether the connected service supports schema type selection feature for the current OData version, default is true
+        /// </summary>
+        public bool IsSupportedODataVersion
+        {
+            get { return _isSupportedVersion; }
+            set
+            {
+                _isSupportedVersion = value;
+                OnPropertyChanged("VersionWarningVisibility");
+            }
+        }
+
+        /// <summary>
+        ///  Whether the waring of unsupported version should be visible.
+        /// </summary>
+        public Visibility VersionWarningVisibility
+        {
+            get { return IsSupportedODataVersion ? Visibility.Collapsed : Visibility.Visible; }
         }
 
         /// <summary>

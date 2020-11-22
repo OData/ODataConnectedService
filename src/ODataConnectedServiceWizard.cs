@@ -257,6 +257,16 @@ namespace Microsoft.OData.ConnectedService
         {
             if (sender is SchemaTypesViewModel entityTypeViewModel)
             {
+                var supportedVersion = Constants.SupportedSchemTypesSelectionEdmxVersions.Contains(EdmxVersion);
+                SchemaTypesViewModel.IsSupportedODataVersion = supportedVersion;
+                SchemaTypesViewModel.View.IsEnabled = supportedVersion;
+
+                if (!supportedVersion)
+                {
+                    SchemaTypesViewModel.ClearSchemaTypes();
+                    return;
+                }
+
                 if (this.ProcessedEndpointForSchemaTypes != ConfigODataEndpointViewModel.Endpoint)
                 {
                     var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
@@ -278,6 +288,11 @@ namespace Microsoft.OData.ConnectedService
 
         public void SchemaTypeSelectionViewModel_PageLeaving(object sender, EventArgs args)
         {
+            if (!Constants.SupportedSchemTypesSelectionEdmxVersions.Contains(EdmxVersion))
+            {
+                return;
+            }
+
             var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
 
             // exclude related operation imports for excluded types

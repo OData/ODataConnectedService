@@ -149,5 +149,10 @@
                 Deselect All Bound Operations
             </Button>
         </StackPanel>
+        <TextBlock
+            Visibility="{Binding VersionWarningVisibility}"
+            FontWeight="Bold">
+            This feature is only available for OData v4 services.
+        </TextBlock>
     </StackPanel>
 </UserControl>

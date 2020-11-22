@@ -71,5 +71,12 @@ namespace Microsoft.OData.ConnectedService.Common
         };
 
         public static Dictionary<string, Version> SupportedEdmxNamespaces => supportedEdmxNamespaces;
+
+        private static HashSet<Version> supportedSchemaTypesSelectionEdmxVersions = new HashSet<Version>
+        {
+            EdmxVersion4,
+        };
+
+        public static HashSet<Version> SupportedSchemTypesSelectionEdmxVersions => supportedSchemaTypesSelectionEdmxVersions;
     }
 }
