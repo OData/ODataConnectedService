@@ -92,7 +92,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             // Hack!
             // Tests were failing since the test project cannot access ProjectItems
             // dte == null when running test cases
-            var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+            var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(DTE)) as DTE;
             if (dte != null)
             {
                 var projectItem = this.GetCsdlFileProjectItem(csdlFileName);
