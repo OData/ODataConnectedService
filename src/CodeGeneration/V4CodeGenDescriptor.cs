@@ -66,7 +66,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             var tempFile = Path.GetTempFileName();
             var t4Folder = Path.Combine(this.CurrentAssemblyPath, "Templates");
 
-            var referenceFolder = GetReferenceFileFolder();
+            var referenceFolder = this.GetReferenceFileFolder();
 
             // generate .ttinclude
             using (StreamWriter writer = File.CreateText(tempFile))
@@ -92,7 +92,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             // Hack!
             // Tests were failing since the test project cannot access ProjectItems
             // dte == null when running test cases
-            var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+            var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(DTE)) as DTE;
             if (dte != null)
             {
                 var projectItem = this.GetCsdlFileProjectItem(csdlFileName);
@@ -185,7 +185,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             t4CodeGenerator.WebProxyNetworkCredentialsDomain = ServiceConfiguration.WebProxyNetworkCredentialsDomain;
 
             var tempFile = Path.GetTempFileName();
-            var referenceFolder = GetReferenceFileFolder();
+            var referenceFolder = this.GetReferenceFileFolder();
 
             // Csdl file name is this format [ServiceName]Csdl.xml
             var csdlFileName = string.Concat(ServiceConfiguration.ServiceName, Common.Constants.CsdlFileNameSuffix);
@@ -196,7 +196,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             // Tests were failing since the test project cannot access ProjectItems
             // dte == null when running test cases
             var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(DTE)) as DTE;
-            if(dte != null)
+            if (dte != null)
             {
                 var projectItem = this.GetCsdlFileProjectItem(csdlFileName);
                 projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionEmbeddedResource;

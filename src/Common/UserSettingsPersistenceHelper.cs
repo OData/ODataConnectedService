@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------------
 // <copyright file="UserSettingsPersistenceHelper.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ namespace Microsoft.OData.ConnectedService.Common
                         }
                         finally
                         {
-                            stream?.Dispose();
+                            DisposeStream(stream);
                         }
                     }
 
@@ -93,7 +93,7 @@ namespace Microsoft.OData.ConnectedService.Common
                             }
                             finally
                             {
-                                stream?.Dispose();
+                                DisposeStream(stream);
                             }
 
                             if (onLoaded != null && result != null)
@@ -135,6 +135,11 @@ namespace Microsoft.OData.ConnectedService.Common
             {
                 logger?.WriteMessageAsync(LoggerMessageCategory.Warning, failureMessage, failureMessageArg, ex);
             }
+        }
+
+        private static void DisposeStream(IsolatedStorageFileStream stream)
+        {
+            stream?.Dispose();
         }
     }
 }

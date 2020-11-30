@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------------
 // <copyright file="V3CodeGenDescriptor.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //----------------------------------------------------------------------------
@@ -37,7 +37,12 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
 
         public override async Task AddGeneratedClientCodeAsync()
         {
-            await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Generating Client Proxy ...").ConfigureAwait(false);
+            await AddGeneratedCodeAsync().ConfigureAwait(true);
+        }
+
+        private async Task AddGeneratedCodeAsync()
+        {
+            await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Generating Client Proxy ...").ConfigureAwait(true);
 
             var generator = new EntityClassGenerator(this.TargetProjectLanguage)
             {
@@ -66,17 +71,17 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 using (StreamWriter writer = File.CreateText(tempFile))
                 {
                     var errors = generator.GenerateCode(reader, writer, this.ServiceConfiguration.NamespacePrefix);
-                    await writer.FlushAsync().ConfigureAwait(false);
+                    await writer.FlushAsync().ConfigureAwait(true);
                     if (errors != null && errors.Any())
                     {
                         noErrors = false;
 
                         foreach (var err in errors)
                         {
-                            await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, err.Message).ConfigureAwait(false);
+                            await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, err.Message).ConfigureAwait(true);
                         }
 
-                        await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, "Client Proxy for OData V3 was not generated.").ConfigureAwait(false);
+                        await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, "Client Proxy for OData V3 was not generated.").ConfigureAwait(true);
                     }
                 }
 
@@ -86,10 +91,10 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                         ? ".cs"
                         : ".vb";
 
-                    var outputFile = Path.Combine(GetReferenceFileFolder(), this.GeneratedFileNamePrefix + ext);
-                    await Context.HandlerHelper.AddFileAsync(tempFile, outputFile, new AddFileOptions { OpenOnComplete = ServiceConfiguration.OpenGeneratedFilesInIDE }).ConfigureAwait(false);
+                    var outputFile = Path.Combine(this.GetReferenceFileFolder(), this.GeneratedFileNamePrefix + ext);
+                    await Context.HandlerHelper.AddFileAsync(tempFile, outputFile, new AddFileOptions { OpenOnComplete = ServiceConfiguration.OpenGeneratedFilesInIDE }).ConfigureAwait(true);
 
-                    await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Client Proxy for OData V3 was generated.").ConfigureAwait(false);
+                    await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Client Proxy for OData V3 was generated.").ConfigureAwait(true);
                 }
             }
         }

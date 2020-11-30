@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" standalone="yes" ?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2006/04/edmx">
+  <edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="2.0">
+    <Schema Namespace="Simple" xmlns="http://schemas.microsoft.com/ado/2006/04/edmx">
+      <EntityType Name="TestType">
+        <Key>
+          <PropertyRef Name="KeyProp" />
+        </Key>
+        <Property Name="KeyProp" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ValueProp" Type="Edm.String" Nullable="false" />
+      </EntityType>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
