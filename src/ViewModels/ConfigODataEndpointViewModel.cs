@@ -101,7 +101,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             if (this.Endpoint.StartsWith("https:", StringComparison.Ordinal)
                 || this.Endpoint.StartsWith("http", StringComparison.Ordinal))
             {
-                if (!this.Endpoint.EndsWith("$metadata", StringComparison.Ordinal))
+                if (!this.Endpoint.Contains("$metadata"))
                 {
                     this.Endpoint = this.Endpoint.TrimEnd('/') + "/$metadata";
                 }

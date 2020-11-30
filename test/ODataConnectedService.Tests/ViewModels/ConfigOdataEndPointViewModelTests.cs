@@ -54,11 +54,25 @@ namespace ODataConnectedService.Tests.ViewModels
             Assert.IsFalse(pageNavigationResult.IsSuccess);
             Assert.IsTrue(pageNavigationResult.ShowMessageBoxOnFailure);
 
+            //Provide a url with $metadata somewhere in the url
+            configOdataEndPointViewModel.Endpoint = "http://mysite/ODataService/$metadata?api-version=2.0";
+            pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
+
+            //Check if the url is detected as valid and kept without no modification
+            Assert.AreEqual(configOdataEndPointViewModel.Endpoint, "http://mysite/ODataService/$metadata?api-version=2.0");
+
+            //Check if an exception is thrown for an invalid url and the user is notified
+            pageNavigationResult = pageNavigationResultTask?.Result;
+            Assert.IsNotNull(pageNavigationResult.ErrorMessage);
+            Assert.IsTrue(pageNavigationResult.ErrorMessage.Contains("The remote name could not be resolved"));
+            Assert.IsFalse(pageNavigationResult.IsSuccess);
+            Assert.IsTrue(pageNavigationResult.ShowMessageBoxOnFailure);
+
             //Provide a url without $metadata
             configOdataEndPointViewModel.Endpoint = "http://mysite/ODataService";
             pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
-            //Check if $metadata is apended if the url does not have it added at the end
+            //Check if $metadata is appended if the url does not have it added at the end
             Assert.AreEqual(configOdataEndPointViewModel.Endpoint, "http://mysite/ODataService/$metadata");
 
             //Check if an exception is thrown for an invalid url and the user is notified
@@ -78,11 +92,11 @@ namespace ODataConnectedService.Tests.ViewModels
             Assert.IsTrue(pageNavigationResult.IsSuccess);
             Assert.IsFalse(pageNavigationResult.ShowMessageBoxOnFailure);
 
-            //Check if the content writtent to the temp file is correct
+            //Check if the content written to the temp file is correct
             string actualTempFileContent = File.ReadAllText(configOdataEndPointViewModel.MetadataTempPath);
             Assert.AreEqual(expectedTempfileContent.Trim(), actualTempFileContent.Trim(), "temp metadata file not properly written");
 
-            //Check if Edmx verison of has correctly been detected
+            //Check if Edmx version of has correctly been detected
             Assert.AreEqual(configOdataEndPointViewModel.EdmxVersion.ToString(),"4.0.0.0","Version not properly detected");
         }
     }
