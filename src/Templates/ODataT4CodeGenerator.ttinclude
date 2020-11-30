@@ -27,6 +27,7 @@
 <#@ Import Namespace="System.Collections.Generic" #>
 <#@ Import Namespace="Microsoft.OData.Edm.Csdl" #>
 <#@ Import Namespace="Microsoft.OData.Edm" #>
+<#@ Import Namespace="Microsoft.OData.Edm.Validation" #>
 <#@ Import Namespace="Microsoft.OData.Edm.Vocabularies" #>
 <#@ Import Namespace="Microsoft.OData.Edm.Vocabularies.V1" #>
 <#@ Import Namespace="Microsoft.OData.Edm.Vocabularies.Community.V1" #>
@@ -3405,7 +3406,9 @@ internal static class Utils
             return clrTypeName;
         }
 
-        throw new Exception($"Could not get CLR type name for EDM type '{edmTypeReference.FullName()}'");
+        var errors = edmTypeReference.Errors().Select(e => e.ErrorMessage);
+        throw new Exception(
+            $"Could not get CLR type name for EDM type '{edmTypeReference.FullName()}'{System.Environment.NewLine}{string.Join(global::System.Environment.NewLine, errors)}");
     }
 
     /// <summary>

@@ -19,6 +19,7 @@ namespace Microsoft.OData.ConnectedService.Templates
     using System.Collections.Generic;
     using Microsoft.OData.Edm.Csdl;
     using Microsoft.OData.Edm;
+    using Microsoft.OData.Edm.Validation;
     using Microsoft.OData.Edm.Vocabularies;
     using Microsoft.OData.Edm.Vocabularies.V1;
     using Microsoft.OData.Edm.Vocabularies.Community.V1;
@@ -3551,7 +3552,9 @@ internal static class Utils
             return clrTypeName;
         }
 
-        throw new Exception($"Could not get CLR type name for EDM type '{edmTypeReference.FullName()}'");
+        var errors = edmTypeReference.Errors().Select(e => e.ErrorMessage);
+        throw new Exception(
+            $"Could not get CLR type name for EDM type '{edmTypeReference.FullName()}'{System.Environment.NewLine}{string.Join(global::System.Environment.NewLine, errors)}");
     }
 
     /// <summary>

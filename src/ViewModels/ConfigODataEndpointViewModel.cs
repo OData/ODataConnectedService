@@ -1,6 +1,6 @@
 ﻿//----------------------------------------------------------------------------------
 // <copyright file="ConfigODataEndpointViewModel.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //---------------------------------------------------------------------------------
@@ -178,7 +178,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
             finally
             {
-                metadataStream?.Dispose();
+                this.DisposeStream(metadataStream);
             }
         }
 
@@ -215,6 +215,11 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                 this.WebProxyNetworkCredentialsUsername = UserSettings.WebProxyNetworkCredentialsUsername;
                 this.View = new ConfigODataEndpoint { DataContext = this };
             }
+        }
+
+        private void DisposeStream(Stream stream)
+        {
+            stream?.Dispose();
         }
     }
 }

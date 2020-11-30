@@ -5,6 +5,7 @@
 // </copyright>
 //----------------------------------------------------------------------------
 
+using System;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
 using Microsoft.VisualStudio.ConnectedServices;
@@ -34,24 +35,35 @@ namespace Microsoft.OData.ConnectedService.Common
 
             using (var reader = XmlReader.Create(path, xmlSettings))
             {
-                var result = CsdlReader.TryParse(reader, true /* ignoreUnexpectedAttributes */, out var model, out var errors);
-                if (result)
+                try
                 {
-                    return model;
-                }
-                if (context != null)
-                {
-                    foreach (var error in errors)
+                    var result = CsdlReader.TryParse(reader, true /* ignoreUnexpectedAttributes */, out var model, out var errors);
+                    if (result)
                     {
-                        var task = context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning,
-                            error.ErrorMessage);
-                        task.RunSynchronously();
+                        return model;
+                    }
+
+                    if (context != null)
+                    {
+                        foreach (var error in errors)
+                        {
+                            var task = context.Logger?.WriteMessageAsync(LoggerMessageCategory.Warning,
+                                error.ErrorMessage);
+                            task?.RunSynchronously();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (context != null)
+                    {
+                        var task = context.Logger?.WriteMessageAsync(LoggerMessageCategory.Warning, ex.Message);
+                        task?.RunSynchronously();
                     }
                 }
             }
             return null;
         }
-
 
         /// <summary>
         /// Gets all the operation imports in the model
@@ -60,7 +72,7 @@ namespace Microsoft.OData.ConnectedService.Common
         /// <returns>A list of operation imports</returns>
         public static IEnumerable<IEdmOperationImport> GetOperationImports(IEdmModel model)
         {
-            var containers = model.SchemaElements.OfType<IEdmEntityContainer>();
+            var containers = model?.SchemaElements?.OfType<IEdmEntityContainer>() ?? Array.Empty<IEdmEntityContainer>();
             foreach (var container in containers)
             {
                 foreach (var operation in container.OperationImports())
@@ -78,6 +90,11 @@ namespace Microsoft.OData.ConnectedService.Common
         public static IDictionary<IEdmType, List<IEdmOperation>> GetBoundOperations(IEdmModel model)
         {
             _boundOperations = new Dictionary<IEdmType, List<IEdmOperation>>();
+            if (model == null)
+            {
+                return _boundOperations;
+            }
+
             foreach (IEdmOperation operation in model.SchemaElements.OfType<IEdmOperation>())
             {
                 if (operation.IsBound)
@@ -104,7 +121,7 @@ namespace Microsoft.OData.ConnectedService.Common
         /// <returns>All schema types in the model</returns>
         public static IEnumerable<IEdmSchemaType> GetSchemaTypes(IEdmModel model)
         {
-            var schemaTypes = model.SchemaElements.OfType<IEdmSchemaType>();
+            var schemaTypes = model?.SchemaElements?.OfType<IEdmSchemaType>() ?? Array.Empty<IEdmSchemaType>();
 
             foreach (var schemaType in schemaTypes)
             {
