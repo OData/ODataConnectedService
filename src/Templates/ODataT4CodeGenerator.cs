@@ -906,6 +906,12 @@ public class CodeGenerationContext
     /// Preconfigured WebProxy for fetching the metadata
     /// </summary>
     private WebProxy webProxy;
+
+    /// <summary>
+    /// The metadata uri used for the original source edmx
+    /// </summary>
+    private Uri metadataUri;
+
     private  IList<string> customHttpHeaders;
     /// <summary>
     /// Constructs an instance of <see cref="CodeGenerationContext"/>.
@@ -926,6 +932,7 @@ public class CodeGenerationContext
     public CodeGenerationContext(Uri metadataUri, string namespacePrefix,  WebProxy proxy,  IList<string> CustomHttpHeaders)
         : this(GetEdmxStringFromMetadataPath(metadataUri, proxy, CustomHttpHeaders), namespacePrefix)
     {
+        this.metadataUri = metadataUri;
         webProxy = proxy;
         customHttpHeaders = CustomHttpHeaders;
     }
@@ -1026,6 +1033,11 @@ public class CodeGenerationContext
         {
             return (uri) =>
             {
+                if(uri.IsAbsoluteUri == false)
+                {
+                    // In the case that the reference model uri is relative we should create an absolute uri using the metadataUri as the base
+                    uri = new Uri(metadataUri, uri.ToString());
+                }
                 using (XmlReader reader = GetReferencedModelReaderFunc(uri, webProxy, customHttpHeaders))
                 {
                     if (reader == null)
