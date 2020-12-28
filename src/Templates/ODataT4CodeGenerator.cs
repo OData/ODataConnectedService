@@ -1490,7 +1490,8 @@ public class CodeGenerationContext
                 tmp.FindDeclaredTerm(AlternateKeysVocabularyConstants.AlternateKeys) != null ||
                 tmp.FindDeclaredTerm("Org.OData.Authorization.V1.Authorizations") != null ||
                 tmp.FindDeclaredTerm("Org.OData.Validation.V1.DerivedTypeConstraint") != null ||
-                tmp.FindDeclaredTerm("Org.OData.Community.V1.UrlEscapeFunction") != null)
+                tmp.FindDeclaredTerm("Org.OData.Community.V1.UrlEscapeFunction") != null ||
+                tmp.DeclaredNamespaces.Any(n => n.StartsWith("com.sap.vocabularies")))
             {
                 continue;
             }
