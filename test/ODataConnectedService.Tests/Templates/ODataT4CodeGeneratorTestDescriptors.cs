@@ -146,6 +146,13 @@ namespace ODataConnectedService.Tests
             return LoadContentFromBaseline(fileName);
         }
 
+        internal static string GetAbsoluteUriOfFile(string fileName)
+        {
+            var outPutDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+            var filePath = Path.Combine(outPutDirectory, $"CodeGenReferences\\{fileName}");
+            return filePath;
+        }
+
         private const string BaseName = "ODataConnectedService.Tests.CodeGenReferences.";
         private static readonly Assembly Assembly = Assembly.GetExecutingAssembly();
 
@@ -489,6 +496,25 @@ namespace ODataConnectedService.Tests
                 { ExpectedVBUseDSC, MultiReferenceModelVBUseDSC }
             },
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, MultiReferenceModel.ExpectedResults, isCSharp, useDSC, "MultiReferenceModel"),
+        };
+
+        #endregion
+
+        #region MultiReferenceModelRelativeUri
+
+        public static string EdmxWithMultiReferenceModelRelativeUriFilePath = GetAbsoluteUriOfFile("MultiReferenceModelRelativeUri.xml");
+
+        public static string MultiReferenceModelRelativeUriCSharp = LoadContentFromBaseline("MultiReferenceModelRelativeUri.cs");
+        public static string MultiReferenceModelRelativeUriVB = LoadContentFromBaseline("MultiReferenceModelRelativeUri.vb");
+
+        public static ODataT4CodeGeneratorTestsDescriptor MultiReferenceModelRelativeUri = new ODataT4CodeGeneratorTestsDescriptor()
+        {
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, MultiReferenceModelRelativeUriCSharp },
+                { ExpectedVB, MultiReferenceModelRelativeUriVB },
+            },
+            Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, MultiReferenceModelRelativeUri.ExpectedResults, isCSharp, useDSC, "MultiReferenceModelRelativeUri"),
         };
 
         #endregion
