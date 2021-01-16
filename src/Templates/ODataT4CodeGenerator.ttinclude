@@ -888,7 +888,7 @@ public class CodeGenerationContext
             return (uri) =>
             {
                 Uri originalUri = uri;
-                if(uri.IsAbsoluteUri == false)
+                if(!uri.IsAbsoluteUri)
                 {
                     // In the case that the reference model uri is relative we should create an absolute uri using the metadataUri as the base
                     uri = new Uri(metadataUri, uri.ToString());
