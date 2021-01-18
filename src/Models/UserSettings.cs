@@ -388,7 +388,7 @@ namespace Microsoft.OData.ConnectedService.Models
                     {
                         foreach (var mruEndpoint in userSettings.MruEndpoints)
                         {
-                            this.MruEndpoints.Add(mruEndpoint);
+                            MruEndpoints.Add(mruEndpoint);
                         }
                     }
                 },
@@ -438,33 +438,33 @@ namespace Microsoft.OData.ConnectedService.Models
                 return;
             }
 
-            var index = this.MruEndpoints.IndexOf(mruEndpoint);
+            var index = MruEndpoints.IndexOf(mruEndpoint);
 
             if (index >= 0)
             {
                 // Remove possible duplicates
-                for (var i = this.MruEndpoints.Count - 1; index > 0 && i > index; i--)
+                for (var i = MruEndpoints.Count - 1; index > 0 && i > index; i--)
                 {
-                    if (this.MruEndpoints[i].Equals(mruEndpoint, StringComparison.Ordinal))
+                    if (MruEndpoints[i].Equals(mruEndpoint, StringComparison.Ordinal))
                     {
-                        this.MruEndpoints.RemoveAt(i);
+                        MruEndpoints.RemoveAt(i);
                     }
                 }
 
                 // Endpoint not at index 0
                 if (index > 0)
                 {
-                    this.MruEndpoints.Move(index, 0);
+                    MruEndpoints.Move(index, 0);
                 }
             }
             else
             {
-                while (this.MruEndpoints.Count >= MaxMruEntries)
+                while (MruEndpoints.Count >= MaxMruEntries)
                 {
-                    this.MruEndpoints.RemoveAt(this.MruEndpoints.Count - 1);
+                    MruEndpoints.RemoveAt(MruEndpoints.Count - 1);
                 }
 
-                this.MruEndpoints.Insert(0, mruEndpoint);
+                MruEndpoints.Insert(0, mruEndpoint);
             }
         }
     }
