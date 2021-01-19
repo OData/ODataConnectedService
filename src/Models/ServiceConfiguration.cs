@@ -39,7 +39,7 @@ namespace Microsoft.OData.ConnectedService.Models
         public bool EnableNamingAlias { get; set; }
         public bool IgnoreUnexpectedElementsAndAttributes { get; set; }
         public bool IncludeT4File { get; set; }
-        public List<string> ExcludedOperationImports;
-        public List<string> ExcludedBoundOperations;
+        public List<string> ExcludedOperationImports { get; set; }
+        public List<string> ExcludedBoundOperations { get; set; }
     }
 }

@@ -36,7 +36,8 @@ namespace Microsoft.OData.ConnectedService.Common
                         {
                             // note: this overwrites existing settings file if it exists
                             stream = file.OpenFile(fileName, FileMode.Create);
-                            using (var writer = XmlWriter.Create(stream))
+
+                            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true }))
                             {
                                 var dcs = new DataContractSerializer(userSettings.GetType());
                                 dcs.WriteObject(writer, userSettings);
@@ -112,7 +113,7 @@ namespace Microsoft.OData.ConnectedService.Common
 
         private static string GetStorageFileName(string providerId, string name)
         {
-            return providerId + "_" + name + ".xml";
+            return providerId + "." + name + ".xml";
         }
 
         private static IsolatedStorageFile GetIsolatedStorageFile()

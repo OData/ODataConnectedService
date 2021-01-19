@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Microsoft.OData.ConnectedService;
 using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Models;
-using Microsoft.OData.ConnectedService.Tests.Templates;
 using Microsoft.OData.ConnectedService.ViewModels;
 using Microsoft.VisualStudio.ConnectedServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -31,7 +30,8 @@ namespace ODataConnectedService.Tests.ViewModels
         {
             userSettings = new UserSettings();
             serviceWizard = new ODataConnectedServiceWizard(null);
-            configOdataEndPointViewModel = new ConfigODataEndpointViewModel(userSettings, serviceWizard);
+            configOdataEndPointViewModel = new ConfigODataEndpointViewModel(userSettings);
+            serviceWizard.Pages.Add(configOdataEndPointViewModel);
             CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
         }
 
@@ -55,11 +55,11 @@ namespace ODataConnectedService.Tests.ViewModels
             Assert.IsTrue(pageNavigationResult.ShowMessageBoxOnFailure);
 
             //Provide a url without $metadata
-            configOdataEndPointViewModel.Endpoint = "http://mysite/ODataService";
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://mysite/ODataService";
             pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
             //Check if $metadata is apended if the url does not have it added at the end
-            Assert.AreEqual(configOdataEndPointViewModel.Endpoint, "http://mysite/ODataService/$metadata");
+            Assert.AreEqual(configOdataEndPointViewModel.UserSettings.Endpoint, "http://mysite/ODataService/$metadata");
 
             //Check if an exception is thrown for an invalid url and the user is notified
             pageNavigationResult = pageNavigationResultTask?.Result;
@@ -69,7 +69,7 @@ namespace ODataConnectedService.Tests.ViewModels
             Assert.IsTrue(pageNavigationResult.ShowMessageBoxOnFailure);
 
 
-            configOdataEndPointViewModel.Endpoint = Path.Combine(Directory.GetCurrentDirectory(),"EdmxFile.xml");
+            configOdataEndPointViewModel.UserSettings.Endpoint = Path.Combine(Directory.GetCurrentDirectory(),"EdmxFile.xml");
             pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
             //Check if any errors were reported

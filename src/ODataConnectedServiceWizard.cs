@@ -32,15 +32,13 @@ namespace Microsoft.OData.ConnectedService
 
         public ConnectedServiceProviderContext Context { get; set; }
 
-        public ODataConnectedServiceInstance ServiceInstance => this.serviceInstance ?? (this.serviceInstance = new ODataConnectedServiceInstance());
+        public ODataConnectedServiceInstance ServiceInstance => serviceInstance ?? (serviceInstance = new ODataConnectedServiceInstance());
 
-        public Version EdmxVersion => this.ConfigODataEndpointViewModel.EdmxVersion;
+        public Version EdmxVersion => ConfigODataEndpointViewModel.EdmxVersion;
 
-        public UserSettings UserSettings { get; }
+        public UserSettings UserSettings { get; internal set; }
 
-        private readonly ServiceConfigurationV4 _serviceConfig;
-
-        public ServiceConfigurationV4 ServiceConfig { get { return _serviceConfig; } }
+        public ServiceConfigurationV4 ServiceConfig { get; private set; }
 
         internal string ProcessedEndpointForOperationImports;
 
@@ -48,74 +46,73 @@ namespace Microsoft.OData.ConnectedService
 
         public ODataConnectedServiceWizard(ConnectedServiceProviderContext context)
         {
-            this.Context = context;
-            this.UserSettings = UserSettings.Load(context?.Logger);
+            Context = context;
+            // We only use most recently used endpoints from the config file saved in user's isolated storage
+            // The UserSettings constructor will load those endpoints
+            UserSettings = new UserSettings(context?.Logger);
 
-            // Since ServiceConfigurationV4 is a derived type of ServiceConfiguration. So we can deserialize a ServiceConfiguration into a ServiceConfigurationV4.
-            this._serviceConfig = this.Context?.GetExtendedDesignerData<ServiceConfigurationV4>();
+            // Since ServiceConfigurationV4 is a derived type of ServiceConfiguration,
+            // we can deserialize a ServiceConfiguration into a ServiceConfigurationV4.
+            ServiceConfig = Context?.GetExtendedDesignerData<ServiceConfigurationV4>();
 
-            ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(this.UserSettings, this);
-            AdvancedSettingsViewModel = new AdvancedSettingsViewModel(this.UserSettings);
-            SchemaTypesViewModel = new SchemaTypesViewModel(this.UserSettings);
+            ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(UserSettings);
+            AdvancedSettingsViewModel = new AdvancedSettingsViewModel(UserSettings);
+            SchemaTypesViewModel = new SchemaTypesViewModel(UserSettings);
+            OperationImportsViewModel = new OperationImportsViewModel(UserSettings);
 
-            OperationImportsViewModel = new OperationImportsViewModel(this.UserSettings);
             OperationImportsViewModel.PageEntering += OperationImportsViewModel_PageEntering;
-
             SchemaTypesViewModel.PageEntering += SchemaTypeSelectionViewModel_PageEntering;
             SchemaTypesViewModel.PageLeaving += SchemaTypeSelectionViewModel_PageLeaving;
-            if (this.Context != null && this.Context.IsUpdating)
+
+            if (Context != null && Context.IsUpdating)
             {
-                ConfigODataEndpointViewModel.Endpoint = this._serviceConfig?.Endpoint;
-                ConfigODataEndpointViewModel.EdmxVersion = this._serviceConfig?.EdmxVersion;
-                ConfigODataEndpointViewModel.ServiceName = this._serviceConfig?.ServiceName;
-                ConfigODataEndpointViewModel.CustomHttpHeaders = this._serviceConfig?.CustomHttpHeaders;
+                LoadUserSettingsFromServiceConfig();
+                ConfigODataEndpointViewModel.EdmxVersion = ServiceConfig?.EdmxVersion;
 
                 // Restore the main settings to UI elements.
                 ConfigODataEndpointViewModel.PageEntering += ConfigODataEndpointViewModel_PageEntering;
-
                 // The ViewModel should always be filled otherwise if the wizard is completed without visiting this page the generated code becomes wrong
                 AdvancedSettingsViewModel_PageEntering(AdvancedSettingsViewModel, EventArgs.Empty);
-
                 // Restore the advanced settings to UI elements.
                 AdvancedSettingsViewModel.PageEntering += AdvancedSettingsViewModel_PageEntering;
             }
 
-            this.Pages.Add(ConfigODataEndpointViewModel);
-            this.Pages.Add(SchemaTypesViewModel);
-            this.Pages.Add(OperationImportsViewModel);
-            this.Pages.Add(AdvancedSettingsViewModel);
-            this.IsFinishEnabled = true;
+            Pages.Add(ConfigODataEndpointViewModel);
+            Pages.Add(SchemaTypesViewModel);
+            Pages.Add(OperationImportsViewModel);
+            Pages.Add(AdvancedSettingsViewModel);
+            IsFinishEnabled = true;
         }
 
         public override async Task<ConnectedServiceInstance> GetFinishedServiceInstanceAsync()
         {
             // ensure that the data has been loaded from wizard pages and saved to UserSettings
-            if (this.Context.IsUpdating)
+            if (Context.IsUpdating)
             {
-                if (!this.OperationImportsViewModel.IsEntered)
+                if (!OperationImportsViewModel.IsEntered)
                 {
                     await OperationImportsViewModel.OnPageEnteringAsync(null).ConfigureAwait(false);
                     await OperationImportsViewModel.OnPageLeavingAsync(null).ConfigureAwait(false);
                 }
 
-                if (!this.SchemaTypesViewModel.IsEntered)
+                if (!SchemaTypesViewModel.IsEntered)
                 {
                     await SchemaTypesViewModel.OnPageEnteringAsync(null).ConfigureAwait(false);
                     await SchemaTypesViewModel.OnPageLeavingAsync(null).ConfigureAwait(false);
                 }
 
-                if (!this.AdvancedSettingsViewModel.IsEntered)
+                if (!AdvancedSettingsViewModel.IsEntered)
                 {
                     await AdvancedSettingsViewModel.OnPageEnteringAsync(null).ConfigureAwait(false);
                     await AdvancedSettingsViewModel.OnPageLeavingAsync(null).ConfigureAwait(false);
                 }
             }
 
-            this.UserSettings.Save();
-            this.ServiceInstance.InstanceId = AdvancedSettingsViewModel.GeneratedFileNamePrefix;
-            this.ServiceInstance.Name = ConfigODataEndpointViewModel.ServiceName;
-            this.ServiceInstance.MetadataTempFilePath = ConfigODataEndpointViewModel.MetadataTempPath;
-            this.ServiceInstance.ServiceConfig = this.CreateServiceConfiguration();
+            UserSettings.Save();
+            ServiceInstance.InstanceId = UserSettings.GeneratedFileNamePrefix;
+            ServiceInstance.Name = UserSettings.ServiceName;
+            ServiceInstance.MetadataTempFilePath = ConfigODataEndpointViewModel.MetadataTempPath;
+            ServiceInstance.ServiceConfig = CreateServiceConfiguration();
 
             return await Task.FromResult<ConnectedServiceInstance>(ServiceInstance).ConfigureAwait(false);
         }
@@ -127,50 +124,38 @@ namespace Microsoft.OData.ConnectedService
         private ServiceConfiguration CreateServiceConfiguration()
         {
             ServiceConfiguration serviceConfiguration;
-            if (ConfigODataEndpointViewModel.EdmxVersion == Common.Constants.EdmxVersion4)
+
+            if (ConfigODataEndpointViewModel.EdmxVersion == Constants.EdmxVersion4)
             {
-                var serviceConfigurationV4 = new ServiceConfigurationV4
-                {
-                    ExcludedOperationImports = OperationImportsViewModel.ExcludedOperationImportsNames.ToList(),
-                    ExcludedBoundOperations = SchemaTypesViewModel.ExcludedBoundOperationsNames.ToList(),
-                    IgnoreUnexpectedElementsAndAttributes =
-                        AdvancedSettingsViewModel.IgnoreUnexpectedElementsAndAttributes,
-                    EnableNamingAlias = AdvancedSettingsViewModel.EnableNamingAlias,
-                    IncludeT4File = AdvancedSettingsViewModel.IncludeT4File,
-                    OpenGeneratedFilesInIDE = AdvancedSettingsViewModel.OpenGeneratedFilesInIDE
-                };
+                var serviceConfigurationV4 = new ServiceConfigurationV4();
+                serviceConfigurationV4.CopyPropertiesFrom(UserSettings);
+
+                serviceConfigurationV4.ExcludedOperationImports = OperationImportsViewModel.ExcludedOperationImportsNames.ToList();
+                serviceConfigurationV4.ExcludedBoundOperations = SchemaTypesViewModel.ExcludedBoundOperationsNames.ToList();
+
                 serviceConfiguration = serviceConfigurationV4;
             }
             else
             {
                 serviceConfiguration = new ServiceConfiguration();
+
+                serviceConfiguration.CopyPropertiesFrom(UserSettings);
             }
 
             serviceConfiguration.ExcludedSchemaTypes = SchemaTypesViewModel.ExcludedSchemaTypeNames.ToList();
-            serviceConfiguration.ServiceName = ConfigODataEndpointViewModel.ServiceName;
-            serviceConfiguration.Endpoint = ConfigODataEndpointViewModel.Endpoint;
             serviceConfiguration.EdmxVersion = ConfigODataEndpointViewModel.EdmxVersion;
-            serviceConfiguration.CustomHttpHeaders = ConfigODataEndpointViewModel.CustomHttpHeaders;
-            serviceConfiguration.IncludeWebProxy = ConfigODataEndpointViewModel.IncludeWebProxy;
-            serviceConfiguration.WebProxyHost = ConfigODataEndpointViewModel.WebProxyHost;
-            serviceConfiguration.IncludeWebProxyNetworkCredentials = ConfigODataEndpointViewModel.IncludeWebProxyNetworkCredentials;
-            serviceConfiguration.WebProxyNetworkCredentialsUsername = ConfigODataEndpointViewModel.WebProxyNetworkCredentialsUsername;
-            serviceConfiguration.WebProxyNetworkCredentialsPassword = ConfigODataEndpointViewModel.WebProxyNetworkCredentialsPassword;
-            serviceConfiguration.WebProxyNetworkCredentialsDomain = ConfigODataEndpointViewModel.WebProxyNetworkCredentialsDomain;
-            serviceConfiguration.IncludeCustomHeaders = ConfigODataEndpointViewModel.IncludeCustomHeaders;
-            serviceConfiguration.UseDataServiceCollection = AdvancedSettingsViewModel.UseDataServiceCollection;
-            serviceConfiguration.GeneratedFileNamePrefix = AdvancedSettingsViewModel.GeneratedFileNamePrefix;
-            serviceConfiguration.UseNamespacePrefix = AdvancedSettingsViewModel.UseNamespacePrefix;
-            serviceConfiguration.MakeTypesInternal = AdvancedSettingsViewModel.MakeTypesInternal;
-            serviceConfiguration.OpenGeneratedFilesInIDE = AdvancedSettingsViewModel.OpenGeneratedFilesInIDE;
-            serviceConfiguration.GenerateMultipleFiles = AdvancedSettingsViewModel.GenerateMultipleFiles;
-
-            if (AdvancedSettingsViewModel.UseNamespacePrefix && !string.IsNullOrEmpty(AdvancedSettingsViewModel.NamespacePrefix))
-            {
-                serviceConfiguration.NamespacePrefix = AdvancedSettingsViewModel.NamespacePrefix;
-            }
 
             return serviceConfiguration;
+        }
+
+        private void LoadUserSettingsFromServiceConfig()
+        {
+            if (ServiceConfig == null)
+            {
+                return;
+            }
+
+            UserSettings.CopyPropertiesFrom(ServiceConfig);
         }
 
         #region "Event Handlers"
@@ -183,19 +168,9 @@ namespace Microsoft.OData.ConnectedService
                 {
                     configOdataView.Endpoint.IsEnabled = false;
                     configOdataView.OpenConnectedServiceJsonFileButton.IsEnabled = false;
-                    configOdataView.OpenEndpointFileButton.IsEnabled = !this._serviceConfig.Endpoint.StartsWith("http", StringComparison.OrdinalIgnoreCase);
+                    configOdataView.OpenEndpointFileButton.IsEnabled = !ServiceConfig.Endpoint.StartsWith("http", StringComparison.OrdinalIgnoreCase);
                     configOdataView.ServiceName.IsEnabled = false;
                 }
-
-                configOdataViewModel.IncludeCustomHeaders = this._serviceConfig.IncludeCustomHeaders;
-                configOdataViewModel.IncludeWebProxy = this._serviceConfig.IncludeWebProxy;
-                configOdataViewModel.WebProxyHost = this._serviceConfig.WebProxyHost;
-                configOdataViewModel.IncludeWebProxyNetworkCredentials = this._serviceConfig.IncludeWebProxyNetworkCredentials;
-                configOdataViewModel.WebProxyNetworkCredentialsDomain = this._serviceConfig.WebProxyNetworkCredentialsDomain;
-
-                // don't accept any credentials from the restored settings
-                configOdataViewModel.WebProxyNetworkCredentialsUsername = null;
-                configOdataViewModel.WebProxyNetworkCredentialsPassword = null;
             }
         }
 
@@ -205,22 +180,12 @@ namespace Microsoft.OData.ConnectedService
             {
                 if (advancedSettingsViewModel.View is AdvancedSettings advancedSettings)
                 {
-                    advancedSettingsViewModel.GeneratedFileNamePrefix = this._serviceConfig.GeneratedFileNamePrefix;
-                    advancedSettings.ReferenceFileName.IsEnabled = !this.Context.IsUpdating;
-                    advancedSettingsViewModel.UseNamespacePrefix = this._serviceConfig.UseNamespacePrefix;
-                    advancedSettingsViewModel.NamespacePrefix = this._serviceConfig.NamespacePrefix ?? Common.Constants.DefaultReferenceFileName;
-                    advancedSettingsViewModel.UseDataServiceCollection = this._serviceConfig.UseDataServiceCollection;
-                    advancedSettingsViewModel.OpenGeneratedFilesInIDE = this._serviceConfig.OpenGeneratedFilesInIDE;
-                    advancedSettingsViewModel.GenerateMultipleFiles = this._serviceConfig.GenerateMultipleFiles;
-                    advancedSettings.GenerateMultipleFiles.IsEnabled = !this.Context.IsUpdating;
+                    advancedSettings.ReferenceFileName.IsEnabled = !Context.IsUpdating;
+                    advancedSettings.GenerateMultipleFiles.IsEnabled = !Context.IsUpdating;
 
-                    if (this._serviceConfig.EdmxVersion == Common.Constants.EdmxVersion4)
+                    if (ServiceConfig.EdmxVersion == Constants.EdmxVersion4)
                     {
-                        advancedSettingsViewModel.IgnoreUnexpectedElementsAndAttributes = this._serviceConfig.IgnoreUnexpectedElementsAndAttributes;
-                        advancedSettingsViewModel.EnableNamingAlias = this._serviceConfig.EnableNamingAlias;
-                        advancedSettingsViewModel.IncludeT4File = this._serviceConfig.IncludeT4File;
-                        advancedSettingsViewModel.MakeTypesInternal = this._serviceConfig.MakeTypesInternal;
-                        advancedSettings.IncludeT4File.IsEnabled = !this.Context.IsUpdating;
+                        advancedSettings.IncludeT4File.IsEnabled = !Context.IsUpdating;
                     }
                 }
             }
@@ -230,7 +195,7 @@ namespace Microsoft.OData.ConnectedService
         {
             if (sender is OperationImportsViewModel operationImportsViewModel)
             {
-                if (this.ProcessedEndpointForOperationImports != ConfigODataEndpointViewModel.Endpoint)
+                if (ProcessedEndpointForOperationImports != UserSettings.Endpoint)
                 {
                     if (ConfigODataEndpointViewModel.EdmxVersion != Constants.EdmxVersion4)
                     {
@@ -245,11 +210,11 @@ namespace Microsoft.OData.ConnectedService
 
                     if (Context.IsUpdating)
                     {
-                        operationImportsViewModel.ExcludeOperationImports(this._serviceConfig?.ExcludedOperationImports ?? Enumerable.Empty<string>());
+                        operationImportsViewModel.ExcludeOperationImports(ServiceConfig?.ExcludedOperationImports ?? Enumerable.Empty<string>());
                     }
                 }
 
-                this.ProcessedEndpointForOperationImports = ConfigODataEndpointViewModel.Endpoint;
+                ProcessedEndpointForOperationImports = UserSettings.Endpoint;
             }
         }
 
@@ -257,7 +222,7 @@ namespace Microsoft.OData.ConnectedService
         {
             if (sender is SchemaTypesViewModel entityTypeViewModel)
             {
-                if (this.ProcessedEndpointForSchemaTypes != ConfigODataEndpointViewModel.Endpoint)
+                if (ProcessedEndpointForSchemaTypes != UserSettings.Endpoint)
                 {
                     var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
                     var entityTypes = EdmHelper.GetSchemaTypes(model);
@@ -267,12 +232,12 @@ namespace Microsoft.OData.ConnectedService
                     if (Context.IsUpdating)
                     {
                         entityTypeViewModel.ExcludeSchemaTypes(
-                            this._serviceConfig?.ExcludedSchemaTypes ?? Enumerable.Empty<string>(),
-                            this._serviceConfig?.ExcludedBoundOperations ?? Enumerable.Empty<string>());
+                            ServiceConfig?.ExcludedSchemaTypes ?? Enumerable.Empty<string>(),
+                            ServiceConfig?.ExcludedBoundOperations ?? Enumerable.Empty<string>());
                     }
                 }
 
-                this.ProcessedEndpointForSchemaTypes = ConfigODataEndpointViewModel.Endpoint;
+                ProcessedEndpointForSchemaTypes = UserSettings.Endpoint;
             }
         }
 
@@ -320,34 +285,34 @@ namespace Microsoft.OData.ConnectedService
             {
                 if (disposing)
                 {
-                    if (this.AdvancedSettingsViewModel != null)
+                    if (AdvancedSettingsViewModel != null)
                     {
-                        this.AdvancedSettingsViewModel.Dispose();
-                        this.AdvancedSettingsViewModel = null;
+                        AdvancedSettingsViewModel.Dispose();
+                        AdvancedSettingsViewModel = null;
                     }
 
-                    if (this.OperationImportsViewModel != null)
+                    if (OperationImportsViewModel != null)
                     {
-                        this.OperationImportsViewModel.Dispose();
+                        OperationImportsViewModel.Dispose();
                         OperationImportsViewModel = null;
                     }
 
-                    if (this.SchemaTypesViewModel != null)
+                    if (SchemaTypesViewModel != null)
                     {
-                        this.SchemaTypesViewModel.Dispose();
-                        this.SchemaTypesViewModel = null;
+                        SchemaTypesViewModel.Dispose();
+                        SchemaTypesViewModel = null;
                     }
 
-                    if (this.ConfigODataEndpointViewModel != null)
+                    if (ConfigODataEndpointViewModel != null)
                     {
-                        this.ConfigODataEndpointViewModel.Dispose();
-                        this.ConfigODataEndpointViewModel = null;
+                        ConfigODataEndpointViewModel.Dispose();
+                        ConfigODataEndpointViewModel = null;
                     }
 
-                    if (this.serviceInstance != null)
+                    if (serviceInstance != null)
                     {
-                        this.serviceInstance.Dispose();
-                        this.serviceInstance = null;
+                        serviceInstance.Dispose();
+                        serviceInstance = null;
                     }
                 }
             }
