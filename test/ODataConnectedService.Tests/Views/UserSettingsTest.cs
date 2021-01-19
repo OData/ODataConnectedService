@@ -5,19 +5,27 @@
 // </copyright>
 //-----------------------------------------------------------------------------------
 
+using System;
 using Microsoft.OData.ConnectedService.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ODataConnectedService.Tests.Views
 {
-    [TestClass]
-    public class UserSettingsTest
+    public sealed class UserSettingsTest : IDisposable
     {
-        [TestMethod]
+        // Will be executed after every test to set test user settings to a known initial state
+        public void Dispose()
+        {
+            var userSettings = new UserSettings(configName: "TestUserSettings");
+            userSettings.MruEndpoints.Clear();
+            userSettings.Save();
+        }
+
+        [Fact]
         public void SaveSettingsWhenSaveMethodIsCalled()
         {
             // Create an instance of UserSettings
-            var userSettings = new UserSettings();
+            var userSettings = new UserSettings(configName: "TestUserSettings");
 
             // Set UserSettings
             userSettings.Endpoint = "https://service/$metadata";
@@ -28,22 +36,20 @@ namespace ODataConnectedService.Tests.Views
             // Save settings
             userSettings.Save();
 
-            //Load settings
-            UserSettings settings = UserSettings.Load(null);
-            Assert.AreEqual("https://service/$metadata", settings.Endpoint);
-            Assert.AreEqual("MyPrefix", settings.GeneratedFileNamePrefix);
-            Assert.AreEqual(true, settings.GenerateMultipleFiles);
-            Assert.AreEqual(true, settings.MakeTypesInternal);
-
-            // Reset User Settings
-            ResetUserSettings();
+            // Load settings
+            var settings = new UserSettings(configName: "TestUserSettings");
+            settings.Load();
+            Assert.Equal("https://service/$metadata", settings.Endpoint);
+            Assert.Equal("MyPrefix", settings.GeneratedFileNamePrefix);
+            Assert.True(settings.GenerateMultipleFiles);
+            Assert.True(settings.MakeTypesInternal);
         }
 
-        [TestMethod]
+        [Fact]
         public void AddToTopOfMruList_ShouldAddToTopWithoutDuplicatingOrExceedingMax()
         {
             // Create an instance of UserSettings
-            var userSettings = new UserSettings();
+            var userSettings = new UserSettings(configName: "TestUserSettings");
 
             var endpoint1 = "https://service1/$metadata";
             var endpoint2 = "https://service2/$metadata";
@@ -58,45 +64,36 @@ namespace ODataConnectedService.Tests.Views
             var endpoint11 = "https://service11/$metadata";
 
             // Add an endpoint.
-            UserSettings.AddToTopOfMruList(userSettings?.MruEndpoints, endpoint1);
-            Assert.AreEqual(1, userSettings.MruEndpoints.Count);            
+            userSettings.AddMruEndpoint(endpoint1);
+            Assert.Single(userSettings.MruEndpoints);            
 
             // Add another endpoint.The latest endpoint to be added is at the top of the MruList.
-            UserSettings.AddToTopOfMruList(userSettings?.MruEndpoints, endpoint2);
-            Assert.AreEqual(2, userSettings.MruEndpoints.Count);
-            Assert.AreEqual(endpoint2, userSettings.MruEndpoints[0]);
-            Assert.AreEqual(endpoint1, userSettings.MruEndpoints[1]);
+            userSettings.AddMruEndpoint(endpoint2);
+            Assert.Equal(2, userSettings.MruEndpoints.Count);
+            Assert.Equal(endpoint2, userSettings.MruEndpoints[0]);
+            Assert.Equal(endpoint1, userSettings.MruEndpoints[1]);
 
             // Add duplicate endpoint, Count should remain the same. But the item is moved to top of the MruList.
-            UserSettings.AddToTopOfMruList(userSettings?.MruEndpoints, endpoint1);
-            Assert.AreEqual(2, userSettings.MruEndpoints.Count);
-            Assert.AreEqual(endpoint1, userSettings.MruEndpoints[0]);
-            Assert.AreEqual(endpoint2, userSettings.MruEndpoints[1]);
+            userSettings.AddMruEndpoint(endpoint1);
+            Assert.Equal(2, userSettings.MruEndpoints.Count);
+            Assert.Equal(endpoint1, userSettings.MruEndpoints[0]);
+            Assert.Equal(endpoint2, userSettings.MruEndpoints[1]);
 
-            //Add 9 more endpoints. Total should not exceed 10
-            UserSettings.AddToTopOfMruList(userSettings?.MruEndpoints, endpoint3);
-            UserSettings.AddToTopOfMruList(userSettings?.MruEndpoints, endpoint4);
-            UserSettings.AddToTopOfMruList(userSettings?.MruEndpoints, endpoint5);
-            UserSettings.AddToTopOfMruList(userSettings?.MruEndpoints, endpoint6);
-            UserSettings.AddToTopOfMruList(userSettings?.MruEndpoints, endpoint7);
-            UserSettings.AddToTopOfMruList(userSettings?.MruEndpoints, endpoint8);
-            UserSettings.AddToTopOfMruList(userSettings?.MruEndpoints, endpoint9);
-            UserSettings.AddToTopOfMruList(userSettings?.MruEndpoints, endpoint10);
-            UserSettings.AddToTopOfMruList(userSettings?.MruEndpoints, endpoint11);
-            Assert.AreEqual(10, userSettings.MruEndpoints.Count);
-            //endpoint11 is the latest so on top in the MruList
-            Assert.AreEqual(endpoint11, userSettings.MruEndpoints[0]);
-            //endpoint2 is the least recent hence removed from the list
-            Assert.IsFalse(userSettings.MruEndpoints.Contains(endpoint2));
-
-            // Reset User Settings
-            ResetUserSettings();
-        }
-
-        private void ResetUserSettings()
-        {
-            var settings = new UserSettings();
-            settings.Save();
+            // Add 9 more endpoints. Total should not exceed 10
+            userSettings.AddMruEndpoint(endpoint3);
+            userSettings.AddMruEndpoint(endpoint4);
+            userSettings.AddMruEndpoint(endpoint5);
+            userSettings.AddMruEndpoint(endpoint6);
+            userSettings.AddMruEndpoint(endpoint7);
+            userSettings.AddMruEndpoint(endpoint8);
+            userSettings.AddMruEndpoint(endpoint9);
+            userSettings.AddMruEndpoint(endpoint10);
+            userSettings.AddMruEndpoint(endpoint11);
+            Assert.Equal(10, userSettings.MruEndpoints.Count);
+            // endpoint11 is the latest so on top in the MruList
+            Assert.Equal(endpoint11, userSettings.MruEndpoints[0]);
+            // endpoint2 is the least recent hence removed from the list
+            Assert.Contains(userSettings.MruEndpoints, d => !d.Contains(endpoint2));
         }
     }
 }

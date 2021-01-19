@@ -29,7 +29,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// <remarks>
         /// <see cref="Models.UserSettings"/>
         /// </remarks>
-        public UserSettings UserSettings { get; set; }
+        public UserSettings UserSettings { get; internal set; }
 
         private long _operationImportsCount = 0;
 

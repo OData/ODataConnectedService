@@ -6,7 +6,6 @@ using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.ViewModels;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,6 +19,7 @@ namespace Microsoft.OData.ConnectedService.Views
     public partial class ConfigODataEndpoint : UserControl
     {
         internal UserSettings UserSettings { get; set; }
+
         public ConfigODataEndpoint()
         {
             InitializeComponent();
@@ -27,7 +27,10 @@ namespace Microsoft.OData.ConnectedService.Views
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (Endpoint.Items.Count > 0 && !((ConfigODataEndpointViewModel)this.DataContext).ServiceWizard.Context.IsUpdating)
+            ODataConnectedServiceWizard connectedServiceWizard = GetODataConnectedServiceWizard();
+            UserSettings = connectedServiceWizard.UserSettings;
+
+            if (Endpoint.Items.Count > 0 && !connectedServiceWizard.Context.IsUpdating)
             {
                 Endpoint.SelectedItem = Endpoint.Items[0];
             }
@@ -53,103 +56,95 @@ namespace Microsoft.OData.ConnectedService.Views
 
         private void OpenConnectedServiceJsonFileButton_Click(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new Microsoft.Win32.OpenFileDialog
+            var fileDialogTitle = "Open OData Connected Service Config File";
+
+            var openFileDialog = new Win32.OpenFileDialog
             {
                 DefaultExt = ".json",
                 Filter = "JSON File (.json)|*.json",
-                Title = "Open OData Connected Service Config File"
+                Title = fileDialogTitle
             };
 
-            var result = openFileDialog.ShowDialog();
-            if (result == false)
+            if (!(openFileDialog.ShowDialog() == true)) // Result of ShowDialog() call is bool?
+            {
                 return;
+            }
+
             if (!File.Exists(openFileDialog.FileName))
             {
-               MessageBox.Show($"File \"{openFileDialog.FileName}\" does not exists.", string.Format(CultureInfo.InvariantCulture, "Open OData Connected Service json-file"), MessageBoxButton.OK, MessageBoxImage.Warning);
+               MessageBox.Show(
+                   $"File \"{openFileDialog.FileName}\" does not exists.",
+                   string.Format(CultureInfo.InvariantCulture, fileDialogTitle),
+                   MessageBoxButton.OK,
+                   MessageBoxImage.Warning);
                return;
             }
 
             var jsonFileText = File.ReadAllText(openFileDialog.FileName);
             if (string.IsNullOrWhiteSpace(jsonFileText))
             {
-               MessageBox.Show("File have not content.", string.Format(CultureInfo.InvariantCulture, "Open OData Connected Service json-file"), MessageBoxButton.OK, MessageBoxImage.Warning);
+               MessageBox.Show("Config file is empty.",
+                   string.Format(CultureInfo.InvariantCulture, fileDialogTitle),
+                   MessageBoxButton.OK,
+                   MessageBoxImage.Warning);
                return;
             }
-            if (JObject.Parse(jsonFileText) == null)
+
+            ConnectedServiceJsonFileData connectedServiceData;
+
+            try
             {
-                MessageBox.Show("Can't convert file content to JObject.", string.Format(CultureInfo.InvariantCulture, "Open OData Connected Service json-file"), MessageBoxButton.OK, MessageBoxImage.Warning);
+                connectedServiceData = JsonConvert.DeserializeObject<ConnectedServiceJsonFileData>(jsonFileText);
+            }
+            catch (JsonException ex)
+            {
+                System.Diagnostics.Debug.Assert(ex != null);
+                MessageBox.Show(
+                    "Contents of the config file could not be deserialized.",
+                    string.Format(CultureInfo.InvariantCulture, fileDialogTitle),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
                 return;
             }
-            var microsoftConnectedServiceData = JsonConvert.DeserializeObject<ConnectedServiceJsonFileData>(jsonFileText);
-            if (microsoftConnectedServiceData != null)
+
+            // connectedServiceData not expected to be null at this point
+            if (connectedServiceData.ExtendedData != null)
             {
-                this.UserSettings = new UserSettings();
-                this.UserSettings.Endpoint = microsoftConnectedServiceData.ExtendedData?.Endpoint ?? this.UserSettings.Endpoint;
-                this.UserSettings.ServiceName = microsoftConnectedServiceData.ExtendedData?.ServiceName ?? this.UserSettings.ServiceName;
-                this.UserSettings.GeneratedFileNamePrefix = microsoftConnectedServiceData.ExtendedData?.GeneratedFileNamePrefix ?? this.UserSettings.GeneratedFileNamePrefix;
-                this.UserSettings.OpenGeneratedFilesInIDE = microsoftConnectedServiceData.ExtendedData?.OpenGeneratedFilesInIDE ?? this.UserSettings.OpenGeneratedFilesInIDE;
-                this.UserSettings.MakeTypesInternal = microsoftConnectedServiceData.ExtendedData?.MakeTypesInternal ?? this.UserSettings.MakeTypesInternal;
-                this.UserSettings.NamespacePrefix = microsoftConnectedServiceData.ExtendedData?.NamespacePrefix ?? this.UserSettings.NamespacePrefix;
-                this.UserSettings.UseDataServiceCollection = microsoftConnectedServiceData.ExtendedData?.UseDataServiceCollection ?? this.UserSettings.UseDataServiceCollection;
-                this.UserSettings.UseNamespacePrefix = microsoftConnectedServiceData.ExtendedData?.UseNamespacePrefix ?? this.UserSettings.UseNamespacePrefix;
-                this.UserSettings.IncludeT4File = microsoftConnectedServiceData.ExtendedData?.IncludeT4File ?? this.UserSettings.IncludeT4File;
-                this.UserSettings.IgnoreUnexpectedElementsAndAttributes = microsoftConnectedServiceData.ExtendedData?.IgnoreUnexpectedElementsAndAttributes ?? this.UserSettings.IgnoreUnexpectedElementsAndAttributes;
-                this.UserSettings.GenerateMultipleFiles = microsoftConnectedServiceData.ExtendedData?.GenerateMultipleFiles ?? this.UserSettings.GenerateMultipleFiles;
-                this.UserSettings.EnableNamingAlias = microsoftConnectedServiceData.ExtendedData?.EnableNamingAlias ?? this.UserSettings.EnableNamingAlias;
-                this.UserSettings.CustomHttpHeaders = microsoftConnectedServiceData.ExtendedData?.CustomHttpHeaders ?? this.UserSettings.CustomHttpHeaders;
-                this.UserSettings.IncludeCustomHeaders = microsoftConnectedServiceData.ExtendedData?.IncludeCustomHeaders ?? this.UserSettings.IncludeCustomHeaders;
-                this.UserSettings.ExcludedOperationImports = microsoftConnectedServiceData.ExtendedData?.ExcludedOperationImports ?? new List<string>();
-                this.UserSettings.ExcludedBoundOperations = microsoftConnectedServiceData.ExtendedData?.ExcludedBoundOperations ?? new List<string>();
-                this.UserSettings.ExcludedSchemaTypes = microsoftConnectedServiceData.ExtendedData?.ExcludedSchemaTypes ?? new List<string>();
-                this.UserSettings.WebProxyHost = microsoftConnectedServiceData.ExtendedData?.WebProxyHost ?? this.UserSettings.WebProxyHost;
-                this.UserSettings.IncludeWebProxy = microsoftConnectedServiceData.ExtendedData?.IncludeWebProxy ?? this.UserSettings.IncludeWebProxy;
-                this.UserSettings.IncludeWebProxyNetworkCredentials = microsoftConnectedServiceData.ExtendedData?.IncludeWebProxyNetworkCredentials ?? this.UserSettings.IncludeWebProxyNetworkCredentials;
-                this.UserSettings.WebProxyNetworkCredentialsDomain = microsoftConnectedServiceData.ExtendedData?.WebProxyNetworkCredentialsDomain ?? this.UserSettings.WebProxyNetworkCredentialsDomain;
-                this.UserSettings.WebProxyNetworkCredentialsPassword = microsoftConnectedServiceData.ExtendedData?.WebProxyNetworkCredentialsPassword ?? this.UserSettings.WebProxyNetworkCredentialsPassword;
-                this.UserSettings.WebProxyNetworkCredentialsUsername = microsoftConnectedServiceData.ExtendedData?.WebProxyNetworkCredentialsUsername ?? this.UserSettings.WebProxyNetworkCredentialsUsername;
-                ODataConnectedServiceWizard ServiceWizard = ((ConfigODataEndpointViewModel)this.DataContext).ServiceWizard;
-                this.UserSettings.MruEndpoints = UserSettings.Load(ServiceWizard.Context.Logger)?.MruEndpoints;
+                this.UserSettings.CopyPropertiesFrom(connectedServiceData.ExtendedData);
+            }
 
-                ServiceWizard.ConfigODataEndpointViewModel.UserSettings = this.UserSettings;
-                ServiceWizard.ConfigODataEndpointViewModel.LoadFromUserSettings();
+            ODataConnectedServiceWizard connectedServiceWizard = GetODataConnectedServiceWizard();
 
-                ServiceWizard.AdvancedSettingsViewModel.UserSettings = this.UserSettings;
-                ServiceWizard.AdvancedSettingsViewModel.LoadFromUserSettings();
-
-                ServiceWizard.OperationImportsViewModel.UserSettings = this.UserSettings;
-
-                // get Operation Imports and bound operations from metadata for excluding ExcludedOperationImports and ExcludedBoundOperations
-                try
+            // get Operation Imports and bound operations from metadata for excluding ExcludedOperationImports and ExcludedBoundOperations
+            try
+            {
+                connectedServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath = connectedServiceWizard.ConfigODataEndpointViewModel.GetMetadata(out var version);
+                connectedServiceWizard.ConfigODataEndpointViewModel.EdmxVersion = version;
+                if (version == Constants.EdmxVersion4)
                 {
-                    ServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath = ServiceWizard.ConfigODataEndpointViewModel.GetMetadata(out var version);
-                    ServiceWizard.ConfigODataEndpointViewModel.EdmxVersion = version;
-                    if (version == Constants.EdmxVersion4)
-                    {
-                        Edm.IEdmModel model = EdmHelper.GetEdmModelFromFile(ServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath);
+                    Edm.IEdmModel model = EdmHelper.GetEdmModelFromFile(connectedServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath);
 
-                        IEnumerable<Edm.IEdmSchemaType> entityTypes = EdmHelper.GetSchemaTypes(model);
-                        IDictionary<Edm.IEdmType, List<Edm.IEdmOperation>> boundOperations = EdmHelper.GetBoundOperations(model);
-                        ServiceWizard.SchemaTypesViewModel.LoadSchemaTypes(entityTypes, boundOperations);
-                        ServiceWizard.ProcessedEndpointForSchemaTypes = this.UserSettings.Endpoint;
-                        ServiceWizard.SchemaTypesViewModel.LoadFromUserSettings();
+                    IEnumerable<Edm.IEdmSchemaType> entityTypes = EdmHelper.GetSchemaTypes(model);
+                    IDictionary<Edm.IEdmType, List<Edm.IEdmOperation>> boundOperations = EdmHelper.GetBoundOperations(model);
+                    connectedServiceWizard.SchemaTypesViewModel.LoadSchemaTypes(entityTypes, boundOperations);
+                    connectedServiceWizard.ProcessedEndpointForSchemaTypes = this.UserSettings.Endpoint;
+                    connectedServiceWizard.SchemaTypesViewModel.LoadFromUserSettings();
 
-                        IEnumerable<Edm.IEdmOperationImport> operations = EdmHelper.GetOperationImports(model);
-                        ServiceWizard.OperationImportsViewModel.LoadOperationImports(operations, new HashSet<string>(), new Dictionary<string, SchemaTypeModel>());
-                        ServiceWizard.ProcessedEndpointForOperationImports = this.UserSettings.Endpoint;
-                        ServiceWizard.OperationImportsViewModel.LoadFromUserSettings();
-
-                        //IDictionary<Edm.IEdmType, List<Edm.IEdmOperation>> allBoundOperations = EdmHelper.GetBoundOperations(model);
-                        //ServiceWizard.BoundOperationsViewModel.LoadBoundOperations(allBoundOperations,
-                        //    new HashSet<string>(), new Dictionary<string, SchemaTypeModel>());
-                        //ServiceWizard.ProcessedEndpointForBoundOperations = this.UserSettings.Endpoint;
-                        //ServiceWizard.BoundOperationsViewModel.LoadFromUserSettings();
-                    }
-                }
-                catch
-                {
-                    // ignored
+                    IEnumerable<Edm.IEdmOperationImport> operations = EdmHelper.GetOperationImports(model);
+                    connectedServiceWizard.OperationImportsViewModel.LoadOperationImports(operations, new HashSet<string>(), new Dictionary<string, SchemaTypeModel>());
+                    connectedServiceWizard.ProcessedEndpointForOperationImports = this.UserSettings.Endpoint;
+                    connectedServiceWizard.OperationImportsViewModel.LoadFromUserSettings();
                 }
             }
+            catch
+            {
+                // ignored
+            }
+        }
+
+        private ODataConnectedServiceWizard GetODataConnectedServiceWizard()
+        {
+            return (ODataConnectedServiceWizard)((ConfigODataEndpointViewModel)this.DataContext).Wizard;
         }
     }
 }

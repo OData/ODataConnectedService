@@ -38,7 +38,7 @@
                 Height="20"
                 Margin="0,5,10,5"
                 HorizontalAlignment="Left"
-                Text="{Binding Path=ServiceName, Mode=TwoWay}" />
+                Text="{Binding Path=UserSettings.ServiceName, Mode=TwoWay}" />
             <Button
                 x:Name="OpenConnectedServiceJsonFileButton"
                 Grid.Column="1"
@@ -71,7 +71,7 @@
                 HorizontalAlignment="Stretch"
                 IsEditable="True"
                 ItemsSource="{Binding Path=UserSettings.MruEndpoints}"
-                Text="{Binding Path=Endpoint, Mode=TwoWay, TargetNullValue='Enter your endpoint...'}" />
+                Text="{Binding Path=UserSettings.Endpoint, Mode=TwoWay, TargetNullValue='Enter your endpoint...'}" />
             <Button
                 x:Name="OpenEndpointFileButton"
                 Grid.Column="1"
@@ -91,7 +91,7 @@
             VerticalAlignment="Top"
             Content="Include Custom Http Headers"
             FontWeight="Medium"
-            IsChecked="{Binding IncludeCustomHeaders, Mode=TwoWay}" />
+            IsChecked="{Binding Path=UserSettings.IncludeCustomHeaders, Mode=TwoWay}" />
 
         <StackPanel Margin="20,0,0,0" Visibility="{Binding Path=IsChecked, ElementName=IncludeHttpHeadersElement, Converter={StaticResource BooleanToVisibilityConverter}}">
 
@@ -106,7 +106,7 @@
                 Margin="20,5,10,5"
                 HorizontalAlignment="Left"
                 AcceptsReturn="True"
-                Text="{Binding Path=CustomHttpHeaders, Mode=TwoWay}"
+                Text="{Binding Path=UserSettings.CustomHttpHeaders, Mode=TwoWay}"
                 TextWrapping="Wrap"
                 VerticalScrollBarVisibility="Visible">
                 <TextBox.ToolTip>
@@ -128,7 +128,7 @@
             VerticalAlignment="Top"
             Content="Include WebProxy"
             FontWeight="Medium"
-            IsChecked="{Binding IncludeWebProxy, Mode=TwoWay}" />
+            IsChecked="{Binding Path=UserSettings.IncludeWebProxy, Mode=TwoWay}" />
 
         <StackPanel Margin="20,0,0,0" Visibility="{Binding Path=IsChecked, ElementName=IncludeWebProxyElement, Converter={StaticResource BooleanToVisibilityConverter}}">
 
@@ -143,7 +143,7 @@
                     Width="300"
                     Margin="0,0,0,0"
                     HorizontalAlignment="Left"
-                    Text="{Binding WebProxyHost}"
+                    Text="{Binding Path=UserSettings.WebProxyHost, Mode=TwoWay}"
                     TextWrapping="Wrap" />
             </StackPanel>
             <CheckBox
@@ -153,7 +153,7 @@
                 VerticalAlignment="Top"
                 Content="Include Proxy Network credentials"
                 FontWeight="Medium"
-                IsChecked="{Binding IncludeWebProxyNetworkCredentials, Mode=TwoWay}" />
+                IsChecked="{Binding Path=UserSettings.IncludeWebProxyNetworkCredentials, Mode=TwoWay}" />
             <StackPanel
                 Margin="20,0,0,0"
                 Orientation="Vertical"
@@ -169,7 +169,7 @@
                     Width="300"
                     Margin="0,5,0,0"
                     HorizontalAlignment="Left"
-                    Text="{Binding WebProxyNetworkCredentialsUsername, Mode=TwoWay}"
+                    Text="{Binding Path=UserSettings.WebProxyNetworkCredentialsUsername, Mode=TwoWay}"
                     TextWrapping="Wrap" />
 
                 <TextBlock
@@ -182,7 +182,7 @@
                     Width="300"
                     Margin="0,5,0,0"
                     HorizontalAlignment="Left"
-                    Text="{Binding WebProxyNetworkCredentialsPassword, Mode=TwoWay}"
+                    Text="{Binding Path=UserSettings.WebProxyNetworkCredentialsPassword, Mode=TwoWay}"
                     TextWrapping="Wrap" />
 
                 <TextBlock
@@ -195,7 +195,7 @@
                     Width="300"
                     Margin="0,5,0,0"
                     HorizontalAlignment="Left"
-                    Text="{Binding WebProxyNetworkCredentialsDomain, Mode=TwoWay}"
+                    Text="{Binding Path=UserSettings.WebProxyNetworkCredentialsDomain, Mode=TwoWay}"
                     TextWrapping="Wrap" />
 
             </StackPanel>

@@ -15,7 +15,7 @@
 
             <TextBlock x:Name="ReferenceFileNameLabel" Text="Enter the file name (without extension):"
                            HorizontalAlignment="Left" Margin="0, 5, 0, 0"/>
-            <TextBox x:Name="ReferenceFileName" Text="{Binding GeneratedFileNamePrefix}"
+            <TextBox x:Name="ReferenceFileName" Text="{Binding UserSettings.GeneratedFileNamePrefix, Mode=TwoWay}"
                          HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="250" Margin="20, 5, 0, 0"/>
             <StackPanel x:Name="AdvancedSettingsHyperLinkPanel">
                 <TextBlock x:Name="Label" TextWrapping="WrapWithOverflow" Margin="0, 20, 40, 0">
@@ -28,33 +28,33 @@
         </StackPanel>
         <StackPanel x:Name="AdvancedSettingsPanel">
             <StackPanel HorizontalAlignment="Left" Margin="10, 0, 0, 0" VerticalAlignment="Top">
-                <CheckBox x:Name="UseNamespacePrefix" IsChecked="{Binding UseNamespacePrefix}"
+                <CheckBox x:Name="UseNamespacePrefix" IsChecked="{Binding UserSettings.UseNamespacePrefix, Mode=TwoWay}"
                           HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,5">
                     <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">
                         Use a custom namespace (It will replace the original namespace in the metadata document, unless the model has several namespaces.)
                     </TextBlock>
                 </CheckBox>
-                <TextBox x:Name="NamespacePrefix" Text="{Binding NamespacePrefix}"
+                <TextBox x:Name="NamespacePrefix" Text="{Binding Path=UserSettings.NamespacePrefix, Mode=TwoWay}"
                          HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="250" Margin="20, 0, 0, 5"/>
-                <CheckBox x:Name="UseDSC" Content="Enable entity and property tracking" IsChecked="{Binding UseDataServiceCollection}"
+                <CheckBox x:Name="UseDSC" Content="Enable entity and property tracking" IsChecked="{Binding Path=UserSettings.UseDataServiceCollection, Mode=TwoWay}"
                           HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5, 0, 0" />
             </StackPanel>
             <StackPanel x:Name="AdvancedSettingsForv4" HorizontalAlignment="Left" Margin="10, 5, 0, 0" VerticalAlignment="Top">
-                <CheckBox x:Name="EnableCamelCase" Content="Use c# casing style" IsChecked="{Binding EnableNamingAlias}"
+                <CheckBox x:Name="EnableCamelCase" Content="Use c# casing style" IsChecked="{Binding Path=UserSettings.EnableNamingAlias, Mode=TwoWay}"
             		HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5"/>
-                <CheckBox x:Name="IgnoreUnknownAttributeOrElement" IsChecked="{Binding IgnoreUnexpectedElementsAndAttributes}"
+                <CheckBox x:Name="IgnoreUnknownAttributeOrElement" IsChecked="{Binding Path=UserSettings.IgnoreUnexpectedElementsAndAttributes, Mode=TwoWay}"
             		HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5">
                     <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Ignore unknown elements (Whether to ignore unexpected elements and attributes in the metadata document and generate the client code if any.)</TextBlock>
                 </CheckBox>
-                <CheckBox x:Name="MakeTypesInternal" IsChecked="{Binding MakeTypesInternal}"
+                <CheckBox x:Name="MakeTypesInternal" IsChecked="{Binding Path=UserSettings.MakeTypesInternal, Mode=TwoWay}"
                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5">
                     <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Make generated types internal (Enable this if you don't want to expose the generated types outside of your assembly.)</TextBlock>
                 </CheckBox>
-                <CheckBox x:Name="IncludeT4File" Content="Add code templates (Whether to include the T4 files into this project.)" IsChecked="{Binding IncludeT4File}"
+                <CheckBox x:Name="IncludeT4File" Content="Add code templates (Whether to include the T4 files into this project.)" IsChecked="{Binding Path=UserSettings.IncludeT4File, Mode=TwoWay}"
             		HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 15" FontWeight="Medium"/>
-                <CheckBox x:Name="OpenGeneratedFilesInIDE" Content="Open generated files in the IDE when generation completes." IsChecked="{Binding OpenGeneratedFilesInIDE}"
+                <CheckBox x:Name="OpenGeneratedFilesInIDE" Content="Open generated files in the IDE when generation completes." IsChecked="{Binding Path=UserSettings.OpenGeneratedFilesInIDE, Mode=TwoWay}"
                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5"/>
-                <CheckBox x:Name="GenerateMultipleFiles" Content="Generate multiple files." IsChecked="{Binding GenerateMultipleFiles}"
+                <CheckBox x:Name="GenerateMultipleFiles" Content="Generate multiple files." IsChecked="{Binding Path=UserSettings.GenerateMultipleFiles, Mode=TwoWay}"
                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5"/>
             </StackPanel>
         </StackPanel>
