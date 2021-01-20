@@ -362,6 +362,16 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
+        public void CodeGenWithMultiReferenceModelRelativeUri()
+        {
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MultiReferenceModelRelativeUri.Metadata, null, true, false, metadataDocumentUri: ODataT4CodeGeneratorTestDescriptors.EdmxWithMultiReferenceModelRelativeUriFilePath );
+            ODataT4CodeGeneratorTestDescriptors.MultiReferenceModelRelativeUri.Verify(code, true /*isCSharp*/, false /*useDSC*/);
+
+            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MultiReferenceModelRelativeUri.Metadata, null, false, false, metadataDocumentUri: ODataT4CodeGeneratorTestDescriptors.EdmxWithMultiReferenceModelRelativeUriFilePath);
+            ODataT4CodeGeneratorTestDescriptors.MultiReferenceModelRelativeUri.Verify(code, false/*isCSharp*/, false/*useDSC*/);
+        }
+
+        [TestMethod]
         public void CodeGenWithUpperCamelCaseWithNamespacePrefix()
         {
             const string namespacePrefix = "namespacePrefix";
@@ -538,7 +548,7 @@ namespace ODataConnectedService.Tests
             bool useDataServiceCollection, bool enableNamingAlias = false,
             bool ignoreUnexpectedElementsAndAttributes = false,
             Func<Uri, WebProxy, IList<string>, XmlReader> getReferencedModelReaderFunc = null,
-            bool appendDSCSuffix = false, string MetadataFilePath = null, bool generateMultipleFiles = false,
+            bool appendDSCSuffix = false, string MetadataFilePath = null, bool generateMultipleFiles = false, string metadataDocumentUri = null,
             IEnumerable<string> excludedSchemaTypes = default(List<string>))
 
         {
@@ -567,6 +577,11 @@ namespace ODataConnectedService.Tests
                 GenerateMultipleFiles = generateMultipleFiles,
                 ExcludedSchemaTypes = excludedSchemaTypes
             };
+
+            if (!String.IsNullOrEmpty(metadataDocumentUri))
+            {
+                t4CodeGenerator.MetadataDocumentUri = metadataDocumentUri;
+            }
 
             if (!String.IsNullOrEmpty(MetadataFilePath))
             {

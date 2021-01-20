@@ -151,8 +151,25 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CodeGenReferences\*.cs" />
-    <EmbeddedResource Include="CodeGenReferences\*.xml" />
     <EmbeddedResource Include="CodeGenReferences\*.vb" />
+    <EmbeddedResource Include="CodeGenReferences\MultiReferenceModelCoreTerms.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CodeGenReferences\MultiReferenceModelDeviceModelTerms.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CodeGenReferences\MultiReferenceModelGPS.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CodeGenReferences\MultiReferenceModelLocation.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CodeGenReferences\MultiReferenceModelMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CodeGenReferences\MultiReferenceModelRelativeUri.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\..\src\Templates\ODataT4CodeGenerator.ttinclude">
@@ -175,6 +192,33 @@
     <Content Include="CodeGeneration\SampleServiceV2.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="CodeGenReferences\AbstractEntityTypeWithoutKey.xml" />
+    <EmbeddedResource Include="CodeGenReferences\DupNames.xml" />
+    <EmbeddedResource Include="CodeGenReferences\EmptySchema.xml" />
+    <EmbeddedResource Include="CodeGenReferences\EntitiesEnumsFunctions.xml" />
+    <EmbeddedResource Include="CodeGenReferences\EntityBooleanPropertyWithDefaultValue.xml" />
+    <EmbeddedResource Include="CodeGenReferences\EntityHierarchyWithIDAndId.xml" />
+    <EmbeddedResource Include="CodeGenReferences\KeywordsAsNames.xml" />
+    <EmbeddedResource Include="CodeGenReferences\MergedFunctionalTest.xml" />
+    <EmbeddedResource Include="CodeGenReferences\Multiplicity.xml" />
+    <EmbeddedResource Include="CodeGenReferences\MultiReferenceModel.xml" />
+    <EmbeddedResource Include="CodeGenReferences\NamespaceInKeywords.xml" />
+    <EmbeddedResource Include="CodeGenReferences\NamespaceInKeywordsWithRefModel.xml" />
+    <EmbeddedResource Include="CodeGenReferences\NamespaceInKeywordsWithRefModelReferenced.xml" />
+    <EmbeddedResource Include="CodeGenReferences\NamespacePrefixRepeatWithSchemaNameSpace.xml" />
+    <EmbeddedResource Include="CodeGenReferences\NamespacePrefixWithDoubleNamespaces.xml" />
+    <EmbeddedResource Include="CodeGenReferences\NamespacePrefixWithInheritence.xml" />
+    <EmbeddedResource Include="CodeGenReferences\NamespacePrefixWithSingleNamespace.xml" />
+    <EmbeddedResource Include="CodeGenReferences\OverrideOperations.xml" />
+    <EmbeddedResource Include="CodeGenReferences\PrefixConflict.xml" />
+    <EmbeddedResource Include="CodeGenReferences\Simple.xml" />
+    <EmbeddedResource Include="CodeGenReferences\SimpleMultipleFiles.xml" />
+    <EmbeddedResource Include="CodeGenReferences\SourceParameterOrKeysProperty.xml" />
+    <EmbeddedResource Include="CodeGenReferences\TempSimple.xml" />
+    <EmbeddedResource Include="CodeGenReferences\TypeDefinitions.xml" />
+    <EmbeddedResource Include="CodeGenReferences\UnexpectedElementsAndAttributes.xml" />
+    <EmbeddedResource Include="CodeGenReferences\UpperCamelCaseWithNamespacePrefix.xml" />
+    <EmbeddedResource Include="CodeGenReferences\UpperCamelCaseWithoutNamespacePrefix.xml" />
     <Content Include="TestMetadataCsdl.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
