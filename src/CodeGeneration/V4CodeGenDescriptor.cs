@@ -87,18 +87,6 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             var csdlFileName = string.Concat(ServiceConfiguration.ServiceName, Common.Constants.CsdlFileNameSuffix);
             var metadataFile = Path.Combine(referenceFolder, csdlFileName);
 
-            await Context.HandlerHelper.AddFileAsync(tempFile, metadataFile, new AddFileOptions() { SuppressOverwritePrompt = true }).ConfigureAwait(true);
-
-            // Hack!
-            // Tests were failing since the test project cannot access ProjectItems
-            // dte == null when running test cases
-            var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(DTE)) as DTE;
-            if (dte != null)
-            {
-                var projectItem = this.GetCsdlFileProjectItem(csdlFileName);
-                projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionEmbeddedResource;
-            }
-
             using (StreamWriter writer = File.CreateText(tempFile))
             {
                 var text = File.ReadAllText(Path.Combine(t4Folder, "ODataT4CodeGenerator.tt"));
