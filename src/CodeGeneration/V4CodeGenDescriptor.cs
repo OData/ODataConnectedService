@@ -89,7 +89,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
 
             // When the T4 file is added to the target project, the proxy and metadata files 
             // are not automatically generated. To avoid ending up with an empty metadata file with 
-            // warnings, we pre-populate the it with the root element. The content will later be overwritten.
+            // warnings, we pre-populate it with the root element. The content will later be overwritten with the actual metadata when T4 template is run by the user.
             using (StreamWriter writer = File.CreateText(tempFile))
             {
                 await writer.WriteLineAsync("<edmx:Edmx Version=\"4.0\" xmlns:edmx=\"http://docs.oasis-open.org/odata/ns/edmx\">").ConfigureAwait(true);
