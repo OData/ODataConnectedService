@@ -87,6 +87,29 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             var csdlFileName = string.Concat(ServiceConfiguration.ServiceName, Common.Constants.CsdlFileNameSuffix);
             var metadataFile = Path.Combine(referenceFolder, csdlFileName);
 
+            // When the T4 file is added to the target project, the proxy and metadata files 
+            // are not automatically generated. To avoid ending up with an empty metadata file with 
+            // warnings, we pre-populate the it with the root element. The content will later be overwritten.
+            using (StreamWriter writer = File.CreateText(tempFile))
+            {
+                await writer.WriteLineAsync("<edmx:Edmx Version=\"4.0\" xmlns:edmx=\"http://docs.oasis-open.org/odata/ns/edmx\">").ConfigureAwait(true);
+                await writer.WriteLineAsync("</edmx:Edmx>").ConfigureAwait(true);
+            }
+
+            await Context.HandlerHelper.AddFileAsync(tempFile, metadataFile, new AddFileOptions() { SuppressOverwritePrompt = true }).ConfigureAwait(true);
+
+            // Hack!
+            // Tests were failing since the test project cannot access ProjectItems
+            // dte == null when running test cases
+            var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(DTE)) as DTE;
+            if (dte != null)
+            {
+                var projectItem = this.GetCsdlFileProjectItem(csdlFileName);
+                projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionEmbeddedResource;
+            }
+
+            tempFile = Path.GetTempFileName();
+
             using (StreamWriter writer = File.CreateText(tempFile))
             {
                 var text = File.ReadAllText(Path.Combine(t4Folder, "ODataT4CodeGenerator.tt"));
