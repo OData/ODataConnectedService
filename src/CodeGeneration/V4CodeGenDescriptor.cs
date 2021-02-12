@@ -63,13 +63,13 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
         {
             await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Adding T4 files for OData V4...").ConfigureAwait(true);
 
-            var tempFile = Path.GetTempFileName();
+            var t4IncludeTempFile = Path.GetTempFileName();
             var t4Folder = Path.Combine(this.CurrentAssemblyPath, "Templates");
 
             var referenceFolder = this.GetReferenceFileFolder();
 
             // generate .ttinclude
-            using (StreamWriter writer = File.CreateText(tempFile))
+            using (StreamWriter writer = File.CreateText(t4IncludeTempFile))
             {
                 var ttIncludeText = File.ReadAllText(Path.Combine(t4Folder, "ODataT4CodeGenerator.ttinclude"));
                 if (this.TargetProjectLanguage == LanguageOption.GenerateVBCode)
@@ -78,16 +78,25 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 await writer.FlushAsync().ConfigureAwait(true);
             }
 
-            await Context.HandlerHelper.AddFileAsync(tempFile, Path.Combine(referenceFolder, GeneratedFileNamePrefix + ".ttinclude")).ConfigureAwait(true);
+            await Context.HandlerHelper.AddFileAsync(t4IncludeTempFile, Path.Combine(referenceFolder, GeneratedFileNamePrefix + ".ttinclude")).ConfigureAwait(true);
             await Context.HandlerHelper.AddFileAsync(Path.Combine(t4Folder, "ODataT4CodeGenFilesManager.ttinclude"), Path.Combine(referenceFolder, "ODataT4CodeGenFilesManager.ttinclude")).ConfigureAwait(true);
 
-            tempFile = Path.GetTempFileName();
+            var csdlTempFile = Path.GetTempFileName();
 
             // Csdl file name is this format [ServiceName]Csdl.xml
             var csdlFileName = string.Concat(ServiceConfiguration.ServiceName, Common.Constants.CsdlFileNameSuffix);
             var metadataFile = Path.Combine(referenceFolder, csdlFileName);
 
-            await Context.HandlerHelper.AddFileAsync(tempFile, metadataFile, new AddFileOptions() { SuppressOverwritePrompt = true }).ConfigureAwait(true);
+            // When the T4 file is added to the target project, the proxy and metadata files 
+            // are not automatically generated. To avoid ending up with an empty metadata file with 
+            // warnings, we pre-populate it with the root element. The content will later be overwritten with the actual metadata when T4 template is run by the user.
+            using (StreamWriter writer = File.CreateText(csdlTempFile))
+            {
+                await writer.WriteLineAsync("<edmx:Edmx Version=\"4.0\" xmlns:edmx=\"http://docs.oasis-open.org/odata/ns/edmx\">").ConfigureAwait(true);
+                await writer.WriteLineAsync("</edmx:Edmx>").ConfigureAwait(true);
+            }
+
+            await Context.HandlerHelper.AddFileAsync(csdlTempFile, metadataFile, new AddFileOptions() { SuppressOverwritePrompt = true }).ConfigureAwait(true);
 
             // Hack!
             // Tests were failing since the test project cannot access ProjectItems
@@ -99,7 +108,9 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionEmbeddedResource;
             }
 
-            using (StreamWriter writer = File.CreateText(tempFile))
+            var t4TempFile = Path.GetTempFileName();
+
+            using (StreamWriter writer = File.CreateText(t4TempFile))
             {
                 var text = File.ReadAllText(Path.Combine(t4Folder, "ODataT4CodeGenerator.tt"));
 
@@ -141,7 +152,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
                 await writer.FlushAsync().ConfigureAwait(true);
             }
 
-            await Context.HandlerHelper.AddFileAsync(tempFile, Path.Combine(referenceFolder, GeneratedFileNamePrefix + ".tt")).ConfigureAwait(true);
+            await Context.HandlerHelper.AddFileAsync(t4TempFile, Path.Combine(referenceFolder, GeneratedFileNamePrefix + ".tt")).ConfigureAwait(true);
 
             await Context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "T4 files for OData V4 were added.").ConfigureAwait(true);
         }
