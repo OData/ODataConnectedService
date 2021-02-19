@@ -124,7 +124,7 @@ namespace Foo
 
                     if (!global::Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, false, out edmModel, out errors))
                     {
-                        global::System.Text.StringBuilder errorMessages = new System.Text.StringBuilder();
+                        global::System.Text.StringBuilder errorMessages = new global::System.Text.StringBuilder();
                         foreach (var error in errors)
                         {
                             errorMessages.Append(error.ErrorMessage);
