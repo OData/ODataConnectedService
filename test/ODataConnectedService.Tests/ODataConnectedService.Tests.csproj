@@ -219,6 +219,7 @@
     <EmbeddedResource Include="CodeGenReferences\UnexpectedElementsAndAttributes.xml" />
     <EmbeddedResource Include="CodeGenReferences\UpperCamelCaseWithNamespacePrefix.xml" />
     <EmbeddedResource Include="CodeGenReferences\UpperCamelCaseWithoutNamespacePrefix.xml" />
+    <EmbeddedResource Include="CodeGenReferences\SameNamedEntityMultipleFiles.xml" />
     <Content Include="TestMetadataCsdl.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

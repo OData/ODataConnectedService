@@ -191,6 +191,31 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
+        public void CodeGenSameNamedEntityEdmxMultipleFiles()
+        {
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SameNamedEntityMultipleFiles.Metadata, null, true, false, generateMultipleFiles: true);
+
+            string expectedNamespace1TestType = GeneratedCodeHelpers.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFileContent("SameNamedEntityMultipleNamespace1TestType.cs"));
+            string actualNamespace1TestType = GeneratedCodeHelpers.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "Namespace1.TestType.cs")));
+
+            string expectedNamespace2TestType = GeneratedCodeHelpers.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFileContent("SameNamedEntityMultipleNamespace2TestType.cs"));
+            string actualNamespace2TestType = GeneratedCodeHelpers.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "Namespace2.TestType.cs")));
+
+            string expectedNamespace1ExtensionMethods = GeneratedCodeHelpers.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFileContent("SameNamedEntityMultipleFilesNamespace1Main.cs"));
+            string actualNamespace1ExtenisonMethods = GeneratedCodeHelpers.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "Namespace1.ExtensionMethods.cs")));
+
+            string expectedNamespace2ExtensionMethods = GeneratedCodeHelpers.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFileContent("SameNamedEntityMultipleFilesNamespace2Main.cs"));
+            string actualNamespace2ExtenisonMethods = GeneratedCodeHelpers.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "Namespace2.ExtensionMethods.cs")));
+
+            // TODO: add VB tests
+
+            Assert.AreEqual(expectedNamespace1TestType, actualNamespace1TestType);
+            Assert.AreEqual(expectedNamespace2TestType, actualNamespace2TestType);
+            Assert.AreEqual(expectedNamespace1ExtensionMethods, actualNamespace1ExtenisonMethods);
+            Assert.AreEqual(expectedNamespace2ExtensionMethods, actualNamespace2ExtenisonMethods);
+        }
+
+        [TestMethod]
         public void CodeGenEntityBooleanPropertyWithDefaultValueEdmx()
         {
             string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Metadata, null, true, false);

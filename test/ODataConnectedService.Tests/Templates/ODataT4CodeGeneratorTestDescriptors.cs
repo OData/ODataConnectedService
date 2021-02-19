@@ -245,6 +245,17 @@ namespace ODataConnectedService.Tests
         };
         #endregion
 
+        #region SameNamedEntityMultipleFiles
+        public static string EdmxSameNamedEntityMultipleFiles = LoadContentFromBaseline("SameNamedEntityMultipleFiles.xml");
+        public static string SameNamedEntityMultipleFilesNamespace1CSharp = LoadContentFromBaseline("SameNamedEntityMultipleFilesNamespace1Main.cs");
+        public static ODataT4CodeGeneratorTestsDescriptor SameNamedEntityMultipleFiles = new ODataT4CodeGeneratorTestsDescriptor()
+        {
+            Metadata = EdmxSameNamedEntityMultipleFiles,
+            ExpectedResults = new Dictionary<string, string>() { { ExpectedCSharp, SameNamedEntityMultipleFilesNamespace1CSharp } },
+            Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, SameNamedEntityMultipleFiles.ExpectedResults, isCSharp, useDSC, "SameNamedEntityMultipleFiles"),
+        };
+        #endregion
+
         #region NamespacePrefix
 
         public static string EdmxNamespacePrefixWithSingleNamespace = LoadContentFromBaseline("NamespacePrefixWithSingleNamespace.xml");
