@@ -522,6 +522,16 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
+        public void CodeGenUsingTempMetadataFileForVBTest()
+        {
+            MetadataFilePath = "tempMetadata.xml";
+            File.Delete(MetadataFilePath);
+            CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Metadata, null, false, true, false, false, null, true, MetadataFilePath);
+            Action action = () => ODataT4CodeGeneratorTestDescriptors.ValidateXMLFile(MetadataFilePath);
+            action.ShouldNotThrow<XmlException>();
+        }
+
+        [TestMethod]
         public void CodeGenSelectingSchemaTypesTest()
         {
             string @namespace = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.";

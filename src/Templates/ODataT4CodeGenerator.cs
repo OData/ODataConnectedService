@@ -2188,7 +2188,7 @@ public abstract class ODataClientTemplate : TemplateBase
             }
         }
 
-        if (useTempFile)
+        if (useTempFile && this.context.TargetLanguage == LanguageOption.CSharp)
         {
             this.WriteGeneratedEdmModel(Utils.SerializeToString(this.context.Edmx));
         }
