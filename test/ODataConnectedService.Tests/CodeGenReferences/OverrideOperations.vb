@@ -12,17 +12,17 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 13.06.2020 13:06:59
+'Generation date: 03.03.2021 22:24:07
 Namespace OverrideOperations
-    '''<summary>
-    '''There are no comments for OverrideOperationsContainer in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for OverrideOperationsContainer in the schema.
+        ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("OverrideOperationsContainer")>  _
     Partial Public Class OverrideOperationsContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
-        '''<summary>
-        '''Initialize a new OverrideOperationsContainer object.
-        '''</summary>
+        ''' <summary>
+        ''' Initialize a new OverrideOperationsContainer object.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
@@ -36,11 +36,11 @@ Namespace OverrideOperations
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private Shared ROOTNAMESPACE As String = GetType(OverrideOperationsContainer).Namespace.Remove(GetType(OverrideOperationsContainer).Namespace.LastIndexOf("OverrideOperations"))
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Function ResolveTypeFromName(ByVal typeName As String) As Global.System.Type
             Dim resolvedType As Global.System.Type = Me.DefaultResolveType(typeName, "OverrideOperations", String.Concat(ROOTNAMESPACE, "OverrideOperations"))
@@ -49,11 +49,11 @@ Namespace OverrideOperations
             End If
             Return Nothing
         End Function
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Function ResolveNameFromType(ByVal clientType As Global.System.Type) As String
             Dim originalNameAttribute As Global.Microsoft.OData.Client.OriginalNameAttribute =
@@ -70,9 +70,9 @@ Namespace OverrideOperations
             End If
             Return clientType.FullName.Substring(ROOTNAMESPACE.Length)
         End Function
-        '''<summary>
-        '''There are no comments for ETSets in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for ETSets in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("ETSets")>  _
         Public Overridable ReadOnly Property ETSets() As Global.Microsoft.OData.Client.DataServiceQuery(Of ET)
@@ -85,9 +85,9 @@ Namespace OverrideOperations
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _ETSets As Global.Microsoft.OData.Client.DataServiceQuery(Of ET)
-        '''<summary>
-        '''There are no comments for ETSets in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for ETSets in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToETSets(ByVal eT As ET)
             MyBase.AddObject("ETSets", eT)
@@ -169,9 +169,20 @@ Namespace OverrideOperations
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader)
+                    Dim errors As Global.System.Collections.Generic.IEnumerable(Of Global.Microsoft.OData.Edm.Validation.EdmError) = Nothing
+                    Dim edmModel As Global.Microsoft.OData.Edm.IEdmModel = Nothing
+                    If Not Global.Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, False, edmModel, errors) Then
+                        Dim errorMessages As Global.System.Text.StringBuilder = New Global.System.Text.StringBuilder()
+                        For Each err As Global.Microsoft.OData.Edm.Validation.EdmError In errors
+                            errorMessages.Append(err.ErrorMessage)
+                            errorMessages.Append("; ")
+                        Next
+                        Throw New Global.System.InvalidOperationException(errorMessages.ToString())
+                    End If
+
+                    Return edmModel
                 Finally
-                    CType(reader,Global.System.IDisposable).Dispose
+                    CType(reader, Global.System.IDisposable).Dispose()
                 End Try
             End Function
             <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -180,9 +191,9 @@ Namespace OverrideOperations
             End Function
         End Class
     End Class
-    '''<summary>
-    '''There are no comments for ETSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for ETSingle in the schema.
+        ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("ETSingle")>  _
     Partial Public Class ETSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of ET)
@@ -207,29 +218,29 @@ Namespace OverrideOperations
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for ET in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''UserName
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for ET in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' UserName
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("UserName")>  _
     <Global.Microsoft.OData.Client.OriginalNameAttribute("ET")>  _
     Partial Public Class ET
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new ET object.
-        '''</summary>
-        '''<param name="userName">Initial value of UserName.</param>
+        ''' <summary>
+        ''' Create a new ET object.
+        ''' </summary>
+        ''' <param name="userName">Initial value of UserName.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateET(ByVal userName As String) As ET
             Dim eT As ET = New ET()
             eT.UserName = userName
             Return eT
         End Function
-        '''<summary>
-        '''There are no comments for Property UserName in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property UserName in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("UserName")>  _
         Public Overridable Property UserName() As String
@@ -270,9 +281,9 @@ Namespace OverrideOperations
             Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)(Me.Context, resource.EditLink.OriginalString.Trim("/"C) + "/OverrideOperations.ActionWithParameter", New Global.Microsoft.OData.Client.BodyOperationParameter("p1", p1))
         End Function
     End Class
-    '''<summary>
-    '''There are no comments for DerivedETSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for DerivedETSingle in the schema.
+        ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedETSingle")>  _
     Partial Public Class DerivedETSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DerivedET)
@@ -297,29 +308,29 @@ Namespace OverrideOperations
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DerivedET in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''UserName
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for DerivedET in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' UserName
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("UserName")>  _
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedET")>  _
     Partial Public Class DerivedET
         Inherits ET
-        '''<summary>
-        '''Create a new DerivedET object.
-        '''</summary>
-        '''<param name="userName">Initial value of UserName.</param>
+        ''' <summary>
+        ''' Create a new DerivedET object.
+        ''' </summary>
+        ''' <param name="userName">Initial value of UserName.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateDerivedET(ByVal userName As String) As DerivedET
             Dim derivedET As DerivedET = New DerivedET()
             derivedET.UserName = userName
             Return derivedET
         End Function
-        '''<summary>
-        '''There are no comments for Property DerivedComplexP in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DerivedComplexP in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedComplexP")>  _
         Public Overridable Property DerivedComplexP() As OverrideOperations.DerivedCT
@@ -360,24 +371,24 @@ Namespace OverrideOperations
             Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)(Me.Context, resource.EditLink.OriginalString.Trim("/"C) + "/OverrideOperations.ActionWithParameter", New Global.Microsoft.OData.Client.BodyOperationParameter("p1", p1))
         End Function
     End Class
-    '''<summary>
-    '''There are no comments for CT in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for CT in the schema.
+        ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("CT")>  _
     Partial Public Class CT
-        '''<summary>
-        '''Create a new CT object.
-        '''</summary>
-        '''<param name="name">Initial value of Name.</param>
+        ''' <summary>
+        ''' Create a new CT object.
+        ''' </summary>
+        ''' <param name="name">Initial value of Name.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateCT(ByVal name As String) As CT
             Dim cT As CT = New CT()
             cT.Name = name
             Return cT
         End Function
-        '''<summary>
-        '''There are no comments for Property Name in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Name in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Name")>  _
         Public Overridable Property Name() As String
@@ -397,17 +408,17 @@ Namespace OverrideOperations
         Partial Private Sub OnNameChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DerivedCT in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for DerivedCT in the schema.
+        ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedCT")>  _
     Partial Public Class DerivedCT
         Inherits CT
-        '''<summary>
-        '''Create a new DerivedCT object.
-        '''</summary>
-        '''<param name="name">Initial value of Name.</param>
-        '''<param name="description">Initial value of Description.</param>
+        ''' <summary>
+        ''' Create a new DerivedCT object.
+        ''' </summary>
+        ''' <param name="name">Initial value of Name.</param>
+        ''' <param name="description">Initial value of Description.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateDerivedCT(ByVal name As String, ByVal description As String) As DerivedCT
             Dim derivedCT As DerivedCT = New DerivedCT()
@@ -415,9 +426,9 @@ Namespace OverrideOperations
             derivedCT.Description = description
             Return derivedCT
         End Function
-        '''<summary>
-        '''There are no comments for Property Description in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Description in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Description")>  _
         Public Overridable Property Description() As String

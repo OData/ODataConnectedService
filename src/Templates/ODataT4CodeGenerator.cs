@@ -2206,13 +2206,20 @@ public abstract class ODataClientTemplate : TemplateBase
             }
         }
 
-        if (useTempFile && this.context.TargetLanguage == LanguageOption.CSharp)
+        if (useTempFile)
         {
             this.WriteGeneratedEdmModel(Utils.SerializeToString(this.context.Edmx));
         }
         else
         {
-            this.WriteGeneratedEdmModel(Utils.SerializeToString(this.context.Edmx).Replace("\"", "\"\""));
+            if (this.context.TargetLanguage == LanguageOption.VB)
+            {
+                this.WriteGeneratedEdmModel(Utils.SerializeToString(this.context.Edmx).Replace("\"", "\"\"").Replace("\r\n", "\" & _\r\n \""));
+            }
+            else
+            {
+                this.WriteGeneratedEdmModel(Utils.SerializeToString(this.context.Edmx).Replace("\"", "\"\""));
+            }
         }
 
         bool hasOperationImport = container.OperationImports().OfType<IEdmOperationImport>().Any();
@@ -6562,7 +6569,17 @@ this.Write(")\r\n        End Sub\r\n");
 
     internal override void WriteGeneratedEdmModel(string escapedEdmxString)
     {
-        escapedEdmxString = escapedEdmxString.Replace("\r\n", "\" & _\r\n \"");
+        string path = this.context.MetadataFilePath;
+        string relativePath = this.context.MetadataFileRelativePath;
+        if(!String.IsNullOrEmpty(path))
+        {
+            using (StreamWriter writer = new StreamWriter(path, false))
+            {
+                writer.WriteLine(escapedEdmxString);
+            }
+        }
+
+        bool useTempFile = !String.IsNullOrEmpty(path) && System.IO.File.Exists(path);
 
 this.Write("        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData.C" +
         "lient.Design.T4\", \"");
@@ -6617,8 +6634,30 @@ this.Write("            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
 this.Write("\")>  _\r\n            Private Shared ParsedModel As Global.Microsoft.OData.Edm.IEdm" +
-        "Model = LoadModelFromString\r\n            <Global.System.CodeDom.Compiler.Generat" +
-        "edCodeAttribute(\"Microsoft.OData.Client.Design.T4\", \"");
+        "Model = LoadModelFromString\r\n");
+
+
+            if (useTempFile)
+            {
+
+this.Write("            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.ODa" +
+        "ta.Client.Design.T4\", \"");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
+
+this.Write("\")>  _\r\n            Private Const filePath As String = \"");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(relativePath));
+
+this.Write("\"\r\n");
+
+
+            }
+            else
+            {
+
+this.Write("            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.ODa" +
+        "ta.Client.Design.T4\", \"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
@@ -6626,8 +6665,13 @@ this.Write("\")>  _\r\n            Private Const Edmx As String = \"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(escapedEdmxString));
 
-this.Write("\"\r\n            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft." +
-        "OData.Client.Design.T4\", \"");
+this.Write("\"\r\n");
+
+
+            }
+
+this.Write("            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.ODa" +
+        "ta.Client.Design.T4\", \"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
@@ -6655,10 +6699,27 @@ this.Write(@""")>  _
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
-this.Write(@""")>  _
-            Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
-                Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
-                Try
+this.Write("\")>  _\r\n            Private Shared Function LoadModelFromString() As Global.Micro" +
+        "soft.OData.Edm.IEdmModel\r\n");
+
+
+                if (useTempFile)
+                {
+
+this.Write("                Dim reader As Global.System.Xml.XmlReader = CreateXmlReader()\r\n");
+
+
+                }
+                else
+                {
+
+this.Write("                Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)" +
+        "\r\n");
+
+
+                }
+
+this.Write(@"                Try
                     Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader, AddressOf getReferencedModelFromMap)
                 Finally
                     CType(reader,Global.System.IDisposable).Dispose
@@ -6676,13 +6737,45 @@ this.Write("            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
-this.Write(@""")>  _
-            Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
-                Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
-                Try
-                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader)
+this.Write("\")>  _\r\n            Private Shared Function LoadModelFromString() As Global.Micro" +
+        "soft.OData.Edm.IEdmModel\r\n");
+
+
+                if (useTempFile)
+                {
+
+this.Write("                Dim reader As Global.System.Xml.XmlReader = CreateXmlReader()\r\n");
+
+
+                }
+                else
+                {
+
+this.Write("                Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)" +
+        "\r\n");
+
+
+                }
+
+this.Write(@"                Try
+                    Dim errors As Global.System.Collections.Generic.IEnumerable(Of Global.Microsoft.OData.Edm.Validation.EdmError) = Nothing
+                    Dim edmModel As Global.Microsoft.OData.Edm.IEdmModel = Nothing
+                    If Not Global.Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, ");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(this.context.IgnoreUnexpectedElementsAndAttributes ? "True" : "False"));
+
+this.Write(@", edmModel, errors) Then
+                        Dim errorMessages As Global.System.Text.StringBuilder = New Global.System.Text.StringBuilder()
+                        For Each err As Global.Microsoft.OData.Edm.Validation.EdmError In errors
+                            errorMessages.Append(err.ErrorMessage)
+                            errorMessages.Append(""; "")
+                        Next
+                        Throw New Global.System.InvalidOperationException(errorMessages.ToString())
+                    End If
+
+                    Return edmModel
                 Finally
-                    CType(reader,Global.System.IDisposable).Dispose
+                    CType(reader, Global.System.IDisposable).Dispose()
                 End Try
             End Function
 ");
@@ -6695,12 +6788,37 @@ this.Write("            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
+this.Write("\")>  _\r\n            Private Shared Function CreateXmlReader(ByVal edmxToParse As " +
+        "String) As Global.System.Xml.XmlReader\r\n                Return Global.System.Xml" +
+        ".XmlReader.Create(New Global.System.IO.StringReader(edmxToParse))\r\n            E" +
+        "nd Function\r\n");
+
+
+        if (useTempFile)
+        {
+
+this.Write("            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.ODa" +
+        "ta.Client.Design.T4\", \"");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
+
 this.Write(@""")>  _
-            Private Shared Function CreateXmlReader(ByVal edmxToParse As String) As Global.System.Xml.XmlReader
-                Return Global.System.Xml.XmlReader.Create(New Global.System.IO.StringReader(edmxToParse))
+            Private Shared Function CreateXmlReader() As Global.System.Xml.XmlReader
+                Try
+                    Dim assembly As Global.System.Reflection.Assembly = Global.System.Reflection.Assembly.GetExecutingAssembly()
+                    Dim resourcePath As Global.System.String = Global.System.Linq.Enumerable.Single(assembly.GetManifestResourceNames(), Function(str) str.EndsWith(filePath))
+                    Dim stream As Global.System.IO.Stream = assembly.GetManifestResourceStream(resourcePath)
+                    Return Global.System.Xml.XmlReader.Create(New Global.System.IO.StreamReader(stream))
+                Catch e As Global.System.Xml.XmlException
+                    Throw New Global.System.Xml.XmlException(""Failed to create an XmlReader from the stream. Check if the resource exists."", e)
+                End Try
             End Function
-        End Class
 ");
+
+
+        }
+
+this.Write("        End Class\r\n");
 
 
     }

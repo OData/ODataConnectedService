@@ -12,16 +12,16 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 13.06.2020 13:25:04
+'Generation date: 03.03.2021 22:59:45
 Namespace MergedFunctionalTest
-    '''<summary>
-    '''There are no comments for TestContainer in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for TestContainer in the schema.
+        ''' </summary>
     Partial Public Class TestContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
-        '''<summary>
-        '''Initialize a new TestContainer object.
-        '''</summary>
+        ''' <summary>
+        ''' Initialize a new TestContainer object.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
@@ -35,18 +35,18 @@ Namespace MergedFunctionalTest
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private Shared ROOTNAMESPACE As String = GetType(TestContainer).Namespace.Remove(GetType(TestContainer).Namespace.LastIndexOf("MergedFunctionalTest"))
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Function ResolveNameFromType(ByVal clientType As Global.System.Type) As String
             Return clientType.FullName.Substring(ROOTNAMESPACE.Length)
         End Function
-        '''<summary>
-        '''There are no comments for Customers in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Customers in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Customers() As Global.Microsoft.OData.Client.DataServiceQuery(Of Customer)
             Get
@@ -58,9 +58,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Customers As Global.Microsoft.OData.Client.DataServiceQuery(Of Customer)
-        '''<summary>
-        '''There are no comments for Orders in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Orders in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Orders() As Global.Microsoft.OData.Client.DataServiceQuery(Of Order)
             Get
@@ -72,9 +72,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Orders As Global.Microsoft.OData.Client.DataServiceQuery(Of Order)
-        '''<summary>
-        '''There are no comments for CustomerInfo in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for CustomerInfo in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property CustomerInfo() As Global.Microsoft.OData.Client.DataServiceQuery(Of CustomerInfo)
             Get
@@ -86,9 +86,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _CustomerInfo As Global.Microsoft.OData.Client.DataServiceQuery(Of CustomerInfo)
-        '''<summary>
-        '''There are no comments for Company in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Company in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Company() As Global.Microsoft.OData.Client.DataServiceQuery(Of Company)
             Get
@@ -100,9 +100,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Company As Global.Microsoft.OData.Client.DataServiceQuery(Of Company)
-        '''<summary>
-        '''There are no comments for TestSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for TestSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property TestSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of SpecialTypeWithPrecisionFacet)
             Get
@@ -114,9 +114,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _TestSet As Global.Microsoft.OData.Client.DataServiceQuery(Of SpecialTypeWithPrecisionFacet)
-        '''<summary>
-        '''There are no comments for BlobEntities in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for BlobEntities in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property BlobEntities() As Global.Microsoft.OData.Client.DataServiceQuery(Of BlobType)
             Get
@@ -128,9 +128,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _BlobEntities As Global.Microsoft.OData.Client.DataServiceQuery(Of BlobType)
-        '''<summary>
-        '''There are no comments for People in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for People in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property People() As Global.Microsoft.OData.Client.DataServiceQuery(Of Person)
             Get
@@ -142,9 +142,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _People As Global.Microsoft.OData.Client.DataServiceQuery(Of Person)
-        '''<summary>
-        '''There are no comments for TestTypeSet1 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for TestTypeSet1 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property TestTypeSet1() As Global.Microsoft.OData.Client.DataServiceQuery(Of TestType)
             Get
@@ -156,9 +156,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _TestTypeSet1 As Global.Microsoft.OData.Client.DataServiceQuery(Of TestType)
-        '''<summary>
-        '''There are no comments for TestTypeSet2 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for TestTypeSet2 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property TestTypeSet2() As Global.Microsoft.OData.Client.DataServiceQuery(Of TestType)
             Get
@@ -170,9 +170,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _TestTypeSet2 As Global.Microsoft.OData.Client.DataServiceQuery(Of TestType)
-        '''<summary>
-        '''There are no comments for SpatialCollectionEntities in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for SpatialCollectionEntities in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property SpatialCollectionEntities() As Global.Microsoft.OData.Client.DataServiceQuery(Of TestCollectionType)
             Get
@@ -184,9 +184,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _SpatialCollectionEntities As Global.Microsoft.OData.Client.DataServiceQuery(Of TestCollectionType)
-        '''<summary>
-        '''There are no comments for KatMaiSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for KatMaiSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property KatMaiSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of KatmaiType)
             Get
@@ -198,9 +198,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _KatMaiSet As Global.Microsoft.OData.Client.DataServiceQuery(Of KatmaiType)
-        '''<summary>
-        '''There are no comments for GoodCustomers in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for GoodCustomers in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property GoodCustomers() As Global.Microsoft.OData.Client.DataServiceQuery(Of GoodCustomer)
             Get
@@ -212,9 +212,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _GoodCustomers As Global.Microsoft.OData.Client.DataServiceQuery(Of GoodCustomer)
-        '''<summary>
-        '''There are no comments for BadCustomers in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for BadCustomers in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property BadCustomers() As Global.Microsoft.OData.Client.DataServiceQuery(Of BadCustomer)
             Get
@@ -226,9 +226,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _BadCustomers As Global.Microsoft.OData.Client.DataServiceQuery(Of BadCustomer)
-        '''<summary>
-        '''There are no comments for GroupSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for GroupSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property GroupSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of Group)
             Get
@@ -240,9 +240,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _GroupSet As Global.Microsoft.OData.Client.DataServiceQuery(Of Group)
-        '''<summary>
-        '''There are no comments for Product in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Product in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Product() As Global.Microsoft.OData.Client.DataServiceQuery(Of Product)
             Get
@@ -254,9 +254,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Product As Global.Microsoft.OData.Client.DataServiceQuery(Of Product)
-        '''<summary>
-        '''There are no comments for ProductDetail in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for ProductDetail in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property ProductDetail() As Global.Microsoft.OData.Client.DataServiceQuery(Of ProductDetail)
             Get
@@ -268,121 +268,121 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _ProductDetail As Global.Microsoft.OData.Client.DataServiceQuery(Of ProductDetail)
-        '''<summary>
-        '''There are no comments for Customers in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Customers in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToCustomers(ByVal customer As Customer)
             MyBase.AddObject("Customers", customer)
         End Sub
-        '''<summary>
-        '''There are no comments for Orders in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Orders in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToOrders(ByVal order As Order)
             MyBase.AddObject("Orders", order)
         End Sub
-        '''<summary>
-        '''There are no comments for CustomerInfo in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for CustomerInfo in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToCustomerInfo(ByVal customerInfo As CustomerInfo)
             MyBase.AddObject("CustomerInfo", customerInfo)
         End Sub
-        '''<summary>
-        '''There are no comments for Company in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Company in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToCompany(ByVal company As Company)
             MyBase.AddObject("Company", company)
         End Sub
-        '''<summary>
-        '''There are no comments for TestSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for TestSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToTestSet(ByVal specialTypeWithPrecisionFacet As SpecialTypeWithPrecisionFacet)
             MyBase.AddObject("TestSet", specialTypeWithPrecisionFacet)
         End Sub
-        '''<summary>
-        '''There are no comments for BlobEntities in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for BlobEntities in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToBlobEntities(ByVal blobType As BlobType)
             MyBase.AddObject("BlobEntities", blobType)
         End Sub
-        '''<summary>
-        '''There are no comments for People in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for People in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToPeople(ByVal person As Person)
             MyBase.AddObject("People", person)
         End Sub
-        '''<summary>
-        '''There are no comments for TestTypeSet1 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for TestTypeSet1 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToTestTypeSet1(ByVal testType As TestType)
             MyBase.AddObject("TestTypeSet1", testType)
         End Sub
-        '''<summary>
-        '''There are no comments for TestTypeSet2 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for TestTypeSet2 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToTestTypeSet2(ByVal testType As TestType)
             MyBase.AddObject("TestTypeSet2", testType)
         End Sub
-        '''<summary>
-        '''There are no comments for SpatialCollectionEntities in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for SpatialCollectionEntities in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToSpatialCollectionEntities(ByVal testCollectionType As TestCollectionType)
             MyBase.AddObject("SpatialCollectionEntities", testCollectionType)
         End Sub
-        '''<summary>
-        '''There are no comments for KatMaiSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for KatMaiSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToKatMaiSet(ByVal katmaiType As KatmaiType)
             MyBase.AddObject("KatMaiSet", katmaiType)
         End Sub
-        '''<summary>
-        '''There are no comments for GoodCustomers in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for GoodCustomers in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToGoodCustomers(ByVal goodCustomer As GoodCustomer)
             MyBase.AddObject("GoodCustomers", goodCustomer)
         End Sub
-        '''<summary>
-        '''There are no comments for BadCustomers in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for BadCustomers in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToBadCustomers(ByVal badCustomer As BadCustomer)
             MyBase.AddObject("BadCustomers", badCustomer)
         End Sub
-        '''<summary>
-        '''There are no comments for GroupSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for GroupSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToGroupSet(ByVal group As Group)
             MyBase.AddObject("GroupSet", group)
         End Sub
-        '''<summary>
-        '''There are no comments for Product in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Product in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToProduct(ByVal product As Product)
             MyBase.AddObject("Product", product)
         End Sub
-        '''<summary>
-        '''There are no comments for ProductDetail in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for ProductDetail in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToProductDetail(ByVal productDetail As ProductDetail)
             MyBase.AddObject("ProductDetail", productDetail)
         End Sub
-        '''<summary>
-        '''There are no comments for SuperType in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for SuperType in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property SuperType() As TestTypeSingle
             Get
@@ -394,9 +394,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _SuperType As TestTypeSingle
-        '''<summary>
-        '''There are no comments for Single in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Single in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property [Single]() As SingleTypeSingle
             Get
@@ -962,9 +962,20 @@ Namespace MergedFunctionalTest
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader)
+                    Dim errors As Global.System.Collections.Generic.IEnumerable(Of Global.Microsoft.OData.Edm.Validation.EdmError) = Nothing
+                    Dim edmModel As Global.Microsoft.OData.Edm.IEdmModel = Nothing
+                    If Not Global.Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, False, edmModel, errors) Then
+                        Dim errorMessages As Global.System.Text.StringBuilder = New Global.System.Text.StringBuilder()
+                        For Each err As Global.Microsoft.OData.Edm.Validation.EdmError In errors
+                            errorMessages.Append(err.ErrorMessage)
+                            errorMessages.Append("; ")
+                        Next
+                        Throw New Global.System.InvalidOperationException(errorMessages.ToString())
+                    End If
+
+                    Return edmModel
                 Finally
-                    CType(reader,Global.System.IDisposable).Dispose
+                    CType(reader, Global.System.IDisposable).Dispose()
                 End Try
             End Function
             <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -1026,9 +1037,9 @@ Namespace MergedFunctionalTest
             Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of Integer)(Me, Me.BaseUri.OriginalString.Trim("/"C) + "/foo11", New Global.Microsoft.OData.Client.BodyOperationParameter("p1", p1))
         End Function
     End Class
-    '''<summary>
-    '''There are no comments for CustomerSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for CustomerSingle in the schema.
+        ''' </summary>
     Partial Public Class CustomerSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Customer)
         ''' <summary>
@@ -1051,9 +1062,9 @@ Namespace MergedFunctionalTest
         Public Sub New(ByVal query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Customer))
             MyBase.New(query)
         End Sub
-        '''<summary>
-        '''There are no comments for Info in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Info in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Info() As MergedFunctionalTest.CustomerInfoSingle
             Get
@@ -1068,9 +1079,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Info As MergedFunctionalTest.CustomerInfoSingle
-        '''<summary>
-        '''There are no comments for Company in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Company in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Company() As MergedFunctionalTest.CompanySingle
             Get
@@ -1085,9 +1096,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Company As MergedFunctionalTest.CompanySingle
-        '''<summary>
-        '''There are no comments for Orders in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Orders in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Orders() As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.Order)
             Get
@@ -1103,22 +1114,22 @@ Namespace MergedFunctionalTest
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Orders As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.Order)
     End Class
-    '''<summary>
-    '''There are no comments for Customer in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''CustomerId
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for Customer in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' CustomerId
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("CustomerId")>  _
     Partial Public Class Customer
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new Customer object.
-        '''</summary>
-        '''<param name="customerId">Initial value of CustomerId.</param>
-        '''<param name="thumbnail">Initial value of Thumbnail.</param>
-        '''<param name="video">Initial value of Video.</param>
-        '''<param name="info">Initial value of Info.</param>
+        ''' <summary>
+        ''' Create a new Customer object.
+        ''' </summary>
+        ''' <param name="customerId">Initial value of CustomerId.</param>
+        ''' <param name="thumbnail">Initial value of Thumbnail.</param>
+        ''' <param name="video">Initial value of Video.</param>
+        ''' <param name="info">Initial value of Info.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateCustomer(ByVal customerId As Integer, ByVal thumbnail As Global.Microsoft.OData.Client.DataServiceStreamLink, ByVal video As Global.Microsoft.OData.Client.DataServiceStreamLink, ByVal info As MergedFunctionalTest.CustomerInfo) As Customer
             Dim customer As Customer = New Customer()
@@ -1131,9 +1142,9 @@ Namespace MergedFunctionalTest
             customer.Info = info
             Return customer
         End Function
-        '''<summary>
-        '''There are no comments for Property CustomerId in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property CustomerId in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property CustomerId() As Integer
             Get
@@ -1151,9 +1162,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnCustomerIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Name in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Name in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Name() As String
             Get
@@ -1171,9 +1182,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNameChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Addresses in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Addresses in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Addresses() As Global.System.Collections.ObjectModel.Collection(Of MergedFunctionalTest.Address)
             Get
@@ -1191,9 +1202,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnAddressesChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Thumbnail in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Thumbnail in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Thumbnail() As Global.Microsoft.OData.Client.DataServiceStreamLink
             Get
@@ -1211,9 +1222,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnThumbnailChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Video in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Video in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Video() As Global.Microsoft.OData.Client.DataServiceStreamLink
             Get
@@ -1231,9 +1242,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnVideoChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Info in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Info in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Info() As MergedFunctionalTest.CustomerInfo
             Get
@@ -1251,9 +1262,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnInfoChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Company in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Company in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Company() As MergedFunctionalTest.Company
             Get
@@ -1271,9 +1282,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnCompanyChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Orders in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Orders in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Orders() As Global.System.Collections.ObjectModel.Collection(Of MergedFunctionalTest.Order)
             Get
@@ -1291,9 +1302,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnOrdersChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DynamicProperties in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DynamicProperties in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property DynamicProperties() As Global.System.Collections.Generic.IDictionary(Of String, Object)
             Get
@@ -1359,9 +1370,9 @@ Namespace MergedFunctionalTest
             Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of MergedFunctionalTest.Address)(Me.Context, resource.EditLink.OriginalString.Trim("/"C) + "/MergedFunctionalTest.foo10")
         End Function
     End Class
-    '''<summary>
-    '''There are no comments for GoodCustomerSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for GoodCustomerSingle in the schema.
+        ''' </summary>
     Partial Public Class GoodCustomerSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of GoodCustomer)
         ''' <summary>
@@ -1384,9 +1395,9 @@ Namespace MergedFunctionalTest
         Public Sub New(ByVal query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of GoodCustomer))
             MyBase.New(query)
         End Sub
-        '''<summary>
-        '''There are no comments for Info in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Info in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Info() As MergedFunctionalTest.CustomerInfoSingle
             Get
@@ -1401,9 +1412,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Info As MergedFunctionalTest.CustomerInfoSingle
-        '''<summary>
-        '''There are no comments for Company in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Company in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Company() As MergedFunctionalTest.CompanySingle
             Get
@@ -1418,9 +1429,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Company As MergedFunctionalTest.CompanySingle
-        '''<summary>
-        '''There are no comments for Orders in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Orders in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Orders() As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.Order)
             Get
@@ -1436,22 +1447,22 @@ Namespace MergedFunctionalTest
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Orders As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.Order)
     End Class
-    '''<summary>
-    '''There are no comments for GoodCustomer in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''CustomerId
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for GoodCustomer in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' CustomerId
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("CustomerId")>  _
     Partial Public Class GoodCustomer
         Inherits Customer
-        '''<summary>
-        '''Create a new GoodCustomer object.
-        '''</summary>
-        '''<param name="customerId">Initial value of CustomerId.</param>
-        '''<param name="thumbnail">Initial value of Thumbnail.</param>
-        '''<param name="video">Initial value of Video.</param>
-        '''<param name="info">Initial value of Info.</param>
+        ''' <summary>
+        ''' Create a new GoodCustomer object.
+        ''' </summary>
+        ''' <param name="customerId">Initial value of CustomerId.</param>
+        ''' <param name="thumbnail">Initial value of Thumbnail.</param>
+        ''' <param name="video">Initial value of Video.</param>
+        ''' <param name="info">Initial value of Info.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateGoodCustomer(ByVal customerId As Integer, ByVal thumbnail As Global.Microsoft.OData.Client.DataServiceStreamLink, ByVal video As Global.Microsoft.OData.Client.DataServiceStreamLink, ByVal info As MergedFunctionalTest.CustomerInfo) As GoodCustomer
             Dim goodCustomer As GoodCustomer = New GoodCustomer()
@@ -1465,9 +1476,9 @@ Namespace MergedFunctionalTest
             Return goodCustomer
         End Function
     End Class
-    '''<summary>
-    '''There are no comments for BadCustomerSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for BadCustomerSingle in the schema.
+        ''' </summary>
     Partial Public Class BadCustomerSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of BadCustomer)
         ''' <summary>
@@ -1490,9 +1501,9 @@ Namespace MergedFunctionalTest
         Public Sub New(ByVal query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of BadCustomer))
             MyBase.New(query)
         End Sub
-        '''<summary>
-        '''There are no comments for Info in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Info in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Info() As MergedFunctionalTest.CustomerInfoSingle
             Get
@@ -1507,9 +1518,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Info As MergedFunctionalTest.CustomerInfoSingle
-        '''<summary>
-        '''There are no comments for Company in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Company in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Company() As MergedFunctionalTest.CompanySingle
             Get
@@ -1524,9 +1535,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Company As MergedFunctionalTest.CompanySingle
-        '''<summary>
-        '''There are no comments for Orders in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Orders in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Orders() As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.Order)
             Get
@@ -1542,22 +1553,22 @@ Namespace MergedFunctionalTest
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Orders As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.Order)
     End Class
-    '''<summary>
-    '''There are no comments for BadCustomer in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''CustomerId
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for BadCustomer in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' CustomerId
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("CustomerId")>  _
     Partial Public Class BadCustomer
         Inherits Customer
-        '''<summary>
-        '''Create a new BadCustomer object.
-        '''</summary>
-        '''<param name="customerId">Initial value of CustomerId.</param>
-        '''<param name="thumbnail">Initial value of Thumbnail.</param>
-        '''<param name="video">Initial value of Video.</param>
-        '''<param name="info">Initial value of Info.</param>
+        ''' <summary>
+        ''' Create a new BadCustomer object.
+        ''' </summary>
+        ''' <param name="customerId">Initial value of CustomerId.</param>
+        ''' <param name="thumbnail">Initial value of Thumbnail.</param>
+        ''' <param name="video">Initial value of Video.</param>
+        ''' <param name="info">Initial value of Info.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateBadCustomer(ByVal customerId As Integer, ByVal thumbnail As Global.Microsoft.OData.Client.DataServiceStreamLink, ByVal video As Global.Microsoft.OData.Client.DataServiceStreamLink, ByVal info As MergedFunctionalTest.CustomerInfo) As BadCustomer
             Dim badCustomer As BadCustomer = New BadCustomer()
@@ -1571,9 +1582,9 @@ Namespace MergedFunctionalTest
             Return badCustomer
         End Function
     End Class
-    '''<summary>
-    '''There are no comments for CustomerInfoSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for CustomerInfoSingle in the schema.
+        ''' </summary>
     Partial Public Class CustomerInfoSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of CustomerInfo)
         ''' <summary>
@@ -1597,28 +1608,28 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for CustomerInfo in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''CustomerInfoId
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for CustomerInfo in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' CustomerInfoId
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("CustomerInfoId")>  _
     Partial Public Class CustomerInfo
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new CustomerInfo object.
-        '''</summary>
-        '''<param name="customerInfoId">Initial value of CustomerInfoId.</param>
+        ''' <summary>
+        ''' Create a new CustomerInfo object.
+        ''' </summary>
+        ''' <param name="customerInfoId">Initial value of CustomerInfoId.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateCustomerInfo(ByVal customerInfoId As Integer) As CustomerInfo
             Dim customerInfo As CustomerInfo = New CustomerInfo()
             customerInfo.CustomerInfoId = customerInfoId
             Return customerInfo
         End Function
-        '''<summary>
-        '''There are no comments for Property CustomerInfoId in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property CustomerInfoId in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property CustomerInfoId() As Integer
             Get
@@ -1636,9 +1647,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnCustomerInfoIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Information in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Information in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Information() As String
             Get
@@ -1657,9 +1668,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnInformationChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for OrderSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for OrderSingle in the schema.
+        ''' </summary>
     Partial Public Class OrderSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Order)
         ''' <summary>
@@ -1682,9 +1693,9 @@ Namespace MergedFunctionalTest
         Public Sub New(ByVal query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Order))
             MyBase.New(query)
         End Sub
-        '''<summary>
-        '''There are no comments for Customer in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Customer in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Customer() As MergedFunctionalTest.CustomerSingle
             Get
@@ -1700,28 +1711,28 @@ Namespace MergedFunctionalTest
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Customer As MergedFunctionalTest.CustomerSingle
     End Class
-    '''<summary>
-    '''There are no comments for Order in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''OrderId
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for Order in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' OrderId
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("OrderId")>  _
     Partial Public Class Order
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new Order object.
-        '''</summary>
-        '''<param name="orderId">Initial value of OrderId.</param>
+        ''' <summary>
+        ''' Create a new Order object.
+        ''' </summary>
+        ''' <param name="orderId">Initial value of OrderId.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateOrder(ByVal orderId As Integer) As Order
             Dim order As Order = New Order()
             order.OrderId = orderId
             Return order
         End Function
-        '''<summary>
-        '''There are no comments for Property OrderId in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property OrderId in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property OrderId() As Integer
             Get
@@ -1739,9 +1750,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnOrderIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property CustomerId in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property CustomerId in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property CustomerId() As Global.System.Nullable(Of Integer)
             Get
@@ -1759,9 +1770,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnCustomerIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Customer in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Customer in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Customer() As MergedFunctionalTest.Customer
             Get
@@ -1780,9 +1791,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnCustomerChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for CompanySingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for CompanySingle in the schema.
+        ''' </summary>
     Partial Public Class CompanySingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Company)
         ''' <summary>
@@ -1806,28 +1817,28 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Company in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''CompanyId
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for Company in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' CompanyId
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("CompanyId")>  _
     Partial Public Class Company
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new Company object.
-        '''</summary>
-        '''<param name="companyId">Initial value of CompanyId.</param>
+        ''' <summary>
+        ''' Create a new Company object.
+        ''' </summary>
+        ''' <param name="companyId">Initial value of CompanyId.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateCompany(ByVal companyId As Integer) As Company
             Dim company As Company = New Company()
             company.CompanyId = companyId
             Return company
         End Function
-        '''<summary>
-        '''There are no comments for Property CompanyId in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property CompanyId in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property CompanyId() As Integer
             Get
@@ -1845,9 +1856,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnCompanyIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property CompanyInformation in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property CompanyInformation in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property CompanyInformation() As String
             Get
@@ -1866,9 +1877,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnCompanyInformationChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for ProductSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for ProductSingle in the schema.
+        ''' </summary>
     Partial Public Class ProductSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Product)
         ''' <summary>
@@ -1891,9 +1902,9 @@ Namespace MergedFunctionalTest
         Public Sub New(ByVal query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Product))
             MyBase.New(query)
         End Sub
-        '''<summary>
-        '''There are no comments for Detail in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Detail in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Detail() As MergedFunctionalTest.ProductDetailSingle
             Get
@@ -1909,28 +1920,28 @@ Namespace MergedFunctionalTest
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Detail As MergedFunctionalTest.ProductDetailSingle
     End Class
-    '''<summary>
-    '''There are no comments for Product in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''ID
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for Product in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' ID
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("ID")>  _
     Partial Public Class Product
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new Product object.
-        '''</summary>
-        '''<param name="ID">Initial value of ID.</param>
+        ''' <summary>
+        ''' Create a new Product object.
+        ''' </summary>
+        ''' <param name="ID">Initial value of ID.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateProduct(ByVal ID As String) As Product
             Dim product As Product = New Product()
             product.ID = ID
             Return product
         End Function
-        '''<summary>
-        '''There are no comments for Property ID in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ID in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ID() As String
             Get
@@ -1948,9 +1959,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnIDChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Description in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Description in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Description() As String
             Get
@@ -1968,9 +1979,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnDescriptionChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Colors in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Colors in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Colors() As Global.System.Collections.ObjectModel.Collection(Of MergedFunctionalTest.Color)
             Get
@@ -1988,9 +1999,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnColorsChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Detail in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Detail in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Detail() As MergedFunctionalTest.ProductDetail
             Get
@@ -2025,9 +2036,9 @@ Namespace MergedFunctionalTest
             Return Me.Context.CreateFunctionQuery(Of MergedFunctionalTest.Customer)("", String.Join("/", Global.System.Linq.Enumerable.Select(Global.System.Linq.Enumerable.Skip(requestUri.Segments, Me.Context.BaseUri.Segments.Length), Function(s) s.Trim("/"C))) + "/MergedFunctionalTest.foo7", False)
         End Function
     End Class
-    '''<summary>
-    '''There are no comments for ProductDetailSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for ProductDetailSingle in the schema.
+        ''' </summary>
     Partial Public Class ProductDetailSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of ProductDetail)
         ''' <summary>
@@ -2050,9 +2061,9 @@ Namespace MergedFunctionalTest
         Public Sub New(ByVal query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of ProductDetail))
             MyBase.New(query)
         End Sub
-        '''<summary>
-        '''There are no comments for Product in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Product in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Product() As MergedFunctionalTest.ProductSingle
             Get
@@ -2068,28 +2079,28 @@ Namespace MergedFunctionalTest
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Product As MergedFunctionalTest.ProductSingle
     End Class
-    '''<summary>
-    '''There are no comments for ProductDetail in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''ProductId
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for ProductDetail in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' ProductId
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("ProductId")>  _
     Partial Public Class ProductDetail
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new ProductDetail object.
-        '''</summary>
-        '''<param name="productId">Initial value of ProductId.</param>
+        ''' <summary>
+        ''' Create a new ProductDetail object.
+        ''' </summary>
+        ''' <param name="productId">Initial value of ProductId.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateProductDetail(ByVal productId As Integer) As ProductDetail
             Dim productDetail As ProductDetail = New ProductDetail()
             productDetail.ProductId = productId
             Return productDetail
         End Function
-        '''<summary>
-        '''There are no comments for Property ProductId in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ProductId in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ProductId() As Integer
             Get
@@ -2107,9 +2118,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnProductIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Details in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Details in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Details() As String
             Get
@@ -2127,9 +2138,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnDetailsChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Product in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Product in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Product() As MergedFunctionalTest.Product
             Get
@@ -2148,9 +2159,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnProductChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for SpecialTypeWithPrecisionFacetSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for SpecialTypeWithPrecisionFacetSingle in the schema.
+        ''' </summary>
     Partial Public Class SpecialTypeWithPrecisionFacetSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of SpecialTypeWithPrecisionFacet)
         ''' <summary>
@@ -2174,28 +2185,28 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for SpecialTypeWithPrecisionFacet in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Id
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for SpecialTypeWithPrecisionFacet in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' Id
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Id")>  _
     Partial Public Class SpecialTypeWithPrecisionFacet
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new SpecialTypeWithPrecisionFacet object.
-        '''</summary>
-        '''<param name="ID">Initial value of Id.</param>
+        ''' <summary>
+        ''' Create a new SpecialTypeWithPrecisionFacet object.
+        ''' </summary>
+        ''' <param name="ID">Initial value of Id.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateSpecialTypeWithPrecisionFacet(ByVal ID As Integer) As SpecialTypeWithPrecisionFacet
             Dim specialTypeWithPrecisionFacet As SpecialTypeWithPrecisionFacet = New SpecialTypeWithPrecisionFacet()
             specialTypeWithPrecisionFacet.Id = ID
             Return specialTypeWithPrecisionFacet
         End Function
-        '''<summary>
-        '''There are no comments for Property Id in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Id in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Id() As Integer
             Get
@@ -2213,9 +2224,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property TimeSpan in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property TimeSpan in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property TimeSpan() As Global.System.Nullable(Of Global.System.TimeSpan)
             Get
@@ -2234,9 +2245,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnTimeSpanChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for BlobTypeSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for BlobTypeSingle in the schema.
+        ''' </summary>
     Partial Public Class BlobTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of BlobType)
         ''' <summary>
@@ -2260,21 +2271,21 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for BlobType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''KeyProp
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for BlobType in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' KeyProp
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("KeyProp")>  _
     <Global.Microsoft.OData.Client.HasStream()>  _
     Partial Public Class BlobType
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new BlobType object.
-        '''</summary>
-        '''<param name="keyProp">Initial value of KeyProp.</param>
-        '''<param name="valueProp">Initial value of ValueProp.</param>
+        ''' <summary>
+        ''' Create a new BlobType object.
+        ''' </summary>
+        ''' <param name="keyProp">Initial value of KeyProp.</param>
+        ''' <param name="valueProp">Initial value of ValueProp.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateBlobType(ByVal keyProp As Integer, ByVal valueProp As String) As BlobType
             Dim blobType As BlobType = New BlobType()
@@ -2282,9 +2293,9 @@ Namespace MergedFunctionalTest
             blobType.ValueProp = valueProp
             Return blobType
         End Function
-        '''<summary>
-        '''There are no comments for Property KeyProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property KeyProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property KeyProp() As Integer
             Get
@@ -2302,9 +2313,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnKeyPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ValueProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ValueProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ValueProp() As String
             Get
@@ -2323,9 +2334,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnValuePropChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for ChildSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for ChildSingle in the schema.
+        ''' </summary>
     Partial Public Class ChildSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Child)
         ''' <summary>
@@ -2349,28 +2360,28 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Child in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''ID
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for Child in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' ID
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("ID")>  _
     Partial Public Class Child
         Inherits Person
-        '''<summary>
-        '''Create a new Child object.
-        '''</summary>
-        '''<param name="ID">Initial value of ID.</param>
+        ''' <summary>
+        ''' Create a new Child object.
+        ''' </summary>
+        ''' <param name="ID">Initial value of ID.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateChild(ByVal ID As Global.System.Guid) As Child
             Dim child As Child = New Child()
             child.ID = ID
             Return child
         End Function
-        '''<summary>
-        '''There are no comments for Property Description in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Description in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Description() As String
             Get
@@ -2389,9 +2400,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnDescriptionChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for PersonSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for PersonSingle in the schema.
+        ''' </summary>
     Partial Public Class PersonSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Person)
         ''' <summary>
@@ -2415,28 +2426,28 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Person in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''ID
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for Person in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' ID
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("ID")>  _
     Partial Public Class Person
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new Person object.
-        '''</summary>
-        '''<param name="ID">Initial value of ID.</param>
+        ''' <summary>
+        ''' Create a new Person object.
+        ''' </summary>
+        ''' <param name="ID">Initial value of ID.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreatePerson(ByVal ID As Global.System.Guid) As Person
             Dim person As Person = New Person()
             person.ID = ID
             Return person
         End Function
-        '''<summary>
-        '''There are no comments for Property ID in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ID in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ID() As Global.System.Guid
             Get
@@ -2454,9 +2465,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnIDChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Name in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Name in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Name() As String
             Get
@@ -2475,9 +2486,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnNameChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for TestTypeSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for TestTypeSingle in the schema.
+        ''' </summary>
     Partial Public Class TestTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of TestType)
         ''' <summary>
@@ -2501,54 +2512,54 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for TestType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Id
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for TestType in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' Id
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Id")>  _
     Partial Public Class TestType
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new TestType object.
-        '''</summary>
-        '''<param name="ID">Initial value of Id.</param>
-        '''<param name="colorProp">Initial value of ColorProp.</param>
-        '''<param name="nonNullableBinaryProp">Initial value of NonNullableBinaryProp.</param>
-        '''<param name="nonNullableBooleanProp">Initial value of NonNullableBooleanProp.</param>
-        '''<param name="nonNullableByteProp">Initial value of NonNullableByteProp.</param>
-        '''<param name="nonNullableDecimalProp">Initial value of NonNullableDecimalProp.</param>
-        '''<param name="nonNullableDoubleProp">Initial value of NonNullableDoubleProp.</param>
-        '''<param name="nonNullableSingleProp">Initial value of NonNullableSingleProp.</param>
-        '''<param name="nonNullableInt16Prop">Initial value of NonNullableInt16Prop.</param>
-        '''<param name="nonNullableInt32Prop">Initial value of NonNullableInt32Prop.</param>
-        '''<param name="nonNullableInt64Prop">Initial value of NonNullableInt64Prop.</param>
-        '''<param name="nonNullableGuidProp">Initial value of NonNullableGuidProp.</param>
-        '''<param name="nonNullableStringProp">Initial value of NonNullableStringProp.</param>
-        '''<param name="nonNullableDurationProp">Initial value of NonNullableDurationProp.</param>
-        '''<param name="nonNullableDateTimeOffsetProp">Initial value of NonNullableDateTimeOffsetProp.</param>
-        '''<param name="nonNullableDateProp">Initial value of NonNullableDateProp.</param>
-        '''<param name="nonNullableTimeOfDayProp">Initial value of NonNullableTimeOfDayProp.</param>
-        '''<param name="nonNullableStreamProp">Initial value of NonNullableStreamProp.</param>
-        '''<param name="nonNullableSByteProp">Initial value of NonNullableSByteProp.</param>
-        '''<param name="nonNullableGeography">Initial value of NonNullableGeography.</param>
-        '''<param name="nonNullableGeographyPoint">Initial value of NonNullableGeographyPoint.</param>
-        '''<param name="nonNullableGeographyLineString">Initial value of NonNullableGeographyLineString.</param>
-        '''<param name="nonNullableGeographyPolygon">Initial value of NonNullableGeographyPolygon.</param>
-        '''<param name="nonNullableGeographyMultiPoint">Initial value of NonNullableGeographyMultiPoint.</param>
-        '''<param name="nonNullableGeographyMultiLineString">Initial value of NonNullableGeographyMultiLineString.</param>
-        '''<param name="nonNullableGeographyMultiPolygon">Initial value of NonNullableGeographyMultiPolygon.</param>
-        '''<param name="nonNullableGeographyCollection">Initial value of NonNullableGeographyCollection.</param>
-        '''<param name="nonNullableGeometry">Initial value of NonNullableGeometry.</param>
-        '''<param name="nonNullableGeometryPoint">Initial value of NonNullableGeometryPoint.</param>
-        '''<param name="nonNullableGeometryLineString">Initial value of NonNullableGeometryLineString.</param>
-        '''<param name="nonNullableGeometryPolygon">Initial value of NonNullableGeometryPolygon.</param>
-        '''<param name="nonNullableGeometryMultiPoint">Initial value of NonNullableGeometryMultiPoint.</param>
-        '''<param name="nonNullableGeometryMultiLineString">Initial value of NonNullableGeometryMultiLineString.</param>
-        '''<param name="nonNullableGeometryMultiPolygon">Initial value of NonNullableGeometryMultiPolygon.</param>
-        '''<param name="nonNullableGeometryCollection">Initial value of NonNullableGeometryCollection.</param>
-        '''<param name="complexNonNull">Initial value of ComplexNonNull.</param>
+        ''' <summary>
+        ''' Create a new TestType object.
+        ''' </summary>
+        ''' <param name="ID">Initial value of Id.</param>
+        ''' <param name="colorProp">Initial value of ColorProp.</param>
+        ''' <param name="nonNullableBinaryProp">Initial value of NonNullableBinaryProp.</param>
+        ''' <param name="nonNullableBooleanProp">Initial value of NonNullableBooleanProp.</param>
+        ''' <param name="nonNullableByteProp">Initial value of NonNullableByteProp.</param>
+        ''' <param name="nonNullableDecimalProp">Initial value of NonNullableDecimalProp.</param>
+        ''' <param name="nonNullableDoubleProp">Initial value of NonNullableDoubleProp.</param>
+        ''' <param name="nonNullableSingleProp">Initial value of NonNullableSingleProp.</param>
+        ''' <param name="nonNullableInt16Prop">Initial value of NonNullableInt16Prop.</param>
+        ''' <param name="nonNullableInt32Prop">Initial value of NonNullableInt32Prop.</param>
+        ''' <param name="nonNullableInt64Prop">Initial value of NonNullableInt64Prop.</param>
+        ''' <param name="nonNullableGuidProp">Initial value of NonNullableGuidProp.</param>
+        ''' <param name="nonNullableStringProp">Initial value of NonNullableStringProp.</param>
+        ''' <param name="nonNullableDurationProp">Initial value of NonNullableDurationProp.</param>
+        ''' <param name="nonNullableDateTimeOffsetProp">Initial value of NonNullableDateTimeOffsetProp.</param>
+        ''' <param name="nonNullableDateProp">Initial value of NonNullableDateProp.</param>
+        ''' <param name="nonNullableTimeOfDayProp">Initial value of NonNullableTimeOfDayProp.</param>
+        ''' <param name="nonNullableStreamProp">Initial value of NonNullableStreamProp.</param>
+        ''' <param name="nonNullableSByteProp">Initial value of NonNullableSByteProp.</param>
+        ''' <param name="nonNullableGeography">Initial value of NonNullableGeography.</param>
+        ''' <param name="nonNullableGeographyPoint">Initial value of NonNullableGeographyPoint.</param>
+        ''' <param name="nonNullableGeographyLineString">Initial value of NonNullableGeographyLineString.</param>
+        ''' <param name="nonNullableGeographyPolygon">Initial value of NonNullableGeographyPolygon.</param>
+        ''' <param name="nonNullableGeographyMultiPoint">Initial value of NonNullableGeographyMultiPoint.</param>
+        ''' <param name="nonNullableGeographyMultiLineString">Initial value of NonNullableGeographyMultiLineString.</param>
+        ''' <param name="nonNullableGeographyMultiPolygon">Initial value of NonNullableGeographyMultiPolygon.</param>
+        ''' <param name="nonNullableGeographyCollection">Initial value of NonNullableGeographyCollection.</param>
+        ''' <param name="nonNullableGeometry">Initial value of NonNullableGeometry.</param>
+        ''' <param name="nonNullableGeometryPoint">Initial value of NonNullableGeometryPoint.</param>
+        ''' <param name="nonNullableGeometryLineString">Initial value of NonNullableGeometryLineString.</param>
+        ''' <param name="nonNullableGeometryPolygon">Initial value of NonNullableGeometryPolygon.</param>
+        ''' <param name="nonNullableGeometryMultiPoint">Initial value of NonNullableGeometryMultiPoint.</param>
+        ''' <param name="nonNullableGeometryMultiLineString">Initial value of NonNullableGeometryMultiLineString.</param>
+        ''' <param name="nonNullableGeometryMultiPolygon">Initial value of NonNullableGeometryMultiPolygon.</param>
+        ''' <param name="nonNullableGeometryCollection">Initial value of NonNullableGeometryCollection.</param>
+        ''' <param name="complexNonNull">Initial value of ComplexNonNull.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateTestType(ByVal ID As Global.System.DateTimeOffset,  _
                     ByVal colorProp As MergedFunctionalTest.Color,  _
@@ -2628,9 +2639,9 @@ Namespace MergedFunctionalTest
             testType.ComplexNonNull = complexNonNull
             Return testType
         End Function
-        '''<summary>
-        '''There are no comments for Property Id in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Id in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Id() As Global.System.DateTimeOffset
             Get
@@ -2648,9 +2659,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ColorProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ColorProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ColorProp() As MergedFunctionalTest.Color
             Get
@@ -2668,9 +2679,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnColorPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableBinaryProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableBinaryProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableBinaryProp() As Byte()
             Get
@@ -2688,9 +2699,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableBinaryPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableBinaryProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableBinaryProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableBinaryProp() As Byte()
             Get
@@ -2708,9 +2719,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableBinaryPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableBinaryProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableBinaryProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableBinaryProp() As Byte()
             Get
@@ -2728,9 +2739,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableBinaryPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableBooleanProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableBooleanProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableBooleanProp() As Boolean
             Get
@@ -2748,9 +2759,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableBooleanPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableBooleanProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableBooleanProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableBooleanProp() As Global.System.Nullable(Of Boolean)
             Get
@@ -2768,9 +2779,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableBooleanPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableBooleanProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableBooleanProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableBooleanProp() As Global.System.Nullable(Of Boolean)
             Get
@@ -2788,9 +2799,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableBooleanPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableByteProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableByteProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableByteProp() As Byte
             Get
@@ -2808,9 +2819,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableBytePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableByteProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableByteProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableByteProp() As Global.System.Nullable(Of Byte)
             Get
@@ -2828,9 +2839,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableBytePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableByteProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableByteProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableByteProp() As Global.System.Nullable(Of Byte)
             Get
@@ -2848,9 +2859,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableBytePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableDecimalProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableDecimalProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableDecimalProp() As Decimal
             Get
@@ -2868,9 +2879,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableDecimalPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableDecimalProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableDecimalProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableDecimalProp() As Global.System.Nullable(Of Decimal)
             Get
@@ -2888,9 +2899,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableDecimalPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableDecimalProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableDecimalProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableDecimalProp() As Global.System.Nullable(Of Decimal)
             Get
@@ -2908,9 +2919,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableDecimalPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableDoubleProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableDoubleProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableDoubleProp() As Double
             Get
@@ -2928,9 +2939,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableDoublePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableDoubleProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableDoubleProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableDoubleProp() As Global.System.Nullable(Of Double)
             Get
@@ -2948,9 +2959,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableDoublePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableDoubleProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableDoubleProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableDoubleProp() As Global.System.Nullable(Of Double)
             Get
@@ -2968,9 +2979,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableDoublePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableSingleProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableSingleProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableSingleProp() As Single
             Get
@@ -2988,9 +2999,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableSinglePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableSingleProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableSingleProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableSingleProp() As Global.System.Nullable(Of Single)
             Get
@@ -3008,9 +3019,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableSinglePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableSingleProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableSingleProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableSingleProp() As Global.System.Nullable(Of Single)
             Get
@@ -3028,9 +3039,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableSinglePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableInt16Prop in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableInt16Prop in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableInt16Prop() As Short
             Get
@@ -3048,9 +3059,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableInt16PropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableInt16Prop in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableInt16Prop in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableInt16Prop() As Global.System.Nullable(Of Short)
             Get
@@ -3068,9 +3079,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableInt16PropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableInt16Prop in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableInt16Prop in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableInt16Prop() As Global.System.Nullable(Of Short)
             Get
@@ -3088,9 +3099,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableInt16PropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableInt32Prop in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableInt32Prop in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableInt32Prop() As Integer
             Get
@@ -3108,9 +3119,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableInt32PropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableInt32Prop in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableInt32Prop in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableInt32Prop() As Global.System.Nullable(Of Integer)
             Get
@@ -3128,9 +3139,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableInt32PropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableInt32Prop in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableInt32Prop in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableInt32Prop() As Global.System.Nullable(Of Integer)
             Get
@@ -3148,9 +3159,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableInt32PropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableInt64Prop in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableInt64Prop in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableInt64Prop() As Long
             Get
@@ -3168,9 +3179,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableInt64PropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableInt64Prop in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableInt64Prop in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableInt64Prop() As Global.System.Nullable(Of Long)
             Get
@@ -3188,9 +3199,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableInt64PropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableInt64Prop in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableInt64Prop in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableInt64Prop() As Global.System.Nullable(Of Long)
             Get
@@ -3208,9 +3219,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableInt64PropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGuidProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGuidProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGuidProp() As Global.System.Guid
             Get
@@ -3228,9 +3239,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGuidPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGuidProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGuidProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGuidProp() As Global.System.Nullable(Of Global.System.Guid)
             Get
@@ -3248,9 +3259,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGuidPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGuidProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGuidProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGuidProp() As Global.System.Nullable(Of Global.System.Guid)
             Get
@@ -3268,9 +3279,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGuidPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableStringProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableStringProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableStringProp() As String
             Get
@@ -3288,9 +3299,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableStringPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableStringProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableStringProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableStringProp() As String
             Get
@@ -3308,9 +3319,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableStringPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableStringProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableStringProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableStringProp() As String
             Get
@@ -3328,9 +3339,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableStringPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableDurationProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableDurationProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableDurationProp() As Global.System.TimeSpan
             Get
@@ -3348,9 +3359,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableDurationPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableDurationProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableDurationProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableDurationProp() As Global.System.Nullable(Of Global.System.TimeSpan)
             Get
@@ -3368,9 +3379,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableDurationPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableDurationProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableDurationProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableDurationProp() As Global.System.Nullable(Of Global.System.TimeSpan)
             Get
@@ -3388,9 +3399,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableDurationPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableDateTimeOffsetProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableDateTimeOffsetProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableDateTimeOffsetProp() As Global.System.DateTimeOffset
             Get
@@ -3408,9 +3419,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableDateTimeOffsetPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableDateTimeOffsetProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableDateTimeOffsetProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableDateTimeOffsetProp() As Global.System.Nullable(Of Global.System.DateTimeOffset)
             Get
@@ -3428,9 +3439,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableDateTimeOffsetPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableDateTimeOffsetProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableDateTimeOffsetProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableDateTimeOffsetProp() As Global.System.Nullable(Of Global.System.DateTimeOffset)
             Get
@@ -3448,9 +3459,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableDateTimeOffsetPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableDateProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableDateProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableDateProp() As Global.Microsoft.OData.Edm.Date
             Get
@@ -3468,9 +3479,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableDatePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableDateProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableDateProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableDateProp() As Global.System.Nullable(Of Global.Microsoft.OData.Edm.Date)
             Get
@@ -3488,9 +3499,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableDatePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableDateProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableDateProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableDateProp() As Global.System.Nullable(Of Global.Microsoft.OData.Edm.Date)
             Get
@@ -3508,9 +3519,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableDatePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableTimeOfDayProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableTimeOfDayProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableTimeOfDayProp() As Global.Microsoft.OData.Edm.TimeOfDay
             Get
@@ -3528,9 +3539,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableTimeOfDayPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableTimeOfDayProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableTimeOfDayProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableTimeOfDayProp() As Global.System.Nullable(Of Global.Microsoft.OData.Edm.TimeOfDay)
             Get
@@ -3548,9 +3559,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableTimeOfDayPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableTimeOfDayProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableTimeOfDayProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableTimeOfDayProp() As Global.System.Nullable(Of Global.Microsoft.OData.Edm.TimeOfDay)
             Get
@@ -3568,9 +3579,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableTimeOfDayPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableStreamProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableStreamProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableStreamProp() As Global.Microsoft.OData.Client.DataServiceStreamLink
             Get
@@ -3588,9 +3599,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableStreamPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableStreamProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableStreamProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableStreamProp() As Global.Microsoft.OData.Client.DataServiceStreamLink
             Get
@@ -3608,9 +3619,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableStreamPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableStreamProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableStreamProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableStreamProp() As Global.Microsoft.OData.Client.DataServiceStreamLink
             Get
@@ -3628,9 +3639,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableStreamPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableSByteProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableSByteProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableSByteProp() As SByte
             Get
@@ -3648,9 +3659,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableSBytePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableSByteProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableSByteProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableSByteProp() As Global.System.Nullable(Of SByte)
             Get
@@ -3668,9 +3679,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableSBytePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableSByteProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableSByteProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableSByteProp() As Global.System.Nullable(Of SByte)
             Get
@@ -3688,9 +3699,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableSBytePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeography in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeography in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeography() As Global.Microsoft.Spatial.Geography
             Get
@@ -3708,9 +3719,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeographyChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeography in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeography in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeography() As Global.Microsoft.Spatial.Geography
             Get
@@ -3728,9 +3739,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeographyChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeography in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeography in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeography() As Global.Microsoft.Spatial.Geography
             Get
@@ -3748,9 +3759,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeographyChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeographyPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeographyPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeographyPoint() As Global.Microsoft.Spatial.GeographyPoint
             Get
@@ -3768,9 +3779,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeographyPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeographyPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeographyPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeographyPoint() As Global.Microsoft.Spatial.GeographyPoint
             Get
@@ -3788,9 +3799,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeographyPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeographyPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeographyPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeographyPoint() As Global.Microsoft.Spatial.GeographyPoint
             Get
@@ -3808,9 +3819,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeographyPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeographyLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeographyLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeographyLineString() As Global.Microsoft.Spatial.GeographyLineString
             Get
@@ -3828,9 +3839,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeographyLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeographyLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeographyLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeographyLineString() As Global.Microsoft.Spatial.GeographyLineString
             Get
@@ -3848,9 +3859,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeographyLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeographyLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeographyLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeographyLineString() As Global.Microsoft.Spatial.GeographyLineString
             Get
@@ -3868,9 +3879,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeographyLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeographyPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeographyPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeographyPolygon() As Global.Microsoft.Spatial.GeographyPolygon
             Get
@@ -3888,9 +3899,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeographyPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeographyPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeographyPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeographyPolygon() As Global.Microsoft.Spatial.GeographyPolygon
             Get
@@ -3908,9 +3919,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeographyPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeographyPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeographyPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeographyPolygon() As Global.Microsoft.Spatial.GeographyPolygon
             Get
@@ -3928,9 +3939,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeographyPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeographyMultiPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeographyMultiPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeographyMultiPoint() As Global.Microsoft.Spatial.GeographyMultiPoint
             Get
@@ -3948,9 +3959,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeographyMultiPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeographyMultiPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeographyMultiPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeographyMultiPoint() As Global.Microsoft.Spatial.GeographyMultiPoint
             Get
@@ -3968,9 +3979,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeographyMultiPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeographyMultiPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeographyMultiPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeographyMultiPoint() As Global.Microsoft.Spatial.GeographyMultiPoint
             Get
@@ -3988,9 +3999,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeographyMultiPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeographyMultiLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeographyMultiLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeographyMultiLineString() As Global.Microsoft.Spatial.GeographyMultiLineString
             Get
@@ -4008,9 +4019,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeographyMultiLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeographyMultiLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeographyMultiLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeographyMultiLineString() As Global.Microsoft.Spatial.GeographyMultiLineString
             Get
@@ -4028,9 +4039,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeographyMultiLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeographyMultiLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeographyMultiLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeographyMultiLineString() As Global.Microsoft.Spatial.GeographyMultiLineString
             Get
@@ -4048,9 +4059,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeographyMultiLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeographyMultiPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeographyMultiPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeographyMultiPolygon() As Global.Microsoft.Spatial.GeographyMultiPolygon
             Get
@@ -4068,9 +4079,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeographyMultiPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeographyMultiPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeographyMultiPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeographyMultiPolygon() As Global.Microsoft.Spatial.GeographyMultiPolygon
             Get
@@ -4088,9 +4099,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeographyMultiPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeographyMultiPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeographyMultiPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeographyMultiPolygon() As Global.Microsoft.Spatial.GeographyMultiPolygon
             Get
@@ -4108,9 +4119,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeographyMultiPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeographyCollection in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeographyCollection in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeographyCollection() As Global.Microsoft.Spatial.GeographyCollection
             Get
@@ -4128,9 +4139,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeographyCollectionChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeographyCollection in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeographyCollection in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeographyCollection() As Global.Microsoft.Spatial.GeographyCollection
             Get
@@ -4148,9 +4159,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeographyCollectionChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeographyCollection in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeographyCollection in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeographyCollection() As Global.Microsoft.Spatial.GeographyCollection
             Get
@@ -4168,9 +4179,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeographyCollectionChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeometry in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeometry in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeometry() As Global.Microsoft.Spatial.Geometry
             Get
@@ -4188,9 +4199,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeometryChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeometry in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeometry in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeometry() As Global.Microsoft.Spatial.Geometry
             Get
@@ -4208,9 +4219,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeometryChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeometry in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeometry in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeometry() As Global.Microsoft.Spatial.Geometry
             Get
@@ -4228,9 +4239,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeometryChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeometryPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeometryPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeometryPoint() As Global.Microsoft.Spatial.GeometryPoint
             Get
@@ -4248,9 +4259,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeometryPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeometryPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeometryPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeometryPoint() As Global.Microsoft.Spatial.GeometryPoint
             Get
@@ -4268,9 +4279,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeometryPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeometryPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeometryPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeometryPoint() As Global.Microsoft.Spatial.GeometryPoint
             Get
@@ -4288,9 +4299,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeometryPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeometryLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeometryLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeometryLineString() As Global.Microsoft.Spatial.GeometryLineString
             Get
@@ -4308,9 +4319,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeometryLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeometryLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeometryLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeometryLineString() As Global.Microsoft.Spatial.GeometryLineString
             Get
@@ -4328,9 +4339,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeometryLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeometryLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeometryLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeometryLineString() As Global.Microsoft.Spatial.GeometryLineString
             Get
@@ -4348,9 +4359,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeometryLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeometryPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeometryPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeometryPolygon() As Global.Microsoft.Spatial.GeometryPolygon
             Get
@@ -4368,9 +4379,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeometryPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeometryPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeometryPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeometryPolygon() As Global.Microsoft.Spatial.GeometryPolygon
             Get
@@ -4388,9 +4399,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeometryPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeometryPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeometryPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeometryPolygon() As Global.Microsoft.Spatial.GeometryPolygon
             Get
@@ -4408,9 +4419,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeometryPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeometryMultiPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeometryMultiPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeometryMultiPoint() As Global.Microsoft.Spatial.GeometryMultiPoint
             Get
@@ -4428,9 +4439,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeometryMultiPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeometryMultiPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeometryMultiPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeometryMultiPoint() As Global.Microsoft.Spatial.GeometryMultiPoint
             Get
@@ -4448,9 +4459,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeometryMultiPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeometryMultiPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeometryMultiPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeometryMultiPoint() As Global.Microsoft.Spatial.GeometryMultiPoint
             Get
@@ -4468,9 +4479,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeometryMultiPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeometryMultiLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeometryMultiLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeometryMultiLineString() As Global.Microsoft.Spatial.GeometryMultiLineString
             Get
@@ -4488,9 +4499,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeometryMultiLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeometryMultiLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeometryMultiLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeometryMultiLineString() As Global.Microsoft.Spatial.GeometryMultiLineString
             Get
@@ -4508,9 +4519,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeometryMultiLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeometryMultiLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeometryMultiLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeometryMultiLineString() As Global.Microsoft.Spatial.GeometryMultiLineString
             Get
@@ -4528,9 +4539,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeometryMultiLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeometryMultiPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeometryMultiPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeometryMultiPolygon() As Global.Microsoft.Spatial.GeometryMultiPolygon
             Get
@@ -4548,9 +4559,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeometryMultiPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeometryMultiPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeometryMultiPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeometryMultiPolygon() As Global.Microsoft.Spatial.GeometryMultiPolygon
             Get
@@ -4568,9 +4579,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeometryMultiPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeometryMultiPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeometryMultiPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeometryMultiPolygon() As Global.Microsoft.Spatial.GeometryMultiPolygon
             Get
@@ -4588,9 +4599,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeometryMultiPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NonNullableGeometryCollection in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NonNullableGeometryCollection in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NonNullableGeometryCollection() As Global.Microsoft.Spatial.GeometryCollection
             Get
@@ -4608,9 +4619,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNonNullableGeometryCollectionChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ExplicitlyNullableGeometryCollection in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ExplicitlyNullableGeometryCollection in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ExplicitlyNullableGeometryCollection() As Global.Microsoft.Spatial.GeometryCollection
             Get
@@ -4628,9 +4639,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnExplicitlyNullableGeometryCollectionChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableGeometryCollection in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableGeometryCollection in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableGeometryCollection() As Global.Microsoft.Spatial.GeometryCollection
             Get
@@ -4648,9 +4659,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableGeometryCollectionChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ComplexNonNull in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ComplexNonNull in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ComplexNonNull() As MergedFunctionalTest.TestComplexType
             Get
@@ -4668,9 +4679,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnComplexNonNullChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ComplexNullExplicit in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ComplexNullExplicit in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ComplexNullExplicit() As MergedFunctionalTest.TestComplexType
             Get
@@ -4688,9 +4699,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnComplexNullExplicitChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ComplexNull in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ComplexNull in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ComplexNull() As MergedFunctionalTest.TestComplexType
             Get
@@ -4709,9 +4720,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnComplexNullChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for TestCollectionTypeSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for TestCollectionTypeSingle in the schema.
+        ''' </summary>
     Partial Public Class TestCollectionTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of TestCollectionType)
         ''' <summary>
@@ -4735,28 +4746,28 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for TestCollectionType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''KeyProp
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for TestCollectionType in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' KeyProp
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("KeyProp")>  _
     Partial Public Class TestCollectionType
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new TestCollectionType object.
-        '''</summary>
-        '''<param name="keyProp">Initial value of KeyProp.</param>
+        ''' <summary>
+        ''' Create a new TestCollectionType object.
+        ''' </summary>
+        ''' <param name="keyProp">Initial value of KeyProp.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateTestCollectionType(ByVal keyProp As Integer) As TestCollectionType
             Dim testCollectionType As TestCollectionType = New TestCollectionType()
             testCollectionType.KeyProp = keyProp
             Return testCollectionType
         End Function
-        '''<summary>
-        '''There are no comments for Property KeyProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property KeyProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property KeyProp() As Integer
             Get
@@ -4774,9 +4785,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnKeyPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfDecimals in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfDecimals in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfDecimals() As Global.System.Collections.ObjectModel.Collection(Of Decimal)
             Get
@@ -4794,9 +4805,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfDecimalsChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfDoubles in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfDoubles in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfDoubles() As Global.System.Collections.ObjectModel.Collection(Of Double)
             Get
@@ -4814,9 +4825,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfDoublesChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfSingles in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfSingles in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfSingles() As Global.System.Collections.ObjectModel.Collection(Of Single)
             Get
@@ -4834,9 +4845,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfSinglesChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfBytes in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfBytes in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfBytes() As Global.System.Collections.ObjectModel.Collection(Of Byte)
             Get
@@ -4854,9 +4865,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfBytesChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfInt16s in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfInt16s in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfInt16s() As Global.System.Collections.ObjectModel.Collection(Of Short)
             Get
@@ -4874,9 +4885,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfInt16sChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfInt32s in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfInt32s in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfInt32s() As Global.System.Collections.ObjectModel.Collection(Of Integer)
             Get
@@ -4894,9 +4905,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfInt32sChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfInt64s in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfInt64s in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfInt64s() As Global.System.Collections.ObjectModel.Collection(Of Long)
             Get
@@ -4914,9 +4925,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfInt64sChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfGuids in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfGuids in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfGuids() As Global.System.Collections.ObjectModel.Collection(Of Global.System.Guid)
             Get
@@ -4934,9 +4945,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfGuidsChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfDateTime in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfDateTime in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfDateTime() As Global.System.Collections.ObjectModel.Collection(Of Global.System.DateTimeOffset)
             Get
@@ -4954,9 +4965,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfDateTimeChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfStrings in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfStrings in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfStrings() As Global.System.Collections.ObjectModel.Collection(Of String)
             Get
@@ -4974,9 +4985,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfStringsChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfBinarys in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfBinarys in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfBinarys() As Global.System.Collections.ObjectModel.Collection(Of Byte())
             Get
@@ -4994,9 +5005,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfBinarysChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfBooleans in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfBooleans in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfBooleans() As Global.System.Collections.ObjectModel.Collection(Of Boolean)
             Get
@@ -5014,9 +5025,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfBooleansChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfDuration in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfDuration in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfDuration() As Global.System.Collections.ObjectModel.Collection(Of Global.System.TimeSpan)
             Get
@@ -5034,9 +5045,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfDurationChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfDate in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfDate in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfDate() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.OData.Edm.Date)
             Get
@@ -5054,9 +5065,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfDateChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfTimeOfDay in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfTimeOfDay in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfTimeOfDay() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.OData.Edm.TimeOfDay)
             Get
@@ -5074,9 +5085,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfTimeOfDayChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfStream in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfStream in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfStream() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.OData.Client.DataServiceStreamLink)
             Get
@@ -5094,9 +5105,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfStreamChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BagOfSByte in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BagOfSByte in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BagOfSByte() As Global.System.Collections.ObjectModel.Collection(Of SByte)
             Get
@@ -5114,9 +5125,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBagOfSByteChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Geography in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Geography in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Geography() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.Geography)
             Get
@@ -5134,9 +5145,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeographyPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeographyPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeographyPoint() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.GeographyPoint)
             Get
@@ -5154,9 +5165,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeographyLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeographyLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeographyLineString() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.GeographyLineString)
             Get
@@ -5174,9 +5185,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeographyPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeographyPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeographyPolygon() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.GeographyPolygon)
             Get
@@ -5194,9 +5205,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeographyMultiPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeographyMultiPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeographyMultiPoint() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.GeographyMultiPoint)
             Get
@@ -5214,9 +5225,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyMultiPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeographyMultiLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeographyMultiLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeographyMultiLineString() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.GeographyMultiLineString)
             Get
@@ -5234,9 +5245,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyMultiLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeographyMultiPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeographyMultiPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeographyMultiPolygon() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.GeographyMultiPolygon)
             Get
@@ -5254,9 +5265,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyMultiPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeographyCollection in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeographyCollection in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeographyCollection() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.GeographyCollection)
             Get
@@ -5274,9 +5285,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyCollectionChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Geometry in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Geometry in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Geometry() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.Geometry)
             Get
@@ -5294,9 +5305,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeometryPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeometryPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeometryPoint() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.GeometryPoint)
             Get
@@ -5314,9 +5325,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeometryLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeometryLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeometryLineString() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.GeometryLineString)
             Get
@@ -5334,9 +5345,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeometryPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeometryPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeometryPolygon() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.GeometryPolygon)
             Get
@@ -5354,9 +5365,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeometryMultiPoint in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeometryMultiPoint in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeometryMultiPoint() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.GeometryMultiPoint)
             Get
@@ -5374,9 +5385,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryMultiPointChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeometryMultiLineString in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeometryMultiLineString in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeometryMultiLineString() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.GeometryMultiLineString)
             Get
@@ -5394,9 +5405,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryMultiLineStringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeometryMultiPolygon in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeometryMultiPolygon in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeometryMultiPolygon() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.GeometryMultiPolygon)
             Get
@@ -5414,9 +5425,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryMultiPolygonChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeometryCollection in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeometryCollection in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeometryCollection() As Global.System.Collections.ObjectModel.Collection(Of Global.Microsoft.Spatial.GeometryCollection)
             Get
@@ -5434,9 +5445,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryCollectionChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property CollectionOfComplexNotNullExplictly in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property CollectionOfComplexNotNullExplictly in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property CollectionOfComplexNotNullExplictly() As Global.System.Collections.ObjectModel.Collection(Of MergedFunctionalTest.TestComplexType)
             Get
@@ -5454,9 +5465,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnCollectionOfComplexNotNullExplictlyChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property CollectionOfComplexNullExplictly in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property CollectionOfComplexNullExplictly in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property CollectionOfComplexNullExplictly() As Global.System.Collections.ObjectModel.Collection(Of MergedFunctionalTest.TestComplexType)
             Get
@@ -5474,9 +5485,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnCollectionOfComplexNullExplictlyChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property CollectionOfComplex in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property CollectionOfComplex in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property CollectionOfComplex() As Global.System.Collections.ObjectModel.Collection(Of MergedFunctionalTest.TestComplexType)
             Get
@@ -5495,9 +5506,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnCollectionOfComplexChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DefaultValueTestTypeSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for DefaultValueTestTypeSingle in the schema.
+        ''' </summary>
     Partial Public Class DefaultValueTestTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DefaultValueTestType)
         ''' <summary>
@@ -5521,18 +5532,18 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DefaultValueTestType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''KeyProp
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for DefaultValueTestType in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' KeyProp
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("KeyProp")>  _
     Partial Public Class DefaultValueTestType
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''There are no comments for Property KeyProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property KeyProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property KeyProp() As Integer
             Get
@@ -5550,9 +5561,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnKeyPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BinaryProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BinaryProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BinaryProp() As Byte()
             Get
@@ -5570,9 +5581,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBinaryPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property StringProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property StringProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property StringProp() As String
             Get
@@ -5590,9 +5601,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnStringPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DecimalProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DecimalProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property DecimalProp() As Decimal
             Get
@@ -5610,9 +5621,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnDecimalPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ShortProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ShortProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ShortProp() As Short
             Get
@@ -5630,9 +5641,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnShortPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property FloatProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property FloatProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property FloatProp() As Single
             Get
@@ -5650,9 +5661,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnFloatPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BooleanProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BooleanProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BooleanProp() As Boolean
             Get
@@ -5670,9 +5681,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBooleanPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DoubleProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DoubleProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property DoubleProp() As Double
             Get
@@ -5690,9 +5701,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnDoublePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GuidProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GuidProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GuidProp() As Global.System.Guid
             Get
@@ -5710,9 +5721,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGuidPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ByteProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ByteProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ByteProp() As Byte
             Get
@@ -5730,9 +5741,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBytePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property LongProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property LongProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property LongProp() As Long
             Get
@@ -5750,9 +5761,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnLongPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property SByteProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property SByteProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property SByteProp() As SByte
             Get
@@ -5770,9 +5781,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnSBytePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DurationProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DurationProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property DurationProp() As Global.System.TimeSpan
             Get
@@ -5790,9 +5801,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnDurationPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DateTimeOffsetProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DateTimeOffsetProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property DateTimeOffsetProp() As Global.System.DateTimeOffset
             Get
@@ -5810,9 +5821,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnDateTimeOffsetPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DateProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DateProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property DateProp() As Global.Microsoft.OData.Edm.Date
             Get
@@ -5830,9 +5841,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnDatePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property TimeOfDayProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property TimeOfDayProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property TimeOfDayProp() As Global.Microsoft.OData.Edm.TimeOfDay
             Get
@@ -5850,9 +5861,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnTimeOfDayPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeographyProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeographyProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeographyProp() As Global.Microsoft.Spatial.Geography
             Get
@@ -5870,9 +5881,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeographyPointProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeographyPointProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeographyPointProp() As Global.Microsoft.Spatial.GeographyPoint
             Get
@@ -5890,9 +5901,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyPointPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeographyLineStringProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeographyLineStringProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeographyLineStringProp() As Global.Microsoft.Spatial.GeographyLineString
             Get
@@ -5910,9 +5921,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyLineStringPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeographyPolygonProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeographyPolygonProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeographyPolygonProp() As Global.Microsoft.Spatial.GeographyPolygon
             Get
@@ -5930,9 +5941,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyPolygonPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeographyCollectionProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeographyCollectionProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeographyCollectionProp() As Global.Microsoft.Spatial.GeographyCollection
             Get
@@ -5950,9 +5961,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyCollectionPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeographyMultiPolygonProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeographyMultiPolygonProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeographyMultiPolygonProp() As Global.Microsoft.Spatial.GeographyMultiPolygon
             Get
@@ -5970,9 +5981,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyMultiPolygonPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeographyMultiLineStringProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeographyMultiLineStringProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeographyMultiLineStringProp() As Global.Microsoft.Spatial.GeographyMultiLineString
             Get
@@ -5990,9 +6001,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyMultiLineStringPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeographyMultiPointProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeographyMultiPointProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeographyMultiPointProp() As Global.Microsoft.Spatial.GeographyMultiPoint
             Get
@@ -6010,9 +6021,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeographyMultiPointPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeometryProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeometryProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeometryProp() As Global.Microsoft.Spatial.Geometry
             Get
@@ -6030,9 +6041,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeometryPointProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeometryPointProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeometryPointProp() As Global.Microsoft.Spatial.GeometryPoint
             Get
@@ -6050,9 +6061,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryPointPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeometryLineStringProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeometryLineStringProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeometryLineStringProp() As Global.Microsoft.Spatial.GeometryLineString
             Get
@@ -6070,9 +6081,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryLineStringPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeometryPolygonProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeometryPolygonProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeometryPolygonProp() As Global.Microsoft.Spatial.GeometryPolygon
             Get
@@ -6090,9 +6101,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryPolygonPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeometryCollectionProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeometryCollectionProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeometryCollectionProp() As Global.Microsoft.Spatial.GeometryCollection
             Get
@@ -6110,9 +6121,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryCollectionPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeometryMultiPolygonProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeometryMultiPolygonProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeometryMultiPolygonProp() As Global.Microsoft.Spatial.GeometryMultiPolygon
             Get
@@ -6130,9 +6141,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryMultiPolygonPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeometryMultiLineStringProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeometryMultiLineStringProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeometryMultiLineStringProp() As Global.Microsoft.Spatial.GeometryMultiLineString
             Get
@@ -6150,9 +6161,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryMultiLineStringPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeometryMultiPointProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeometryMultiPointProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeometryMultiPointProp() As Global.Microsoft.Spatial.GeometryMultiPoint
             Get
@@ -6170,9 +6181,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeometryMultiPointPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property UserAccess in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property UserAccess in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property UserAccess() As Global.System.Nullable(Of MergedFunctionalTest.AccessLevel)
             Get
@@ -6190,9 +6201,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnUserAccessChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property SkinColor in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property SkinColor in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property SkinColor() As MergedFunctionalTest.Color
             Get
@@ -6210,9 +6221,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnSkinColorChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property SkinColor2 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property SkinColor2 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property SkinColor2() As MergedFunctionalTest.Color
             Get
@@ -6230,9 +6241,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnSkinColor2Changed()
         End Sub
-        '''<summary>
-        '''There are no comments for Property SkinColor3 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property SkinColor3 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property SkinColor3() As MergedFunctionalTest.Color
             Get
@@ -6251,9 +6262,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnSkinColor3Changed()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for MultiKeyTestTypeSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for MultiKeyTestTypeSingle in the schema.
+        ''' </summary>
     Partial Public Class MultiKeyTestTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MultiKeyTestType)
         ''' <summary>
@@ -6277,25 +6288,25 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for MultiKeyTestType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Int64Id
-    '''StringId
-    '''DateTimeOffsetId
-    '''GuidId
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for MultiKeyTestType in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' Int64Id
+    ''' StringId
+    ''' DateTimeOffsetId
+    ''' GuidId
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Int64Id", "StringId", "DateTimeOffsetId", "GuidId")>  _
     Partial Public Class MultiKeyTestType
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new MultiKeyTestType object.
-        '''</summary>
-        '''<param name="int64Id">Initial value of Int64Id.</param>
-        '''<param name="stringId">Initial value of StringId.</param>
-        '''<param name="dateTimeOffsetId">Initial value of DateTimeOffsetId.</param>
-        '''<param name="guidId">Initial value of GuidId.</param>
+        ''' <summary>
+        ''' Create a new MultiKeyTestType object.
+        ''' </summary>
+        ''' <param name="int64Id">Initial value of Int64Id.</param>
+        ''' <param name="stringId">Initial value of StringId.</param>
+        ''' <param name="dateTimeOffsetId">Initial value of DateTimeOffsetId.</param>
+        ''' <param name="guidId">Initial value of GuidId.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateMultiKeyTestType(ByVal int64Id As Long, ByVal stringId As String, ByVal dateTimeOffsetId As Global.System.DateTimeOffset, ByVal guidId As Global.System.Guid) As MultiKeyTestType
             Dim multiKeyTestType As MultiKeyTestType = New MultiKeyTestType()
@@ -6305,9 +6316,9 @@ Namespace MergedFunctionalTest
             multiKeyTestType.GuidId = guidId
             Return multiKeyTestType
         End Function
-        '''<summary>
-        '''There are no comments for Property Int64Id in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Int64Id in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Int64Id() As Long
             Get
@@ -6325,9 +6336,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnInt64IdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property StringId in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property StringId in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property StringId() As String
             Get
@@ -6345,9 +6356,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnStringIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DateTimeOffsetId in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DateTimeOffsetId in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property DateTimeOffsetId() As Global.System.DateTimeOffset
             Get
@@ -6365,9 +6376,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnDateTimeOffsetIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GuidId in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GuidId in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GuidId() As Global.System.Guid
             Get
@@ -6386,9 +6397,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnGuidIdChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for BaseTypeSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for BaseTypeSingle in the schema.
+        ''' </summary>
     Partial Public Class BaseTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of BaseType)
         ''' <summary>
@@ -6412,28 +6423,28 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for BaseType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''KeyProp
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for BaseType in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' KeyProp
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("KeyProp")>  _
     Partial Public Class BaseType
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new BaseType object.
-        '''</summary>
-        '''<param name="keyProp">Initial value of KeyProp.</param>
+        ''' <summary>
+        ''' Create a new BaseType object.
+        ''' </summary>
+        ''' <param name="keyProp">Initial value of KeyProp.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateBaseType(ByVal keyProp As Long) As BaseType
             Dim baseType As BaseType = New BaseType()
             baseType.KeyProp = keyProp
             Return baseType
         End Function
-        '''<summary>
-        '''There are no comments for Property KeyProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property KeyProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property KeyProp() As Long
             Get
@@ -6452,9 +6463,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnKeyPropChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for KatmaiTypeSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for KatmaiTypeSingle in the schema.
+        ''' </summary>
     Partial Public Class KatmaiTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of KatmaiType)
         ''' <summary>
@@ -6478,21 +6489,21 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for KatmaiType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''KeyProp
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for KatmaiType in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' KeyProp
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("KeyProp")>  _
     Partial Public Class KatmaiType
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new KatmaiType object.
-        '''</summary>
-        '''<param name="keyProp">Initial value of KeyProp.</param>
-        '''<param name="dateTimeOffset">Initial value of DateTimeOffset.</param>
-        '''<param name="timeSpan">Initial value of TimeSpan.</param>
+        ''' <summary>
+        ''' Create a new KatmaiType object.
+        ''' </summary>
+        ''' <param name="keyProp">Initial value of KeyProp.</param>
+        ''' <param name="dateTimeOffset">Initial value of DateTimeOffset.</param>
+        ''' <param name="timeSpan">Initial value of TimeSpan.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateKatmaiType(ByVal keyProp As Integer, ByVal dateTimeOffset As Global.System.DateTimeOffset, ByVal timeSpan As Global.System.TimeSpan) As KatmaiType
             Dim katmaiType As KatmaiType = New KatmaiType()
@@ -6501,9 +6512,9 @@ Namespace MergedFunctionalTest
             katmaiType.TimeSpan = timeSpan
             Return katmaiType
         End Function
-        '''<summary>
-        '''There are no comments for Property KeyProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property KeyProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property KeyProp() As Integer
             Get
@@ -6521,9 +6532,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnKeyPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DateTimeOffset in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DateTimeOffset in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property DateTimeOffset() As Global.System.DateTimeOffset
             Get
@@ -6541,9 +6552,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnDateTimeOffsetChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property TimeSpan in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property TimeSpan in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property TimeSpan() As Global.System.TimeSpan
             Get
@@ -6561,9 +6572,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnTimeSpanChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableDateTimeOffset in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableDateTimeOffset in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableDateTimeOffset() As Global.System.Nullable(Of Global.System.DateTimeOffset)
             Get
@@ -6581,9 +6592,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnNullableDateTimeOffsetChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property NullableTimeSpan in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property NullableTimeSpan in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property NullableTimeSpan() As Global.System.Nullable(Of Global.System.TimeSpan)
             Get
@@ -6602,9 +6613,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnNullableTimeSpanChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Level0Single in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for Level0Single in the schema.
+        ''' </summary>
     Partial Public Class Level0Single
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Level0)
         ''' <summary>
@@ -6628,18 +6639,18 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Level0 in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Level0Prop
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for Level0 in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' Level0Prop
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Level0Prop")>  _
     Partial Public MustInherit Class Level0
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''There are no comments for Property Level0Prop in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Level0Prop in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Level0Prop() As String
             Get
@@ -6658,9 +6669,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnLevel0PropChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Level1Single in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for Level1Single in the schema.
+        ''' </summary>
     Partial Public Class Level1Single
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Level1)
         ''' <summary>
@@ -6684,21 +6695,21 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Level1 in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Level1Id
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for Level1 in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' Level1Id
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Level1Id")>  _
     Partial Public Class Level1
         Inherits Level0
-        '''<summary>
-        '''Create a new Level1 object.
-        '''</summary>
-        '''<param name="level0Prop">Initial value of Level0Prop.</param>
-        '''<param name="level1Id">Initial value of Level1Id.</param>
-        '''<param name="level1Prop">Initial value of Level1Prop.</param>
+        ''' <summary>
+        ''' Create a new Level1 object.
+        ''' </summary>
+        ''' <param name="level0Prop">Initial value of Level0Prop.</param>
+        ''' <param name="level1Id">Initial value of Level1Id.</param>
+        ''' <param name="level1Prop">Initial value of Level1Prop.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateLevel1(ByVal level0Prop As String, ByVal level1Id As Integer, ByVal level1Prop As String) As Level1
             Dim level1 As Level1 = New Level1()
@@ -6707,9 +6718,9 @@ Namespace MergedFunctionalTest
             level1.Level1Prop = level1Prop
             Return level1
         End Function
-        '''<summary>
-        '''There are no comments for Property Level1Id in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Level1Id in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Level1Id() As Integer
             Get
@@ -6727,9 +6738,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnLevel1IdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Level1Prop in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Level1Prop in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Level1Prop() As String
             Get
@@ -6748,9 +6759,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnLevel1PropChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Level2Single in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for Level2Single in the schema.
+        ''' </summary>
     Partial Public Class Level2Single
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Level2)
         ''' <summary>
@@ -6774,22 +6785,22 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Level2 in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Level1Id
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for Level2 in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' Level1Id
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Level1Id")>  _
     Partial Public Class Level2
         Inherits Level1
-        '''<summary>
-        '''Create a new Level2 object.
-        '''</summary>
-        '''<param name="level0Prop">Initial value of Level0Prop.</param>
-        '''<param name="level1Id">Initial value of Level1Id.</param>
-        '''<param name="level1Prop">Initial value of Level1Prop.</param>
-        '''<param name="level2Prop">Initial value of Level2Prop.</param>
+        ''' <summary>
+        ''' Create a new Level2 object.
+        ''' </summary>
+        ''' <param name="level0Prop">Initial value of Level0Prop.</param>
+        ''' <param name="level1Id">Initial value of Level1Id.</param>
+        ''' <param name="level1Prop">Initial value of Level1Prop.</param>
+        ''' <param name="level2Prop">Initial value of Level2Prop.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateLevel2(ByVal level0Prop As String, ByVal level1Id As Integer, ByVal level1Prop As String, ByVal level2Prop As String) As Level2
             Dim level2 As Level2 = New Level2()
@@ -6799,9 +6810,9 @@ Namespace MergedFunctionalTest
             level2.Level2Prop = level2Prop
             Return level2
         End Function
-        '''<summary>
-        '''There are no comments for Property Level2Prop in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Level2Prop in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Level2Prop() As String
             Get
@@ -6820,9 +6831,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnLevel2PropChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for SingleTypeSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for SingleTypeSingle in the schema.
+        ''' </summary>
     Partial Public Class SingleTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of SingleType)
         ''' <summary>
@@ -6845,9 +6856,9 @@ Namespace MergedFunctionalTest
         Public Sub New(ByVal query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of SingleType))
             MyBase.New(query)
         End Sub
-        '''<summary>
-        '''There are no comments for BaseSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for BaseSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property BaseSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.TestType)
             Get
@@ -6863,28 +6874,28 @@ Namespace MergedFunctionalTest
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _BaseSet As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.TestType)
     End Class
-    '''<summary>
-    '''There are no comments for SingleType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''KeyProp
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for SingleType in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' KeyProp
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("KeyProp")>  _
     Partial Public Class SingleType
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new SingleType object.
-        '''</summary>
-        '''<param name="keyProp">Initial value of KeyProp.</param>
+        ''' <summary>
+        ''' Create a new SingleType object.
+        ''' </summary>
+        ''' <param name="keyProp">Initial value of KeyProp.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateSingleType(ByVal keyProp As Global.Microsoft.Spatial.GeographyPoint) As SingleType
             Dim singleType As SingleType = New SingleType()
             singleType.KeyProp = keyProp
             Return singleType
         End Function
-        '''<summary>
-        '''There are no comments for Property KeyProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property KeyProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property KeyProp() As Global.Microsoft.Spatial.GeographyPoint
             Get
@@ -6902,9 +6913,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnKeyPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BaseSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BaseSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BaseSet() As Global.System.Collections.ObjectModel.Collection(Of MergedFunctionalTest.TestType)
             Get
@@ -6923,9 +6934,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnBaseSetChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for GroupSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for GroupSingle in the schema.
+        ''' </summary>
     Partial Public Class GroupSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Group)
         ''' <summary>
@@ -6948,9 +6959,9 @@ Namespace MergedFunctionalTest
         Public Sub New(ByVal query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Group))
             MyBase.New(query)
         End Sub
-        '''<summary>
-        '''There are no comments for Good in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Good in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Good() As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.GoodCustomer)
             Get
@@ -6965,9 +6976,9 @@ Namespace MergedFunctionalTest
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Good As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.GoodCustomer)
-        '''<summary>
-        '''There are no comments for Bad in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Bad in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Bad() As MergedFunctionalTest.BadCustomerSingle
             Get
@@ -6983,20 +6994,20 @@ Namespace MergedFunctionalTest
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Bad As MergedFunctionalTest.BadCustomerSingle
     End Class
-    '''<summary>
-    '''There are no comments for Group in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Id
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for Group in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' Id
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Id")>  _
     Partial Public Class Group
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new Group object.
-        '''</summary>
-        '''<param name="ID">Initial value of Id.</param>
-        '''<param name="isHiddenInUI">Initial value of IsHiddenInUI.</param>
+        ''' <summary>
+        ''' Create a new Group object.
+        ''' </summary>
+        ''' <param name="ID">Initial value of Id.</param>
+        ''' <param name="isHiddenInUI">Initial value of IsHiddenInUI.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateGroup(ByVal ID As Integer, ByVal isHiddenInUI As Boolean) As Group
             Dim group As Group = New Group()
@@ -7004,9 +7015,9 @@ Namespace MergedFunctionalTest
             group.IsHiddenInUI = isHiddenInUI
             Return group
         End Function
-        '''<summary>
-        '''There are no comments for Property Id in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Id in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Id() As Integer
             Get
@@ -7024,9 +7035,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property IsHiddenInUI in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property IsHiddenInUI in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property IsHiddenInUI() As Boolean
             Get
@@ -7044,9 +7055,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnIsHiddenInUIChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property LoginName in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property LoginName in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property LoginName() As String
             Get
@@ -7064,9 +7075,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnLoginNameChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Good in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Good in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Good() As Global.System.Collections.ObjectModel.Collection(Of MergedFunctionalTest.GoodCustomer)
             Get
@@ -7084,9 +7095,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGoodChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Bad in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Bad in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Bad() As MergedFunctionalTest.BadCustomer
             Get
@@ -7104,9 +7115,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBadChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DynamicProperties in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DynamicProperties in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property DynamicProperties() As Global.System.Collections.Generic.IDictionary(Of String, Object)
             Get
@@ -7125,9 +7136,9 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnDynamicPropertiesChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for PrincipalSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for PrincipalSingle in the schema.
+        ''' </summary>
     Partial Public Class PrincipalSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Principal)
         ''' <summary>
@@ -7151,21 +7162,21 @@ Namespace MergedFunctionalTest
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Principal in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Id
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for Principal in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' Id
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Id")>  _
     Partial Public Class Principal
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new Principal object.
-        '''</summary>
-        '''<param name="ID">Initial value of Id.</param>
-        '''<param name="isHiddenInUI">Initial value of IsHiddenInUI.</param>
-        '''<param name="principalType">Initial value of PrincipalType.</param>
+        ''' <summary>
+        ''' Create a new Principal object.
+        ''' </summary>
+        ''' <param name="ID">Initial value of Id.</param>
+        ''' <param name="isHiddenInUI">Initial value of IsHiddenInUI.</param>
+        ''' <param name="principalType">Initial value of PrincipalType.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreatePrincipal(ByVal ID As Integer, ByVal isHiddenInUI As Boolean, ByVal principalType As Integer) As Principal
             Dim principal As Principal = New Principal()
@@ -7174,9 +7185,9 @@ Namespace MergedFunctionalTest
             principal.PrincipalType = principalType
             Return principal
         End Function
-        '''<summary>
-        '''There are no comments for Property Id in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Id in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Id() As Integer
             Get
@@ -7194,9 +7205,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property IsHiddenInUI in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property IsHiddenInUI in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property IsHiddenInUI() As Boolean
             Get
@@ -7214,9 +7225,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnIsHiddenInUIChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property LoginName in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property LoginName in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property LoginName() As String
             Get
@@ -7234,9 +7245,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnLoginNameChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Title in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Title in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Title() As String
             Get
@@ -7254,9 +7265,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnTitleChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property PrincipalType in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property PrincipalType in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property PrincipalType() As Integer
             Get
@@ -7275,13 +7286,13 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnPrincipalTypeChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for ComplextLevel0 in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for ComplextLevel0 in the schema.
+        ''' </summary>
     Partial Public MustInherit Class ComplextLevel0
-        '''<summary>
-        '''There are no comments for Property ComplextLevel0Prop in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ComplextLevel0Prop in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ComplextLevel0Prop() As String
             Get
@@ -7300,16 +7311,16 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnComplextLevel0PropChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for ComplextLevel1 in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for ComplextLevel1 in the schema.
+        ''' </summary>
     Partial Public Class ComplextLevel1
         Inherits ComplextLevel0
-        '''<summary>
-        '''Create a new ComplextLevel1 object.
-        '''</summary>
-        '''<param name="complextLevel0Prop">Initial value of ComplextLevel0Prop.</param>
-        '''<param name="complextLevel1Prop">Initial value of ComplextLevel1Prop.</param>
+        ''' <summary>
+        ''' Create a new ComplextLevel1 object.
+        ''' </summary>
+        ''' <param name="complextLevel0Prop">Initial value of ComplextLevel0Prop.</param>
+        ''' <param name="complextLevel1Prop">Initial value of ComplextLevel1Prop.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateComplextLevel1(ByVal complextLevel0Prop As String, ByVal complextLevel1Prop As Long) As ComplextLevel1
             Dim complextLevel1 As ComplextLevel1 = New ComplextLevel1()
@@ -7317,9 +7328,9 @@ Namespace MergedFunctionalTest
             complextLevel1.ComplextLevel1Prop = complextLevel1Prop
             Return complextLevel1
         End Function
-        '''<summary>
-        '''There are no comments for Property ComplextLevel1Prop in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ComplextLevel1Prop in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ComplextLevel1Prop() As Long
             Get
@@ -7338,13 +7349,13 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnComplextLevel1PropChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Address in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for Address in the schema.
+        ''' </summary>
     Partial Public Class Address
-        '''<summary>
-        '''There are no comments for Property Street in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Street in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Street() As String
             Get
@@ -7363,23 +7374,23 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnStreetChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for TestComplexType in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for TestComplexType in the schema.
+        ''' </summary>
     Partial Public Class TestComplexType
-        '''<summary>
-        '''Create a new TestComplexType object.
-        '''</summary>
-        '''<param name="booleanProp">Initial value of BooleanProp.</param>
-        '''<param name="decimalProp">Initial value of DecimalProp.</param>
-        '''<param name="doubleProp">Initial value of DoubleProp.</param>
-        '''<param name="singleProp">Initial value of SingleProp.</param>
-        '''<param name="guidProp">Initial value of GuidProp.</param>
-        '''<param name="durationProp">Initial value of DurationProp.</param>
-        '''<param name="dateTimeOffsetProp">Initial value of DateTimeOffsetProp.</param>
-        '''<param name="streamProp">Initial value of StreamProp.</param>
-        '''<param name="sByteProp">Initial value of SByteProp.</param>
-        '''<param name="colorProp">Initial value of ColorProp.</param>
+        ''' <summary>
+        ''' Create a new TestComplexType object.
+        ''' </summary>
+        ''' <param name="booleanProp">Initial value of BooleanProp.</param>
+        ''' <param name="decimalProp">Initial value of DecimalProp.</param>
+        ''' <param name="doubleProp">Initial value of DoubleProp.</param>
+        ''' <param name="singleProp">Initial value of SingleProp.</param>
+        ''' <param name="guidProp">Initial value of GuidProp.</param>
+        ''' <param name="durationProp">Initial value of DurationProp.</param>
+        ''' <param name="dateTimeOffsetProp">Initial value of DateTimeOffsetProp.</param>
+        ''' <param name="streamProp">Initial value of StreamProp.</param>
+        ''' <param name="sByteProp">Initial value of SByteProp.</param>
+        ''' <param name="colorProp">Initial value of ColorProp.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateTestComplexType(ByVal booleanProp As Boolean,  _
                     ByVal decimalProp As Decimal,  _
@@ -7404,9 +7415,9 @@ Namespace MergedFunctionalTest
             testComplexType.ColorProp = colorProp
             Return testComplexType
         End Function
-        '''<summary>
-        '''There are no comments for Property BinaryProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BinaryProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BinaryProp() As Byte()
             Get
@@ -7424,9 +7435,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBinaryPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BooleanProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BooleanProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property BooleanProp() As Boolean
             Get
@@ -7444,9 +7455,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBooleanPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ByteProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ByteProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ByteProp() As Global.System.Nullable(Of Byte)
             Get
@@ -7464,9 +7475,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnBytePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DecimalProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DecimalProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property DecimalProp() As Decimal
             Get
@@ -7484,9 +7495,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnDecimalPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DoubleProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DoubleProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property DoubleProp() As Double
             Get
@@ -7504,9 +7515,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnDoublePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property SingleProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property SingleProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property SingleProp() As Single
             Get
@@ -7524,9 +7535,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnSinglePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GuidProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GuidProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GuidProp() As Global.System.Guid
             Get
@@ -7544,9 +7555,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGuidPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Int64Prop in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Int64Prop in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Int64Prop() As Global.System.Nullable(Of Long)
             Get
@@ -7564,9 +7575,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnInt64PropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property StringProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property StringProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property StringProp() As String
             Get
@@ -7584,9 +7595,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnStringPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DurationProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DurationProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property DurationProp() As Global.System.TimeSpan
             Get
@@ -7604,9 +7615,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnDurationPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DateTimeOffsetProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DateTimeOffsetProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property DateTimeOffsetProp() As Global.System.DateTimeOffset
             Get
@@ -7624,9 +7635,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnDateTimeOffsetPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property StreamProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property StreamProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property StreamProp() As Global.Microsoft.OData.Client.DataServiceStreamLink
             Get
@@ -7644,9 +7655,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnStreamPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property SByteProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property SByteProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property SByteProp() As SByte
             Get
@@ -7664,9 +7675,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnSBytePropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeogPointProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeogPointProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeogPointProp() As Global.Microsoft.Spatial.GeographyPoint
             Get
@@ -7684,9 +7695,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeogPointPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property GeomPointProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property GeomPointProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property GeomPointProp() As Global.Microsoft.Spatial.GeometryPoint
             Get
@@ -7704,9 +7715,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnGeomPointPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ColorProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ColorProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ColorProp() As MergedFunctionalTest.Color
             Get
@@ -7724,9 +7735,9 @@ Namespace MergedFunctionalTest
         End Sub
         Partial Private Sub OnColorPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Colors in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Colors in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Colors() As Global.System.Collections.ObjectModel.Collection(Of MergedFunctionalTest.Color)
             Get
@@ -7745,18 +7756,18 @@ Namespace MergedFunctionalTest
         Partial Private Sub OnColorsChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Color in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for Color in the schema.
+        ''' </summary>
     <Global.System.Flags()>
     Public Enum Color
         Red = 0
         White = 1
         Blue = 2
     End Enum
-    '''<summary>
-    '''There are no comments for AccessLevel in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for AccessLevel in the schema.
+        ''' </summary>
     Public Enum AccessLevel
         None = 0
         Read = 1
@@ -8620,9 +8631,9 @@ Namespace MergedFunctionalTest
     End Module
 End Namespace
 Namespace MergedFunctionalTest1
-    '''<summary>
-    '''There are no comments for DerivedTypeSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for DerivedTypeSingle in the schema.
+        ''' </summary>
     Partial Public Class DerivedTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DerivedType)
         ''' <summary>
@@ -8646,28 +8657,28 @@ Namespace MergedFunctionalTest1
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DerivedType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''KeyProp
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for DerivedType in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' KeyProp
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("KeyProp")>  _
     Partial Public Class DerivedType
         Inherits MergedFunctionalTest.BaseType
-        '''<summary>
-        '''Create a new DerivedType object.
-        '''</summary>
-        '''<param name="keyProp">Initial value of KeyProp.</param>
+        ''' <summary>
+        ''' Create a new DerivedType object.
+        ''' </summary>
+        ''' <param name="keyProp">Initial value of KeyProp.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateDerivedType(ByVal keyProp As Long) As DerivedType
             Dim derivedType As DerivedType = New DerivedType()
             derivedType.KeyProp = keyProp
             Return derivedType
         End Function
-        '''<summary>
-        '''There are no comments for Property DerivedProperty in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DerivedProperty in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property DerivedProperty() As String
             Get
@@ -8686,9 +8697,9 @@ Namespace MergedFunctionalTest1
         Partial Private Sub OnDerivedPropertyChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for CustomerSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for CustomerSingle in the schema.
+        ''' </summary>
     Partial Public Class CustomerSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Customer)
         ''' <summary>
@@ -8712,28 +8723,28 @@ Namespace MergedFunctionalTest1
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Customer in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''CustomerId
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for Customer in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' CustomerId
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("CustomerId")>  _
     Partial Public Class Customer
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new Customer object.
-        '''</summary>
-        '''<param name="customerId">Initial value of CustomerId.</param>
+        ''' <summary>
+        ''' Create a new Customer object.
+        ''' </summary>
+        ''' <param name="customerId">Initial value of CustomerId.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateCustomer(ByVal customerId As Integer) As Customer
             Dim customer As Customer = New Customer()
             customer.CustomerId = customerId
             Return customer
         End Function
-        '''<summary>
-        '''There are no comments for Property CustomerId in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property CustomerId in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property CustomerId() As Integer
             Get
@@ -8751,9 +8762,9 @@ Namespace MergedFunctionalTest1
         End Sub
         Partial Private Sub OnCustomerIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Name in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Name in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Name() As String
             Get
@@ -8771,9 +8782,9 @@ Namespace MergedFunctionalTest1
         End Sub
         Partial Private Sub OnNameChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Address in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Address in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Address() As MergedFunctionalTest1.Address
             Get
@@ -8791,9 +8802,9 @@ Namespace MergedFunctionalTest1
         End Sub
         Partial Private Sub OnAddressChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DynamicProperties in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DynamicProperties in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property DynamicProperties() As Global.System.Collections.Generic.IDictionary(Of String, Object)
             Get
@@ -8812,13 +8823,13 @@ Namespace MergedFunctionalTest1
         Partial Private Sub OnDynamicPropertiesChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Address in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for Address in the schema.
+        ''' </summary>
     Partial Public Class Address
-        '''<summary>
-        '''There are no comments for Property Street in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Street in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Street() As String
             Get

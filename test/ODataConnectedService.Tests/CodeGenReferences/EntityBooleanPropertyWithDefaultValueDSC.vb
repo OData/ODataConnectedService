@@ -12,17 +12,17 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 28.05.2020 18:58:53
+'Generation date: 03.03.2021 22:20:31
 Namespace Namespace1.DSC
-    '''<summary>
-    '''There are no comments for EntityContainer in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for EntityContainer in the schema.
+        ''' </summary>
     Partial Public Class EntityContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
-        '''<summary>
-        '''Initialize a new EntityContainer object.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' Initialize a new EntityContainer object.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
             Me.OnContextCreated
@@ -31,10 +31,10 @@ Namespace Namespace1.DSC
         End Sub
         Partial Private Sub OnContextCreated()
         End Sub
-        '''<summary>
-        '''There are no comments for Set1 in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Set1 in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Set1() As Global.Microsoft.OData.Client.DataServiceQuery(Of EntityType)
             Get
                 If (Me._Set1 Is Nothing) Then
@@ -43,20 +43,20 @@ Namespace Namespace1.DSC
                 Return Me._Set1
             End Get
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Set1 As Global.Microsoft.OData.Client.DataServiceQuery(Of EntityType)
-        '''<summary>
-        '''There are no comments for Set1 in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Set1 in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToSet1(ByVal entityType As EntityType)
             MyBase.AddObject("Set1", entityType)
         End Sub
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private MustInherit Class GeneratedEdmModel
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
             Private Shared ParsedModel As Global.Microsoft.OData.Edm.IEdmModel = LoadModelFromString
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
             Private Const Edmx As String = "<edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">" & _
  "  <edmx:DataServices>" & _
  "    <Schema Namespace=""Namespace1.DSC"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">" & _
@@ -73,28 +73,39 @@ Namespace Namespace1.DSC
  "    </Schema>" & _
  "  </edmx:DataServices>" & _
  "</edmx:Edmx>"
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
             Public Shared Function GetInstance() As Global.Microsoft.OData.Edm.IEdmModel
                 Return ParsedModel
             End Function
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader)
+                    Dim errors As Global.System.Collections.Generic.IEnumerable(Of Global.Microsoft.OData.Edm.Validation.EdmError) = Nothing
+                    Dim edmModel As Global.Microsoft.OData.Edm.IEdmModel = Nothing
+                    If Not Global.Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, False, edmModel, errors) Then
+                        Dim errorMessages As Global.System.Text.StringBuilder = New Global.System.Text.StringBuilder()
+                        For Each err As Global.Microsoft.OData.Edm.Validation.EdmError In errors
+                            errorMessages.Append(err.ErrorMessage)
+                            errorMessages.Append("; ")
+                        Next
+                        Throw New Global.System.InvalidOperationException(errorMessages.ToString())
+                    End If
+
+                    Return edmModel
                 Finally
-                    CType(reader,Global.System.IDisposable).Dispose
+                    CType(reader, Global.System.IDisposable).Dispose()
                 End Try
             End Function
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
             Private Shared Function CreateXmlReader(ByVal edmxToParse As String) As Global.System.Xml.XmlReader
                 Return Global.System.Xml.XmlReader.Create(New Global.System.IO.StringReader(edmxToParse))
             End Function
         End Class
     End Class
-    '''<summary>
-    '''There are no comments for EntityTypeSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for EntityTypeSingle in the schema.
+        ''' </summary>
     Partial Public Class EntityTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of EntityType)
         ''' <summary>
@@ -118,31 +129,31 @@ Namespace Namespace1.DSC
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for EntityType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Id
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for EntityType in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' Id
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Id")>  _
     <Global.Microsoft.OData.Client.EntitySet("Set1")>  _
     Partial Public Class EntityType
         Inherits Global.Microsoft.OData.Client.BaseEntityType
         Implements Global.System.ComponentModel.INotifyPropertyChanged
-        '''<summary>
-        '''Create a new EntityType object.
-        '''</summary>
-        '''<param name="ID">Initial value of Id.</param>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' Create a new EntityType object.
+        ''' </summary>
+        ''' <param name="ID">Initial value of Id.</param>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateEntityType(ByVal ID As Integer) As EntityType
             Dim entityType As EntityType = New EntityType()
             entityType.Id = ID
             Return entityType
         End Function
-        '''<summary>
-        '''There are no comments for Property Id in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property Id in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Id() As Integer
             Get
                 Return Me._Id
@@ -154,16 +165,16 @@ Namespace Namespace1.DSC
                 Me.OnPropertyChanged("Id")
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Id As Integer
         Partial Private Sub OnIdChanging(ByVal value As Integer)
         End Sub
         Partial Private Sub OnIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property TestBoolean in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property TestBoolean in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property TestBoolean() As Boolean
             Get
                 Return Me._TestBoolean
@@ -175,7 +186,7 @@ Namespace Namespace1.DSC
                 Me.OnPropertyChanged("TestBoolean")
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _TestBoolean As Boolean = False
         Partial Private Sub OnTestBooleanChanging(ByVal value As Boolean)
         End Sub
@@ -184,13 +195,13 @@ Namespace Namespace1.DSC
         ''' <summary>
         ''' This event is raised when the value of the property is changed
         ''' </summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Event PropertyChanged As Global.System.ComponentModel.PropertyChangedEventHandler Implements Global.System.ComponentModel.INotifyPropertyChanged.PropertyChanged
         ''' <summary>
         ''' The value of the property is changed
         ''' </summary>
         ''' <param name="property">property name</param>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Overridable Sub OnPropertyChanged(ByVal [property] As String)
             If (Not (Me.PropertyChangedEvent) Is Nothing) Then
                 RaiseEvent PropertyChanged(Me, New Global.System.ComponentModel.PropertyChangedEventArgs([property]))
@@ -220,7 +231,7 @@ Namespace Namespace1.DSC
             id As Integer) As Namespace1.DSC.EntityTypeSingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"Id", id}
+                { "Id", id }
             }
             Return New Namespace1.DSC.EntityTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function

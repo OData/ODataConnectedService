@@ -12,17 +12,17 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 15:06:23
+'Generation date: 03.03.2021 1:44:57
 Namespace AbstractEntityTypeWithoutKey
-    '''<summary>
-    '''There are no comments for Container in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for Container in the schema.
+        ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("Container")>  _
     Partial Public Class Container
         Inherits Global.Microsoft.OData.Client.DataServiceContext
-        '''<summary>
-        '''Initialize a new Container object.
-        '''</summary>
+        ''' <summary>
+        ''' Initialize a new Container object.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
@@ -36,11 +36,11 @@ Namespace AbstractEntityTypeWithoutKey
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private Shared ROOTNAMESPACE As String = GetType(Container).Namespace.Remove(GetType(Container).Namespace.LastIndexOf("AbstractEntityTypeWithoutKey"))
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Function ResolveTypeFromName(ByVal typeName As String) As Global.System.Type
             Dim resolvedType As Global.System.Type = Me.DefaultResolveType(typeName, "AbstractEntityTypeWithoutKey", String.Concat(ROOTNAMESPACE, "AbstractEntityTypeWithoutKey"))
@@ -49,11 +49,11 @@ Namespace AbstractEntityTypeWithoutKey
             End If
             Return Nothing
         End Function
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Function ResolveNameFromType(ByVal clientType As Global.System.Type) As String
             Dim originalNameAttribute As Global.Microsoft.OData.Client.OriginalNameAttribute =
@@ -70,9 +70,9 @@ Namespace AbstractEntityTypeWithoutKey
             End If
             Return clientType.FullName.Substring(ROOTNAMESPACE.Length)
         End Function
-        '''<summary>
-        '''There are no comments for DerivedBaseETSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for DerivedBaseETSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedBaseETSet")>  _
         Public Overridable ReadOnly Property DerivedBaseETSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of DerivedBaseET)
@@ -85,9 +85,9 @@ Namespace AbstractEntityTypeWithoutKey
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _DerivedBaseETSet As Global.Microsoft.OData.Client.DataServiceQuery(Of DerivedBaseET)
-        '''<summary>
-        '''There are no comments for DerivedETSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for DerivedETSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedETSet")>  _
         Public Overridable ReadOnly Property DerivedETSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of DerivedET)
@@ -100,9 +100,9 @@ Namespace AbstractEntityTypeWithoutKey
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _DerivedETSet As Global.Microsoft.OData.Client.DataServiceQuery(Of DerivedET)
-        '''<summary>
-        '''There are no comments for DerivedAbstractETSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for DerivedAbstractETSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedAbstractETSet")>  _
         Public Overridable ReadOnly Property DerivedAbstractETSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of DerivedAbstractETWithKey)
@@ -115,23 +115,23 @@ Namespace AbstractEntityTypeWithoutKey
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _DerivedAbstractETSet As Global.Microsoft.OData.Client.DataServiceQuery(Of DerivedAbstractETWithKey)
-        '''<summary>
-        '''There are no comments for DerivedBaseETSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for DerivedBaseETSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToDerivedBaseETSet(ByVal derivedBaseET As DerivedBaseET)
             MyBase.AddObject("DerivedBaseETSet", derivedBaseET)
         End Sub
-        '''<summary>
-        '''There are no comments for DerivedETSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for DerivedETSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToDerivedETSet(ByVal derivedET As DerivedET)
             MyBase.AddObject("DerivedETSet", derivedET)
         End Sub
-        '''<summary>
-        '''There are no comments for DerivedAbstractETSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for DerivedAbstractETSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToDerivedAbstractETSet(ByVal derivedAbstractETWithKey As DerivedAbstractETWithKey)
             MyBase.AddObject("DerivedAbstractETSet", derivedAbstractETWithKey)
@@ -184,9 +184,20 @@ Namespace AbstractEntityTypeWithoutKey
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader)
+                    Dim errors As Global.System.Collections.Generic.IEnumerable(Of Global.Microsoft.OData.Edm.Validation.EdmError) = Nothing
+                    Dim edmModel As Global.Microsoft.OData.Edm.IEdmModel = Nothing
+                    If Not Global.Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, False, edmModel, errors) Then
+                        Dim errorMessages As Global.System.Text.StringBuilder = New Global.System.Text.StringBuilder()
+                        For Each err As Global.Microsoft.OData.Edm.Validation.EdmError In errors
+                            errorMessages.Append(err.ErrorMessage)
+                            errorMessages.Append("; ")
+                        Next
+                        Throw New Global.System.InvalidOperationException(errorMessages.ToString())
+                    End If
+
+                    Return edmModel
                 Finally
-                    CType(reader,Global.System.IDisposable).Dispose
+                    CType(reader, Global.System.IDisposable).Dispose()
                 End Try
             End Function
             <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -195,9 +206,9 @@ Namespace AbstractEntityTypeWithoutKey
             End Function
         End Class
     End Class
-    '''<summary>
-    '''There are no comments for AbstractETSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for AbstractETSingle in the schema.
+        ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("AbstractETSingle")>  _
     Partial Public Class AbstractETSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractET)
@@ -222,16 +233,16 @@ Namespace AbstractEntityTypeWithoutKey
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for AbstractET in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for AbstractET in the schema.
+        ''' </summary>
     <Global.Microsoft.OData.Client.EntityType()>  _
     <Global.Microsoft.OData.Client.OriginalNameAttribute("AbstractET")>  _
     Partial Public MustInherit Class AbstractET
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''There are no comments for Property PropertyInAbstractET in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property PropertyInAbstractET in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("PropertyInAbstractET")>  _
         Public Overridable Property PropertyInAbstractET() As String
@@ -251,9 +262,9 @@ Namespace AbstractEntityTypeWithoutKey
         Partial Private Sub OnPropertyInAbstractETChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DerivedAbstractETSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for DerivedAbstractETSingle in the schema.
+        ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedAbstractETSingle")>  _
     Partial Public Class DerivedAbstractETSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DerivedAbstractET)
@@ -278,16 +289,16 @@ Namespace AbstractEntityTypeWithoutKey
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DerivedAbstractET in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for DerivedAbstractET in the schema.
+        ''' </summary>
     <Global.Microsoft.OData.Client.EntityType()>  _
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedAbstractET")>  _
     Partial Public MustInherit Class DerivedAbstractET
         Inherits AbstractET
-        '''<summary>
-        '''There are no comments for Property PropertyInDerivedAbstractET in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property PropertyInDerivedAbstractET in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("PropertyInDerivedAbstractET")>  _
         Public Overridable Property PropertyInDerivedAbstractET() As String
@@ -307,9 +318,9 @@ Namespace AbstractEntityTypeWithoutKey
         Partial Private Sub OnPropertyInDerivedAbstractETChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DerivedBaseETSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for DerivedBaseETSingle in the schema.
+        ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedBaseETSingle")>  _
     Partial Public Class DerivedBaseETSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DerivedBaseET)
@@ -334,29 +345,29 @@ Namespace AbstractEntityTypeWithoutKey
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DerivedBaseET in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Id
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for DerivedBaseET in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' Id
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Id")>  _
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedBaseET")>  _
     Partial Public Class DerivedBaseET
         Inherits DerivedAbstractET
-        '''<summary>
-        '''Create a new DerivedBaseET object.
-        '''</summary>
-        '''<param name="ID">Initial value of Id.</param>
+        ''' <summary>
+        ''' Create a new DerivedBaseET object.
+        ''' </summary>
+        ''' <param name="ID">Initial value of Id.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateDerivedBaseET(ByVal ID As String) As DerivedBaseET
             Dim derivedBaseET As DerivedBaseET = New DerivedBaseET()
             derivedBaseET.Id = ID
             Return derivedBaseET
         End Function
-        '''<summary>
-        '''There are no comments for Property Id in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Id in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Id")>  _
         Public Overridable Property Id() As String
@@ -376,9 +387,9 @@ Namespace AbstractEntityTypeWithoutKey
         Partial Private Sub OnIdChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DerivedETSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for DerivedETSingle in the schema.
+        ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedETSingle")>  _
     Partial Public Class DerivedETSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DerivedET)
@@ -403,21 +414,21 @@ Namespace AbstractEntityTypeWithoutKey
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DerivedET in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Id
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for DerivedET in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' Id
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Id")>  _
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedET")>  _
     Partial Public Class DerivedET
         Inherits DerivedBaseET
-        '''<summary>
-        '''Create a new DerivedET object.
-        '''</summary>
-        '''<param name="ID">Initial value of Id.</param>
-        '''<param name="propertyInDerivedET">Initial value of PropertyInDerivedET.</param>
+        ''' <summary>
+        ''' Create a new DerivedET object.
+        ''' </summary>
+        ''' <param name="ID">Initial value of Id.</param>
+        ''' <param name="propertyInDerivedET">Initial value of PropertyInDerivedET.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateDerivedET(ByVal ID As String, ByVal propertyInDerivedET As Integer) As DerivedET
             Dim derivedET As DerivedET = New DerivedET()
@@ -425,9 +436,9 @@ Namespace AbstractEntityTypeWithoutKey
             derivedET.PropertyInDerivedET = propertyInDerivedET
             Return derivedET
         End Function
-        '''<summary>
-        '''There are no comments for Property PropertyInDerivedET in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property PropertyInDerivedET in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("PropertyInDerivedET")>  _
         Public Overridable Property PropertyInDerivedET() As Integer
@@ -447,9 +458,9 @@ Namespace AbstractEntityTypeWithoutKey
         Partial Private Sub OnPropertyInDerivedETChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DerivedAbstractETWithKeySingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for DerivedAbstractETWithKeySingle in the schema.
+        ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedAbstractETWithKeySingle")>  _
     Partial Public Class DerivedAbstractETWithKeySingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DerivedAbstractETWithKey)
@@ -474,19 +485,19 @@ Namespace AbstractEntityTypeWithoutKey
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DerivedAbstractETWithKey in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Id
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for DerivedAbstractETWithKey in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' Id
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Id")>  _
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedAbstractETWithKey")>  _
     Partial Public MustInherit Class DerivedAbstractETWithKey
         Inherits AbstractET
-        '''<summary>
-        '''There are no comments for Property Id in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Id in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Id")>  _
         Public Overridable Property Id() As String
@@ -506,9 +517,9 @@ Namespace AbstractEntityTypeWithoutKey
         Partial Private Sub OnIdChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DerivedET2Single in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for DerivedET2Single in the schema.
+        ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedET2Single")>  _
     Partial Public Class DerivedET2Single
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DerivedET2)
@@ -533,21 +544,21 @@ Namespace AbstractEntityTypeWithoutKey
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DerivedET2 in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Id
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for DerivedET2 in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' Id
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Id")>  _
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedET2")>  _
     Partial Public Class DerivedET2
         Inherits DerivedAbstractETWithKey
-        '''<summary>
-        '''Create a new DerivedET2 object.
-        '''</summary>
-        '''<param name="ID">Initial value of Id.</param>
-        '''<param name="propertyInDerivedET2">Initial value of PropertyInDerivedET2.</param>
+        ''' <summary>
+        ''' Create a new DerivedET2 object.
+        ''' </summary>
+        ''' <param name="ID">Initial value of Id.</param>
+        ''' <param name="propertyInDerivedET2">Initial value of PropertyInDerivedET2.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateDerivedET2(ByVal ID As String, ByVal propertyInDerivedET2 As String) As DerivedET2
             Dim derivedET2 As DerivedET2 = New DerivedET2()
@@ -555,9 +566,9 @@ Namespace AbstractEntityTypeWithoutKey
             derivedET2.PropertyInDerivedET2 = propertyInDerivedET2
             Return derivedET2
         End Function
-        '''<summary>
-        '''There are no comments for Property PropertyInDerivedET2 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property PropertyInDerivedET2 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("PropertyInDerivedET2")>  _
         Public Overridable Property PropertyInDerivedET2() As String
@@ -609,7 +620,7 @@ Namespace AbstractEntityTypeWithoutKey
             id As String) As AbstractEntityTypeWithoutKey.DerivedBaseETSingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"Id", id}
+                { "Id", id }
             }
             Return New AbstractEntityTypeWithoutKey.DerivedBaseETSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
@@ -650,7 +661,7 @@ Namespace AbstractEntityTypeWithoutKey
             id As String) As AbstractEntityTypeWithoutKey.DerivedETSingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"Id", id}
+                { "Id", id }
             }
             Return New AbstractEntityTypeWithoutKey.DerivedETSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
@@ -700,7 +711,7 @@ Namespace AbstractEntityTypeWithoutKey
             id As String) As AbstractEntityTypeWithoutKey.DerivedAbstractETWithKeySingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"Id", id}
+                { "Id", id }
             }
             Return New AbstractEntityTypeWithoutKey.DerivedAbstractETWithKeySingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
@@ -732,7 +743,7 @@ Namespace AbstractEntityTypeWithoutKey
             id As String) As AbstractEntityTypeWithoutKey.DerivedET2Single
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"Id", id}
+                { "Id", id }
             }
             Return New AbstractEntityTypeWithoutKey.DerivedET2Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function

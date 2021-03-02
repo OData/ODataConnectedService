@@ -12,16 +12,16 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 15:15:30
+'Generation date: 03.03.2021 22:26:57
 Namespace PrefixConflict.DSC
-    '''<summary>
-    '''There are no comments for EntityContainer in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for EntityContainer in the schema.
+        ''' </summary>
     Partial Public Class EntityContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
-        '''<summary>
-        '''Initialize a new EntityContainer object.
-        '''</summary>
+        ''' <summary>
+        ''' Initialize a new EntityContainer object.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
@@ -31,9 +31,9 @@ Namespace PrefixConflict.DSC
         End Sub
         Partial Private Sub OnContextCreated()
         End Sub
-        '''<summary>
-        '''There are no comments for Set1 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Set1 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Set1() As Global.Microsoft.OData.Client.DataServiceQuery(Of EntityType)
             Get
@@ -45,9 +45,9 @@ Namespace PrefixConflict.DSC
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Set1 As Global.Microsoft.OData.Client.DataServiceQuery(Of EntityType)
-        '''<summary>
-        '''There are no comments for Set1 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Set1 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToSet1(ByVal entityType As EntityType)
             MyBase.AddObject("Set1", entityType)
@@ -83,9 +83,20 @@ Namespace PrefixConflict.DSC
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader)
+                    Dim errors As Global.System.Collections.Generic.IEnumerable(Of Global.Microsoft.OData.Edm.Validation.EdmError) = Nothing
+                    Dim edmModel As Global.Microsoft.OData.Edm.IEdmModel = Nothing
+                    If Not Global.Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, False, edmModel, errors) Then
+                        Dim errorMessages As Global.System.Text.StringBuilder = New Global.System.Text.StringBuilder()
+                        For Each err As Global.Microsoft.OData.Edm.Validation.EdmError In errors
+                            errorMessages.Append(err.ErrorMessage)
+                            errorMessages.Append("; ")
+                        Next
+                        Throw New Global.System.InvalidOperationException(errorMessages.ToString())
+                    End If
+
+                    Return edmModel
                 Finally
-                    CType(reader,Global.System.IDisposable).Dispose
+                    CType(reader, Global.System.IDisposable).Dispose()
                 End Try
             End Function
             <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -94,9 +105,9 @@ Namespace PrefixConflict.DSC
             End Function
         End Class
     End Class
-    '''<summary>
-    '''There are no comments for EntityTypeSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for EntityTypeSingle in the schema.
+        ''' </summary>
     Partial Public Class EntityTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of EntityType)
         ''' <summary>
@@ -120,30 +131,30 @@ Namespace PrefixConflict.DSC
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for EntityType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Id
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for EntityType in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' Id
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Id")>  _
     <Global.Microsoft.OData.Client.EntitySet("Set1")>  _
     Partial Public Class EntityType
         Inherits Global.Microsoft.OData.Client.BaseEntityType
         Implements Global.System.ComponentModel.INotifyPropertyChanged
-        '''<summary>
-        '''Create a new EntityType object.
-        '''</summary>
-        '''<param name="ID">Initial value of Id.</param>
+        ''' <summary>
+        ''' Create a new EntityType object.
+        ''' </summary>
+        ''' <param name="ID">Initial value of Id.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateEntityType(ByVal ID As Global.System.Guid) As EntityType
             Dim entityType As EntityType = New EntityType()
             entityType.Id = ID
             Return entityType
         End Function
-        '''<summary>
-        '''There are no comments for Property Id in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Id in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Id() As Global.System.Guid
             Get
@@ -162,9 +173,9 @@ Namespace PrefixConflict.DSC
         End Sub
         Partial Private Sub OnIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Name in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Name in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Name() As Global.System.Nullable(Of Integer)
             Get
@@ -183,9 +194,9 @@ Namespace PrefixConflict.DSC
         End Sub
         Partial Private Sub OnNameChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property _Name in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property _Name in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property _Name() As String
             Get
@@ -204,9 +215,9 @@ Namespace PrefixConflict.DSC
         End Sub
         Partial Private Sub On_NameChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property __Name in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property __Name in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property __Name() As Global.System.Nullable(Of Integer)
             Get
@@ -264,7 +275,7 @@ Namespace PrefixConflict.DSC
             id As Global.System.Guid) As PrefixConflict.DSC.EntityTypeSingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"Id", id}
+                { "Id", id }
             }
             Return New PrefixConflict.DSC.EntityTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function

@@ -12,16 +12,16 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 15:20:18
+'Generation date: 03.03.2021 22:30:35
 Namespace Foo
-    '''<summary>
-    '''There are no comments for EntityContainer in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for EntityContainer in the schema.
+        ''' </summary>
     Partial Public Class EntityContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
-        '''<summary>
-        '''Initialize a new EntityContainer object.
-        '''</summary>
+        ''' <summary>
+        ''' Initialize a new EntityContainer object.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
@@ -35,11 +35,11 @@ Namespace Foo
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private Shared ROOTNAMESPACE As String = GetType(EntityContainer).Namespace.Remove(GetType(EntityContainer).Namespace.LastIndexOf("Foo"))
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Function ResolveTypeFromName(ByVal typeName As String) As Global.System.Type
             Dim resolvedType As Global.System.Type = Me.DefaultResolveType(typeName, "NamespacePrefixWithInheritence", String.Concat(ROOTNAMESPACE, "Foo"))
@@ -48,11 +48,11 @@ Namespace Foo
             End If
             Return Nothing
         End Function
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Function ResolveNameFromType(ByVal clientType As Global.System.Type) As String
             If clientType.Namespace.Equals(String.Concat(ROOTNAMESPACE, "Foo"), Global.System.StringComparison.OrdinalIgnoreCase) Then
@@ -60,9 +60,9 @@ Namespace Foo
             End If
             Return clientType.FullName.Substring(ROOTNAMESPACE.Length)
         End Function
-        '''<summary>
-        '''There are no comments for Set1 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Set1 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Set1() As Global.Microsoft.OData.Client.DataServiceQuery(Of EntityType)
             Get
@@ -74,9 +74,9 @@ Namespace Foo
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Set1 As Global.Microsoft.OData.Client.DataServiceQuery(Of EntityType)
-        '''<summary>
-        '''There are no comments for Set1 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Set1 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToSet1(ByVal entityType As EntityType)
             MyBase.AddObject("Set1", entityType)
@@ -112,9 +112,20 @@ Namespace Foo
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader)
+                    Dim errors As Global.System.Collections.Generic.IEnumerable(Of Global.Microsoft.OData.Edm.Validation.EdmError) = Nothing
+                    Dim edmModel As Global.Microsoft.OData.Edm.IEdmModel = Nothing
+                    If Not Global.Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, False, edmModel, errors) Then
+                        Dim errorMessages As Global.System.Text.StringBuilder = New Global.System.Text.StringBuilder()
+                        For Each err As Global.Microsoft.OData.Edm.Validation.EdmError In errors
+                            errorMessages.Append(err.ErrorMessage)
+                            errorMessages.Append("; ")
+                        Next
+                        Throw New Global.System.InvalidOperationException(errorMessages.ToString())
+                    End If
+
+                    Return edmModel
                 Finally
-                    CType(reader,Global.System.IDisposable).Dispose
+                    CType(reader, Global.System.IDisposable).Dispose()
                 End Try
             End Function
             <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -123,9 +134,9 @@ Namespace Foo
             End Function
         End Class
     End Class
-    '''<summary>
-    '''There are no comments for EntityBaseSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for EntityBaseSingle in the schema.
+        ''' </summary>
     Partial Public Class EntityBaseSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of EntityBase)
         ''' <summary>
@@ -149,28 +160,28 @@ Namespace Foo
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for EntityBase in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''IdKey
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for EntityBase in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' IdKey
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("IdKey")>  _
     Partial Public Class EntityBase
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new EntityBase object.
-        '''</summary>
-        '''<param name="idKey">Initial value of IdKey.</param>
+        ''' <summary>
+        ''' Create a new EntityBase object.
+        ''' </summary>
+        ''' <param name="idKey">Initial value of IdKey.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateEntityBase(ByVal idKey As Integer) As EntityBase
             Dim entityBase As EntityBase = New EntityBase()
             entityBase.IdKey = idKey
             Return entityBase
         End Function
-        '''<summary>
-        '''There are no comments for Property IdKey in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property IdKey in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property IdKey() As Integer
             Get
@@ -189,9 +200,9 @@ Namespace Foo
         Partial Private Sub OnIdKeyChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for EntityTypeSingle in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for EntityTypeSingle in the schema.
+        ''' </summary>
     Partial Public Class EntityTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of EntityType)
         ''' <summary>
@@ -215,20 +226,20 @@ Namespace Foo
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for EntityType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''IdKey
-    '''</KeyProperties>
+        ''' <summary>
+        ''' There are no comments for EntityType in the schema.
+        ''' </summary>
+    ''' <KeyProperties>
+    ''' IdKey
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("IdKey")>  _
     Partial Public Class EntityType
         Inherits EntityBase
-        '''<summary>
-        '''Create a new EntityType object.
-        '''</summary>
-        '''<param name="idKey">Initial value of IdKey.</param>
-        '''<param name="ID">Initial value of ID.</param>
+        ''' <summary>
+        ''' Create a new EntityType object.
+        ''' </summary>
+        ''' <param name="idKey">Initial value of IdKey.</param>
+        ''' <param name="ID">Initial value of ID.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateEntityType(ByVal idKey As Integer, ByVal ID As Integer) As EntityType
             Dim entityType As EntityType = New EntityType()
@@ -236,9 +247,9 @@ Namespace Foo
             entityType.ID = ID
             Return entityType
         End Function
-        '''<summary>
-        '''There are no comments for Property ID in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ID in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ID() As Integer
             Get
@@ -280,7 +291,7 @@ Namespace Foo
             idKey As Integer) As Foo.EntityBaseSingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"IdKey", idKey}
+                { "IdKey", idKey }
             }
             Return New Foo.EntityBaseSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
@@ -303,7 +314,7 @@ Namespace Foo
             idKey As Integer) As Foo.EntityTypeSingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"IdKey", idKey}
+                { "IdKey", idKey }
             }
             Return New Foo.EntityTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function

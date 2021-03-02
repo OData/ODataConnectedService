@@ -12,16 +12,16 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 30-Apr-20 1:18:56 PM
+'Generation date: 03.03.2021 22:50:56
 Namespace NS
-    '''<summary>
-    '''There are no comments for Container in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for Container in the schema.
+        ''' </summary>
     Partial Public Class Container
         Inherits Global.Microsoft.OData.Client.DataServiceContext
-        '''<summary>
-        '''Initialize a new Container object.
-        '''</summary>
+        ''' <summary>
+        ''' Initialize a new Container object.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
@@ -57,9 +57,20 @@ Namespace NS
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader)
+                    Dim errors As Global.System.Collections.Generic.IEnumerable(Of Global.Microsoft.OData.Edm.Validation.EdmError) = Nothing
+                    Dim edmModel As Global.Microsoft.OData.Edm.IEdmModel = Nothing
+                    If Not Global.Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, False, edmModel, errors) Then
+                        Dim errorMessages As Global.System.Text.StringBuilder = New Global.System.Text.StringBuilder()
+                        For Each err As Global.Microsoft.OData.Edm.Validation.EdmError In errors
+                            errorMessages.Append(err.ErrorMessage)
+                            errorMessages.Append("; ")
+                        Next
+                        Throw New Global.System.InvalidOperationException(errorMessages.ToString())
+                    End If
+
+                    Return edmModel
                 Finally
-                    CType(reader,Global.System.IDisposable).Dispose
+                    CType(reader, Global.System.IDisposable).Dispose()
                 End Try
             End Function
             <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
@@ -68,15 +79,15 @@ Namespace NS
             End Function
         End Class
     End Class
-    '''<summary>
-    '''There are no comments for Address in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for Address in the schema.
+        ''' </summary>
     Partial Public Class Address
-        '''<summary>
-        '''Create a new Address object.
-        '''</summary>
-        '''<param name="street">Initial value of Street.</param>
-        '''<param name="city">Initial value of City.</param>
+        ''' <summary>
+        ''' Create a new Address object.
+        ''' </summary>
+        ''' <param name="street">Initial value of Street.</param>
+        ''' <param name="city">Initial value of City.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Public Shared Function CreateAddress(ByVal street As String, ByVal city As String) As Address
             Dim address As Address = New Address()
@@ -84,9 +95,9 @@ Namespace NS
             address.City = city
             Return address
         End Function
-        '''<summary>
-        '''There are no comments for Property Street in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property Street in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Public Overridable Property Street() As String
             Get
@@ -104,9 +115,9 @@ Namespace NS
         End Sub
         Partial Private Sub OnStreetChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property City in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property City in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Public Overridable Property City() As String
             Get
@@ -124,9 +135,9 @@ Namespace NS
         End Sub
         Partial Private Sub OnCityChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DynamicProperties in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DynamicProperties in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         <Global.Microsoft.OData.Client.ContainerProperty>  _
         Public Overridable Property DynamicProperties() As Global.System.Collections.Generic.IDictionary(Of String, Object)
