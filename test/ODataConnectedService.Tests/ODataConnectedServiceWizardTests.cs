@@ -250,7 +250,7 @@ namespace ODataConnectedService.Tests
                 advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(typesPage)).Wait();
                 Assert.Equal(Constants.DefaultReferenceFileName, advancedPage.UserSettings.GeneratedFileNamePrefix);
                 Assert.False(advancedPage.UserSettings.UseNamespacePrefix);
-                Assert.Equal(Constants.DefaultReferenceFileName, advancedPage.UserSettings.NamespacePrefix);
+                Assert.Null(advancedPage.UserSettings.NamespacePrefix);
                 Assert.True(advancedPage.UserSettings.UseDataServiceCollection);
                 Assert.True(advancedPage.UserSettings.EnableNamingAlias);
                 Assert.False(advancedPage.UserSettings.OpenGeneratedFilesInIDE);
