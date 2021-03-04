@@ -368,7 +368,6 @@ namespace Microsoft.OData.ConnectedService.Models
             this.logger = logger;
             // Desired defaults
             GeneratedFileNamePrefix = Constants.DefaultReferenceFileName;
-            NamespacePrefix = Constants.DefaultReferenceFileName;
             ServiceName = Constants.DefaultServiceName;
             UseDataServiceCollection = true; // To support entity and property tracking
             EnableNamingAlias = true; // To force upper camel case in the event that entities are named in lower camel case
