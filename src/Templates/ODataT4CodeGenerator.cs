@@ -1736,6 +1736,18 @@ public abstract class ODataClientTemplate : TemplateBase
         }
     }
 
+    internal string GetFileNameForMultipleFilesGeneration(IEdmSchemaElement schemaElement)
+    {
+        IEdmSchemaElement[] schemaElementsInModel = this.context.NamespacesInModel.SelectMany(n => this.context.GetSchemaElements(n)).ToArray();
+        string fileExtension = this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs";
+        if (schemaElementsInModel.Count(e => e.Name.Equals(schemaElement.Name)) > 1)
+        {
+            return $"{schemaElement.FullName()}{fileExtension}";
+        }
+
+        return $"{schemaElement.Name}{fileExtension}";
+    }
+
     internal void WriteNamespace(string fullNamespace)
     {
         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
@@ -1780,13 +1792,8 @@ public abstract class ODataClientTemplate : TemplateBase
 
                 if(context.GenerateMultipleFiles)
                 {
-                    string fileName = enumType.Name;
-                    if (schemaElementsInModel.Count(e => e.Name.Equals(enumType.Name)) > 1)
-                    {
-                        fileName = enumType.FullName();
-                    }
-
-                    context.MultipleFilesManager.StartNewFile($"{fileName}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}", false);
+                    string fileName = GetFileNameForMultipleFilesGeneration(enumType);
+                    context.MultipleFilesManager.StartNewFile(fileName, false);
                     this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                 }
 
@@ -1809,13 +1816,8 @@ public abstract class ODataClientTemplate : TemplateBase
 
                     if(context.GenerateMultipleFiles)
                     {
-                        string fileName = complexType.Name;
-                        if (schemaElementsInModel.Count(e => e.Name.Equals(complexType.Name)) > 1)
-                        {
-                            fileName = complexType.FullName();
-                        }
-
-                        context.MultipleFilesManager.StartNewFile($"{fileName}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}", false);
+                        string fileName = GetFileNameForMultipleFilesGeneration(complexType);
+                        context.MultipleFilesManager.StartNewFile(fileName, false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
@@ -1836,13 +1838,8 @@ public abstract class ODataClientTemplate : TemplateBase
 
                     if(context.GenerateMultipleFiles)
                     {
-                        string fileName = entityType.Name;
-                        if (schemaElementsInModel.Count(e => e.Name.Equals(entityType.Name)) > 1)
-                        {
-                            fileName = entityType.FullName();
-                        }
-
-                        context.MultipleFilesManager.StartNewFile($"{fileName}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}", false);
+                        string fileName = GetFileNameForMultipleFilesGeneration(entityType);
+                        context.MultipleFilesManager.StartNewFile(fileName, false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
@@ -1874,7 +1871,9 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             if(context.GenerateMultipleFiles)
             {
-                context.MultipleFilesManager.StartNewFile($"{(this.context.NamespacesInModel.Length > 1 ? $"{fullNamespace}." : string.Empty)}ExtensionMethods{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}", false);
+                string ns = this.context.NamespacesInModel.Length > 1 ? $"{fullNamespace}." : string.Empty;
+                string fileExtension = this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs";
+                context.MultipleFilesManager.StartNewFile($"{ns}ExtensionMethods{fileExtension}", false);
                 this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
             }
 
