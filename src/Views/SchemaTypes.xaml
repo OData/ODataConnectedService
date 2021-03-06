@@ -6,6 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Microsoft.OData.ConnectedService.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:sysWindows="clr-namespace:System.Windows;assembly=PresentationFramework"
     xmlns:viewModels="clr-namespace:Microsoft.OData.ConnectedService.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewModels:SchemaTypesViewModel}"
     d:DesignHeight="300"
@@ -15,6 +17,7 @@
         <RoutedCommand x:Key="SelectAllBoundOperationsForSchemaTypeCmd" />
         <RoutedCommand x:Key="DeselectAllBoundOperationsForSchemaTypeCmd" />
         <converters:SchemaTypeModelToVisibilityConverter x:Key="SchemaTypeModelToVisibilityConverter" />
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
     <UserControl.CommandBindings>
         <CommandBinding
@@ -108,7 +111,29 @@
                         <TextBlock
                             VerticalAlignment="Bottom"
                             ContextMenu="{StaticResource SchemaTypeContextMenu}"
-                            Text="{Binding Path=ShortName}" />
+                            Text="{Binding Path=ShortName}">
+                            <TextBlock.Visibility>
+                                <Binding>
+                                    <Binding.ElementName>
+                                        <sys:String>ShowSchemaTypesFullName</sys:String>
+                                    </Binding.ElementName>
+                                    <Binding.Path>
+                                        <sysWindows:PropertyPath>IsChecked</sysWindows:PropertyPath>
+                                    </Binding.Path>
+                                    <Binding.Converter>
+                                        <StaticResource ResourceKey="BoolToVisibilityConverter" />
+                                    </Binding.Converter>
+                                    <Binding.ConverterParameter>
+                                        <sys:Boolean>true</sys:Boolean>
+                                    </Binding.ConverterParameter>
+                                </Binding>
+                            </TextBlock.Visibility>
+                        </TextBlock>
+                        <TextBlock
+                            VerticalAlignment="Bottom"
+                            ContextMenu="{StaticResource SchemaTypeContextMenu}"
+                            Text="{Binding Path=Name}"
+                            Visibility="{Binding ElementName=ShowSchemaTypesFullName, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}" />
                     </StackPanel>
                     <HierarchicalDataTemplate.ItemTemplate>
                         <DataTemplate>
@@ -149,5 +174,17 @@
                 Deselect All Bound Operations
             </Button>
         </StackPanel>
+        <DockPanel Margin="0,5,0,0">
+            <CheckBox
+                x:Name="ShowSchemaTypesFullName"
+                Width="16"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Content="Show full name for schema types."
+                IsChecked="False" />
+            <TextBlock Margin="5,0,0,0" FontWeight="Bold">
+                Show full name for schema types.
+            </TextBlock>
+        </DockPanel>
     </StackPanel>
 </UserControl>

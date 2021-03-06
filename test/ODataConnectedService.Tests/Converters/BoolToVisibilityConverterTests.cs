@@ -38,6 +38,26 @@ namespace ODataConnectedService.Tests.Converters
         }
 
         [TestMethod]
+        public void Convert_ShouldReturnVisible_ForFalseValue_WithTrueParameter()
+        {
+            var result = new BoolToVisibilityConverter()
+                .Convert(false, typeof(Visibility), true, CultureInfo.CurrentCulture);
+
+            result.Should()
+                .Be(Visibility.Visible);
+        }
+
+        [TestMethod]
+        public void Convert_ShouldReturnCollapsed_ForTrueValue_WithTrueParameter()
+        {
+            var result = new BoolToVisibilityConverter()
+                .Convert(true, typeof(Visibility), true, CultureInfo.CurrentCulture);
+
+            result.Should()
+                .Be(Visibility.Collapsed);
+        }
+
+        [TestMethod]
         public void Convert_ShouldThrowNotSupportedException_ForNonVisibilityTargetType()
         {
             Action convertAction = () =>

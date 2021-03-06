@@ -1736,10 +1736,23 @@ public abstract class ODataClientTemplate : TemplateBase
         }
     }
 
+    internal string GetFileNameForMultipleFilesGeneration(IEdmSchemaElement schemaElement)
+    {
+        IEdmSchemaElement[] schemaElementsInModel = this.context.NamespacesInModel.SelectMany(n => this.context.GetSchemaElements(n)).ToArray();
+        string fileExtension = this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs";
+        if (schemaElementsInModel.Count(e => e.Name.Equals(schemaElement.Name)) > 1)
+        {
+            return $"{schemaElement.FullName()}{fileExtension}";
+        }
+
+        return $"{schemaElement.Name}{fileExtension}";
+    }
+
     internal void WriteNamespace(string fullNamespace)
     {
         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
 
+        IEdmSchemaElement[] schemaElementsInModel = this.context.NamespacesInModel.SelectMany(n => this.context.GetSchemaElements(n)).ToArray();
         IEdmSchemaElement[] schemaElements = this.context.GetSchemaElements(fullNamespace).ToArray();
         if (schemaElements.OfType<IEdmEntityContainer>().Any()) {
             IEdmEntityContainer container = schemaElements.OfType<IEdmEntityContainer>().Single();
@@ -1772,24 +1785,25 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             if (type is IEdmEnumType enumType)
             {
-                    if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(enumType.FullName()))
-                    {
-                        continue;
-                    }
+                if (this.context.ExcludedSchemaTypes != null && this.context.ExcludedSchemaTypes.Contains(enumType.FullName()))
+                {
+                    continue;
+                }
 
-                    if(context.GenerateMultipleFiles)
-                    {
-                        context.MultipleFilesManager.StartNewFile($"{enumType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
-                        this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
-                    }
+                if(context.GenerateMultipleFiles)
+                {
+                    string fileName = GetFileNameForMultipleFilesGeneration(enumType);
+                    context.MultipleFilesManager.StartNewFile(fileName, false);
+                    this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
+                }
 
-                    this.WriteEnumType(enumType);
+                this.WriteEnumType(enumType);
 
-                    if(context.GenerateMultipleFiles)
-                    {
-                        this.WriteNamespaceEnd();
-                        context.MultipleFilesManager.EndBlock();
-                    }
+                if(context.GenerateMultipleFiles)
+                {
+                    this.WriteNamespaceEnd();
+                    context.MultipleFilesManager.EndBlock();
+                }
             }
             else
             {
@@ -1802,7 +1816,8 @@ public abstract class ODataClientTemplate : TemplateBase
 
                     if(context.GenerateMultipleFiles)
                     {
-                        context.MultipleFilesManager.StartNewFile($"{complexType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
+                        string fileName = GetFileNameForMultipleFilesGeneration(complexType);
+                        context.MultipleFilesManager.StartNewFile(fileName, false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
@@ -1823,7 +1838,8 @@ public abstract class ODataClientTemplate : TemplateBase
 
                     if(context.GenerateMultipleFiles)
                     {
-                        context.MultipleFilesManager.StartNewFile($"{entityType.Name}{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
+                        string fileName = GetFileNameForMultipleFilesGeneration(entityType);
+                        context.MultipleFilesManager.StartNewFile(fileName, false);
                         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
                     }
 
@@ -1855,7 +1871,9 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             if(context.GenerateMultipleFiles)
             {
-                context.MultipleFilesManager.StartNewFile($"ExtensionMethods{(this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs")}",false);
+                string ns = this.context.NamespacesInModel.Length > 1 ? $"{fullNamespace}." : string.Empty;
+                string fileExtension = this.context.TargetLanguage == LanguageOption.VB ? ".vb" : ".cs";
+                context.MultipleFilesManager.StartNewFile($"{ns}ExtensionMethods{fileExtension}", false);
                 this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
             }
 

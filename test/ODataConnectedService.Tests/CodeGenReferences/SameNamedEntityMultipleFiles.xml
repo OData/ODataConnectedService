@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" standalone="yes" ?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:DataServices>
+    <Schema Namespace="Namespace1" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="TestType">
+        <Key>
+          <PropertyRef Name="KeyProp" />
+        </Key>
+        <Property Name="KeyProp" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ValueProp" Type="Edm.String" Nullable="false" />
+      </EntityType>
+    </Schema>
+    <Schema Namespace="Namespace2" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="TestType">
+        <Key>
+          <PropertyRef Name="KeyProp1" />
+        </Key>
+        <Property Name="KeyProp1" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ValueProp2" Type="Edm.String" Nullable="false" />
+      </EntityType>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

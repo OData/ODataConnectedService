@@ -881,6 +881,71 @@ namespace ODataConnectedService.Tests
 
         #endregion
 
+        #region Tests for GetFileNameForMultipleFilesGeneration
+
+        private const string SameNamedTypesEdmx = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
+  <edmx:DataServices>
+    <Schema Namespace=""Namespace1"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
+      <ComplexType Name=""ComplexType""/>
+      <EnumType Name=""EnumType""/>
+      <EntityType Name=""EntityType"" Abstract=""true""/>
+    </Schema>
+    <Schema Namespace=""Namespace2"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
+      <ComplexType Name=""ComplexType""/>
+      <EnumType Name=""EnumType""/>
+      <EntityType Name=""EntityType"" Abstract=""true""/>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>";
+
+        [TestMethod]
+        public void GetFileNameForMultipleFilesGenerationForSameNamedTypesShouldReturnsFileNamesWithNamespaces()
+        {
+            var namespacePrefix = string.Empty;
+            Context = new ODataT4CodeGenerator.CodeGenerationContext(SameNamedTypesEdmx, namespacePrefix);
+            Context.GenerateMultipleFiles = true;
+
+            ODataClientTemplateImp template;
+            foreach (ODataT4CodeGenerator.LanguageOption language in Enum.GetValues(typeof(ODataT4CodeGenerator.LanguageOption)))
+            {
+                Context.TargetLanguage = language;
+                template = new ODataClientTemplateImp(Context);
+
+                IEdmSchemaElement[] schemaElements = Context.GetSchemaElements("Namespace1").ToArray();
+                foreach (IEdmSchemaType type in schemaElements.OfType<IEdmSchemaType>())
+                {
+                    var fileName = template.GetFileNameForMultipleFilesGeneration(type);
+                    fileName.Should().StartWith("Namespace1.").And.EndWith(language == ODataT4CodeGenerator.LanguageOption.CSharp ? ".cs" : ".vb");
+                }
+
+                schemaElements = Context.GetSchemaElements("Namespace2").ToArray();
+                foreach (IEdmSchemaType type in schemaElements.OfType<IEdmSchemaType>())
+                {
+                    var fileName = template.GetFileNameForMultipleFilesGeneration(type);
+                    fileName.Should().StartWith("Namespace2.").And.EndWith(language == ODataT4CodeGenerator.LanguageOption.CSharp ? ".cs" : ".vb");
+                }
+            }
+        }
+
+        [TestMethod]
+        public void GetFileNameForMultipleFilesGenerationForSimpleEdmxShouldReturnsFileNamesWithoutNamespaces()
+        {
+            var namespacePrefix = string.Empty;
+            Context = new ODataT4CodeGenerator.CodeGenerationContext(SimpleEdmx, namespacePrefix);
+            Context.GenerateMultipleFiles = true;
+            var template = new ODataClientTemplateImp(Context);
+
+            IEdmSchemaElement[] schemaElements = Context.GetSchemaElements("Namespace1").ToArray();
+            foreach (IEdmSchemaType type in schemaElements.OfType<IEdmSchemaType>())
+            {
+                var fileName = template.GetFileNameForMultipleFilesGeneration(type);
+                fileName.Should().NotContain("Namespace1.");
+            }
+        }
+
+        #endregion
+
         #region Tests for WriteNamespace
 
         private const string SimpleEdmx = @"<?xml version=""1.0"" encoding=""utf-8""?>

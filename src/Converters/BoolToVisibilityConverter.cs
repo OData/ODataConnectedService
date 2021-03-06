@@ -19,7 +19,14 @@ namespace Microsoft.OData.ConnectedService.Converters
             if (targetType == typeof(Visibility))
             {
                 if (value is bool boolValue)
+                {
+                    if (parameter is bool isInversed && isInversed)
+                    {
+                        return !boolValue ? Visibility.Visible : Visibility.Collapsed;
+                    }
+
                     return boolValue ? Visibility.Visible : Visibility.Collapsed;
+                }
 
                 throw new NotSupportedException();
             }
