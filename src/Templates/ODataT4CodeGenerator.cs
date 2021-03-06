@@ -2206,19 +2206,21 @@ public abstract class ODataClientTemplate : TemplateBase
             }
         }
 
+        string edmx = Utils.SerializeToString(this.context.Edmx);
         if (useTempFile)
         {
-            this.WriteGeneratedEdmModel(Utils.SerializeToString(this.context.Edmx));
+            this.WriteGeneratedEdmModel(edmx);
         }
-        else
+        else // constructing Edmx string
         {
+            edmx = edmx.Replace("\"", "\"\"");
             if (this.context.TargetLanguage == LanguageOption.VB)
             {
-                this.WriteGeneratedEdmModel(Utils.SerializeToString(this.context.Edmx).Replace("\"", "\"\"").Replace("\r\n", "\" & _\r\n \""));
+                this.WriteGeneratedEdmModel(edmx.Replace("\r\n", "\" & _\r\n \""));
             }
             else
             {
-                this.WriteGeneratedEdmModel(Utils.SerializeToString(this.context.Edmx).Replace("\"", "\"\""));
+                this.WriteGeneratedEdmModel(edmx);
             }
         }
 
