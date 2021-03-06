@@ -12,11 +12,11 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 03.03.2021 22:29:27
+'Generation date: 06.03.2021 22:57:04
 Namespace Foo.NamespacePrefixWithDoubleNamespaces
-        ''' <summary>
-        ''' There are no comments for EntityContainer in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for EntityContainer in the schema.
+    ''' </summary>
     Partial Public Class EntityContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
         ''' <summary>
@@ -176,9 +176,9 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces
             End Function
         End Class
     End Class
-        ''' <summary>
-        ''' There are no comments for ComplexType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for ComplexType in the schema.
+    ''' </summary>
     Partial Public Class ComplexType
         ''' <summary>
         ''' Create a new ComplexType object.
@@ -211,9 +211,9 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces
         Partial Private Sub OnValueChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for EntityTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for EntityTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class EntityTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of EntityType)
         ''' <summary>
@@ -237,9 +237,9 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for EntityType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for EntityType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Id
     ''' </KeyProperties>
@@ -327,9 +327,9 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces
     End Module
 End Namespace
 Namespace Foo.NamespacePrefixWithDoubleNamespaces2
-        ''' <summary>
-        ''' There are no comments for ComplexType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for ComplexType in the schema.
+    ''' </summary>
     Partial Public Class ComplexType
         ''' <summary>
         ''' Create a new ComplexType object.
@@ -362,9 +362,9 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces2
         Partial Private Sub OnValueChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for EntityTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for EntityTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class EntityTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of EntityType)
         ''' <summary>
@@ -388,9 +388,9 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces2
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for EntityType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for EntityType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Id
     ''' </KeyProperties>

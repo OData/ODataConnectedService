@@ -14,9 +14,9 @@ Option Explicit On
 
 'Generation date: 03.03.2021 22:50:56
 Namespace NS
-        ''' <summary>
-        ''' There are no comments for Container in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Container in the schema.
+    ''' </summary>
     Partial Public Class Container
         Inherits Global.Microsoft.OData.Client.DataServiceContext
         ''' <summary>
@@ -79,9 +79,9 @@ Namespace NS
             End Function
         End Class
     End Class
-        ''' <summary>
-        ''' There are no comments for Address in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Address in the schema.
+    ''' </summary>
     Partial Public Class Address
         ''' <summary>
         ''' Create a new Address object.

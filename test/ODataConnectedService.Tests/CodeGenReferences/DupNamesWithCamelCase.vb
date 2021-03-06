@@ -14,9 +14,9 @@ Option Explicit On
 
 'Generation date: 03.03.2021 22:15:32
 Namespace DupNames
-        ''' <summary>
-        ''' There are no comments for EntityContainer in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for EntityContainer in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("EntityContainer")>  _
     Partial Public Class EntityContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
@@ -187,9 +187,9 @@ Namespace DupNames
             End Function
         End Class
     End Class
-        ''' <summary>
-        ''' There are no comments for DupWithTypeNameSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DupWithTypeNameSingle in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeNameSingle")>  _
     Partial Public Class DupWithTypeNameSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DupWithTypeName)
@@ -232,9 +232,9 @@ Namespace DupNames
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _DupPropertyName As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName1)
     End Class
-        ''' <summary>
-        ''' There are no comments for DupWithTypeName in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DupWithTypeName in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' DupWithTypeName
     ''' </KeyProperties>
@@ -432,9 +432,9 @@ Namespace DupNames
         Partial Private Sub OnDupPropertyName1Changed()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DupWithComplexTypeName in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DupWithComplexTypeName in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithComplexTypeName")>  _
     Partial Public Class DupWithComplexTypeName
         ''' <summary>
@@ -543,9 +543,9 @@ Namespace DupNames
         Partial Private Sub On__DupWithComplexTypeName2Changed()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DupWithTypeName1Single in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DupWithTypeName1Single in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName1Single")>  _
     Partial Public Class DupWithTypeName1Single
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DupWithTypeName1)
@@ -570,9 +570,9 @@ Namespace DupNames
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DupWithTypeName1 in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DupWithTypeName1 in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' DupWithTypeName
     ''' </KeyProperties>

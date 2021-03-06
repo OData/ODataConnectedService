@@ -14,9 +14,9 @@ Option Explicit On
 
 'Generation date: 03.03.2021 21:48:10
 Namespace DupNames.DSC
-        ''' <summary>
-        ''' There are no comments for EntityContainer in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for EntityContainer in the schema.
+    ''' </summary>
     Partial Public Class EntityContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
         ''' <summary>
@@ -150,9 +150,9 @@ Namespace DupNames.DSC
             End Function
         End Class
     End Class
-        ''' <summary>
-        ''' There are no comments for DupWithTypeNameSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DupWithTypeNameSingle in the schema.
+    ''' </summary>
     Partial Public Class DupWithTypeNameSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DupWithTypeName)
         ''' <summary>
@@ -193,9 +193,9 @@ Namespace DupNames.DSC
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _dupPropertyName As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DSC.DupWithTypeName1)
     End Class
-        ''' <summary>
-        ''' There are no comments for DupWithTypeName in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DupWithTypeName in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' DupWithTypeName
     ''' </KeyProperties>
@@ -412,9 +412,9 @@ Namespace DupNames.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DupWithComplexTypeName in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DupWithComplexTypeName in the schema.
+    ''' </summary>
     Partial Public Class DupWithComplexTypeName
         Implements Global.System.ComponentModel.INotifyPropertyChanged
         ''' <summary>
@@ -539,9 +539,9 @@ Namespace DupNames.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DupWithTypeName1Single in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DupWithTypeName1Single in the schema.
+    ''' </summary>
     Partial Public Class DupWithTypeName1Single
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DupWithTypeName1)
         ''' <summary>
@@ -565,9 +565,9 @@ Namespace DupNames.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DupWithTypeName1 in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DupWithTypeName1 in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' DupWithTypeName
     ''' </KeyProperties>

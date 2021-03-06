@@ -12,11 +12,11 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 03.03.2021 22:46:55
+'Generation date: 06.03.2021 23:07:20
 Namespace [Namespace].Foo.DSC
-        ''' <summary>
-        ''' There are no comments for BaseTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for BaseTypeSingle in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("baseTypeSingle")>  _
     Partial Public Class BaseTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of BaseType)
@@ -41,9 +41,9 @@ Namespace [Namespace].Foo.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for BaseType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for BaseType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' KeyProp
     ''' </KeyProperties>
@@ -100,9 +100,9 @@ Namespace [Namespace].Foo.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for TestTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TestTypeSingle in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("testTypeSingle")>  _
     Partial Public Class TestTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of TestType)
@@ -145,9 +145,9 @@ Namespace [Namespace].Foo.DSC
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _SingleType As [Namespace].Foo.DSC.SingleTypeSingle
     End Class
-        ''' <summary>
-        ''' There are no comments for TestType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TestType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' KeyProp
     ''' </KeyProperties>
@@ -188,9 +188,9 @@ Namespace [Namespace].Foo.DSC
         Partial Private Sub OnSingleTypeChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for SingleTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for SingleTypeSingle in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("singleTypeSingle")>  _
     Partial Public Class SingleTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of SingleType)
@@ -233,9 +233,9 @@ Namespace [Namespace].Foo.DSC
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _BaseSet As Global.Microsoft.OData.Client.DataServiceQuery(Of [Namespace].Foo.DSC.TestType)
     End Class
-        ''' <summary>
-        ''' There are no comments for SingleType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for SingleType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' KeyProp
     ''' </KeyProperties>
@@ -459,9 +459,9 @@ Namespace [Namespace].Foo.DSC
     End Module
 End Namespace
 Namespace [Namespace].Bar.DSC
-        ''' <summary>
-        ''' There are no comments for SingletonContainer in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for SingletonContainer in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("singletonContainer")>  _
     Partial Public Class SingletonContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext

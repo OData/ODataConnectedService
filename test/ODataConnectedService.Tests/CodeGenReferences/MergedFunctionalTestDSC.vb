@@ -12,11 +12,11 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 03.03.2021 23:01:42
+'Generation date: 06.03.2021 22:49:02
 Namespace MergedFunctionalTest.DSC
-        ''' <summary>
-        ''' There are no comments for TestContainer in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TestContainer in the schema.
+    ''' </summary>
     Partial Public Class TestContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
         ''' <summary>
@@ -1037,9 +1037,9 @@ Namespace MergedFunctionalTest.DSC
             Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of Integer)(Me, Me.BaseUri.OriginalString.Trim("/"C) + "/foo11", New Global.Microsoft.OData.Client.BodyOperationParameter("p1", p1))
         End Function
     End Class
-        ''' <summary>
-        ''' There are no comments for CustomerSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for CustomerSingle in the schema.
+    ''' </summary>
     Partial Public Class CustomerSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Customer)
         ''' <summary>
@@ -1114,9 +1114,9 @@ Namespace MergedFunctionalTest.DSC
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Orders As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Order)
     End Class
-        ''' <summary>
-        ''' There are no comments for Customer in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Customer in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' CustomerId
     ''' </KeyProperties>
@@ -1396,9 +1396,9 @@ Namespace MergedFunctionalTest.DSC
             Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of MergedFunctionalTest.DSC.Address)(Me.Context, resource.EditLink.OriginalString.Trim("/"C) + "/MergedFunctionalTest.DSC.foo10")
         End Function
     End Class
-        ''' <summary>
-        ''' There are no comments for GoodCustomerSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for GoodCustomerSingle in the schema.
+    ''' </summary>
     Partial Public Class GoodCustomerSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of GoodCustomer)
         ''' <summary>
@@ -1473,9 +1473,9 @@ Namespace MergedFunctionalTest.DSC
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Orders As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Order)
     End Class
-        ''' <summary>
-        ''' There are no comments for GoodCustomer in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for GoodCustomer in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' CustomerId
     ''' </KeyProperties>
@@ -1503,9 +1503,9 @@ Namespace MergedFunctionalTest.DSC
             Return goodCustomer
         End Function
     End Class
-        ''' <summary>
-        ''' There are no comments for BadCustomerSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for BadCustomerSingle in the schema.
+    ''' </summary>
     Partial Public Class BadCustomerSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of BadCustomer)
         ''' <summary>
@@ -1580,9 +1580,9 @@ Namespace MergedFunctionalTest.DSC
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Orders As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.Order)
     End Class
-        ''' <summary>
-        ''' There are no comments for BadCustomer in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for BadCustomer in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' CustomerId
     ''' </KeyProperties>
@@ -1610,9 +1610,9 @@ Namespace MergedFunctionalTest.DSC
             Return badCustomer
         End Function
     End Class
-        ''' <summary>
-        ''' There are no comments for CustomerInfoSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for CustomerInfoSingle in the schema.
+    ''' </summary>
     Partial Public Class CustomerInfoSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of CustomerInfo)
         ''' <summary>
@@ -1636,9 +1636,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for CustomerInfo in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for CustomerInfo in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' CustomerInfoId
     ''' </KeyProperties>
@@ -1715,9 +1715,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for OrderSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for OrderSingle in the schema.
+    ''' </summary>
     Partial Public Class OrderSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Order)
         ''' <summary>
@@ -1758,9 +1758,9 @@ Namespace MergedFunctionalTest.DSC
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Customer As MergedFunctionalTest.DSC.CustomerSingle
     End Class
-        ''' <summary>
-        ''' There are no comments for Order in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Order in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' OrderId
     ''' </KeyProperties>
@@ -1858,9 +1858,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for CompanySingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for CompanySingle in the schema.
+    ''' </summary>
     Partial Public Class CompanySingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Company)
         ''' <summary>
@@ -1884,9 +1884,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Company in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Company in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' CompanyId
     ''' </KeyProperties>
@@ -1963,9 +1963,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for ProductSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for ProductSingle in the schema.
+    ''' </summary>
     Partial Public Class ProductSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Product)
         ''' <summary>
@@ -2006,9 +2006,9 @@ Namespace MergedFunctionalTest.DSC
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Detail As MergedFunctionalTest.DSC.ProductDetailSingle
     End Class
-        ''' <summary>
-        ''' There are no comments for Product in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Product in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' ID
     ''' </KeyProperties>
@@ -2143,9 +2143,9 @@ Namespace MergedFunctionalTest.DSC
             Return Me.Context.CreateFunctionQuery(Of MergedFunctionalTest.DSC.Customer)("", String.Join("/", Global.System.Linq.Enumerable.Select(Global.System.Linq.Enumerable.Skip(requestUri.Segments, Me.Context.BaseUri.Segments.Length), Function(s) s.Trim("/"C))) + "/MergedFunctionalTest.DSC.foo7", False)
         End Function
     End Class
-        ''' <summary>
-        ''' There are no comments for ProductDetailSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for ProductDetailSingle in the schema.
+    ''' </summary>
     Partial Public Class ProductDetailSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of ProductDetail)
         ''' <summary>
@@ -2186,9 +2186,9 @@ Namespace MergedFunctionalTest.DSC
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Product As MergedFunctionalTest.DSC.ProductSingle
     End Class
-        ''' <summary>
-        ''' There are no comments for ProductDetail in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for ProductDetail in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' ProductId
     ''' </KeyProperties>
@@ -2286,9 +2286,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for SpecialTypeWithPrecisionFacetSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for SpecialTypeWithPrecisionFacetSingle in the schema.
+    ''' </summary>
     Partial Public Class SpecialTypeWithPrecisionFacetSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of SpecialTypeWithPrecisionFacet)
         ''' <summary>
@@ -2312,9 +2312,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for SpecialTypeWithPrecisionFacet in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for SpecialTypeWithPrecisionFacet in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Id
     ''' </KeyProperties>
@@ -2391,9 +2391,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for BlobTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for BlobTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class BlobTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of BlobType)
         ''' <summary>
@@ -2417,9 +2417,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for BlobType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for BlobType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' KeyProp
     ''' </KeyProperties>
@@ -2499,9 +2499,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for ChildSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for ChildSingle in the schema.
+    ''' </summary>
     Partial Public Class ChildSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Child)
         ''' <summary>
@@ -2525,9 +2525,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Child in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Child in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' ID
     ''' </KeyProperties>
@@ -2566,9 +2566,9 @@ Namespace MergedFunctionalTest.DSC
         Partial Private Sub OnDescriptionChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for PersonSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for PersonSingle in the schema.
+    ''' </summary>
     Partial Public Class PersonSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Person)
         ''' <summary>
@@ -2592,9 +2592,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Person in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Person in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' ID
     ''' </KeyProperties>
@@ -2671,9 +2671,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for TestTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TestTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class TestTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of TestType)
         ''' <summary>
@@ -2697,9 +2697,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for TestType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TestType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Id
     ''' </KeyProperties>
@@ -5025,9 +5025,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for TestCollectionTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TestCollectionTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class TestCollectionTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of TestCollectionType)
         ''' <summary>
@@ -5051,9 +5051,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for TestCollectionType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TestCollectionType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' KeyProp
     ''' </KeyProperties>
@@ -5865,9 +5865,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DefaultValueTestTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DefaultValueTestTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class DefaultValueTestTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DefaultValueTestType)
         ''' <summary>
@@ -5891,9 +5891,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DefaultValueTestType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DefaultValueTestType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' KeyProp
     ''' </KeyProperties>
@@ -6673,9 +6673,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for MultiKeyTestTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for MultiKeyTestTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class MultiKeyTestTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of MultiKeyTestType)
         ''' <summary>
@@ -6699,9 +6699,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for MultiKeyTestType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for MultiKeyTestType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Int64Id
     ''' StringId
@@ -6828,9 +6828,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for BaseTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for BaseTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class BaseTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of BaseType)
         ''' <summary>
@@ -6854,9 +6854,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for BaseType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for BaseType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' KeyProp
     ''' </KeyProperties>
@@ -6911,9 +6911,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for KatmaiTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for KatmaiTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class KatmaiTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of KatmaiType)
         ''' <summary>
@@ -6937,9 +6937,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for KatmaiType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for KatmaiType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' KeyProp
     ''' </KeyProperties>
@@ -7083,9 +7083,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Level0Single in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Level0Single in the schema.
+    ''' </summary>
     Partial Public Class Level0Single
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Level0)
         ''' <summary>
@@ -7109,9 +7109,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Level0 in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Level0 in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Level0Prop
     ''' </KeyProperties>
@@ -7156,9 +7156,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Level1Single in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Level1Single in the schema.
+    ''' </summary>
     Partial Public Class Level1Single
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Level1)
         ''' <summary>
@@ -7182,9 +7182,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Level1 in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Level1 in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Level1Id
     ''' </KeyProperties>
@@ -7248,9 +7248,9 @@ Namespace MergedFunctionalTest.DSC
         Partial Private Sub OnLevel1PropChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Level2Single in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Level2Single in the schema.
+    ''' </summary>
     Partial Public Class Level2Single
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Level2)
         ''' <summary>
@@ -7274,9 +7274,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Level2 in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Level2 in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Level1Id
     ''' </KeyProperties>
@@ -7321,9 +7321,9 @@ Namespace MergedFunctionalTest.DSC
         Partial Private Sub OnLevel2PropChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for SingleTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for SingleTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class SingleTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of SingleType)
         ''' <summary>
@@ -7364,9 +7364,9 @@ Namespace MergedFunctionalTest.DSC
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _BaseSet As Global.Microsoft.OData.Client.DataServiceQuery(Of MergedFunctionalTest.DSC.TestType)
     End Class
-        ''' <summary>
-        ''' There are no comments for SingleType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for SingleType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' KeyProp
     ''' </KeyProperties>
@@ -7442,9 +7442,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for GroupSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for GroupSingle in the schema.
+    ''' </summary>
     Partial Public Class GroupSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Group)
         ''' <summary>
@@ -7502,9 +7502,9 @@ Namespace MergedFunctionalTest.DSC
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Bad As MergedFunctionalTest.DSC.BadCustomerSingle
     End Class
-        ''' <summary>
-        ''' There are no comments for Group in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Group in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Id
     ''' </KeyProperties>
@@ -7667,9 +7667,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for PrincipalSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for PrincipalSingle in the schema.
+    ''' </summary>
     Partial Public Class PrincipalSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Principal)
         ''' <summary>
@@ -7693,9 +7693,9 @@ Namespace MergedFunctionalTest.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Principal in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Principal in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Id
     ''' </KeyProperties>
@@ -7838,9 +7838,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for ComplextLevel0 in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for ComplextLevel0 in the schema.
+    ''' </summary>
     Partial Public MustInherit Class ComplextLevel0
         Implements Global.System.ComponentModel.INotifyPropertyChanged
         ''' <summary>
@@ -7880,9 +7880,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for ComplextLevel1 in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for ComplextLevel1 in the schema.
+    ''' </summary>
     Partial Public Class ComplextLevel1
         Inherits ComplextLevel0
         ''' <summary>
@@ -7919,9 +7919,9 @@ Namespace MergedFunctionalTest.DSC
         Partial Private Sub OnComplextLevel1PropChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Address in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Address in the schema.
+    ''' </summary>
     Partial Public Class Address
         Implements Global.System.ComponentModel.INotifyPropertyChanged
         ''' <summary>
@@ -7961,9 +7961,9 @@ Namespace MergedFunctionalTest.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for TestComplexType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TestComplexType in the schema.
+    ''' </summary>
     Partial Public Class TestComplexType
         Implements Global.System.ComponentModel.INotifyPropertyChanged
         ''' <summary>
@@ -9251,9 +9251,9 @@ Namespace MergedFunctionalTest.DSC
     End Module
 End Namespace
 Namespace MergedFunctionalTest1.DSC
-        ''' <summary>
-        ''' There are no comments for DerivedTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class DerivedTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DerivedType)
         ''' <summary>
@@ -9277,9 +9277,9 @@ Namespace MergedFunctionalTest1.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' KeyProp
     ''' </KeyProperties>
@@ -9318,9 +9318,9 @@ Namespace MergedFunctionalTest1.DSC
         Partial Private Sub OnDerivedPropertyChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for CustomerSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for CustomerSingle in the schema.
+    ''' </summary>
     Partial Public Class CustomerSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Customer)
         ''' <summary>
@@ -9344,9 +9344,9 @@ Namespace MergedFunctionalTest1.DSC
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Customer in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Customer in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' CustomerId
     ''' </KeyProperties>
@@ -9464,9 +9464,9 @@ Namespace MergedFunctionalTest1.DSC
             End If
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Address in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Address in the schema.
+    ''' </summary>
     Partial Public Class Address
         Implements Global.System.ComponentModel.INotifyPropertyChanged
         ''' <summary>

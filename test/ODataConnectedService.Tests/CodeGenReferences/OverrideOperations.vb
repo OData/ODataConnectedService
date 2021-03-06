@@ -12,11 +12,11 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 03.03.2021 22:24:07
+'Generation date: 06.03.2021 23:01:38
 Namespace OverrideOperations
-        ''' <summary>
-        ''' There are no comments for OverrideOperationsContainer in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for OverrideOperationsContainer in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("OverrideOperationsContainer")>  _
     Partial Public Class OverrideOperationsContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
@@ -191,9 +191,9 @@ Namespace OverrideOperations
             End Function
         End Class
     End Class
-        ''' <summary>
-        ''' There are no comments for ETSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for ETSingle in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("ETSingle")>  _
     Partial Public Class ETSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of ET)
@@ -218,9 +218,9 @@ Namespace OverrideOperations
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for ET in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for ET in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' UserName
     ''' </KeyProperties>
@@ -281,9 +281,9 @@ Namespace OverrideOperations
             Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)(Me.Context, resource.EditLink.OriginalString.Trim("/"C) + "/OverrideOperations.ActionWithParameter", New Global.Microsoft.OData.Client.BodyOperationParameter("p1", p1))
         End Function
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedETSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedETSingle in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedETSingle")>  _
     Partial Public Class DerivedETSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DerivedET)
@@ -308,9 +308,9 @@ Namespace OverrideOperations
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedET in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedET in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' UserName
     ''' </KeyProperties>
@@ -371,9 +371,9 @@ Namespace OverrideOperations
             Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of OverrideOperations.ET)(Me.Context, resource.EditLink.OriginalString.Trim("/"C) + "/OverrideOperations.ActionWithParameter", New Global.Microsoft.OData.Client.BodyOperationParameter("p1", p1))
         End Function
     End Class
-        ''' <summary>
-        ''' There are no comments for CT in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for CT in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("CT")>  _
     Partial Public Class CT
         ''' <summary>
@@ -408,9 +408,9 @@ Namespace OverrideOperations
         Partial Private Sub OnNameChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedCT in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedCT in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedCT")>  _
     Partial Public Class DerivedCT
         Inherits CT

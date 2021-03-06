@@ -14,9 +14,9 @@ Option Explicit On
 
 'Generation date: 03.03.2021 1:44:57
 Namespace AbstractEntityTypeWithoutKey
-        ''' <summary>
-        ''' There are no comments for Container in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Container in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("Container")>  _
     Partial Public Class Container
         Inherits Global.Microsoft.OData.Client.DataServiceContext
@@ -206,9 +206,9 @@ Namespace AbstractEntityTypeWithoutKey
             End Function
         End Class
     End Class
-        ''' <summary>
-        ''' There are no comments for AbstractETSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for AbstractETSingle in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("AbstractETSingle")>  _
     Partial Public Class AbstractETSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of AbstractET)
@@ -233,9 +233,9 @@ Namespace AbstractEntityTypeWithoutKey
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for AbstractET in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for AbstractET in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.EntityType()>  _
     <Global.Microsoft.OData.Client.OriginalNameAttribute("AbstractET")>  _
     Partial Public MustInherit Class AbstractET
@@ -262,9 +262,9 @@ Namespace AbstractEntityTypeWithoutKey
         Partial Private Sub OnPropertyInAbstractETChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedAbstractETSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedAbstractETSingle in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedAbstractETSingle")>  _
     Partial Public Class DerivedAbstractETSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DerivedAbstractET)
@@ -289,9 +289,9 @@ Namespace AbstractEntityTypeWithoutKey
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedAbstractET in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedAbstractET in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.EntityType()>  _
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedAbstractET")>  _
     Partial Public MustInherit Class DerivedAbstractET
@@ -318,9 +318,9 @@ Namespace AbstractEntityTypeWithoutKey
         Partial Private Sub OnPropertyInDerivedAbstractETChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedBaseETSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedBaseETSingle in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedBaseETSingle")>  _
     Partial Public Class DerivedBaseETSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DerivedBaseET)
@@ -345,9 +345,9 @@ Namespace AbstractEntityTypeWithoutKey
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedBaseET in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedBaseET in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Id
     ''' </KeyProperties>
@@ -387,9 +387,9 @@ Namespace AbstractEntityTypeWithoutKey
         Partial Private Sub OnIdChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedETSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedETSingle in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedETSingle")>  _
     Partial Public Class DerivedETSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DerivedET)
@@ -414,9 +414,9 @@ Namespace AbstractEntityTypeWithoutKey
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedET in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedET in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Id
     ''' </KeyProperties>
@@ -458,9 +458,9 @@ Namespace AbstractEntityTypeWithoutKey
         Partial Private Sub OnPropertyInDerivedETChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedAbstractETWithKeySingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedAbstractETWithKeySingle in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedAbstractETWithKeySingle")>  _
     Partial Public Class DerivedAbstractETWithKeySingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DerivedAbstractETWithKey)
@@ -485,9 +485,9 @@ Namespace AbstractEntityTypeWithoutKey
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedAbstractETWithKey in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedAbstractETWithKey in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Id
     ''' </KeyProperties>
@@ -517,9 +517,9 @@ Namespace AbstractEntityTypeWithoutKey
         Partial Private Sub OnIdChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedET2Single in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedET2Single in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DerivedET2Single")>  _
     Partial Public Class DerivedET2Single
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DerivedET2)
@@ -544,9 +544,9 @@ Namespace AbstractEntityTypeWithoutKey
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedET2 in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedET2 in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Id
     ''' </KeyProperties>

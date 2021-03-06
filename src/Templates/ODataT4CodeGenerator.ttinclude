@@ -1542,7 +1542,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteBoundFunctionReturnSingleResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description);
     internal abstract void WriteBoundFunctionReturnCollectionResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description);
     internal abstract void WriteBoundActionAsExtension(string actionName, string originalActionName, string boundSourceType, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description);
-    protected abstract void WriteDescriptionSummary(string description);
+    protected abstract void WriteDescriptionSummary(string description, bool isClass = false);
     #endregion Language specific write methods.
 
     internal HashSet<EdmPrimitiveTypeKind> ClrReferenceTypes { get {
@@ -3891,7 +3891,7 @@ namespace <#= fullNamespace #>
 
     internal override void WriteClassStartForEntityContainer(string originalContainerName, string containerName, string fixedContainerName, string description)
     {
-        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {containerName} in the schema." : description);
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {containerName} in the schema." : description, true);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -4352,7 +4352,7 @@ namespace <#= fullNamespace #>
 
     internal override void WriteSummaryCommentForStructuredType(string typeName, string description)
     {
-        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {typeName} in the schema." : description);
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {typeName} in the schema." : description, true);
     }
 
     internal override void WriteKeyPropertiesCommentAndAttribute(IEnumerable<string> keyProperties, string keyString)
@@ -4841,13 +4841,24 @@ namespace <#= fullNamespace #>
 <#+
     }
 
-    protected override void WriteDescriptionSummary(string description)
+    protected override void WriteDescriptionSummary(string description, bool isClass = false)
     {
+        if (isClass)
+        {
+#>
+    /// <summary>
+    /// <#= description.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n    ///") #>
+    /// </summary>
+<#+
+        }
+        else
+        {
 #>
         /// <summary>
         /// <#= description.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n        ///") #>
         /// </summary>
 <#+
+        }
     }
 
     internal override void WriteNamespaceEnd()
@@ -5001,7 +5012,7 @@ Namespace <#= fullNamespace #>
 
     internal override void WriteClassStartForEntityContainer(string originalContainerName, string containerName, string fixedContainerName, string description)
     {
-        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {containerName} in the schema." : description);
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {containerName} in the schema." : description, true);
         if (this.context.EnableNamingAlias)
         {
 #>
@@ -5442,7 +5453,7 @@ Namespace <#= fullNamespace #>
 
     internal override void WriteSummaryCommentForStructuredType(string typeName, string description)
     {
-        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {typeName} in the schema." : description);
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {typeName} in the schema." : description, true);
     }
 
     internal override void WriteKeyPropertiesCommentAndAttribute(IEnumerable<string> keyProperties, string keyString)
@@ -5925,13 +5936,24 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    protected override void WriteDescriptionSummary(string description)
+    protected override void WriteDescriptionSummary(string description, bool isClass = false)
     {
+        if (isClass)
+        {
+#>
+    ''' <summary>
+    ''' <#= description.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n    \'\'\'") #>
+    ''' </summary>
+<#+
+        }
+        else
+        {
 #>
         ''' <summary>
         ''' <#= description.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n        \'\'\'") #>
         ''' </summary>
 <#+
+        }
     }
 
     internal override void WriteNamespaceEnd()

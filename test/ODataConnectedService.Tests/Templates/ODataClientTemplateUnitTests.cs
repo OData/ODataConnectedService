@@ -1,6 +1,6 @@
 ﻿//----------------------------------------------------------------------------
 // <copyright file="ODataClientTemplateUnitTests.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //----------------------------------------------------------------------------
@@ -714,7 +714,7 @@ namespace ODataConnectedService.Tests
                 this.CalledActions.Add("WriteBoundActionAsExtension(" + actionName + ", " + originalActionName + ", " + boundTypeName + ", " + returnTypeName + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + description + ")");
             }
 
-            protected override void WriteDescriptionSummary(string description)
+            protected override void WriteDescriptionSummary(string description, bool isClass = false)
             {
                 // this method is called internally by other language specific write methods
             }

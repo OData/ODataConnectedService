@@ -14,9 +14,9 @@ Option Explicit On
 
 'Generation date: 03.03.2021 22:32:55
 Namespace Namespace1
-        ''' <summary>
-        ''' There are no comments for New in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for New in the schema.
+    ''' </summary>
     Partial Public Class [New]
         Inherits Global.Microsoft.OData.Client.DataServiceContext
         ''' <summary>
@@ -135,9 +135,9 @@ Namespace Namespace1
             Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Namespace1.[event])(Me, Me.BaseUri.OriginalString.Trim("/"C) + "/enum", New Global.Microsoft.OData.Client.BodyOperationParameter("p0", p0))
         End Function
     End Class
-        ''' <summary>
-        ''' There are no comments for eventSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for eventSingle in the schema.
+    ''' </summary>
     Partial Public Class eventSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of [event])
         ''' <summary>
@@ -178,9 +178,9 @@ Namespace Namespace1
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _event As Namespace1.eventSingle
     End Class
-        ''' <summary>
-        ''' There are no comments for event in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for event in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' string
     ''' </KeyProperties>

@@ -14,9 +14,9 @@ Option Explicit On
 
 'Generation date: 03.03.2021 22:28:09
 Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
-        ''' <summary>
-        ''' There are no comments for Container in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Container in the schema.
+    ''' </summary>
     Partial Public Class Container
         Inherits Global.Microsoft.OData.Client.DataServiceContext
         ''' <summary>
@@ -254,9 +254,9 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
             Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Me, Me.BaseUri.OriginalString.Trim("/"C) + "/ResetDataSource")
         End Function
     End Class
-        ''' <summary>
-        ''' There are no comments for PersonSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for PersonSingle in the schema.
+    ''' </summary>
     Partial Public Class PersonSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Person)
         ''' <summary>
@@ -314,9 +314,9 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Trips As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)
     End Class
-        ''' <summary>
-        ''' There are no comments for Person in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Person in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' UserName
     ''' </KeyProperties>
@@ -456,9 +456,9 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         Partial Private Sub OnTripsChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for AirlineSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for AirlineSingle in the schema.
+    ''' </summary>
     Partial Public Class AirlineSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Airline)
         ''' <summary>
@@ -482,9 +482,9 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Airline in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Airline in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' AirlineCode
     ''' </KeyProperties>
@@ -542,9 +542,9 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         Partial Private Sub OnNameChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for AirportSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for AirportSingle in the schema.
+    ''' </summary>
     Partial Public Class AirportSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Airport)
         ''' <summary>
@@ -568,9 +568,9 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Airport in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Airport in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' IcaoCode
     ''' </KeyProperties>
@@ -628,9 +628,9 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         Partial Private Sub OnIcaoCodeChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Location in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Location in the schema.
+    ''' </summary>
     Partial Public Class Location
         ''' <summary>
         ''' There are no comments for Property Address in the schema.
@@ -673,9 +673,9 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         Partial Private Sub OnCityChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for City in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for City in the schema.
+    ''' </summary>
     Partial Public Class City
         ''' <summary>
         ''' There are no comments for Property Name in the schema.
@@ -698,9 +698,9 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         Partial Private Sub OnNameChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for TripSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TripSingle in the schema.
+    ''' </summary>
     Partial Public Class TripSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Trip)
         ''' <summary>
@@ -724,9 +724,9 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for Trip in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for Trip in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' TripId
     ''' </KeyProperties>
@@ -784,9 +784,9 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         Partial Private Sub OnNameChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for PersonGender in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for PersonGender in the schema.
+    ''' </summary>
     Public Enum PersonGender
         Male = 0
         Female = 1

@@ -12,11 +12,11 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 03.03.2021 21:45:53
+'Generation date: 06.03.2021 23:00:32
 Namespace NamespacePrefixWithSingleNamespace
-        ''' <summary>
-        ''' There are no comments for MyContainer in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for MyContainer in the schema.
+    ''' </summary>
     Partial Public Class MyContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
         ''' <summary>
@@ -132,9 +132,9 @@ Namespace NamespacePrefixWithSingleNamespace
             End Function
         End Class
     End Class
-        ''' <summary>
-        ''' There are no comments for TestTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TestTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class TestTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of TestType)
         ''' <summary>
@@ -158,9 +158,9 @@ Namespace NamespacePrefixWithSingleNamespace
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for TestType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TestType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' KeyProp
     ''' </KeyProperties>

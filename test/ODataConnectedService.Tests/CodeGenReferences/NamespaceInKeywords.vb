@@ -12,11 +12,11 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 03.03.2021 22:42:29
+'Generation date: 06.03.2021 22:54:55
 Namespace NamespaceInKeywords.[event].[string].int
-        ''' <summary>
-        ''' There are no comments for ComplexType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for ComplexType in the schema.
+    ''' </summary>
     Partial Public Class ComplexType
         ''' <summary>
         ''' Create a new ComplexType object.
@@ -49,9 +49,9 @@ Namespace NamespaceInKeywords.[event].[string].int
         Partial Private Sub OnValueChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for TestType1Single in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TestType1Single in the schema.
+    ''' </summary>
     Partial Public Class TestType1Single
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of TestType1)
         ''' <summary>
@@ -75,9 +75,9 @@ Namespace NamespaceInKeywords.[event].[string].int
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for TestType1 in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TestType1 in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' KeyProp
     ''' </KeyProperties>
@@ -167,9 +167,9 @@ Namespace NamespaceInKeywords.[event].[string].int
     End Module
 End Namespace
 Namespace NamespaceInKeywords.[double]
-        ''' <summary>
-        ''' There are no comments for EntityContainer in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for EntityContainer in the schema.
+    ''' </summary>
     Partial Public Class EntityContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
         ''' <summary>
@@ -291,9 +291,9 @@ Namespace NamespaceInKeywords.[double]
             End Function
         End Class
     End Class
-        ''' <summary>
-        ''' There are no comments for TestType2Single in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TestType2Single in the schema.
+    ''' </summary>
     Partial Public Class TestType2Single
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of TestType2)
         ''' <summary>
@@ -317,9 +317,9 @@ Namespace NamespaceInKeywords.[double]
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for TestType2 in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TestType2 in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' KeyProp
     ''' </KeyProperties>
