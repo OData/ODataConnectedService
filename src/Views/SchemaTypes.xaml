@@ -6,6 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Microsoft.OData.ConnectedService.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:sysWindows="clr-namespace:System.Windows;assembly=PresentationFramework"
     xmlns:viewModels="clr-namespace:Microsoft.OData.ConnectedService.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewModels:SchemaTypesViewModel}"
     d:DesignHeight="300"
@@ -109,8 +111,24 @@
                         <TextBlock
                             VerticalAlignment="Bottom"
                             ContextMenu="{StaticResource SchemaTypeContextMenu}"
-                            Text="{Binding Path=ShortName}"
-                            Visibility="{Binding ElementName=ShowSchemaTypesFullName, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=true}" />
+                            Text="{Binding Path=ShortName}">
+                            <TextBlock.Visibility>
+                                <Binding>
+                                    <Binding.ElementName>
+                                        <sys:String>ShowSchemaTypesFullName</sys:String>
+                                    </Binding.ElementName>
+                                    <Binding.Path>
+                                        <sysWindows:PropertyPath>IsChecked</sysWindows:PropertyPath>
+                                    </Binding.Path>
+                                    <Binding.Converter>
+                                        <StaticResource ResourceKey="BoolToVisibilityConverter" />
+                                    </Binding.Converter>
+                                    <Binding.ConverterParameter>
+                                        <sys:Boolean>true</sys:Boolean>
+                                    </Binding.ConverterParameter>
+                                </Binding>
+                            </TextBlock.Visibility>
+                        </TextBlock>
                         <TextBlock
                             VerticalAlignment="Bottom"
                             ContextMenu="{StaticResource SchemaTypeContextMenu}"

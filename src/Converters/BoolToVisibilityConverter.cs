@@ -20,7 +20,7 @@ namespace Microsoft.OData.ConnectedService.Converters
             {
                 if (value is bool boolValue)
                 {
-                    if (parameter is string isInversed && isInversed.Equals("true", StringComparison.OrdinalIgnoreCase))
+                    if (parameter is bool isInversed && isInversed)
                     {
                         return !boolValue ? Visibility.Visible : Visibility.Collapsed;
                     }
