@@ -41,7 +41,7 @@ namespace ODataConnectedService.Tests.Converters
         public void Convert_ShouldReturnVisible_ForFalseValue_WithTrueParameter()
         {
             var result = new BoolToVisibilityConverter()
-                .Convert(false, typeof(Visibility), "true", CultureInfo.CurrentCulture);
+                .Convert(false, typeof(Visibility), true, CultureInfo.CurrentCulture);
 
             result.Should()
                 .Be(Visibility.Visible);
@@ -51,7 +51,7 @@ namespace ODataConnectedService.Tests.Converters
         public void Convert_ShouldReturnCollapsed_ForTrueValue_WithTrueParameter()
         {
             var result = new BoolToVisibilityConverter()
-                .Convert(true, typeof(Visibility), "true", CultureInfo.CurrentCulture);
+                .Convert(true, typeof(Visibility), true, CultureInfo.CurrentCulture);
 
             result.Should()
                 .Be(Visibility.Collapsed);
