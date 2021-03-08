@@ -1666,7 +1666,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteParameterNullCheckForStaticCreateMethod(string parameterName);
     internal abstract void WritePropertyValueAssignmentForStaticCreateMethod(string instanceName, string propertyName, string parameterName);
     internal abstract void WriteMethodEndForStaticCreateMethod(string instanceName);
-    internal abstract void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, int? propertyMaxLength, bool writeOnPropertyChanged, IDictionary<string, string> revisionAnnotations);
+    internal abstract void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, int? propertyMaxLength, bool writeOnPropertyChanged, bool isNullable, IDictionary<string, string> revisionAnnotations);
     internal abstract void WriteINotifyPropertyChangedImplementation();
     internal abstract void WriteClassEndForStructuredType();
     internal abstract void WriteNamespaceEnd();
@@ -1693,6 +1693,7 @@ public abstract class ODataClientTemplate : TemplateBase
     protected abstract void WriteDescriptionSummary(string description, bool isClass = false);
     protected abstract void WriteObsoleteAttribute(IDictionary<string, string> revisionAnnotations, bool isClass = false);
     protected abstract void WriteStringLengthAttribute(int maxLength, string errorMessage);
+    protected abstract void WriteRequiredAttribute(string errorMessage);
     #endregion Language specific write methods.
 
     internal HashSet<EdmPrimitiveTypeKind> ClrReferenceTypes { get {
@@ -2945,6 +2946,7 @@ public abstract class ODataClientTemplate : TemplateBase
                     PropertyAttribute = string.Empty,
                     PropertyDescription = GetDescriptionAnnotation(property)?.Value,
                     PropertyMaxLength = property.Type.AsString()?.MaxLength,
+                    IsNullable = property.Type.IsNullable,
                     RevisionAnnotations = GetRevisionAnnotations(property)
                 };
         }).ToList();
@@ -2974,6 +2976,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 PropertyAttribute = containerPropertyAttribute,
                 PropertyDescription = string.Empty,
                 PropertyMaxLength = (int?)null,
+                IsNullable = true,
                 RevisionAnnotations = emptyDict
             });
         }
@@ -2997,6 +3000,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 propertyInfo.PropertyDescription,
                 propertyInfo.PropertyMaxLength,
                 useDataServiceCollection,
+                propertyInfo.IsNullable,
                 propertyInfo.RevisionAnnotations);
         }
     }
@@ -5063,7 +5067,7 @@ this.Write(";\r\n        }\r\n");
 
     }
 
-    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, int? propertyMaxLength, bool writeOnPropertyChanged, IDictionary<string, string> revisionAnnotations)
+    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, int? propertyMaxLength, bool writeOnPropertyChanged, bool isNullable, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(propertyDescription) ? $"There are no comments for Property {propertyName} in the schema." : propertyDescription);
         WriteObsoleteAttribute(revisionAnnotations);
@@ -5091,6 +5095,11 @@ this.Write("\")]\r\n");
         if (propertyMaxLength != null)
         {
             WriteStringLengthAttribute((int)propertyMaxLength, $"{propertyName} cannot be longer than {propertyMaxLength} characters.");
+        }
+
+        if (!isNullable)
+        {
+            WriteRequiredAttribute($"{propertyName} is required.");
         }
 
 
@@ -6024,6 +6033,19 @@ this.Write("        [global::System.ComponentModel.DataAnnotations.StringLengthA
 this.Write(this.ToStringHelper.ToStringWithCulture(maxLength));
 
 this.Write(", ErrorMessage = \"");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(errorMessage));
+
+this.Write("\")]\r\n");
+
+
+    }
+
+    protected override void WriteRequiredAttribute(string errorMessage)
+    {
+
+this.Write("        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMes" +
+        "sage = \"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(errorMessage));
 
@@ -7192,7 +7214,7 @@ this.Write("\r\n        End Function\r\n");
 
     }
 
-    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, int? propertyMaxLength, bool writeOnPropertyChanged, IDictionary<string, string> revisionAnnotations)
+    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, int? propertyMaxLength, bool writeOnPropertyChanged, bool isNullable, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(propertyDescription) ? $"There are no comments for Property {propertyName} in the schema." : propertyDescription);
         WriteObsoleteAttribute(revisionAnnotations);
@@ -7220,6 +7242,11 @@ this.Write("\")>  _\r\n");
         if (propertyMaxLength != null)
         {
             WriteStringLengthAttribute((int)propertyMaxLength, $"{propertyName} cannot be longer than {propertyMaxLength} characters.");
+        }
+
+        if (!isNullable)
+        {
+            WriteRequiredAttribute($"{propertyName} is required.");
         }
 
 
@@ -8168,6 +8195,14 @@ this.Write("        <Global.System.ComponentModel.DataAnnotations.StringLengthAt
 this.Write(this.ToStringHelper.ToStringWithCulture(maxLength));
 
 this.Write(")>  _\r\n");
+
+
+    }
+
+    protected override void WriteRequiredAttribute(string errorMessage)
+    {
+
+this.Write("        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _\r\n");
 
 
     }
