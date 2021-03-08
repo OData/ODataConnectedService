@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 03.03.2021 22:32:55
+'Generation date: 10.03.2021 19:45:18
 Namespace Namespace1
     ''' <summary>
     ''' There are no comments for New in the schema.
@@ -206,6 +206,7 @@ Namespace Namespace1
         ''' There are no comments for Property string in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property [string]() As String
             Get
                 Return Me._string
@@ -226,6 +227,7 @@ Namespace Namespace1
         ''' There are no comments for Property event in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property [event]() As Namespace1.[event]
             Get
                 Return Me._event

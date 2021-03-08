@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 03.03.2021 22:20:31
+'Generation date: 10.03.2021 20:16:02
 Namespace Namespace1.DSC
     ''' <summary>
     ''' There are no comments for EntityContainer in the schema.
@@ -154,6 +154,7 @@ Namespace Namespace1.DSC
         ''' There are no comments for Property Id in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Id() As Integer
             Get
                 Return Me._Id
@@ -175,6 +176,7 @@ Namespace Namespace1.DSC
         ''' There are no comments for Property TestBoolean in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property TestBoolean() As Boolean
             Get
                 Return Me._TestBoolean

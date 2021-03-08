@@ -12,11 +12,11 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 13.06.2020 13:16:45
+'Generation date: 10.03.2021 19:47:52
 Namespace Microsoft.OData.TestService
-    '''<summary>
-    '''There are no comments for PersonSingle in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for PersonSingle in the schema.
+    ''' </summary>
     Partial Public Class PersonSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Person)
         ''' <summary>
@@ -40,29 +40,30 @@ Namespace Microsoft.OData.TestService
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Person in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Keys
-    '''</KeyProperties>
+    ''' <summary>
+    ''' There are no comments for Person in the schema.
+    ''' </summary>
+    ''' <KeyProperties>
+    ''' Keys
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Keys")>  _
     Partial Public Class Person
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new Person object.
-        '''</summary>
-        '''<param name="keys">Initial value of Keys.</param>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' Create a new Person object.
+        ''' </summary>
+        ''' <param name="keys">Initial value of Keys.</param>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreatePerson(ByVal keys As String) As Person
             Dim person As Person = New Person()
             person.Keys = keys
             Return person
         End Function
-        '''<summary>
-        '''There are no comments for Property Keys in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property Keys in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Keys() As String
             Get
                 Return Me._Keys
@@ -73,7 +74,7 @@ Namespace Microsoft.OData.TestService
                 Me.OnKeysChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Keys As String
         Partial Private Sub OnKeysChanging(ByVal value As String)
         End Sub

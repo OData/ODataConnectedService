@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 18.03.2020 16:10:06
+// Generation date: 08.03.2021 22:50:59
 namespace OverrideOperations.DSC
 {
     /// <summary>
@@ -20,7 +20,7 @@ namespace OverrideOperations.DSC
         /// Initialize a new OverrideOperationsContainer object.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public OverrideOperationsContainer(global::System.Uri serviceRoot) : 
+        public OverrideOperationsContainer(global::System.Uri serviceRoot) :
                 base(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
         {
             this.ResolveName = new global::System.Func<global::System.Type, string>(this.ResolveNameFromType);
@@ -152,13 +152,13 @@ namespace OverrideOperations.DSC
 
                     if (!global::Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, false, out edmModel, out errors))
                     {
-	                    global::System.Text.StringBuilder errorMessages = new global::System.Text.StringBuilder();
-	                    foreach (var error in errors)
-	                    {
-		                    errorMessages.Append(error.ErrorMessage);
-		                    errorMessages.Append("; ");
-	                    }
-	                    throw new global::System.InvalidOperationException(errorMessages.ToString());
+                        global::System.Text.StringBuilder errorMessages = new global::System.Text.StringBuilder();
+                        foreach (var error in errors)
+                        {
+                            errorMessages.Append(error.ErrorMessage);
+                            errorMessages.Append("; ");
+                        }
+                        throw new global::System.InvalidOperationException(errorMessages.ToString());
                     }
 
                     return edmModel;
@@ -185,19 +185,19 @@ namespace OverrideOperations.DSC
         /// Initialize a new ETSingle object.
         /// </summary>
         public ETSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new ETSingle object.
         /// </summary>
         public ETSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new ETSingle object.
         /// </summary>
         public ETSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<ET> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -225,6 +225,7 @@ namespace OverrideOperations.DSC
         /// There are no comments for Property UserName in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "UserName is required.")]
         public virtual string UserName
         {
             get
@@ -263,7 +264,7 @@ namespace OverrideOperations.DSC
         /// <summary>
         /// There are no comments for FunctionWithoutParameter in the schema.
         /// </summary>
-        public virtual  global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.CT> FunctionWithoutParameter()
+        public virtual global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.CT> FunctionWithoutParameter()
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);
@@ -293,19 +294,19 @@ namespace OverrideOperations.DSC
         /// Initialize a new DerivedETSingle object.
         /// </summary>
         public DerivedETSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new DerivedETSingle object.
         /// </summary>
         public DerivedETSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new DerivedETSingle object.
         /// </summary>
         public DerivedETSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<DerivedET> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -353,7 +354,7 @@ namespace OverrideOperations.DSC
         /// <summary>
         /// There are no comments for FunctionWithoutParameter in the schema.
         /// </summary>
-        public virtual new  global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.CT> FunctionWithoutParameter()
+        public virtual new global::Microsoft.OData.Client.DataServiceQuerySingle<global::OverrideOperations.DSC.CT> FunctionWithoutParameter()
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);
@@ -394,6 +395,7 @@ namespace OverrideOperations.DSC
         /// There are no comments for Property Name in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Name is required.")]
         public virtual string Name
         {
             get
@@ -452,6 +454,7 @@ namespace OverrideOperations.DSC
         /// There are no comments for Property Description in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Description is required.")]
         public virtual string Description
         {
             get

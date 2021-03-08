@@ -61,6 +61,7 @@ namespace Namespace1
         /// There are no comments for Property KeyProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "1.0.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "KeyProp is required.")]
         public virtual int KeyProp
         {
             get
@@ -82,6 +83,7 @@ namespace Namespace1
         /// There are no comments for Property ValueProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "1.0.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "ValueProp is required.")]
         public virtual string ValueProp
         {
             get

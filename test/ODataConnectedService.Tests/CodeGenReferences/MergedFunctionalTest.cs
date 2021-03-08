@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 18.03.2020 16:21:51
+// Generation date: 08.03.2021 23:13:27
 namespace MergedFunctionalTest
 {
     /// <summary>
@@ -20,7 +20,7 @@ namespace MergedFunctionalTest
         /// Initialize a new TestContainer object.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public TestContainer(global::System.Uri serviceRoot) : 
+        public TestContainer(global::System.Uri serviceRoot) :
                 base(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
         {
             this.UrlKeyDelimiter = global::Microsoft.OData.Client.DataServiceUrlKeyDelimiter.Slash;
@@ -1039,13 +1039,13 @@ namespace MergedFunctionalTest
 
                     if (!global::Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, false, out edmModel, out errors))
                     {
-	                    global::System.Text.StringBuilder errorMessages = new global::System.Text.StringBuilder();
-	                    foreach (var error in errors)
-	                    {
-		                    errorMessages.Append(error.ErrorMessage);
-		                    errorMessages.Append("; ");
-	                    }
-	                    throw new global::System.InvalidOperationException(errorMessages.ToString());
+                        global::System.Text.StringBuilder errorMessages = new global::System.Text.StringBuilder();
+                        foreach (var error in errors)
+                        {
+                            errorMessages.Append(error.ErrorMessage);
+                            errorMessages.Append("; ");
+                        }
+                        throw new global::System.InvalidOperationException(errorMessages.ToString());
                     }
 
                     return edmModel;
@@ -1133,19 +1133,19 @@ namespace MergedFunctionalTest
         /// Initialize a new CustomerSingle object.
         /// </summary>
         public CustomerSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new CustomerSingle object.
         /// </summary>
         public CustomerSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new CustomerSingle object.
         /// </summary>
         public CustomerSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<Customer> query)
-            : base(query) {}
+            : base(query) { }
 
         /// <summary>
         /// There are no comments for Info in the schema.
@@ -1245,6 +1245,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property CustomerId in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "CustomerId is required.")]
         public virtual int CustomerId
         {
             get
@@ -1308,6 +1309,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Thumbnail in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Thumbnail is required.")]
         public virtual global::Microsoft.OData.Client.DataServiceStreamLink Thumbnail
         {
             get
@@ -1329,6 +1331,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Video in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Video is required.")]
         public virtual global::Microsoft.OData.Client.DataServiceStreamLink Video
         {
             get
@@ -1350,6 +1353,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Info in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Info is required.")]
         public virtual global::MergedFunctionalTest.CustomerInfo Info
         {
             get
@@ -1433,7 +1437,7 @@ namespace MergedFunctionalTest
         /// <summary>
         /// There are no comments for foo2 in the schema.
         /// </summary>
-        public virtual  global::Microsoft.OData.Client.DataServiceQuerySingle<string> foo2(int p2)
+        public virtual global::Microsoft.OData.Client.DataServiceQuerySingle<string> foo2(int p2)
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);
@@ -1443,7 +1447,7 @@ namespace MergedFunctionalTest
         /// <summary>
         /// There are no comments for foo7 in the schema.
         /// </summary>
-        public virtual  global::Microsoft.OData.Client.DataServiceQuerySingle<global::System.Nullable<int>> foo7(global::System.Collections.Generic.ICollection<int> p1, global::MergedFunctionalTest.Address p2)
+        public virtual global::Microsoft.OData.Client.DataServiceQuerySingle<global::System.Nullable<int>> foo7(global::System.Collections.Generic.ICollection<int> p1, global::MergedFunctionalTest.Address p2)
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);
@@ -1454,7 +1458,7 @@ namespace MergedFunctionalTest
         /// <summary>
         /// There are no comments for foo7 in the schema.
         /// </summary>
-        public virtual  global::MergedFunctionalTest.CustomerSingle foo7(global::MergedFunctionalTest.Address p1)
+        public virtual global::MergedFunctionalTest.CustomerSingle foo7(global::MergedFunctionalTest.Address p1)
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);
@@ -1497,19 +1501,19 @@ namespace MergedFunctionalTest
         /// Initialize a new GoodCustomerSingle object.
         /// </summary>
         public GoodCustomerSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new GoodCustomerSingle object.
         /// </summary>
         public GoodCustomerSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new GoodCustomerSingle object.
         /// </summary>
         public GoodCustomerSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<GoodCustomer> query)
-            : base(query) {}
+            : base(query) { }
 
         /// <summary>
         /// There are no comments for Info in the schema.
@@ -1615,19 +1619,19 @@ namespace MergedFunctionalTest
         /// Initialize a new BadCustomerSingle object.
         /// </summary>
         public BadCustomerSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new BadCustomerSingle object.
         /// </summary>
         public BadCustomerSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new BadCustomerSingle object.
         /// </summary>
         public BadCustomerSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<BadCustomer> query)
-            : base(query) {}
+            : base(query) { }
 
         /// <summary>
         /// There are no comments for Info in the schema.
@@ -1733,19 +1737,19 @@ namespace MergedFunctionalTest
         /// Initialize a new CustomerInfoSingle object.
         /// </summary>
         public CustomerInfoSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new CustomerInfoSingle object.
         /// </summary>
         public CustomerInfoSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new CustomerInfoSingle object.
         /// </summary>
         public CustomerInfoSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<CustomerInfo> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -1772,6 +1776,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property CustomerInfoId in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "CustomerInfoId is required.")]
         public virtual int CustomerInfoId
         {
             get
@@ -1820,19 +1825,19 @@ namespace MergedFunctionalTest
         /// Initialize a new OrderSingle object.
         /// </summary>
         public OrderSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new OrderSingle object.
         /// </summary>
         public OrderSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new OrderSingle object.
         /// </summary>
         public OrderSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<Order> query)
-            : base(query) {}
+            : base(query) { }
 
         /// <summary>
         /// There are no comments for Customer in the schema.
@@ -1880,6 +1885,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property OrderId in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "OrderId is required.")]
         public virtual int OrderId
         {
             get
@@ -1949,19 +1955,19 @@ namespace MergedFunctionalTest
         /// Initialize a new CompanySingle object.
         /// </summary>
         public CompanySingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new CompanySingle object.
         /// </summary>
         public CompanySingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new CompanySingle object.
         /// </summary>
         public CompanySingle(global::Microsoft.OData.Client.DataServiceQuerySingle<Company> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -1988,6 +1994,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property CompanyId in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "CompanyId is required.")]
         public virtual int CompanyId
         {
             get
@@ -2036,19 +2043,19 @@ namespace MergedFunctionalTest
         /// Initialize a new ProductSingle object.
         /// </summary>
         public ProductSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new ProductSingle object.
         /// </summary>
         public ProductSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new ProductSingle object.
         /// </summary>
         public ProductSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<Product> query)
-            : base(query) {}
+            : base(query) { }
 
         /// <summary>
         /// There are no comments for Detail in the schema.
@@ -2096,6 +2103,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property ID in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "ID is required.")]
         public virtual string ID
         {
             get
@@ -2138,6 +2146,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Colors in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Colors is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::MergedFunctionalTest.Color> Colors
         {
             get
@@ -2179,7 +2188,7 @@ namespace MergedFunctionalTest
         /// <summary>
         /// There are no comments for foo7 in the schema.
         /// </summary>
-        public virtual  global::MergedFunctionalTest.CustomerSingle foo7(global::MergedFunctionalTest.Address p1)
+        public virtual global::MergedFunctionalTest.CustomerSingle foo7(global::MergedFunctionalTest.Address p1)
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);
@@ -2205,19 +2214,19 @@ namespace MergedFunctionalTest
         /// Initialize a new ProductDetailSingle object.
         /// </summary>
         public ProductDetailSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new ProductDetailSingle object.
         /// </summary>
         public ProductDetailSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new ProductDetailSingle object.
         /// </summary>
         public ProductDetailSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<ProductDetail> query)
-            : base(query) {}
+            : base(query) { }
 
         /// <summary>
         /// There are no comments for Product in the schema.
@@ -2265,6 +2274,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property ProductId in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "ProductId is required.")]
         public virtual int ProductId
         {
             get
@@ -2334,19 +2344,19 @@ namespace MergedFunctionalTest
         /// Initialize a new SpecialTypeWithPrecisionFacetSingle object.
         /// </summary>
         public SpecialTypeWithPrecisionFacetSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new SpecialTypeWithPrecisionFacetSingle object.
         /// </summary>
         public SpecialTypeWithPrecisionFacetSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new SpecialTypeWithPrecisionFacetSingle object.
         /// </summary>
         public SpecialTypeWithPrecisionFacetSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<SpecialTypeWithPrecisionFacet> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -2373,6 +2383,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Id in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Id is required.")]
         public virtual int Id
         {
             get
@@ -2421,19 +2432,19 @@ namespace MergedFunctionalTest
         /// Initialize a new BlobTypeSingle object.
         /// </summary>
         public BlobTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new BlobTypeSingle object.
         /// </summary>
         public BlobTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new BlobTypeSingle object.
         /// </summary>
         public BlobTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<BlobType> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -2463,6 +2474,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property KeyProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "KeyProp is required.")]
         public virtual int KeyProp
         {
             get
@@ -2484,6 +2496,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property ValueProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "ValueProp is required.")]
         public virtual string ValueProp
         {
             get
@@ -2511,19 +2524,19 @@ namespace MergedFunctionalTest
         /// Initialize a new ChildSingle object.
         /// </summary>
         public ChildSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new ChildSingle object.
         /// </summary>
         public ChildSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new ChildSingle object.
         /// </summary>
         public ChildSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<Child> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -2577,19 +2590,19 @@ namespace MergedFunctionalTest
         /// Initialize a new PersonSingle object.
         /// </summary>
         public PersonSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new PersonSingle object.
         /// </summary>
         public PersonSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new PersonSingle object.
         /// </summary>
         public PersonSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<Person> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -2616,6 +2629,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property ID in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "ID is required.")]
         public virtual global::System.Guid ID
         {
             get
@@ -2664,19 +2678,19 @@ namespace MergedFunctionalTest
         /// Initialize a new TestTypeSingle object.
         /// </summary>
         public TestTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new TestTypeSingle object.
         /// </summary>
         public TestTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new TestTypeSingle object.
         /// </summary>
         public TestTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<TestType> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -2728,41 +2742,41 @@ namespace MergedFunctionalTest
         /// <param name="nonNullableGeometryCollection">Initial value of NonNullableGeometryCollection.</param>
         /// <param name="complexNonNull">Initial value of ComplexNonNull.</param>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public static TestType CreateTestType(global::System.DateTimeOffset ID, 
-                    global::MergedFunctionalTest.Color colorProp, 
-                    byte[] nonNullableBinaryProp, 
-                    bool nonNullableBooleanProp, 
-                    byte nonNullableByteProp, 
-                    decimal nonNullableDecimalProp, 
-                    double nonNullableDoubleProp, 
-                    float nonNullableSingleProp, 
-                    short nonNullableInt16Prop, 
-                    int nonNullableInt32Prop, 
-                    long nonNullableInt64Prop, 
-                    global::System.Guid nonNullableGuidProp, 
-                    string nonNullableStringProp, 
-                    global::System.TimeSpan nonNullableDurationProp, 
-                    global::System.DateTimeOffset nonNullableDateTimeOffsetProp, 
-                    global::Microsoft.OData.Edm.Date nonNullableDateProp, 
-                    global::Microsoft.OData.Edm.TimeOfDay nonNullableTimeOfDayProp, 
-                    global::Microsoft.OData.Client.DataServiceStreamLink nonNullableStreamProp, 
-                    sbyte nonNullableSByteProp, 
-                    global::Microsoft.Spatial.Geography nonNullableGeography, 
-                    global::Microsoft.Spatial.GeographyPoint nonNullableGeographyPoint, 
-                    global::Microsoft.Spatial.GeographyLineString nonNullableGeographyLineString, 
-                    global::Microsoft.Spatial.GeographyPolygon nonNullableGeographyPolygon, 
-                    global::Microsoft.Spatial.GeographyMultiPoint nonNullableGeographyMultiPoint, 
-                    global::Microsoft.Spatial.GeographyMultiLineString nonNullableGeographyMultiLineString, 
-                    global::Microsoft.Spatial.GeographyMultiPolygon nonNullableGeographyMultiPolygon, 
-                    global::Microsoft.Spatial.GeographyCollection nonNullableGeographyCollection, 
-                    global::Microsoft.Spatial.Geometry nonNullableGeometry, 
-                    global::Microsoft.Spatial.GeometryPoint nonNullableGeometryPoint, 
-                    global::Microsoft.Spatial.GeometryLineString nonNullableGeometryLineString, 
-                    global::Microsoft.Spatial.GeometryPolygon nonNullableGeometryPolygon, 
-                    global::Microsoft.Spatial.GeometryMultiPoint nonNullableGeometryMultiPoint, 
-                    global::Microsoft.Spatial.GeometryMultiLineString nonNullableGeometryMultiLineString, 
-                    global::Microsoft.Spatial.GeometryMultiPolygon nonNullableGeometryMultiPolygon, 
-                    global::Microsoft.Spatial.GeometryCollection nonNullableGeometryCollection, 
+        public static TestType CreateTestType(global::System.DateTimeOffset ID,
+                    global::MergedFunctionalTest.Color colorProp,
+                    byte[] nonNullableBinaryProp,
+                    bool nonNullableBooleanProp,
+                    byte nonNullableByteProp,
+                    decimal nonNullableDecimalProp,
+                    double nonNullableDoubleProp,
+                    float nonNullableSingleProp,
+                    short nonNullableInt16Prop,
+                    int nonNullableInt32Prop,
+                    long nonNullableInt64Prop,
+                    global::System.Guid nonNullableGuidProp,
+                    string nonNullableStringProp,
+                    global::System.TimeSpan nonNullableDurationProp,
+                    global::System.DateTimeOffset nonNullableDateTimeOffsetProp,
+                    global::Microsoft.OData.Edm.Date nonNullableDateProp,
+                    global::Microsoft.OData.Edm.TimeOfDay nonNullableTimeOfDayProp,
+                    global::Microsoft.OData.Client.DataServiceStreamLink nonNullableStreamProp,
+                    sbyte nonNullableSByteProp,
+                    global::Microsoft.Spatial.Geography nonNullableGeography,
+                    global::Microsoft.Spatial.GeographyPoint nonNullableGeographyPoint,
+                    global::Microsoft.Spatial.GeographyLineString nonNullableGeographyLineString,
+                    global::Microsoft.Spatial.GeographyPolygon nonNullableGeographyPolygon,
+                    global::Microsoft.Spatial.GeographyMultiPoint nonNullableGeographyMultiPoint,
+                    global::Microsoft.Spatial.GeographyMultiLineString nonNullableGeographyMultiLineString,
+                    global::Microsoft.Spatial.GeographyMultiPolygon nonNullableGeographyMultiPolygon,
+                    global::Microsoft.Spatial.GeographyCollection nonNullableGeographyCollection,
+                    global::Microsoft.Spatial.Geometry nonNullableGeometry,
+                    global::Microsoft.Spatial.GeometryPoint nonNullableGeometryPoint,
+                    global::Microsoft.Spatial.GeometryLineString nonNullableGeometryLineString,
+                    global::Microsoft.Spatial.GeometryPolygon nonNullableGeometryPolygon,
+                    global::Microsoft.Spatial.GeometryMultiPoint nonNullableGeometryMultiPoint,
+                    global::Microsoft.Spatial.GeometryMultiLineString nonNullableGeometryMultiLineString,
+                    global::Microsoft.Spatial.GeometryMultiPolygon nonNullableGeometryMultiPolygon,
+                    global::Microsoft.Spatial.GeometryCollection nonNullableGeometryCollection,
                     global::MergedFunctionalTest.TestComplexType complexNonNull)
         {
             TestType testType = new TestType();
@@ -2812,6 +2826,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Id in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Id is required.")]
         public virtual global::System.DateTimeOffset Id
         {
             get
@@ -2833,6 +2848,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property ColorProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "ColorProp is required.")]
         public virtual global::MergedFunctionalTest.Color ColorProp
         {
             get
@@ -2854,6 +2870,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableBinaryProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableBinaryProp is required.")]
         public virtual byte[] NonNullableBinaryProp
         {
             get
@@ -2917,6 +2934,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableBooleanProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableBooleanProp is required.")]
         public virtual bool NonNullableBooleanProp
         {
             get
@@ -2980,6 +2998,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableByteProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableByteProp is required.")]
         public virtual byte NonNullableByteProp
         {
             get
@@ -3043,6 +3062,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableDecimalProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableDecimalProp is required.")]
         public virtual decimal NonNullableDecimalProp
         {
             get
@@ -3106,6 +3126,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableDoubleProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableDoubleProp is required.")]
         public virtual double NonNullableDoubleProp
         {
             get
@@ -3169,6 +3190,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableSingleProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableSingleProp is required.")]
         public virtual float NonNullableSingleProp
         {
             get
@@ -3232,6 +3254,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableInt16Prop in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableInt16Prop is required.")]
         public virtual short NonNullableInt16Prop
         {
             get
@@ -3295,6 +3318,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableInt32Prop in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableInt32Prop is required.")]
         public virtual int NonNullableInt32Prop
         {
             get
@@ -3358,6 +3382,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableInt64Prop in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableInt64Prop is required.")]
         public virtual long NonNullableInt64Prop
         {
             get
@@ -3421,6 +3446,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGuidProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGuidProp is required.")]
         public virtual global::System.Guid NonNullableGuidProp
         {
             get
@@ -3484,6 +3510,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableStringProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableStringProp is required.")]
         public virtual string NonNullableStringProp
         {
             get
@@ -3547,6 +3574,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableDurationProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableDurationProp is required.")]
         public virtual global::System.TimeSpan NonNullableDurationProp
         {
             get
@@ -3610,6 +3638,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableDateTimeOffsetProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableDateTimeOffsetProp is required.")]
         public virtual global::System.DateTimeOffset NonNullableDateTimeOffsetProp
         {
             get
@@ -3673,6 +3702,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableDateProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableDateProp is required.")]
         public virtual global::Microsoft.OData.Edm.Date NonNullableDateProp
         {
             get
@@ -3736,6 +3766,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableTimeOfDayProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableTimeOfDayProp is required.")]
         public virtual global::Microsoft.OData.Edm.TimeOfDay NonNullableTimeOfDayProp
         {
             get
@@ -3799,6 +3830,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableStreamProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableStreamProp is required.")]
         public virtual global::Microsoft.OData.Client.DataServiceStreamLink NonNullableStreamProp
         {
             get
@@ -3862,6 +3894,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableSByteProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableSByteProp is required.")]
         public virtual sbyte NonNullableSByteProp
         {
             get
@@ -3925,6 +3958,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeography in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeography is required.")]
         public virtual global::Microsoft.Spatial.Geography NonNullableGeography
         {
             get
@@ -3988,6 +4022,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeographyPoint in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeographyPoint is required.")]
         public virtual global::Microsoft.Spatial.GeographyPoint NonNullableGeographyPoint
         {
             get
@@ -4051,6 +4086,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeographyLineString in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeographyLineString is required.")]
         public virtual global::Microsoft.Spatial.GeographyLineString NonNullableGeographyLineString
         {
             get
@@ -4114,6 +4150,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeographyPolygon in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeographyPolygon is required.")]
         public virtual global::Microsoft.Spatial.GeographyPolygon NonNullableGeographyPolygon
         {
             get
@@ -4177,6 +4214,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeographyMultiPoint in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeographyMultiPoint is required.")]
         public virtual global::Microsoft.Spatial.GeographyMultiPoint NonNullableGeographyMultiPoint
         {
             get
@@ -4240,6 +4278,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeographyMultiLineString in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeographyMultiLineString is required.")]
         public virtual global::Microsoft.Spatial.GeographyMultiLineString NonNullableGeographyMultiLineString
         {
             get
@@ -4303,6 +4342,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeographyMultiPolygon in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeographyMultiPolygon is required.")]
         public virtual global::Microsoft.Spatial.GeographyMultiPolygon NonNullableGeographyMultiPolygon
         {
             get
@@ -4366,6 +4406,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeographyCollection in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeographyCollection is required.")]
         public virtual global::Microsoft.Spatial.GeographyCollection NonNullableGeographyCollection
         {
             get
@@ -4429,6 +4470,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeometry in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeometry is required.")]
         public virtual global::Microsoft.Spatial.Geometry NonNullableGeometry
         {
             get
@@ -4492,6 +4534,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeometryPoint in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeometryPoint is required.")]
         public virtual global::Microsoft.Spatial.GeometryPoint NonNullableGeometryPoint
         {
             get
@@ -4555,6 +4598,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeometryLineString in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeometryLineString is required.")]
         public virtual global::Microsoft.Spatial.GeometryLineString NonNullableGeometryLineString
         {
             get
@@ -4618,6 +4662,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeometryPolygon in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeometryPolygon is required.")]
         public virtual global::Microsoft.Spatial.GeometryPolygon NonNullableGeometryPolygon
         {
             get
@@ -4681,6 +4726,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeometryMultiPoint in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeometryMultiPoint is required.")]
         public virtual global::Microsoft.Spatial.GeometryMultiPoint NonNullableGeometryMultiPoint
         {
             get
@@ -4744,6 +4790,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeometryMultiLineString in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeometryMultiLineString is required.")]
         public virtual global::Microsoft.Spatial.GeometryMultiLineString NonNullableGeometryMultiLineString
         {
             get
@@ -4807,6 +4854,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeometryMultiPolygon in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeometryMultiPolygon is required.")]
         public virtual global::Microsoft.Spatial.GeometryMultiPolygon NonNullableGeometryMultiPolygon
         {
             get
@@ -4870,6 +4918,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property NonNullableGeometryCollection in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "NonNullableGeometryCollection is required.")]
         public virtual global::Microsoft.Spatial.GeometryCollection NonNullableGeometryCollection
         {
             get
@@ -4933,6 +4982,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property ComplexNonNull in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "ComplexNonNull is required.")]
         public virtual global::MergedFunctionalTest.TestComplexType ComplexNonNull
         {
             get
@@ -5002,19 +5052,19 @@ namespace MergedFunctionalTest
         /// Initialize a new TestCollectionTypeSingle object.
         /// </summary>
         public TestCollectionTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new TestCollectionTypeSingle object.
         /// </summary>
         public TestCollectionTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new TestCollectionTypeSingle object.
         /// </summary>
         public TestCollectionTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<TestCollectionType> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -5041,6 +5091,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property KeyProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "KeyProp is required.")]
         public virtual int KeyProp
         {
             get
@@ -5083,6 +5134,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property BagOfDoubles in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "BagOfDoubles is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<double> BagOfDoubles
         {
             get
@@ -5125,6 +5177,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property BagOfBytes in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "BagOfBytes is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<byte> BagOfBytes
         {
             get
@@ -5167,6 +5220,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property BagOfInt32s in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "BagOfInt32s is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<int> BagOfInt32s
         {
             get
@@ -5188,6 +5242,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property BagOfInt64s in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "BagOfInt64s is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<long> BagOfInt64s
         {
             get
@@ -5230,6 +5285,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property BagOfDateTime in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "BagOfDateTime is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::System.DateTimeOffset> BagOfDateTime
         {
             get
@@ -5272,6 +5328,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property BagOfBinarys in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "BagOfBinarys is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<byte[]> BagOfBinarys
         {
             get
@@ -5293,6 +5350,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property BagOfBooleans in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "BagOfBooleans is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<bool> BagOfBooleans
         {
             get
@@ -5314,6 +5372,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property BagOfDuration in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "BagOfDuration is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::System.TimeSpan> BagOfDuration
         {
             get
@@ -5335,6 +5394,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property BagOfDate in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "BagOfDate is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.OData.Edm.Date> BagOfDate
         {
             get
@@ -5356,6 +5416,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property BagOfTimeOfDay in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "BagOfTimeOfDay is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.OData.Edm.TimeOfDay> BagOfTimeOfDay
         {
             get
@@ -5377,6 +5438,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property BagOfStream in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "BagOfStream is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.OData.Client.DataServiceStreamLink> BagOfStream
         {
             get
@@ -5398,6 +5460,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property BagOfSByte in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "BagOfSByte is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<sbyte> BagOfSByte
         {
             get
@@ -5419,6 +5482,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Geography in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Geography is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.Spatial.Geography> Geography
         {
             get
@@ -5440,6 +5504,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GeographyPoint in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GeographyPoint is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.Spatial.GeographyPoint> GeographyPoint
         {
             get
@@ -5461,6 +5526,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GeographyLineString in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GeographyLineString is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.Spatial.GeographyLineString> GeographyLineString
         {
             get
@@ -5482,6 +5548,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GeographyPolygon in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GeographyPolygon is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.Spatial.GeographyPolygon> GeographyPolygon
         {
             get
@@ -5503,6 +5570,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GeographyMultiPoint in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GeographyMultiPoint is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.Spatial.GeographyMultiPoint> GeographyMultiPoint
         {
             get
@@ -5524,6 +5592,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GeographyMultiLineString in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GeographyMultiLineString is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.Spatial.GeographyMultiLineString> GeographyMultiLineString
         {
             get
@@ -5545,6 +5614,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GeographyMultiPolygon in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GeographyMultiPolygon is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.Spatial.GeographyMultiPolygon> GeographyMultiPolygon
         {
             get
@@ -5566,6 +5636,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GeographyCollection in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GeographyCollection is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.Spatial.GeographyCollection> GeographyCollection
         {
             get
@@ -5587,6 +5658,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Geometry in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Geometry is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.Spatial.Geometry> Geometry
         {
             get
@@ -5629,6 +5701,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GeometryLineString in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GeometryLineString is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.Spatial.GeometryLineString> GeometryLineString
         {
             get
@@ -5650,6 +5723,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GeometryPolygon in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GeometryPolygon is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.Spatial.GeometryPolygon> GeometryPolygon
         {
             get
@@ -5671,6 +5745,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GeometryMultiPoint in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GeometryMultiPoint is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.Spatial.GeometryMultiPoint> GeometryMultiPoint
         {
             get
@@ -5692,6 +5767,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GeometryMultiLineString in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GeometryMultiLineString is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.Spatial.GeometryMultiLineString> GeometryMultiLineString
         {
             get
@@ -5713,6 +5789,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GeometryMultiPolygon in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GeometryMultiPolygon is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.Spatial.GeometryMultiPolygon> GeometryMultiPolygon
         {
             get
@@ -5734,6 +5811,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GeometryCollection in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GeometryCollection is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.Spatial.GeometryCollection> GeometryCollection
         {
             get
@@ -5755,6 +5833,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property CollectionOfComplexNotNullExplictly in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "CollectionOfComplexNotNullExplictly is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::MergedFunctionalTest.TestComplexType> CollectionOfComplexNotNullExplictly
         {
             get
@@ -5824,19 +5903,19 @@ namespace MergedFunctionalTest
         /// Initialize a new DefaultValueTestTypeSingle object.
         /// </summary>
         public DefaultValueTestTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new DefaultValueTestTypeSingle object.
         /// </summary>
         public DefaultValueTestTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new DefaultValueTestTypeSingle object.
         /// </summary>
         public DefaultValueTestTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<DefaultValueTestType> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -5852,6 +5931,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property KeyProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "KeyProp is required.")]
         public virtual int KeyProp
         {
             get
@@ -5873,6 +5953,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property BinaryProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "BinaryProp is required.")]
         public virtual byte[] BinaryProp
         {
             get
@@ -5894,6 +5975,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property StringProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "StringProp is required.")]
         public virtual string StringProp
         {
             get
@@ -5915,6 +5997,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property DecimalProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "DecimalProp is required.")]
         public virtual decimal DecimalProp
         {
             get
@@ -5936,6 +6019,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property ShortProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "ShortProp is required.")]
         public virtual short ShortProp
         {
             get
@@ -5957,6 +6041,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property FloatProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "FloatProp is required.")]
         public virtual float FloatProp
         {
             get
@@ -5978,6 +6063,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property BooleanProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "BooleanProp is required.")]
         public virtual bool BooleanProp
         {
             get
@@ -5999,6 +6085,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property DoubleProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "DoubleProp is required.")]
         public virtual double DoubleProp
         {
             get
@@ -6020,6 +6107,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GuidProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GuidProp is required.")]
         public virtual global::System.Guid GuidProp
         {
             get
@@ -6041,6 +6129,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property ByteProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "ByteProp is required.")]
         public virtual byte ByteProp
         {
             get
@@ -6062,6 +6151,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property LongProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "LongProp is required.")]
         public virtual long LongProp
         {
             get
@@ -6083,6 +6173,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property SByteProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "SByteProp is required.")]
         public virtual sbyte SByteProp
         {
             get
@@ -6104,6 +6195,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property DurationProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "DurationProp is required.")]
         public virtual global::System.TimeSpan DurationProp
         {
             get
@@ -6125,6 +6217,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property DateTimeOffsetProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "DateTimeOffsetProp is required.")]
         public virtual global::System.DateTimeOffset DateTimeOffsetProp
         {
             get
@@ -6146,6 +6239,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property DateProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "DateProp is required.")]
         public virtual global::Microsoft.OData.Edm.Date DateProp
         {
             get
@@ -6167,6 +6261,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property TimeOfDayProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "TimeOfDayProp is required.")]
         public virtual global::Microsoft.OData.Edm.TimeOfDay TimeOfDayProp
         {
             get
@@ -6545,6 +6640,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property SkinColor in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "SkinColor is required.")]
         public virtual global::MergedFunctionalTest.Color SkinColor
         {
             get
@@ -6566,6 +6662,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property SkinColor2 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "SkinColor2 is required.")]
         public virtual global::MergedFunctionalTest.Color SkinColor2
         {
             get
@@ -6587,6 +6684,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property SkinColor3 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "SkinColor3 is required.")]
         public virtual global::MergedFunctionalTest.Color SkinColor3
         {
             get
@@ -6614,19 +6712,19 @@ namespace MergedFunctionalTest
         /// Initialize a new MultiKeyTestTypeSingle object.
         /// </summary>
         public MultiKeyTestTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new MultiKeyTestTypeSingle object.
         /// </summary>
         public MultiKeyTestTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new MultiKeyTestTypeSingle object.
         /// </summary>
         public MultiKeyTestTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<MultiKeyTestType> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -6662,6 +6760,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Int64Id in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Int64Id is required.")]
         public virtual long Int64Id
         {
             get
@@ -6683,6 +6782,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property StringId in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "StringId is required.")]
         public virtual string StringId
         {
             get
@@ -6704,6 +6804,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property DateTimeOffsetId in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "DateTimeOffsetId is required.")]
         public virtual global::System.DateTimeOffset DateTimeOffsetId
         {
             get
@@ -6725,6 +6826,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GuidId in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GuidId is required.")]
         public virtual global::System.Guid GuidId
         {
             get
@@ -6752,19 +6854,19 @@ namespace MergedFunctionalTest
         /// Initialize a new BaseTypeSingle object.
         /// </summary>
         public BaseTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new BaseTypeSingle object.
         /// </summary>
         public BaseTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new BaseTypeSingle object.
         /// </summary>
         public BaseTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<BaseType> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -6791,6 +6893,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property KeyProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "KeyProp is required.")]
         public virtual long KeyProp
         {
             get
@@ -6818,19 +6921,19 @@ namespace MergedFunctionalTest
         /// Initialize a new KatmaiTypeSingle object.
         /// </summary>
         public KatmaiTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new KatmaiTypeSingle object.
         /// </summary>
         public KatmaiTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new KatmaiTypeSingle object.
         /// </summary>
         public KatmaiTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<KatmaiType> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -6861,6 +6964,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property KeyProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "KeyProp is required.")]
         public virtual int KeyProp
         {
             get
@@ -6882,6 +6986,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property DateTimeOffset in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "DateTimeOffset is required.")]
         public virtual global::System.DateTimeOffset DateTimeOffset
         {
             get
@@ -6903,6 +7008,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property TimeSpan in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "TimeSpan is required.")]
         public virtual global::System.TimeSpan TimeSpan
         {
             get
@@ -6972,19 +7078,19 @@ namespace MergedFunctionalTest
         /// Initialize a new Level0Single object.
         /// </summary>
         public Level0Single(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new Level0Single object.
         /// </summary>
         public Level0Single(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new Level0Single object.
         /// </summary>
         public Level0Single(global::Microsoft.OData.Client.DataServiceQuerySingle<Level0> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -7000,6 +7106,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Level0Prop in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Level0Prop is required.")]
         public virtual string Level0Prop
         {
             get
@@ -7027,19 +7134,19 @@ namespace MergedFunctionalTest
         /// Initialize a new Level1Single object.
         /// </summary>
         public Level1Single(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new Level1Single object.
         /// </summary>
         public Level1Single(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new Level1Single object.
         /// </summary>
         public Level1Single(global::Microsoft.OData.Client.DataServiceQuerySingle<Level1> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -7070,6 +7177,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Level1Id in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Level1Id is required.")]
         public virtual int Level1Id
         {
             get
@@ -7091,6 +7199,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Level1Prop in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Level1Prop is required.")]
         public virtual string Level1Prop
         {
             get
@@ -7118,19 +7227,19 @@ namespace MergedFunctionalTest
         /// Initialize a new Level2Single object.
         /// </summary>
         public Level2Single(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new Level2Single object.
         /// </summary>
         public Level2Single(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new Level2Single object.
         /// </summary>
         public Level2Single(global::Microsoft.OData.Client.DataServiceQuerySingle<Level2> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -7163,6 +7272,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Level2Prop in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Level2Prop is required.")]
         public virtual string Level2Prop
         {
             get
@@ -7190,19 +7300,19 @@ namespace MergedFunctionalTest
         /// Initialize a new SingleTypeSingle object.
         /// </summary>
         public SingleTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new SingleTypeSingle object.
         /// </summary>
         public SingleTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new SingleTypeSingle object.
         /// </summary>
         public SingleTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<SingleType> query)
-            : base(query) {}
+            : base(query) { }
 
         /// <summary>
         /// There are no comments for BaseSet in the schema.
@@ -7250,6 +7360,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property KeyProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "KeyProp is required.")]
         public virtual global::Microsoft.Spatial.GeographyPoint KeyProp
         {
             get
@@ -7298,19 +7409,19 @@ namespace MergedFunctionalTest
         /// Initialize a new GroupSingle object.
         /// </summary>
         public GroupSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new GroupSingle object.
         /// </summary>
         public GroupSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new GroupSingle object.
         /// </summary>
         public GroupSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<Group> query)
-            : base(query) {}
+            : base(query) { }
 
         /// <summary>
         /// There are no comments for Good in the schema.
@@ -7381,6 +7492,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Id in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Id is required.")]
         public virtual int Id
         {
             get
@@ -7402,6 +7514,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property IsHiddenInUI in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "IsHiddenInUI is required.")]
         public virtual bool IsHiddenInUI
         {
             get
@@ -7513,19 +7626,19 @@ namespace MergedFunctionalTest
         /// Initialize a new PrincipalSingle object.
         /// </summary>
         public PrincipalSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new PrincipalSingle object.
         /// </summary>
         public PrincipalSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new PrincipalSingle object.
         /// </summary>
         public PrincipalSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<Principal> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -7556,6 +7669,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Id in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Id is required.")]
         public virtual int Id
         {
             get
@@ -7577,6 +7691,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property IsHiddenInUI in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "IsHiddenInUI is required.")]
         public virtual bool IsHiddenInUI
         {
             get
@@ -7640,6 +7755,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property PrincipalType in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "PrincipalType is required.")]
         public virtual int PrincipalType
         {
             get
@@ -7667,6 +7783,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property ComplextLevel0Prop in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "ComplextLevel0Prop is required.")]
         public virtual string ComplextLevel0Prop
         {
             get
@@ -7707,6 +7824,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property ComplextLevel1Prop in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "ComplextLevel1Prop is required.")]
         public virtual long ComplextLevel1Prop
         {
             get
@@ -7771,15 +7889,15 @@ namespace MergedFunctionalTest
         /// <param name="sByteProp">Initial value of SByteProp.</param>
         /// <param name="colorProp">Initial value of ColorProp.</param>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public static TestComplexType CreateTestComplexType(bool booleanProp, 
-                    decimal decimalProp, 
-                    double doubleProp, 
-                    float singleProp, 
-                    global::System.Guid guidProp, 
-                    global::System.TimeSpan durationProp, 
-                    global::System.DateTimeOffset dateTimeOffsetProp, 
-                    global::Microsoft.OData.Client.DataServiceStreamLink streamProp, 
-                    sbyte sByteProp, 
+        public static TestComplexType CreateTestComplexType(bool booleanProp,
+                    decimal decimalProp,
+                    double doubleProp,
+                    float singleProp,
+                    global::System.Guid guidProp,
+                    global::System.TimeSpan durationProp,
+                    global::System.DateTimeOffset dateTimeOffsetProp,
+                    global::Microsoft.OData.Client.DataServiceStreamLink streamProp,
+                    sbyte sByteProp,
                     global::MergedFunctionalTest.Color colorProp)
         {
             TestComplexType testComplexType = new TestComplexType();
@@ -7820,6 +7938,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property BooleanProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "BooleanProp is required.")]
         public virtual bool BooleanProp
         {
             get
@@ -7862,6 +7981,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property DecimalProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "DecimalProp is required.")]
         public virtual decimal DecimalProp
         {
             get
@@ -7883,6 +8003,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property DoubleProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "DoubleProp is required.")]
         public virtual double DoubleProp
         {
             get
@@ -7904,6 +8025,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property SingleProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "SingleProp is required.")]
         public virtual float SingleProp
         {
             get
@@ -7925,6 +8047,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property GuidProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "GuidProp is required.")]
         public virtual global::System.Guid GuidProp
         {
             get
@@ -7988,6 +8111,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property DurationProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "DurationProp is required.")]
         public virtual global::System.TimeSpan DurationProp
         {
             get
@@ -8009,6 +8133,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property DateTimeOffsetProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "DateTimeOffsetProp is required.")]
         public virtual global::System.DateTimeOffset DateTimeOffsetProp
         {
             get
@@ -8030,6 +8155,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property StreamProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "StreamProp is required.")]
         public virtual global::Microsoft.OData.Client.DataServiceStreamLink StreamProp
         {
             get
@@ -8051,6 +8177,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property SByteProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "SByteProp is required.")]
         public virtual sbyte SByteProp
         {
             get
@@ -8114,6 +8241,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property ColorProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "ColorProp is required.")]
         public virtual global::MergedFunctionalTest.Color ColorProp
         {
             get
@@ -8135,6 +8263,7 @@ namespace MergedFunctionalTest
         /// There are no comments for Property Colors in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Colors is required.")]
         public virtual global::System.Collections.ObjectModel.Collection<global::MergedFunctionalTest.Color> Colors
         {
             get
@@ -8567,16 +8696,16 @@ namespace MergedFunctionalTest
         /// <param name="dateTimeOffsetId">The value of dateTimeOffsetId</param>
         /// <param name="guidId">The value of guidId</param>
         public static global::MergedFunctionalTest.MultiKeyTestTypeSingle ByKey(this global::Microsoft.OData.Client.DataServiceQuery<global::MergedFunctionalTest.MultiKeyTestType> _source,
-            long int64Id, 
-            string stringId, 
-            global::System.DateTimeOffset dateTimeOffsetId, 
+            long int64Id,
+            string stringId,
+            global::System.DateTimeOffset dateTimeOffsetId,
             global::System.Guid guidId)
         {
             global::System.Collections.Generic.IDictionary<string, object> _keys = new global::System.Collections.Generic.Dictionary<string, object>
             {
-                { "Int64Id", int64Id }, 
-                { "StringId", stringId }, 
-                { "DateTimeOffsetId", dateTimeOffsetId }, 
+                { "Int64Id", int64Id },
+                { "StringId", stringId },
+                { "DateTimeOffsetId", dateTimeOffsetId },
                 { "GuidId", guidId }
             };
             return new global::MergedFunctionalTest.MultiKeyTestTypeSingle(_source.Context, _source.GetKeyPath(global::Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)));
@@ -9072,19 +9201,19 @@ namespace MergedFunctionalTest1
         /// Initialize a new DerivedTypeSingle object.
         /// </summary>
         public DerivedTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new DerivedTypeSingle object.
         /// </summary>
         public DerivedTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new DerivedTypeSingle object.
         /// </summary>
         public DerivedTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<DerivedType> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -9138,19 +9267,19 @@ namespace MergedFunctionalTest1
         /// Initialize a new CustomerSingle object.
         /// </summary>
         public CustomerSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new CustomerSingle object.
         /// </summary>
         public CustomerSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new CustomerSingle object.
         /// </summary>
         public CustomerSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<Customer> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -9177,6 +9306,7 @@ namespace MergedFunctionalTest1
         /// There are no comments for Property CustomerId in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "CustomerId is required.")]
         public virtual int CustomerId
         {
             get

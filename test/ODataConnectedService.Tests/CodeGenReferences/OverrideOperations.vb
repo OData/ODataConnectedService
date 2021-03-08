@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 06.03.2021 23:01:38
+'Generation date: 10.03.2021 20:12:58
 Namespace OverrideOperations
     ''' <summary>
     ''' There are no comments for OverrideOperationsContainer in the schema.
@@ -243,6 +243,7 @@ Namespace OverrideOperations
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("UserName")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property UserName() As String
             Get
                 Return Me._UserName
@@ -391,6 +392,7 @@ Namespace OverrideOperations
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Name")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Name() As String
             Get
                 Return Me._Name
@@ -431,6 +433,7 @@ Namespace OverrideOperations
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Description")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Description() As String
             Get
                 Return Me._Description

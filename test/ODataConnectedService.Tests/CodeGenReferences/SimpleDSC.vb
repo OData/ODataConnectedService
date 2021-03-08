@@ -12,11 +12,11 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 15:23:10
+'Generation date: 10.03.2021 20:07:04
 Namespace Simple.DSC
-    '''<summary>
-    '''There are no comments for TestTypeSingle in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for TestTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class TestTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of TestType)
         ''' <summary>
@@ -40,21 +40,21 @@ Namespace Simple.DSC
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for TestType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''KeyProp
-    '''</KeyProperties>
+    ''' <summary>
+    ''' There are no comments for TestType in the schema.
+    ''' </summary>
+    ''' <KeyProperties>
+    ''' KeyProp
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("KeyProp")>  _
     Partial Public Class TestType
         Inherits Global.Microsoft.OData.Client.BaseEntityType
         Implements Global.System.ComponentModel.INotifyPropertyChanged
-        '''<summary>
-        '''Create a new TestType object.
-        '''</summary>
-        '''<param name="keyProp">Initial value of KeyProp.</param>
-        '''<param name="valueProp">Initial value of ValueProp.</param>
+        ''' <summary>
+        ''' Create a new TestType object.
+        ''' </summary>
+        ''' <param name="keyProp">Initial value of KeyProp.</param>
+        ''' <param name="valueProp">Initial value of ValueProp.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateTestType(ByVal keyProp As Integer, ByVal valueProp As String) As TestType
             Dim testType As TestType = New TestType()
@@ -62,10 +62,11 @@ Namespace Simple.DSC
             testType.ValueProp = valueProp
             Return testType
         End Function
-        '''<summary>
-        '''There are no comments for Property KeyProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property KeyProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property KeyProp() As Integer
             Get
                 Return Me._KeyProp
@@ -83,10 +84,11 @@ Namespace Simple.DSC
         End Sub
         Partial Private Sub OnKeyPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ValueProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ValueProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property ValueProp() As String
             Get
                 Return Me._ValueProp
@@ -143,7 +145,7 @@ Namespace Simple.DSC
             keyProp As Integer) As Simple.DSC.TestTypeSingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"KeyProp", keyProp}
+                { "KeyProp", keyProp }
             }
             Return New Simple.DSC.TestTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function

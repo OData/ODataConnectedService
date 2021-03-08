@@ -12,11 +12,11 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 13.06.2020 13:17:38
+'Generation date: 10.03.2021 19:48:40
 Namespace Microsoft.OData.TestService.DSC
-    '''<summary>
-    '''There are no comments for PersonSingle in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for PersonSingle in the schema.
+    ''' </summary>
     Partial Public Class PersonSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Person)
         ''' <summary>
@@ -40,30 +40,31 @@ Namespace Microsoft.OData.TestService.DSC
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Person in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''Keys
-    '''</KeyProperties>
+    ''' <summary>
+    ''' There are no comments for Person in the schema.
+    ''' </summary>
+    ''' <KeyProperties>
+    ''' Keys
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("Keys")>  _
     Partial Public Class Person
         Inherits Global.Microsoft.OData.Client.BaseEntityType
         Implements Global.System.ComponentModel.INotifyPropertyChanged
-        '''<summary>
-        '''Create a new Person object.
-        '''</summary>
-        '''<param name="keys">Initial value of Keys.</param>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' Create a new Person object.
+        ''' </summary>
+        ''' <param name="keys">Initial value of Keys.</param>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreatePerson(ByVal keys As String) As Person
             Dim person As Person = New Person()
             person.Keys = keys
             Return person
         End Function
-        '''<summary>
-        '''There are no comments for Property Keys in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property Keys in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Keys() As String
             Get
                 Return Me._Keys
@@ -75,7 +76,7 @@ Namespace Microsoft.OData.TestService.DSC
                 Me.OnPropertyChanged("Keys")
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Keys As String
         Partial Private Sub OnKeysChanging(ByVal value As String)
         End Sub
@@ -84,13 +85,13 @@ Namespace Microsoft.OData.TestService.DSC
         ''' <summary>
         ''' This event is raised when the value of the property is changed
         ''' </summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Event PropertyChanged As Global.System.ComponentModel.PropertyChangedEventHandler Implements Global.System.ComponentModel.INotifyPropertyChanged.PropertyChanged
         ''' <summary>
         ''' The value of the property is changed
         ''' </summary>
         ''' <param name="property">property name</param>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Overridable Sub OnPropertyChanged(ByVal [property] As String)
             If (Not (Me.PropertyChangedEvent) Is Nothing) Then
                 RaiseEvent PropertyChanged(Me, New Global.System.ComponentModel.PropertyChangedEventArgs([property]))

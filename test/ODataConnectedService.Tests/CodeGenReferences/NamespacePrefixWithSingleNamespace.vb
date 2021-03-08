@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 06.03.2021 23:00:32
+'Generation date: 10.03.2021 20:08:25
 Namespace NamespacePrefixWithSingleNamespace
     ''' <summary>
     ''' There are no comments for MyContainer in the schema.
@@ -183,6 +183,7 @@ Namespace NamespacePrefixWithSingleNamespace
         ''' There are no comments for Property KeyProp in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property KeyProp() As Integer
             Get
                 Return Me._KeyProp
@@ -203,6 +204,7 @@ Namespace NamespacePrefixWithSingleNamespace
         ''' There are no comments for Property ValueProp in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property ValueProp() As String
             Get
                 Return Me._ValueProp

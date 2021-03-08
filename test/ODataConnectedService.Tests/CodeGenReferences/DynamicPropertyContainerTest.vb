@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 03.03.2021 22:50:56
+'Generation date: 10.03.2021 20:22:58
 Namespace NS
     ''' <summary>
     ''' There are no comments for Container in the schema.
@@ -99,6 +99,7 @@ Namespace NS
         ''' There are no comments for Property Street in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Street() As String
             Get
                 Return Me._Street
@@ -119,6 +120,7 @@ Namespace NS
         ''' There are no comments for Property City in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property City() As String
             Get
                 Return Me._City

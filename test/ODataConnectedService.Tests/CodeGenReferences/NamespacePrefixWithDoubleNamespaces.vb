@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 06.03.2021 22:57:04
+'Generation date: 10.03.2021 20:10:11
 Namespace Foo.NamespacePrefixWithDoubleNamespaces
     ''' <summary>
     ''' There are no comments for EntityContainer in the schema.
@@ -194,6 +194,7 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces
         ''' There are no comments for Property Value in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Value() As String
             Get
                 Return Me._Value
@@ -260,6 +261,7 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces
         ''' There are no comments for Property Id in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Id() As Global.System.Guid
             Get
                 Return Me._Id
@@ -345,6 +347,7 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces2
         ''' There are no comments for Property Value in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Value() As String
             Get
                 Return Me._Value
@@ -411,6 +414,7 @@ Namespace Foo.NamespacePrefixWithDoubleNamespaces2
         ''' There are no comments for Property Id in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Id() As Global.System.Guid
             Get
                 Return Me._Id

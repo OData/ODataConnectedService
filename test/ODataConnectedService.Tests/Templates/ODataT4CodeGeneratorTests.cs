@@ -31,6 +31,7 @@ namespace ODataConnectedService.Tests
     using System.Net;
     using ODataConnectedService.Tests.TestHelpers;
     using System.Globalization;
+    using System.ComponentModel.DataAnnotations;
 
     [TestClass]
     public class ODataT4CodeGeneratorTests
@@ -804,6 +805,7 @@ namespace ODataConnectedService.Tests
                     AssemblyRef.System,
                     AssemblyRef.SystemCore,
                     AssemblyRef.SystemXml,
+                    typeof(RequiredAttribute).Assembly.Location
                 }
             };
 

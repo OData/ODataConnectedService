@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 06.03.2021 23:02:49
+'Generation date: 10.03.2021 20:12:09
 Namespace PrefixConflict.DSC
     ''' <summary>
     ''' There are no comments for EntityContainer in the schema.
@@ -156,6 +156,7 @@ Namespace PrefixConflict.DSC
         ''' There are no comments for Property Id in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Id() As Global.System.Guid
             Get
                 Return Me._Id
