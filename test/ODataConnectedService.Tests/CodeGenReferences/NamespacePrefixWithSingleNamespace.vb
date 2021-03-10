@@ -12,16 +12,16 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 15:21:18
+'Generation date: 06.03.2021 23:00:32
 Namespace NamespacePrefixWithSingleNamespace
-    '''<summary>
-    '''There are no comments for MyContainer in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for MyContainer in the schema.
+    ''' </summary>
     Partial Public Class MyContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
-        '''<summary>
-        '''Initialize a new MyContainer object.
-        '''</summary>
+        ''' <summary>
+        ''' Initialize a new MyContainer object.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
@@ -35,11 +35,11 @@ Namespace NamespacePrefixWithSingleNamespace
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private Shared ROOTNAMESPACE As String = GetType(MyContainer).Namespace.Remove(GetType(MyContainer).Namespace.LastIndexOf("NamespacePrefixWithSingleNamespace"))
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Function ResolveTypeFromName(ByVal typeName As String) As Global.System.Type
             Dim resolvedType As Global.System.Type = Me.DefaultResolveType(typeName, "NamespacePrefixWithSingleNamespace", String.Concat(ROOTNAMESPACE, "NamespacePrefixWithSingleNamespace"))
@@ -48,11 +48,11 @@ Namespace NamespacePrefixWithSingleNamespace
             End If
             Return Nothing
         End Function
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Function ResolveNameFromType(ByVal clientType As Global.System.Type) As String
             If clientType.Namespace.Equals(String.Concat(ROOTNAMESPACE, "NamespacePrefixWithSingleNamespace"), Global.System.StringComparison.OrdinalIgnoreCase) Then
@@ -60,9 +60,9 @@ Namespace NamespacePrefixWithSingleNamespace
             End If
             Return Nothing
         End Function
-        '''<summary>
-        '''There are no comments for Items in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Items in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Items() As Global.Microsoft.OData.Client.DataServiceQuery(Of TestType)
             Get
@@ -74,9 +74,9 @@ Namespace NamespacePrefixWithSingleNamespace
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Items As Global.Microsoft.OData.Client.DataServiceQuery(Of TestType)
-        '''<summary>
-        '''There are no comments for Items in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Items in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToItems(ByVal testType As TestType)
             MyBase.AddObject("Items", testType)
@@ -110,9 +110,20 @@ Namespace NamespacePrefixWithSingleNamespace
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader)
+                    Dim errors As Global.System.Collections.Generic.IEnumerable(Of Global.Microsoft.OData.Edm.Validation.EdmError) = Nothing
+                    Dim edmModel As Global.Microsoft.OData.Edm.IEdmModel = Nothing
+                    If Not Global.Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, False, edmModel, errors) Then
+                        Dim errorMessages As Global.System.Text.StringBuilder = New Global.System.Text.StringBuilder()
+                        For Each err As Global.Microsoft.OData.Edm.Validation.EdmError In errors
+                            errorMessages.Append(err.ErrorMessage)
+                            errorMessages.Append("; ")
+                        Next
+                        Throw New Global.System.InvalidOperationException(errorMessages.ToString())
+                    End If
+
+                    Return edmModel
                 Finally
-                    CType(reader,Global.System.IDisposable).Dispose
+                    CType(reader, Global.System.IDisposable).Dispose()
                 End Try
             End Function
             <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -121,9 +132,9 @@ Namespace NamespacePrefixWithSingleNamespace
             End Function
         End Class
     End Class
-    '''<summary>
-    '''There are no comments for TestTypeSingle in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for TestTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class TestTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of TestType)
         ''' <summary>
@@ -147,20 +158,20 @@ Namespace NamespacePrefixWithSingleNamespace
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for TestType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''KeyProp
-    '''</KeyProperties>
+    ''' <summary>
+    ''' There are no comments for TestType in the schema.
+    ''' </summary>
+    ''' <KeyProperties>
+    ''' KeyProp
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("KeyProp")>  _
     Partial Public Class TestType
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new TestType object.
-        '''</summary>
-        '''<param name="keyProp">Initial value of KeyProp.</param>
-        '''<param name="valueProp">Initial value of ValueProp.</param>
+        ''' <summary>
+        ''' Create a new TestType object.
+        ''' </summary>
+        ''' <param name="keyProp">Initial value of KeyProp.</param>
+        ''' <param name="valueProp">Initial value of ValueProp.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateTestType(ByVal keyProp As Integer, ByVal valueProp As String) As TestType
             Dim testType As TestType = New TestType()
@@ -168,9 +179,9 @@ Namespace NamespacePrefixWithSingleNamespace
             testType.ValueProp = valueProp
             Return testType
         End Function
-        '''<summary>
-        '''There are no comments for Property KeyProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property KeyProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property KeyProp() As Integer
             Get
@@ -188,9 +199,9 @@ Namespace NamespacePrefixWithSingleNamespace
         End Sub
         Partial Private Sub OnKeyPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ValueProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ValueProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property ValueProp() As String
             Get
@@ -232,7 +243,7 @@ Namespace NamespacePrefixWithSingleNamespace
             keyProp As Integer) As NamespacePrefixWithSingleNamespace.TestTypeSingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"KeyProp", keyProp}
+                { "KeyProp", keyProp }
             }
             Return New NamespacePrefixWithSingleNamespace.TestTypeSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function

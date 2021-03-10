@@ -12,16 +12,16 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 15:27:13
+'Generation date: 03.03.2021 22:32:55
 Namespace Namespace1
-    '''<summary>
-    '''There are no comments for New in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for New in the schema.
+    ''' </summary>
     Partial Public Class [New]
         Inherits Global.Microsoft.OData.Client.DataServiceContext
-        '''<summary>
-        '''Initialize a new New object.
-        '''</summary>
+        ''' <summary>
+        ''' Initialize a new New object.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
@@ -31,9 +31,9 @@ Namespace Namespace1
         End Sub
         Partial Private Sub OnContextCreated()
         End Sub
-        '''<summary>
-        '''There are no comments for double in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for double in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property [double]() As Global.Microsoft.OData.Client.DataServiceQuery(Of [event])
             Get
@@ -45,9 +45,9 @@ Namespace Namespace1
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _double As Global.Microsoft.OData.Client.DataServiceQuery(Of [event])
-        '''<summary>
-        '''There are no comments for double in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for double in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddTodouble(ByVal [event] As [event])
             MyBase.AddObject("double", [event])
@@ -101,9 +101,20 @@ Namespace Namespace1
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader)
+                    Dim errors As Global.System.Collections.Generic.IEnumerable(Of Global.Microsoft.OData.Edm.Validation.EdmError) = Nothing
+                    Dim edmModel As Global.Microsoft.OData.Edm.IEdmModel = Nothing
+                    If Not Global.Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, False, edmModel, errors) Then
+                        Dim errorMessages As Global.System.Text.StringBuilder = New Global.System.Text.StringBuilder()
+                        For Each err As Global.Microsoft.OData.Edm.Validation.EdmError In errors
+                            errorMessages.Append(err.ErrorMessage)
+                            errorMessages.Append("; ")
+                        Next
+                        Throw New Global.System.InvalidOperationException(errorMessages.ToString())
+                    End If
+
+                    Return edmModel
                 Finally
-                    CType(reader,Global.System.IDisposable).Dispose
+                    CType(reader, Global.System.IDisposable).Dispose()
                 End Try
             End Function
             <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -124,9 +135,9 @@ Namespace Namespace1
             Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Namespace1.[event])(Me, Me.BaseUri.OriginalString.Trim("/"C) + "/enum", New Global.Microsoft.OData.Client.BodyOperationParameter("p0", p0))
         End Function
     End Class
-    '''<summary>
-    '''There are no comments for eventSingle in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for eventSingle in the schema.
+    ''' </summary>
     Partial Public Class eventSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of [event])
         ''' <summary>
@@ -149,9 +160,9 @@ Namespace Namespace1
         Public Sub New(ByVal query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of [event]))
             MyBase.New(query)
         End Sub
-        '''<summary>
-        '''There are no comments for event in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for event in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property [event]() As Namespace1.eventSingle
             Get
@@ -167,20 +178,20 @@ Namespace Namespace1
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _event As Namespace1.eventSingle
     End Class
-    '''<summary>
-    '''There are no comments for event in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''string
-    '''</KeyProperties>
+    ''' <summary>
+    ''' There are no comments for event in the schema.
+    ''' </summary>
+    ''' <KeyProperties>
+    ''' string
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("string")>  _
     Partial Public Class [event]
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new event object.
-        '''</summary>
-        '''<param name="string">Initial value of string.</param>
-        '''<param name="event1">Initial value of event.</param>
+        ''' <summary>
+        ''' Create a new event object.
+        ''' </summary>
+        ''' <param name="string">Initial value of string.</param>
+        ''' <param name="event1">Initial value of event.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function Createevent(ByVal [string] As String, ByVal event1 As Namespace1.[event]) As [event]
             Dim [event] As [event] = New [event]()
@@ -191,9 +202,9 @@ Namespace Namespace1
             [event].[event] = event1
             Return [event]
         End Function
-        '''<summary>
-        '''There are no comments for Property string in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property string in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property [string]() As String
             Get
@@ -211,9 +222,9 @@ Namespace Namespace1
         End Sub
         Partial Private Sub OnstringChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property event in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property event in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property [event]() As Namespace1.[event]
             Get
@@ -274,7 +285,7 @@ Namespace Namespace1
             [string] As String) As Namespace1.eventSingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"string", [string]}
+                { "string", [string] }
             }
             Return New Namespace1.eventSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function

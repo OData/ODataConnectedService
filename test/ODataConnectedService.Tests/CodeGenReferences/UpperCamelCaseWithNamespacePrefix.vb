@@ -12,11 +12,11 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 13.06.2020 13:28:23
+'Generation date: 06.03.2021 23:05:42
 Namespace namespacePrefix.[Namespace].Foo
-    '''<summary>
-    '''There are no comments for BaseTypeSingle in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for BaseTypeSingle in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("baseTypeSingle")>  _
     Partial Public Class BaseTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of BaseType)
@@ -41,29 +41,29 @@ Namespace namespacePrefix.[Namespace].Foo
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for BaseType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''KeyProp
-    '''</KeyProperties>
+    ''' <summary>
+    ''' There are no comments for BaseType in the schema.
+    ''' </summary>
+    ''' <KeyProperties>
+    ''' KeyProp
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("keyProp")>  _
     <Global.Microsoft.OData.Client.OriginalNameAttribute("baseType")>  _
     Partial Public Class BaseType
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new BaseType object.
-        '''</summary>
-        '''<param name="keyProp">Initial value of KeyProp.</param>
+        ''' <summary>
+        ''' Create a new BaseType object.
+        ''' </summary>
+        ''' <param name="keyProp">Initial value of KeyProp.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateBaseType(ByVal keyProp As Integer) As BaseType
             Dim baseType As BaseType = New BaseType()
             baseType.KeyProp = keyProp
             Return baseType
         End Function
-        '''<summary>
-        '''There are no comments for Property KeyProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property KeyProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("keyProp")>  _
         Public Overridable Property KeyProp() As Integer
@@ -83,9 +83,9 @@ Namespace namespacePrefix.[Namespace].Foo
         Partial Private Sub OnKeyPropChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for TestTypeSingle in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for TestTypeSingle in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("testTypeSingle")>  _
     Partial Public Class TestTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of TestType)
@@ -109,9 +109,9 @@ Namespace namespacePrefix.[Namespace].Foo
         Public Sub New(ByVal query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of TestType))
             MyBase.New(query)
         End Sub
-        '''<summary>
-        '''There are no comments for SingleType in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for SingleType in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("singleType")>  _
         Public Overridable ReadOnly Property SingleType() As namespacePrefix.[Namespace].Foo.SingleTypeSingle
@@ -128,29 +128,29 @@ Namespace namespacePrefix.[Namespace].Foo
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _SingleType As namespacePrefix.[Namespace].Foo.SingleTypeSingle
     End Class
-    '''<summary>
-    '''There are no comments for TestType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''KeyProp
-    '''</KeyProperties>
+    ''' <summary>
+    ''' There are no comments for TestType in the schema.
+    ''' </summary>
+    ''' <KeyProperties>
+    ''' KeyProp
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("keyProp")>  _
     <Global.Microsoft.OData.Client.OriginalNameAttribute("testType")>  _
     Partial Public Class TestType
         Inherits BaseType
-        '''<summary>
-        '''Create a new TestType object.
-        '''</summary>
-        '''<param name="keyProp">Initial value of KeyProp.</param>
+        ''' <summary>
+        ''' Create a new TestType object.
+        ''' </summary>
+        ''' <param name="keyProp">Initial value of KeyProp.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateTestType(ByVal keyProp As Integer) As TestType
             Dim testType As TestType = New TestType()
             testType.KeyProp = keyProp
             Return testType
         End Function
-        '''<summary>
-        '''There are no comments for Property SingleType in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property SingleType in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("singleType")>  _
         Public Overridable Property SingleType() As namespacePrefix.[Namespace].Foo.SingleType
@@ -180,9 +180,9 @@ Namespace namespacePrefix.[Namespace].Foo
                     New Global.Microsoft.OData.Client.UriOperationParameter("p2", p2))
         End Function
     End Class
-    '''<summary>
-    '''There are no comments for SingleTypeSingle in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for SingleTypeSingle in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("singleTypeSingle")>  _
     Partial Public Class SingleTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of SingleType)
@@ -206,9 +206,9 @@ Namespace namespacePrefix.[Namespace].Foo
         Public Sub New(ByVal query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of SingleType))
             MyBase.New(query)
         End Sub
-        '''<summary>
-        '''There are no comments for BaseSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for BaseSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("baseSet")>  _
         Public Overridable ReadOnly Property BaseSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.TestType)
@@ -225,21 +225,21 @@ Namespace namespacePrefix.[Namespace].Foo
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _BaseSet As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.TestType)
     End Class
-    '''<summary>
-    '''There are no comments for SingleType in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''KeyProp
-    '''</KeyProperties>
+    ''' <summary>
+    ''' There are no comments for SingleType in the schema.
+    ''' </summary>
+    ''' <KeyProperties>
+    ''' KeyProp
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("keyProp")>  _
     <Global.Microsoft.OData.Client.OriginalNameAttribute("singleType")>  _
     Partial Public Class SingleType
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new SingleType object.
-        '''</summary>
-        '''<param name="keyProp">Initial value of KeyProp.</param>
-        '''<param name="colorProp">Initial value of ColorProp.</param>
+        ''' <summary>
+        ''' Create a new SingleType object.
+        ''' </summary>
+        ''' <param name="keyProp">Initial value of KeyProp.</param>
+        ''' <param name="colorProp">Initial value of ColorProp.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateSingleType(ByVal keyProp As Integer, ByVal colorProp As namespacePrefix.[Namespace].Foo.Color) As SingleType
             Dim singleType As SingleType = New SingleType()
@@ -247,9 +247,9 @@ Namespace namespacePrefix.[Namespace].Foo
             singleType.ColorProp = colorProp
             Return singleType
         End Function
-        '''<summary>
-        '''There are no comments for Property KeyProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property KeyProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("keyProp")>  _
         Public Overridable Property KeyProp() As Integer
@@ -268,9 +268,9 @@ Namespace namespacePrefix.[Namespace].Foo
         End Sub
         Partial Private Sub OnKeyPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property ColorProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property ColorProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("colorProp")>  _
         Public Overridable Property ColorProp() As namespacePrefix.[Namespace].Foo.Color
@@ -289,9 +289,9 @@ Namespace namespacePrefix.[Namespace].Foo
         End Sub
         Partial Private Sub OnColorPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property BaseSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property BaseSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("baseSet")>  _
         Public Overridable Property BaseSet() As Global.System.Collections.ObjectModel.Collection(Of namespacePrefix.[Namespace].Foo.TestType)
@@ -323,16 +323,16 @@ Namespace namespacePrefix.[Namespace].Foo
             Return New Global.Microsoft.OData.Client.DataServiceActionQuerySingle(Of Global.System.Nullable(Of Integer))(Me.Context, resource.EditLink.OriginalString.Trim("/"C) + "/namespace.foo.foo8")
         End Function
     End Class
-    '''<summary>
-    '''There are no comments for Complex in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for Complex in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("complex")>  _
     Partial Public Class Complex
-        '''<summary>
-        '''Create a new Complex object.
-        '''</summary>
-        '''<param name="intProp">Initial value of IntProp.</param>
-        '''<param name="stringProp">Initial value of StringProp.</param>
+        ''' <summary>
+        ''' Create a new Complex object.
+        ''' </summary>
+        ''' <param name="intProp">Initial value of IntProp.</param>
+        ''' <param name="stringProp">Initial value of StringProp.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateComplex(ByVal intProp As Integer, ByVal stringProp As String) As Complex
             Dim complex As Complex = New Complex()
@@ -340,9 +340,9 @@ Namespace namespacePrefix.[Namespace].Foo
             complex.StringProp = stringProp
             Return complex
         End Function
-        '''<summary>
-        '''There are no comments for Property IntProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property IntProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("intProp")>  _
         Public Overridable Property IntProp() As Integer
@@ -361,9 +361,9 @@ Namespace namespacePrefix.[Namespace].Foo
         End Sub
         Partial Private Sub OnIntPropChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property StringProp in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property StringProp in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("stringProp")>  _
         Public Overridable Property StringProp() As String
@@ -383,9 +383,9 @@ Namespace namespacePrefix.[Namespace].Foo
         Partial Private Sub OnStringPropChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Color in the schema.
-    '''</summary>
+        ''' <summary>
+        ''' There are no comments for Color in the schema.
+        ''' </summary>
     <Global.System.Flags()>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("color")>  _
     Public Enum Color
@@ -505,15 +505,15 @@ Namespace namespacePrefix.[Namespace].Foo
     End Module
 End Namespace
 Namespace namespacePrefix.[Namespace].Bar
-    '''<summary>
-    '''There are no comments for SingletonContainer in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for SingletonContainer in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("singletonContainer")>  _
     Partial Public Class SingletonContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
-        '''<summary>
-        '''Initialize a new SingletonContainer object.
-        '''</summary>
+        ''' <summary>
+        ''' Initialize a new SingletonContainer object.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
@@ -527,11 +527,11 @@ Namespace namespacePrefix.[Namespace].Bar
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private Shared ROOTNAMESPACE As String = GetType(SingletonContainer).Namespace.Remove(GetType(SingletonContainer).Namespace.LastIndexOf("namespacePrefix.Namespace.Bar"))
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Function ResolveTypeFromName(ByVal typeName As String) As Global.System.Type
             Dim resolvedType As Global.System.Type = Me.DefaultResolveType(typeName, "namespace.bar", String.Concat(ROOTNAMESPACE, "namespacePrefix.Namespace.Bar"))
@@ -544,11 +544,11 @@ Namespace namespacePrefix.[Namespace].Bar
             End If
             Return Nothing
         End Function
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Function ResolveNameFromType(ByVal clientType As Global.System.Type) As String
             Dim originalNameAttribute As Global.Microsoft.OData.Client.OriginalNameAttribute =
@@ -571,9 +571,9 @@ Namespace namespacePrefix.[Namespace].Bar
             End If
             Return clientType.FullName.Substring(ROOTNAMESPACE.Length)
         End Function
-        '''<summary>
-        '''There are no comments for TestTypeSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for TestTypeSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("testTypeSet")>  _
         Public Overridable ReadOnly Property TestTypeSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.TestType)
@@ -586,9 +586,9 @@ Namespace namespacePrefix.[Namespace].Bar
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _TestTypeSet As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.TestType)
-        '''<summary>
-        '''There are no comments for BaseTypeSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for BaseTypeSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("baseTypeSet")>  _
         Public Overridable ReadOnly Property BaseTypeSet() As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.BaseType)
@@ -601,23 +601,23 @@ Namespace namespacePrefix.[Namespace].Bar
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _BaseTypeSet As Global.Microsoft.OData.Client.DataServiceQuery(Of namespacePrefix.[Namespace].Foo.BaseType)
-        '''<summary>
-        '''There are no comments for TestTypeSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for TestTypeSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToTestTypeSet(ByVal testType As namespacePrefix.[Namespace].Foo.TestType)
             MyBase.AddObject("testTypeSet", testType)
         End Sub
-        '''<summary>
-        '''There are no comments for BaseTypeSet in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for BaseTypeSet in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToBaseTypeSet(ByVal baseType As namespacePrefix.[Namespace].Foo.BaseType)
             MyBase.AddObject("baseTypeSet", baseType)
         End Sub
-        '''<summary>
-        '''There are no comments for SuperType in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for SuperType in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("superType")>  _
         Public Overridable ReadOnly Property SuperType() As namespacePrefix.[Namespace].Foo.TestTypeSingle
@@ -630,9 +630,9 @@ Namespace namespacePrefix.[Namespace].Bar
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _SuperType As namespacePrefix.[Namespace].Foo.TestTypeSingle
-        '''<summary>
-        '''There are no comments for Single in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Single in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("single")>  _
         Public Overridable ReadOnly Property [Single]() As namespacePrefix.[Namespace].Foo.SingleTypeSingle
@@ -718,9 +718,20 @@ Namespace namespacePrefix.[Namespace].Bar
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader)
+                    Dim errors As Global.System.Collections.Generic.IEnumerable(Of Global.Microsoft.OData.Edm.Validation.EdmError) = Nothing
+                    Dim edmModel As Global.Microsoft.OData.Edm.IEdmModel = Nothing
+                    If Not Global.Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, False, edmModel, errors) Then
+                        Dim errorMessages As Global.System.Text.StringBuilder = New Global.System.Text.StringBuilder()
+                        For Each err As Global.Microsoft.OData.Edm.Validation.EdmError In errors
+                            errorMessages.Append(err.ErrorMessage)
+                            errorMessages.Append("; ")
+                        Next
+                        Throw New Global.System.InvalidOperationException(errorMessages.ToString())
+                    End If
+
+                    Return edmModel
                 Finally
-                    CType(reader,Global.System.IDisposable).Dispose
+                    CType(reader, Global.System.IDisposable).Dispose()
                 End Try
             End Function
             <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _

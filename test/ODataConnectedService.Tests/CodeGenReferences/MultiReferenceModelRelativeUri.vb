@@ -12,11 +12,11 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 1/16/2021 1:39:28 PM
+'Generation date: 06.03.2021 22:52:23
 Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
-        ''' <summary>
-        ''' There are no comments for TruckDemoService in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TruckDemoService in the schema.
+    ''' </summary>
     Partial Public Class TruckDemoService
         Inherits Global.Microsoft.OData.Client.DataServiceContext
         ''' <summary>
@@ -365,9 +365,9 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
             Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)(Me, Me.BaseUri.OriginalString.Trim("/"C) + "/ResetVehicleSpeedToValue", New Global.Microsoft.OData.Client.BodyOperationParameter("targetValue", targetValue))
         End Function
     End Class
-        ''' <summary>
-        ''' There are no comments for LocationAndFuel in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for LocationAndFuel in the schema.
+    ''' </summary>
     Partial Public Class LocationAndFuel
         ''' <summary>
         ''' There are no comments for Property FuelLevel in the schema.
@@ -410,9 +410,9 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         Partial Private Sub OnLocationChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' Alarm: Truck Stopped!
-        ''' </summary>
+    ''' <summary>
+    ''' Alarm: Truck Stopped!
+    ''' </summary>
     Partial Public Class TruckStoppedAlarmType
         ''' <summary>
         ''' There are no comments for Property Severity in the schema.
@@ -455,9 +455,9 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         Partial Private Sub OnLocationAndFuelChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for HeadUnitTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for HeadUnitTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class HeadUnitTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of HeadUnitType)
         ''' <summary>
@@ -481,9 +481,9 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for HeadUnitType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for HeadUnitType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' SerialNo
     ''' </KeyProperties>
@@ -541,9 +541,9 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         Partial Private Sub OnDimmingLevelChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for TruckTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TruckTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class TruckTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of TruckType)
         ''' <summary>
@@ -601,9 +601,9 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Private _VehicleGPS As Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSTypeSingle
     End Class
-        ''' <summary>
-        ''' There are no comments for TruckType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for TruckType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Key
     ''' </KeyProperties>
@@ -823,9 +823,9 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
             Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Me.Context, resource.EditLink.OriginalString.Trim("/"C) + "/Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo.TurnOffAC")
         End Function
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedVehicleGPSTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedVehicleGPSTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class DerivedVehicleGPSTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DerivedVehicleGPSType)
         ''' <summary>
@@ -849,9 +849,9 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for DerivedVehicleGPSType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for DerivedVehicleGPSType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Key
     ''' </KeyProperties>
@@ -998,9 +998,9 @@ End Namespace
 Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.Vocabulary.V1
 End Namespace
 Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
-        ''' <summary>
-        ''' There are no comments for GPSContainer in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for GPSContainer in the schema.
+    ''' </summary>
     Partial Public Class GPSContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
         ''' <summary>
@@ -1280,9 +1280,9 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
             Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Of Microsoft.OData.SampleService.Models.ModelRefDemo.GPS.VehicleGPSType)(Me, Me.BaseUri.OriginalString.Trim("/"C) + "/ResetVehicleSpeedToValue", New Global.Microsoft.OData.Client.BodyOperationParameter("targetValue", targetValue))
         End Function
     End Class
-        ''' <summary>
-        ''' There are no comments for GPSLostSignalAlarmType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for GPSLostSignalAlarmType in the schema.
+    ''' </summary>
     Partial Public Class GPSLostSignalAlarmType
         ''' <summary>
         ''' There are no comments for Property Severity in the schema.
@@ -1325,9 +1325,9 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         Partial Private Sub OnLastKnownLocationChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for VehicleGPSTypeSingle in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for VehicleGPSTypeSingle in the schema.
+    ''' </summary>
     Partial Public Class VehicleGPSTypeSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of VehicleGPSType)
         ''' <summary>
@@ -1351,9 +1351,9 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
             MyBase.New(query)
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for VehicleGPSType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for VehicleGPSType in the schema.
+    ''' </summary>
     ''' <KeyProperties>
     ''' Key
     ''' </KeyProperties>
@@ -1581,9 +1581,9 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
     End Module
 End Namespace
 Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.Location
-        ''' <summary>
-        ''' There are no comments for GeoLocation in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for GeoLocation in the schema.
+    ''' </summary>
     Partial Public Class GeoLocation
         ''' <summary>
         ''' There are no comments for Property Lat in the schema.
@@ -1626,9 +1626,9 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.Location
         Partial Private Sub OnLongChanged()
         End Sub
     End Class
-        ''' <summary>
-        ''' There are no comments for OutsideGeoFenceAlarmType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for OutsideGeoFenceAlarmType in the schema.
+    ''' </summary>
     Partial Public Class OutsideGeoFenceAlarmType
         ''' <summary>
         ''' There are no comments for Property Severity in the schema.
@@ -1673,9 +1673,9 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.Location
     End Class
 End Namespace
 Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.Map
-        ''' <summary>
-        ''' There are no comments for MapType in the schema.
-        ''' </summary>
+    ''' <summary>
+    ''' There are no comments for MapType in the schema.
+    ''' </summary>
     Partial Public Class MapType
         ''' <summary>
         ''' There are no comments for Property ProviderName in the schema.

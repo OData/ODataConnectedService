@@ -12,17 +12,17 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 4/1/2020 11:51:01 AM
+'Generation date: 03.03.2021 22:28:09
 Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
-    '''<summary>
-    '''There are no comments for Container in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for Container in the schema.
+    ''' </summary>
     Partial Public Class Container
         Inherits Global.Microsoft.OData.Client.DataServiceContext
-        '''<summary>
-        '''Initialize a new Container object.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' Initialize a new Container object.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
             Me.ResolveName = AddressOf Me.ResolveNameFromType
@@ -32,21 +32,21 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         End Sub
         Partial Private Sub OnContextCreated()
         End Sub
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private Shared ROOTNAMESPACE As String = GetType(Container).Namespace.Remove(GetType(Container).Namespace.LastIndexOf("Microsoft.OData.Service.Sample.TrippinInMemory.Models"))
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Function ResolveNameFromType(ByVal clientType As Global.System.Type) As String
             Return clientType.FullName.Substring(ROOTNAMESPACE.Length)
         End Function
-        '''<summary>
-        '''There are no comments for People in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for People in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property People() As Global.Microsoft.OData.Client.DataServiceQuery(Of Person)
             Get
                 If (Me._People Is Nothing) Then
@@ -55,12 +55,12 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Return Me._People
             End Get
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _People As Global.Microsoft.OData.Client.DataServiceQuery(Of Person)
-        '''<summary>
-        '''There are no comments for Airlines in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Airlines in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Airlines() As Global.Microsoft.OData.Client.DataServiceQuery(Of Airline)
             Get
                 If (Me._Airlines Is Nothing) Then
@@ -69,12 +69,12 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Return Me._Airlines
             End Get
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Airlines As Global.Microsoft.OData.Client.DataServiceQuery(Of Airline)
-        '''<summary>
-        '''There are no comments for Airports in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Airports in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Airports() As Global.Microsoft.OData.Client.DataServiceQuery(Of Airport)
             Get
                 If (Me._Airports Is Nothing) Then
@@ -83,33 +83,33 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Return Me._Airports
             End Get
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Airports As Global.Microsoft.OData.Client.DataServiceQuery(Of Airport)
-        '''<summary>
-        '''There are no comments for People in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for People in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToPeople(ByVal person As Person)
             MyBase.AddObject("People", person)
         End Sub
-        '''<summary>
-        '''There are no comments for Airlines in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Airlines in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToAirlines(ByVal airline As Airline)
             MyBase.AddObject("Airlines", airline)
         End Sub
-        '''<summary>
-        '''There are no comments for Airports in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Airports in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToAirports(ByVal airport As Airport)
             MyBase.AddObject("Airports", airport)
         End Sub
-        '''<summary>
-        '''There are no comments for Me in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Me in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property [Me]() As PersonSingle
             Get
                 If (Me._Me Is Nothing) Then
@@ -118,13 +118,13 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Return Me._Me
             End Get
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Me As PersonSingle
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private MustInherit Class GeneratedEdmModel
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
             Private Shared ParsedModel As Global.Microsoft.OData.Edm.IEdmModel = LoadModelFromString
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
             Private Const Edmx As String = "<edmx:Edmx xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"" Version=""4.0"">" & _
  "  <edmx:DataServices>" & _
  "    <Schema xmlns=""http://docs.oasis-open.org/odata/ns/edm"" Namespace=""Microsoft.OData.Service.Sample.TrippinInMemory.Models"">" & _
@@ -205,20 +205,31 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
  "    </Schema>" & _
  "  </edmx:DataServices>" & _
  "</edmx:Edmx>"
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
             Public Shared Function GetInstance() As Global.Microsoft.OData.Edm.IEdmModel
                 Return ParsedModel
             End Function
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader)
+                    Dim errors As Global.System.Collections.Generic.IEnumerable(Of Global.Microsoft.OData.Edm.Validation.EdmError) = Nothing
+                    Dim edmModel As Global.Microsoft.OData.Edm.IEdmModel = Nothing
+                    If Not Global.Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, False, edmModel, errors) Then
+                        Dim errorMessages As Global.System.Text.StringBuilder = New Global.System.Text.StringBuilder()
+                        For Each err As Global.Microsoft.OData.Edm.Validation.EdmError In errors
+                            errorMessages.Append(err.ErrorMessage)
+                            errorMessages.Append("; ")
+                        Next
+                        Throw New Global.System.InvalidOperationException(errorMessages.ToString())
+                    End If
+
+                    Return edmModel
                 Finally
-                    CType(reader,Global.System.IDisposable).Dispose
+                    CType(reader, Global.System.IDisposable).Dispose()
                 End Try
             End Function
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
             Private Shared Function CreateXmlReader(ByVal edmxToParse As String) As Global.System.Xml.XmlReader
                 Return Global.System.Xml.XmlReader.Create(New Global.System.IO.StringReader(edmxToParse))
             End Function
@@ -243,9 +254,9 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
             Return New Global.Microsoft.OData.Client.DataServiceActionQuery(Me, Me.BaseUri.OriginalString.Trim("/"C) + "/ResetDataSource")
         End Function
     End Class
-    '''<summary>
-    '''There are no comments for PersonSingle in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for PersonSingle in the schema.
+    ''' </summary>
     Partial Public Class PersonSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Person)
         ''' <summary>
@@ -268,10 +279,10 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         Public Sub New(ByVal query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Person))
             MyBase.New(query)
         End Sub
-        '''<summary>
-        '''There are no comments for Friends in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Friends in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Friends() As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)
             Get
                 If Not Me.IsComposable Then
@@ -283,12 +294,12 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Return Me._Friends
             End Get
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Friends As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)
-        '''<summary>
-        '''There are no comments for Trips in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Trips in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable ReadOnly Property Trips() As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)
             Get
                 If Not Me.IsComposable Then
@@ -300,34 +311,34 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Return Me._Trips
             End Get
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Trips As Global.Microsoft.OData.Client.DataServiceQuery(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)
     End Class
-    '''<summary>
-    '''There are no comments for Person in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''UserName
-    '''</KeyProperties>
+    ''' <summary>
+    ''' There are no comments for Person in the schema.
+    ''' </summary>
+    ''' <KeyProperties>
+    ''' UserName
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("UserName")>  _
     Partial Public Class Person
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new Person object.
-        '''</summary>
-        '''<param name="userName">Initial value of UserName.</param>
-        '''<param name="gender">Initial value of Gender.</param>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' Create a new Person object.
+        ''' </summary>
+        ''' <param name="userName">Initial value of UserName.</param>
+        ''' <param name="gender">Initial value of Gender.</param>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreatePerson(ByVal userName As String, ByVal gender As Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender) As Person
             Dim person As Person = New Person()
             person.UserName = userName
             person.Gender = gender
             Return person
         End Function
-        '''<summary>
-        '''There are no comments for Property UserName in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property UserName in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property UserName() As String
             Get
                 Return Me._UserName
@@ -338,16 +349,16 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Me.OnUserNameChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _UserName As String
         Partial Private Sub OnUserNameChanging(ByVal value As String)
         End Sub
         Partial Private Sub OnUserNameChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Gender in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property Gender in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Gender() As Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender
             Get
                 Return Me._Gender
@@ -358,16 +369,16 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Me.OnGenderChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Gender As Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender
         Partial Private Sub OnGenderChanging(ByVal value As Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender)
         End Sub
         Partial Private Sub OnGenderChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Age in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property Age in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Age() As Global.System.Nullable(Of Long)
             Get
                 Return Me._Age
@@ -378,16 +389,16 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Me.OnAgeChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Age As Global.System.Nullable(Of Long)
         Partial Private Sub OnAgeChanging(ByVal value As Global.System.Nullable(Of Long))
         End Sub
         Partial Private Sub OnAgeChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property HomeAddress in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property HomeAddress in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property HomeAddress() As Microsoft.OData.Service.Sample.TrippinInMemory.Models.Location
             Get
                 Return Me._HomeAddress
@@ -398,16 +409,16 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Me.OnHomeAddressChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _HomeAddress As Microsoft.OData.Service.Sample.TrippinInMemory.Models.Location
         Partial Private Sub OnHomeAddressChanging(ByVal value As Microsoft.OData.Service.Sample.TrippinInMemory.Models.Location)
         End Sub
         Partial Private Sub OnHomeAddressChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Friends in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property Friends in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Friends() As Global.System.Collections.ObjectModel.Collection(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)
             Get
                 Return Me._Friends
@@ -418,16 +429,16 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Me.OnFriendsChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Friends As Global.System.Collections.ObjectModel.Collection(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person) = New Global.System.Collections.ObjectModel.Collection(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)()
         Partial Private Sub OnFriendsChanging(ByVal value As Global.System.Collections.ObjectModel.Collection(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person))
         End Sub
         Partial Private Sub OnFriendsChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Trips in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property Trips in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Trips() As Global.System.Collections.ObjectModel.Collection(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)
             Get
                 Return Me._Trips
@@ -438,16 +449,16 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Me.OnTripsChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Trips As Global.System.Collections.ObjectModel.Collection(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip) = New Global.System.Collections.ObjectModel.Collection(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip)()
         Partial Private Sub OnTripsChanging(ByVal value As Global.System.Collections.ObjectModel.Collection(Of Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip))
         End Sub
         Partial Private Sub OnTripsChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for AirlineSingle in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for AirlineSingle in the schema.
+    ''' </summary>
     Partial Public Class AirlineSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Airline)
         ''' <summary>
@@ -471,29 +482,29 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Airline in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''AirlineCode
-    '''</KeyProperties>
+    ''' <summary>
+    ''' There are no comments for Airline in the schema.
+    ''' </summary>
+    ''' <KeyProperties>
+    ''' AirlineCode
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("AirlineCode")>  _
     Partial Public Class Airline
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new Airline object.
-        '''</summary>
-        '''<param name="airlineCode">Initial value of AirlineCode.</param>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' Create a new Airline object.
+        ''' </summary>
+        ''' <param name="airlineCode">Initial value of AirlineCode.</param>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateAirline(ByVal airlineCode As String) As Airline
             Dim airline As Airline = New Airline()
             airline.AirlineCode = airlineCode
             Return airline
         End Function
-        '''<summary>
-        '''There are no comments for Property AirlineCode in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property AirlineCode in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property AirlineCode() As String
             Get
                 Return Me._AirlineCode
@@ -504,16 +515,16 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Me.OnAirlineCodeChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _AirlineCode As String
         Partial Private Sub OnAirlineCodeChanging(ByVal value As String)
         End Sub
         Partial Private Sub OnAirlineCodeChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Name in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property Name in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Name() As String
             Get
                 Return Me._Name
@@ -524,16 +535,16 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Me.OnNameChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Name As String
         Partial Private Sub OnNameChanging(ByVal value As String)
         End Sub
         Partial Private Sub OnNameChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for AirportSingle in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for AirportSingle in the schema.
+    ''' </summary>
     Partial Public Class AirportSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Airport)
         ''' <summary>
@@ -557,29 +568,29 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Airport in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''IcaoCode
-    '''</KeyProperties>
+    ''' <summary>
+    ''' There are no comments for Airport in the schema.
+    ''' </summary>
+    ''' <KeyProperties>
+    ''' IcaoCode
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("IcaoCode")>  _
     Partial Public Class Airport
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new Airport object.
-        '''</summary>
-        '''<param name="icaoCode">Initial value of IcaoCode.</param>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' Create a new Airport object.
+        ''' </summary>
+        ''' <param name="icaoCode">Initial value of IcaoCode.</param>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateAirport(ByVal icaoCode As String) As Airport
             Dim airport As Airport = New Airport()
             airport.IcaoCode = icaoCode
             Return airport
         End Function
-        '''<summary>
-        '''There are no comments for Property Name in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property Name in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Name() As String
             Get
                 Return Me._Name
@@ -590,16 +601,16 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Me.OnNameChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Name As String
         Partial Private Sub OnNameChanging(ByVal value As String)
         End Sub
         Partial Private Sub OnNameChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property IcaoCode in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property IcaoCode in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property IcaoCode() As String
             Get
                 Return Me._IcaoCode
@@ -610,21 +621,21 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Me.OnIcaoCodeChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _IcaoCode As String
         Partial Private Sub OnIcaoCodeChanging(ByVal value As String)
         End Sub
         Partial Private Sub OnIcaoCodeChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Location in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for Location in the schema.
+    ''' </summary>
     Partial Public Class Location
-        '''<summary>
-        '''There are no comments for Property Address in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property Address in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Address() As String
             Get
                 Return Me._Address
@@ -635,16 +646,16 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Me.OnAddressChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Address As String
         Partial Private Sub OnAddressChanging(ByVal value As String)
         End Sub
         Partial Private Sub OnAddressChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property City in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property City in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property City() As Microsoft.OData.Service.Sample.TrippinInMemory.Models.City
             Get
                 Return Me._City
@@ -655,21 +666,21 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Me.OnCityChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _City As Microsoft.OData.Service.Sample.TrippinInMemory.Models.City
         Partial Private Sub OnCityChanging(ByVal value As Microsoft.OData.Service.Sample.TrippinInMemory.Models.City)
         End Sub
         Partial Private Sub OnCityChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for City in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for City in the schema.
+    ''' </summary>
     Partial Public Class City
-        '''<summary>
-        '''There are no comments for Property Name in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property Name in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Name() As String
             Get
                 Return Me._Name
@@ -680,16 +691,16 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Me.OnNameChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Name As String
         Partial Private Sub OnNameChanging(ByVal value As String)
         End Sub
         Partial Private Sub OnNameChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for TripSingle in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for TripSingle in the schema.
+    ''' </summary>
     Partial Public Class TripSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Trip)
         ''' <summary>
@@ -713,29 +724,29 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for Trip in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''TripId
-    '''</KeyProperties>
+    ''' <summary>
+    ''' There are no comments for Trip in the schema.
+    ''' </summary>
+    ''' <KeyProperties>
+    ''' TripId
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("TripId")>  _
     Partial Public Class Trip
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new Trip object.
-        '''</summary>
-        '''<param name="tripId">Initial value of TripId.</param>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' Create a new Trip object.
+        ''' </summary>
+        ''' <param name="tripId">Initial value of TripId.</param>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateTrip(ByVal tripId As Integer) As Trip
             Dim trip As Trip = New Trip()
             trip.TripId = tripId
             Return trip
         End Function
-        '''<summary>
-        '''There are no comments for Property TripId in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property TripId in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property TripId() As Integer
             Get
                 Return Me._TripId
@@ -746,16 +757,16 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Me.OnTripIdChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _TripId As Integer
         Partial Private Sub OnTripIdChanging(ByVal value As Integer)
         End Sub
         Partial Private Sub OnTripIdChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property Name in the schema.
-        '''</summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        ''' <summary>
+        ''' There are no comments for Property Name in the schema.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Property Name() As String
             Get
                 Return Me._Name
@@ -766,16 +777,16 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 Me.OnNameChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Name As String
         Partial Private Sub OnNameChanging(ByVal value As String)
         End Sub
         Partial Private Sub OnNameChanged()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for PersonGender in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for PersonGender in the schema.
+    ''' </summary>
     Public Enum PersonGender
         Male = 0
         Female = 1
@@ -804,7 +815,7 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
             userName As String) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonSingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"UserName", userName}
+                { "UserName", userName }
             }
             Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
@@ -827,7 +838,7 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
             airlineCode As String) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirlineSingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"AirlineCode", airlineCode}
+                { "AirlineCode", airlineCode }
             }
             Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirlineSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
@@ -850,7 +861,7 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
             icaoCode As String) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirportSingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"IcaoCode", icaoCode}
+                { "IcaoCode", icaoCode }
             }
             Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.AirportSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
@@ -873,7 +884,7 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
             tripId As Integer) As Microsoft.OData.Service.Sample.TrippinInMemory.Models.TripSingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"TripId", tripId}
+                { "TripId", tripId }
             }
             Return New Microsoft.OData.Service.Sample.TrippinInMemory.Models.TripSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function

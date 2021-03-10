@@ -12,17 +12,17 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 18.03.2020 15:13:28
+'Generation date: 03.03.2021 22:15:32
 Namespace DupNames
-    '''<summary>
-    '''There are no comments for EntityContainer in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for EntityContainer in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("EntityContainer")>  _
     Partial Public Class EntityContainer
         Inherits Global.Microsoft.OData.Client.DataServiceContext
-        '''<summary>
-        '''Initialize a new EntityContainer object.
-        '''</summary>
+        ''' <summary>
+        ''' Initialize a new EntityContainer object.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
@@ -36,11 +36,11 @@ Namespace DupNames
         End Sub
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private Shared ROOTNAMESPACE As String = GetType(EntityContainer).Namespace.Remove(GetType(EntityContainer).Namespace.LastIndexOf("DupNames"))
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Function ResolveTypeFromName(ByVal typeName As String) As Global.System.Type
             Dim resolvedType As Global.System.Type = Me.DefaultResolveType(typeName, "DupNames", String.Concat(ROOTNAMESPACE, "DupNames"))
@@ -49,11 +49,11 @@ Namespace DupNames
             End If
             Return Nothing
         End Function
-        '''<summary>
-        '''Since the namespace configured for this service reference
-        '''in Visual Studio is different from the one indicated in the
-        '''server schema, use type-mappers to map between the two.
-        '''</summary>
+        ''' <summary>
+        ''' Since the namespace configured for this service reference
+        ''' in Visual Studio is different from the one indicated in the
+        ''' server schema, use type-mappers to map between the two.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Protected Function ResolveNameFromType(ByVal clientType As Global.System.Type) As String
             Dim originalNameAttribute As Global.Microsoft.OData.Client.OriginalNameAttribute =
@@ -66,9 +66,9 @@ Namespace DupNames
             End If
             Return Nothing
         End Function
-        '''<summary>
-        '''There are no comments for Set1 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Set1 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Set1")>  _
         Public Overridable ReadOnly Property Set1() As Global.Microsoft.OData.Client.DataServiceQuery(Of DupWithTypeName)
@@ -81,9 +81,9 @@ Namespace DupNames
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Set1 As Global.Microsoft.OData.Client.DataServiceQuery(Of DupWithTypeName)
-        '''<summary>
-        '''There are no comments for Set2 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Set2 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Set2")>  _
         Public Overridable ReadOnly Property Set2() As Global.Microsoft.OData.Client.DataServiceQuery(Of DupWithTypeName1)
@@ -96,16 +96,16 @@ Namespace DupNames
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _Set2 As Global.Microsoft.OData.Client.DataServiceQuery(Of DupWithTypeName1)
-        '''<summary>
-        '''There are no comments for Set1 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Set1 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToSet1(ByVal dupWithTypeName As DupWithTypeName)
             MyBase.AddObject("Set1", dupWithTypeName)
         End Sub
-        '''<summary>
-        '''There are no comments for Set2 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Set2 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Overridable Sub AddToSet2(ByVal dupWithTypeName1 As DupWithTypeName1)
             MyBase.AddObject("Set2", dupWithTypeName1)
@@ -165,9 +165,20 @@ Namespace DupNames
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
-                    Return Global.Microsoft.OData.Edm.Csdl.CsdlReader.Parse(reader)
+                    Dim errors As Global.System.Collections.Generic.IEnumerable(Of Global.Microsoft.OData.Edm.Validation.EdmError) = Nothing
+                    Dim edmModel As Global.Microsoft.OData.Edm.IEdmModel = Nothing
+                    If Not Global.Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, False, edmModel, errors) Then
+                        Dim errorMessages As Global.System.Text.StringBuilder = New Global.System.Text.StringBuilder()
+                        For Each err As Global.Microsoft.OData.Edm.Validation.EdmError In errors
+                            errorMessages.Append(err.ErrorMessage)
+                            errorMessages.Append("; ")
+                        Next
+                        Throw New Global.System.InvalidOperationException(errorMessages.ToString())
+                    End If
+
+                    Return edmModel
                 Finally
-                    CType(reader,Global.System.IDisposable).Dispose
+                    CType(reader, Global.System.IDisposable).Dispose()
                 End Try
             End Function
             <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
@@ -176,9 +187,9 @@ Namespace DupNames
             End Function
         End Class
     End Class
-    '''<summary>
-    '''There are no comments for DupWithTypeNameSingle in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for DupWithTypeNameSingle in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeNameSingle")>  _
     Partial Public Class DupWithTypeNameSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DupWithTypeName)
@@ -202,9 +213,9 @@ Namespace DupNames
         Public Sub New(ByVal query As Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DupWithTypeName))
             MyBase.New(query)
         End Sub
-        '''<summary>
-        '''There are no comments for DupPropertyName in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for DupPropertyName in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupPropertyName")>  _
         Public Overridable ReadOnly Property DupPropertyName() As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName1)
@@ -221,24 +232,24 @@ Namespace DupNames
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Private _DupPropertyName As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName1)
     End Class
-    '''<summary>
-    '''There are no comments for DupWithTypeName in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''DupWithTypeName
-    '''</KeyProperties>
+    ''' <summary>
+    ''' There are no comments for DupWithTypeName in the schema.
+    ''' </summary>
+    ''' <KeyProperties>
+    ''' DupWithTypeName
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("DupWithTypeName")>  _
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName")>  _
     Partial Public Class DupWithTypeName
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new DupWithTypeName object.
-        '''</summary>
-        '''<param name="dupWithTypeName1">Initial value of DupWithTypeName.</param>
-        '''<param name="dupWithTypeName11">Initial value of DupWithTypeName1.</param>
-        '''<param name="dupWithTypeName111">Initial value of DupWithTypeName11.</param>
-        '''<param name="dupWithTypeName2">Initial value of DupWithTypeName2.</param>
-        '''<param name="dupWithTypeName3">Initial value of DupWithTypeName3.</param>
+        ''' <summary>
+        ''' Create a new DupWithTypeName object.
+        ''' </summary>
+        ''' <param name="dupWithTypeName1">Initial value of DupWithTypeName.</param>
+        ''' <param name="dupWithTypeName11">Initial value of DupWithTypeName1.</param>
+        ''' <param name="dupWithTypeName111">Initial value of DupWithTypeName11.</param>
+        ''' <param name="dupWithTypeName2">Initial value of DupWithTypeName2.</param>
+        ''' <param name="dupWithTypeName3">Initial value of DupWithTypeName3.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateDupWithTypeName(ByVal dupWithTypeName1 As Global.System.Guid, ByVal dupWithTypeName11 As Global.System.Guid, ByVal dupWithTypeName111 As Global.System.Guid, ByVal dupWithTypeName2 As Global.System.Guid, ByVal dupWithTypeName3 As DupNames.DupWithComplexTypeName) As DupWithTypeName
             Dim dupWithTypeName As DupWithTypeName = New DupWithTypeName()
@@ -252,9 +263,9 @@ Namespace DupNames
             dupWithTypeName.DupWithTypeName3 = dupWithTypeName3
             Return dupWithTypeName
         End Function
-        '''<summary>
-        '''There are no comments for Property DupWithTypeName in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupWithTypeName in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName")>  _
         Public Overridable Property DupWithTypeName() As Global.System.Guid
@@ -273,9 +284,9 @@ Namespace DupNames
         End Sub
         Partial Private Sub OnDupWithTypeNameChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DupWithTypeName4 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupWithTypeName4 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupWithTypeName")>  _
         Public Overridable Property DupWithTypeName4() As Global.System.Nullable(Of Integer)
@@ -294,9 +305,9 @@ Namespace DupNames
         End Sub
         Partial Private Sub OnDupWithTypeName4Changed()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DupWithTypeName1 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupWithTypeName1 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName1")>  _
         Public Overridable Property DupWithTypeName1() As Global.System.Guid
@@ -315,9 +326,9 @@ Namespace DupNames
         End Sub
         Partial Private Sub OnDupWithTypeName1Changed()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DupWithTypeName11 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupWithTypeName11 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupWithTypeName1")>  _
         Public Overridable Property DupWithTypeName11() As Global.System.Guid
@@ -336,9 +347,9 @@ Namespace DupNames
         End Sub
         Partial Private Sub OnDupWithTypeName11Changed()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DupWithTypeName2 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupWithTypeName2 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName2")>  _
         Public Overridable Property DupWithTypeName2() As Global.System.Guid
@@ -357,9 +368,9 @@ Namespace DupNames
         End Sub
         Partial Private Sub OnDupWithTypeName2Changed()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DupWithTypeName3 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupWithTypeName3 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName3")>  _
         Public Overridable Property DupWithTypeName3() As DupNames.DupWithComplexTypeName
@@ -378,9 +389,9 @@ Namespace DupNames
         End Sub
         Partial Private Sub OnDupWithTypeName3Changed()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DupPropertyName in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupPropertyName in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupPropertyName")>  _
         Public Overridable Property DupPropertyName() As Global.System.Nullable(Of Integer)
@@ -399,9 +410,9 @@ Namespace DupNames
         End Sub
         Partial Private Sub OnDupPropertyNameChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DupPropertyName1 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupPropertyName1 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupPropertyName")>  _
         Public Overridable Property DupPropertyName1() As Global.System.Collections.ObjectModel.Collection(Of DupNames.DupWithTypeName1)
@@ -421,14 +432,14 @@ Namespace DupNames
         Partial Private Sub OnDupPropertyName1Changed()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DupWithComplexTypeName in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for DupWithComplexTypeName in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithComplexTypeName")>  _
     Partial Public Class DupWithComplexTypeName
-        '''<summary>
-        '''There are no comments for Property DupWithComplexTypeName in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupWithComplexTypeName in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithComplexTypeName")>  _
         Public Overridable Property DupWithComplexTypeName() As Global.System.Nullable(Of Integer)
@@ -447,9 +458,9 @@ Namespace DupNames
         End Sub
         Partial Private Sub OnDupWithComplexTypeNameChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DupWithComplexTypeName2 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupWithComplexTypeName2 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupWithComplexTypeName")>  _
         Public Overridable Property DupWithComplexTypeName2() As Global.System.Nullable(Of Integer)
@@ -468,9 +479,9 @@ Namespace DupNames
         End Sub
         Partial Private Sub OnDupWithComplexTypeName2Changed()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DupWithComplexTypeName1 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupWithComplexTypeName1 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithComplexTypeName1")>  _
         Public Overridable Property DupWithComplexTypeName1() As String
@@ -489,9 +500,9 @@ Namespace DupNames
         End Sub
         Partial Private Sub OnDupWithComplexTypeName1Changed()
         End Sub
-        '''<summary>
-        '''There are no comments for Property _DupWithComplexTypeName2 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property _DupWithComplexTypeName2 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("_DupWithComplexTypeName2")>  _
         Public Overridable Property _DupWithComplexTypeName2() As Global.System.Nullable(Of Integer)
@@ -510,9 +521,9 @@ Namespace DupNames
         End Sub
         Partial Private Sub On_DupWithComplexTypeName2Changed()
         End Sub
-        '''<summary>
-        '''There are no comments for Property __DupWithComplexTypeName2 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property __DupWithComplexTypeName2 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("__DupWithComplexTypeName2")>  _
         Public Overridable Property __DupWithComplexTypeName2() As Global.System.Nullable(Of Integer)
@@ -532,9 +543,9 @@ Namespace DupNames
         Partial Private Sub On__DupWithComplexTypeName2Changed()
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DupWithTypeName1Single in the schema.
-    '''</summary>
+    ''' <summary>
+    ''' There are no comments for DupWithTypeName1Single in the schema.
+    ''' </summary>
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName1Single")>  _
     Partial Public Class DupWithTypeName1Single
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of DupWithTypeName1)
@@ -559,21 +570,21 @@ Namespace DupNames
             MyBase.New(query)
         End Sub
     End Class
-    '''<summary>
-    '''There are no comments for DupWithTypeName1 in the schema.
-    '''</summary>
-    '''<KeyProperties>
-    '''DupWithTypeName
-    '''</KeyProperties>
+    ''' <summary>
+    ''' There are no comments for DupWithTypeName1 in the schema.
+    ''' </summary>
+    ''' <KeyProperties>
+    ''' DupWithTypeName
+    ''' </KeyProperties>
     <Global.Microsoft.OData.Client.Key("DupWithTypeName")>  _
     <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName1")>  _
     Partial Public Class DupWithTypeName1
         Inherits Global.Microsoft.OData.Client.BaseEntityType
-        '''<summary>
-        '''Create a new DupWithTypeName1 object.
-        '''</summary>
-        '''<param name="dupWithTypeName2">Initial value of DupWithTypeName2.</param>
-        '''<param name="dupwithtypeName4">Initial value of DupwithtypeName4.</param>
+        ''' <summary>
+        ''' Create a new DupWithTypeName1 object.
+        ''' </summary>
+        ''' <param name="dupWithTypeName2">Initial value of DupWithTypeName2.</param>
+        ''' <param name="dupwithtypeName4">Initial value of DupwithtypeName4.</param>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Shared Function CreateDupWithTypeName1(ByVal dupWithTypeName2 As Global.System.Guid, ByVal dupwithtypeName4 As Global.System.Guid) As DupWithTypeName1
             Dim dupWithTypeName1 As DupWithTypeName1 = New DupWithTypeName1()
@@ -581,9 +592,9 @@ Namespace DupNames
             dupWithTypeName1.DupwithtypeName4 = dupwithtypeName4
             Return dupWithTypeName1
         End Function
-        '''<summary>
-        '''There are no comments for Property DupWithTypeName2 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupWithTypeName2 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupWithTypeName")>  _
         Public Overridable Property DupWithTypeName2() As Global.System.Guid
@@ -602,9 +613,9 @@ Namespace DupNames
         End Sub
         Partial Private Sub OnDupWithTypeName2Changed()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DupwithtypeName4 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupwithtypeName4 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupwithtypeName")>  _
         Public Overridable Property DupwithtypeName4() As Global.System.Guid
@@ -623,9 +634,9 @@ Namespace DupNames
         End Sub
         Partial Private Sub OnDupwithtypeName4Changed()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DupWithTypeName in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupWithTypeName in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName")>  _
         Public Overridable Property DupWithTypeName() As Global.System.Nullable(Of Integer)
@@ -644,9 +655,9 @@ Namespace DupNames
         End Sub
         Partial Private Sub OnDupWithTypeNameChanged()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DupWithTypeName1 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupWithTypeName1 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName1")>  _
         Public Overridable Property DupWithTypeName1() As Global.System.Nullable(Of Integer)
@@ -665,9 +676,9 @@ Namespace DupNames
         End Sub
         Partial Private Sub OnDupWithTypeName1Changed()
         End Sub
-        '''<summary>
-        '''There are no comments for Property DupWithTypeName3 in the schema.
-        '''</summary>
+        ''' <summary>
+        ''' There are no comments for Property DupWithTypeName3 in the schema.
+        ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName3")>  _
         Public Overridable Property DupWithTypeName3() As Global.System.Nullable(Of Integer)
@@ -710,7 +721,7 @@ Namespace DupNames
             dupWithTypeName As Global.System.Guid) As DupNames.DupWithTypeNameSingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"DupWithTypeName", dupWithTypeName}
+                { "DupWithTypeName", dupWithTypeName }
             }
             Return New DupNames.DupWithTypeNameSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
@@ -733,7 +744,7 @@ Namespace DupNames
             dupWithTypeName As Global.System.Nullable(Of Integer)) As DupNames.DupWithTypeName1Single
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"DupWithTypeName", dupWithTypeName}
+                { "DupWithTypeName", dupWithTypeName }
             }
             Return New DupNames.DupWithTypeName1Single(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
