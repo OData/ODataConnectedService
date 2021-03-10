@@ -54,10 +54,12 @@ namespace ODataConnectedService.Tests
                 EdmxVersion = Constants.EdmxVersion4,
                 ServiceName = "MyService",
                 IncludeCustomHeaders = true,
+                StoreCustomHttpHeaders = true,
                 CustomHttpHeaders = "Key1:Val1\nKey2:Val2",
                 IncludeWebProxy = true,
                 WebProxyHost = "http://localhost:8080",
                 IncludeWebProxyNetworkCredentials = true,
+                StoreWebProxyNetworkCredentials = true,
                 WebProxyNetworkCredentialsDomain = "domain",
                 WebProxyNetworkCredentialsUsername = "username",
                 WebProxyNetworkCredentialsPassword = "password",
@@ -124,10 +126,12 @@ namespace ODataConnectedService.Tests
                 Assert.Null(endpointPage.UserSettings.Endpoint);
                 Assert.Null(endpointPage.EdmxVersion);
                 Assert.False(endpointPage.UserSettings.IncludeCustomHeaders);
+                Assert.False(endpointPage.UserSettings.StoreCustomHttpHeaders);
                 Assert.Null(endpointPage.UserSettings.CustomHttpHeaders);
                 Assert.False(endpointPage.UserSettings.IncludeWebProxy);
                 Assert.Null(endpointPage.UserSettings.WebProxyHost);
                 Assert.False(endpointPage.UserSettings.IncludeWebProxyNetworkCredentials);
+                Assert.False(endpointPage.UserSettings.StoreWebProxyNetworkCredentials);
                 Assert.Null(endpointPage.UserSettings.WebProxyNetworkCredentialsDomain);
                 Assert.Null(endpointPage.UserSettings.WebProxyNetworkCredentialsUsername);
                 Assert.Null(endpointPage.UserSettings.WebProxyNetworkCredentialsPassword);
@@ -276,11 +280,13 @@ namespace ODataConnectedService.Tests
                 Assert.Equal("https://service/$metadata", endpointPage.UserSettings.Endpoint);
                 Assert.Equal("MyService", endpointPage.UserSettings.ServiceName);
                 Assert.True(endpointPage.UserSettings.IncludeCustomHeaders);
+                Assert.True(endpointPage.UserSettings.StoreCustomHttpHeaders);
                 Assert.Equal("Key1:Val1\nKey2:Val2", endpointPage.UserSettings.CustomHttpHeaders);
                 Assert.True(endpointPage.UserSettings.IncludeWebProxy);
                 Assert.Equal("http://localhost:8080", endpointPage.UserSettings.WebProxyHost);
                 Assert.True(endpointPage.UserSettings.IncludeWebProxyNetworkCredentials);
-                Assert.Equal("domain", endpointPage.UserSettings.WebProxyNetworkCredentialsDomain);
+                Assert.True(endpointPage.UserSettings.StoreWebProxyNetworkCredentials);
+                Assert.Equal("domain", endpointPage.UserSettings.WebProxyNetworkCredentialsDomain);                                
                 // username and password are not restored from the config
                 Assert.Equal("username", endpointPage.UserSettings.WebProxyNetworkCredentialsUsername);
                 Assert.Equal("password", endpointPage.UserSettings.WebProxyNetworkCredentialsPassword);
@@ -464,10 +470,12 @@ namespace ODataConnectedService.Tests
                 endpointPage.UserSettings.Endpoint = MetadataPath;
                 endpointPage.EdmxVersion = Constants.EdmxVersion4;
                 endpointPage.UserSettings.IncludeCustomHeaders = true;
+                endpointPage.UserSettings.StoreCustomHttpHeaders = true;
                 endpointPage.UserSettings.CustomHttpHeaders = "Key:val";
-                endpointPage.UserSettings.IncludeWebProxy = true;
+                endpointPage.UserSettings.IncludeWebProxy = true;                
                 endpointPage.UserSettings.WebProxyHost = "http://localhost:8080";
                 endpointPage.UserSettings.IncludeWebProxyNetworkCredentials = true;
+                endpointPage.UserSettings.StoreWebProxyNetworkCredentials = true;
                 endpointPage.UserSettings.WebProxyNetworkCredentialsDomain = "domain";
                 endpointPage.UserSettings.WebProxyNetworkCredentialsUsername = "user";
                 endpointPage.UserSettings.WebProxyNetworkCredentialsPassword = "pass";
@@ -538,10 +546,12 @@ namespace ODataConnectedService.Tests
                 Assert.Equal(MetadataPath, settings.MruEndpoints.First());
                 Assert.Equal(1, settings.MruEndpoints.Count(e => e == MetadataPath));
                 Assert.True(settings.IncludeCustomHeaders);
+                Assert.True(settings.StoreCustomHttpHeaders);
                 Assert.Null(settings.CustomHttpHeaders); // Custom HTTP headers may contain sensitive details like auth tokens
                 Assert.True(settings.IncludeWebProxy);
                 Assert.Equal("http://localhost:8080", settings.WebProxyHost);
                 Assert.True(settings.IncludeWebProxyNetworkCredentials);
+                Assert.True(settings.StoreWebProxyNetworkCredentials);
                 Assert.Equal("domain", settings.WebProxyNetworkCredentialsDomain);
                 // We don't persist web proxy network credentials
                 Assert.Null(settings.WebProxyNetworkCredentialsUsername);
@@ -574,10 +584,12 @@ namespace ODataConnectedService.Tests
                 Assert.Equal(MetadataPath, config.Endpoint);
                 Assert.Equal(Constants.EdmxVersion4, config.EdmxVersion);
                 Assert.True(config.IncludeCustomHeaders);
+                Assert.True(config.StoreCustomHttpHeaders);
                 Assert.Equal("Key:val", config.CustomHttpHeaders);
                 Assert.True(config.IncludeWebProxy);
                 Assert.Equal("http://localhost:8080", config.WebProxyHost);
                 Assert.True(config.IncludeWebProxyNetworkCredentials);
+                Assert.True(config.StoreCustomHttpHeaders);
                 Assert.Equal("domain", config.WebProxyNetworkCredentialsDomain);
                 Assert.Equal("user", config.WebProxyNetworkCredentialsUsername);
                 Assert.Equal("pass", config.WebProxyNetworkCredentialsPassword);
@@ -625,10 +637,12 @@ namespace ODataConnectedService.Tests
                 Assert.Equal(MetadataPath, config.Endpoint);
                 Assert.Equal(Constants.EdmxVersion4, config.EdmxVersion);
                 Assert.True(config.IncludeCustomHeaders);
+                Assert.True(config.StoreCustomHttpHeaders);
                 Assert.Equal("Key1:Val1\nKey2:Val2", config.CustomHttpHeaders);
                 Assert.True(config.IncludeWebProxy);
                 Assert.Equal("http://localhost:8080", config.WebProxyHost);
                 Assert.True(config.IncludeWebProxyNetworkCredentials);
+                Assert.True(config.StoreWebProxyNetworkCredentials);
                 Assert.Equal("domain", config.WebProxyNetworkCredentialsDomain);
                 Assert.Equal("username", config.WebProxyNetworkCredentialsUsername);
                 Assert.Equal("password", config.WebProxyNetworkCredentialsPassword);
@@ -713,6 +727,8 @@ namespace ODataConnectedService.Tests
                 Assert.Equal(MetadataPath, endpointPage.UserSettings.Endpoint);
                 endpointPage.UserSettings.ServiceName = "Service";
                 endpointPage.UserSettings.IncludeCustomHeaders = true;
+                endpointPage.UserSettings.StoreCustomHttpHeaders = true;
+                endpointPage.UserSettings.StoreWebProxyNetworkCredentials = true;
                 endpointPage.UserSettings.CustomHttpHeaders = "A:b";
                 endpointPage.OnPageLeavingAsync(null).Wait();
 
@@ -751,6 +767,8 @@ namespace ODataConnectedService.Tests
                 Assert.Equal("Service", config.ServiceName);
                 Assert.Equal(MetadataPath, config.Endpoint);
                 Assert.True(config.IncludeCustomHeaders);
+                Assert.True(config.StoreCustomHttpHeaders);
+                Assert.True(config.StoreWebProxyNetworkCredentials);
                 Assert.Equal("A:b", config.CustomHttpHeaders);
                 Assert.True(config.GenerateMultipleFiles);
                 Assert.True(config.MakeTypesInternal);
@@ -852,6 +870,8 @@ namespace ODataConnectedService.Tests
                 Assert.Equal(savedConfig.ServiceName, config.ServiceName);
                 Assert.Equal(savedConfig.Endpoint, config.Endpoint);
                 Assert.True(config.IncludeCustomHeaders);
+                Assert.True(config.StoreCustomHttpHeaders);
+                Assert.True(config.StoreWebProxyNetworkCredentials);
                 Assert.Equal("A:b", config.CustomHttpHeaders);
                 Assert.True(config.GenerateMultipleFiles);
                 Assert.True(config.MakeTypesInternal);
