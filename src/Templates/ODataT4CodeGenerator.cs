@@ -5236,7 +5236,7 @@ this.Write("    [global::System.Flags]\r\n");
 
     internal override void WriteSummaryCommentForEnumType(string enumName, string description)
     {
-        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {enumName} in the schema." : description);
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {enumName} in the schema." : description, true);
     }
 
     internal override void WriteEnumDeclaration(string enumName, string originalEnumName, string underlyingType)
@@ -7390,7 +7390,7 @@ this.Write("    <Global.System.Flags()>\r\n");
 
     internal override void WriteSummaryCommentForEnumType(string enumName, string description)
     {
-        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {enumName} in the schema." : description);
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {enumName} in the schema." : description, true);
     }
 
     internal override void WriteEnumDeclaration(string enumName, string originalEnumName, string underlyingType)
