@@ -48,11 +48,17 @@ namespace Microsoft.OData.ConnectedService
             Project project = ProjectHelper.GetProjectFromHierarchy(context.ProjectHierarchy);
             var serviceInstance = (ODataConnectedServiceInstance)context.ServiceInstance;
 
-            var codeGenDescriptor = await GenerateCodeAsync(serviceInstance.ServiceConfig.Endpoint, serviceInstance.ServiceConfig.EdmxVersion, context, project).ConfigureAwait(false);
-            // We don't save headers and proxy details to designer data
-            serviceInstance.ServiceConfig.CustomHttpHeaders = null;
-            serviceInstance.ServiceConfig.WebProxyNetworkCredentialsUsername = null;
-            serviceInstance.ServiceConfig.WebProxyNetworkCredentialsPassword = null;
+            var codeGenDescriptor = await GenerateCodeAsync(serviceInstance.ServiceConfig.Endpoint, serviceInstance.ServiceConfig.EdmxVersion, context, project).ConfigureAwait(false);            
+            if (!serviceInstance.ServiceConfig.StoreCustomHttpHeaders)
+            {
+                serviceInstance.ServiceConfig.CustomHttpHeaders = null;
+            }
+            if (!serviceInstance.ServiceConfig.StoreWebProxyNetworkCredentials)
+            {
+                serviceInstance.ServiceConfig.WebProxyNetworkCredentialsUsername = null;
+                serviceInstance.ServiceConfig.WebProxyNetworkCredentialsPassword = null;
+                serviceInstance.ServiceConfig.WebProxyNetworkCredentialsDomain = null;
+            }
 
             context.SetExtendedDesignerData(serviceInstance.ServiceConfig);
             return codeGenDescriptor;

@@ -119,6 +119,14 @@
                     </ToolTip>
                 </TextBox.ToolTip>
             </TextBox>
+            <CheckBox
+                x:Name="StoreCustomHttpHeaders"
+                Margin="0,15"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Save custom http headers in ConnectedService.json"
+                FontWeight="Medium"
+                IsChecked="{Binding Path=UserSettings.StoreCustomHttpHeaders, Mode=TwoWay}" />
         </StackPanel>
 
         <CheckBox
@@ -197,6 +205,14 @@
                     HorizontalAlignment="Left"
                     Text="{Binding Path=UserSettings.WebProxyNetworkCredentialsDomain, Mode=TwoWay}"
                     TextWrapping="Wrap" />
+                <CheckBox
+                    x:Name="StoreWebProxyNetworkCredentials"
+                    Margin="0,10"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Save web proxy credentials in ConnectedService.json"
+                    FontWeight="Medium"
+                    IsChecked="{Binding Path=UserSettings.StoreWebProxyNetworkCredentials, Mode=TwoWay}" />
 
             </StackPanel>
         </StackPanel>

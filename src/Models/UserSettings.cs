@@ -58,6 +58,8 @@ namespace Microsoft.OData.ConnectedService.Models
 
         private string customHttpHeaders;
 
+        private bool storeCustomHttpHeaders;
+
         private bool enableNamingAlias;
 
         private bool ignoreUnexpectedElementsAndAttributes;
@@ -69,6 +71,8 @@ namespace Microsoft.OData.ConnectedService.Models
         private string webProxyHost;
 
         private bool includeWebProxyNetworkCredentials;
+
+        private bool storeWebProxyNetworkCredentials;
 
         private string webProxyNetworkCredentialsUsername;
 
@@ -254,6 +258,17 @@ namespace Microsoft.OData.ConnectedService.Models
         }
 
         [DataMember]
+        public bool StoreCustomHttpHeaders
+        {
+            get { return storeCustomHttpHeaders; }
+            set
+            {
+                storeCustomHttpHeaders = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DataMember]
         public string WebProxyHost
         {
             get { return webProxyHost; }
@@ -271,6 +286,17 @@ namespace Microsoft.OData.ConnectedService.Models
             set
             {
                 includeWebProxyNetworkCredentials = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DataMember]
+        public bool StoreWebProxyNetworkCredentials
+        {
+            get { return storeWebProxyNetworkCredentials; }
+            set
+            {
+                storeWebProxyNetworkCredentials = value;
                 OnPropertyChanged();
             }
         }

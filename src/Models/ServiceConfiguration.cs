@@ -26,11 +26,13 @@ namespace Microsoft.OData.ConnectedService.Models
         public bool IncludeWebProxy { get; set; }
         public string WebProxyHost { get; set; }
         public bool IncludeWebProxyNetworkCredentials { get; set; }
+        public bool StoreWebProxyNetworkCredentials { get; set; }
         public string WebProxyNetworkCredentialsUsername { get; set; }
         public string WebProxyNetworkCredentialsPassword { get; set; }
         public string WebProxyNetworkCredentialsDomain { get; set; }
         public bool IncludeCustomHeaders { get; set; }
-        public List<string> ExcludedSchemaTypes { get; set; }
+        public bool StoreCustomHttpHeaders { get; set; }
+        public List<string> ExcludedSchemaTypes { get; set; }        
 
     }
 
