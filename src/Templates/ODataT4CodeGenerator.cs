@@ -1679,7 +1679,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription);
     internal abstract void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription);
     internal abstract void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description);
-    internal abstract void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description);
+    internal abstract void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description, string revisionDescription);
     internal abstract void WriteConstructorForSingleType(string singleTypeName, string baseTypeName);
     internal abstract void WriteExtensionMethodsStart();
     internal abstract void WriteExtensionMethodsEnd();
@@ -2547,7 +2547,7 @@ public abstract class ODataClientTemplate : TemplateBase
                     actionName = Customization.CustomizeNaming(actionName);
                 }
 
-                this.WriteBoundActionInEntityType(hideBaseMethod, GetFixedName(actionName), action.Name, returnTypeName, parameterString, action.Namespace, parameterValues, GetDescriptionAnnotation(action)?.Value);
+                this.WriteBoundActionInEntityType(hideBaseMethod, GetFixedName(actionName), action.Name, returnTypeName, parameterString, action.Namespace, parameterValues, GetDescriptionAnnotation(action)?.Value, GetRevisionsAnnotation(action)?.Value);
             }
         }
     }
@@ -5535,9 +5535,10 @@ this.Write(");\r\n        }\r\n");
 
     }
 
-    internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description)
+    internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
+        WriteRevisionDescription(revisionDescription);
         if (this.context.EnableNamingAlias)
         {
 
@@ -7624,7 +7625,7 @@ this.Write(")\r\n        End Function\r\n");
 
     }
 
-    internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description)
+    internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
