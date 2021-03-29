@@ -1664,7 +1664,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteParameterNullCheckForStaticCreateMethod(string parameterName);
     internal abstract void WritePropertyValueAssignmentForStaticCreateMethod(string instanceName, string propertyName, string parameterName);
     internal abstract void WriteMethodEndForStaticCreateMethod(string instanceName);
-    internal abstract void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged);
+    internal abstract void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged, string revisionDescription);
     internal abstract void WriteINotifyPropertyChangedImplementation();
     internal abstract void WriteClassEndForStructuredType();
     internal abstract void WriteNamespaceEnd();
@@ -2935,7 +2935,8 @@ public abstract class ODataClientTemplate : TemplateBase
                     PrivatePropertyName = "_" + propertyName,
                     PropertyInitializationValue = Utils.GetPropertyInitializationValue(property, useDataServiceCollection, this, this.context),
                     PropertyAttribute = string.Empty,
-                    PropertyDescription = GetDescriptionAnnotation(property)?.Value
+                    PropertyDescription = GetDescriptionAnnotation(property)?.Value,
+                    RevisionDescription = GetRevisionsAnnotation(property)?.Value
                 };
         }).ToList();
 
@@ -2959,7 +2960,8 @@ public abstract class ODataClientTemplate : TemplateBase
                 PrivatePropertyName = "_" + containerPropertyName,
                 PropertyInitializationValue = string.Format(this.DictionaryConstructor, this.StringTypeName, this.ObjectTypeName),
                 PropertyAttribute = containerPropertyAttribute,
-                PropertyDescription = string.Empty
+                PropertyDescription = string.Empty,
+                RevisionDescription = string.Empty
             });
         }
 
@@ -2980,7 +2982,8 @@ public abstract class ODataClientTemplate : TemplateBase
                 propertyInfo.PropertyInitializationValue,
                 propertyInfo.PropertyAttribute,
                 propertyInfo.PropertyDescription,
-                useDataServiceCollection);
+                useDataServiceCollection,
+                propertyInfo.RevisionDescription);
         }
     }
 
@@ -3076,6 +3079,29 @@ public abstract class ODataClientTemplate : TemplateBase
     {
         return model.VocabularyAnnotations(this.context.EdmModel).Where(x => x.Term.Name == "Description")
             .Select(x => x.Value).FirstOrDefault() as IEdmStringConstantExpression;
+    }
+
+    /// <summary>
+    /// Searches through model's vocabulary annotations and returns annotation of term 'Revisions' if present
+    /// </summary>
+    private IEdmStringConstantExpression GetRevisionsAnnotation(IEdmVocabularyAnnotatable model)
+    {
+        IEnumerable<IEdmExpression> collection = model.VocabularyAnnotations(this.context.EdmModel).Where(x => x.Term.Name == "Revisions")
+            .Select(x => x.Value);
+
+        if (collection != null && collection.Count() > 0)
+        {
+            IEdmCollectionExpression semanticElement = collection.FirstOrDefault() as IEdmCollectionExpression;
+            IEdmRecordExpression element = semanticElement.Elements.FirstOrDefault() as IEdmRecordExpression;
+            IEdmStringConstantExpression description = element.Properties.Where(x => x.Name == "Description").Select(x => x.Value).FirstOrDefault() as IEdmStringConstantExpression;
+
+            return description;
+        }
+        else
+        {
+            return null;
+        }
+
     }
 }
 
@@ -5005,7 +5031,7 @@ this.Write(";\r\n        }\r\n");
 
     }
 
-    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged)
+    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(propertyDescription) ? $"There are no comments for Property {propertyName} in the schema." : propertyDescription);
 
@@ -5014,7 +5040,7 @@ this.Write("        [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Mi
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
-this.Write("\")]\r\n");
+this.Write("\")]\r\n\r\n");
 
 
         if (this.context.EnableNamingAlias || IdentifierMappings.ContainsKey(originalPropertyName))
@@ -5023,6 +5049,19 @@ this.Write("\")]\r\n");
 this.Write("        [global::Microsoft.OData.Client.OriginalNameAttribute(\"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(originalPropertyName));
+
+this.Write("\")]\r\n");
+
+
+        }
+
+
+        if (!string.IsNullOrEmpty(revisionDescription))
+        {
+
+this.Write("        [global::System.ObsoleteAttribute(\"");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(revisionDescription));
 
 this.Write("\")]\r\n");
 
@@ -7073,7 +7112,7 @@ this.Write("\r\n        End Function\r\n");
 
     }
 
-    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged)
+    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(propertyDescription) ? $"There are no comments for Property {propertyName} in the schema." : propertyDescription);
 
