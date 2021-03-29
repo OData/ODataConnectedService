@@ -1676,8 +1676,8 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WritePropertyRootNamespace(string containerName, string fullNamespace);
     internal abstract void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description);
     internal abstract void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description);
-    internal abstract void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description);
-    internal abstract void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description);
+    internal abstract void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription);
+    internal abstract void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription);
     internal abstract void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description);
     internal abstract void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description);
     internal abstract void WriteConstructorForSingleType(string singleTypeName, string baseTypeName);
@@ -1689,6 +1689,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteBoundFunctionReturnCollectionResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description);
     internal abstract void WriteBoundActionAsExtension(string actionName, string originalActionName, string boundSourceType, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description);
     protected abstract void WriteDescriptionSummary(string description, bool isClass = false);
+    protected abstract void WriteRevisionDescription(string revisionDescription);
     #endregion Language specific write methods.
 
     internal HashSet<EdmPrimitiveTypeKind> ClrReferenceTypes { get {
@@ -2501,11 +2502,11 @@ public abstract class ODataClientTemplate : TemplateBase
 
                 if (function.ReturnType.IsCollection())
                 {
-                    this.WriteBoundFunctionInEntityTypeReturnCollectionResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, parameterString, function.Namespace, parameterValues, function.IsComposable, useEntityReference, GetDescriptionAnnotation(function)?.Value);
+                    this.WriteBoundFunctionInEntityTypeReturnCollectionResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, parameterString, function.Namespace, parameterValues, function.IsComposable, useEntityReference, GetDescriptionAnnotation(function)?.Value, GetRevisionsAnnotation(function)?.Value);
                 }
                 else
                 {
-                    this.WriteBoundFunctionInEntityTypeReturnSingleResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, function.Namespace, parameterValues, function.IsComposable, function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(function)?.Value);
+                    this.WriteBoundFunctionInEntityTypeReturnSingleResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, function.Namespace, parameterValues, function.IsComposable, function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(function)?.Value, GetRevisionsAnnotation(function)?.Value);
                 }
             }
 
@@ -5034,6 +5035,7 @@ this.Write(";\r\n        }\r\n");
     internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(propertyDescription) ? $"There are no comments for Property {propertyName} in the schema." : propertyDescription);
+        WriteRevisionDescription(revisionDescription);
 
 this.Write("        [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData." +
         "Client.Design.T4\", \"");
@@ -5049,19 +5051,6 @@ this.Write("\")]\r\n\r\n");
 this.Write("        [global::Microsoft.OData.Client.OriginalNameAttribute(\"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(originalPropertyName));
-
-this.Write("\")]\r\n");
-
-
-        }
-
-
-        if (!string.IsNullOrEmpty(revisionDescription))
-        {
-
-this.Write("        [global::System.ObsoleteAttribute(\"");
-
-this.Write(this.ToStringHelper.ToStringWithCulture(revisionDescription));
 
 this.Write("\")]\r\n");
 
@@ -5371,9 +5360,10 @@ this.Write(";\r\n        }\r\n");
 
     }
 
-    internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description)
+    internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
+        WriteRevisionDescription(revisionDescription);
         if (this.context.EnableNamingAlias)
         {
 
@@ -5433,9 +5423,10 @@ this.Write(");\r\n        }\r\n");
 
     }
 
-    internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description)
+    internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
+        WriteRevisionDescription(revisionDescription);
         if (this.context.EnableNamingAlias)
         {
 
@@ -5949,6 +5940,21 @@ this.Write("        /// <summary>\r\n        /// ");
 this.Write(this.ToStringHelper.ToStringWithCulture(description.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n        ///")));
 
 this.Write("\r\n        /// </summary>\r\n");
+
+
+        }
+    }
+
+    protected override void WriteRevisionDescription(string revisionDescription)
+    {
+        if (!string.IsNullOrEmpty(revisionDescription))
+        {
+
+this.Write("        [global::System.ObsoleteAttribute(\"");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(revisionDescription));
+
+this.Write("\")]\r\n");
 
 
         }
@@ -7446,7 +7452,7 @@ this.Write("\r\n        End Function\r\n");
 
     }
 
-    internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description)
+    internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
@@ -7506,9 +7512,10 @@ this.Write(")\r\n        End Function\r\n");
 
     }
 
-    internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description)
+    internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
+        WriteRevisionDescription(revisionDescription);
         if (this.context.EnableNamingAlias)
         {
 
@@ -8035,6 +8042,10 @@ this.Write("\r\n        \'\'\' </summary>\r\n");
 
 
         }
+    }
+
+    protected override void WriteRevisionDescription(string revisionDescription)
+    {
     }
 
     internal override void WriteNamespaceEnd()
