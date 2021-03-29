@@ -1674,11 +1674,11 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteMemberForEnumType(string member, string originalMemberName, bool last);
     internal abstract void WriteEnumEnd();
     internal abstract void WritePropertyRootNamespace(string containerName, string fullNamespace);
-    internal abstract void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description);
-    internal abstract void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description);
+    internal abstract void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription);
+    internal abstract void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription);
     internal abstract void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription);
     internal abstract void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription);
-    internal abstract void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description);
+    internal abstract void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description, string revisionDescription);
     internal abstract void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description, string revisionDescription);
     internal abstract void WriteConstructorForSingleType(string singleTypeName, string baseTypeName);
     internal abstract void WriteExtensionMethodsStart();
@@ -2249,11 +2249,11 @@ public abstract class ODataClientTemplate : TemplateBase
 
             if (functionImport.Function.ReturnType.IsCollection())
             {
-                this.WriteFunctionImportReturnCollectionResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, parameterString, parameterValues, functionImport.Function.IsComposable, useEntityReference, GetDescriptionAnnotation(functionImport)?.Value);
+                this.WriteFunctionImportReturnCollectionResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, parameterString, parameterValues, functionImport.Function.IsComposable, useEntityReference, GetDescriptionAnnotation(functionImport)?.Value, GetRevisionsAnnotation(functionImport)?.Value);
             }
             else
             {
-                this.WriteFunctionImportReturnSingleResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, parameterValues, functionImport.Function.IsComposable, functionImport.Function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(functionImport)?.Value);
+                this.WriteFunctionImportReturnSingleResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, parameterValues, functionImport.Function.IsComposable, functionImport.Function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(functionImport)?.Value, GetRevisionsAnnotation(functionImport)?.Value);
             }
         }
 
@@ -2294,7 +2294,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 fixedContainerName = Customization.CustomizeNaming(fixedContainerName);
             }
 
-            this.WriteActionImport(this.GetFixedName(actionImportName), actionImport.Name, returnTypeName, parameterString, parameterValues, GetDescriptionAnnotation(actionImport)?.Value);
+            this.WriteActionImport(this.GetFixedName(actionImportName), actionImport.Name, returnTypeName, parameterString, parameterValues, GetDescriptionAnnotation(actionImport)?.Value, GetRevisionsAnnotation(actionImport)?.Value);
         }
 
         this.WriteClassEndForEntityContainer();
@@ -5256,9 +5256,10 @@ this.Write("    }\r\n");
 
     }
 
-    internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description)
+    internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
+        WriteRevisionDescription(revisionDescription);
         if (this.context.EnableNamingAlias)
         {
 
@@ -5304,9 +5305,10 @@ this.Write(");\r\n        }\r\n");
 
     }
 
-    internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description)
+    internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
+        WriteRevisionDescription(revisionDescription);
         if (this.context.EnableNamingAlias)
         {
 
@@ -5491,9 +5493,10 @@ this.Write(";\r\n        }\r\n");
 
         }
 
-    internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description)
+    internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
+        WriteRevisionDescription(revisionDescription);
         if (this.context.EnableNamingAlias)
         {
 
@@ -7347,7 +7350,7 @@ this.Write("    End Enum\r\n");
 
     }
 
-    internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description)
+    internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
@@ -7397,7 +7400,7 @@ this.Write(")\r\n        End Function\r\n");
 
     }
 
-    internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description)
+    internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
@@ -7581,7 +7584,7 @@ this.Write("\r\n        End Function\r\n");
 
     }
 
-    internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description)
+    internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
         if (this.context.EnableNamingAlias)
