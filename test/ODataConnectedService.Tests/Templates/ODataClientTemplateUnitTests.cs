@@ -501,9 +501,9 @@ namespace ODataConnectedService.Tests
                 this.CalledActions.Add("WriteContextEntitySetProperty(" + entitySetName + ", " + entitySetFixedName + ", " + originalEntitySetName + ", " + entitySetElementTypeName + ", " + description + ", " + inContext + ")");
             }
 
-            internal override void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, string description, bool inContext = true)
+            internal override void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, string description, string revisionDescription, bool inContext = true)
             {
-                this.CalledActions.Add("WriteContextsSingletonProperty(" + singletonName + ", " + singletonFixedName + ", " + originalSingletonName + ", " + singletonElementTypeName + ", " + description + ", " + inContext + ")");
+                this.CalledActions.Add("WriteContextsSingletonProperty(" + singletonName + ", " + singletonFixedName + ", " + originalSingletonName + ", " + singletonElementTypeName + ", " + description + ", " + revisionDescription + ", " + inContext + ")");
             }
 
             internal override void WriteContextAddToEntitySetMethod(string entitySetName, string originalEntitySetName, string typeName, string parameterName)
@@ -591,9 +591,9 @@ namespace ODataConnectedService.Tests
                 this.CalledActions.Add("WriteMethodEndForStaticCreateMethod(" + instanceName + ")");
             }
 
-            internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged)
+            internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged, string revisionDescription)
             {
-                this.CalledActions.Add("WritePropertyForStructuredType(" + propertyType + ", " + originalPropertyName + ", " + propertyName + ", " + fixedPropertyName + ", " + privatePropertyName + ", " + propertyInitializationValue + ", " + propertyAttribute + ", " + writeOnPropertyChanged + ")");
+                this.CalledActions.Add("WritePropertyForStructuredType(" + propertyType + ", " + originalPropertyName + ", " + propertyName + ", " + fixedPropertyName + ", " + privatePropertyName + ", " + propertyInitializationValue + ", " + propertyAttribute + ", " + writeOnPropertyChanged + ", " + revisionDescription + ")");
             }
 
             internal override void WriteINotifyPropertyChangedImplementation()
@@ -641,33 +641,33 @@ namespace ODataConnectedService.Tests
                 this.CalledActions.Add("WritePropertyRootNamespace(" + containerName + ", " + fullNamespace + ")");
             }
 
-            internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description)
+            internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription)
             {
-                this.CalledActions.Add("WriteFunctionImportReturnCollectionResult(" + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + parameters + ", " + parameterValues + ", " + isComposable + ", " + useEntityReference + ", " + description + ")");
+                this.CalledActions.Add("WriteFunctionImportReturnCollectionResult(" + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + parameters + ", " + parameterValues + ", " + isComposable + ", " + useEntityReference + ", " + description + ", " + revisionDescription + ")");
             }
 
-            internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description)
+            internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription)
             {
-                this.CalledActions.Add("WriteFunctionImportReturnSingleResult(" + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + returnTypeNameWithSingleSuffix + ", " + parameters + ", " + parameterValues + ", " + isComposable + ", " + useEntityReference + ", " + description + ")");
+                this.CalledActions.Add("WriteFunctionImportReturnSingleResult(" + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + returnTypeNameWithSingleSuffix + ", " + parameters + ", " + parameterValues + ", " + isComposable + ", " + useEntityReference + ", " + description + ", " + revisionDescription + ")");
             }
-            internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description)
+            internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription)
             {
-                this.CalledActions.Add("WriteBoundFunctionInEntityTypeReturnCollectionResult(" + hideBaseMethod + ", " + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + isComposable + ", " + useEntityReference + ", " + description + ")");
-            }
-
-            internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description)
-            {
-                this.CalledActions.Add("WriteBoundFunctionInEntityTypeReturnSingleResult(" + hideBaseMethod + ", " + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + returnTypeNameWithSingleSuffix + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + isComposable + ", " + isReturnEntity + ", " + useEntityReference + ", " + description + ")");
+                this.CalledActions.Add("WriteBoundFunctionInEntityTypeReturnCollectionResult(" + hideBaseMethod + ", " + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + isComposable + ", " + useEntityReference + ", " + description + ", " + revisionDescription + ")");
             }
 
-            internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description)
+            internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription)
             {
-                this.CalledActions.Add("WriteActionImport(" + actionName + ", " + originalActionName + ", " + returnTypeName + ", " + parameters + ", " + parameterValues + ", " + description + ")");
+                this.CalledActions.Add("WriteBoundFunctionInEntityTypeReturnSingleResult(" + hideBaseMethod + ", " + functionName + ", " + originalFunctionName + ", " + returnTypeName + ", " + returnTypeNameWithSingleSuffix + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + isComposable + ", " + isReturnEntity + ", " + useEntityReference + ", " + description + ", " + revisionDescription + ")");
             }
 
-            internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description)
+            internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description, string revisionDescription)
             {
-                this.CalledActions.Add("WriteBoundActionInEntityType(" + hideBaseMethod + ", " + actionName + ", " + originalActionName + ", " + returnTypeName + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + description + ")");
+                this.CalledActions.Add("WriteActionImport(" + actionName + ", " + originalActionName + ", " + returnTypeName + ", " + parameters + ", " + parameterValues + ", " + description + ", " + revisionDescription + ")");
+            }
+
+            internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description, string revisionDescription)
+            {
+                this.CalledActions.Add("WriteBoundActionInEntityType(" + hideBaseMethod + ", " + actionName + ", " + originalActionName + ", " + returnTypeName + ", " + parameters + ", " + fullNamespace + ", " + parameterValues + ", " + description + ", " + revisionDescription + ")");
             }
 
             internal override void WriteConstructorForSingleType(string singleTypeName, string baseTypeName)
@@ -717,6 +717,11 @@ namespace ODataConnectedService.Tests
             protected override void WriteDescriptionSummary(string description, bool isClass = false)
             {
                 // this method is called internally by other language specific write methods
+            }
+
+            protected override void WriteRevisionDescription(string revisionDescription)
+            {
+                throw new NotImplementedException();
             }
         }
 
@@ -1658,7 +1663,7 @@ namespace ODataConnectedService.Tests
                 "WriteDeclarationEndForStaticCreateMethod(EntityType, entityType)",
                 "WritePropertyValueAssignmentForStaticCreateMethod(entityType, Id, ID)",
                 "WriteMethodEndForStaticCreateMethod(entityType)",
-                "WritePropertyForStructuredType(Guid, Id, Id, Id, _Id, , , False)",
+                "WritePropertyForStructuredType(Guid, Id, Id, Id, _Id, , , False, )",
                 "WriteClassEndForStructuredType()"
             };
             template.CalledActions.Should().Equal(expectedActions);
@@ -1702,7 +1707,7 @@ namespace ODataConnectedService.Tests
                 "WriteDeclarationEndForStaticCreateMethod(Customer, customer)",
                 "WritePropertyValueAssignmentForStaticCreateMethod(customer, PersonId, personId)",
                 "WriteMethodEndForStaticCreateMethod(customer)",
-                "WritePropertyForStructuredType(Int32, PersonId, PersonId, PersonId, _PersonId, , , True)",
+                "WritePropertyForStructuredType(Int32, PersonId, PersonId, PersonId, _PersonId, , , True, )",
                 "WriteINotifyPropertyChangedImplementation()",
                 "WriteClassEndForStructuredType()"
             };
@@ -1749,7 +1754,7 @@ namespace ODataConnectedService.Tests
                 "WriteDeclarationEndForStaticCreateMethod(Customer, customer)",
                 "WritePropertyValueAssignmentForStaticCreateMethod(customer, PersonId, personId)",
                 "WriteMethodEndForStaticCreateMethod(customer)",
-                "WritePropertyForStructuredType(Int32, PersonId, PersonId, PersonId, _PersonId, , , True)",
+                "WritePropertyForStructuredType(Int32, PersonId, PersonId, PersonId, _PersonId, , , True, )",
                 "WriteINotifyPropertyChangedImplementation()",
                 "WriteClassEndForStructuredType()"
             };
@@ -1852,7 +1857,7 @@ namespace ODataConnectedService.Tests
                 "WriteDeclarationEndForStaticCreateMethod(ComplexType, complexType)",
                 "WritePropertyValueAssignmentForStaticCreateMethod(complexType, Value, value)",
                 "WriteMethodEndForStaticCreateMethod(complexType)",
-                "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , , False)",
+                "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , , False, )",
                 "WriteClassEndForStructuredType()"
             };
             template.CalledActions.Should().Equal(expectedActions);
@@ -2313,8 +2318,8 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WritePropertyForStructuredType(String, Name, Name, Name, _Name, , , False)",
-                "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , , False)"
+                "WritePropertyForStructuredType(String, Name, Name, Name, _Name, , , False, )",
+                "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , , False, )"
             };
             template.CalledActions.Should().Equal(expectedActions);
         }
@@ -2333,7 +2338,7 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , , True)"
+                "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , , True, )"
             };
             template.CalledActions.Should().Equal(expectedActions);
         }
@@ -2410,9 +2415,9 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WritePropertyForStructuredType(String, Name, Name, Name, _Name1, , , False)",
-                "WritePropertyForStructuredType(String, _Name, _Name, _Name, __Name1, , , False)",
-                "WritePropertyForStructuredType(String, __Name, __Name, __Name, ___Name, , , False)"
+                "WritePropertyForStructuredType(String, Name, Name, Name, _Name1, , , False, )",
+                "WritePropertyForStructuredType(String, _Name, _Name, _Name, __Name1, , , False, )",
+                "WritePropertyForStructuredType(String, __Name, __Name, __Name, ___Name, , , False, )"
             };
             template.CalledActions.Should().Equal(expectedActions);
         }
@@ -2446,10 +2451,10 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WritePropertyForStructuredType(String, Name, Name2, Name2, _Name21, , , False)",
-                "WritePropertyForStructuredType(String, name, name, name, _name, , , False)",
-                "WritePropertyForStructuredType(String, Name1, Name1, Name1, _Name1, , , False)",
-                "WritePropertyForStructuredType(String, _Name2, _Name2, _Name2, __Name2, , , False)",
+                "WritePropertyForStructuredType(String, Name, Name2, Name2, _Name21, , , False, )",
+                "WritePropertyForStructuredType(String, name, name, name, _name, , , False, )",
+                "WritePropertyForStructuredType(String, Name1, Name1, Name1, _Name1, , , False, )",
+                "WritePropertyForStructuredType(String, _Name2, _Name2, _Name2, __Name2, , , False, )",
             };
             template.CalledActions.Should().Contain(expectedActions);
         }
@@ -2467,10 +2472,10 @@ namespace ODataConnectedService.Tests
 
             var expectedActions = new List<string>
             {
-                "WritePropertyForStructuredType(String, Name, Name2, Name2, _Name21, , , False)",
-                "WritePropertyForStructuredType(String, name, Name3, Name3, _Name3, , , False)",
-                "WritePropertyForStructuredType(String, Name1, Name1, Name1, _Name1, , , False)",
-                "WritePropertyForStructuredType(String, _Name2, _Name2, _Name2, __Name2, , , False)",
+                "WritePropertyForStructuredType(String, Name, Name2, Name2, _Name21, , , False, )",
+                "WritePropertyForStructuredType(String, name, Name3, Name3, _Name3, , , False, )",
+                "WritePropertyForStructuredType(String, Name1, Name1, Name1, _Name1, , , False, )",
+                "WritePropertyForStructuredType(String, _Name2, _Name2, _Name2, __Name2, , , False, )",
             };
             template.CalledActions.Should().Contain(expectedActions);
         }
