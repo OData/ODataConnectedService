@@ -496,9 +496,9 @@ namespace ODataConnectedService.Tests
                 this.CalledActions.Add("WriteMethodEndForResolveNameFromType(" + modelHasInheritance + ")");
             }
 
-            internal override void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, string description, bool inContext = true)
+            internal override void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, string description, string revisionDescription, bool inContext = true)
             {
-                this.CalledActions.Add("WriteContextEntitySetProperty(" + entitySetName + ", " + entitySetFixedName + ", " + originalEntitySetName + ", " + entitySetElementTypeName + ", " + description + ", " + inContext + ")");
+                this.CalledActions.Add("WriteContextEntitySetProperty(" + entitySetName + ", " + entitySetFixedName + ", " + originalEntitySetName + ", " + entitySetElementTypeName + ", " + description + ", " + revisionDescription + ", " + inContext + ")");
             }
 
             internal override void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, string description, string revisionDescription, bool inContext = true)
@@ -1121,7 +1121,7 @@ namespace ODataConnectedService.Tests
                 "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer, )",
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
                 "WriteClassEndForEntityContainerConstructor()",
-                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, , True)",
+                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, , , True)",
                 "WriteContextAddToEntitySetMethod(Set1, Set1, EntityType, entityType)",
                 "WriteGeneratedEdmModel(<edmx:Edmx Version=\"\"4.0\"\" xmlns:edmx=\"\"http://docs.oasis-open.org/odata/ns/edmx\"\">\r\n  <edmx:DataServices>\r\n    <Schema Namespace=\"\"Namespace1\"\" xmlns=\"\"http://docs.oasis-open.org/odata/ns/edm\"\">\r\n      <EntityType Name=\"\"EntityType\"\" />\r\n      <EntityContainer Name=\"\"EntityContainer\"\">\r\n        <EntitySet Name=\"\"Set1\"\" EntityType=\"\"Namespace1.EntityType\"\" />\r\n      </EntityContainer>\r\n    </Schema>\r\n  </edmx:DataServices>\r\n</edmx:Edmx>)",
                 "WriteClassEndForEntityContainer()"
@@ -1143,8 +1143,8 @@ namespace ODataConnectedService.Tests
                 "WriteClassStartForEntityContainer(EntityContainer, EntityContainer, EntityContainer, )",
                 "WriteMethodStartForEntityContainerConstructor(EntityContainer, EntityContainer)",
                 "WriteClassEndForEntityContainerConstructor()",
-                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, , True)",
-                "WriteContextEntitySetProperty(Set2, Set2, Set2, global::Namespace2.EntityType, , True)",
+                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, , , True)",
+                "WriteContextEntitySetProperty(Set2, Set2, Set2, global::Namespace2.EntityType, , , True)",
                 "WriteContextAddToEntitySetMethod(Set1, Set1, EntityType, entityType)",
                 "WriteContextAddToEntitySetMethod(Set2, Set2, global::Namespace2.EntityType, entityType)",
                 "WriteGeneratedEdmModel(<edmx:Edmx Version=\"\"4.0\"\" xmlns:edmx=\"\"http://docs.oasis-open.org/odata/ns/edmx\"\">\r\n  <edmx:DataServices>\r\n    <Schema Namespace=\"\"Namespace1\"\" xmlns=\"\"http://docs.oasis-open.org/odata/ns/edm\"\">\r\n      <EntityType Name=\"\"EntityType\"\" />\r\n      <EntityContainer Name=\"\"EntityContainer\"\">\r\n        <EntitySet Name=\"\"Set1\"\" EntityType=\"\"Namespace1.EntityType\"\" />\r\n        <EntitySet Name=\"\"Set2\"\" EntityType=\"\"Namespace2.EntityType\"\" />\r\n      </EntityContainer>\r\n    </Schema>\r\n    <Schema Namespace=\"\"Namespace2\"\" xmlns=\"\"http://docs.oasis-open.org/odata/ns/edm\"\">\r\n      <EntityType Name=\"\"EntityType\"\" />\r\n    </Schema>\r\n  </edmx:DataServices>\r\n</edmx:Edmx>)",
@@ -1176,7 +1176,7 @@ namespace ODataConnectedService.Tests
                 "WriteMethodStartForResolveNameFromType(EntityContainer, Namespace1)",
                 "WriteResolveType(Namespace1, Foo)",
                 "WriteMethodEndForResolveNameFromType(False)",
-                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, , True)",
+                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, , , True)",
                 "WriteContextAddToEntitySetMethod(Set1, Set1, EntityType, entityType)",
                 "WriteGeneratedEdmModel(<edmx:Edmx Version=\"\"4.0\"\" xmlns:edmx=\"\"http://docs.oasis-open.org/odata/ns/edmx\"\">\r\n  <edmx:DataServices>\r\n    <Schema Namespace=\"\"Namespace1\"\" xmlns=\"\"http://docs.oasis-open.org/odata/ns/edm\"\">\r\n      <EntityType Name=\"\"EntityType\"\" />\r\n      <EntityContainer Name=\"\"EntityContainer\"\">\r\n        <EntitySet Name=\"\"Set1\"\" EntityType=\"\"Namespace1.EntityType\"\" />\r\n      </EntityContainer>\r\n    </Schema>\r\n  </edmx:DataServices>\r\n</edmx:Edmx>)",
                 "WriteClassEndForEntityContainer()"
@@ -1209,8 +1209,8 @@ namespace ODataConnectedService.Tests
                 "WriteResolveType(Namespace1, Foo.Namespace1)",
                 "WriteResolveType(Namespace2, Foo.Namespace2)",
                 "WriteMethodEndForResolveNameFromType(False)",
-                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, , True)",
-                "WriteContextEntitySetProperty(Set2, Set2, Set2, global::Foo.Namespace2.EntityType, , True)",
+                "WriteContextEntitySetProperty(Set1, Set1, Set1, EntityType, , , True)",
+                "WriteContextEntitySetProperty(Set2, Set2, Set2, global::Foo.Namespace2.EntityType, , , True)",
                 "WriteContextAddToEntitySetMethod(Set1, Set1, EntityType, entityType)",
                 "WriteContextAddToEntitySetMethod(Set2, Set2, global::Foo.Namespace2.EntityType, entityType)",
                 "WriteGeneratedEdmModel(<edmx:Edmx Version=\"\"4.0\"\" xmlns:edmx=\"\"http://docs.oasis-open.org/odata/ns/edmx\"\">\r\n  <edmx:DataServices>\r\n    <Schema Namespace=\"\"Namespace1\"\" xmlns=\"\"http://docs.oasis-open.org/odata/ns/edm\"\">\r\n      <EntityType Name=\"\"EntityType\"\" />\r\n      <EntityContainer Name=\"\"EntityContainer\"\">\r\n        <EntitySet Name=\"\"Set1\"\" EntityType=\"\"Namespace1.EntityType\"\" />\r\n        <EntitySet Name=\"\"Set2\"\" EntityType=\"\"Namespace2.EntityType\"\" />\r\n      </EntityContainer>\r\n    </Schema>\r\n    <Schema Namespace=\"\"Namespace2\"\" xmlns=\"\"http://docs.oasis-open.org/odata/ns/edm\"\">\r\n      <EntityType Name=\"\"EntityType\"\" />\r\n    </Schema>\r\n  </edmx:DataServices>\r\n</edmx:Edmx>)",
