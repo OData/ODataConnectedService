@@ -1689,7 +1689,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteBoundFunctionReturnCollectionResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description);
     internal abstract void WriteBoundActionAsExtension(string actionName, string originalActionName, string boundSourceType, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description);
     protected abstract void WriteDescriptionSummary(string description, bool isClass = false);
-    protected abstract void WriteRevisionDescription(string revisionDescription);
+    protected abstract void WriteRevisionDescription(string revisionDescription, bool isClass = false);
     #endregion Language specific write methods.
 
     internal HashSet<EdmPrimitiveTypeKind> ClrReferenceTypes { get {
@@ -2397,6 +2397,7 @@ public abstract class ODataClientTemplate : TemplateBase
         string entityTypeName = ((IEdmSchemaElement)entityType).Name;
         entityTypeName = this.context.EnableNamingAlias ? Customization.CustomizeNaming(entityTypeName) : entityTypeName;
         this.WriteSummaryCommentForStructuredType(entityTypeName + this.SingleSuffix, GetDescriptionAnnotation(entityType)?.Value);
+        this.WriteRevisionDescription(GetRevisionsAnnotation(entityType)?.Value, /* isClass */ true);
         this.WriteStructurdTypeDeclaration(entityType,
             this.ClassInheritMarker + string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, GetFixedName(entityTypeName)),
             this.SingleSuffix);
@@ -2443,6 +2444,7 @@ public abstract class ODataClientTemplate : TemplateBase
             this.WriteEntityHasStreamAttribute();
         }
 
+        this.WriteRevisionDescription(GetRevisionsAnnotation(entityType)?.Value, /* isClass */ true);
         this.WriteStructurdTypeDeclaration(entityType, this.BaseEntityType);
         this.SetPropertyIdentifierMappingsIfNameConflicts(entityType.Name, entityType);
         this.WriteTypeStaticCreateMethod(entityType.Name, entityType);
@@ -5951,9 +5953,25 @@ this.Write("\r\n        /// </summary>\r\n");
         }
     }
 
-    protected override void WriteRevisionDescription(string revisionDescription)
+    protected override void WriteRevisionDescription(string revisionDescription, bool isClass = false)
     {
-        if (!string.IsNullOrEmpty(revisionDescription))
+        if (string.IsNullOrEmpty(revisionDescription))
+        {
+            return;
+        }
+
+        if (isClass)
+        {
+
+this.Write("    [global::System.ObsoleteAttribute(\"");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(revisionDescription));
+
+this.Write("\")]\r\n");
+
+
+        }
+        else
         {
 
 this.Write("        [global::System.ObsoleteAttribute(\"");
@@ -8050,7 +8068,7 @@ this.Write("\r\n        \'\'\' </summary>\r\n");
         }
     }
 
-    protected override void WriteRevisionDescription(string revisionDescription)
+    protected override void WriteRevisionDescription(string revisionDescription, bool isClass = false)
     {
     }
 

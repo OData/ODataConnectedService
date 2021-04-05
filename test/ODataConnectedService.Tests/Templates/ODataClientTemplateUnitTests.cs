@@ -719,7 +719,7 @@ namespace ODataConnectedService.Tests
                 // this method is called internally by other language specific write methods
             }
 
-            protected override void WriteRevisionDescription(string revisionDescription)
+            protected override void WriteRevisionDescription(string revisionDescription, bool isClass = false)
             {
                 throw new NotImplementedException();
             }
