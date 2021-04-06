@@ -6036,13 +6036,13 @@ Namespace <#= fullNamespace #>
         if (isClass)
         {
 #>
-    <Global.System.ObsoleteAttribute("<#= revisionDescription #>")>
+    <Global.System.ObsoleteAttribute("<#= revisionDescription #>")> _
 <#+
         }
         else
         {
 #>
-        <Global.System.ObsoleteAttribute("<#= revisionDescription #>")>
+        <Global.System.ObsoleteAttribute("<#= revisionDescription #>")> _
 <#+
         }
     }

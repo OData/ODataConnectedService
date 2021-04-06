@@ -586,8 +586,8 @@ namespace ODataConnectedService.Tests
             ODataT4CodeGeneratorTestDescriptors.EntityTypeMarkedObsolete.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
             // TODO: Activate this once support for VB is added.
-            // code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityTypeMarkedObsolete.Metadata, null, false, false);
-            // ODataT4CodeGeneratorTestDescriptors.EntityTypeMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
+            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityTypeMarkedObsolete.Metadata, null, false, false);
+            ODataT4CodeGeneratorTestDescriptors.EntityTypeMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]

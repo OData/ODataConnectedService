@@ -8090,7 +8090,7 @@ this.Write("    <Global.System.ObsoleteAttribute(\"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(revisionDescription));
 
-this.Write("\")>\r\n");
+this.Write("\")> _\r\n");
 
 
         }
@@ -8101,7 +8101,7 @@ this.Write("        <Global.System.ObsoleteAttribute(\"");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(revisionDescription));
 
-this.Write("\")>\r\n");
+this.Write("\")> _\r\n");
 
 
         }
