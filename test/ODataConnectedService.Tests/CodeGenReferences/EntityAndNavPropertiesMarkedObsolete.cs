@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 06/04/2021 22:39:53
+// Generation date: 06/04/2021 23:38:02
 namespace Namespace1
 {
     /// <summary>
@@ -76,7 +76,7 @@ namespace Namespace1
                 <PropertyValue Property=""Date"" Date=""2020-08-20"" />
                 <PropertyValue Property=""Version"" String=""2020-08/Tasks_And_Plans"" />
                 <PropertyValue Property=""Kind"" EnumMember=""Org.OData.Core.V1.RevisionKind/Deprecated"" />
-                <PropertyValue Property=""Description"" String=""The Trippin Service has deprecated the ProductItems NavigationProperty and will stop returning data on August 20, 2022."" />
+                <PropertyValue Property=""Description"" String=""The Service has deprecated the ProductItems NavigationProperty and will stop returning data on August 20, 2022."" />
                 <PropertyValue Property=""RemovalDate"" Date=""2022-08-20"" />
               </Record>
             </Collection>
@@ -163,7 +163,7 @@ namespace Namespace1
         /// <summary>
         /// There are no comments for ProductItems in the schema.
         /// </summary>
-        [global::System.ObsoleteAttribute("The Trippin Service has deprecated the ProductItems NavigationProperty and will stop returning data on August 20, 2022.")]
+        [global::System.ObsoleteAttribute("The Service has deprecated the ProductItems NavigationProperty and will stop returning data on August 20, 2022.")]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
         public virtual global::Microsoft.OData.Client.DataServiceQuery<global::Namespace1.ProductItem> ProductItems
         {
@@ -252,7 +252,7 @@ namespace Namespace1
         /// <summary>
         /// There are no comments for Property ProductItems in the schema.
         /// </summary>
-        [global::System.ObsoleteAttribute("The Trippin Service has deprecated the ProductItems NavigationProperty and will stop returning data on August 20, 2022.")]
+        [global::System.ObsoleteAttribute("The Service has deprecated the ProductItems NavigationProperty and will stop returning data on August 20, 2022.")]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
 
         public virtual global::System.Collections.ObjectModel.Collection<global::Namespace1.ProductItem> ProductItems
