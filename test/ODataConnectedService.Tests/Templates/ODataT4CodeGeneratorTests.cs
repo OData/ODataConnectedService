@@ -590,6 +590,61 @@ namespace ODataConnectedService.Tests
             // ODataT4CodeGeneratorTestDescriptors.EntityTypeMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
+        [TestMethod]
+        public void CodeGenEntitySetMarkedObsoleteEdmx()
+        {
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntitySetMarkedObsolete.Metadata, null, true, false);
+            ODataT4CodeGeneratorTestDescriptors.EntitySetMarkedObsolete.Verify(code, true/*isCSharp*/, false/*useDSC*/);
+
+            // TODO: Activate this once support for VB is added.
+            // code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntitySetMarkedObsolete.Metadata, null, false, false);
+            // ODataT4CodeGeneratorTestDescriptors.EntitySetMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
+        }
+
+        [TestMethod]
+        public void CodeGenBoundActionsAndFunctionsMarkedObsoleteEdmx()
+        {
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.BoundActionsAndFunctionsMarkedObsolete.Metadata, null, true, false);
+            ODataT4CodeGeneratorTestDescriptors.BoundActionsAndFunctionsMarkedObsolete.Verify(code, true/*isCSharp*/, false/*useDSC*/);
+
+            // TODO: Activate this once support for VB is added.
+            // code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.BoundActionsAndFunctionsMarkedObsolete.Metadata, null, false, false);
+            // ODataT4CodeGeneratorTestDescriptors.BoundActionsAndFunctionsMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
+        }
+
+        [TestMethod]
+        public void CodeGenEntityAndNavPropertiesMarkedObsoleteEdmx()
+        {
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityAndNavPropertiesMarkedObsolete.Metadata, null, true, false);
+            ODataT4CodeGeneratorTestDescriptors.EntityAndNavPropertiesMarkedObsolete.Verify(code, true/*isCSharp*/, false/*useDSC*/);
+
+            // TODO: Activate this once support for VB is added.
+            // code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityAndNavPropertiesMarkedObsolete.Metadata, null, false, false);
+            // ODataT4CodeGeneratorTestDescriptors.EntityAndNavPropertiesMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
+        }
+
+        [TestMethod]
+        public void CodeGenFunctionsAndActionImportsMarkedObsoleteEdmx()
+        {
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.FunctionsAndActionImportsMarkedObsolete.Metadata, null, true, false);
+            ODataT4CodeGeneratorTestDescriptors.FunctionsAndActionImportsMarkedObsolete.Verify(code, true/*isCSharp*/, false/*useDSC*/);
+
+            // TODO: Activate this once support for VB is added.
+            // code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.FunctionsAndActionImportsMarkedObsolete.Metadata, null, false, false);
+            // ODataT4CodeGeneratorTestDescriptors.FunctionsAndActionImportsMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
+        }
+
+        [TestMethod]
+        public void CodeGenSingletonsMarkedObsoleteEdmx()
+        {
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SingletonsMarkedObsolete.Metadata, null, true, false);
+            ODataT4CodeGeneratorTestDescriptors.SingletonsMarkedObsolete.Verify(code, true/*isCSharp*/, false/*useDSC*/);
+
+            // TODO: Activate this once support for VB is added.
+            // code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SingletonsMarkedObsolete.Metadata, null, false, false);
+            // ODataT4CodeGeneratorTestDescriptors.SingletonsMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
+        }
+
         private static string CodeGenWithT4Template(string edmx, string namespacePrefix, bool isCSharp,
             bool useDataServiceCollection, bool enableNamingAlias = false,
             bool ignoreUnexpectedElementsAndAttributes = false,

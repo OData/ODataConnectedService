@@ -722,5 +722,90 @@ namespace ODataConnectedService.Tests
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, EntityTypeMarkedObsolete.ExpectedResults, isCSharp, useDSC, "EntityTypeMarkedObsolete"),
         };
         #endregion
+
+        #region EntitySetMarkedObsolete
+        public static string EdmxEntitySetMarkedObsolete = LoadContentFromBaseline("EntitySetMarkedObsolete.xml");
+        public static string EntitySetMarkedObsoleteCSharp = LoadContentFromBaseline("EntitySetMarkedObsolete.cs");
+        //public static string EntitySetMarkedObsoleteVB = LoadContentFromBaseline("EntitySetMarkedObsolete.vb");
+
+        public static ODataT4CodeGeneratorTestsDescriptor EntitySetMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
+        {
+            Metadata = EdmxEntitySetMarkedObsolete,
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, EntitySetMarkedObsoleteCSharp },
+                //{ ExpectedVB, EntitySetMarkedObsoleteVB },
+            },
+            Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, EntitySetMarkedObsolete.ExpectedResults, isCSharp, useDSC, "EntitySetMarkedObsolete"),
+        };
+        #endregion
+
+        #region BoundActionsAndFunctionsMarkedObsolete
+        public static string EdmxBoundActionsAndFunctionsMarkedObsolete = LoadContentFromBaseline("BoundActionsAndFunctionsMarkedObsolete.xml");
+        public static string BoundActionsAndFunctionsMarkedObsoleteCSharp = LoadContentFromBaseline("BoundActionsAndFunctionsMarkedObsolete.cs");
+        //public static string BoundActionsAndFunctionsMarkedObsoleteVB = LoadContentFromBaseline("BoundActionsAndFunctionsMarkedObsolete.vb");
+
+        public static ODataT4CodeGeneratorTestsDescriptor BoundActionsAndFunctionsMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
+        {
+            Metadata = EdmxBoundActionsAndFunctionsMarkedObsolete,
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, BoundActionsAndFunctionsMarkedObsoleteCSharp },
+                //{ ExpectedVB, BoundActionsAndFunctionsMarkedObsoleteVB },
+            },
+            Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, BoundActionsAndFunctionsMarkedObsolete.ExpectedResults, isCSharp, useDSC, "BoundActionsAndFunctionsMarkedObsolete"),
+        };
+        #endregion
+
+        #region EntityAndNavPropertiesMarkedObsolete
+        public static string EdmxEntityAndNavPropertiesMarkedObsolete = LoadContentFromBaseline("EntityAndNavPropertiesMarkedObsolete.xml");
+        public static string EntityAndNavPropertiesMarkedObsoleteCSharp = LoadContentFromBaseline("EntityAndNavPropertiesMarkedObsolete.cs");
+        //public static string EntityAndNavPropertiesMarkedObsoleteVB = LoadContentFromBaseline("EntityAndNavPropertiesMarkedObsolete.vb");
+
+        public static ODataT4CodeGeneratorTestsDescriptor EntityAndNavPropertiesMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
+        {
+            Metadata = EdmxEntityAndNavPropertiesMarkedObsolete,
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, EntityAndNavPropertiesMarkedObsoleteCSharp },
+                //{ ExpectedVB, EntityAndNavPropertiesMarkedObsoleteVB },
+            },
+            Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, EntityAndNavPropertiesMarkedObsolete.ExpectedResults, isCSharp, useDSC, "EntityAndNavPropertiesMarkedObsolete"),
+        };
+        #endregion
+
+        #region FunctionsAndActionImportsMarkedObsolete
+        public static string EdmxFunctionsAndActionImportsMarkedObsolete = LoadContentFromBaseline("FunctionsAndActionImportsMarkedObsolete.xml");
+        public static string FunctionsAndActionImportsMarkedObsoleteCSharp = LoadContentFromBaseline("FunctionsAndActionImportsMarkedObsolete.cs");
+        //public static string FunctionsAndActionImportsMarkedObsoleteVB = LoadContentFromBaseline("FunctionsAndActionImportsMarkedObsolete.vb");
+
+        public static ODataT4CodeGeneratorTestsDescriptor FunctionsAndActionImportsMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
+        {
+            Metadata = EdmxFunctionsAndActionImportsMarkedObsolete,
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, FunctionsAndActionImportsMarkedObsoleteCSharp },
+                //{ ExpectedVB, FunctionsAndActionImportsMarkedObsoleteVB },
+            },
+            Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, FunctionsAndActionImportsMarkedObsolete.ExpectedResults, isCSharp, useDSC, "FunctionsAndActionImportsMarkedObsolete"),
+        };
+        #endregion
+
+        #region SingletonsMarkedObsolete
+        public static string EdmxSingletonsMarkedObsolete = LoadContentFromBaseline("SingletonsMarkedObsolete.xml");
+        public static string SingletonsMarkedObsoleteCSharp = LoadContentFromBaseline("SingletonsMarkedObsolete.cs");
+        //public static string SingletonsMarkedObsoleteVB = LoadContentFromBaseline("SingletonsMarkedObsolete.vb");
+
+        public static ODataT4CodeGeneratorTestsDescriptor SingletonsMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
+        {
+            Metadata = EdmxSingletonsMarkedObsolete,
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, SingletonsMarkedObsoleteCSharp },
+                //{ ExpectedVB, SingletonsMarkedObsoleteVB },
+            },
+            Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, SingletonsMarkedObsolete.ExpectedResults, isCSharp, useDSC, "SingletonsMarkedObsolete"),
+        };
+        #endregion
     }
 }
