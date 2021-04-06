@@ -705,5 +705,22 @@ namespace ODataConnectedService.Tests
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, SourceParameterOrKeysProperty.ExpectedResults, isCSharp, useDSC, nameof(SourceParameterOrKeysProperty)),
         };
         #endregion
+
+        #region EntityTypeMarkedObsolete
+        public static string EdmxEntityTypeMarkedObsolete = LoadContentFromBaseline("EntityTypeMarkedObsolete.xml");
+        public static string EntityTypeMarkedObsoleteCSharp = LoadContentFromBaseline("EntityTypeMarkedObsolete.cs");
+        public static string EntityTypeMarkedObsoleteVB = LoadContentFromBaseline("EntityTypeMarkedObsolete.vb");
+
+        public static ODataT4CodeGeneratorTestsDescriptor EntityTypeMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
+        {
+            Metadata = EdmxEntityTypeMarkedObsolete,
+            ExpectedResults = new Dictionary<string, string>()
+            {
+                { ExpectedCSharp, EntityTypeMarkedObsoleteCSharp },
+                { ExpectedVB, EntityTypeMarkedObsoleteVB },
+            },
+            Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, EntityTypeMarkedObsolete.ExpectedResults, isCSharp, useDSC, "EntityTypeMarkedObsolete"),
+        };
+        #endregion
     }
 }
