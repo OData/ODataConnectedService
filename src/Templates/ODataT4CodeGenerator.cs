@@ -6447,6 +6447,7 @@ this.Write(")\r\n            MyBase.New(query)\r\n        End Sub\r\n");
     internal override void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, string description, string revisionDescription, bool inContext)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {entitySetName} in the schema." : description);
+        WriteRevisionDescription(revisionDescription);
 
 this.Write("        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData.C" +
         "lient.Design.T4\", \"");
@@ -6534,6 +6535,7 @@ this.Write(")\r\n");
     internal override void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, string description, string revisionDescription, bool inContext)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {singletonName} in the schema." : description);
+        WriteRevisionDescription(revisionDescription);
 
 this.Write("        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData.C" +
         "lient.Design.T4\", \"");
@@ -7145,6 +7147,7 @@ this.Write("\r\n        End Function\r\n");
     internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(propertyDescription) ? $"There are no comments for Property {propertyName} in the schema." : propertyDescription);
+        WriteRevisionDescription(revisionDescription);
 
 this.Write("        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData.C" +
         "lient.Design.T4\", \"");
@@ -7373,6 +7376,7 @@ this.Write("    End Enum\r\n");
     internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
+        WriteRevisionDescription(revisionDescription);
         if (this.context.EnableNamingAlias)
         {
 
@@ -7423,6 +7427,7 @@ this.Write(")\r\n        End Function\r\n");
     internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
+        WriteRevisionDescription(revisionDescription);
         if (this.context.EnableNamingAlias)
         {
 
@@ -7479,6 +7484,7 @@ this.Write("\r\n        End Function\r\n");
     internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
+        WriteRevisionDescription(revisionDescription);
         if (this.context.EnableNamingAlias)
         {
 
@@ -7607,6 +7613,7 @@ this.Write("\r\n        End Function\r\n");
     internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
+        WriteRevisionDescription(revisionDescription);
         if (this.context.EnableNamingAlias)
         {
 
@@ -7651,6 +7658,7 @@ this.Write(")\r\n        End Function\r\n");
     internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description, string revisionDescription)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
+        WriteRevisionDescription(revisionDescription);
         if (this.context.EnableNamingAlias)
         {
 
@@ -8070,6 +8078,33 @@ this.Write("\r\n        \'\'\' </summary>\r\n");
 
     protected override void WriteRevisionDescription(string revisionDescription, bool isClass = false)
     {
+    if (string.IsNullOrEmpty(revisionDescription))
+        {
+            return;
+        }
+
+        if (isClass)
+        {
+
+this.Write("    <Global.System.ObsoleteAttribute(\"");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(revisionDescription));
+
+this.Write("\")>\r\n");
+
+
+        }
+        else
+        {
+
+this.Write("        <Global.System.ObsoleteAttribute(\"");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(revisionDescription));
+
+this.Write("\")>\r\n");
+
+
+        }
     }
 
     internal override void WriteNamespaceEnd()
