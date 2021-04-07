@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 07/04/2021 01:04:35
+'Generation date: 07/04/2021 11:45:27
 Namespace Namespace1
     ''' <summary>
     ''' There are no comments for EntityContainer in the schema.
@@ -22,10 +22,10 @@ Namespace Namespace1
         ''' <summary>
         ''' Initialize a new EntityContainer object.
         ''' </summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
-            Me.OnContextCreated()
+            Me.OnContextCreated
             Me.Format.LoadServiceModel = AddressOf GeneratedEdmModel.GetInstance
             Me.Format.UseJson()
         End Sub
@@ -34,7 +34,7 @@ Namespace Namespace1
         ''' <summary>
         ''' There are no comments for Products in the schema.
         ''' </summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Public Overridable ReadOnly Property Products() As Global.Microsoft.OData.Client.DataServiceQuery(Of Product)
             Get
                 If (Me._Products Is Nothing) Then
@@ -43,52 +43,52 @@ Namespace Namespace1
                 Return Me._Products
             End Get
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Private _Products As Global.Microsoft.OData.Client.DataServiceQuery(Of Product)
         ''' <summary>
         ''' There are no comments for Products in the schema.
         ''' </summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Public Overridable Sub AddToProducts(ByVal product As Product)
             MyBase.AddObject("Products", product)
         End Sub
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Private MustInherit Class GeneratedEdmModel
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>
-            Private Shared ParsedModel As Global.Microsoft.OData.Edm.IEdmModel = LoadModelFromString()
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>
-            Private Const Edmx As String = "<edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">" &
- "  <edmx:DataServices>" &
- "    <Schema Namespace=""Namespace1"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">" &
- "      <EntityType Name=""Product"">" &
- "        <Key>" &
- "          <PropertyRef Name=""Id"" />" &
- "        </Key>" &
- "        <Property Name=""Id"" Type=""Edm.Int32"" Nullable=""false"" />" &
- "        <Property Name=""Name"" Type=""Edm.String"" Nullable=""false"" />" &
- "        <Annotation Term=""Org.OData.Core.V1.Revisions"">" &
- "          <Collection>" &
- "            <Record>" &
- "              <PropertyValue Property=""Date"" Date=""2020-08-20"" />" &
- "              <PropertyValue Property=""Version"" String=""2020-08/Tasks_And_Plans"" />" &
- "              <PropertyValue Property=""Kind"" EnumMember=""Org.OData.Core.V1.RevisionKind/Deprecated"" />" &
- "              <PropertyValue Property=""Description"" String=""The Service has deprecated the Product EntityType and will stop returning data on August 20, 2022."" />" &
- "              <PropertyValue Property=""RemovalDate"" Date=""2022-08-20"" />" &
- "            </Record>" &
- "          </Collection>" &
- "        </Annotation>" &
- "      </EntityType>" &
- "      <EntityContainer Name=""EntityContainer"">" &
- "        <EntitySet Name=""Products"" EntityType=""Namespace1.Product"" />" &
- "      </EntityContainer>" &
- "    </Schema>" &
- "  </edmx:DataServices>" &
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+            Private Shared ParsedModel As Global.Microsoft.OData.Edm.IEdmModel = LoadModelFromString
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+            Private Const Edmx As String = "<edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">" & _
+ "  <edmx:DataServices>" & _
+ "    <Schema Namespace=""Namespace1"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">" & _
+ "      <EntityType Name=""Product"">" & _
+ "        <Key>" & _
+ "          <PropertyRef Name=""Id"" />" & _
+ "        </Key>" & _
+ "        <Property Name=""Id"" Type=""Edm.Int32"" Nullable=""false"" />" & _
+ "        <Property Name=""Name"" Type=""Edm.String"" Nullable=""false"" />" & _
+ "        <Annotation Term=""Org.OData.Core.V1.Revisions"">" & _
+ "          <Collection>" & _
+ "            <Record>" & _
+ "              <PropertyValue Property=""Date"" Date=""2020-08-20"" />" & _
+ "              <PropertyValue Property=""Version"" String=""2020-08/Tasks_And_Plans"" />" & _
+ "              <PropertyValue Property=""Kind"" EnumMember=""Org.OData.Core.V1.RevisionKind/Deprecated"" />" & _
+ "              <PropertyValue Property=""Description"" String=""The Service has deprecated the Product EntityType and will stop returning data on August 20, 2022."" />" & _
+ "              <PropertyValue Property=""RemovalDate"" Date=""2022-08-20"" />" & _
+ "            </Record>" & _
+ "          </Collection>" & _
+ "        </Annotation>" & _
+ "      </EntityType>" & _
+ "      <EntityContainer Name=""EntityContainer"">" & _
+ "        <EntitySet Name=""Products"" EntityType=""Namespace1.Product"" />" & _
+ "      </EntityContainer>" & _
+ "    </Schema>" & _
+ "  </edmx:DataServices>" & _
  "</edmx:Edmx>"
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
             Public Shared Function GetInstance() As Global.Microsoft.OData.Edm.IEdmModel
                 Return ParsedModel
             End Function
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
             Private Shared Function LoadModelFromString() As Global.Microsoft.OData.Edm.IEdmModel
                 Dim reader As Global.System.Xml.XmlReader = CreateXmlReader(Edmx)
                 Try
@@ -108,7 +108,7 @@ Namespace Namespace1
                     CType(reader, Global.System.IDisposable).Dispose()
                 End Try
             End Function
-            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
             Private Shared Function CreateXmlReader(ByVal edmxToParse As String) As Global.System.Xml.XmlReader
                 Return Global.System.Xml.XmlReader.Create(New Global.System.IO.StringReader(edmxToParse))
             End Function
@@ -117,7 +117,7 @@ Namespace Namespace1
     ''' <summary>
     ''' There are no comments for ProductSingle in the schema.
     ''' </summary>
-    <Global.System.ObsoleteAttribute("The Service has deprecated the Product EntityType and will stop returning data on August 20, 2022.")>
+    <Global.System.ObsoleteAttribute("The Service has deprecated the Product EntityType and will stop returning data on August 20, 2022.")>  _
     Partial Public Class ProductSingle
         Inherits Global.Microsoft.OData.Client.DataServiceQuerySingle(Of Product)
         ''' <summary>
@@ -147,8 +147,8 @@ Namespace Namespace1
     ''' <KeyProperties>
     ''' Id
     ''' </KeyProperties>
-    <Global.Microsoft.OData.Client.Key("Id")>
-    <Global.System.ObsoleteAttribute("The Service has deprecated the Product EntityType and will stop returning data on August 20, 2022.")>
+    <Global.Microsoft.OData.Client.Key("Id")>  _
+    <Global.System.ObsoleteAttribute("The Service has deprecated the Product EntityType and will stop returning data on August 20, 2022.")>  _
     Partial Public Class Product
         Inherits Global.Microsoft.OData.Client.BaseEntityType
         ''' <summary>
@@ -156,7 +156,7 @@ Namespace Namespace1
         ''' </summary>
         ''' <param name="ID">Initial value of Id.</param>
         ''' <param name="name">Initial value of Name.</param>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Public Shared Function CreateProduct(ByVal ID As Integer, ByVal name As String) As Product
             Dim product As Product = New Product()
             product.Id = ID
@@ -166,18 +166,18 @@ Namespace Namespace1
         ''' <summary>
         ''' There are no comments for Property Id in the schema.
         ''' </summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Public Overridable Property Id() As Integer
             Get
                 Return Me._Id
             End Get
             Set
-                Me.OnIdChanging(Value)
-                Me._Id = Value
-                Me.OnIdChanged()
+                Me.OnIdChanging(value)
+                Me._Id = value
+                Me.OnIdChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Private _Id As Integer
         Partial Private Sub OnIdChanging(ByVal value As Integer)
         End Sub
@@ -186,18 +186,18 @@ Namespace Namespace1
         ''' <summary>
         ''' There are no comments for Property Name in the schema.
         ''' </summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Public Overridable Property Name() As String
             Get
                 Return Me._Name
             End Get
             Set
-                Me.OnNameChanging(Value)
-                Me._Name = Value
-                Me.OnNameChanged()
+                Me.OnNameChanging(value)
+                Me._Name = value
+                Me.OnNameChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Private _Name As String
         Partial Private Sub OnNameChanging(ByVal value As String)
         End Sub
@@ -227,7 +227,7 @@ Namespace Namespace1
             id As Integer) As Namespace1.ProductSingle
             Dim _keys As Global.System.Collections.Generic.IDictionary(Of String, Object) = New Global.System.Collections.Generic.Dictionary(Of String, Object)() From
             {
-                {"Id", id}
+                { "Id", id }
             }
             Return New Namespace1.ProductSingle(_source.Context, _source.GetKeyPath(Global.Microsoft.OData.Client.Serializer.GetKeyString(_source.Context, _keys)))
         End Function
