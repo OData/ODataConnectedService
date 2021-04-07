@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 06/04/2021 23:38:02
+// Generation date: 07/04/2021 13:17:43
 namespace Namespace1
 {
     /// <summary>
@@ -68,7 +68,19 @@ namespace Namespace1
           <PropertyRef Name=""Id"" />
         </Key>
         <Property Name=""Id"" Type=""Edm.Int32"" Nullable=""false"" />
-        <Property Name=""Name"" Type=""Edm.String"" Nullable=""false"" />
+        <Property Name=""Name"" Type=""Edm.String"" Nullable=""false"">
+          <Annotation Term=""Org.OData.Core.V1.Revisions"">
+            <Collection>
+              <Record>
+                <PropertyValue Property=""Date"" Date=""2020-08-20"" />
+                <PropertyValue Property=""Version"" String=""2020-08/Tasks_And_Plans"" />
+                <PropertyValue Property=""Kind"" EnumMember=""Org.OData.Core.V1.RevisionKind/Deprecated"" />
+                <PropertyValue Property=""Description"" String=""The Service has deprecated the Name Property and will stop returning data on August 20, 2022."" />
+                <PropertyValue Property=""RemovalDate"" Date=""2022-08-20"" />
+              </Record>
+            </Collection>
+          </Annotation>
+        </Property>
         <NavigationProperty Name=""ProductItems"" Type=""Collection(Namespace1.ProductItem)"">
           <Annotation Term=""Org.OData.Core.V1.Revisions"">
             <Collection>
@@ -230,6 +242,7 @@ namespace Namespace1
         /// <summary>
         /// There are no comments for Property Name in the schema.
         /// </summary>
+        [global::System.ObsoleteAttribute("The Service has deprecated the Name Property and will stop returning data on August 20, 2022.")]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
 
         public virtual string Name

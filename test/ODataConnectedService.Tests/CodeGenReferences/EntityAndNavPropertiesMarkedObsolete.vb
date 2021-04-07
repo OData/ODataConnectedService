@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 07/04/2021 12:22:33
+'Generation date: 07/04/2021 13:19:31
 Namespace Namespace1
     ''' <summary>
     ''' There are no comments for EntityContainer in the schema.
@@ -65,7 +65,19 @@ Namespace Namespace1
  "          <PropertyRef Name=""Id"" />" & _
  "        </Key>" & _
  "        <Property Name=""Id"" Type=""Edm.Int32"" Nullable=""false"" />" & _
- "        <Property Name=""Name"" Type=""Edm.String"" Nullable=""false"" />" & _
+ "        <Property Name=""Name"" Type=""Edm.String"" Nullable=""false"">" & _
+ "          <Annotation Term=""Org.OData.Core.V1.Revisions"">" & _
+ "            <Collection>" & _
+ "              <Record>" & _
+ "                <PropertyValue Property=""Date"" Date=""2020-08-20"" />" & _
+ "                <PropertyValue Property=""Version"" String=""2020-08/Tasks_And_Plans"" />" & _
+ "                <PropertyValue Property=""Kind"" EnumMember=""Org.OData.Core.V1.RevisionKind/Deprecated"" />" & _
+ "                <PropertyValue Property=""Description"" String=""The Service has deprecated the Name Property and will stop returning data on August 20, 2022."" />" & _
+ "                <PropertyValue Property=""RemovalDate"" Date=""2022-08-20"" />" & _
+ "              </Record>" & _
+ "            </Collection>" & _
+ "          </Annotation>" & _
+ "        </Property>" & _
  "        <NavigationProperty Name=""ProductItems"" Type=""Collection(Namespace1.ProductItem)"">" & _
  "          <Annotation Term=""Org.OData.Core.V1.Revisions"">" & _
  "            <Collection>" & _
@@ -211,6 +223,7 @@ Namespace Namespace1
         ''' <summary>
         ''' There are no comments for Property Name in the schema.
         ''' </summary>
+        <Global.System.ObsoleteAttribute("The Service has deprecated the Name Property and will stop returning data on August 20, 2022.")>  _
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Public Overridable Property Name() As String
             Get
