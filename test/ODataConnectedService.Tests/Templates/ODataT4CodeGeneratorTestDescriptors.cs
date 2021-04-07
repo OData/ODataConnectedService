@@ -27,7 +27,6 @@ namespace ODataConnectedService.Tests
         private const string ExpectedVBUseDSC = "ExpectedVBUseDSC";
         private const string ExpectedVB = "ExpectedVB";
         private const string T4Version = "#VersionNumber#";
-        private const string ObsoleteMessage = "#ObsoleteMessage#";
 
         public class ODataT4CodeGeneratorTestsDescriptor
         {

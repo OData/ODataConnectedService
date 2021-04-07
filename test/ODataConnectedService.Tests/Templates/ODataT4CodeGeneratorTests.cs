@@ -808,7 +808,9 @@ namespace ODataConnectedService.Tests
             }
 
             var results = codeProvider.CompileAssemblyFromSource(compilerOptions, source);
-            //results.Errors.Should().BeEmpty(); // Activate when we fix why warnings are still being treated as errors.
+
+            // TODO: Activate when we fix why warnings are still being treated as errors.
+            // results.Errors.Should().BeEmpty();
         }
 
         [TestMethod]
