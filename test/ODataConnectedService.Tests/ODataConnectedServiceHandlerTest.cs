@@ -54,12 +54,15 @@ namespace Microsoft.OData.ConnectedService.Tests
         }
 
         [DataTestMethod]
-        [DataRow("AddServiceInstanceAsync", 4, "V4")]
-        [DataRow("UpdateServiceInstanceAsync", 4, "V4")]
-        public void TestAddUpdateServiceInstance_DoesnotSaveCustomHttpHeadersToDesignerData(string method, int edmxVersion, string generatorVersion)
+        [DataRow("AddServiceInstanceAsync", 4, "V4", false)]
+        [DataRow("AddServiceInstanceAsync", 4, "V4", true)]
+        [DataRow("UpdateServiceInstanceAsync", 4, "V4", false)]
+        [DataRow("UpdateServiceInstanceAsync", 4, "V4", true)]
+        public void TestAddUpdateServiceInstance_SavesCustomHttpHeadersToDesignerDataAccordingToStoreCustomHttpHeaders(string method, int edmxVersion, string generatorVersion, bool store)
         {
             var descriptorFactory = new TestCodeGenDescriptorFactory();
             var serviceHandler = new ODataConnectedServiceHandler(descriptorFactory);
+            const string headerValue = @"Authorization: Bearer xyz12345-randomstring";
             var serviceConfig = new ServiceConfiguration()
             {
                 EdmxVersion = new Version(edmxVersion, 0, 0, 0),
@@ -67,25 +70,30 @@ namespace Microsoft.OData.ConnectedService.Tests
                 UseDataServiceCollection = false,
                 MakeTypesInternal = true,
                 IncludeCustomHeaders = true,
-                CustomHttpHeaders = @"Authorization: Bearer xyz12345-randomstring"
+                CustomHttpHeaders = headerValue,
+                StoreCustomHttpHeaders = store
             };
             var tokenSource = new CancellationTokenSource();
             var context = SetupContext(serviceConfig);
             (typeof(ODataConnectedServiceHandler).GetMethod(method).Invoke(
                 serviceHandler, new object[] { context, tokenSource.Token }) as Task).Wait();
 
-            // CustomHttpHeaders should be null since we are not saving them to DesignerData
+            // CustomHttpHeaders should be null when StoreCustomHttpHeaders is false since we are not saving them to DesignerData
             Assert.AreEqual(serviceConfig, context.SavedExtendedDesignData);
-            Assert.AreEqual(serviceConfig.CustomHttpHeaders, null);
+            Assert.AreEqual(serviceConfig.CustomHttpHeaders, store ? headerValue : null);
         }
 
         [DataTestMethod]
-        [DataRow("AddServiceInstanceAsync", 4, "V4")]
-        [DataRow("UpdateServiceInstanceAsync", 4, "V4")]
-        public void TestAddUpdateServiceInstance_DoesnotSaveWebProxyDetailsToDesignerData(string method, int edmxVersion, string generatorVersion)
+        [DataRow("AddServiceInstanceAsync", 4, "V4", false)]
+        [DataRow("AddServiceInstanceAsync", 4, "V4", true)]
+        [DataRow("UpdateServiceInstanceAsync", 4, "V4", false)]
+        [DataRow("UpdateServiceInstanceAsync", 4, "V4", true)]
+        public void TestAddUpdateServiceInstance_SavesWebProxyDetailsToDesignerDataAccordingToStoreWebProxyNetworkCredentials(string method, int edmxVersion, string generatorVersion, bool store)
         {
             var descriptorFactory = new TestCodeGenDescriptorFactory();
             var serviceHandler = new ODataConnectedServiceHandler(descriptorFactory);
+            const string username = "user";
+            const string password = "pass";
             var serviceConfig = new ServiceConfiguration()
             {
                 EdmxVersion = new Version(edmxVersion, 0, 0, 0),
@@ -95,18 +103,19 @@ namespace Microsoft.OData.ConnectedService.Tests
                 IncludeWebProxy = true,
                 IncludeWebProxyNetworkCredentials = true,
                 WebProxyHost = "http://example.com:80",
-                WebProxyNetworkCredentialsUsername = "user",
-                WebProxyNetworkCredentialsPassword = "pass"
+                WebProxyNetworkCredentialsUsername = username,
+                WebProxyNetworkCredentialsPassword = password,
+                StoreWebProxyNetworkCredentials = store
             };
             var tokenSource = new CancellationTokenSource();
             var context = SetupContext(serviceConfig);
             (typeof(ODataConnectedServiceHandler).GetMethod(method).Invoke(
                 serviceHandler, new object[] { context, tokenSource.Token }) as Task).Wait();
 
-            // WebProxy username and password should be null since we are not saving them to DesignerData
+            // WebProxy username and password should be null when StoreWebProxyNetworkCredentials is false since we are not saving them to DesignerData
             Assert.AreEqual(serviceConfig, context.SavedExtendedDesignData);
-            Assert.AreEqual(serviceConfig.WebProxyNetworkCredentialsUsername, null);
-            Assert.AreEqual(serviceConfig.WebProxyNetworkCredentialsPassword, null);
+            Assert.AreEqual(serviceConfig.WebProxyNetworkCredentialsUsername, store ? username : null);
+            Assert.AreEqual(serviceConfig.WebProxyNetworkCredentialsPassword, store ? password : null);
         }
 
         static TestConnectedServiceHandlerContext SetupContext(ServiceConfiguration serviceConfig)
