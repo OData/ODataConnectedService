@@ -3099,7 +3099,7 @@ public abstract class ODataClientTemplate : TemplateBase
 
         IDictionary<string, string> revisionsAnnotation = new Dictionary<string, string>();
 
-        if (collection != null && collection.Count() > 0)
+        if (collection != null && collection.Any())
         {
             IEdmCollectionExpression semanticElement = collection.FirstOrDefault() as IEdmCollectionExpression;
 
