@@ -1645,8 +1645,8 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteMethodStartForResolveNameFromType(string containerName, string fullNamespace);
     internal abstract void WriteResolveType(string fullNamespace, string languageDependentNamespace);
     internal abstract void WriteMethodEndForResolveNameFromType(bool modelHasInheritance);
-    internal abstract void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, string description, string revisionDescription, bool inContext = true);
-    internal abstract void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, string description, string revisionDescription, bool inContext = true);
+    internal abstract void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, string description, IDictionary<string, string> revisionAnnotations, bool inContext = true);
+    internal abstract void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, string description, IDictionary<string, string> revisionAnnotations, bool inContext = true);
     internal abstract void WriteContextAddToEntitySetMethod(string entitySetName, string originalEntitySetName, string typeName, string parameterName);
     internal abstract void WriteGeneratedEdmModel(string escapedEdmxString);
     internal abstract void WriteClassEndForEntityContainer();
@@ -1664,7 +1664,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteParameterNullCheckForStaticCreateMethod(string parameterName);
     internal abstract void WritePropertyValueAssignmentForStaticCreateMethod(string instanceName, string propertyName, string parameterName);
     internal abstract void WriteMethodEndForStaticCreateMethod(string instanceName);
-    internal abstract void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged, string revisionDescription);
+    internal abstract void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged, IDictionary<string, string> revisionAnnotations);
     internal abstract void WriteINotifyPropertyChangedImplementation();
     internal abstract void WriteClassEndForStructuredType();
     internal abstract void WriteNamespaceEnd();
@@ -1674,12 +1674,12 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteMemberForEnumType(string member, string originalMemberName, bool last);
     internal abstract void WriteEnumEnd();
     internal abstract void WritePropertyRootNamespace(string containerName, string fullNamespace);
-    internal abstract void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription);
-    internal abstract void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription);
-    internal abstract void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription);
-    internal abstract void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription);
-    internal abstract void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description, string revisionDescription);
-    internal abstract void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description, string revisionDescription);
+    internal abstract void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description, IDictionary<string, string> revisionAnnotations);
+    internal abstract void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, IDictionary<string, string> revisionAnnotations);
+    internal abstract void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description, IDictionary<string, string> revisionAnnotations);
+    internal abstract void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, IDictionary<string, string> revisionAnnotations);
+    internal abstract void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description, IDictionary<string, string> revisionAnnotations);
+    internal abstract void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description, IDictionary<string, string> revisionAnnotations);
     internal abstract void WriteConstructorForSingleType(string singleTypeName, string baseTypeName);
     internal abstract void WriteExtensionMethodsStart();
     internal abstract void WriteExtensionMethodsEnd();
@@ -1689,7 +1689,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteBoundFunctionReturnCollectionResultAsExtension(string functionName, string originalFunctionName, string boundTypeName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description);
     internal abstract void WriteBoundActionAsExtension(string actionName, string originalActionName, string boundSourceType, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description);
     protected abstract void WriteDescriptionSummary(string description, bool isClass = false);
-    protected abstract void WriteObsoleteAttribute(string revisionDescription, bool isClass = false);
+    protected abstract void WriteObsoleteAttribute(IDictionary<string, string> revisionAnnotations, bool isClass = false);
     #endregion Language specific write methods.
 
     internal HashSet<EdmPrimitiveTypeKind> ClrReferenceTypes { get {
@@ -2148,7 +2148,9 @@ public abstract class ODataClientTemplate : TemplateBase
                 camelCaseEntitySetName = Customization.CustomizeNaming(camelCaseEntitySetName);
             }
 
-            this.WriteContextEntitySetProperty(camelCaseEntitySetName, GetFixedName(camelCaseEntitySetName), entitySet.Name, GetFixedName(entitySetElementTypeName), GetDescriptionAnnotation(entitySet)?.Value, GetRevisionsAnnotation(entitySet)?.Value);
+            IDictionary<string, string> revisionAnnotations = new Dictionary<string, string>();
+
+            this.WriteContextEntitySetProperty(camelCaseEntitySetName, GetFixedName(camelCaseEntitySetName), entitySet.Name, GetFixedName(entitySetElementTypeName), GetDescriptionAnnotation(entitySet)?.Value, GetRevisionsAnnotation(entitySet));
             List<IEdmNavigationSource> edmNavigationSourceList = null;
             if (!this.context.ElementTypeToNavigationSourceMap.TryGetValue(entitySet.EntityType(), out edmNavigationSourceList))
             {
@@ -2198,7 +2200,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 camelCaseSingletonName = Customization.CustomizeNaming(camelCaseSingletonName);
             }
 
-            this.WriteContextSingletonProperty(camelCaseSingletonName, GetFixedName(camelCaseSingletonName), singleton.Name, singletonElementTypeName + "Single", GetDescriptionAnnotation(singleton)?.Value, GetRevisionsAnnotation(singleton)?.Value);
+            this.WriteContextSingletonProperty(camelCaseSingletonName, GetFixedName(camelCaseSingletonName), singleton.Name, singletonElementTypeName + "Single", GetDescriptionAnnotation(singleton)?.Value, GetRevisionsAnnotation(singleton));
 
             List<IEdmNavigationSource> edmNavigationSourceList = null;
             if (this.context.ElementTypeToNavigationSourceMap.TryGetValue(singleton.EntityType(), out edmNavigationSourceList))
@@ -2249,11 +2251,11 @@ public abstract class ODataClientTemplate : TemplateBase
 
             if (functionImport.Function.ReturnType.IsCollection())
             {
-                this.WriteFunctionImportReturnCollectionResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, parameterString, parameterValues, functionImport.Function.IsComposable, useEntityReference, GetDescriptionAnnotation(functionImport)?.Value, GetRevisionsAnnotation(functionImport)?.Value);
+                this.WriteFunctionImportReturnCollectionResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, parameterString, parameterValues, functionImport.Function.IsComposable, useEntityReference, GetDescriptionAnnotation(functionImport)?.Value, GetRevisionsAnnotation(functionImport));
             }
             else
             {
-                this.WriteFunctionImportReturnSingleResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, parameterValues, functionImport.Function.IsComposable, functionImport.Function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(functionImport)?.Value, GetRevisionsAnnotation(functionImport)?.Value);
+                this.WriteFunctionImportReturnSingleResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, parameterValues, functionImport.Function.IsComposable, functionImport.Function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(functionImport)?.Value, GetRevisionsAnnotation(functionImport));
             }
         }
 
@@ -2294,7 +2296,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 fixedContainerName = Customization.CustomizeNaming(fixedContainerName);
             }
 
-            this.WriteActionImport(this.GetFixedName(actionImportName), actionImport.Name, returnTypeName, parameterString, parameterValues, GetDescriptionAnnotation(actionImport)?.Value, GetRevisionsAnnotation(actionImport)?.Value);
+            this.WriteActionImport(this.GetFixedName(actionImportName), actionImport.Name, returnTypeName, parameterString, parameterValues, GetDescriptionAnnotation(actionImport)?.Value, GetRevisionsAnnotation(actionImport));
         }
 
         this.WriteClassEndForEntityContainer();
@@ -2382,12 +2384,12 @@ public abstract class ODataClientTemplate : TemplateBase
             if (property.Type is Microsoft.OData.Edm.EdmCollectionTypeReference)
             {
                 propertyType = GetSourceOrReturnTypeName(property.Type);
-                WriteContextEntitySetProperty(propertyName, GetFixedName(propertyName), property.Name, propertyType, GetDescriptionAnnotation(property)?.Value, GetRevisionsAnnotation(property)?.Value, false);
+                WriteContextEntitySetProperty(propertyName, GetFixedName(propertyName), property.Name, propertyType, GetDescriptionAnnotation(property)?.Value, GetRevisionsAnnotation(property), false);
             }
             else
             {
                 propertyType = Utils.GetClrTypeName(property.Type, true, this, this.context, true, isEntitySingleType : true);
-                WriteContextSingletonProperty(propertyName, GetFixedName(propertyName), property.Name, propertyType, GetDescriptionAnnotation(property)?.Value, GetRevisionsAnnotation(property)?.Value, false);
+                WriteContextSingletonProperty(propertyName, GetFixedName(propertyName), property.Name, propertyType, GetDescriptionAnnotation(property)?.Value, GetRevisionsAnnotation(property), false);
             }
         }
     }
@@ -2397,7 +2399,7 @@ public abstract class ODataClientTemplate : TemplateBase
         string entityTypeName = ((IEdmSchemaElement)entityType).Name;
         entityTypeName = this.context.EnableNamingAlias ? Customization.CustomizeNaming(entityTypeName) : entityTypeName;
         this.WriteSummaryCommentForStructuredType(entityTypeName + this.SingleSuffix, GetDescriptionAnnotation(entityType)?.Value);
-        this.WriteObsoleteAttribute(GetRevisionsAnnotation(entityType)?.Value, /* isClass */ true);
+        this.WriteObsoleteAttribute(GetRevisionsAnnotation(entityType), /* isClass */ true);
         this.WriteStructurdTypeDeclaration(entityType,
             this.ClassInheritMarker + string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, GetFixedName(entityTypeName)),
             this.SingleSuffix);
@@ -2444,7 +2446,7 @@ public abstract class ODataClientTemplate : TemplateBase
             this.WriteEntityHasStreamAttribute();
         }
 
-        this.WriteObsoleteAttribute(GetRevisionsAnnotation(entityType)?.Value, /* isClass */ true);
+        this.WriteObsoleteAttribute(GetRevisionsAnnotation(entityType), /* isClass */ true);
         this.WriteStructurdTypeDeclaration(entityType, this.BaseEntityType);
         this.SetPropertyIdentifierMappingsIfNameConflicts(entityType.Name, entityType);
         this.WriteTypeStaticCreateMethod(entityType.Name, entityType);
@@ -2504,11 +2506,11 @@ public abstract class ODataClientTemplate : TemplateBase
 
                 if (function.ReturnType.IsCollection())
                 {
-                    this.WriteBoundFunctionInEntityTypeReturnCollectionResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, parameterString, function.Namespace, parameterValues, function.IsComposable, useEntityReference, GetDescriptionAnnotation(function)?.Value, GetRevisionsAnnotation(function)?.Value);
+                    this.WriteBoundFunctionInEntityTypeReturnCollectionResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, parameterString, function.Namespace, parameterValues, function.IsComposable, useEntityReference, GetDescriptionAnnotation(function)?.Value, GetRevisionsAnnotation(function));
                 }
                 else
                 {
-                    this.WriteBoundFunctionInEntityTypeReturnSingleResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, function.Namespace, parameterValues, function.IsComposable, function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(function)?.Value, GetRevisionsAnnotation(function)?.Value);
+                    this.WriteBoundFunctionInEntityTypeReturnSingleResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, function.Namespace, parameterValues, function.IsComposable, function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(function)?.Value, GetRevisionsAnnotation(function));
                 }
             }
 
@@ -2549,7 +2551,7 @@ public abstract class ODataClientTemplate : TemplateBase
                     actionName = Customization.CustomizeNaming(actionName);
                 }
 
-                this.WriteBoundActionInEntityType(hideBaseMethod, GetFixedName(actionName), action.Name, returnTypeName, parameterString, action.Namespace, parameterValues, GetDescriptionAnnotation(action)?.Value, GetRevisionsAnnotation(action)?.Value);
+                this.WriteBoundActionInEntityType(hideBaseMethod, GetFixedName(actionName), action.Name, returnTypeName, parameterString, action.Namespace, parameterValues, GetDescriptionAnnotation(action)?.Value, GetRevisionsAnnotation(action));
             }
         }
     }
@@ -2939,7 +2941,7 @@ public abstract class ODataClientTemplate : TemplateBase
                     PropertyInitializationValue = Utils.GetPropertyInitializationValue(property, useDataServiceCollection, this, this.context),
                     PropertyAttribute = string.Empty,
                     PropertyDescription = GetDescriptionAnnotation(property)?.Value,
-                    RevisionDescription = GetRevisionsAnnotation(property)?.Value
+                    RevisionDescription = GetRevisionsAnnotation(property)
                 };
         }).ToList();
 
@@ -2954,6 +2956,9 @@ public abstract class ODataClientTemplate : TemplateBase
                 containerPropertyAttribute = this.ContainerPropertyAttribute;
             }
 
+            // Add empty dictionary to the anonymous type
+            IDictionary<string, string> emptyDict = new Dictionary<string, string>();
+
             propertyInfos.Add(new
             {
                 PropertyType = string.Format(this.DictionaryInterfaceName, this.StringTypeName, this.ObjectTypeName),
@@ -2964,7 +2969,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 PropertyInitializationValue = string.Format(this.DictionaryConstructor, this.StringTypeName, this.ObjectTypeName),
                 PropertyAttribute = containerPropertyAttribute,
                 PropertyDescription = string.Empty,
-                RevisionDescription = string.Empty
+                RevisionDescription = emptyDict
             });
         }
 
@@ -3085,25 +3090,29 @@ public abstract class ODataClientTemplate : TemplateBase
     }
 
     /// <summary>
-    /// Searches through model's vocabulary annotations and returns annotation of term 'Revisions' if present
+    /// Searches through model's vocabulary annotations and returns dictionary of term 'Revisions' annotation kinds.
     /// </summary>
-    private IEdmStringConstantExpression GetRevisionsAnnotation(IEdmVocabularyAnnotatable model)
+    private IDictionary<string,string> GetRevisionsAnnotation(IEdmVocabularyAnnotatable model)
     {
         IEnumerable<IEdmExpression> collection = model.VocabularyAnnotations(this.context.EdmModel).Where(x => x.Term.Name == "Revisions")
             .Select(x => x.Value);
 
+        IDictionary<string, string> revisionsAnnotation = new Dictionary<string, string>();
+
         if (collection != null && collection.Count() > 0)
         {
             IEdmCollectionExpression semanticElement = collection.FirstOrDefault() as IEdmCollectionExpression;
-            IEdmRecordExpression element = semanticElement.Elements.FirstOrDefault() as IEdmRecordExpression;
-            IEdmStringConstantExpression description = element.Properties.Where(x => x.Name == "Description").Select(x => x.Value).FirstOrDefault() as IEdmStringConstantExpression;
 
-            return description;
+            foreach (IEdmRecordExpression element in semanticElement.Elements)
+            {
+                string description = (element.Properties.Where(x => x.Name == "Description").Select(x => x.Value).FirstOrDefault() as IEdmStringConstantExpression).Value;
+                IEdmEnumMemberExpression revisionKind = element.Properties.Where(x => x.Name == "Kind").Select(x => x.Value).FirstOrDefault() as IEdmEnumMemberExpression;
+                string name = revisionKind.EnumMembers.FirstOrDefault().Name;
+                revisionsAnnotation.Add(name, description);
+            }
         }
-        else
-        {
-            return null;
-        }
+
+        return revisionsAnnotation;
 
     }
 }
@@ -4331,10 +4340,10 @@ this.Write(" query)\r\n            : base(query) {}\r\n\r\n");
 
     }
 
-    internal override void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, string description, string revisionDescription, bool inContext)
+    internal override void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, string description, IDictionary<string, string> revisionAnnotations, bool inContext)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {entitySetName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
 
 this.Write("        [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData." +
         "Client.Design.T4\", \"");
@@ -4419,10 +4428,10 @@ this.Write(";\r\n");
 
     }
 
-    internal override void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, string description, string revisionDescription, bool inContext)
+    internal override void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, string description, IDictionary<string, string> revisionAnnotations, bool inContext)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {singletonName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
 
 this.Write("        [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData." +
         "Client.Design.T4\", \"");
@@ -5036,10 +5045,10 @@ this.Write(";\r\n        }\r\n");
 
     }
 
-    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged, string revisionDescription)
+    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(propertyDescription) ? $"There are no comments for Property {propertyName} in the schema." : propertyDescription);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
 
 this.Write("        [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData." +
         "Client.Design.T4\", \"");
@@ -5260,10 +5269,10 @@ this.Write("    }\r\n");
 
     }
 
-    internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription)
+    internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
         if (this.context.EnableNamingAlias)
         {
 
@@ -5309,10 +5318,10 @@ this.Write(");\r\n        }\r\n");
 
     }
 
-    internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription)
+    internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
         if (this.context.EnableNamingAlias)
         {
 
@@ -5366,10 +5375,10 @@ this.Write(";\r\n        }\r\n");
 
     }
 
-    internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription)
+    internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
         if (this.context.EnableNamingAlias)
         {
 
@@ -5429,10 +5438,10 @@ this.Write(");\r\n        }\r\n");
 
     }
 
-    internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription)
+    internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
         if (this.context.EnableNamingAlias)
         {
 
@@ -5497,10 +5506,10 @@ this.Write(";\r\n        }\r\n");
 
         }
 
-    internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description, string revisionDescription)
+    internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
         if (this.context.EnableNamingAlias)
         {
 
@@ -5542,10 +5551,10 @@ this.Write(");\r\n        }\r\n");
 
     }
 
-    internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description, string revisionDescription)
+    internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
         if (this.context.EnableNamingAlias)
         {
 
@@ -5953,11 +5962,11 @@ this.Write("\r\n        /// </summary>\r\n");
         }
     }
 
-    protected override void WriteObsoleteAttribute(string revisionDescription, bool isClass = false)
+    protected override void WriteObsoleteAttribute(IDictionary<string, string> revisionAnnotations, bool isClass = false)
     {
-        if (string.IsNullOrEmpty(revisionDescription))
+        if (!revisionAnnotations.TryGetValue("Deprecated", out string revisionDescription))
         {
-            return;
+           return;
         }
 
         if (isClass)
@@ -6444,10 +6453,10 @@ this.Write(")\r\n            MyBase.New(query)\r\n        End Sub\r\n");
 
     }
 
-    internal override void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, string description, string revisionDescription, bool inContext)
+    internal override void WriteContextEntitySetProperty(string entitySetName, string entitySetFixedName, string originalEntitySetName, string entitySetElementTypeName, string description, IDictionary<string, string> revisionAnnotations, bool inContext)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {entitySetName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
 
 this.Write("        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData.C" +
         "lient.Design.T4\", \"");
@@ -6532,10 +6541,10 @@ this.Write(")\r\n");
 
     }
 
-    internal override void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, string description, string revisionDescription, bool inContext)
+    internal override void WriteContextSingletonProperty(string singletonName, string singletonFixedName, string originalSingletonName, string singletonElementTypeName, string description, IDictionary<string, string> revisionAnnotations, bool inContext)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {singletonName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
 
 this.Write("        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData.C" +
         "lient.Design.T4\", \"");
@@ -7144,10 +7153,10 @@ this.Write("\r\n        End Function\r\n");
 
     }
 
-    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged, string revisionDescription)
+    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(propertyDescription) ? $"There are no comments for Property {propertyName} in the schema." : propertyDescription);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
 
 this.Write("        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData.C" +
         "lient.Design.T4\", \"");
@@ -7373,10 +7382,10 @@ this.Write("    End Enum\r\n");
 
     }
 
-    internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription)
+    internal override void WriteFunctionImportReturnCollectionResult(string functionName, string originalFunctionName, string returnTypeName, string parameters, string parameterValues, bool isComposable, bool useEntityReference, string description, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
         if (this.context.EnableNamingAlias)
         {
 
@@ -7424,10 +7433,10 @@ this.Write(")\r\n        End Function\r\n");
 
     }
 
-    internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription)
+    internal override void WriteFunctionImportReturnSingleResult(string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
         if (this.context.EnableNamingAlias)
         {
 
@@ -7481,10 +7490,10 @@ this.Write("\r\n        End Function\r\n");
 
     }
 
-    internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description, string revisionDescription)
+    internal override void WriteBoundFunctionInEntityTypeReturnCollectionResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool useEntityReference, string description, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
         if (this.context.EnableNamingAlias)
         {
 
@@ -7542,10 +7551,10 @@ this.Write(")\r\n        End Function\r\n");
 
     }
 
-    internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, string revisionDescription)
+    internal override void WriteBoundFunctionInEntityTypeReturnSingleResult(bool hideBaseMethod, string functionName, string originalFunctionName, string returnTypeName, string returnTypeNameWithSingleSuffix, string parameters, string fullNamespace, string parameterValues, bool isComposable, bool isReturnEntity, bool useEntityReference, string description, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {functionName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
         if (this.context.EnableNamingAlias)
         {
 
@@ -7610,10 +7619,10 @@ this.Write("\r\n        End Function\r\n");
 
     }
 
-    internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description, string revisionDescription)
+    internal override void WriteActionImport(string actionName, string originalActionName, string returnTypeName, string parameters, string parameterValues, string description, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
         if (this.context.EnableNamingAlias)
         {
 
@@ -7655,10 +7664,10 @@ this.Write(")\r\n        End Function\r\n");
 
     }
 
-    internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description, string revisionDescription)
+    internal override void WriteBoundActionInEntityType(bool hideBaseMethod, string actionName, string originalActionName, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description, IDictionary<string, string> revisionAnnotations)
     {
         WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {actionName} in the schema." : description);
-        WriteObsoleteAttribute(revisionDescription);
+        WriteObsoleteAttribute(revisionAnnotations);
         if (this.context.EnableNamingAlias)
         {
 
@@ -8076,11 +8085,11 @@ this.Write("\r\n        \'\'\' </summary>\r\n");
         }
     }
 
-    protected override void WriteObsoleteAttribute(string revisionDescription, bool isClass = false)
+    protected override void WriteObsoleteAttribute(IDictionary<string, string> revisionAnnotations, bool isClass = false)
     {
-    if (string.IsNullOrEmpty(revisionDescription))
+        if (!revisionAnnotations.TryGetValue("Deprecated", out string revisionDescription))
         {
-            return;
+           return;
         }
 
         if (isClass)
