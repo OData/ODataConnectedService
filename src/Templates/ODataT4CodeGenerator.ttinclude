@@ -2946,9 +2946,9 @@ public abstract class ODataClientTemplate : TemplateBase
     /// <summary>
     /// Searches through model's vocabulary annotations and returns dictionary of term 'Revisions' annotation kinds.
     /// </summary>
-    private IDictionary<string,string> GetRevisionsAnnotation(IEdmVocabularyAnnotatable model)
+    private IDictionary<string,string> GetRevisionsAnnotation(IEdmVocabularyAnnotatable schemaElement)
     {
-        IEnumerable<IEdmExpression> collection = model.VocabularyAnnotations(this.context.EdmModel).Where(x => x.Term.Name == "Revisions")
+        IEnumerable<IEdmExpression> collection = schemaElement.VocabularyAnnotations(this.context.EdmModel).Where(x => x.Term.FullName() == "Org.OData.Core.V1.Revisions")
             .Select(x => x.Value);
 
         IDictionary<string, string> revisionsAnnotation = new Dictionary<string, string>();
@@ -2959,9 +2959,9 @@ public abstract class ODataClientTemplate : TemplateBase
 
             foreach (IEdmRecordExpression element in semanticElement.Elements)
             {
-                string description = (element.Properties.Where(x => x.Name == "Description").Select(x => x.Value).FirstOrDefault() as IEdmStringConstantExpression).Value;
-                IEdmEnumMemberExpression revisionKind = element.Properties.Where(x => x.Name == "Kind").Select(x => x.Value).FirstOrDefault() as IEdmEnumMemberExpression;
-                string name = revisionKind.EnumMembers.FirstOrDefault().Name;
+                string description = (element?.Properties.Where(x => x.Name == "Description").Select(x => x.Value).FirstOrDefault() as IEdmStringConstantExpression).Value;
+                IEdmEnumMemberExpression revisionKind = element?.Properties.Where(x => x.Name == "Kind").Select(x => x.Value).FirstOrDefault() as IEdmEnumMemberExpression;
+                string name = revisionKind?.EnumMembers.FirstOrDefault().Name;
                 revisionsAnnotation.Add(name, description);
             }
         }
