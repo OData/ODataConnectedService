@@ -639,6 +639,20 @@ namespace ODataConnectedService.Tests
             ODataT4CodeGeneratorTestDescriptors.SingletonsMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
+        [TestMethod]
+        public void RevisionsAnnotationMissingRevisionKindThrows()
+        {
+            Action act = () => CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EdmxRevisionsAnnotationMissingRevisionKind, null, true, false);
+            act.ShouldThrow<Exception>().WithMessage("Kind property is missing from the Annotation Xml");
+        }
+
+        [TestMethod]
+        public void RevisionsAnnotationMissingDescriptionThrows()
+        {
+            Action act = () => CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EdmxRevisionsAnnotationMissingDescription, null, true, false);
+            act.ShouldThrow<Exception>().WithMessage("Description property is missing from the Annotation Xml");
+        }
+
         private static string CodeGenWithT4Template(string edmx, string namespacePrefix, bool isCSharp,
             bool useDataServiceCollection, bool enableNamingAlias = false,
             bool ignoreUnexpectedElementsAndAttributes = false,

@@ -3109,9 +3109,21 @@ public abstract class ODataClientTemplate : TemplateBase
             {
                 foreach (IEdmRecordExpression element in semanticElement.Elements)
                 {
-                    string description = (element?.Properties.Where(x => x.Name == "Description").Select(x => x.Value).FirstOrDefault() as IEdmStringConstantExpression).Value;
+                    string description = (element?.Properties.Where(x => x.Name == "Description").Select(x => x.Value).FirstOrDefault() as IEdmStringConstantExpression)?.Value;
+
+                    if (string.IsNullOrEmpty(description))
+                    {
+                        throw new Exception("Description property is missing from the Annotation Xml");
+                    }
+
                     IEdmEnumMemberExpression revisionKind = element?.Properties.Where(x => x.Name == "Kind").Select(x => x.Value).FirstOrDefault() as IEdmEnumMemberExpression;
-                    string name = revisionKind?.EnumMembers.FirstOrDefault().Name;
+
+                    if (revisionKind == null)
+                    {
+                        throw new Exception("Kind property is missing from the Annotation Xml");
+                    }
+
+                    string name = revisionKind.EnumMembers.FirstOrDefault().Name;
                     revisionsAnnotation.Add(name, description);
                 }
             }

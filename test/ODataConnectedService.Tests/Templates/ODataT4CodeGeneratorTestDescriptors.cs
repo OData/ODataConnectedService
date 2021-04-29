@@ -807,5 +807,10 @@ namespace ODataConnectedService.Tests
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, SingletonsMarkedObsolete.ExpectedResults, isCSharp, useDSC, "SingletonsMarkedObsolete"),
         };
         #endregion
+
+        #region RevisionsAnnotationMissingProperties
+        public static string EdmxRevisionsAnnotationMissingRevisionKind = LoadContentFromBaseline("RevisionsAnnotationMissingRevisionKind.xml");
+        public static string EdmxRevisionsAnnotationMissingDescription = LoadContentFromBaseline("RevisionsAnnotationMissingDescription.xml");
+        #endregion
     }
 }
