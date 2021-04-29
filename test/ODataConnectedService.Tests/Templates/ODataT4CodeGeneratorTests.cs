@@ -610,13 +610,13 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void CodeGenEntityAndNavPropertiesMarkedObsoleteEdmx()
+        public void CodeGenPropertyAndNavPropertiesMarkedObsoleteEdmx()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityAndNavPropertiesMarkedObsolete.Metadata, null, true, false);
-            ODataT4CodeGeneratorTestDescriptors.EntityAndNavPropertiesMarkedObsolete.Verify(code, true/*isCSharp*/, false/*useDSC*/);
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.PropertyAndNavPropertiesMarkedObsolete.Metadata, null, true, false);
+            ODataT4CodeGeneratorTestDescriptors.PropertyAndNavPropertiesMarkedObsolete.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityAndNavPropertiesMarkedObsolete.Metadata, null, false, false);
-            ODataT4CodeGeneratorTestDescriptors.EntityAndNavPropertiesMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
+            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.PropertyAndNavPropertiesMarkedObsolete.Metadata, null, false, false);
+            ODataT4CodeGeneratorTestDescriptors.PropertyAndNavPropertiesMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]

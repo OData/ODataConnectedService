@@ -1522,6 +1522,8 @@ public abstract class ODataClientTemplate : TemplateBase
 {
     protected const string T4Version  = "#VersionNumber#";
 
+    protected const string deprecated = "Deprecated";
+
     /// <summary>
     /// The code generation context.
     /// </summary>
@@ -2941,7 +2943,7 @@ public abstract class ODataClientTemplate : TemplateBase
                     PropertyInitializationValue = Utils.GetPropertyInitializationValue(property, useDataServiceCollection, this, this.context),
                     PropertyAttribute = string.Empty,
                     PropertyDescription = GetDescriptionAnnotation(property)?.Value,
-                    RevisionDescription = GetRevisionsAnnotation(property)
+                    RevisionAnnotations = GetRevisionsAnnotation(property)
                 };
         }).ToList();
 
@@ -2969,7 +2971,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 PropertyInitializationValue = string.Format(this.DictionaryConstructor, this.StringTypeName, this.ObjectTypeName),
                 PropertyAttribute = containerPropertyAttribute,
                 PropertyDescription = string.Empty,
-                RevisionDescription = emptyDict
+                RevisionAnnotations = emptyDict
             });
         }
 
@@ -2991,7 +2993,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 propertyInfo.PropertyAttribute,
                 propertyInfo.PropertyDescription,
                 useDataServiceCollection,
-                propertyInfo.RevisionDescription);
+                propertyInfo.RevisionAnnotations);
         }
     }
 
@@ -3099,16 +3101,19 @@ public abstract class ODataClientTemplate : TemplateBase
 
         IDictionary<string, string> revisionsAnnotation = new Dictionary<string, string>();
 
-        if (collection != null && collection.Any())
+        if (collection?.Any() == true)
         {
             IEdmCollectionExpression semanticElement = collection.FirstOrDefault() as IEdmCollectionExpression;
 
-            foreach (IEdmRecordExpression element in semanticElement.Elements)
+            if (semanticElement != null)
             {
-                string description = (element?.Properties.Where(x => x.Name == "Description").Select(x => x.Value).FirstOrDefault() as IEdmStringConstantExpression).Value;
-                IEdmEnumMemberExpression revisionKind = element?.Properties.Where(x => x.Name == "Kind").Select(x => x.Value).FirstOrDefault() as IEdmEnumMemberExpression;
-                string name = revisionKind?.EnumMembers.FirstOrDefault().Name;
-                revisionsAnnotation.Add(name, description);
+                foreach (IEdmRecordExpression element in semanticElement.Elements)
+                {
+                    string description = (element?.Properties.Where(x => x.Name == "Description").Select(x => x.Value).FirstOrDefault() as IEdmStringConstantExpression).Value;
+                    IEdmEnumMemberExpression revisionKind = element?.Properties.Where(x => x.Name == "Kind").Select(x => x.Value).FirstOrDefault() as IEdmEnumMemberExpression;
+                    string name = revisionKind?.EnumMembers.FirstOrDefault().Name;
+                    revisionsAnnotation.Add(name, description);
+                }
             }
         }
 
@@ -5964,7 +5969,7 @@ this.Write("\r\n        /// </summary>\r\n");
 
     protected override void WriteObsoleteAttribute(IDictionary<string, string> revisionAnnotations, bool isClass = false)
     {
-        if (!revisionAnnotations.TryGetValue("Deprecated", out string revisionDescription))
+        if (!revisionAnnotations.TryGetValue(deprecated, out string revisionDescription))
         {
            return;
         }
@@ -8087,7 +8092,7 @@ this.Write("\r\n        \'\'\' </summary>\r\n");
 
     protected override void WriteObsoleteAttribute(IDictionary<string, string> revisionAnnotations, bool isClass = false)
     {
-        if (!revisionAnnotations.TryGetValue("Deprecated", out string revisionDescription))
+        if (!revisionAnnotations.TryGetValue(deprecated, out string revisionDescription))
         {
            return;
         }

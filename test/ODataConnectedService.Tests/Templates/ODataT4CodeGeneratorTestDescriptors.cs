@@ -758,19 +758,19 @@ namespace ODataConnectedService.Tests
         #endregion
 
         #region EntityAndNavPropertiesMarkedObsolete
-        public static string EdmxEntityAndNavPropertiesMarkedObsolete = LoadContentFromBaseline("EntityAndNavPropertiesMarkedObsolete.xml");
-        public static string EntityAndNavPropertiesMarkedObsoleteCSharp = LoadContentFromBaseline("EntityAndNavPropertiesMarkedObsolete.cs");
-        public static string EntityAndNavPropertiesMarkedObsoleteVB = LoadContentFromBaseline("EntityAndNavPropertiesMarkedObsolete.vb");
+        public static string EdmxPropertyAndNavPropertiesMarkedObsolete = LoadContentFromBaseline("PropertyAndNavPropertiesMarkedObsolete.xml");
+        public static string PropertyAndNavPropertiesMarkedObsoleteCSharp = LoadContentFromBaseline("PropertyAndNavPropertiesMarkedObsolete.cs");
+        public static string PropertyAndNavPropertiesMarkedObsoleteVB = LoadContentFromBaseline("PropertyAndNavPropertiesMarkedObsolete.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor EntityAndNavPropertiesMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
+        public static ODataT4CodeGeneratorTestsDescriptor PropertyAndNavPropertiesMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
         {
-            Metadata = EdmxEntityAndNavPropertiesMarkedObsolete,
+            Metadata = EdmxPropertyAndNavPropertiesMarkedObsolete,
             ExpectedResults = new Dictionary<string, string>()
             {
-                { ExpectedCSharp, EntityAndNavPropertiesMarkedObsoleteCSharp },
-                { ExpectedVB, EntityAndNavPropertiesMarkedObsoleteVB },
+                { ExpectedCSharp, PropertyAndNavPropertiesMarkedObsoleteCSharp },
+                { ExpectedVB, PropertyAndNavPropertiesMarkedObsoleteVB },
             },
-            Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, EntityAndNavPropertiesMarkedObsolete.ExpectedResults, isCSharp, useDSC, "EntityAndNavPropertiesMarkedObsolete"),
+            Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, PropertyAndNavPropertiesMarkedObsolete.ExpectedResults, isCSharp, useDSC, "PropertyAndNavPropertiesMarkedObsolete"),
         };
         #endregion
 

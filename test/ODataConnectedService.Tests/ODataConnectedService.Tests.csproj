@@ -224,7 +224,7 @@
     <EmbeddedResource Include="CodeGenReferences\EntitySetMarkedObsolete.xml" />
     <EmbeddedResource Include="CodeGenReferences\SingletonsMarkedObsolete.xml" />
     <EmbeddedResource Include="CodeGenReferences\BoundActionsAndFunctionsMarkedObsolete.xml" />
-    <EmbeddedResource Include="CodeGenReferences\EntityAndNavPropertiesMarkedObsolete.xml" />
+    <EmbeddedResource Include="CodeGenReferences\PropertyAndNavPropertiesMarkedObsolete.xml" />
     <EmbeddedResource Include="CodeGenReferences\FunctionsAndActionImportsMarkedObsolete.xml" />
     <Content Include="TestMetadataCsdl.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
