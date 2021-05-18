@@ -220,6 +220,14 @@
     <EmbeddedResource Include="CodeGenReferences\UpperCamelCaseWithNamespacePrefix.xml" />
     <EmbeddedResource Include="CodeGenReferences\UpperCamelCaseWithoutNamespacePrefix.xml" />
     <EmbeddedResource Include="CodeGenReferences\SameNamedEntityMultipleFiles.xml" />
+    <EmbeddedResource Include="CodeGenReferences\EntityTypeMarkedObsolete.xml" />
+    <EmbeddedResource Include="CodeGenReferences\EntitySetMarkedObsolete.xml" />
+    <EmbeddedResource Include="CodeGenReferences\SingletonsMarkedObsolete.xml" />
+    <EmbeddedResource Include="CodeGenReferences\BoundActionsAndFunctionsMarkedObsolete.xml" />
+    <EmbeddedResource Include="CodeGenReferences\PropertyAndNavPropertiesMarkedObsolete.xml" />
+    <EmbeddedResource Include="CodeGenReferences\FunctionsAndActionImportsMarkedObsolete.xml" />
+    <EmbeddedResource Include="CodeGenReferences\RevisionsAnnotationMissingDescription.xml" />
+    <EmbeddedResource Include="CodeGenReferences\RevisionsAnnotationMissingRevisionKind.xml" />
     <Content Include="TestMetadataCsdl.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
