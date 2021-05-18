@@ -3101,31 +3101,28 @@ public abstract class ODataClientTemplate : TemplateBase
 
         IDictionary<string, string> revisionsAnnotation = new Dictionary<string, string>();
 
-        if (collection?.Any() == true)
+        IEdmCollectionExpression semanticElement = collection?.FirstOrDefault() as IEdmCollectionExpression;
+
+        if (semanticElement != null)
         {
-            IEdmCollectionExpression semanticElement = collection.FirstOrDefault() as IEdmCollectionExpression;
-
-            if (semanticElement != null)
+            foreach (IEdmRecordExpression element in semanticElement.Elements)
             {
-                foreach (IEdmRecordExpression element in semanticElement.Elements)
+                string description = (element?.Properties.Where(x => x.Name == "Description").Select(x => x.Value).FirstOrDefault() as IEdmStringConstantExpression)?.Value;
+
+                if (string.IsNullOrEmpty(description))
                 {
-                    string description = (element?.Properties.Where(x => x.Name == "Description").Select(x => x.Value).FirstOrDefault() as IEdmStringConstantExpression)?.Value;
-
-                    if (string.IsNullOrEmpty(description))
-                    {
-                        throw new Exception("Description property is missing from the Annotation Xml");
-                    }
-
-                    IEdmEnumMemberExpression revisionKind = element?.Properties.Where(x => x.Name == "Kind").Select(x => x.Value).FirstOrDefault() as IEdmEnumMemberExpression;
-
-                    if (revisionKind == null)
-                    {
-                        throw new Exception("Kind property is missing from the Annotation Xml");
-                    }
-
-                    string name = revisionKind.EnumMembers.FirstOrDefault().Name;
-                    revisionsAnnotation.Add(name, description);
+                    throw new Exception("Description property is missing from the Annotation Xml");
                 }
+
+                IEdmEnumMemberExpression revisionKind = element?.Properties.Where(x => x.Name == "Kind").Select(x => x.Value).FirstOrDefault() as IEdmEnumMemberExpression;
+
+                if (revisionKind == null)
+                {
+                    throw new Exception("Kind property is missing from the Annotation Xml");
+                }
+
+                string name = revisionKind.EnumMembers.FirstOrDefault().Name;
+                revisionsAnnotation.Add(name, description);
             }
         }
 
