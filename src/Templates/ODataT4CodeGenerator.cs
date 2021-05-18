@@ -2152,7 +2152,7 @@ public abstract class ODataClientTemplate : TemplateBase
 
             IDictionary<string, string> revisionAnnotations = new Dictionary<string, string>();
 
-            this.WriteContextEntitySetProperty(camelCaseEntitySetName, GetFixedName(camelCaseEntitySetName), entitySet.Name, GetFixedName(entitySetElementTypeName), GetDescriptionAnnotation(entitySet)?.Value, GetRevisionsAnnotation(entitySet));
+            this.WriteContextEntitySetProperty(camelCaseEntitySetName, GetFixedName(camelCaseEntitySetName), entitySet.Name, GetFixedName(entitySetElementTypeName), GetDescriptionAnnotation(entitySet)?.Value, GetRevisionAnnotations(entitySet));
             List<IEdmNavigationSource> edmNavigationSourceList = null;
             if (!this.context.ElementTypeToNavigationSourceMap.TryGetValue(entitySet.EntityType(), out edmNavigationSourceList))
             {
@@ -2202,7 +2202,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 camelCaseSingletonName = Customization.CustomizeNaming(camelCaseSingletonName);
             }
 
-            this.WriteContextSingletonProperty(camelCaseSingletonName, GetFixedName(camelCaseSingletonName), singleton.Name, singletonElementTypeName + "Single", GetDescriptionAnnotation(singleton)?.Value, GetRevisionsAnnotation(singleton));
+            this.WriteContextSingletonProperty(camelCaseSingletonName, GetFixedName(camelCaseSingletonName), singleton.Name, singletonElementTypeName + "Single", GetDescriptionAnnotation(singleton)?.Value, GetRevisionAnnotations(singleton));
 
             List<IEdmNavigationSource> edmNavigationSourceList = null;
             if (this.context.ElementTypeToNavigationSourceMap.TryGetValue(singleton.EntityType(), out edmNavigationSourceList))
@@ -2253,11 +2253,11 @@ public abstract class ODataClientTemplate : TemplateBase
 
             if (functionImport.Function.ReturnType.IsCollection())
             {
-                this.WriteFunctionImportReturnCollectionResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, parameterString, parameterValues, functionImport.Function.IsComposable, useEntityReference, GetDescriptionAnnotation(functionImport)?.Value, GetRevisionsAnnotation(functionImport));
+                this.WriteFunctionImportReturnCollectionResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, parameterString, parameterValues, functionImport.Function.IsComposable, useEntityReference, GetDescriptionAnnotation(functionImport)?.Value, GetRevisionAnnotations(functionImport));
             }
             else
             {
-                this.WriteFunctionImportReturnSingleResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, parameterValues, functionImport.Function.IsComposable, functionImport.Function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(functionImport)?.Value, GetRevisionsAnnotation(functionImport));
+                this.WriteFunctionImportReturnSingleResult(this.GetFixedName(functionImportName), functionImport.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, parameterValues, functionImport.Function.IsComposable, functionImport.Function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(functionImport)?.Value, GetRevisionAnnotations(functionImport));
             }
         }
 
@@ -2298,7 +2298,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 fixedContainerName = Customization.CustomizeNaming(fixedContainerName);
             }
 
-            this.WriteActionImport(this.GetFixedName(actionImportName), actionImport.Name, returnTypeName, parameterString, parameterValues, GetDescriptionAnnotation(actionImport)?.Value, GetRevisionsAnnotation(actionImport));
+            this.WriteActionImport(this.GetFixedName(actionImportName), actionImport.Name, returnTypeName, parameterString, parameterValues, GetDescriptionAnnotation(actionImport)?.Value, GetRevisionAnnotations(actionImport));
         }
 
         this.WriteClassEndForEntityContainer();
@@ -2386,12 +2386,12 @@ public abstract class ODataClientTemplate : TemplateBase
             if (property.Type is Microsoft.OData.Edm.EdmCollectionTypeReference)
             {
                 propertyType = GetSourceOrReturnTypeName(property.Type);
-                WriteContextEntitySetProperty(propertyName, GetFixedName(propertyName), property.Name, propertyType, GetDescriptionAnnotation(property)?.Value, GetRevisionsAnnotation(property), false);
+                WriteContextEntitySetProperty(propertyName, GetFixedName(propertyName), property.Name, propertyType, GetDescriptionAnnotation(property)?.Value, GetRevisionAnnotations(property), false);
             }
             else
             {
                 propertyType = Utils.GetClrTypeName(property.Type, true, this, this.context, true, isEntitySingleType : true);
-                WriteContextSingletonProperty(propertyName, GetFixedName(propertyName), property.Name, propertyType, GetDescriptionAnnotation(property)?.Value, GetRevisionsAnnotation(property), false);
+                WriteContextSingletonProperty(propertyName, GetFixedName(propertyName), property.Name, propertyType, GetDescriptionAnnotation(property)?.Value, GetRevisionAnnotations(property), false);
             }
         }
     }
@@ -2401,7 +2401,7 @@ public abstract class ODataClientTemplate : TemplateBase
         string entityTypeName = ((IEdmSchemaElement)entityType).Name;
         entityTypeName = this.context.EnableNamingAlias ? Customization.CustomizeNaming(entityTypeName) : entityTypeName;
         this.WriteSummaryCommentForStructuredType(entityTypeName + this.SingleSuffix, GetDescriptionAnnotation(entityType)?.Value);
-        this.WriteObsoleteAttribute(GetRevisionsAnnotation(entityType), /* isClass */ true);
+        this.WriteObsoleteAttribute(GetRevisionAnnotations(entityType), /* isClass */ true);
         this.WriteStructurdTypeDeclaration(entityType,
             this.ClassInheritMarker + string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, GetFixedName(entityTypeName)),
             this.SingleSuffix);
@@ -2448,7 +2448,7 @@ public abstract class ODataClientTemplate : TemplateBase
             this.WriteEntityHasStreamAttribute();
         }
 
-        this.WriteObsoleteAttribute(GetRevisionsAnnotation(entityType), /* isClass */ true);
+        this.WriteObsoleteAttribute(GetRevisionAnnotations(entityType), /* isClass */ true);
         this.WriteStructurdTypeDeclaration(entityType, this.BaseEntityType);
         this.SetPropertyIdentifierMappingsIfNameConflicts(entityType.Name, entityType);
         this.WriteTypeStaticCreateMethod(entityType.Name, entityType);
@@ -2508,11 +2508,11 @@ public abstract class ODataClientTemplate : TemplateBase
 
                 if (function.ReturnType.IsCollection())
                 {
-                    this.WriteBoundFunctionInEntityTypeReturnCollectionResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, parameterString, function.Namespace, parameterValues, function.IsComposable, useEntityReference, GetDescriptionAnnotation(function)?.Value, GetRevisionsAnnotation(function));
+                    this.WriteBoundFunctionInEntityTypeReturnCollectionResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, parameterString, function.Namespace, parameterValues, function.IsComposable, useEntityReference, GetDescriptionAnnotation(function)?.Value, GetRevisionAnnotations(function));
                 }
                 else
                 {
-                    this.WriteBoundFunctionInEntityTypeReturnSingleResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, function.Namespace, parameterValues, function.IsComposable, function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(function)?.Value, GetRevisionsAnnotation(function));
+                    this.WriteBoundFunctionInEntityTypeReturnSingleResult(hideBaseMethod, GetFixedName(functionName), function.Name, returnTypeName, returnTypeNameWithSingleSuffix, parameterString, function.Namespace, parameterValues, function.IsComposable, function.ReturnType.IsEntity(), useEntityReference, GetDescriptionAnnotation(function)?.Value, GetRevisionAnnotations(function));
                 }
             }
 
@@ -2553,7 +2553,7 @@ public abstract class ODataClientTemplate : TemplateBase
                     actionName = Customization.CustomizeNaming(actionName);
                 }
 
-                this.WriteBoundActionInEntityType(hideBaseMethod, GetFixedName(actionName), action.Name, returnTypeName, parameterString, action.Namespace, parameterValues, GetDescriptionAnnotation(action)?.Value, GetRevisionsAnnotation(action));
+                this.WriteBoundActionInEntityType(hideBaseMethod, GetFixedName(actionName), action.Name, returnTypeName, parameterString, action.Namespace, parameterValues, GetDescriptionAnnotation(action)?.Value, GetRevisionAnnotations(action));
             }
         }
     }
@@ -2943,7 +2943,7 @@ public abstract class ODataClientTemplate : TemplateBase
                     PropertyInitializationValue = Utils.GetPropertyInitializationValue(property, useDataServiceCollection, this, this.context),
                     PropertyAttribute = string.Empty,
                     PropertyDescription = GetDescriptionAnnotation(property)?.Value,
-                    RevisionAnnotations = GetRevisionsAnnotation(property)
+                    RevisionAnnotations = GetRevisionAnnotations(property)
                 };
         }).ToList();
 
@@ -3094,7 +3094,7 @@ public abstract class ODataClientTemplate : TemplateBase
     /// <summary>
     /// Searches through model's vocabulary annotations and returns dictionary of term 'Revisions' annotation kinds.
     /// </summary>
-    private IDictionary<string,string> GetRevisionsAnnotation(IEdmVocabularyAnnotatable schemaElement)
+    private IDictionary<string,string> GetRevisionAnnotations(IEdmVocabularyAnnotatable schemaElement)
     {
         IEnumerable<IEdmExpression> collection = schemaElement.VocabularyAnnotations(this.context.EdmModel).Where(x => x.Term.FullName() == "Org.OData.Core.V1.Revisions")
             .Select(x => x.Value);

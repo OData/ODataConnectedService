@@ -791,7 +791,7 @@ namespace ODataConnectedService.Tests
                 GenerateInMemory = true,
                 IncludeDebugInformation = false,
                 TreatWarningsAsErrors = false,
-                WarningLevel = 4,
+                WarningLevel = 0, // TODO: Switch on warning levels once we resolve why warnings are still being treated as errors.
                 ReferencedAssemblies =
                 {
                     typeof(DataServiceContext).Assembly.Location,
@@ -822,9 +822,7 @@ namespace ODataConnectedService.Tests
             }
 
             var results = codeProvider.CompileAssemblyFromSource(compilerOptions, source);
-
-            // TODO: Activate when we fix why warnings are still being treated as errors.
-            // results.Errors.Should().BeEmpty();
+            results.Errors.Should().BeEmpty();
         }
 
         [TestMethod]
