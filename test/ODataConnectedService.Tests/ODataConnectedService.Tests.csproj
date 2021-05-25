@@ -231,6 +231,7 @@
     <EmbeddedResource Include="CodeGenReferences\FunctionsAndActionImportsMarkedObsolete.xml" />
     <EmbeddedResource Include="CodeGenReferences\RevisionsAnnotationMissingDescription.xml" />
     <EmbeddedResource Include="CodeGenReferences\RevisionsAnnotationMissingRevisionKind.xml" />
+    <EmbeddedResource Include="CodeGenReferences\MaxLength.xml" />
     <Content Include="TestMetadataCsdl.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
