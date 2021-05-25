@@ -6,6 +6,7 @@
 //----------------------------------------------------------------------------
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
@@ -23,10 +24,13 @@ namespace ODataConnectedService.Tests
         {
             public List<string> CalledActions { get; private set; }
 
+            public List<PropertyOptions> UsedPropertyOptions { get; private set; }
+
             public ODataClientTemplateImp(ODataT4CodeGenerator.CodeGenerationContext context)
                 : base(context)
             {
                 this.CalledActions = new List<string>();
+                this.UsedPropertyOptions = new List<PropertyOptions>();
             }
 
             internal override string GlobalPrefix
@@ -591,9 +595,10 @@ namespace ODataConnectedService.Tests
                 this.CalledActions.Add("WriteMethodEndForStaticCreateMethod(" + instanceName + ")");
             }
 
-            internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, int? propertyMaxLength, bool writeOnPropertyChanged, bool isNullable, IDictionary<string, string> revisionAnnotations)
+            internal override void WritePropertyForStructuredType(PropertyOptions propertyOptions)
             {
-                this.CalledActions.Add("WritePropertyForStructuredType(" + propertyType + ", " + originalPropertyName + ", " + propertyName + ", " + fixedPropertyName + ", " + privatePropertyName + ", " + propertyInitializationValue + ", " + propertyAttribute + ", " + propertyMaxLength + ", " + writeOnPropertyChanged + ", " + isNullable + ", " + revisionAnnotations + ")");
+                this.CalledActions.Add("WritePropertyForStructuredType(" + propertyOptions + ")");
+                this.UsedPropertyOptions.Add(propertyOptions);
             }
 
             internal override void WriteINotifyPropertyChangedImplementation()
@@ -1656,6 +1661,7 @@ namespace ODataConnectedService.Tests
             var entityType = Context.GetSchemaElements("Namespace1").OfType<IEdmEntityType>().First();
             template.WriteEntityType(entityType, boundOperationMap);
 
+            Type propertyOptionsType = typeof(ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions);
             var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForStructuredType(EntityTypeSingle, )",
@@ -1672,10 +1678,28 @@ namespace ODataConnectedService.Tests
                 "WriteDeclarationEndForStaticCreateMethod(EntityType, entityType)",
                 "WritePropertyValueAssignmentForStaticCreateMethod(entityType, Id, ID)",
                 "WriteMethodEndForStaticCreateMethod(entityType)",
-                "WritePropertyForStructuredType(Guid, Id, Id, Id, _Id, , , , False, False, System.Collections.Generic.Dictionary`2[System.String,System.String])",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
                 "WriteClassEndForStructuredType()"
             };
             template.CalledActions.Should().Equal(expectedActions);
+
+            var expectedUsedPropertyOptions = new List<ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions> {
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "Guid",
+                    OriginalPropertyName = "Id",
+                    PropertyName = "Id",
+                    FixedPropertyName = "Id",
+                    PrivatePropertyName = "_Id",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                }
+            };
+            template.UsedPropertyOptions.Should().Equal(expectedUsedPropertyOptions);
         }
 
         [TestMethod]
@@ -1700,6 +1724,7 @@ namespace ODataConnectedService.Tests
 
             template.WriteEntityType(entityType, boundOperationMap);
 
+            Type propertyOptionsType = typeof(ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions);
             var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForStructuredType(CustomerSingle, )",
@@ -1716,12 +1741,29 @@ namespace ODataConnectedService.Tests
                 "WriteDeclarationEndForStaticCreateMethod(Customer, customer)",
                 "WritePropertyValueAssignmentForStaticCreateMethod(customer, PersonId, personId)",
                 "WriteMethodEndForStaticCreateMethod(customer)",
-                "WritePropertyForStructuredType(Int32, PersonId, PersonId, PersonId, _PersonId, , , , True, False, System.Collections.Generic.Dictionary`2[System.String,System.String])",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
                 "WriteINotifyPropertyChangedImplementation()",
                 "WriteClassEndForStructuredType()"
             };
-
             template.CalledActions.Should().Equal(expectedActions);
+
+            var expectedUsedPropertyOptions = new List<ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions> {
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "Int32",
+                    OriginalPropertyName = "PersonId",
+                    PropertyName = "PersonId",
+                    FixedPropertyName = "PersonId",
+                    PrivatePropertyName = "_PersonId",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = true,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                }
+            };
+            template.UsedPropertyOptions.Should().Equal(expectedUsedPropertyOptions);
         }
 
         [TestMethod]
@@ -1746,6 +1788,7 @@ namespace ODataConnectedService.Tests
 
             template.WriteEntityType(entityType, boundOperationMap);
 
+            Type propertyOptionsType = typeof(ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions);
             var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForStructuredType(CustomerSingle, )",
@@ -1763,12 +1806,29 @@ namespace ODataConnectedService.Tests
                 "WriteDeclarationEndForStaticCreateMethod(Customer, customer)",
                 "WritePropertyValueAssignmentForStaticCreateMethod(customer, PersonId, personId)",
                 "WriteMethodEndForStaticCreateMethod(customer)",
-                "WritePropertyForStructuredType(Int32, PersonId, PersonId, PersonId, _PersonId, , , , True, False, System.Collections.Generic.Dictionary`2[System.String,System.String])",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
                 "WriteINotifyPropertyChangedImplementation()",
                 "WriteClassEndForStructuredType()"
             };
-
             template.CalledActions.Should().Equal(expectedActions);
+
+            var expectedUsedPropertyOptions = new List<ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions> {
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "Int32",
+                    OriginalPropertyName = "PersonId",
+                    PropertyName = "PersonId",
+                    FixedPropertyName = "PersonId",
+                    PrivatePropertyName = "_PersonId",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = true,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                }
+            };
+            template.UsedPropertyOptions.Should().Equal(expectedUsedPropertyOptions);
         }
         #endregion
 
@@ -1855,6 +1915,7 @@ namespace ODataConnectedService.Tests
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WriteComplexType(complexType, boundOperationMap);
 
+            Type propertyOptionsType = typeof(ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions);
             var expectedActions = new List<string>
             {
                 "WriteSummaryCommentForStructuredType(ComplexType, )",
@@ -1866,10 +1927,28 @@ namespace ODataConnectedService.Tests
                 "WriteDeclarationEndForStaticCreateMethod(ComplexType, complexType)",
                 "WritePropertyValueAssignmentForStaticCreateMethod(complexType, Value, value)",
                 "WriteMethodEndForStaticCreateMethod(complexType)",
-                "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , , , False, False, System.Collections.Generic.Dictionary`2[System.String,System.String])",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
                 "WriteClassEndForStructuredType()"
             };
             template.CalledActions.Should().Equal(expectedActions);
+
+            var expectedUsedPropertyOptions = new List<ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions> {
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Value",
+                    PropertyName = "Value",
+                    FixedPropertyName = "Value",
+                    PrivatePropertyName = "_Value",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                }
+            };
+            template.UsedPropertyOptions.Should().Equal(expectedUsedPropertyOptions);
         }
 
         #endregion
@@ -2325,12 +2404,45 @@ namespace ODataConnectedService.Tests
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WritePropertiesForStructuredType(complexType);
 
+            Type propertyOptionsType = typeof(ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions);
             var expectedActions = new List<string>
             {
-                "WritePropertyForStructuredType(String, Name, Name, Name, _Name, , , , False, False, System.Collections.Generic.Dictionary`2[System.String,System.String])",
-                "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , , , False, False, System.Collections.Generic.Dictionary`2[System.String,System.String])"
+                $"WritePropertyForStructuredType({propertyOptionsType})",
+                $"WritePropertyForStructuredType({propertyOptionsType})"
             };
             template.CalledActions.Should().Equal(expectedActions);
+
+            var expectedUsedPropertyOptions = new List<ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions> {
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Name",
+                    PropertyName = "Name",
+                    FixedPropertyName = "Name",
+                    PrivatePropertyName = "_Name",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Value",
+                    PropertyName = "Value",
+                    FixedPropertyName = "Value",
+                    PrivatePropertyName = "_Value",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                }
+            };
+            template.UsedPropertyOptions.Should().Equal(expectedUsedPropertyOptions);
         }
 
         [TestMethod]
@@ -2345,11 +2457,30 @@ namespace ODataConnectedService.Tests
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WritePropertiesForStructuredType(complexType);
 
+            Type propertyOptionsType = typeof(ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions);
             var expectedActions = new List<string>
             {
-                "WritePropertyForStructuredType(String, Value, Value, Value, _Value, , , , True, False, System.Collections.Generic.Dictionary`2[System.String,System.String])"
+                $"WritePropertyForStructuredType({propertyOptionsType})",
             };
             template.CalledActions.Should().Equal(expectedActions);
+
+            var expectedUsedPropertyOptions = new List<ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions> {
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Value",
+                    PropertyName = "Value",
+                    FixedPropertyName = "Value",
+                    PrivatePropertyName = "_Value",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = true,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                }
+            };
+            template.UsedPropertyOptions.Should().Equal(expectedUsedPropertyOptions);
         }
 
         #endregion
@@ -2422,13 +2553,60 @@ namespace ODataConnectedService.Tests
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
             template.WritePropertiesForStructuredType(complexType);
 
+            Type propertyOptionsType = typeof(ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions);
             var expectedActions = new List<string>
             {
-                "WritePropertyForStructuredType(String, Name, Name, Name, _Name1, , , , False, False, System.Collections.Generic.Dictionary`2[System.String,System.String])",
-                "WritePropertyForStructuredType(String, _Name, _Name, _Name, __Name1, , , , False, False, System.Collections.Generic.Dictionary`2[System.String,System.String])",
-                "WritePropertyForStructuredType(String, __Name, __Name, __Name, ___Name, , , , False, False, System.Collections.Generic.Dictionary`2[System.String,System.String])"
+                $"WritePropertyForStructuredType({propertyOptionsType})",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
             };
             template.CalledActions.Should().Equal(expectedActions);
+
+            var expectedUsedPropertyOptions = new List<ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions> {
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Name",
+                    PropertyName = "Name",
+                    FixedPropertyName = "Name",
+                    PrivatePropertyName = "_Name1",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "_Name",
+                    PropertyName = "_Name",
+                    FixedPropertyName = "_Name",
+                    PrivatePropertyName = "__Name1",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "__Name",
+                    PropertyName = "__Name",
+                    FixedPropertyName = "__Name",
+                    PrivatePropertyName = "___Name",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                }
+            };
+            template.UsedPropertyOptions.Should().Equal(expectedUsedPropertyOptions);
         }
         #endregion
 
@@ -2458,14 +2636,75 @@ namespace ODataConnectedService.Tests
             template.SetPropertyIdentifierMappingsIfNameConflicts(complexType.Name, complexType);
             template.WritePropertiesForStructuredType(complexType);
 
+            Type propertyOptionsType = typeof(ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions);
             var expectedActions = new List<string>
             {
-                "WritePropertyForStructuredType(String, Name, Name2, Name2, _Name21, , , , False, False, System.Collections.Generic.Dictionary`2[System.String,System.String])",
-                "WritePropertyForStructuredType(String, name, name, name, _name, , , , False, False, System.Collections.Generic.Dictionary`2[System.String,System.String])",
-                "WritePropertyForStructuredType(String, Name1, Name1, Name1, _Name1, , , , False, False, System.Collections.Generic.Dictionary`2[System.String,System.String])",
-                "WritePropertyForStructuredType(String, _Name2, _Name2, _Name2, __Name2, , , , False, False, System.Collections.Generic.Dictionary`2[System.String,System.String])",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
+                $"WritePropertyForStructuredType({propertyOptionsType})"
             };
             template.CalledActions.Should().Contain(expectedActions);
+
+            var expectedUsedPropertyOptions = new List<ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions> {
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Name",
+                    PropertyName = "Name2",
+                    FixedPropertyName = "Name2",
+                    PrivatePropertyName = "_Name21",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "name",
+                    PropertyName = "name",
+                    FixedPropertyName = "name",
+                    PrivatePropertyName = "_name",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Name1",
+                    PropertyName = "Name1",
+                    FixedPropertyName = "Name1",
+                    PrivatePropertyName = "_Name1",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "_Name2",
+                    PropertyName = "_Name2",
+                    FixedPropertyName = "_Name2",
+                    PrivatePropertyName = "__Name2",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                }
+            };
+            template.UsedPropertyOptions.Should().Equal(expectedUsedPropertyOptions);
         }
 
         [TestMethod]
@@ -2479,14 +2718,75 @@ namespace ODataConnectedService.Tests
             template.SetPropertyIdentifierMappingsIfNameConflicts(complexType.Name, complexType);
             template.WritePropertiesForStructuredType(complexType);
 
+            Type propertyOptionsType = typeof(ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions);
             var expectedActions = new List<string>
             {
-                "WritePropertyForStructuredType(String, Name, Name2, Name2, _Name21, , , , False, False, System.Collections.Generic.Dictionary`2[System.String,System.String])",
-                "WritePropertyForStructuredType(String, name, Name3, Name3, _Name3, , , , False, False, System.Collections.Generic.Dictionary`2[System.String,System.String])",
-                "WritePropertyForStructuredType(String, Name1, Name1, Name1, _Name1, , , , False, False, System.Collections.Generic.Dictionary`2[System.String,System.String])",
-                "WritePropertyForStructuredType(String, _Name2, _Name2, _Name2, __Name2, , , , False, False, System.Collections.Generic.Dictionary`2[System.String,System.String])",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
+                $"WritePropertyForStructuredType({propertyOptionsType})"
             };
             template.CalledActions.Should().Contain(expectedActions);
+
+            var expectedUsedPropertyOptions = new List<ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions> {
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Name",
+                    PropertyName = "Name2",
+                    FixedPropertyName = "Name2",
+                    PrivatePropertyName = "_Name21",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "name",
+                    PropertyName = "Name3",
+                    FixedPropertyName = "Name3",
+                    PrivatePropertyName = "_Name3",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Name1",
+                    PropertyName = "Name1",
+                    FixedPropertyName = "Name1",
+                    PrivatePropertyName = "_Name1",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "_Name2",
+                    PropertyName = "_Name2",
+                    FixedPropertyName = "_Name2",
+                    PrivatePropertyName = "__Name2",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                }
+            };
+            template.UsedPropertyOptions.Should().Equal(expectedUsedPropertyOptions);
         }
 
         #endregion
