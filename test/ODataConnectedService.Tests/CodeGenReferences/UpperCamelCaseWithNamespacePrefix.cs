@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 18.03.2020 16:19:42
+// Generation date: 08.03.2021 23:08:32
 namespace namespacePrefix.Namespace.Foo
 {
     /// <summary>
@@ -21,19 +21,19 @@ namespace namespacePrefix.Namespace.Foo
         /// Initialize a new BaseTypeSingle object.
         /// </summary>
         public BaseTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new BaseTypeSingle object.
         /// </summary>
         public BaseTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new BaseTypeSingle object.
         /// </summary>
         public BaseTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<BaseType> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -62,6 +62,7 @@ namespace namespacePrefix.Namespace.Foo
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         [global::Microsoft.OData.Client.OriginalNameAttribute("keyProp")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "KeyProp is required.")]
         public virtual int KeyProp
         {
             get
@@ -90,19 +91,19 @@ namespace namespacePrefix.Namespace.Foo
         /// Initialize a new TestTypeSingle object.
         /// </summary>
         public TestTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new TestTypeSingle object.
         /// </summary>
         public TestTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new TestTypeSingle object.
         /// </summary>
         public TestTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<TestType> query)
-            : base(query) {}
+            : base(query) { }
 
         /// <summary>
         /// There are no comments for SingleType in the schema.
@@ -174,7 +175,7 @@ namespace namespacePrefix.Namespace.Foo
         /// There are no comments for Foo7 in the schema.
         /// </summary>
         [global::Microsoft.OData.Client.OriginalNameAttribute("foo7")]
-        public virtual  global::Microsoft.OData.Client.DataServiceQuerySingle<string> Foo7(global::namespacePrefix.Namespace.Foo.Color p1, global::namespacePrefix.Namespace.Foo.Complex p2)
+        public virtual global::Microsoft.OData.Client.DataServiceQuerySingle<string> Foo7(global::namespacePrefix.Namespace.Foo.Color p1, global::namespacePrefix.Namespace.Foo.Complex p2)
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);
@@ -193,19 +194,19 @@ namespace namespacePrefix.Namespace.Foo
         /// Initialize a new SingleTypeSingle object.
         /// </summary>
         public SingleTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new SingleTypeSingle object.
         /// </summary>
         public SingleTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new SingleTypeSingle object.
         /// </summary>
         public SingleTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<SingleType> query)
-            : base(query) {}
+            : base(query) { }
 
         /// <summary>
         /// There are no comments for BaseSet in the schema.
@@ -258,6 +259,7 @@ namespace namespacePrefix.Namespace.Foo
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         [global::Microsoft.OData.Client.OriginalNameAttribute("keyProp")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "KeyProp is required.")]
         public virtual int KeyProp
         {
             get
@@ -280,6 +282,7 @@ namespace namespacePrefix.Namespace.Foo
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         [global::Microsoft.OData.Client.OriginalNameAttribute("colorProp")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "ColorProp is required.")]
         public virtual global::namespacePrefix.Namespace.Foo.Color ColorProp
         {
             get
@@ -358,6 +361,7 @@ namespace namespacePrefix.Namespace.Foo
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         [global::Microsoft.OData.Client.OriginalNameAttribute("intProp")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "IntProp is required.")]
         public virtual int IntProp
         {
             get
@@ -380,6 +384,7 @@ namespace namespacePrefix.Namespace.Foo
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         [global::Microsoft.OData.Client.OriginalNameAttribute("stringProp")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "StringProp is required.")]
         public virtual string StringProp
         {
             get
@@ -536,7 +541,7 @@ namespace namespacePrefix.Namespace.Bar
         /// Initialize a new SingletonContainer object.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public SingletonContainer(global::System.Uri serviceRoot) : 
+        public SingletonContainer(global::System.Uri serviceRoot) :
                 base(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
         {
             this.ResolveName = new global::System.Func<global::System.Type, string>(this.ResolveNameFromType);
@@ -769,13 +774,13 @@ namespace namespacePrefix.Namespace.Bar
 
                     if (!global::Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, false, out edmModel, out errors))
                     {
-	                    global::System.Text.StringBuilder errorMessages = new global::System.Text.StringBuilder();
-	                    foreach (var error in errors)
-	                    {
-		                    errorMessages.Append(error.ErrorMessage);
-		                    errorMessages.Append("; ");
-	                    }
-	                    throw new global::System.InvalidOperationException(errorMessages.ToString());
+                        global::System.Text.StringBuilder errorMessages = new global::System.Text.StringBuilder();
+                        foreach (var error in errors)
+                        {
+                            errorMessages.Append(error.ErrorMessage);
+                            errorMessages.Append("; ");
+                        }
+                        throw new global::System.InvalidOperationException(errorMessages.ToString());
                     }
 
                     return edmModel;

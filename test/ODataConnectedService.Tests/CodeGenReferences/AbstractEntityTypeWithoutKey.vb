@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 03.03.2021 1:44:57
+'Generation date: 10.03.2021 20:20:38
 Namespace AbstractEntityTypeWithoutKey
     ''' <summary>
     ''' There are no comments for Container in the schema.
@@ -370,6 +370,7 @@ Namespace AbstractEntityTypeWithoutKey
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Id")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Id() As String
             Get
                 Return Me._Id
@@ -441,6 +442,7 @@ Namespace AbstractEntityTypeWithoutKey
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("PropertyInDerivedET")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property PropertyInDerivedET() As Integer
             Get
                 Return Me._PropertyInDerivedET
@@ -500,6 +502,7 @@ Namespace AbstractEntityTypeWithoutKey
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("Id")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Id() As String
             Get
                 Return Me._Id
@@ -571,6 +574,7 @@ Namespace AbstractEntityTypeWithoutKey
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("PropertyInDerivedET2")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property PropertyInDerivedET2() As String
             Get
                 Return Me._PropertyInDerivedET2

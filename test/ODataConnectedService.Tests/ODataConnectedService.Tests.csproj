@@ -128,6 +128,9 @@
     <PackageReference Include="NuGet.VisualStudio">
       <Version>4.0.0</Version>
     </PackageReference>
+    <PackageReference Include="System.ComponentModel.Annotations">
+      <Version>4.5.0</Version>
+    </PackageReference>
     <PackageReference Include="System.Xml.ReaderWriter">
       <Version>4.3.1</Version>
     </PackageReference>
@@ -228,6 +231,7 @@
     <EmbeddedResource Include="CodeGenReferences\FunctionsAndActionImportsMarkedObsolete.xml" />
     <EmbeddedResource Include="CodeGenReferences\RevisionsAnnotationMissingDescription.xml" />
     <EmbeddedResource Include="CodeGenReferences\RevisionsAnnotationMissingRevisionKind.xml" />
+    <EmbeddedResource Include="CodeGenReferences\MaxLength.xml" />
     <Content Include="TestMetadataCsdl.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

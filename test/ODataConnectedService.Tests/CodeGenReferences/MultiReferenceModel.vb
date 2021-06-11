@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 06.03.2021 22:50:58
+'Generation date: 10.03.2021 19:44:21
 Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
     ''' <summary>
     ''' There are no comments for TruckDemoService in the schema.
@@ -504,6 +504,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         ''' There are no comments for Property SerialNo in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property SerialNo() As String
             Get
                 Return Me._SerialNo
@@ -624,6 +625,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         ''' There are no comments for Property Key in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Key() As String
             Get
                 Return Me._Key
@@ -1374,6 +1376,7 @@ Namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         ''' There are no comments for Property Key in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Key() As String
             Get
                 Return Me._Key

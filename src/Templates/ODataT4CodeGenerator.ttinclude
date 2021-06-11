@@ -1406,6 +1406,65 @@ public abstract class ODataClientTemplate : TemplateBase
         get { return "Single"; }
     }
 
+    /// <summary>
+    /// Options for <see cref="WritePropertyForStructuredType"/> method.
+    /// </summary>
+    internal class PropertyOptions
+    {
+        public string PropertyType { get; set; }
+        public string OriginalPropertyName { get; set; }
+        public string PropertyName { get; set; }
+        public string FixedPropertyName { get; set; }
+        public string PrivatePropertyName { get; set; }
+        public string PropertyInitializationValue { get; set; }
+        public string PropertyAttribute { get; set; }
+        public string PropertyDescription { get; set; }
+        public int? PropertyMaxLength { get; set; }
+        public bool WriteOnPropertyChanged { get; set; }
+        public bool IsNullable { get; set; }
+        public IDictionary<string, string> RevisionAnnotations { get; set; }
+
+        public override bool Equals(object other)
+        {
+            if(other == null)
+                return false;
+            
+            if (object.ReferenceEquals(this, other))
+                return true;
+
+            if (this.GetType() != other.GetType())
+                return false;
+
+            return this.Equals(other as PropertyOptions);
+        }
+
+        private bool Equals(PropertyOptions other)
+        {
+            return
+                string.Compare(this.PropertyType, other.PropertyType) == 0 &&
+                string.Compare(this.OriginalPropertyName, other.OriginalPropertyName) == 0 &&
+                string.Compare(this.PropertyName, other.PropertyName) == 0 &&
+                string.Compare(this.FixedPropertyName, other.FixedPropertyName) == 0 &&
+                string.Compare(this.PrivatePropertyName, other.PrivatePropertyName) == 0 &&
+                string.Compare(this.PropertyInitializationValue, other.PropertyInitializationValue) == 0 &&
+                string.Compare(this.PropertyAttribute, other.PropertyAttribute) == 0 &&
+                string.Compare(this.PropertyDescription, other.PropertyDescription) == 0 &&
+                other.PropertyMaxLength == null
+                    ? this.PropertyMaxLength == null
+                    : other.PropertyMaxLength.Equals(this.PropertyMaxLength) &&
+                other.WriteOnPropertyChanged.Equals(this.WriteOnPropertyChanged) &&
+                other.IsNullable.Equals(this.IsNullable) &&
+                other.RevisionAnnotations == null
+                    ? this.RevisionAnnotations == null
+                    : other.RevisionAnnotations.Equals(this.RevisionAnnotations);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+    }
+
     #region Get Language specific keyword names.
     internal abstract string GlobalPrefix { get; }
     internal abstract string SystemTypeTypeName { get; }
@@ -1520,7 +1579,7 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteParameterNullCheckForStaticCreateMethod(string parameterName);
     internal abstract void WritePropertyValueAssignmentForStaticCreateMethod(string instanceName, string propertyName, string parameterName);
     internal abstract void WriteMethodEndForStaticCreateMethod(string instanceName);
-    internal abstract void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged, IDictionary<string, string> revisionAnnotations);
+    internal abstract void WritePropertyForStructuredType(PropertyOptions propertyOptions);
     internal abstract void WriteINotifyPropertyChangedImplementation();
     internal abstract void WriteClassEndForStructuredType();
     internal abstract void WriteNamespaceEnd();
@@ -1546,6 +1605,8 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract void WriteBoundActionAsExtension(string actionName, string originalActionName, string boundSourceType, string returnTypeName, string parameters, string fullNamespace, string parameterValues, string description);
     protected abstract void WriteDescriptionSummary(string description, bool isClass = false);
     protected abstract void WriteObsoleteAttribute(IDictionary<string, string> revisionAnnotations, bool isClass = false);
+    protected abstract void WriteStringLengthAttribute(int maxLength, string errorMessage);
+    protected abstract void WriteRequiredAttribute(string errorMessage);
     #endregion Language specific write methods.
 
     internal HashSet<EdmPrimitiveTypeKind> ClrReferenceTypes { get {
@@ -2797,6 +2858,8 @@ public abstract class ODataClientTemplate : TemplateBase
                     PropertyInitializationValue = Utils.GetPropertyInitializationValue(property, useDataServiceCollection, this, this.context),
                     PropertyAttribute = string.Empty,
                     PropertyDescription = GetDescriptionAnnotation(property)?.Value,
+                    PropertyMaxLength = property.Type.AsString()?.MaxLength,
+                    IsNullable = property.Type.IsNullable,
                     RevisionAnnotations = GetRevisionAnnotations(property)
                 };
         }).ToList();
@@ -2825,6 +2888,8 @@ public abstract class ODataClientTemplate : TemplateBase
                 PropertyInitializationValue = string.Format(this.DictionaryConstructor, this.StringTypeName, this.ObjectTypeName),
                 PropertyAttribute = containerPropertyAttribute,
                 PropertyDescription = string.Empty,
+                PropertyMaxLength = (int?)null,
+                IsNullable = true,
                 RevisionAnnotations = emptyDict
             });
         }
@@ -2837,17 +2902,20 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             string privatePropertyName = uniqueIdentifierService.GetUniqueIdentifier("_" + propertyInfo.PropertyName);
 
-            this.WritePropertyForStructuredType(
-                propertyInfo.PropertyType,
-                propertyInfo.PropertyVanillaName,
-                propertyInfo.PropertyName,
-                propertyInfo.FixedPropertyName,
-                privatePropertyName,
-                propertyInfo.PropertyInitializationValue,
-                propertyInfo.PropertyAttribute,
-                propertyInfo.PropertyDescription,
-                useDataServiceCollection,
-                propertyInfo.RevisionAnnotations);
+            this.WritePropertyForStructuredType(new PropertyOptions {
+                PropertyType = propertyInfo.PropertyType,
+                OriginalPropertyName = propertyInfo.PropertyVanillaName,
+                PropertyName = propertyInfo.PropertyName,
+                FixedPropertyName = propertyInfo.FixedPropertyName,
+                PrivatePropertyName = privatePropertyName,
+                PropertyInitializationValue = propertyInfo.PropertyInitializationValue,
+                PropertyAttribute = propertyInfo.PropertyAttribute,
+                PropertyDescription = propertyInfo.PropertyDescription,
+                PropertyMaxLength = propertyInfo.PropertyMaxLength,
+                WriteOnPropertyChanged = useDataServiceCollection,
+                IsNullable = propertyInfo.IsNullable,
+                RevisionAnnotations = propertyInfo.RevisionAnnotations
+            });
         }
     }
 
@@ -4522,55 +4590,65 @@ namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged, IDictionary<string, string> revisionAnnotations)
+    internal override void WritePropertyForStructuredType(PropertyOptions propertyOptions)
     {
-        WriteDescriptionSummary(string.IsNullOrWhiteSpace(propertyDescription) ? $"There are no comments for Property {propertyName} in the schema." : propertyDescription);
-        WriteObsoleteAttribute(revisionAnnotations);
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(propertyOptions.PropertyDescription) ? $"There are no comments for Property {propertyOptions.PropertyName} in the schema." : propertyOptions.PropertyDescription);
+        WriteObsoleteAttribute(propertyOptions.RevisionAnnotations);
 #>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
 
 <#+
-        if (this.context.EnableNamingAlias || IdentifierMappings.ContainsKey(originalPropertyName))
+        if (this.context.EnableNamingAlias || IdentifierMappings.ContainsKey(propertyOptions.OriginalPropertyName))
         {
 #>
-        [global::Microsoft.OData.Client.OriginalNameAttribute("<#= originalPropertyName #>")]
+        [global::Microsoft.OData.Client.OriginalNameAttribute("<#= propertyOptions.OriginalPropertyName #>")]
 <#+
+        }
+
+        if (propertyOptions.PropertyMaxLength != null)
+        {
+            WriteStringLengthAttribute((int)propertyOptions.PropertyMaxLength, $"{propertyOptions.PropertyName} cannot be longer than {propertyOptions.PropertyMaxLength} characters.");
+        }
+
+        if (!propertyOptions.IsNullable)
+        {
+            WriteRequiredAttribute($"{propertyOptions.PropertyName} is required.");
         }
 #>
 
 <#+
-        if (!string.IsNullOrEmpty(propertyAttribute))
+        if (!string.IsNullOrEmpty(propertyOptions.PropertyAttribute))
         {
 #>
-        <#= propertyAttribute #>
+        <#= propertyOptions.PropertyAttribute #>
 <#+
         }
 #>
-        public virtual <#= propertyType #> <#= fixedPropertyName #>
+        public virtual <#= propertyOptions.PropertyType #> <#= propertyOptions.FixedPropertyName #>
         {
             get
             {
-                return this.<#= privatePropertyName #>;
+                return this.<#= propertyOptions.PrivatePropertyName #>;
             }
             set
             {
-                this.On<#= propertyName #>Changing(value);
-                this.<#= privatePropertyName #> = value;
-                this.On<#= propertyName #>Changed();
+                this.On<#= propertyOptions.PropertyName #>Changing(value);
+                this.<#= propertyOptions.PrivatePropertyName #> = value;
+                this.On<#= propertyOptions.PropertyName #>Changed();
 <#+
-        if (writeOnPropertyChanged)
+        if (propertyOptions.WriteOnPropertyChanged)
         {
 #>
-                this.OnPropertyChanged("<#= originalPropertyName #>");
+                this.OnPropertyChanged("<#= propertyOptions.OriginalPropertyName #>");
 <#+
         }
 #>
             }
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
-        private <#= propertyType #> <#= privatePropertyName #><#= propertyInitializationValue != null ? " = " + propertyInitializationValue : string.Empty #>;
-        partial void On<#= propertyName #>Changing(<#= propertyType #> value);
-        partial void On<#= propertyName #>Changed();
+        private <#= propertyOptions.PropertyType #> <#= propertyOptions.PrivatePropertyName #><#= propertyOptions.PropertyInitializationValue != null ? " = " + propertyOptions.PropertyInitializationValue : string.Empty #>;
+        partial void On<#= propertyOptions.PropertyName #>Changing(<#= propertyOptions.PropertyType #> value);
+        partial void On<#= propertyOptions.PropertyName #>Changed();
 <#+
     }
 
@@ -4613,7 +4691,7 @@ namespace <#= fullNamespace #>
 
     internal override void WriteSummaryCommentForEnumType(string enumName, string description)
     {
-        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {enumName} in the schema." : description);
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {enumName} in the schema." : description, true);
     }
 
     internal override void WriteEnumDeclaration(string enumName, string originalEnumName, string underlyingType)
@@ -4943,6 +5021,20 @@ namespace <#= fullNamespace #>
         [global::System.ObsoleteAttribute("<#= revisionDescription #>")]
 <#+
         }
+    }
+
+    protected override void WriteStringLengthAttribute(int maxLength, string errorMessage)
+    {
+#>
+        [global::System.ComponentModel.DataAnnotations.StringLengthAttribute(<#=maxLength#>, ErrorMessage = "<#=errorMessage#>")]
+<#+
+    }
+
+    protected override void WriteRequiredAttribute(string errorMessage)
+    {
+#>
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "<#=errorMessage#>")]
+<#+
     }
 
     internal override void WriteNamespaceEnd()
@@ -5653,41 +5745,51 @@ Namespace <#= fullNamespace #>
 <#+
     }
 
-    internal override void WritePropertyForStructuredType(string propertyType, string originalPropertyName, string propertyName, string fixedPropertyName, string privatePropertyName, string propertyInitializationValue, string propertyAttribute, string propertyDescription, bool writeOnPropertyChanged, IDictionary<string, string> revisionAnnotations)
+    internal override void WritePropertyForStructuredType(PropertyOptions propertyOptions)
     {
-        WriteDescriptionSummary(string.IsNullOrWhiteSpace(propertyDescription) ? $"There are no comments for Property {propertyName} in the schema." : propertyDescription);
-        WriteObsoleteAttribute(revisionAnnotations);
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(propertyOptions.PropertyDescription) ? $"There are no comments for Property {propertyOptions.PropertyName} in the schema." : propertyOptions.PropertyDescription);
+        WriteObsoleteAttribute(propertyOptions.RevisionAnnotations);
 #>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")>  _
 <#+
-        if (this.context.EnableNamingAlias || IdentifierMappings.ContainsKey(originalPropertyName))
+        if (this.context.EnableNamingAlias || IdentifierMappings.ContainsKey(propertyOptions.OriginalPropertyName))
         {
 #>
-        <Global.Microsoft.OData.Client.OriginalNameAttribute("<#= originalPropertyName #>")>  _
+        <Global.Microsoft.OData.Client.OriginalNameAttribute("<#= propertyOptions.OriginalPropertyName #>")>  _
 <#+
+        }
+
+        if (propertyOptions.PropertyMaxLength != null)
+        {
+            WriteStringLengthAttribute((int)propertyOptions.PropertyMaxLength, $"{propertyOptions.PropertyName} cannot be longer than {propertyOptions.PropertyMaxLength} characters.");
+        }
+
+        if (!propertyOptions.IsNullable)
+        {
+            WriteRequiredAttribute($"{propertyOptions.PropertyName} is required.");
         }
 #>
 <#+
-        if (!string.IsNullOrEmpty(propertyAttribute))
+        if (!string.IsNullOrEmpty(propertyOptions.PropertyAttribute))
         {
 #>
-        <#= propertyAttribute #>  _
+        <#= propertyOptions.PropertyAttribute #>  _
 <#+
         }
 #>
-        Public Overridable Property <#= fixedPropertyName #>() As <#= propertyType #>
+        Public Overridable Property <#= propertyOptions.FixedPropertyName #>() As <#= propertyOptions.PropertyType #>
             Get
-                Return Me.<#= privatePropertyName #>
+                Return Me.<#= propertyOptions.PrivatePropertyName #>
             End Get
             Set
-                Me.On<#= propertyName #>Changing(value)
-                Me.<#= privatePropertyName #> = value
-                Me.On<#= propertyName #>Changed
+                Me.On<#= propertyOptions.PropertyName #>Changing(value)
+                Me.<#= propertyOptions.PrivatePropertyName #> = value
+                Me.On<#= propertyOptions.PropertyName #>Changed
 <#+
-        if (writeOnPropertyChanged)
+        if (propertyOptions.WriteOnPropertyChanged)
         {
 #>
-                Me.OnPropertyChanged("<#= originalPropertyName #>")
+                Me.OnPropertyChanged("<#= propertyOptions.OriginalPropertyName #>")
 <#+
         }
 #>
@@ -5696,15 +5798,15 @@ Namespace <#= fullNamespace #>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")>  _
 <#+
         string constructorString = string.Empty;
-        if (!string.IsNullOrEmpty(propertyInitializationValue))
+        if (!string.IsNullOrEmpty(propertyOptions.PropertyInitializationValue))
         {
-            constructorString = " = " + propertyInitializationValue;
+            constructorString = " = " + propertyOptions.PropertyInitializationValue;
         }
 #>
-        Private <#= privatePropertyName #> As <#= propertyType #><#= constructorString #>
-        Partial Private Sub On<#= propertyName #>Changing(ByVal value As <#= propertyType #>)
+        Private <#= propertyOptions.PrivatePropertyName #> As <#= propertyOptions.PropertyType #><#= constructorString #>
+        Partial Private Sub On<#= propertyOptions.PropertyName #>Changing(ByVal value As <#= propertyOptions.PropertyType #>)
         End Sub
-        Partial Private Sub On<#= propertyName #>Changed()
+        Partial Private Sub On<#= propertyOptions.PropertyName #>Changed()
         End Sub
 <#+
     }
@@ -5746,7 +5848,7 @@ Namespace <#= fullNamespace #>
 
     internal override void WriteSummaryCommentForEnumType(string enumName, string description)
     {
-        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {enumName} in the schema." : description);
+        WriteDescriptionSummary(string.IsNullOrWhiteSpace(description) ? $"There are no comments for {enumName} in the schema." : description, true);
     }
 
     internal override void WriteEnumDeclaration(string enumName, string originalEnumName, string underlyingType)
@@ -6068,6 +6170,20 @@ Namespace <#= fullNamespace #>
         <Global.System.ObsoleteAttribute("<#= revisionDescription #>")>  _
 <#+
         }
+    }
+
+    protected override void WriteStringLengthAttribute(int maxLength, string errorMessage)
+    {
+#>
+        <Global.System.ComponentModel.DataAnnotations.StringLengthAttribute(<#=maxLength#>)>  _
+<#+
+    }
+
+    protected override void WriteRequiredAttribute(string errorMessage)
+    {
+#>
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
+<#+
     }
 
     internal override void WriteNamespaceEnd()

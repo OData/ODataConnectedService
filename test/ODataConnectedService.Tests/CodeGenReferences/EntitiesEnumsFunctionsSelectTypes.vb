@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 03.03.2021 22:28:09
+'Generation date: 10.03.2021 20:11:04
 Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
     ''' <summary>
     ''' There are no comments for Container in the schema.
@@ -339,6 +339,7 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         ''' There are no comments for Property UserName in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property UserName() As String
             Get
                 Return Me._UserName
@@ -359,6 +360,7 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         ''' There are no comments for Property Gender in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Gender() As Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender
             Get
                 Return Me._Gender
@@ -505,6 +507,7 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         ''' There are no comments for Property AirlineCode in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property AirlineCode() As String
             Get
                 Return Me._AirlineCode
@@ -611,6 +614,7 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         ''' There are no comments for Property IcaoCode in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property IcaoCode() As String
             Get
                 Return Me._IcaoCode
@@ -747,6 +751,7 @@ Namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         ''' There are no comments for Property TripId in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property TripId() As Integer
             Get
                 Return Me._TripId

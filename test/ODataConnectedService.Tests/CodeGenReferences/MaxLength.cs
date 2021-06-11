@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 08.03.2021 19:09:47
+// Generation date: 25.05.2021 14:20:34
 namespace Simple
 {
     /// <summary>
@@ -49,7 +49,7 @@ namespace Simple
         /// </summary>
         /// <param name="keyProp">Initial value of KeyProp.</param>
         /// <param name="valueProp">Initial value of ValueProp.</param>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
         public static TestType CreateTestType(int keyProp, string valueProp)
         {
             TestType testType = new TestType();
@@ -60,7 +60,8 @@ namespace Simple
         /// <summary>
         /// There are no comments for Property KeyProp in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+
         [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "KeyProp is required.")]
         public virtual int KeyProp
         {
@@ -75,14 +76,16 @@ namespace Simple
                 this.OnKeyPropChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
         private int _KeyProp;
         partial void OnKeyPropChanging(int value);
         partial void OnKeyPropChanged();
         /// <summary>
         /// There are no comments for Property ValueProp in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+
+        [global::System.ComponentModel.DataAnnotations.StringLengthAttribute(25, ErrorMessage = "ValueProp cannot be longer than 25 characters.")]
         [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "ValueProp is required.")]
         public virtual string ValueProp
         {
@@ -97,7 +100,7 @@ namespace Simple
                 this.OnValuePropChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
         private string _ValueProp;
         partial void OnValuePropChanging(string value);
         partial void OnValuePropChanged();

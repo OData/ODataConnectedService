@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 10.03.2021 20:06:13
+'Generation date: 25.05.2021 14:23:22
 Namespace Simple
     ''' <summary>
     ''' There are no comments for TestTypeSingle in the schema.
@@ -54,7 +54,7 @@ Namespace Simple
         ''' </summary>
         ''' <param name="keyProp">Initial value of KeyProp.</param>
         ''' <param name="valueProp">Initial value of ValueProp.</param>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Public Shared Function CreateTestType(ByVal keyProp As Integer, ByVal valueProp As String) As TestType
             Dim testType As TestType = New TestType()
             testType.KeyProp = keyProp
@@ -64,7 +64,7 @@ Namespace Simple
         ''' <summary>
         ''' There are no comments for Property KeyProp in the schema.
         ''' </summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property KeyProp() As Integer
             Get
@@ -76,7 +76,7 @@ Namespace Simple
                 Me.OnKeyPropChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Private _KeyProp As Integer
         Partial Private Sub OnKeyPropChanging(ByVal value As Integer)
         End Sub
@@ -85,7 +85,8 @@ Namespace Simple
         ''' <summary>
         ''' There are no comments for Property ValueProp in the schema.
         ''' </summary>
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.ComponentModel.DataAnnotations.StringLengthAttribute(25)>  _
         <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property ValueProp() As String
             Get
@@ -97,7 +98,7 @@ Namespace Simple
                 Me.OnValuePropChanged
             End Set
         End Property
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Private _ValueProp As String
         Partial Private Sub OnValuePropChanging(ByVal value As String)
         End Sub

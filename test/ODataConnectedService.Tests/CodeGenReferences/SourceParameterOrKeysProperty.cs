@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 13.06.2020 13:14:54
+// Generation date: 08.03.2021 23:00:35
 namespace Microsoft.OData.TestService
 {
     /// <summary>
@@ -48,7 +48,7 @@ namespace Microsoft.OData.TestService
         /// Create a new Person object.
         /// </summary>
         /// <param name="keys">Initial value of Keys.</param>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public static Person CreatePerson(string keys)
         {
             Person person = new Person();
@@ -58,7 +58,8 @@ namespace Microsoft.OData.TestService
         /// <summary>
         /// There are no comments for Property Keys in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Keys is required.")]
         public virtual string Keys
         {
             get
@@ -72,7 +73,7 @@ namespace Microsoft.OData.TestService
                 this.OnKeysChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private string _Keys;
         partial void OnKeysChanging(string value);
         partial void OnKeysChanged();

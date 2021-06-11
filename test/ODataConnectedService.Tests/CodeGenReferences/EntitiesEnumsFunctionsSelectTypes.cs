@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 4/1/2020 11:38:30 AM
+// Generation date: 08.03.2021 22:55:16
 namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
 {
     /// <summary>
@@ -19,7 +19,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// <summary>
         /// Initialize a new Container object.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public Container(global::System.Uri serviceRoot) :
                 base(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
         {
@@ -34,7 +34,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// in Visual Studio is different from the one indicated in the
         /// server schema, use type-mappers to map between the two.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         protected string ResolveNameFromType(global::System.Type clientType)
         {
             return clientType.FullName;
@@ -42,7 +42,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// <summary>
         /// There are no comments for People in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual global::Microsoft.OData.Client.DataServiceQuery<Person> People
         {
             get
@@ -54,12 +54,12 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 return this._People;
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private global::Microsoft.OData.Client.DataServiceQuery<Person> _People;
         /// <summary>
         /// There are no comments for Airlines in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual global::Microsoft.OData.Client.DataServiceQuery<Airline> Airlines
         {
             get
@@ -71,12 +71,12 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 return this._Airlines;
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private global::Microsoft.OData.Client.DataServiceQuery<Airline> _Airlines;
         /// <summary>
         /// There are no comments for Airports in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual global::Microsoft.OData.Client.DataServiceQuery<Airport> Airports
         {
             get
@@ -88,12 +88,12 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 return this._Airports;
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private global::Microsoft.OData.Client.DataServiceQuery<Airport> _Airports;
         /// <summary>
         /// There are no comments for People in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual void AddToPeople(Person person)
         {
             base.AddObject("People", person);
@@ -101,7 +101,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// <summary>
         /// There are no comments for Airlines in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual void AddToAirlines(Airline airline)
         {
             base.AddObject("Airlines", airline);
@@ -109,7 +109,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// <summary>
         /// There are no comments for Airports in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual void AddToAirports(Airport airport)
         {
             base.AddObject("Airports", airport);
@@ -117,7 +117,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// <summary>
         /// There are no comments for Me in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual PersonSingle Me
         {
             get
@@ -129,15 +129,15 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 return this._Me;
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private PersonSingle _Me;
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private abstract class GeneratedEdmModel
         {
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
             private static global::Microsoft.OData.Edm.IEdmModel ParsedModel = LoadModelFromString();
 
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
             private const string Edmx = @"<edmx:Edmx xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"" Version=""4.0"">
   <edmx:DataServices>
     <Schema xmlns=""http://docs.oasis-open.org/odata/ns/edm"" Namespace=""Microsoft.OData.Service.Sample.TrippinInMemory.Models"">
@@ -219,12 +219,12 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
   </edmx:DataServices>
 </edmx:Edmx>";
 
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
             public static global::Microsoft.OData.Edm.IEdmModel GetInstance()
             {
                 return ParsedModel;
             }
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
             private static global::Microsoft.OData.Edm.IEdmModel LoadModelFromString()
             {
                 global::System.Xml.XmlReader reader = CreateXmlReader(Edmx);
@@ -251,7 +251,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                     ((global::System.IDisposable)(reader)).Dispose();
                 }
             }
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
             private static global::System.Xml.XmlReader CreateXmlReader(string edmxToParse)
             {
                 return global::System.Xml.XmlReader.Create(new global::System.IO.StringReader(edmxToParse));
@@ -307,7 +307,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// <summary>
         /// There are no comments for Friends in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person> Friends
         {
             get
@@ -323,12 +323,12 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 return this._Friends;
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person> _Friends;
         /// <summary>
         /// There are no comments for Trips in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip> Trips
         {
             get
@@ -344,7 +344,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 return this._Trips;
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private global::Microsoft.OData.Client.DataServiceQuery<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip> _Trips;
     }
     /// <summary>
@@ -361,7 +361,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// </summary>
         /// <param name="userName">Initial value of UserName.</param>
         /// <param name="gender">Initial value of Gender.</param>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public static Person CreatePerson(string userName, global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender gender)
         {
             Person person = new Person();
@@ -372,7 +372,8 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// <summary>
         /// There are no comments for Property UserName in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "UserName is required.")]
         public virtual string UserName
         {
             get
@@ -386,14 +387,15 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 this.OnUserNameChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private string _UserName;
         partial void OnUserNameChanging(string value);
         partial void OnUserNameChanged();
         /// <summary>
         /// There are no comments for Property Gender in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Gender is required.")]
         public virtual global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender Gender
         {
             get
@@ -407,14 +409,14 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 this.OnGenderChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender _Gender;
         partial void OnGenderChanging(global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.PersonGender value);
         partial void OnGenderChanged();
         /// <summary>
         /// There are no comments for Property Age in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual global::System.Nullable<long> Age
         {
             get
@@ -428,14 +430,14 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 this.OnAgeChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private global::System.Nullable<long> _Age;
         partial void OnAgeChanging(global::System.Nullable<long> value);
         partial void OnAgeChanged();
         /// <summary>
         /// There are no comments for Property HomeAddress in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Location HomeAddress
         {
             get
@@ -449,14 +451,14 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 this.OnHomeAddressChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Location _HomeAddress;
         partial void OnHomeAddressChanging(global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Location value);
         partial void OnHomeAddressChanged();
         /// <summary>
         /// There are no comments for Property Friends in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person> Friends
         {
             get
@@ -470,14 +472,14 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 this.OnFriendsChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private global::System.Collections.ObjectModel.Collection<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person> _Friends = new global::System.Collections.ObjectModel.Collection<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person>();
         partial void OnFriendsChanging(global::System.Collections.ObjectModel.Collection<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person> value);
         partial void OnFriendsChanged();
         /// <summary>
         /// There are no comments for Property Trips in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual global::System.Collections.ObjectModel.Collection<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip> Trips
         {
             get
@@ -491,7 +493,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 this.OnTripsChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private global::System.Collections.ObjectModel.Collection<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip> _Trips = new global::System.Collections.ObjectModel.Collection<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip>();
         partial void OnTripsChanging(global::System.Collections.ObjectModel.Collection<global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip> value);
         partial void OnTripsChanged();
@@ -533,7 +535,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// Create a new Airline object.
         /// </summary>
         /// <param name="airlineCode">Initial value of AirlineCode.</param>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public static Airline CreateAirline(string airlineCode)
         {
             Airline airline = new Airline();
@@ -543,7 +545,8 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// <summary>
         /// There are no comments for Property AirlineCode in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "AirlineCode is required.")]
         public virtual string AirlineCode
         {
             get
@@ -557,14 +560,14 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 this.OnAirlineCodeChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private string _AirlineCode;
         partial void OnAirlineCodeChanging(string value);
         partial void OnAirlineCodeChanged();
         /// <summary>
         /// There are no comments for Property Name in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual string Name
         {
             get
@@ -578,7 +581,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 this.OnNameChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private string _Name;
         partial void OnNameChanging(string value);
         partial void OnNameChanged();
@@ -620,7 +623,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// Create a new Airport object.
         /// </summary>
         /// <param name="icaoCode">Initial value of IcaoCode.</param>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public static Airport CreateAirport(string icaoCode)
         {
             Airport airport = new Airport();
@@ -630,7 +633,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// <summary>
         /// There are no comments for Property Name in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual string Name
         {
             get
@@ -644,14 +647,15 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 this.OnNameChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private string _Name;
         partial void OnNameChanging(string value);
         partial void OnNameChanged();
         /// <summary>
         /// There are no comments for Property IcaoCode in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "IcaoCode is required.")]
         public virtual string IcaoCode
         {
             get
@@ -665,7 +669,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 this.OnIcaoCodeChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private string _IcaoCode;
         partial void OnIcaoCodeChanging(string value);
         partial void OnIcaoCodeChanged();
@@ -678,7 +682,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// <summary>
         /// There are no comments for Property Address in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual string Address
         {
             get
@@ -692,14 +696,14 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 this.OnAddressChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private string _Address;
         partial void OnAddressChanging(string value);
         partial void OnAddressChanged();
         /// <summary>
         /// There are no comments for Property City in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.City City
         {
             get
@@ -713,7 +717,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 this.OnCityChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.City _City;
         partial void OnCityChanging(global::Microsoft.OData.Service.Sample.TrippinInMemory.Models.City value);
         partial void OnCityChanged();
@@ -726,7 +730,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// <summary>
         /// There are no comments for Property Name in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual string Name
         {
             get
@@ -740,7 +744,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 this.OnNameChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private string _Name;
         partial void OnNameChanging(string value);
         partial void OnNameChanged();
@@ -782,7 +786,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// Create a new Trip object.
         /// </summary>
         /// <param name="tripId">Initial value of TripId.</param>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public static Trip CreateTrip(int tripId)
         {
             Trip trip = new Trip();
@@ -792,7 +796,8 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
         /// <summary>
         /// There are no comments for Property TripId in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "TripId is required.")]
         public virtual int TripId
         {
             get
@@ -806,14 +811,14 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 this.OnTripIdChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private int _TripId;
         partial void OnTripIdChanging(int value);
         partial void OnTripIdChanged();
         /// <summary>
         /// There are no comments for Property Name in the schema.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public virtual string Name
         {
             get
@@ -827,7 +832,7 @@ namespace Microsoft.OData.Service.Sample.TrippinInMemory.Models
                 this.OnNameChanged();
             }
         }
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         private string _Name;
         partial void OnNameChanging(string value);
         partial void OnNameChanged();

@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 06.03.2021 22:54:55
+'Generation date: 10.03.2021 19:42:14
 Namespace NamespaceInKeywords.[event].[string].int
     ''' <summary>
     ''' There are no comments for ComplexType in the schema.
@@ -32,6 +32,7 @@ Namespace NamespaceInKeywords.[event].[string].int
         ''' There are no comments for Property Value in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Value() As String
             Get
                 Return Me._Value
@@ -100,6 +101,7 @@ Namespace NamespaceInKeywords.[event].[string].int
         ''' There are no comments for Property KeyProp in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property KeyProp() As Integer
             Get
                 Return Me._KeyProp
@@ -120,6 +122,7 @@ Namespace NamespaceInKeywords.[event].[string].int
         ''' There are no comments for Property ValueProp in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property ValueProp() As String
             Get
                 Return Me._ValueProp
@@ -347,6 +350,7 @@ Namespace NamespaceInKeywords.[double]
         ''' There are no comments for Property KeyProp in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property KeyProp() As Integer
             Get
                 Return Me._KeyProp
@@ -367,6 +371,7 @@ Namespace NamespaceInKeywords.[double]
         ''' There are no comments for Property ValueProp in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property ValueProp() As String
             Get
                 Return Me._ValueProp
@@ -387,6 +392,7 @@ Namespace NamespaceInKeywords.[double]
         ''' There are no comments for Property ComplexValueProp in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property ComplexValueProp() As NamespaceInKeywords.[event].[string].int.ComplexType
             Get
                 Return Me._ComplexValueProp

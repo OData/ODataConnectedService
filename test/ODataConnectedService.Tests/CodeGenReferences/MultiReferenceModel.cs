@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 18.03.2020 16:15:47
+// Generation date: 08.03.2021 23:04:48
 namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
 {
     /// <summary>
@@ -20,7 +20,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         /// Initialize a new TruckDemoService object.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public TruckDemoService(global::System.Uri serviceRoot) : 
+        public TruckDemoService(global::System.Uri serviceRoot) :
                 base(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
         {
             this.ResolveName = new global::System.Func<global::System.Type, string>(this.ResolveNameFromType);
@@ -497,19 +497,19 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         /// Initialize a new HeadUnitTypeSingle object.
         /// </summary>
         public HeadUnitTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new HeadUnitTypeSingle object.
         /// </summary>
         public HeadUnitTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new HeadUnitTypeSingle object.
         /// </summary>
         public HeadUnitTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<HeadUnitType> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -536,6 +536,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         /// There are no comments for Property SerialNo in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "SerialNo is required.")]
         public virtual string SerialNo
         {
             get
@@ -584,19 +585,19 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         /// Initialize a new TruckTypeSingle object.
         /// </summary>
         public TruckTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new TruckTypeSingle object.
         /// </summary>
         public TruckTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new TruckTypeSingle object.
         /// </summary>
         public TruckTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<TruckType> query)
-            : base(query) {}
+            : base(query) { }
 
         /// <summary>
         /// There are no comments for HeadUnit in the schema.
@@ -665,6 +666,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         /// There are no comments for Property Key in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Key is required.")]
         public virtual string Key
         {
             get
@@ -886,19 +888,19 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         /// Initialize a new DerivedVehicleGPSTypeSingle object.
         /// </summary>
         public DerivedVehicleGPSTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new DerivedVehicleGPSTypeSingle object.
         /// </summary>
         public DerivedVehicleGPSTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new DerivedVehicleGPSTypeSingle object.
         /// </summary>
         public DerivedVehicleGPSTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<DerivedVehicleGPSType> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -1069,7 +1071,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         /// Initialize a new GPSContainer object.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public GPSContainer(global::System.Uri serviceRoot) : 
+        public GPSContainer(global::System.Uri serviceRoot) :
                 base(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
         {
             this.ResolveName = new global::System.Func<global::System.Type, string>(this.ResolveNameFromType);
@@ -1416,19 +1418,19 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         /// Initialize a new VehicleGPSTypeSingle object.
         /// </summary>
         public VehicleGPSTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new VehicleGPSTypeSingle object.
         /// </summary>
         public VehicleGPSTypeSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new VehicleGPSTypeSingle object.
         /// </summary>
         public VehicleGPSTypeSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<VehicleGPSType> query)
-            : base(query) {}
+            : base(query) { }
 
     }
     /// <summary>
@@ -1455,6 +1457,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         /// There are no comments for Property Key in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "Key is required.")]
         public virtual string Key
         {
             get
@@ -1601,7 +1604,7 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         /// <summary>
         /// There are no comments for GetVehicleSpeed in the schema.
         /// </summary>
-        public virtual  global::Microsoft.OData.Client.DataServiceQuerySingle<double> GetVehicleSpeed()
+        public virtual global::Microsoft.OData.Client.DataServiceQuerySingle<double> GetVehicleSpeed()
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);

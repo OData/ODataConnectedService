@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 1/28/2020 3:05:18 PM
+// Generation date: 08.03.2021 20:01:20
 namespace Microsoft.OData.TestService
 {
     /// <summary>
@@ -59,6 +59,7 @@ namespace Microsoft.OData.TestService
         /// There are no comments for Property UserName in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "UserName is required.")]
         public virtual string UserName
         {
             get
@@ -251,4 +252,4 @@ namespace Microsoft.OData.TestService
                     new global::Microsoft.OData.Client.UriOperationParameter("MaxCount", MaxCount));
         }
     }
-} 
+}

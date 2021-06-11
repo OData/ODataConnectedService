@@ -16,4 +16,5 @@ internal static class AssemblyRef
         internal const string SystemRuntime = "System.Runtime.dll";
         internal const string SystemXml = "System.Xml.dll";
         internal const string SystemXmlReaderWriter = "System.Xml.ReaderWriter.dll";
+        internal const string SystemComponentModelAnnotations = "System.ComponentModel.Annotations.dll";
 }

@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 03.03.2021 22:15:32
+'Generation date: 10.03.2021 20:16:59
 Namespace DupNames
     ''' <summary>
     ''' There are no comments for EntityContainer in the schema.
@@ -268,6 +268,7 @@ Namespace DupNames
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property DupWithTypeName() As Global.System.Guid
             Get
                 Return Me._DupWithTypeName
@@ -310,6 +311,7 @@ Namespace DupNames
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName1")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property DupWithTypeName1() As Global.System.Guid
             Get
                 Return Me._DupWithTypeName1
@@ -331,6 +333,7 @@ Namespace DupNames
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupWithTypeName1")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property DupWithTypeName11() As Global.System.Guid
             Get
                 Return Me._DupWithTypeName11
@@ -352,6 +355,7 @@ Namespace DupNames
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName2")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property DupWithTypeName2() As Global.System.Guid
             Get
                 Return Me._DupWithTypeName2
@@ -373,6 +377,7 @@ Namespace DupNames
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("DupWithTypeName3")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property DupWithTypeName3() As DupNames.DupWithComplexTypeName
             Get
                 Return Me._DupWithTypeName3
@@ -597,6 +602,7 @@ Namespace DupNames
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupWithTypeName")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property DupWithTypeName2() As Global.System.Guid
             Get
                 Return Me._DupWithTypeName2
@@ -618,6 +624,7 @@ Namespace DupNames
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupwithtypeName")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property DupwithtypeName4() As Global.System.Guid
             Get
                 Return Me._DupwithtypeName4

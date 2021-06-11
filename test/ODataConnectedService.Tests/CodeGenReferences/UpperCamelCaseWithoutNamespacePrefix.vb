@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 06.03.2021 23:06:58
+'Generation date: 10.03.2021 19:38:11
 Namespace [Namespace].Foo
     ''' <summary>
     ''' There are no comments for BaseTypeSingle in the schema.
@@ -66,6 +66,7 @@ Namespace [Namespace].Foo
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("keyProp")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property KeyProp() As Integer
             Get
                 Return Me._KeyProp
@@ -242,6 +243,7 @@ Namespace [Namespace].Foo
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("keyProp")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property KeyProp() As Integer
             Get
                 Return Me._KeyProp
@@ -263,6 +265,7 @@ Namespace [Namespace].Foo
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("colorProp")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property ColorProp() As [Namespace].Foo.Color
             Get
                 Return Me._ColorProp

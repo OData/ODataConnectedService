@@ -12,7 +12,7 @@ Option Strict Off
 Option Explicit On
 
 
-'Generation date: 07/04/2021 11:45:27
+'Generation date: 19.05.2021 0:59:21
 Namespace Namespace1
     ''' <summary>
     ''' There are no comments for EntityContainer in the schema.
@@ -167,6 +167,7 @@ Namespace Namespace1
         ''' There are no comments for Property Id in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Id() As Integer
             Get
                 Return Me._Id
@@ -187,6 +188,7 @@ Namespace Namespace1
         ''' There are no comments for Property Name in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property Name() As String
             Get
                 Return Me._Name

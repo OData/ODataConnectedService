@@ -31,6 +31,7 @@ namespace ODataConnectedService.Tests
     using System.Net;
     using ODataConnectedService.Tests.TestHelpers;
     using System.Globalization;
+    using System.ComponentModel.DataAnnotations;
 
     [TestClass]
     public class ODataT4CodeGeneratorTests
@@ -166,6 +167,22 @@ namespace ODataConnectedService.Tests
         }
 
 
+
+        [TestMethod]
+        public void CodeGenMaxLengthEdmx()
+        {
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MaxLength.Metadata, null, true, false);
+            ODataT4CodeGeneratorTestDescriptors.MaxLength.Verify(code, true/*isCSharp*/, false/*useDSC*/);
+
+            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MaxLength.Metadata, null, true, true, false, false, null, true);
+            ODataT4CodeGeneratorTestDescriptors.MaxLength.Verify(code, true/*isCSharp*/, true/*useDSC*/);
+
+            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MaxLength.Metadata, null, false, false);
+            ODataT4CodeGeneratorTestDescriptors.MaxLength.Verify(code, false/*isCSharp*/, false/*useDSC*/);
+
+            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MaxLength.Metadata, null, false, true, false, false, null, true);
+            ODataT4CodeGeneratorTestDescriptors.MaxLength.Verify(code, false/*isCSharp*/, true/*useDSC*/);
+        }
 
         [TestMethod]
         public void CodeGenSimpleEdmxMultipleFiles()
@@ -804,6 +821,7 @@ namespace ODataConnectedService.Tests
                     AssemblyRef.System,
                     AssemblyRef.SystemCore,
                     AssemblyRef.SystemXml,
+                    typeof(RequiredAttribute).Assembly.Location
                 }
             };
 

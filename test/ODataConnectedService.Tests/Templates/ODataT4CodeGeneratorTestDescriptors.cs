@@ -234,6 +234,23 @@ namespace ODataConnectedService.Tests
         };
         #endregion
 
+        #region MaxLength
+
+        public static string EdmxMaxLength = LoadContentFromBaseline("MaxLength.xml");
+        public static string MaxLengthCSharp = LoadContentFromBaseline("MaxLength.cs");
+        public static string MaxLengthCSharpUseDSC = LoadContentFromBaseline("MaxLengthDSC.cs");
+        public static string MaxLengthVB = LoadContentFromBaseline("MaxLength.vb");
+        public static string MaxLengthVBUseDSC = LoadContentFromBaseline("MaxLengthDSC.vb");
+
+        public static ODataT4CodeGeneratorTestsDescriptor MaxLength = new ODataT4CodeGeneratorTestsDescriptor()
+        {
+            Metadata = EdmxMaxLength,
+            ExpectedResults = new Dictionary<string, string>() { { ExpectedCSharp, MaxLengthCSharp }, { ExpectedCSharpUseDSC, MaxLengthCSharpUseDSC }, { ExpectedVB, MaxLengthVB }, { ExpectedVBUseDSC, MaxLengthVBUseDSC } },
+            Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, MaxLength.ExpectedResults, isCSharp, useDSC, "MaxLength"),
+        };
+
+        #endregion
+
         #region SimpleMultipleFiles
         public static string EdmxSimpleMultipleFiles = LoadContentFromBaseline("SimpleMultipleFiles.xml");
         public static string SimpleMultipleFilesCSharp = LoadContentFromBaseline("SimpleMultipleFilesMain.cs");

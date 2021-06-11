@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 18.03.2020 16:11:25
+// Generation date: 08.03.2021 23:03:56
 namespace Namespace1
 {
     /// <summary>
@@ -20,7 +20,7 @@ namespace Namespace1
         /// Initialize a new New object.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public New(global::System.Uri serviceRoot) : 
+        public New(global::System.Uri serviceRoot) :
                 base(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
         {
             this.OnContextCreated();
@@ -113,13 +113,13 @@ namespace Namespace1
 
                     if (!global::Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, false, out edmModel, out errors))
                     {
-	                    global::System.Text.StringBuilder errorMessages = new global::System.Text.StringBuilder();
-	                    foreach (var error in errors)
-	                    {
-		                    errorMessages.Append(error.ErrorMessage);
-		                    errorMessages.Append("; ");
-	                    }
-	                    throw new global::System.InvalidOperationException(errorMessages.ToString());
+                        global::System.Text.StringBuilder errorMessages = new global::System.Text.StringBuilder();
+                        foreach (var error in errors)
+                        {
+                            errorMessages.Append(error.ErrorMessage);
+                            errorMessages.Append("; ");
+                        }
+                        throw new global::System.InvalidOperationException(errorMessages.ToString());
                     }
 
                     return edmModel;
@@ -160,19 +160,19 @@ namespace Namespace1
         /// Initialize a new eventSingle object.
         /// </summary>
         public eventSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new eventSingle object.
         /// </summary>
         public eventSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new eventSingle object.
         /// </summary>
         public eventSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<@event> query)
-            : base(query) {}
+            : base(query) { }
 
         /// <summary>
         /// There are no comments for event in the schema.
@@ -226,6 +226,7 @@ namespace Namespace1
         /// There are no comments for Property string in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "string is required.")]
         public virtual string @string
         {
             get
@@ -248,6 +249,7 @@ namespace Namespace1
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         [global::Microsoft.OData.Client.OriginalNameAttribute("event")]
+        [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "event1 is required.")]
         public virtual global::Namespace1.@event event1
         {
             get
@@ -268,7 +270,7 @@ namespace Namespace1
         /// <summary>
         /// There are no comments for @const in the schema.
         /// </summary>
-        public virtual  global::Namespace1.eventSingle @const()
+        public virtual global::Namespace1.eventSingle @const()
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);
