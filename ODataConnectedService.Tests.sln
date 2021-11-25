@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ODataCli", "src\ODataCli\ODataCli.csproj", "{EF809374-384C-4AC2-981A-C12F0044B5AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OData.Cli", "src\OData.Cli\OData.Cli.csproj", "{EF809374-384C-4AC2-981A-C12F0044B5AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ODataCodeGen.Core", "src\ODataCodeGen.Core\ODataCodeGen.Core.csproj", "{9D0D5003-3B6A-43CF-A388-C84DD0A705AB}"
 EndProject
