@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.CommandLineUtils;
 
-namespace ODataCli
+namespace OData.Cli
 {
     class Program
     {
