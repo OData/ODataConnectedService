@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.OData.ConnectedService.Models
+namespace Microsoft.OData.CodeGen.Models
 {
-    internal class ServiceConfiguration
+    public class ServiceConfiguration
     {
         public string ServiceName { get; set; }
         public string Endpoint { get; set; }
@@ -36,7 +36,7 @@ namespace Microsoft.OData.ConnectedService.Models
 
     }
 
-    internal class ServiceConfigurationV4 : ServiceConfiguration
+    public class ServiceConfigurationV4 : ServiceConfiguration
     {
         public bool EnableNamingAlias { get; set; }
         public bool IgnoreUnexpectedElementsAndAttributes { get; set; }

@@ -11,12 +11,12 @@ using System.Globalization;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.OData.ConnectedService.Common
+namespace Microsoft.OData.CodeGen.Common
 {
     /// <summary>
     /// A utility class for working with VS projects (e.g. retrieving settings from).
     /// </summary>
-    internal static class ProjectHelper
+    public static class ProjectHelper
     {
         public const uint VSConstants_VSITEMID_ROOT = 4294967294;
         public const int __VSHPROPID_VSHPROPID_ExtObject = -2027;

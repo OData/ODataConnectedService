@@ -5,12 +5,12 @@
 // </copyright>
 //----------------------------------------------------------------------------
 
-using Microsoft.OData.ConnectedService.Models;
+using Microsoft.OData.CodeGen.Models;
 
-namespace Microsoft.OData.ConnectedService.Common
+namespace Microsoft.OData.CodeGen.Common
 {
     #region For update from Microsoft OData Connected Service
-    internal class ConnectedServiceJsonFileData
+    public class ConnectedServiceJsonFileData
     {
         public string ProviderId { get; set; }
 

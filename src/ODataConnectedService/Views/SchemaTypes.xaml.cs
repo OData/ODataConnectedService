@@ -3,7 +3,7 @@ using Microsoft.OData.ConnectedService.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Microsoft.OData.ConnectedService.Models;
+using Microsoft.OData.CodeGen.Models;
 
 namespace Microsoft.OData.ConnectedService.Views
 {

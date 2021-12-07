@@ -5,9 +5,9 @@
 // </copyright>
 //----------------------------------------------------------------------------
 
-namespace Microsoft.OData.ConnectedService.Templates
+namespace Microsoft.OData.CodeGen.Templates
 {
-    class ODataT4CodeGeneratorFactory: IODataT4CodeGeneratorFactory
+    public class ODataT4CodeGeneratorFactory: IODataT4CodeGeneratorFactory
     {
         public ODataT4CodeGenerator Create()
         {

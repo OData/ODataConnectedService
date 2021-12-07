@@ -7,9 +7,9 @@
 
 using System.ComponentModel;
 
-namespace Microsoft.OData.ConnectedService.Models
+namespace Microsoft.OData.CodeGen.Models
 {
-    class BoundOperationModel : INotifyPropertyChanged
+    public class BoundOperationModel : INotifyPropertyChanged
     {
         private bool _isSelected;
 

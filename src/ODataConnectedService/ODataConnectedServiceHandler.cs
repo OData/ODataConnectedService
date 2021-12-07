@@ -9,9 +9,11 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using EnvDTE;
-using Microsoft.OData.ConnectedService.CodeGeneration;
-using Microsoft.OData.ConnectedService.Common;
+using Microsoft.OData.CodeGen.CodeGeneration;
+using Microsoft.OData.CodeGen.Common;
 using Microsoft.VisualStudio.ConnectedServices;
+using Microsoft.OData.CodeGen;
+using Common = Microsoft.OData.CodeGen.Common;
 
 namespace Microsoft.OData.ConnectedService
 {

@@ -11,14 +11,14 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using Microsoft.OData.ConnectedService.Common;
+using Microsoft.OData.CodeGen.Common;
 using Microsoft.VisualStudio.ConnectedServices;
 using Newtonsoft.Json;
 
-namespace Microsoft.OData.ConnectedService.Models
+namespace Microsoft.OData.CodeGen.Models
 {
     [DataContract]
-    internal class UserSettings : INotifyPropertyChanged
+    public class UserSettings : INotifyPropertyChanged
     {
         #region Const Members
 

@@ -11,8 +11,8 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Xml;
-using Microsoft.OData.ConnectedService.Common;
-using Microsoft.OData.ConnectedService.Models;
+using Microsoft.OData.CodeGen.Common;
+using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService.Views;
 using Microsoft.VisualStudio.ConnectedServices;
 
@@ -145,7 +145,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                             throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "The metadata is an empty file"));
                         }
 
-                        Common.Constants.SupportedEdmxNamespaces.TryGetValue(reader.NamespaceURI, out edmxVersion);
+                        Constants.SupportedEdmxNamespaces.TryGetValue(reader.NamespaceURI, out edmxVersion);
                         writer.WriteNode(reader, false);
                     }
                 }

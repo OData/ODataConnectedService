@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.OData.ConnectedService.Common;
-using Microsoft.OData.ConnectedService.Models;
+using Microsoft.OData.CodeGen.Common;
+using Microsoft.OData.CodeGen.Models;
 using Xunit;
 
 namespace ODataConnectedService.Tests

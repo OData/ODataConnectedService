@@ -2,8 +2,8 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using Microsoft.OData.ConnectedService.Common;
-using Microsoft.OData.ConnectedService.Models;
+using Microsoft.OData.CodeGen.Common;
+using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService.ViewModels;
 using Newtonsoft.Json;
 using System.IO;

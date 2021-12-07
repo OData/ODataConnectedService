@@ -14,9 +14,9 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace Microsoft.OData.ConnectedService.Common
+namespace Microsoft.OData.CodeGen.Common
 {
-    internal class EdmHelper
+    public class EdmHelper
     {
         private static IDictionary<IEdmType, List<IEdmOperation>> _boundOperations = null;
 

@@ -7,20 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Windows;
+using System.Windows.Documents;
+using FluentAssertions;
+using Microsoft.OData.ConnectedService;
+using Microsoft.OData.ConnectedService.Views;
 using Microsoft.VisualStudio.ConnectedServices;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.OData.ConnectedService;
-using System.ComponentModel;
-using Microsoft.OData.ConnectedService.Models;
-using FluentAssertions;
-using Microsoft.OData.ConnectedService.Common;
-using Microsoft.OData.ConnectedService.Views;
-using System.IO;
-using System.Windows.Documents;
-using System.Windows;
-using System.Linq;
+using Microsoft.OData.CodeGen;
+using Microsoft.OData.CodeGen.Common;
+using Microsoft.OData.CodeGen.Models;
 using Xunit;
-using System.Globalization;
 
 namespace ODataConnectedService.Tests
 {

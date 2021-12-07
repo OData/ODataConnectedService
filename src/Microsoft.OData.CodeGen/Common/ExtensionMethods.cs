@@ -9,9 +9,9 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Microsoft.OData.ConnectedService.Common
+namespace Microsoft.OData.CodeGen.Common
 {
-    internal static class ExtensionMethods
+    public static class ExtensionMethods
     {
         /// <summary>
         /// Copies public properties with matching name and type from one object to the other.

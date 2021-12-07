@@ -9,11 +9,11 @@ using System;
 using System.Globalization;
 using EnvDTE;
 using Microsoft.VisualStudio.ConnectedServices;
-using Microsoft.OData.ConnectedService.Templates;
+using Microsoft.OData.CodeGen.Templates;
 
-namespace Microsoft.OData.ConnectedService.CodeGeneration
+namespace Microsoft.OData.CodeGen.CodeGeneration
 {
-    class CodeGenDescriptorFactory : ICodeGenDescriptorFactory
+    public class CodeGenDescriptorFactory : ICodeGenDescriptorFactory
     {
         public BaseCodeGenDescriptor Create(Version edmxVersion, string metadataUri, ConnectedServiceHandlerContext context, Project project)
         {

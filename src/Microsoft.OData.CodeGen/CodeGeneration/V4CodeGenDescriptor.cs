@@ -14,14 +14,14 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using EnvDTE;
-using Microsoft.OData.ConnectedService.Models;
-using Microsoft.OData.ConnectedService.Templates;
+using Microsoft.OData.CodeGen.Models;
+using Microsoft.OData.CodeGen.Templates;
 using Microsoft.VisualStudio.ConnectedServices;
 using VSLangProj;
 
-namespace Microsoft.OData.ConnectedService.CodeGeneration
+namespace Microsoft.OData.CodeGen.CodeGeneration
 {
-    internal class V4CodeGenDescriptor : BaseCodeGenDescriptor
+    public class V4CodeGenDescriptor : BaseCodeGenDescriptor
     {
         public V4CodeGenDescriptor(string metadataUri, ConnectedServiceHandlerContext context, Project project, IODataT4CodeGeneratorFactory codeGeneratorFactory)
             : base(metadataUri, context, project)
@@ -101,7 +101,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             // Hack!
             // Tests were failing since the test project cannot access ProjectItems
             // dte == null when running test cases
-            var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(DTE)) as DTE;
+            var dte = Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(DTE)) as DTE;
             if (dte != null)
             {
                 var projectItem = this.GetCsdlFileProjectItem(csdlFileName);
@@ -206,7 +206,7 @@ namespace Microsoft.OData.ConnectedService.CodeGeneration
             // Hack!
             // Tests were failing since the test project cannot access ProjectItems
             // dte == null when running test cases
-            var dte = VisualStudio.Shell.Package.GetGlobalService(typeof(DTE)) as DTE;
+            var dte = Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(DTE)) as DTE;
             if (dte != null)
             {
                 var projectItem = this.GetCsdlFileProjectItem(csdlFileName);

@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.OData.ConnectedService.Common
+namespace Microsoft.OData.CodeGen.Common
 {
-    internal static class Constants
+    public static class Constants
     {
         public static Version EdmxVersion1 = new Version(1, 0, 0, 0);
         public static Version EdmxVersion2 = new Version(2, 0, 0, 0);
