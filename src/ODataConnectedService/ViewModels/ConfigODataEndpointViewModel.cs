@@ -8,6 +8,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Xml;
@@ -77,10 +78,14 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             if (UserSettings.Endpoint.StartsWith("https:", StringComparison.Ordinal)
                 || UserSettings.Endpoint.StartsWith("http", StringComparison.Ordinal))
             {
-                if (!UserSettings.Endpoint.EndsWith("$metadata", StringComparison.Ordinal))
+                if (!Uri.TryCreate(UserSettings.Endpoint, UriKind.Absolute, out var uri))
                 {
-                    UserSettings.Endpoint = UserSettings.Endpoint.TrimEnd('/') + "/$metadata";
+                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" is not a valid MetadataDocumentUri because is it not a valid absolute Uri. The MetadataDocumentUri must be set to an absolute Uri referencing the $metadata endpoint of an OData service.", UserSettings.Endpoint));
                 }
+
+                uri = uri.CleanMetadataUri();
+
+                UserSettings.Endpoint = uri.AbsoluteUri;
             }
 
             Stream metadataStream;
