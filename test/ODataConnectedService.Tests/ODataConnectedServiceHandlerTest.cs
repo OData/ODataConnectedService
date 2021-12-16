@@ -9,13 +9,14 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using EnvDTE;
+using Microsoft.OData.ConnectedService.Tests.TestHelpers;
 using Microsoft.VisualStudio.ConnectedServices;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.OData.ConnectedService.CodeGeneration;
-using Microsoft.OData.ConnectedService.Models;
 using Moq;
-using Microsoft.OData.ConnectedService.Tests.TestHelpers;
+using Microsoft.OData.CodeGen;
+using Microsoft.OData.CodeGen.CodeGeneration;
+using Microsoft.OData.CodeGen.Models;
 
 namespace Microsoft.OData.ConnectedService.Tests
 {

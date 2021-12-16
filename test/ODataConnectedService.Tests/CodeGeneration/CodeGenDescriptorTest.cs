@@ -5,24 +5,26 @@
 // </copyright>
 //---------------------------------------------------------------------------
 
-using System.IO;
-using Microsoft.VisualStudio.ConnectedServices;
-using EnvDTE;
-using Moq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.OData.ConnectedService.CodeGeneration;
-using Microsoft.OData.ConnectedService.Models;
-using Microsoft.OData.ConnectedService.Templates;
-using Microsoft.OData.ConnectedService.Tests.TestHelpers;
-using System.Collections.Generic;
-using System.Net;
-using ODataConnectedService.Tests;
-using System.Text;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
+using EnvDTE;
+using Microsoft.OData.ConnectedService.Tests.TestHelpers;
+using Microsoft.VisualStudio.ConnectedServices;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Microsoft.OData.CodeGen;
+using Microsoft.OData.CodeGen.CodeGeneration;
+using Microsoft.OData.CodeGen.Models;
+using Microsoft.OData.CodeGen.Templates;
+using ODataConnectedService.Tests;
 using ODataConnectedService.Tests.TestHelpers;
+using Common = Microsoft.OData.CodeGen.Common;
 
 namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
 {

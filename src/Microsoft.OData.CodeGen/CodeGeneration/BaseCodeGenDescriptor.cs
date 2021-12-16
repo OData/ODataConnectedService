@@ -10,16 +10,16 @@ using System.Data.Services.Design;
 using System.IO;
 using System.Threading.Tasks;
 using EnvDTE;
-using Microsoft.OData.ConnectedService.Common;
-using Microsoft.OData.ConnectedService.Models;
+using Microsoft.OData.CodeGen.Common;
+using Microsoft.OData.CodeGen.Models;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.ConnectedServices;
 using NuGet.VisualStudio;
 using Shell = Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.OData.ConnectedService.CodeGeneration
+namespace Microsoft.OData.CodeGen.CodeGeneration
 {
-    internal abstract class BaseCodeGenDescriptor
+    public abstract class BaseCodeGenDescriptor
     {
         public IVsPackageInstaller PackageInstaller { get; protected set; }
         public IVsPackageInstallerServices PackageInstallerServices { get; protected set; }

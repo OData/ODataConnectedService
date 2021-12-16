@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------------
 
 using System;
-using Microsoft.OData.ConnectedService.Models;
+using Microsoft.OData.CodeGen.Models;
 using Xunit;
 
 namespace ODataConnectedService.Tests.Views

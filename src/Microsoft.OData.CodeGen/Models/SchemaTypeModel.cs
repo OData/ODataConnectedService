@@ -1,24 +1,35 @@
 ﻿//-----------------------------------------------------------------------------
-// <copyright file="OperationImportModel.cs" company=".NET Foundation">
+// <copyright file="SchemaTypeModel.cs" company=".NET Foundation">
 //      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //----------------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Microsoft.OData.ConnectedService.Models
+namespace Microsoft.OData.CodeGen.Models
 {
-    class OperationImportModel: INotifyPropertyChanged
+    public class SchemaTypeModel : INotifyPropertyChanged
     {
         private bool _isSelected;
 
+        public SchemaTypeModel(): this(null, null)
+        {
+        }
+
+        public SchemaTypeModel(string name, string shortName)
+        {
+            Name = name;
+            ShortName = shortName;
+        }
+
         public string Name { get; set; }
 
-        public string ReturnType { get; set; }
+        public string ShortName { get; set; }
 
-        public string ParametersString { get; set; }
-
+        public IEnumerable<BoundOperationModel> BoundOperations { get; set; }
+            = new List<BoundOperationModel>();
 
         public bool IsSelected
         {

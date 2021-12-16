@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace Microsoft.OData.ConnectedService.Templates
+namespace Microsoft.OData.CodeGen.Templates
 {
     using System;
     using System.IO;
@@ -35,7 +35,7 @@ namespace Microsoft.OData.ConnectedService.Templates
     /// Class to produce the template output
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    internal partial class ODataT4CodeGenerator : ODataT4CodeGeneratorBase
+    public partial class ODataT4CodeGenerator : ODataT4CodeGeneratorBase
     {
         /// <summary>
         /// Create the template output
@@ -8619,7 +8619,7 @@ public class FilesManager {
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
-    internal class ODataT4CodeGeneratorBase
+    public class ODataT4CodeGeneratorBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

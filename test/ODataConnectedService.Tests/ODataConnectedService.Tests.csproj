@@ -147,6 +147,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Microsoft.OData.CodeGen\Microsoft.OData.CodeGen.csproj">
+      <Project>{86faaaec-3bbd-479c-8a44-d2715a6bd4c1}</Project>
+      <Name>Microsoft.OData.CodeGen</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\ODataConnectedService\ODataConnectedService.csproj">
       <Project>{a8bc5b8e-9ab7-4257-b8f1-e7c62169f9b5}</Project>
       <Name>ODataConnectedService</Name>
@@ -175,16 +179,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\..\src\ODataConnectedService\Templates\ODataT4CodeGenerator.ttinclude">
+    <EmbeddedResource Include="..\..\src\Microsoft.OData.CodeGen\Templates\ODataT4CodeGenerator.ttinclude">
       <Link>Templates\ODataT4CodeGenerator.ttinclude</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\..\src\ODataConnectedService\Templates\ODataT4CodeGenFilesManager.ttinclude">
+    <EmbeddedResource Include="..\..\src\Microsoft.OData.CodeGen\Templates\ODataT4CodeGenFilesManager.ttinclude">
       <Link>Templates\ODataT4CodeGenFilesManager.ttinclude</Link>
     </EmbeddedResource>
     <None Include="35MSSharedLib1024.snk" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\..\src\ODataConnectedService\Templates\ODataT4CodeGenerator.tt">
+    <EmbeddedResource Include="..\..\src\Microsoft.OData.CodeGen\Templates\ODataT4CodeGenerator.tt">
       <Link>Templates\ODataT4CodeGenerator.tt</Link>
     </EmbeddedResource>
   </ItemGroup>

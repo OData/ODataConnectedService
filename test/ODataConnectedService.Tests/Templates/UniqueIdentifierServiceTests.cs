@@ -11,7 +11,7 @@ namespace ODataConnectedService.Tests
 {
     using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.OData.ConnectedService.Templates;
+    using Microsoft.OData.CodeGen.Templates;
 
     [TestClass]
     public class UniqueIdentifierServiceTests

@@ -9,9 +9,9 @@ using System;
 using EnvDTE;
 using Microsoft.VisualStudio.ConnectedServices;
 
-namespace Microsoft.OData.ConnectedService.CodeGeneration
+namespace Microsoft.OData.CodeGen.CodeGeneration
 {
-    interface ICodeGenDescriptorFactory
+    public interface ICodeGenDescriptorFactory
     {
         BaseCodeGenDescriptor Create(Version edmxVersion, string metadataUri, ConnectedServiceHandlerContext context, Project project);
     }
