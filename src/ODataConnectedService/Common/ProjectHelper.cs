@@ -11,7 +11,7 @@ using System.Globalization;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.OData.CodeGen.Common
+namespace Microsoft.OData.ConnectedService.Common
 {
     /// <summary>
     /// A utility class for working with VS projects (e.g. retrieving settings from).
@@ -55,4 +55,3 @@ namespace Microsoft.OData.CodeGen.Common
         }
     }
 }
-

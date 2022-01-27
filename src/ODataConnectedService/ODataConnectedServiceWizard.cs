@@ -16,6 +16,7 @@ using Microsoft.OData.ConnectedService.ViewModels;
 using Microsoft.OData.ConnectedService.Views;
 using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.ConnectedServices;
+using Microsoft.OData.ConnectedService.Common;
 
 namespace Microsoft.OData.ConnectedService
 {

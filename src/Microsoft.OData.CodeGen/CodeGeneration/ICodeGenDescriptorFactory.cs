@@ -6,13 +6,17 @@
 //-----------------------------------------------------------------------------
 
 using System;
-using EnvDTE;
-using Microsoft.VisualStudio.ConnectedServices;
+using System.Data.Services.Design;
+using Microsoft.OData.CodeGen.FileHandling;
+using Microsoft.OData.CodeGen.Logging;
+using Microsoft.OData.CodeGen.Models;
+using Microsoft.OData.CodeGen.PackageInstallation;
+
 
 namespace Microsoft.OData.CodeGen.CodeGeneration
 {
     public interface ICodeGenDescriptorFactory
     {
-        BaseCodeGenDescriptor Create(Version edmxVersion, string metadataUri, ConnectedServiceHandlerContext context, Project project);
+        BaseCodeGenDescriptor Create(Version edmxVersion, IFileHandler fileHandler, IMessageLogger logger, IPackageInstaller packageInstaller);
     }
 }

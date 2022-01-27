@@ -11,7 +11,7 @@ using FluentAssertions;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.OData.CodeGen.Common;
+using Microsoft.OData.ConnectedService.Common;
 
 namespace ODataConnectedService.Tests
 {

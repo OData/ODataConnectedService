@@ -6,38 +6,41 @@
 //----------------------------------------------------------------------------
 
 using System;
+using System.Data.Services.Design;
 using System.Globalization;
-using EnvDTE;
-using Microsoft.VisualStudio.ConnectedServices;
+using Microsoft.OData.CodeGen.FileHandling;
+using Microsoft.OData.CodeGen.Logging;
+using Microsoft.OData.CodeGen.Models;
+using Microsoft.OData.CodeGen.PackageInstallation;
 using Microsoft.OData.CodeGen.Templates;
 
 namespace Microsoft.OData.CodeGen.CodeGeneration
 {
     public class CodeGenDescriptorFactory : ICodeGenDescriptorFactory
     {
-        public BaseCodeGenDescriptor Create(Version edmxVersion, string metadataUri, ConnectedServiceHandlerContext context, Project project)
+        public BaseCodeGenDescriptor Create(Version edmxVersion, IFileHandler fileHandler, IMessageLogger logger, IPackageInstaller packageInstaller)
         {
             if (edmxVersion == Common.Constants.EdmxVersion1
                 || edmxVersion == Common.Constants.EdmxVersion2
                 || edmxVersion == Common.Constants.EdmxVersion3)
             {
-                return CreateV3CodeGenDescriptor(metadataUri, context, project);
+                return CreateV3CodeGenDescriptor(fileHandler, logger, packageInstaller);
             }
             else if (edmxVersion == Common.Constants.EdmxVersion4)
             {
-                return CreateV4CodeGenDescriptor(metadataUri, context, project);
+                return CreateV4CodeGenDescriptor(fileHandler, logger, packageInstaller);
             }
             throw new Exception(string.Format(CultureInfo.InvariantCulture, "Not supported Edmx Version {0}", edmxVersion.ToString()));
         }
 
-        protected virtual BaseCodeGenDescriptor CreateV3CodeGenDescriptor(string metadataUri, ConnectedServiceHandlerContext context, Project project)
+        protected virtual BaseCodeGenDescriptor CreateV3CodeGenDescriptor(IFileHandler fileHandler, IMessageLogger logger, IPackageInstaller packageInstaller)
         {
-            return new V3CodeGenDescriptor(metadataUri, context, project);
+            return new V3CodeGenDescriptor(fileHandler, logger, packageInstaller);
         }
 
-        protected virtual BaseCodeGenDescriptor CreateV4CodeGenDescriptor(string metadataUri, ConnectedServiceHandlerContext context, Project project)
+        protected virtual BaseCodeGenDescriptor CreateV4CodeGenDescriptor(IFileHandler fileHandler, IMessageLogger logger, IPackageInstaller packageInstaller)
         {
-            return new V4CodeGenDescriptor(metadataUri, context, project, new ODataT4CodeGeneratorFactory());
+            return new V4CodeGenDescriptor(fileHandler, logger, packageInstaller, new ODataT4CodeGeneratorFactory());
         }
     }
 }

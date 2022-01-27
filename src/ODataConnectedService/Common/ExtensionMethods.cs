@@ -9,7 +9,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Microsoft.OData.CodeGen.Common
+namespace Microsoft.OData.ConnectedService.Common
 {
     public static class ExtensionMethods
     {

@@ -23,13 +23,11 @@ namespace Microsoft.OData.CodeGen.Templates
     using Microsoft.OData.Edm.Vocabularies;
     using Microsoft.OData.Edm.Vocabularies.V1;
     using Microsoft.OData.Edm.Vocabularies.Community.V1;
+    using Microsoft.OData.CodeGen.FileHandling;
+    using Microsoft.OData.CodeGen.Logging;
     using System.Text;
     using System.Net;
-    using System.Reflection;
     using System.Security;
-    using Microsoft.VisualStudio.TextTemplating;
-    using Microsoft.VisualStudio.ConnectedServices;
-    using EnvDTE;
     
     /// <summary>
     /// Class to produce the template output
@@ -73,7 +71,7 @@ namespace Microsoft.OData.CodeGen.Templates
             MetadataFilePath = this.MetadataFilePath,
             MetadataFileRelativePath = this.MetadataFileRelativePath,
             MakeTypesInternal = this.MakeTypesInternal,
-            MultipleFilesManager = FilesManager.Create(this.Host, null),
+            MultipleFilesManager = new FilesManager(null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedBoundOperations = this.ExcludedBoundOperations,
@@ -113,7 +111,7 @@ namespace Microsoft.OData.CodeGen.Templates
             MetadataFilePath = this.MetadataFilePath,
             MetadataFileRelativePath = this.MetadataFileRelativePath,
             MakeTypesInternal = this.MakeTypesInternal,
-            MultipleFilesManager = FilesManager.Create(this.Host, null),
+            MultipleFilesManager = new FilesManager(null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedBoundOperations = this.ExcludedBoundOperations,
@@ -8315,9 +8313,6 @@ public class FilesManager {
     /// <summary> A block describing the header of all files.</summary>
     private Block _header = new Block();
 
-    /// <summary> Templating engine host being used.</summary>
-    private ITextTemplatingEngineHost _host;
-
     /// <summary> A list of file names to be generated.</summary>
     protected List<String> _generatedFileNames = new List<String>();
 
@@ -8327,18 +8322,6 @@ public class FilesManager {
             get;
             set;
         }
-
-
-    /// <summary>
-    /// Creates FilesManager object given <paramref name="host"> and <param name="template">.
-    /// </summary>
-    /// <param name="host">Templating engine host</param>
-    /// <param name="template">Holds generated text</param>
-    [SecurityCritical]
-    public static FilesManager Create(ITextTemplatingEngineHost host, StringBuilder template)
-    {
-        return (host is IServiceProvider) ? new VSManager(host, template) : new FilesManager(host, template);
-    }
 
     /// <summary>
     /// Marks the start of a new file.
@@ -8396,7 +8379,7 @@ public class FilesManager {
     /// <param name="split">If true the function is executed and multiple files generated
     /// otherwise only a single file is generated.</param>
     [SecurityCritical]
-    public virtual void GenerateFiles(bool split, ConnectedServiceHandlerHelper handlerHelper, ConnectedServiceLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE)
+    public virtual void GenerateFiles(bool split, IFileHandler handlerHelper, IMessageLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE)
     {
         if (split)
         {
@@ -8404,15 +8387,8 @@ public class FilesManager {
             string headerText = Template.ToString(_header.Start, _header.Length);
             string footerText = Template.ToString(_footer.Start, _footer.Length);
             string outputPath ="";
-            
-            if(_host != null)
-            {
-                outputPath = Path.GetDirectoryName(_host.TemplateFile);
-            }
-            else
-            {
-                outputPath = Path.GetTempPath();
-            }
+
+            outputPath = Path.GetTempPath();
             
             _files.Reverse();
 
@@ -8425,10 +8401,10 @@ public class FilesManager {
                 {
                     string outputFile = Path.Combine(referenceFolder, block.Name);
                     bool fileExists = File.Exists(outputFile);
-                    handlerHelper.AddFileAsync(fileName, outputFile, new AddFileOptions { OpenOnComplete = OpenGeneratedFilesInIDE, SuppressOverwritePrompt = true }).ContinueWith(
+                    handlerHelper.AddFileAsync(fileName, outputFile, new ODataFileOptions { OpenOnComplete = OpenGeneratedFilesInIDE, SuppressOverwritePrompt = true }).ContinueWith(
                         async _ =>
                         {
-                            await logger?.WriteMessageAsync(LoggerMessageCategory.Information,
+                            await logger?.WriteMessageAsync(LogMessageCategory.Information,
                                 "\"{0}\" has been {1}.", new FileInfo(fileName).Name, fileExists ? "updated" : "added");
                         }, System.Threading.Tasks.TaskContinuationOptions.ExecuteSynchronously);
                 }
@@ -8481,12 +8457,10 @@ public class FilesManager {
     }
 
     /// <summary>
-    /// FilesManager constructor. Initializes the host and template variable.
+    /// FilesManager constructor. Initializes the template variable.
     /// </summary>
-    [SecurityCritical]
-    private FilesManager(ITextTemplatingEngineHost host, StringBuilder template)
+    public FilesManager(StringBuilder template)
     {
-        _host = host;
         Template = template;
     }
 
@@ -8512,105 +8486,38 @@ public class FilesManager {
     }
 
     private class VSManager : FilesManager {
-        
-        private readonly EnvDTE.ProjectItem _templateProjectItem;
-        private readonly EnvDTE.DTE _dte;
-        private readonly Action<string> _checkOutAction;
-        private readonly Action<IEnumerable<string>> _projectSyncAction;
 
-        /// <summary>
-        ///Creates a file with the name <paramref name="fileName"> and content <paramref name="content">.
-        /// </summary>
-        /// <param name="fileName">Name of the file to be created</param>
-        /// <param name="content">Content of the file to be created</param>
-        protected override void CreateFile(string fileName, string content)
+    /// <summary>
+    ///Creates a file with the name <paramref name="fileName"> and content <paramref name="content">.
+    /// </summary>
+    /// <param name="fileName">Name of the file to be created</param>
+    /// <param name="content">Content of the file to be created</param>
+    protected override void CreateFile(string fileName, string content)
+    {
+        if (IsFileContentDifferent(fileName, content))
         {
-            if (IsFileContentDifferent(fileName, content))
-            {
-                CheckoutFileIfRequired(fileName);
-                File.WriteAllText(fileName, content);
-            }
+            File.WriteAllText(fileName, content);
         }
+    }
 
-        /// <summary>
-        /// Generates multiple files depending on the number of blocks.
-        /// </summary>
-        /// <param name="split">If true the function is executed and multiple files generated
-        /// otherwise only a single file is generated.</param>
-        [SecurityCritical]
-        public override void GenerateFiles(bool split, ConnectedServiceHandlerHelper handlerHelper, ConnectedServiceLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE) 
-        {
-            if (_templateProjectItem.ProjectItems == null)
-            {
-                    return;
-            }               
+    /// <summary>
+    /// Generates multiple files depending on the number of blocks.
+    /// </summary>
+    /// <param name="split">If true the function is executed and multiple files generated
+    /// otherwise only a single file is generated.</param>
+    [SecurityCritical]
+    public override void GenerateFiles(bool split, IFileHandler handlerHelper, IMessageLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE) 
+    {
+        base.GenerateFiles(split, handlerHelper, logger, referenceFolder, fileCreated, OpenGeneratedFilesInIDE);
+    }
 
-            base.GenerateFiles(split, handlerHelper, logger, referenceFolder, fileCreated, OpenGeneratedFilesInIDE);
-            _projectSyncAction.Invoke(_generatedFileNames);
-        }
-
-        /// <summary>
-        /// VSManager constructor. Initializes the host and template variable.
-        /// </summary>
-        internal VSManager(ITextTemplatingEngineHost host, StringBuilder template)
-            : base(host, template)
-        {
-            var hostServiceProvider = host as IServiceProvider;
-
-            if (hostServiceProvider == null)
-            {
-                throw new ArgumentNullException("Could not obtain IServiceProvider");
-            }
-            
-            _dte = hostServiceProvider.GetService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
-
-            if (_dte == null)
-            {
-                throw new ArgumentNullException("Could not obtain DTE from host");
-            }
-
-            _templateProjectItem = _dte.Solution.FindProjectItem(host.TemplateFile);
-            _checkOutAction = (fileName) => _dte.SourceControl.CheckOutItem(fileName);
-            _projectSyncAction = (fileNames) => ProjectSync(_templateProjectItem, fileNames);
-        }
-
-        /// <summary>
-        /// Synchronizes the project by adding the generated files to the VS project file.
-        /// This ensures the generated files are referenced in the project file and can be built when building the project
-        /// <param name="templateProjectItem">T4 project item as returned by EnvDTE</param>
-        /// <param name="fileNames">Names of the files generated</param>
-        /// </summary>
-        private static void ProjectSync(EnvDTE.ProjectItem templateProjectItem, IEnumerable<string> fileNames) 
-        {
-            HashSet<string> fileNameSet = new HashSet<string>(fileNames);
-            Dictionary<string, EnvDTE.ProjectItem> projectFiles = new Dictionary<string, EnvDTE.ProjectItem>();
-            string originalFilePrefix = Path.GetFileNameWithoutExtension(templateProjectItem.get_FileNames(0));
-
-            foreach(EnvDTE.ProjectItem projectItem in templateProjectItem.ProjectItems)
-            {
-                var fileName = projectItem.get_FileNames(0);
-                if (!fileNameSet.Contains(fileName) && !(Path.GetFileNameWithoutExtension(fileName)).StartsWith(originalFilePrefix))
-                {
-                    projectItem.Delete();
-                }
-
-                fileNameSet.Remove(fileName);
-            }
-            // then the loop that comes after will be
-            foreach(string fileName in fileNameSet)
-            {
-                templateProjectItem.ProjectItems.AddFromFile(fileName);
-            }
-        }
-        
-        private void CheckoutFileIfRequired(string fileName) 
-        {
-            var sourceControl = _dte.SourceControl;
-            if (sourceControl != null && sourceControl.IsItemUnderSCC(fileName) && !sourceControl.IsItemCheckedOut(fileName))
-            {
-                _checkOutAction.Invoke(fileName);
-            }    
-        }
+    /// <summary>
+    /// VSManager constructor. Initializes the template variable.
+    /// </summary>
+    internal VSManager(StringBuilder template)
+        : base(template)
+    {
+    }
     }
 } 
     }

@@ -8,7 +8,7 @@
 using Microsoft.OData.CodeGen.Models;
 using Microsoft.VisualStudio.ConnectedServices;
 
-namespace Microsoft.OData.CodeGen
+namespace Microsoft.OData.ConnectedService
 {
     public class ODataConnectedServiceInstance : ConnectedServiceInstance
     {

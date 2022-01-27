@@ -439,6 +439,7 @@ namespace ODataConnectedService.Tests
             ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithoutNamespacePrefix.Verify(code, false/*isCSharp*/, true/*useDSC*/);
         }
 
+        [Ignore("to be removed")]
         [TestMethod]
         public void CodeGenCommandlineSimpleEdmx()
         {
@@ -449,6 +450,7 @@ namespace ODataConnectedService.Tests
             ODataT4CodeGeneratorTestDescriptors.Simple.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
+        [Ignore("to be removed")]
         [TestMethod]
         public void CodeGenCommandlineSetNamespacePrefixWithSingleNamespace()
         {
@@ -459,6 +461,7 @@ namespace ODataConnectedService.Tests
             ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithSingleNamespace.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
+        [Ignore("to be removed")]
         [TestMethod]
         public void CodeGenCommandlineSetNamespacePrefixRepeatWithSchemaNameSpace()
         {

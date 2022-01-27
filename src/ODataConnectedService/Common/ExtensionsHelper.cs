@@ -7,7 +7,7 @@
 
 using Microsoft.OData.CodeGen.Models;
 
-namespace Microsoft.OData.CodeGen.Common
+namespace Microsoft.OData.ConnectedService.Common
 {
     #region For update from Microsoft OData Connected Service
     public class ConnectedServiceJsonFileData
