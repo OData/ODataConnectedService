@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using Microsoft.OData.CodeGen.Common;
+using Microsoft.OData.ConnectedService.Common;
 using Microsoft.VisualStudio.ConnectedServices;
 using Newtonsoft.Json;
 

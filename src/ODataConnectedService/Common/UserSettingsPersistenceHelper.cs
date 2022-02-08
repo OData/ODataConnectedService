@@ -12,7 +12,7 @@ using System.Runtime.Serialization;
 using System.Xml;
 using Microsoft.VisualStudio.ConnectedServices;
 
-namespace Microsoft.OData.CodeGen.Common
+namespace Microsoft.OData.ConnectedService.Common
 {
     public class UserSettingsPersistenceHelper
     {

@@ -6,17 +6,19 @@
 //-----------------------------------------------------------------------------------
 
 using System;
+using System.Data.Services.Design;
 using System.Threading;
 using System.Threading.Tasks;
-using EnvDTE;
+using Microsoft.OData.CodeGen;
+using Microsoft.OData.CodeGen.CodeGeneration;
+using Microsoft.OData.CodeGen.FileHandling;
+using Microsoft.OData.CodeGen.Logging;
+using Microsoft.OData.CodeGen.Models;
+using Microsoft.OData.CodeGen.PackageInstallation;
 using Microsoft.OData.ConnectedService.Tests.TestHelpers;
-using Microsoft.VisualStudio.ConnectedServices;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Microsoft.OData.CodeGen;
-using Microsoft.OData.CodeGen.CodeGeneration;
-using Microsoft.OData.CodeGen.Models;
 
 namespace Microsoft.OData.ConnectedService.Tests
 {
@@ -139,17 +141,17 @@ namespace Microsoft.OData.ConnectedService.Tests
     class TestCodeGenDescriptorFactory: CodeGenDescriptorFactory
     {
         public BaseCodeGenDescriptor CreatedInstance { get; private set; }
-        protected override BaseCodeGenDescriptor CreateV3CodeGenDescriptor(string metadataUri, ConnectedServiceHandlerContext context, Project project)
+        protected override BaseCodeGenDescriptor CreateV3CodeGenDescriptor(IFileHandler fileHandler, IMessageLogger messageLogger, IPackageInstaller packageInstaller)
         {
-            var descriptor = new TestCodeGenDescriptor(metadataUri, context, project);
+            var descriptor = new TestCodeGenDescriptor(fileHandler, messageLogger, packageInstaller);
             descriptor.Version = "V3";
             CreatedInstance = CreatedInstance ?? descriptor;
             return descriptor;
         }
 
-        protected override BaseCodeGenDescriptor CreateV4CodeGenDescriptor(string metadataUri, ConnectedServiceHandlerContext context, Project project)
+        protected override BaseCodeGenDescriptor CreateV4CodeGenDescriptor(IFileHandler fileHandler, IMessageLogger messageLogger, IPackageInstaller packageInstaller)
         {
-            var descriptor = new TestCodeGenDescriptor(metadataUri, context, project);
+            var descriptor = new TestCodeGenDescriptor(fileHandler, messageLogger, packageInstaller);
             descriptor.Version = "V4";
             CreatedInstance = CreatedInstance ?? descriptor;
             return descriptor;
@@ -158,8 +160,8 @@ namespace Microsoft.OData.ConnectedService.Tests
 
     class TestCodeGenDescriptor : BaseCodeGenDescriptor
     {
-        public TestCodeGenDescriptor(string metadataUri, ConnectedServiceHandlerContext context, Project project)
-            : base(metadataUri, context, project)
+        public TestCodeGenDescriptor(IFileHandler fileHandler, IMessageLogger messageLogger, IPackageInstaller packageInstaller)
+            : base(fileHandler, messageLogger, packageInstaller)
         {
             ClientDocUri = "https://odata.org";
         }
@@ -167,8 +169,7 @@ namespace Microsoft.OData.ConnectedService.Tests
         public bool AddedClientCode { get; private set; }
         public bool AddedNugetPackages { get; private set; }
 
-        protected override void Init() { }
-        public override Task AddGeneratedClientCodeAsync()
+        public override Task AddGeneratedClientCodeAsync(string metadataUri, string outputDirectory, LanguageOption languageOption, ServiceConfiguration serviceConfiguration)
         {
             AddedClientCode = true;
             return Task.CompletedTask;

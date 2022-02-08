@@ -31,9 +31,10 @@
 <#@ Import Namespace="Microsoft.OData.Edm.Vocabularies" #>
 <#@ Import Namespace="Microsoft.OData.Edm.Vocabularies.V1" #>
 <#@ Import Namespace="Microsoft.OData.Edm.Vocabularies.Community.V1" #>
+<#@ Import Namespace="Microsoft.OData.CodeGen.FileHandling" #>
+<#@ Import Namespace="Microsoft.OData.CodeGen.Logging" #>
 <#@ Import Namespace="System.Text"#>
 <#@ Import Namespace="System.Net"#>
-<#@ Import Namespace="System.Reflection"#>
 <#@include file="ODataT4CodeGenFilesManager.ttinclude"
 #><#
     CodeGenerationContext context;
@@ -48,7 +49,7 @@
             MetadataFilePath = this.MetadataFilePath,
             MetadataFileRelativePath = this.MetadataFileRelativePath,
             MakeTypesInternal = this.MakeTypesInternal,
-            MultipleFilesManager = FilesManager.Create(this.Host, null),
+            MultipleFilesManager = new FilesManager(null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedBoundOperations = this.ExcludedBoundOperations,
@@ -88,7 +89,7 @@
             MetadataFilePath = this.MetadataFilePath,
             MetadataFileRelativePath = this.MetadataFileRelativePath,
             MakeTypesInternal = this.MakeTypesInternal,
-            MultipleFilesManager = FilesManager.Create(this.Host, null),
+            MultipleFilesManager = new FilesManager(null),
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedBoundOperations = this.ExcludedBoundOperations,

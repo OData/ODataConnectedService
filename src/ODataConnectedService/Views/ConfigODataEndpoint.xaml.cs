@@ -10,6 +10,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Globalization;
+using Microsoft.OData.ConnectedService.Common;
 
 namespace Microsoft.OData.ConnectedService.Views
 {

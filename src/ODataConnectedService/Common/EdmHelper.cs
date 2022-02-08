@@ -6,15 +6,15 @@
 //----------------------------------------------------------------------------
 
 using System;
-using Microsoft.OData.Edm;
-using Microsoft.OData.Edm.Csdl;
-using Microsoft.VisualStudio.ConnectedServices;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using Microsoft.OData.Edm;
+using Microsoft.OData.Edm.Csdl;
+using Microsoft.VisualStudio.ConnectedServices;
 
-namespace Microsoft.OData.CodeGen.Common
+namespace Microsoft.OData.ConnectedService.Common
 {
     public class EdmHelper
     {
