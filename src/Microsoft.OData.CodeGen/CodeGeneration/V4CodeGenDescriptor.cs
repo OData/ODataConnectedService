@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.Services.Design;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.FileHandling;
 using Microsoft.OData.CodeGen.Logging;
 using Microsoft.OData.CodeGen.Models;
@@ -47,17 +47,18 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
 
         public override async Task AddGeneratedClientCodeAsync(string metadata, string outputDirectory, LanguageOption languageOption, ServiceConfiguration serviceConfiguration)
         {
-            if ((serviceConfiguration as ServiceConfigurationV4).IncludeT4File)
+            var serviceConfigurationV4 = serviceConfiguration as ServiceConfigurationV4;
+            if (serviceConfigurationV4.IncludeT4File)
             {
-                await AddT4FileAsync(metadata, outputDirectory, languageOption, serviceConfiguration);
+                await AddT4FileAsync(metadata, outputDirectory, languageOption, serviceConfigurationV4);
             }
             else
             {
-                await AddGeneratedCodeAsync(metadata, outputDirectory, languageOption, serviceConfiguration);
+                await AddGeneratedCodeAsync(metadata, outputDirectory, languageOption, serviceConfigurationV4);
             }
         }
 
-        private async Task AddT4FileAsync(string metadata, string outputDirectory, LanguageOption languageOption, ServiceConfiguration serviceConfiguration)
+        private async Task AddT4FileAsync(string metadata, string outputDirectory, LanguageOption languageOption, ServiceConfigurationV4 serviceConfiguration)
         {
             await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Adding T4 files for OData V4...");
 
@@ -65,7 +66,6 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
             var t4Folder = Path.Combine(this.CurrentAssemblyPath, "Templates");
 
             var referenceFolder = outputDirectory;
-            var servConfiguration = serviceConfiguration as ServiceConfigurationV4;
 
             // generate .ttinclude
             using (StreamWriter writer = File.CreateText(t4IncludeTempFile))
@@ -77,13 +77,13 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
                 await writer.FlushAsync();
             }
 
-            await FileHandler.AddFileAsync(t4IncludeTempFile, Path.Combine(referenceFolder, this.GeneratedFileNamePrefix(servConfiguration.GeneratedFileNamePrefix) + ".ttinclude"));
+            await FileHandler.AddFileAsync(t4IncludeTempFile, Path.Combine(referenceFolder, this.GeneratedFileNamePrefix(serviceConfiguration.GeneratedFileNamePrefix) + ".ttinclude"));
             await FileHandler.AddFileAsync(Path.Combine(t4Folder, "ODataT4CodeGenFilesManager.ttinclude"), Path.Combine(referenceFolder, "ODataT4CodeGenFilesManager.ttinclude"));
 
             var csdlTempFile = Path.GetTempFileName();
 
             // Csdl file name is this format [ServiceName]Csdl.xml
-            var csdlFileName = string.Concat(servConfiguration.ServiceName, Common.Constants.CsdlFileNameSuffix);
+            var csdlFileName = string.Concat(serviceConfiguration.ServiceName, Common.Constants.CsdlFileNameSuffix);
             var metadataFile = Path.Combine(referenceFolder, csdlFileName);
 
             // When the T4 file is added to the target project, the proxy and metadata files 
@@ -105,10 +105,10 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
             {
                 var text = File.ReadAllText(Path.Combine(t4Folder, "ODataT4CodeGenerator.tt"));
 
-                text = Regex.Replace(text, "ODataT4CodeGenerator(\\.ttinclude)", this.GeneratedFileNamePrefix(servConfiguration.GeneratedFileNamePrefix) + "$1");
-                text = Regex.Replace(text, "(public const string MetadataDocumentUri = )\"\";", "$1@\"" + servConfiguration.Endpoint + "\";");
-                text = Regex.Replace(text, "(public const bool UseDataServiceCollection = ).*;", "$1" + servConfiguration.UseDataServiceCollection.ToString(CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture) + ";");
-                text = Regex.Replace(text, "(public const string NamespacePrefix = )\"\\$rootnamespace\\$\";", "$1\"" + servConfiguration.NamespacePrefix + "\";");
+                text = Regex.Replace(text, "ODataT4CodeGenerator(\\.ttinclude)", this.GeneratedFileNamePrefix(serviceConfiguration.GeneratedFileNamePrefix) + "$1");
+                text = Regex.Replace(text, "(public const string MetadataDocumentUri = )\"\";", "$1@\"" + serviceConfiguration.Endpoint + "\";");
+                text = Regex.Replace(text, "(public const bool UseDataServiceCollection = ).*;", "$1" + serviceConfiguration.UseDataServiceCollection.ToString(CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture) + ";");
+                text = Regex.Replace(text, "(public const string NamespacePrefix = )\"\\$rootnamespace\\$\";", "$1\"" + serviceConfiguration.NamespacePrefix + "\";");
                 if (languageOption == LanguageOption.GenerateCSharpCode)
                 {
                     text = Regex.Replace(text, "(public const string TargetLanguage = )\"OutputLanguage\";",
@@ -119,58 +119,57 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
                     text = Regex.Replace(text, "(public const string TargetLanguage = )\"OutputLanguage\";",
                         "$1\"VB\";");
                 }
-                text = Regex.Replace(text, "(public const bool EnableNamingAlias = )true;", "$1" + servConfiguration.EnableNamingAlias.ToString(CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture) + ";");
-                text = Regex.Replace(text, "(public const bool IgnoreUnexpectedElementsAndAttributes = )true;", "$1" + servConfiguration.IgnoreUnexpectedElementsAndAttributes.ToString(CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture) + ";");
-                text = Regex.Replace(text, "(public const bool MakeTypesInternal = )false;", "$1" + servConfiguration.MakeTypesInternal.ToString(CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture) + ";");
-                text = Regex.Replace(text, "(public const bool GenerateMultipleFiles = )false;", "$1" + servConfiguration.GenerateMultipleFiles.ToString(CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture) + ";");
-                var customHeaders = servConfiguration.CustomHttpHeaders ?? "";
+                text = Regex.Replace(text, "(public const bool EnableNamingAlias = )true;", "$1" + serviceConfiguration.EnableNamingAlias.ToString(CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture) + ";");
+                text = Regex.Replace(text, "(public const bool IgnoreUnexpectedElementsAndAttributes = )true;", "$1" + serviceConfiguration.IgnoreUnexpectedElementsAndAttributes.ToString(CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture) + ";");
+                text = Regex.Replace(text, "(public const bool MakeTypesInternal = )false;", "$1" + serviceConfiguration.MakeTypesInternal.ToString(CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture) + ";");
+                text = Regex.Replace(text, "(public const bool GenerateMultipleFiles = )false;", "$1" + serviceConfiguration.GenerateMultipleFiles.ToString(CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture) + ";");
+                var customHeaders = serviceConfiguration.CustomHttpHeaders ?? "";
                 text = Regex.Replace(text, "(public const string CustomHttpHeaders = )\"\";", "$1@\"" + customHeaders + "\";");
                 text = Regex.Replace(text, "(public const string MetadataFilePath = )\"\";", "$1@\"" + metadataFile + "\";");
                 text = Regex.Replace(text, "(public const string MetadataFileRelativePath = )\"\";", "$1@\"" + csdlFileName + "\";");
-                if (servConfiguration.ExcludedOperationImports?.Any() == true)
+                if (serviceConfiguration.ExcludedOperationImports?.Any() == true)
                 {
-                    text = Regex.Replace(text, "(public const string ExcludedOperationImports = )\"\";", "$1\"" + string.Join(",", servConfiguration.ExcludedOperationImports) + "\";");
+                    text = Regex.Replace(text, "(public const string ExcludedOperationImports = )\"\";", "$1\"" + string.Join(",", serviceConfiguration.ExcludedOperationImports) + "\";");
                 }
-                if (servConfiguration.ExcludedBoundOperations?.Any() == true)
+                if (serviceConfiguration.ExcludedBoundOperations?.Any() == true)
                 {
-                    text = Regex.Replace(text, "(public const string ExcludedBoundOperations = )\"\";", "$1\"" + string.Join(",", servConfiguration.ExcludedBoundOperations) + "\";");
+                    text = Regex.Replace(text, "(public const string ExcludedBoundOperations = )\"\";", "$1\"" + string.Join(",", serviceConfiguration.ExcludedBoundOperations) + "\";");
                 }
-                if (servConfiguration.ExcludedSchemaTypes?.Any() == true)
+                if (serviceConfiguration.ExcludedSchemaTypes?.Any() == true)
                 {
-                    text = Regex.Replace(text, "(public const string ExcludedSchemaTypes = )\"\";", "$1\"" + string.Join(",", servConfiguration.ExcludedSchemaTypes) + "\";");
+                    text = Regex.Replace(text, "(public const string ExcludedSchemaTypes = )\"\";", "$1\"" + string.Join(",", serviceConfiguration.ExcludedSchemaTypes) + "\";");
                 }
                 await writer.WriteAsync(text);
                 await writer.FlushAsync();
             }
 
-            await FileHandler.AddFileAsync(t4TempFile, Path.Combine(referenceFolder, this.GeneratedFileNamePrefix(servConfiguration.GeneratedFileNamePrefix) + ".tt"));
+            await FileHandler.AddFileAsync(t4TempFile, Path.Combine(referenceFolder, this.GeneratedFileNamePrefix(serviceConfiguration.GeneratedFileNamePrefix) + ".tt"));
 
             await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "T4 files for OData V4 were added.");
         }
 
-        private async Task AddGeneratedCodeAsync(string metadata, string outputDirectory, LanguageOption languageOption, ServiceConfiguration serviceConfiguration)
+        private async Task AddGeneratedCodeAsync(string metadata, string outputDirectory, LanguageOption languageOption, ServiceConfigurationV4 serviceConfiguration)
         {
             await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Generating Client Proxy for OData V4...");
-            ServiceConfigurationV4 servConfiguration = serviceConfiguration as ServiceConfigurationV4;
             ODataT4CodeGenerator t4CodeGenerator = CodeGeneratorFactory.Create();
             t4CodeGenerator.MetadataDocumentUri = metadata;
-            t4CodeGenerator.UseDataServiceCollection = servConfiguration.UseDataServiceCollection;
+            t4CodeGenerator.UseDataServiceCollection = serviceConfiguration.UseDataServiceCollection;
             t4CodeGenerator.TargetLanguage =
                 languageOption == LanguageOption.GenerateCSharpCode
                     ? ODataT4CodeGenerator.LanguageOption.CSharp
                     : ODataT4CodeGenerator.LanguageOption.VB;
-            t4CodeGenerator.IgnoreUnexpectedElementsAndAttributes = servConfiguration.IgnoreUnexpectedElementsAndAttributes;
-            t4CodeGenerator.EnableNamingAlias = servConfiguration.EnableNamingAlias;
-            t4CodeGenerator.NamespacePrefix = servConfiguration.NamespacePrefix;
-            t4CodeGenerator.MakeTypesInternal = servConfiguration.MakeTypesInternal;
-            t4CodeGenerator.GenerateMultipleFiles = servConfiguration.GenerateMultipleFiles;
-            t4CodeGenerator.ExcludedOperationImports = servConfiguration.ExcludedOperationImports;
-            t4CodeGenerator.ExcludedBoundOperations = servConfiguration.ExcludedBoundOperations;
-            t4CodeGenerator.ExcludedSchemaTypes = servConfiguration.ExcludedSchemaTypes;
+            t4CodeGenerator.IgnoreUnexpectedElementsAndAttributes = serviceConfiguration.IgnoreUnexpectedElementsAndAttributes;
+            t4CodeGenerator.EnableNamingAlias = serviceConfiguration.EnableNamingAlias;
+            t4CodeGenerator.NamespacePrefix = serviceConfiguration.NamespacePrefix;
+            t4CodeGenerator.MakeTypesInternal = serviceConfiguration.MakeTypesInternal;
+            t4CodeGenerator.GenerateMultipleFiles = serviceConfiguration.GenerateMultipleFiles;
+            t4CodeGenerator.ExcludedOperationImports = serviceConfiguration.ExcludedOperationImports;
+            t4CodeGenerator.ExcludedBoundOperations = serviceConfiguration.ExcludedBoundOperations;
+            t4CodeGenerator.ExcludedSchemaTypes = serviceConfiguration.ExcludedSchemaTypes;
             var headers = new List<string>();
-            if (servConfiguration.CustomHttpHeaders !=null)
+            if (serviceConfiguration.CustomHttpHeaders !=null)
             {
-                var headerElements = servConfiguration.CustomHttpHeaders.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                var headerElements = serviceConfiguration.CustomHttpHeaders.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var headerElement in headerElements)
                 {
                     // Trim header for empty spaces
@@ -179,18 +178,18 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
                 }
             }
             t4CodeGenerator.CustomHttpHeaders = headers;
-            t4CodeGenerator.IncludeWebProxy = servConfiguration.IncludeWebProxy;
-            t4CodeGenerator.WebProxyHost = servConfiguration.WebProxyHost;
-            t4CodeGenerator.IncludeWebProxyNetworkCredentials = servConfiguration.IncludeWebProxyNetworkCredentials;
-            t4CodeGenerator.WebProxyNetworkCredentialsUsername = servConfiguration.WebProxyNetworkCredentialsUsername;
-            t4CodeGenerator.WebProxyNetworkCredentialsPassword = servConfiguration.WebProxyNetworkCredentialsPassword;
-            t4CodeGenerator.WebProxyNetworkCredentialsDomain = servConfiguration.WebProxyNetworkCredentialsDomain;
+            t4CodeGenerator.IncludeWebProxy = serviceConfiguration.IncludeWebProxy;
+            t4CodeGenerator.WebProxyHost = serviceConfiguration.WebProxyHost;
+            t4CodeGenerator.IncludeWebProxyNetworkCredentials = serviceConfiguration.IncludeWebProxyNetworkCredentials;
+            t4CodeGenerator.WebProxyNetworkCredentialsUsername = serviceConfiguration.WebProxyNetworkCredentialsUsername;
+            t4CodeGenerator.WebProxyNetworkCredentialsPassword = serviceConfiguration.WebProxyNetworkCredentialsPassword;
+            t4CodeGenerator.WebProxyNetworkCredentialsDomain = serviceConfiguration.WebProxyNetworkCredentialsDomain;
 
             var tempFile = Path.GetTempFileName();
             var referenceFolder = outputDirectory;
 
             // Csdl file name is this format [ServiceName]Csdl.xml
-            var csdlFileName = string.Concat(servConfiguration.ServiceName, Common.Constants.CsdlFileNameSuffix);
+            var csdlFileName = string.Concat(serviceConfiguration.ServiceName, Common.Constants.CsdlFileNameSuffix);
             var metadataFile = Path.Combine(referenceFolder, csdlFileName);
             await FileHandler.AddFileAsync(tempFile, metadataFile, new ODataFileOptions { SuppressOverwritePrompt = true});
 
@@ -213,9 +212,9 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
                 }
             }
 
-            var outputFile = Path.Combine(referenceFolder, $"{this.GeneratedFileNamePrefix(servConfiguration.GeneratedFileNamePrefix)}{(languageOption == LanguageOption.GenerateCSharpCode ? ".cs" : ".vb")}");
+            var outputFile = Path.Combine(referenceFolder, $"{this.GeneratedFileNamePrefix(serviceConfiguration.GeneratedFileNamePrefix)}{(languageOption == LanguageOption.GenerateCSharpCode ? ".cs" : ".vb")}");
             await FileHandler.AddFileAsync(tempFile, outputFile, new ODataFileOptions { SuppressOverwritePrompt = true});
-            t4CodeGenerator.MultipleFilesManager?.GenerateFiles(servConfiguration.GenerateMultipleFiles, FileHandler, MessageLogger, referenceFolder, true, servConfiguration.OpenGeneratedFilesInIDE);
+            t4CodeGenerator.MultipleFilesManager?.GenerateFiles(serviceConfiguration.GenerateMultipleFiles, FileHandler, MessageLogger, referenceFolder, true, serviceConfiguration.OpenGeneratedFilesInIDE);
             await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Client Proxy for OData V4 was generated.");
         }
     }

@@ -91,7 +91,7 @@ namespace Microsoft.OData.ConnectedService
 
             BaseCodeGenDescriptor codeGenDescriptor = codeGenDescriptorFactory.Create(edmxVersion, new ConnectedServiceFileHandler(context, project), new ConnectedServiceMessageLogger(context), new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)));
             await codeGenDescriptor.AddNugetPackagesAsync().ConfigureAwait(false);
-            await codeGenDescriptor.AddGeneratedClientCodeAsync(metadataUri, outputDirectory, languageOption, ((ODataConnectedServiceInstance)context.ServiceInstance).ServiceConfig).ConfigureAwait(false);
+            await codeGenDescriptor.AddGeneratedClientCodeAsync(metadataUri, outputDirectory, (Microsoft.OData.CodeGen.Common.LanguageOption)languageOption, ((ODataConnectedServiceInstance)context.ServiceInstance).ServiceConfig).ConfigureAwait(false);
             return codeGenDescriptor;
         }
     }
