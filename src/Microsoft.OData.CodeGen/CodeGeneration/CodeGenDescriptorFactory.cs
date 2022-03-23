@@ -6,11 +6,9 @@
 //----------------------------------------------------------------------------
 
 using System;
-using System.Data.Services.Design;
 using System.Globalization;
 using Microsoft.OData.CodeGen.FileHandling;
 using Microsoft.OData.CodeGen.Logging;
-using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.CodeGen.PackageInstallation;
 using Microsoft.OData.CodeGen.Templates;
 

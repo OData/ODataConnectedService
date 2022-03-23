@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -146,6 +146,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\LanguageOption.cs" />
+    <Compile Include="Common\MetadataReader.cs" />
     <Compile Include="FileHandling\IFileHandler.cs" />
     <Compile Include="FileHandling\ODataFileOptions.cs" />
     <Compile Include="Logging\IMessageLogger.cs" />

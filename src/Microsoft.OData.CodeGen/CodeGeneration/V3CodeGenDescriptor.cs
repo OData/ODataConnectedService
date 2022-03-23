@@ -15,6 +15,7 @@ using Microsoft.OData.CodeGen.FileHandling;
 using Microsoft.OData.CodeGen.Logging;
 using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.CodeGen.PackageInstallation;
+using Common = Microsoft.OData.CodeGen.Common;
 
 namespace Microsoft.OData.CodeGen.CodeGeneration
 {
@@ -37,16 +38,16 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
             await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Nuget Packages were installed.").ConfigureAwait(false);
         }
 
-        public override async Task AddGeneratedClientCodeAsync(string metadataUri, string outputDirectory, LanguageOption languageOption, ServiceConfiguration serviceConfiguration)
+        public override async Task AddGeneratedClientCodeAsync(string metadataUri, string outputDirectory, Common.LanguageOption languageOption, ServiceConfiguration serviceConfiguration)
         {
             await AddGeneratedCodeAsync(metadataUri, outputDirectory, languageOption, serviceConfiguration);
         }
 
-        private async Task AddGeneratedCodeAsync(string metadataUri, string outputDirectory, LanguageOption languageOption, ServiceConfiguration serviceConfiguration)
+        private async Task AddGeneratedCodeAsync(string metadataUri, string outputDirectory, Common.LanguageOption languageOption, ServiceConfiguration serviceConfiguration)
         {
             await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Generating Client Proxy ...");
 
-            var generator = new EntityClassGenerator(languageOption)
+            var generator = new EntityClassGenerator((System.Data.Services.Design.LanguageOption)languageOption)
             {
                 UseDataServiceCollection = serviceConfiguration.UseDataServiceCollection,
                 Version = DataServiceCodeVersion.V3
@@ -89,7 +90,7 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
 
                 if (noErrors)
                 {
-                    var ext = languageOption == LanguageOption.GenerateCSharpCode
+                    var ext = languageOption == Common.LanguageOption.GenerateCSharpCode
                         ? ".cs"
                         : ".vb";
 

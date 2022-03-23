@@ -5,9 +5,9 @@
 // </copyright>
 //----------------------------------------------------------------------------
 
-using System.Data.Services.Design;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.FileHandling;
 using Microsoft.OData.CodeGen.Logging;
 using Microsoft.OData.CodeGen.Models;

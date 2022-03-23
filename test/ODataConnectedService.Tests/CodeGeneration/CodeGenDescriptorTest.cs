@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.Services.Design;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -15,8 +14,8 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using EnvDTE;
-using Microsoft.OData.CodeGen;
 using Microsoft.OData.CodeGen.CodeGeneration;
+using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.FileHandling;
 using Microsoft.OData.CodeGen.Logging;
 using Microsoft.OData.CodeGen.Models;

@@ -1992,7 +1992,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 {
                     IEdmTypeReference edmTypeReference = function.Parameters.First().Type;
 
-                    if (this.context.ExcludedBoundOperations.Contains($"{function.Name}({edmTypeReference.Definition.FullTypeName()})"))
+                    if (this.context.ExcludedBoundOperations?.Contains($"{function.Name}({edmTypeReference.Definition.FullTypeName()})") == true)
                     {
                         continue;
                     }
@@ -2073,7 +2073,7 @@ public abstract class ODataClientTemplate : TemplateBase
                 {
                     IEdmTypeReference edmTypeReference = action.Parameters.First().Type;
 
-                    if (this.context.ExcludedBoundOperations.Contains($"{action.Name}({edmTypeReference.Definition.FullTypeName()})"))
+                    if (this.context.ExcludedBoundOperations?.Contains($"{action.Name}({edmTypeReference.Definition.FullTypeName()})") == true)
                     {
                         continue;
                     }
@@ -2291,7 +2291,7 @@ public abstract class ODataClientTemplate : TemplateBase
         bool hasOperationImport = container.OperationImports().OfType<IEdmOperationImport>().Any();
         foreach (IEdmFunctionImport functionImport in container.OperationImports().OfType<IEdmFunctionImport>())
         {
-            if (this.context.ExcludedOperationImports.Contains(functionImport.Name))
+            if (this.context.ExcludedOperationImports?.Contains(functionImport.Name) == true)
             {
                 continue;
             }
@@ -2322,7 +2322,7 @@ public abstract class ODataClientTemplate : TemplateBase
 
         foreach (IEdmActionImport actionImport in container.OperationImports().OfType<IEdmActionImport>())
         {
-            if (this.context.ExcludedOperationImports.Contains(actionImport.Name))
+            if (this.context.ExcludedOperationImports?.Contains(actionImport.Name) == true)
             {
                 continue;
             }
@@ -2548,7 +2548,7 @@ public abstract class ODataClientTemplate : TemplateBase
             {
                 IEdmTypeReference edmTypeReference = function.Parameters.First().Type;
 
-                if (this.context.ExcludedBoundOperations.Contains($"{function.Name}({edmTypeReference.Definition.FullTypeName()})"))
+                if (this.context.ExcludedBoundOperations?.Contains($"{function.Name}({edmTypeReference.Definition.FullTypeName()})") == true)
                 {
                     continue;
                 }
@@ -2579,7 +2579,7 @@ public abstract class ODataClientTemplate : TemplateBase
             {
                 IEdmTypeReference edmTypeReference = action.Parameters.First().Type;
 
-                if (this.context.ExcludedBoundOperations.Contains($"{action.Name}({edmTypeReference.Definition.FullTypeName()})"))
+                if (this.context.ExcludedBoundOperations?.Contains($"{action.Name}({edmTypeReference.Definition.FullTypeName()})") == true)
                 {
                     continue;
                 }
