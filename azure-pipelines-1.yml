@@ -61,14 +61,6 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)\Nupkg'
         OverWrite: true
 
-    - task: CopyFiles@2
-      displayName: 'Copy Files - Stage Product'
-      inputs:
-        SourceFolder: '$(productBinPath)'
-        Contents: '$(productFiles)'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)\Product'
-        OverWrite: true
-
     # Sign NuGet packages
     - task: EsrpCodeSigning@1
       displayName: 'ESRP CodeSigning Nuget Packages'
@@ -94,7 +86,6 @@ stages:
             "toolVersion": "1.0"
           }
         ]
-    VerboseLogin: true
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact - Nuget Packages'
