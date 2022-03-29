@@ -63,6 +63,17 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)\Nupkg'
         OverWrite: true
 
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact - Nupkg'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)\Nupkg'
+        ArtifactName: 'Nupkg'
+        publishLocation: 'Container'
+
+    - publish: configs
+      displayName: Publish Signing Scripts
+      artifact: configs
+
 - stage: CodeSign
   jobs:
   - deployment: CodeSign
