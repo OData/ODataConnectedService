@@ -31,7 +31,8 @@ namespace Microsoft.OData.Cli
             if (path.Length > 0)
             {
                 string pathProject = path[0];
-                project = new Project(pathProject);
+                ProjectCollection buildEngine = new ProjectCollection();
+                project = buildEngine.LoadProject(pathProject);
             }
 
             return project;
