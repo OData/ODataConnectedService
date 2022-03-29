@@ -63,29 +63,44 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)\Nupkg'
         OverWrite: true
 
-    - task: DotNetCoreCLI@2
-      displayName: Code signing - Nupkg
-      inputs:
-        command: custom
-        custom: tool
-        arguments: install --tool-path . SignClient
-        displayName: Install SignTool tool
-    # Sign the vsix archive as well as files contained in the vsix that are listed in config/filelist.txt
-    # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
-    - pwsh: |
-        .\SignClient "Sign" `
-        --baseDirectory "$(Pipeline.Workspace)/Nupkg" `
-        --input "$(nupkgFile)" `
-        --output "$(Build.ArtifactStagingDirectory)/SignedNupkg" `
-        --user "$(SignClientUser)" `
-        --secret "$(SignClientSecret)" `
-        --name "OData Cli" `
-        --description "OData Cli" `
-        --descriptionUrl "https://github.com/OData/ODataConnectedService" 
-      
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact - Nuget Packages'
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)\Nupkg'
-        ArtifactName: Nupkg
-        publishLocation: 'Container'
+- stage: CodeSign
+  condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
+  jobs:
+  - deployment: CodeSign
+    displayName: Code Signing
+    pool:
+      vmImage: windows-latest    
+    environment: Code Sign - Approvals
+    variables:
+    - group: Code Signing
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: custom
+              custom: tool
+              arguments: install --tool-path . SignClient
+            displayName: Install SignTool tool
+          
+          # Sign the vsix archive as well as files contained in the vsix that are listed in config/filelist.txt
+          # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
+          - pwsh: |
+              .\SignClient "Sign" `
+              --baseDirectory "$(Pipeline.Workspace)/Nupkg" `
+              --input "$(nupkgFile)" `
+              --output "$(Build.ArtifactStagingDirectory)/SignedNupkg" `
+              --user "$(SignClientUser)" `
+              --secret "$(SignClientSecret)" `
+              --name "OData CLI" `
+              --description "OData CLI" `
+              --descriptionUrl "https://github.com/OData/ODataConnectedService" 
+            displayName: Code signing - Nupkg
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact - Nuget Packages'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)\Nupkg'
+              ArtifactName: Nupkg
+              publishLocation: 'Container'
