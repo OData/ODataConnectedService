@@ -60,9 +60,10 @@ stages:
         Contents: 'Microsoft.OData.Cli.0.1.0.nupkg'
         TargetFolder: '$(Build.ArtifactStagingDirectory)\Nupkg'
         OverWrite: true
-        
+
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact - Nuget Packages'
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)\Nupkg'
         ArtifactName: Nupkg
+        publishLocation: 'Container'
