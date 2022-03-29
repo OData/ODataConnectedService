@@ -69,58 +69,35 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)\Product'
         OverWrite: true
 
+    # Sign NuGet packages
+    - task: EsrpCodeSigning@1
+      displayName: 'ESRP CodeSigning Nuget Packages'
+      inputs:
+        ConnectedServiceName: 'ESRP CodeSigning - OData'
+        FolderPath: '$(Build.ArtifactStagingDirectory)\Nupkg'
+        Pattern: '*.nupkg'
+        signConfigType: inlineSignParams
+        inlineOperation: |
+        [
+          {
+            "keyCode": "CP-401405",
+            "operationSetCode": "NuGetSign",
+            "parameters": [ ],
+            "toolName": "sign",
+            "toolVersion": "1.0"
+          },
+          {
+            "keyCode": "CP-401405",
+            "operationSetCode": "NuGetVerify",
+            "parameters": [ ],
+            "toolName": "sign",
+            "toolVersion": "1.0"
+          }
+        ]
+    VerboseLogin: true
+
     - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact - Nupkg'
+      displayName: 'Publish Artifact - Nuget Packages'
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)\Nupkg'
-        ArtifactName: 'Nupkg'
-        publishLocation: 'Container'
-
-    - publish: configs
-      displayName: Publish Signing Scripts
-      artifact: configs
-
-- stage: CodeSign
-  condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
-  jobs:
-  - deployment: CodeSign
-    displayName: Code Signing
-    pool:
-      vmImage: windows-latest    
-    environment: Code Sign - Approvals
-    variables:
-    - group: Code Signing
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: DotNetCoreCLI@2
-            inputs:
-              command: custom
-              custom: tool
-              arguments: install --tool-path . SignClient
-            displayName: Install SignTool tool
-          
-          # Sign the vsix archive as well as files contained in the vsix that are listed in config/filelist.txt
-          # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
-          - pwsh: |
-              .\SignClient "Sign" `
-              --baseDirectory "$(Pipeline.Workspace)/Nupkg" `
-              --input "$(nupkgFile)" `
-              --output "$(Build.ArtifactStagingDirectory)/SignedNupkg" `
-              --config "$(Pipeline.Workspace)/configs/odata-cli/SignClient.json" `
-              --filelist "$(Pipeline.Workspace)/configs/odata-cli/filelist.txt" `
-              --user "$(SignClientUser)" `
-              --secret "$(SignClientSecret)" `
-              --name "OData CLI" `
-              --description "OData CLI" `
-              --descriptionUrl "https://github.com/OData/ODataConnectedService" 
-            displayName: Code signing - OData CLI
-
-          # publish the signed vsix as an artifact so we can download it after the build
-          - task: PublishBuildArtifacts@1
-            displayName: 'Publish Artifact: SignedNupkg'
-            inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)/SignedNupkg'
-              ArtifactName: 'SignedNupkg'
-              publishLocation: 'Container'
+        ArtifactName: Nupkg
