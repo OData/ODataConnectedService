@@ -45,7 +45,12 @@ stages:
         solution: '$(sln)'
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
-# TODO dotnet pack, make sure the name of the nupkg is Microsoft.OData.Cli.nupkg
+
+    - task: DotNetCoreCLI@2
+      inputs: 
+        command: 'pack'
+        outputDir: '$(Build.ArtifactStagingDirectory)\Nupkg'
+
     - task: CopyFiles@2
       displayName: 'Copy Files - NuGet package to Artifacts Staging'
       inputs:
