@@ -75,7 +75,7 @@ stages:
     - pwsh: |
         .\SignClient "Sign" `
         --baseDirectory "$(Pipeline.Workspace)/Nupkg" `
-        --input "$(vsixFile)" `
+        --input "$(nupkgFile)" `
         --output "$(Build.ArtifactStagingDirectory)/SignedNupkg" `
         --user "$(SignClientUser)" `
         --secret "$(SignClientSecret)" `
