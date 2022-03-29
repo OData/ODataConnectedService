@@ -18,8 +18,8 @@
     <RepositoryUrl>https://github.com/OData/ODataConnectedService/tree/master/src/Microsoft.OData.Cli</RepositoryUrl>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>tools\OcsCliKey.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyFile>tools\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>True</DelaySign>
   </PropertyGroup>
   
   <ItemGroup>
