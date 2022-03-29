@@ -1,0 +1,119 @@
+trigger:
+- master
+- create-odata-cli-pipeline
+
+name: 'OData CLI'
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  rootDir: '$(Build.SourcesDirectory)'
+  sln: '$(rootDir)\OData.Cli.sln'
+  signigConfigPath: '$(rootDir)\configs'
+  signingConfigFiles: '*.*'
+  productBinPath: '$(rootDir)\src\Microsoft.OData.Cli\bin\$(BuildConfiguration)'
+  productFiles: 'odata-cli.*?(*.dll|*.config|*.pdb)'
+  nupkgPath: '$(productBinPath)'
+  nupkgFile: 'Microsoft.OData.Cli.nupkg'
+  signingFiles: 'odata-cli.dll'
+  mainDll: 'odata-cli.dll'
+  snExe: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\sn.exe'
+  snExe64: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\x64\sn.exe'
+
+stages:
+- stage: Build
+
+  jobs:
+  - job: Build
+    steps:
+
+    - task: NuGetToolInstaller@0
+      inputs:
+        versionSpec: '>=5.2.0'
+
+    - task: NuGetCommand@2
+      displayName: 'Nuget restore - OData.Cli.sln'
+      inputs:
+        restoreSolution: '$(sln)'
+
+    - task: VSBuild@1
+      displayName: 'Build solution - OData.Cli.sln'
+      inputs:
+        solution: '$(sln)'
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
+# TODO dotnet pack, make sure the name of the nupkg is Microsoft.OData.Cli.nupkg
+    - task: CopyFiles@2
+      displayName: 'Copy Files - NuGet package to Artifacts Staging'
+      inputs:
+        SourceFolder: '$(productBinPath)'
+        Contents: 'Microsoft.OData.Cli.nupkg'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)\Nupkg'
+        OverWrite: true
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files - Stage Product'
+      inputs:
+        SourceFolder: '$(productBinPath)'
+        Contents: '$(productFiles)'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)\Product'
+        OverWrite: true
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact - Nupkg'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)\Nupkg'
+        ArtifactName: 'Nupkg'
+        publishLocation: 'Container'
+
+    - publish: configs
+      displayName: Publish Signing Scripts
+      artifact: configs
+
+- stage: CodeSign
+  condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
+  jobs:
+  - deployment: CodeSign
+    displayName: Code Signing
+    pool:
+      vmImage: windows-latest    
+    environment: Code Sign - Approvals
+    variables:
+    - group: Code Signing
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: custom
+              custom: tool
+              arguments: install --tool-path . SignClient
+            displayName: Install SignTool tool
+          
+          # Sign the vsix archive as well as files contained in the vsix that are listed in config/filelist.txt
+          # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
+          - pwsh: |
+              .\SignClient "Sign" `
+              --baseDirectory "$(Pipeline.Workspace)/Nupkg" `
+              --input "$(nupkgFile)" `
+              --output "$(Build.ArtifactStagingDirectory)/SignedNupkg" `
+              --config "$(Pipeline.Workspace)/configs/odata-cli/SignClient.json" `
+              --filelist "$(Pipeline.Workspace)/configs/odata-cli/filelist.txt" `
+              --user "$(SignClientUser)" `
+              --secret "$(SignClientSecret)" `
+              --name "OData CLI" `
+              --description "OData CLI" `
+              --descriptionUrl "https://github.com/OData/ODataConnectedService" 
+            displayName: Code signing - OData CLI
+
+          # publish the signed vsix as an artifact so we can download it after the build
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact: SignedNupkg'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)/SignedNupkg'
+              ArtifactName: 'SignedNupkg'
+              publishLocation: 'Container'
