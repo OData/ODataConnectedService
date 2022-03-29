@@ -5,7 +5,6 @@
 // </copyright>
 //----------------------------------------------------------------------------
 
-using System;
 using System.CommandLine;
 using System.Threading.Tasks;
 using Microsoft.OData.CodeGen.Logging;
