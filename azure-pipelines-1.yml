@@ -113,6 +113,6 @@ stages:
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifact - Nuget Packages'
             inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)\Nupkg'
-              ArtifactName: Nupkg
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)\SignedNupkg'
+              ArtifactName: SignedNupkg
               publishLocation: 'Container'
