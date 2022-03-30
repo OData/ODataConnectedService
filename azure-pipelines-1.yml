@@ -46,6 +46,8 @@ stages:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
 
+    
+
     - task: DotNetCoreCLI@2
       displayName: 'Pack Microsoft.OData.Cli package'
       inputs:
@@ -61,14 +63,6 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)\Nupkg'
         OverWrite: true
 
-    - task: CopyFiles@2
-      displayName: 'Copy Files - Stage Product'
-      inputs:
-        SourceFolder: '$(productBinPath)'
-        Contents: '$(productFiles)'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)\Product'
-        OverWrite: true
-
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact - Nupkg'
       inputs:
@@ -81,7 +75,6 @@ stages:
       artifact: configs
 
 - stage: CodeSign
-  condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
   jobs:
   - deployment: CodeSign
     displayName: Code Signing
@@ -105,22 +98,21 @@ stages:
           # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
           - pwsh: |
               .\SignClient "Sign" `
-              --baseDirectory "$(Pipeline.Workspace)/Nupkg" `
+              --baseDirectory "$(Pipeline.Workspace)\Nupkg" `
               --input "$(nupkgFile)" `
-              --output "$(Build.ArtifactStagingDirectory)/SignedNupkg" `
-              --config "$(Pipeline.Workspace)/configs/odata-cli/SignClient.json" `
-              --filelist "$(Pipeline.Workspace)/configs/odata-cli/filelist.txt" `
+              --output "$(Build.ArtifactStagingDirectory)\SignedNupkg" `
+              --config "$(Pipeline.Workspace)\configs\SignClient.json" `
+              --filelist "$(Pipeline.Workspace)\configs\filelist.txt" `
               --user "$(SignClientUser)" `
               --secret "$(SignClientSecret)" `
               --name "OData CLI" `
               --description "OData CLI" `
               --descriptionUrl "https://github.com/OData/ODataConnectedService" 
-            displayName: Code signing - OData CLI
+            displayName: Code signing - Nupkg
 
-          # publish the signed vsix as an artifact so we can download it after the build
           - task: PublishBuildArtifacts@1
-            displayName: 'Publish Artifact: SignedNupkg'
+            displayName: 'Publish Artifact - Nuget Packages'
             inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)/SignedNupkg'
-              ArtifactName: 'SignedNupkg'
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)\Nupkg'
+              ArtifactName: Nupkg
               publishLocation: 'Container'
