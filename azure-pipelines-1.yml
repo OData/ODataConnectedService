@@ -17,7 +17,7 @@ variables:
   productBinPath: '$(rootDir)\src\Microsoft.OData.Cli\bin\$(BuildConfiguration)'
   productFiles: 'odata-cli.*?(*.dll|*.config|*.pdb)'
   nupkgPath: '$(Build.ArtifactStagingDirectory)'
-  nupkgFile: 'Microsoft.OData.Cli.0.1.1.nupkg'
+  nupkgFile: 'Microsoft.OData.Cli.0.1.0.nupkg'
   signingFiles: 'odata-cli.dll'
   mainDll: 'odata-cli.dll'
   snExe: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\sn.exe'
@@ -46,8 +46,6 @@ stages:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
 
-    
-
     - task: DotNetCoreCLI@2
       displayName: 'Pack Microsoft.OData.Cli package'
       inputs:
@@ -59,7 +57,7 @@ stages:
       displayName: 'Copy Files - NuGet package to Artifacts Staging'
       inputs:
         SourceFolder: '$(Build.ArtifactStagingDirectory)'
-        Contents: 'Microsoft.OData.Cli.0.1.1.nupkg'
+        Contents: 'Microsoft.OData.Cli.0.1.0.nupkg'
         TargetFolder: '$(Build.ArtifactStagingDirectory)\Nupkg'
         OverWrite: true
 
@@ -74,6 +72,21 @@ stages:
       displayName: Publish Signing Scripts
       artifact: configs
 
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish OData Cli'
+      inputs:
+        command: 'publish'
+        publishWebProjects: false
+        projects: 'src/Microsoft.OData.Cli/Microsoft.OData.Cli.csproj'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)\Microsoft.OData.Cli'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact - Publish output'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)\Microsoft.OData.Cli'
+        ArtifactName: PublishedCli
+        publishLocation: 'Container'
+  
 - stage: CodeSign
   jobs:
   - deployment: CodeSign
