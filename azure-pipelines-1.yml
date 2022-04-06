@@ -46,12 +46,11 @@ stages:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
 
-    - task: DotNetCoreCLI@2
+    - task: NuGetCommand@2
       displayName: 'Pack Microsoft.OData.Cli package'
       inputs:
-        command: pack
-        packagesToPack: src/Microsoft.OData.Cli/Microsoft.OData.Cli.csproj
-        nobuild: true
+        command: custom
+        packagesToPack: 'pack "$(Build.SourcesDirectory)\src\Microsoft.OData.Cli\Microsoft.OData.Cli.csproj"'
 
     - task: CopyFiles@2
       displayName: 'Copy Files - NuGet package to Artifacts Staging'
