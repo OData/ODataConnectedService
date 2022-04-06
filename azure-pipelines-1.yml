@@ -51,7 +51,7 @@ stages:
       inputs:
         command: custom
         arguments: 'pack "$(Build.SourcesDirectory)\src\Microsoft.OData.Cli\Microsoft.OData.Cli.csproj"'
-
+        
     - task: CopyFiles@2
       displayName: 'Copy Files - NuGet package to Artifacts Staging'
       inputs:
