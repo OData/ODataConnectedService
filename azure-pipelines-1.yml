@@ -130,7 +130,6 @@ stages:
               ArtifactName: SignedNupkg
               publishLocation: 'Container'
           - task: DotNetCoreCLI@2
-            condition: and(succeeded(), or(eq(variables.isMain, true), eq(variables.isRelease, true)))
             displayName: "Push CLI NuGet tool to internal ODataTools feed"
             inputs:
               command: 'push'
