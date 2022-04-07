@@ -129,3 +129,12 @@ stages:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)\SignedNupkg'
               ArtifactName: SignedNupkg
               publishLocation: 'Container'
+          - task: DotNetCoreCLI@2
+            condition: and(succeeded(), or(eq(variables.isMain, true), eq(variables.isRelease, true)))
+            displayName: "Push CLI NuGet tool to internal ODataTools feed"
+            inputs:
+              command: 'push'
+              packagesToPush: '$(Build.ArtifactStagingDirectory)/SignedNupkg/*.nupkg'
+              nuGetFeedType: 'internal'
+              publishVstsFeed: '2cfe7ec3-b94f-4ab9-85ab-2ebff928f3fd/da435b6d-7e7b-4430-be03-48d29e1eeee8'
+
