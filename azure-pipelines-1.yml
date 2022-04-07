@@ -129,11 +129,17 @@ stages:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)\SignedNupkg'
               ArtifactName: SignedNupkg
               publishLocation: 'Container'
-          - task: DotNetCoreCLI@2
-            displayName: "Push CLI NuGet tool to internal ODataTools feed"
+          - task: NuGetCommand@2
             inputs:
               command: 'push'
-              packagesToPush: '$(Build.ArtifactStagingDirectory)/SignedNupkg/*.nupkg'
+              packagesToPush: '$(Build.ArtifactStagingDirectory)/SignedNupkd/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
               nuGetFeedType: 'internal'
-              publishVstsFeed: '2cfe7ec3-b94f-4ab9-85ab-2ebff928f3fd/da435b6d-7e7b-4430-be03-48d29e1eeee8'
+              publishVstsFeed: '56f2987f-474b-40b4-ab0c-156327781571'
+          # - task: DotNetCoreCLI@2
+          #   displayName: "Push CLI NuGet tool to internal ODataTools feed"
+          #   inputs:
+          #     command: 'push'
+          #     packagesToPush: '$(Build.ArtifactStagingDirectory)/SignedNupkg/*.nupkg'
+          #     nuGetFeedType: 'internal'
+          #     publishVstsFeed: '2cfe7ec3-b94f-4ab9-85ab-2ebff928f3fd/da435b6d-7e7b-4430-be03-48d29e1eeee8'
 
