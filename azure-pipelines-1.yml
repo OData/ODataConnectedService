@@ -132,7 +132,7 @@ stages:
           - task: NuGetCommand@2
             inputs:
               command: 'push'
-              packagesToPush: '$(Build.ArtifactStagingDirectory)/SignedNupkd/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+              packagesToPush: '$(Build.ArtifactStagingDirectory)/SignedNupkg/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
               nuGetFeedType: 'internal'
               publishVstsFeed: '56f2987f-474b-40b4-ab0c-156327781571'
           # - task: DotNetCoreCLI@2
