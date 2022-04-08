@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OData.Cli", "src\OData.Cli\OData.Cli.csproj", "{8C2FC194-F76E-4831-BE0F-4A52C222D9D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.OData.Cli", "src\Microsoft.OData.Cli\Microsoft.OData.Cli.csproj", "{887BCE02-9AAF-4A80-B62D-D9249B875349}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.OData.CodeGen", "src\Microsoft.OData.CodeGen\Microsoft.OData.CodeGen.csproj", "{86FAAAEC-3BBD-479C-8A44-D2715A6BD4C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8C2FC194-F76E-4831-BE0F-4A52C222D9D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C2FC194-F76E-4831-BE0F-4A52C222D9D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C2FC194-F76E-4831-BE0F-4A52C222D9D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C2FC194-F76E-4831-BE0F-4A52C222D9D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{887BCE02-9AAF-4A80-B62D-D9249B875349}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{887BCE02-9AAF-4A80-B62D-D9249B875349}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{887BCE02-9AAF-4A80-B62D-D9249B875349}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{887BCE02-9AAF-4A80-B62D-D9249B875349}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86FAAAEC-3BBD-479C-8A44-D2715A6BD4C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86FAAAEC-3BBD-479C-8A44-D2715A6BD4C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86FAAAEC-3BBD-479C-8A44-D2715A6BD4C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86FAAAEC-3BBD-479C-8A44-D2715A6BD4C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

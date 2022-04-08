@@ -49,6 +49,8 @@ namespace Microsoft.OData.CodeGen.Common
             if (!metadataUri.IsFile)
             {
                 var webRequest = (HttpWebRequest)WebRequest.Create(metadataUri);
+                
+                AddCustomHeaders(serviceConfiguration, webRequest);
 
                 if (serviceConfiguration.IncludeWebProxy)
                 {
@@ -104,6 +106,25 @@ namespace Microsoft.OData.CodeGen.Common
             finally
             { 
                 metadataStream?.Dispose();
+            }
+        }
+
+        private static void AddCustomHeaders(ServiceConfiguration serviceConfiguration, WebRequest webRequest)
+        {
+            if (string.IsNullOrWhiteSpace(serviceConfiguration.CustomHttpHeaders)) 
+                return;
+            
+            var customHeaders = serviceConfiguration.CustomHttpHeaders.Split(',');
+            foreach (var customHeader in customHeaders)
+            {
+                var headerKeyValuePair = customHeader.Split(':');
+
+                if (headerKeyValuePair.Length > 1)
+                    webRequest.Headers.Add(headerKeyValuePair[0], headerKeyValuePair[1]);
+                else
+                    Console.WriteLine(headerKeyValuePair.Length > 0
+                        ? $"Header '{headerKeyValuePair[0]}' is missing its value and thus will be ignored."
+                        : "Neither an header name or value was found, header ignored.");
             }
         }
     }

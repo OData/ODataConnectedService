@@ -72,7 +72,7 @@ namespace Microsoft.OData.Cli
             Option upperCamelCase = new Option<bool>(new[] { "--upper-camel-case", "-ucc" })
             {
                 Name = "upper-camel-case",
-                Description = "Disables upper camel casing."
+                Description = "Enables upper camel casing."
             };
 
             this.AddOption(upperCamelCase);
