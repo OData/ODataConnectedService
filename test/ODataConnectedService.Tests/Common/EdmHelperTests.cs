@@ -8,10 +8,10 @@
 using System.Collections.Generic;
 using System.IO;
 using FluentAssertions;
-using Microsoft.OData.ConnectedService.Common;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.OData.ConnectedService.Common;
 
 namespace ODataConnectedService.Tests
 {

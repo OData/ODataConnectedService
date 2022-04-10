@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace Microsoft.OData.ConnectedService.Common
 {
-    internal static class ExtensionMethods
+    public static class ExtensionMethods
     {
         /// <summary>
         /// Copies public properties with matching name and type from one object to the other.

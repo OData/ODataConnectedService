@@ -12,7 +12,7 @@ using System.Linq;
 using FluentAssertions;
 using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.OData.ConnectedService.Templates;
+using Microsoft.OData.CodeGen.Templates;
 
 namespace ODataConnectedService.Tests
 {

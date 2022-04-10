@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.OData.ConnectedService.Models;
+using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService.ViewModels;
 using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

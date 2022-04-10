@@ -5,16 +5,16 @@
 // </copyright>
 //-----------------------------------------------------------------------------------
 
+using System;
+using System.Data.Services.Design;
 using EnvDTE;
+using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService;
 using Microsoft.OData.ConnectedService.Common;
-using Microsoft.OData.ConnectedService.Models;
 using Microsoft.OData.ConnectedService.Tests.TestHelpers;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
-using System.Data.Services.Design;
 
 namespace ODataConnectedService.Tests
 {

@@ -7,12 +7,12 @@
 
 namespace ODataConnectedService.Tests
 {
+    using System;
+    using System.Linq;
     using FluentAssertions;
     using Microsoft.OData.Edm;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System;
-    using System.Linq;
-    using Microsoft.OData.ConnectedService.Templates;
+    using Microsoft.OData.CodeGen.Templates;
 
     [TestClass]
     public class CodeGenerationContextTest

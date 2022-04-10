@@ -1,0 +1,269 @@
+﻿<#/*
+//----------------------------------------------------------------------------------
+// <copyright file="ODataT4CodeGenFilesManager.ttinclude" company=".NET Foundation">
+//      Copyright (c) .NET Foundation and Contributors.  All rights reserved. 
+//      See License.txt in the project root for license information.
+// </copyright>
+//---------------------------------------------------------------------------------
+*/#><#@ assembly name="System.Core.dll"
+#><#@ assembly name="System.Xml.dll"
+#><#@ assembly name="EnvDTE.dll"
+#><#@ assembly name="Microsoft.OData.ConnectedService.dll"
+#><#@ assembly name="Microsoft.VisualStudio.ConnectedServices.dll"
+#><#@ assembly name="System.Xml.Linq.dll"
+#><#@ assembly name="Microsoft.OData.CodeGen.dll"
+#><#@ import namespace="System"
+#><#@ import namespace="System.Collections.Generic"
+#><#@ import namespace="System.IO"
+#><#@ import namespace="System.Linq"
+#><#@ import namespace="System.Text"
+#><#@ import namespace="System.Security"
+#><#@ import namespace="System.Xml.Linq"
+#><#@ import namespace="Microsoft.OData.CodeGen.Logging"
+#><#@ import namespace="Microsoft.OData.CodeGen.FileHandling"
+#><#+
+/// <summary>
+/// Creates an instance of the FilesManager. The object used to generate and manage
+/// multiple source files.
+/// </summary>
+/// <param name="context">The code generation context.</param>
+public class FilesManager {
+
+    /// <summary>
+    /// Creates an instance of the FilesManager. The object used to generate and manage
+    /// multiple source files.
+    /// </summary>
+    private class Block {
+
+        /// <summary> Name of the block.</summary>
+        public string Name;
+
+        /// <summary> The line in the template from which the block starts.</summary>
+        public int Start;
+
+        /// <summary> Length of the block.</summary>
+        public int Length;
+
+         /// <summary> Block currently being processed.</summary>
+        public bool IsContainer;
+    }
+
+    /// <summary> Block currently being processed.</summary>
+    private Block _currentBlock;
+
+    /// <summary> A list of all the blocks of texts to be used to generate multiple files.</summary>
+    private List<Block> _files = new List<Block>();
+
+    /// <summary> A block describing the footer of all files.</summary>
+    private Block _footer = new Block();
+
+    /// <summary> A block describing the header of all files.</summary>
+    private Block _header = new Block();
+
+    /// <summary> A list of file names to be generated.</summary>
+    protected List<String> _generatedFileNames = new List<String>();
+
+    /// <summary> Contains generated text.</summary>
+    public StringBuilder Template
+        {
+            get;
+            set;
+        }
+
+    /// <summary>
+    /// Marks the start of a new file.
+    /// </summary>
+    public void StartNewFile(string name, bool isContainer)
+    {
+        if (name == null)
+        {
+                throw new ArgumentNullException("name");
+        }
+
+        CurrentBlock = new Block { Name = name, IsContainer =  isContainer};
+    }
+
+    /// <summary>
+    /// Marks the start of the footer for all files.
+    /// </summary>
+    public void StartFooter()
+    {
+        CurrentBlock = _footer;
+    }
+
+    /// <summary>
+    /// Marks the start of the header for all files.
+    /// </summary>
+    public void StartHeader()
+    {
+        CurrentBlock = _header;
+    }
+
+
+    /// <summary>
+    /// Marks the End of a file.
+    /// </summary>
+    public void EndBlock()
+    {
+        if (CurrentBlock == null)
+        {
+            return;
+        }
+
+        CurrentBlock.Length = Template.Length - CurrentBlock.Start;
+
+        if (CurrentBlock != _header && CurrentBlock != _footer)
+        {
+            _files.Add(CurrentBlock);
+        }
+
+        _currentBlock = null;
+    }
+
+    /// <summary>
+    /// Generated multiple files depending on the number of blocks.
+    /// </summary>
+    /// <param name="split">If true the function is executed and multiple files generated
+    /// otherwise only a single file is generated.</param>
+    [SecurityCritical]
+    public virtual void GenerateFiles(bool split, IFileHandler handlerHelper, IMessageLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE)
+    {
+        if (split)
+        {
+            EndBlock();
+            string headerText = Template.ToString(_header.Start, _header.Length);
+            string footerText = Template.ToString(_footer.Start, _footer.Length);
+            string outputPath ="";
+
+            outputPath = Path.GetTempPath();
+            
+            _files.Reverse();
+
+            foreach(Block block in _files)
+            {
+                if(block.IsContainer) continue;
+                string fileName = Path.Combine(outputPath, block.Name);
+
+                if(fileCreated)
+                {
+                    string outputFile = Path.Combine(referenceFolder, block.Name);
+                    bool fileExists = File.Exists(outputFile);
+                    handlerHelper.AddFileAsync(fileName, outputFile, new ODataFileOptions { OpenOnComplete = OpenGeneratedFilesInIDE, SuppressOverwritePrompt = true }).ContinueWith(
+                        async _ =>
+                        {
+                            await logger?.WriteMessageAsync(LogMessageCategory.Information,
+                                "\"{0}\" has been {1}.", new FileInfo(fileName).Name, fileExists ? "updated" : "added");
+                        }, System.Threading.Tasks.TaskContinuationOptions.ExecuteSynchronously);
+                }
+                else
+                {
+                    string content = headerText + Template.ToString(block.Start, block.Length) + footerText;
+                    _generatedFileNames.Add(fileName);
+                    CreateFile(fileName, content);
+                    Template.Remove(block.Start, block.Length);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    ///Creates a file with the name <paramref name="fileName"> and content <paramref name="content">.
+    /// </summary>
+    /// <param name="fileName">Name of the file to be created</param>
+    /// <param name="content">Content of the file to be created</param>
+    protected virtual void CreateFile(string fileName, string content)
+    {
+        if (IsFileContentDifferent(fileName, content))
+        {
+                 File.WriteAllText(fileName, content);
+        }           
+    }
+
+    public virtual string GetCustomToolNamespace(string fileName)
+    {
+        return null;
+    }
+
+    public virtual string DefaultProjectNamespace
+    {
+        get
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// checks if the generated content is different from the existing content.
+    /// </summary>
+    /// <param name="fileName">Name of the existing file</param>
+    /// <param name="newContent">Content of existing file</param>
+    /// <returns>true if the file content is different</returns>
+    protected bool IsFileContentDifferent(string fileName, string newContent)
+    {
+        return !(File.Exists(fileName) && File.ReadAllText(fileName) == newContent);
+    }
+
+    /// <summary>
+    /// FilesManager constructor. Initializes the template variable.
+    /// </summary>
+    public FilesManager(StringBuilder template)
+    {
+        Template = template;
+    }
+
+    private Block CurrentBlock
+    {
+        get
+        {
+            return _currentBlock;
+        }
+        set
+        {
+            if (CurrentBlock != null)
+            {
+                EndBlock();
+            }
+
+            if (value != null)
+            {
+                value.Start = Template.Length;
+            }
+            _currentBlock = value;
+        }
+    }
+
+    private class VSManager : FilesManager {
+
+    /// <summary>
+    ///Creates a file with the name <paramref name="fileName"> and content <paramref name="content">.
+    /// </summary>
+    /// <param name="fileName">Name of the file to be created</param>
+    /// <param name="content">Content of the file to be created</param>
+    protected override void CreateFile(string fileName, string content)
+    {
+        if (IsFileContentDifferent(fileName, content))
+        {
+            File.WriteAllText(fileName, content);
+        }
+    }
+
+    /// <summary>
+    /// Generates multiple files depending on the number of blocks.
+    /// </summary>
+    /// <param name="split">If true the function is executed and multiple files generated
+    /// otherwise only a single file is generated.</param>
+    [SecurityCritical]
+    public override void GenerateFiles(bool split, IFileHandler handlerHelper, IMessageLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE) 
+    {
+        base.GenerateFiles(split, handlerHelper, logger, referenceFolder, fileCreated, OpenGeneratedFilesInIDE);
+    }
+
+    /// <summary>
+    /// VSManager constructor. Initializes the template variable.
+    /// </summary>
+    internal VSManager(StringBuilder template)
+        : base(template)
+    {
+    }
+    }
+} #>

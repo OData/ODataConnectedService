@@ -4,6 +4,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.OData.ConnectedService.ViewModels;
+using Microsoft.OData.CodeGen.Common;
 
 namespace Microsoft.OData.ConnectedService.Views
 {
@@ -27,7 +28,7 @@ namespace Microsoft.OData.ConnectedService.Views
             this.AdvancedSettingsPanel.Margin = new Thickness(10, -125, 0, 0);
             this.AdvancedSettingsPanel.Visibility = Visibility.Visible;
 
-            this.AdvancedSettingsForv4.Visibility = this.ODataConnectedServiceWizard.EdmxVersion == Common.Constants.EdmxVersion4
+            this.AdvancedSettingsForv4.Visibility = this.ODataConnectedServiceWizard.EdmxVersion == Constants.EdmxVersion4
                 ? Visibility.Visible : Visibility.Hidden;
         }
     }

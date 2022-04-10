@@ -11,8 +11,8 @@ using System.Globalization;
 using System.Windows;
 using FluentAssertions;
 using Microsoft.OData.ConnectedService.Converters;
-using Microsoft.OData.ConnectedService.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.OData.CodeGen.Models;
 
 namespace ODataConnectedService.Tests.Converters
 {

@@ -51,13 +51,20 @@
     <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Microsoft.Data.Services.Design, Version=5.6.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.OData.ConnectedService.Fakes">
       <HintPath>FakesAssemblies\Microsoft.OData.ConnectedService.Fakes.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\external\Binaries\V3\Microsoft.Data.Services.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Design, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\external\Binaries\V3\Microsoft.Data.Services.Design.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -147,6 +154,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Microsoft.OData.CodeGen\Microsoft.OData.CodeGen.csproj">
+      <Project>{86faaaec-3bbd-479c-8a44-d2715a6bd4c1}</Project>
+      <Name>Microsoft.OData.CodeGen</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\ODataConnectedService\ODataConnectedService.csproj">
       <Project>{a8bc5b8e-9ab7-4257-b8f1-e7c62169f9b5}</Project>
       <Name>ODataConnectedService</Name>
@@ -175,16 +186,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\..\src\ODataConnectedService\Templates\ODataT4CodeGenerator.ttinclude">
+    <EmbeddedResource Include="..\..\src\Microsoft.OData.CodeGen\Templates\ODataT4CodeGenerator.ttinclude">
       <Link>Templates\ODataT4CodeGenerator.ttinclude</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\..\src\ODataConnectedService\Templates\ODataT4CodeGenFilesManager.ttinclude">
+    <EmbeddedResource Include="..\..\src\Microsoft.OData.CodeGen\Templates\ODataT4CodeGenFilesManager.ttinclude">
       <Link>Templates\ODataT4CodeGenFilesManager.ttinclude</Link>
     </EmbeddedResource>
     <None Include="35MSSharedLib1024.snk" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\..\src\ODataConnectedService\Templates\ODataT4CodeGenerator.tt">
+    <EmbeddedResource Include="..\..\src\Microsoft.OData.CodeGen\Templates\ODataT4CodeGenerator.tt">
       <Link>Templates\ODataT4CodeGenerator.tt</Link>
     </EmbeddedResource>
   </ItemGroup>

@@ -10,7 +10,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
-using Microsoft.OData.ConnectedService.Models;
+using Microsoft.OData.CodeGen.Models;
 
 namespace Microsoft.OData.ConnectedService.Converters
 {

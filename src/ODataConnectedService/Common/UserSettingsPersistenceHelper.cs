@@ -14,7 +14,7 @@ using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService.Common
 {
-    internal class UserSettingsPersistenceHelper
+    public class UserSettingsPersistenceHelper
     {
         /// <summary>
         /// Saves user settings to isolated storage.  The data is stored with the user's roaming profile.

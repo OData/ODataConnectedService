@@ -6,17 +6,17 @@
 //----------------------------------------------------------------------------
 
 using System;
-using Microsoft.OData.Edm;
-using Microsoft.OData.Edm.Csdl;
-using Microsoft.VisualStudio.ConnectedServices;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using Microsoft.OData.Edm;
+using Microsoft.OData.Edm.Csdl;
+using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService.Common
 {
-    internal class EdmHelper
+    public class EdmHelper
     {
         private static IDictionary<IEdmType, List<IEdmOperation>> _boundOperations = null;
 

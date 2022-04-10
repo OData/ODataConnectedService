@@ -6,7 +6,7 @@
 //---------------------------------------------------------------------------------
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.OData.ConnectedService.Templates;
+using Microsoft.OData.CodeGen.Templates;
 using ODataConnectedService.Tests.TestHelpers;
 
 namespace Microsoft.OData.ConnectedService.Tests.Templates
