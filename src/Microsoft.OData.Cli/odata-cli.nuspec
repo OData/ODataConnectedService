@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Microsoft.OData.Cli.Exe</id>
+        <version>0.1.0</version>
+        <authors>Microosft</authors>
+        <owners>Microsoft</owners>
+        <projectUrl>https://github.com/OData/ODataConnectedService/tree/master/src/Microsoft.OData.Cli</projectUrl>
+        <license type="expression">MIT</license>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>The odata-cli is a CLI tool for generating strongly typed C# and Visual Basic client code for a specified OData service. It generates a DataServiceContext class to interact with the service and CLR types for each entity type and complex type in the service model. It does exactly what the OData Connected Service does.</description>
+        <copyright>Copyright 2022</copyright>
+    </metadata>
+
+    <files>
+        <file src="..\pub\odata-cli.exe" target="lib" />
+    </files>
+</package>
