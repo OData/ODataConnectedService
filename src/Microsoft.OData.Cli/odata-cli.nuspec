@@ -13,6 +13,6 @@
     </metadata>
 
     <files>
-        <file src="..\pub\odata-cli.exe" target="lib" />
+        <file src="pub\odata-cli.exe" target="lib" />
     </files>
 </package>
