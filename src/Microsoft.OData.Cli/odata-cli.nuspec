@@ -13,7 +13,7 @@
     </metadata>
 
     <files>
-      <file src="pub\odata-cli.exe" target="lib" />
-      <file src="pub\odata-cli.dll" target="lib" />
+      <file src="pub\Microsoft.OData.Cli\odata-cli.exe" target="lib" />
+      <file src="pub\Microsoft.OData.Cli\odata-cli.dll" target="lib" />
     </files>
 </package>
