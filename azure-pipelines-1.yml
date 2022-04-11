@@ -58,20 +58,12 @@ stages:
         projects: 'src/Microsoft.OData.Cli/Microsoft.OData.Cli.csproj'
         arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)\pub'
 
-    - task: NuGetCommand@2
-      displayName: 'Pack Microsoft.OData.Cli package'
+   - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact - Publish output'
       inputs:
-        command: pack
-        packagesToPack: '**/*.nuspec'
-        packDestination: '$(Build.ArtifactStagingDirectory)'
-
-    - task: CopyFiles@2
-      displayName: 'Copy Files - NuGet package to Artifacts Staging'
-      inputs:
-        SourceFolder: '$(Build.ArtifactStagingDirectory)'
-        Contents: 'odata-cli.0.1.0.nupkg'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)\Nupkg'
-        OverWrite: true
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)\pub'
+        ArtifactName: PublishedCli
+        publishLocation: 'Container'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact - Nupkg'
@@ -80,59 +72,4 @@ stages:
         ArtifactName: 'Nupkg'
         publishLocation: 'Container'
   
-- stage: CodeSign
-  jobs:
-  - deployment: CodeSign
-    displayName: Code Signing
-    pool:
-      vmImage: windows-latest    
-    environment: Code Sign - Approvals
-    variables:
-    - group: Code Signing
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: DotNetCoreCLI@2
-            inputs:
-              command: custom
-              custom: tool
-              arguments: install --tool-path . SignClient
-            displayName: Install SignTool tool
-          
-          # Sign the vsix archive as well as files contained in the vsix that are listed in config/filelist.txt
-          # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
-          - pwsh: |
-              .\SignClient "Sign" `
-              --baseDirectory "$(Pipeline.Workspace)\Nupkg" `
-              --input "$(nupkgFile)" `
-              --output "$(Build.ArtifactStagingDirectory)\SignedNupkg" `
-              --config "$(Pipeline.Workspace)\configs\SignClient.json" `
-              --filelist "$(Pipeline.Workspace)\configs\filelist.txt" `
-              --user "$(SignClientUser)" `
-              --secret "$(SignClientSecret)" `
-              --name "OData CLI" `
-              --description "OData CLI" `
-              --descriptionUrl "https://github.com/OData/ODataConnectedService" 
-            displayName: Code signing - Nupkg
-
-          - task: PublishBuildArtifacts@1
-            displayName: 'Publish Artifact - Nuget Packages'
-            inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)\SignedNupkg'
-              ArtifactName: SignedNupkg
-              publishLocation: 'Container'
-          #- task: NuGetCommand@2
-          #   inputs:
-          #    command: 'push'
-          #    packagesToPush: '$(Build.ArtifactStagingDirectory)/SignedNupkg/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-          #    nuGetFeedType: 'internal'
-          #    publishVstsFeed: '56f2987f-474b-40b4-ab0c-156327781571'
-          # - task: DotNetCoreCLI@2
-          #   displayName: "Push CLI NuGet tool to internal ODataTools feed"
-          #   inputs:
-          #     command: 'push'
-          #     packagesToPush: '$(Build.ArtifactStagingDirectory)/SignedNupkg/*.nupkg'
-          #     nuGetFeedType: 'internal'
-          #     publishVstsFeed: '2cfe7ec3-b94f-4ab9-85ab-2ebff928f3fd/da435b6d-7e7b-4430-be03-48d29e1eeee8'
 
