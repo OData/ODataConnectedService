@@ -108,7 +108,6 @@ stages:
               --input "$(nupkgFile)" `
               --output "$(Build.ArtifactStagingDirectory)\SignedNupkg" `
               --config "$(Pipeline.Workspace)\configs\SignClient.json" `
-              --filelist "$(Pipeline.Workspace)\configs\filelist.txt" `
               --user "$(SignClientUser)" `
               --secret "$(SignClientSecret)" `
               --name "OData CLI" `
