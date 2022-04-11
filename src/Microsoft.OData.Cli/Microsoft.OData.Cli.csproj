@@ -5,6 +5,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Microsoft.OData.Cli</RootNamespace>
     <AssemblyName>odata-cli</AssemblyName>
+    <PackageLicenseFile>License.txt</PackageLicenseFile>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>tools\OcsCliKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
