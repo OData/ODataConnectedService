@@ -79,6 +79,10 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)\Nupkg'
         ArtifactName: NupkgNupkg
         publishLocation: 'Container'
+        
+    - publish: configs
+      displayName: Publish Signing Scripts
+      artifact: configs
 
 - stage: CodeSign
   jobs:
