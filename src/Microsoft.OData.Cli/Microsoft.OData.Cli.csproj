@@ -31,7 +31,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Content Include="**/*.*">
+    <Content Include="**/bin/Release/net6.0/*.*">
         <Pack>true</Pack>
         <PackagePath>lib/net6.0</PackagePath>
     </Content>
