@@ -32,7 +32,7 @@
   
   <ItemGroup>
     <Content Include="**/bin/Release/net6.0/*.*">
-      <CopyToOutputDirectory >tools/net6.0/any</CopyToOutputDirectory >
+      <CopyToOutputDirectory >lib/net6.0/</CopyToOutputDirectory >
     </Content>
 </ItemGroup>
 
