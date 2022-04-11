@@ -57,13 +57,6 @@ stages:
         publishWebProjects: false
         projects: 'src/Microsoft.OData.Cli/Microsoft.OData.Cli.csproj'
         arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)\Microsoft.OData.Cli'
-        
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact - Nupkg'
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)\Nupkg'
-        ArtifactName: 'Nupkg'
-        publishLocation: 'Container'
 
     - task: NuGetCommand@2
       displayName: 'Pack Microsoft.OData.Cli package'
