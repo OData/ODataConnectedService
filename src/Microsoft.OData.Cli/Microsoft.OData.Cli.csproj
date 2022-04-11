@@ -5,6 +5,18 @@
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Microsoft.OData.Cli</RootNamespace>
     <AssemblyName>odata-cli</AssemblyName>
+    <PackageId>Microsoft.OData.Cli.Exe</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Microsoft</Authors>
+    <Product>Microsoft.OData.Cli.Exe</Product>
+    <Description>The odata-cli is a CLI tool for generating strongly typed C# and Visual Basic client code for a specified OData service. It generates a DataServiceContext class to interact with the service and CLR types for each entity type and complex type in the service model. It does exactly what the OData Connected Service does.  </Description>
+    <PackageTags>odata</PackageTags>
+    <Copyright>Copyright 2022</Copyright>
+    <RepositoryUrl>https://github.com/OData/ODataConnectedService/tree/master/src/Microsoft.OData.Cli</RepositoryUrl>
+    <PackageLicenseFile>License.txt</PackageLicenseFile>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>tools\OcsCliKey.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
   </PropertyGroup>
   
   <ItemGroup>
@@ -17,6 +29,13 @@
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta3.22114.1" />
     <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta3.22114.1" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="**/*.*">
+        <Pack>true</Pack>
+        <PackagePath>lib/net6.0</PackagePath>
+    </Content>
+</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.OData.CodeGen\Microsoft.OData.CodeGen.csproj" />
