@@ -13,6 +13,6 @@
     </metadata>
 
     <files>
-      <file src="**/bin/*.*" target="lib" />
+      <file src="**bin/*.*" target="lib" />
     </files>
 </package>
