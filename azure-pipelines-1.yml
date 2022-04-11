@@ -56,13 +56,13 @@ stages:
         command: 'publish'
         publishWebProjects: false
         projects: 'src/Microsoft.OData.Cli/Microsoft.OData.Cli.csproj'
-        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)\pub'
-
-   - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact - Publish output'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)\Microsoft.OData.Cli'
+        
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact - Nupkg'
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)\pub'
-        ArtifactName: PublishedCli
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)\Nupkg'
+        ArtifactName: 'Nupkg'
         publishLocation: 'Container'
 
     - task: NuGetCommand@2
@@ -80,13 +80,6 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)\Nupkg'
         OverWrite: true
 
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact - Nupkg'
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)\Nupkg'
-        ArtifactName: 'Nupkg'
-        publishLocation: 'Container'
-  
 - stage: CodeSign
   jobs:
   - deployment: CodeSign
