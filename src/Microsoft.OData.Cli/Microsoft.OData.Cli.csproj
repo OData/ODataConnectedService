@@ -5,9 +5,6 @@
     <TargetFrameworks>net6.0</TargetFrameworks>
     <RootNamespace>Microsoft.OData.Cli</RootNamespace>
     <AssemblyName>odata-cli</AssemblyName>
-    <PackAsTool>true</PackAsTool>
-    <ToolCommandName>odata-cli</ToolCommandName>
-    <PackageOutputPath>./nupkg</PackageOutputPath>
     <PackageId>Microsoft.OData.Cli</PackageId>
     <Version>0.1.0</Version>
     <Authors>Microsoft</Authors>
@@ -39,6 +36,12 @@
 
   <ItemGroup>
     <None Include="LICENSE.txt" Pack="true" Visible="false" PackagePath="$(PackageLicenseFile)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="**/bin/Release/net6.0/*.*">
+      <PackagePath>lib/net6.0</PackagePath>
+    </Content>
   </ItemGroup>
 
 </Project>
