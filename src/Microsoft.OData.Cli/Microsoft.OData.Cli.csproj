@@ -39,8 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="**/bin/Release/net6.0/*.*">
-      <PackageCopyToOutput>true</PackageCopyToOutput>
+    <Content Include="**/bin/**/net6.0/*.*">
+      <PackagePath>lib</PackagePath>
     </Content>
   </ItemGroup>
 
