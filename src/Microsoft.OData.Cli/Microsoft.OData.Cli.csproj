@@ -2,13 +2,16 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFrameworks>net6.0</TargetFrameworks>
     <RootNamespace>Microsoft.OData.Cli</RootNamespace>
     <AssemblyName>odata-cli</AssemblyName>
-    <PackageId>Microsoft.OData.Cli.Exe</PackageId>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>odata-cli</ToolCommandName>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
+    <PackageId>Microsoft.OData.Cli</PackageId>
     <Version>0.1.0</Version>
     <Authors>Microsoft</Authors>
-    <Product>Microsoft.OData.Cli.Exe</Product>
+    <Product>Microsoft.OData.Cli</Product>
     <Description>The odata-cli is a CLI tool for generating strongly typed C# and Visual Basic client code for a specified OData service. It generates a DataServiceContext class to interact with the service and CLR types for each entity type and complex type in the service model. It does exactly what the OData Connected Service does.  </Description>
     <PackageTags>odata</PackageTags>
     <Copyright>Copyright 2022</Copyright>
@@ -18,7 +21,7 @@
     <AssemblyOriginatorKeyFile>tools\OcsCliKey.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Build" Version="17.0.0" ExcludeAssets="runtime" />
     <PackageReference Include="Microsoft.Build.Locator" Version="1.4.1" />
