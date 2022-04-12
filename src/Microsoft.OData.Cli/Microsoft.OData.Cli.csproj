@@ -39,9 +39,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="**/bin/**/net6.0/*.*">
+    <None Include="**/bin/**/net6.0/*.*">
+      <Pack>true</Pack>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <PackageFlatten>true</PackageFlatten>
       <PackagePath>lib</PackagePath>
-    </Content>
+    </None>
   </ItemGroup>
 
 </Project>
