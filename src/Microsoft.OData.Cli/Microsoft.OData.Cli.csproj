@@ -5,7 +5,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Microsoft.OData.Cli</RootNamespace>
     <AssemblyName>odata-cli</AssemblyName>
-    <PackageId>Microsoft.OData.Cli</PackageId>
+    <PackageId>Microsoft.OData.Cli.Exe</PackageId>
     <Version>0.1.0</Version>
     <Authors>Microsoft</Authors>
     <Product>Microsoft.OData.Cli</Product>
@@ -39,8 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="**/bin/Release/net6.0/*.*">
-      <PackagePath>lib/net6.0</PackagePath>
+    <Content Include="**/net6.0/*.*">
+      <PackagePath>lib</PackagePath>
     </Content>
   </ItemGroup>
 
