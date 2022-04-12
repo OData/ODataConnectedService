@@ -120,11 +120,15 @@ namespace Microsoft.OData.CodeGen.Common
                 var headerKeyValuePair = customHeader.Split(':');
 
                 if (headerKeyValuePair.Length > 1)
+                {
                     webRequest.Headers.Add(headerKeyValuePair[0], headerKeyValuePair[1]);
+                }
                 else
+                {
                     Console.WriteLine(headerKeyValuePair.Length > 0
                         ? $"Header '{headerKeyValuePair[0]}' is missing its value and thus will be ignored."
-                        : "Neither an header name or value was found, header ignored.");
+                        : "Neither a header name or value was found, header ignored.");
+                }
             }
         }
     }
