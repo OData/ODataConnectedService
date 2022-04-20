@@ -103,7 +103,7 @@
             <TextBox
                 x:Name="CustomHttpHeaders"
                 Width="250"
-                Margin="20,0,10,0"
+                Margin="0,0,10,0"
                 HorizontalAlignment="Left"
                 AcceptsReturn="True"
                 Text="{Binding Path=UserSettings.CustomHttpHeaders, Mode=TwoWay}"
