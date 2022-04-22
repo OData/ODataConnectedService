@@ -4206,8 +4206,24 @@ this.Write("\")]\r\n        public ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(fixedContainerName));
 
-this.Write("(global::System.Uri serviceRoot) :\r\n                base(serviceRoot, global::Mic" +
-        "rosoft.OData.Client.ODataProtocolVersion.V4)\r\n        {\r\n");
+this.Write("(global::System.Uri serviceRoot) :\r\n                this(serviceRoot, global::Mic" +
+        "rosoft.OData.Client.ODataProtocolVersion.V4)\r\n        {\r\n        }\r\n\r\n        //" +
+        "/ <summary>\r\n        /// Initialize a new ");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(containerName));
+
+this.Write(" object.\r\n        /// </summary>\r\n        [global::System.CodeDom.Compiler.Genera" +
+        "tedCodeAttribute(\"Microsoft.OData.Client.Design.T4\", \"");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
+
+this.Write("\")]\r\n        public ");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(fixedContainerName));
+
+this.Write("(global::System.Uri serviceRoot, global::Microsoft.OData.Client.ODataProtocolVers" +
+        "ion protocolVersion) :\r\n                base(serviceRoot, protocolVersion)\r\n    " +
+        "    {\r\n");
 
 
     }
