@@ -19,11 +19,19 @@ namespace ODataDemo
     public partial class DemoService : global::System.Data.Services.Client.DataServiceContext
     {
         /// <summary>
-        /// Initialize a new DemoService object.
+        /// Initialize a new Container object.
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "1.0.0")]
         public DemoService(global::System.Uri serviceRoot) :
-                base(serviceRoot, global::System.Data.Services.Common.DataServiceProtocolVersion.V3)
+                this(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V3)
+        {
+        }
+        /// <summary>
+        /// Initialize a new Container object.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "1.0.0")]
+        public DemoService(global::System.Uri serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion protocolVersion) :
+                base(serviceRoot, protocolVersion)
         {
             this.ResolveName = new global::System.Func<global::System.Type, string>(this.ResolveNameFromType);
             this.OnContextCreated();

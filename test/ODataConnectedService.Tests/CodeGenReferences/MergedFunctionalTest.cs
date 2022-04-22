@@ -21,7 +21,19 @@ namespace MergedFunctionalTest
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public TestContainer(global::System.Uri serviceRoot) :
+<<<<<<< HEAD
                 base(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
+=======
+                this(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
+        {
+        }
+        /// <summary>
+        /// Initialize a new TestContainer object.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        public TestContainer(global::System.Uri serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion protocolVersion) :
+                base(serviceRoot, protocolVersion)
+>>>>>>> de89bb4 (Update cs templates)
         {
             this.UrlKeyDelimiter = global::Microsoft.OData.Client.DataServiceUrlKeyDelimiter.Slash;
             this.ResolveName = new global::System.Func<global::System.Type, string>(this.ResolveNameFromType);

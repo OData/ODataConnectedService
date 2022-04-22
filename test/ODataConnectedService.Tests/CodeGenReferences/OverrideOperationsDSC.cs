@@ -19,9 +19,23 @@ namespace OverrideOperations.DSC
         /// <summary>
         /// Initialize a new OverrideOperationsContainer object.
         /// </summary>
+<<<<<<< HEAD
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public OverrideOperationsContainer(global::System.Uri serviceRoot) :
                 base(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
+=======
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        public OverrideOperationsContainer(global::System.Uri serviceRoot) :
+                this(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
+        {
+        }
+        /// <summary>
+        /// Initialize a new OverrideOperationsContainer object.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
+        public OverrideOperationsContainer(global::System.Uri serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion protocolVersion) :
+                base(serviceRoot, protocolVersion)
+>>>>>>> de89bb4 (Update cs templates)
         {
             this.ResolveName = new global::System.Func<global::System.Type, string>(this.ResolveNameFromType);
             this.OnContextCreated();
