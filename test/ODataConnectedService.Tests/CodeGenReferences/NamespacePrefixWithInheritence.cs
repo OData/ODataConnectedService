@@ -17,7 +17,7 @@ namespace Foo
     public partial class EntityContainer : global::Microsoft.OData.Client.DataServiceContext
     {
         /// <summary>
-        /// Initialize a new Container object.
+        /// Initialize a new EntityContainer object.
         /// </summary>
 <<<<<<< HEAD
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
@@ -30,7 +30,7 @@ namespace Foo
         {
         }
         /// <summary>
-        /// Initialize a new Container object.
+        /// Initialize a new EntityContainer object.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
         public EntityContainer(global::System.Uri serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion protocolVersion) :
@@ -38,6 +38,7 @@ namespace Foo
 >>>>>>> de89bb4 (Update cs templates)
         {
             this.ResolveName = new global::System.Func<global::System.Type, string>(this.ResolveNameFromType);
+            this.ResolveType = new global::System.Func<string, global::System.Type>(this.ResolveTypeFromName);
             this.OnContextCreated();
             this.Format.LoadServiceModel = GeneratedEdmModel.GetInstance;
             this.Format.UseJson();
