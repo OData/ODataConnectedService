@@ -17,7 +17,7 @@ variables:
   productBinPath: '$(rootDir)\src\Microsoft.OData.Cli\bin\$(BuildConfiguration)'
   productFiles: 'odata-cli.*?(*.dll|*.config|*.pdb)'
   nupkgPath: '$(Build.ArtifactStagingDirectory)'
-  nupkgFile: 'Microsoft.OData.Cli.Exe.0.1.1.nupkg'
+  nupkgFile: 'Microsoft.OData.Cli.Exe.0.1.2.nupkg'
   signingFiles: 'odata-cli.dll'
   mainDll: 'odata-cli.dll'
   snExe: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\sn.exe'
@@ -57,7 +57,7 @@ stages:
       displayName: 'Copy Files - NuGet package to Artifacts Staging'
       inputs:
         SourceFolder: '$(Build.ArtifactStagingDirectory)'
-        Contents: 'Microsoft.OData.Cli.Exe.0.1.1.nupkg'
+        Contents: 'Microsoft.OData.Cli.Exe.0.1.2.nupkg'
         TargetFolder: '$(Build.ArtifactStagingDirectory)\Nupkg'
         OverWrite: true
 
