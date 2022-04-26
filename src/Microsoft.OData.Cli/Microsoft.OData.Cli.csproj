@@ -39,6 +39,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="**/bin/**/net472/*.*">
+      <Pack>true</Pack>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <PackageFlatten>true</PackageFlatten>
+      <PackagePath>lib/net472</PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="**/bin/**/net6.0/*.*">
       <Pack>true</Pack>
       <PackageCopyToOutput>true</PackageCopyToOutput>
