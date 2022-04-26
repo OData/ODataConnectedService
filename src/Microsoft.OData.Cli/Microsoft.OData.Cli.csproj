@@ -6,7 +6,7 @@
     <RootNamespace>Microsoft.OData.Cli</RootNamespace>
     <AssemblyName>odata-cli</AssemblyName>
     <PackageId>Microsoft.OData.Cli.Exe</PackageId>
-    <Version>0.1.1</Version>
+    <Version>0.1.2</Version>
     <Authors>Microsoft</Authors>
     <Product>Microsoft.OData.Cli</Product>
     <Description>The odata-cli is a CLI tool for generating strongly typed C# and Visual Basic client code for a specified OData service. It generates a DataServiceContext class to interact with the service and CLR types for each entity type and complex type in the service model. It does exactly what the OData Connected Service does.  </Description>
