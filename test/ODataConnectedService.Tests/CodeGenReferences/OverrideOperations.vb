@@ -25,7 +25,14 @@ Namespace OverrideOperations
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
-            MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
+            Me.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
+        End Sub
+        ''' <summary>
+        ''' Initialize a new OverrideOperationsContainer object.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
+        Public Sub New(ByVal serviceRoot As Global.System.Uri, ByVal protocolVersion As Global.Microsoft.OData.Client.ODataProtocolVersion)
+            MyBase.New(serviceRoot, protocolVersion)
             Me.ResolveName = AddressOf Me.ResolveNameFromType
             Me.ResolveType = AddressOf Me.ResolveTypeFromName
             Me.OnContextCreated
