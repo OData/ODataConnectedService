@@ -7,6 +7,7 @@
 
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Xml;
@@ -24,13 +25,12 @@ namespace Microsoft.OData.CodeGen.Common
         /// </summary>
         /// <param name="serviceConfiguration">The <see cref="ServiceConfiguration"/> of the metadata provided.</param>
         /// <returns>The <see cref="Version"/> of the metadata</returns>
-        public static Version GetMetadataVersion(ServiceConfiguration serviceConfiguration)
+        public static string GetMetadataVersion(ServiceConfiguration serviceConfiguration, out Version edmxVersion)
         {
             if (string.IsNullOrEmpty(serviceConfiguration.Endpoint))
-                throw new ArgumentNullException("OData Service Endpoint", "Input the metadata document resource");
-
-            if (File.Exists(serviceConfiguration.Endpoint))
-                serviceConfiguration.Endpoint = new FileInfo(serviceConfiguration.Endpoint).FullName;
+            {
+                throw new ArgumentNullException("OData Service Endpoint", string.Format(CultureInfo.InvariantCulture, Constants.InputServiceEndpointMsg));
+            }
 
             if (serviceConfiguration.Endpoint.StartsWith("https:", StringComparison.Ordinal)
                 || serviceConfiguration.Endpoint.StartsWith("http", StringComparison.Ordinal))
@@ -41,19 +41,25 @@ namespace Microsoft.OData.CodeGen.Common
                 }
             }
 
-            
-
             Stream metadataStream;
-            Uri metadataUri = new Uri(serviceConfiguration.Endpoint);
-
+            var metadataUri = new Uri(serviceConfiguration.Endpoint);
             if (!metadataUri.IsFile)
             {
                 var webRequest = (HttpWebRequest)WebRequest.Create(metadataUri);
+                if (serviceConfiguration.CustomHttpHeaders != null)
+                {
+                    var headerElements = serviceConfiguration.CustomHttpHeaders.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var headerElement in headerElements)
+                    {
+                        // Trim header for empty spaces
+                        var header = headerElement.Trim();
+                        webRequest.Headers.Add(header);
+                    }
+                }
 
                 if (serviceConfiguration.IncludeWebProxy)
                 {
                     var proxy = new WebProxy(serviceConfiguration.WebProxyHost);
-
                     if (serviceConfiguration.IncludeWebProxyNetworkCredentials)
                     {
                         proxy.Credentials = new NetworkCredential(
@@ -79,30 +85,36 @@ namespace Microsoft.OData.CodeGen.Common
                 metadataStream = (Stream)xmlUrlResolver.GetEntity(metadataUri, null, typeof(Stream));
             }
 
+            var workFile = Path.GetTempFileName();
+
             try
             {
                 using (XmlReader reader = XmlReader.Create(metadataStream))
                 {
-                    while (reader.NodeType != XmlNodeType.Element)
+                    using (var writer = XmlWriter.Create(workFile))
                     {
-                        reader.Read();
-                    }
+                        while (reader.NodeType != XmlNodeType.Element)
+                        {
+                            reader.Read();
+                        }
 
-                    if (reader.EOF)
-                    {
-                        throw new InvalidOperationException("The metadata is an empty file");
-                    }
+                        if (reader.EOF)
+                        {
+                            throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "The metadata is an empty file"));
+                        }
 
-                    Constants.SupportedEdmxNamespaces.TryGetValue(reader.NamespaceURI, out var edmxVersion);
-                    return edmxVersion;
+                        Constants.SupportedEdmxNamespaces.TryGetValue(reader.NamespaceURI, out edmxVersion);
+                        writer.WriteNode(reader, false);
+                    }
                 }
+                return workFile;
             }
             catch (WebException e)
             {
-                throw new InvalidOperationException(string.Format("The metadata cannot be accessed"), e);
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "Cannot access {0}", serviceConfiguration.Endpoint), e);
             }
             finally
-            { 
+            {
                 metadataStream?.Dispose();
             }
         }

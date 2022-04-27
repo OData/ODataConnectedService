@@ -172,7 +172,8 @@ namespace Microsoft.OData.Cli
                     }
                 }
 
-                Version version = GetMetadataVersion(options);
+                ServiceConfiguration config = GetServiceConfiguration(options);
+                MetadataReader.GetMetadataVersion(config, out Version version);
                 if (version == Constants.EdmxVersion4)
                 {
                     await GenerateCodeForV4Clients(options, console).ConfigureAwait(false);
@@ -191,10 +192,9 @@ namespace Microsoft.OData.Cli
             return 1;
         }
 
-        private Version GetMetadataVersion(GenerateOptions generateOptions)
+        private ServiceConfiguration GetServiceConfiguration(GenerateOptions generateOptions)
         {
-            Version version = null;
-            var serviceConfiguration = new ServiceConfiguration();
+            ServiceConfiguration serviceConfiguration = new ServiceConfiguration();
             serviceConfiguration.Endpoint = generateOptions.MetadataUri;
             serviceConfiguration.CustomHttpHeaders = generateOptions.CustomHeaders;
             serviceConfiguration.WebProxyHost = generateOptions.WebProxyHost;
@@ -203,9 +203,8 @@ namespace Microsoft.OData.Cli
             serviceConfiguration.WebProxyNetworkCredentialsUsername = generateOptions.WebProxyNetworkCredentialsUsername;
             serviceConfiguration.WebProxyNetworkCredentialsPassword = generateOptions.WebProxyNetworkCredentialsPassword;
             serviceConfiguration.WebProxyNetworkCredentialsDomain = generateOptions.WebProxyNetworkCredentialsDomain;
-            
-            version = MetadataReader.GetMetadataVersion(serviceConfiguration);
-            return version;
+
+            return serviceConfiguration;
         }
 
         private async Task GenerateCodeForV4Clients(GenerateOptions generateOptions, IConsole console)

@@ -119,7 +119,8 @@ namespace Microsoft.OData.ConnectedService.Views
             // get Operation Imports and bound operations from metadata for excluding ExcludedOperationImports and ExcludedBoundOperations
             try
             {
-                connectedServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath = connectedServiceWizard.ConfigODataEndpointViewModel.GetMetadata(out var version);
+                var serviceConfiguration = GetServiceConfiguration();
+                connectedServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath = MetadataReader.GetMetadataVersion(serviceConfiguration, out var version);
                 connectedServiceWizard.ConfigODataEndpointViewModel.EdmxVersion = version;
                 if (version == Constants.EdmxVersion4)
                 {
@@ -146,6 +147,21 @@ namespace Microsoft.OData.ConnectedService.Views
         private ODataConnectedServiceWizard GetODataConnectedServiceWizard()
         {
             return (ODataConnectedServiceWizard)((ConfigODataEndpointViewModel)this.DataContext).Wizard;
+        }
+
+        private ServiceConfiguration GetServiceConfiguration()
+        {
+            ServiceConfiguration serviceConfiguration = new ServiceConfiguration();
+            serviceConfiguration.Endpoint = UserSettings.Endpoint;
+            serviceConfiguration.CustomHttpHeaders = UserSettings.CustomHttpHeaders;
+            serviceConfiguration.WebProxyHost = UserSettings.WebProxyHost;
+            serviceConfiguration.IncludeWebProxy = UserSettings.IncludeWebProxy;
+            serviceConfiguration.IncludeWebProxyNetworkCredentials = UserSettings.IncludeWebProxyNetworkCredentials;
+            serviceConfiguration.WebProxyNetworkCredentialsUsername = UserSettings.WebProxyNetworkCredentialsUsername;
+            serviceConfiguration.WebProxyNetworkCredentialsPassword = UserSettings.WebProxyNetworkCredentialsPassword;
+            serviceConfiguration.WebProxyNetworkCredentialsDomain = UserSettings.WebProxyNetworkCredentialsDomain;
+
+            return serviceConfiguration;
         }
     }
 }
