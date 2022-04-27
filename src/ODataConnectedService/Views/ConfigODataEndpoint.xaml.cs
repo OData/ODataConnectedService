@@ -152,14 +152,14 @@ namespace Microsoft.OData.ConnectedService.Views
         private ServiceConfiguration GetServiceConfiguration()
         {
             ServiceConfiguration serviceConfiguration = new ServiceConfiguration();
-            serviceConfiguration.Endpoint = UserSettings.Endpoint;
-            serviceConfiguration.CustomHttpHeaders = UserSettings.CustomHttpHeaders;
-            serviceConfiguration.WebProxyHost = UserSettings.WebProxyHost;
-            serviceConfiguration.IncludeWebProxy = UserSettings.IncludeWebProxy;
-            serviceConfiguration.IncludeWebProxyNetworkCredentials = UserSettings.IncludeWebProxyNetworkCredentials;
-            serviceConfiguration.WebProxyNetworkCredentialsUsername = UserSettings.WebProxyNetworkCredentialsUsername;
-            serviceConfiguration.WebProxyNetworkCredentialsPassword = UserSettings.WebProxyNetworkCredentialsPassword;
-            serviceConfiguration.WebProxyNetworkCredentialsDomain = UserSettings.WebProxyNetworkCredentialsDomain;
+            serviceConfiguration.Endpoint = this.UserSettings.Endpoint;
+            serviceConfiguration.CustomHttpHeaders = this.UserSettings.CustomHttpHeaders;
+            serviceConfiguration.WebProxyHost = this.UserSettings.WebProxyHost;
+            serviceConfiguration.IncludeWebProxy = this.UserSettings.IncludeWebProxy;
+            serviceConfiguration.IncludeWebProxyNetworkCredentials = this.UserSettings.IncludeWebProxyNetworkCredentials;
+            serviceConfiguration.WebProxyNetworkCredentialsUsername = this.UserSettings.WebProxyNetworkCredentialsUsername;
+            serviceConfiguration.WebProxyNetworkCredentialsPassword = this.UserSettings.WebProxyNetworkCredentialsPassword;
+            serviceConfiguration.WebProxyNetworkCredentialsDomain = this.UserSettings.WebProxyNetworkCredentialsDomain;
 
             return serviceConfiguration;
         }
