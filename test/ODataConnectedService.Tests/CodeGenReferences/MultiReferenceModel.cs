@@ -21,7 +21,15 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.TruckDemo
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         public TruckDemoService(global::System.Uri serviceRoot) :
-                base(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
+                this(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
+        {
+        }
+        /// <summary>
+        /// Initialize a new TruckDemoService object.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        public TruckDemoService(global::System.Uri serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion protocolVersion) :
+                base(serviceRoot, protocolVersion)
         {
             this.ResolveName = new global::System.Func<global::System.Type, string>(this.ResolveNameFromType);
             this.OnContextCreated();
@@ -1071,8 +1079,16 @@ namespace Microsoft.OData.SampleService.Models.ModelRefDemo.GPS
         /// Initialize a new GPSContainer object.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public GPSContainer(global::System.Uri serviceRoot) :
-                base(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
+        public GPSContainer(global::System.Uri serviceRoot) : 
+                this(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
+        {
+        }
+        /// <summary>
+        /// Initialize a new GPSContainer object.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
+        public GPSContainer(global::System.Uri serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion protocolVersion) :
+                base(serviceRoot, protocolVersion)
         {
             this.ResolveName = new global::System.Func<global::System.Type, string>(this.ResolveNameFromType);
             this.OnContextCreated();

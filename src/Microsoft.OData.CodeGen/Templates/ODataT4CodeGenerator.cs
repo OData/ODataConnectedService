@@ -4206,8 +4206,24 @@ this.Write("\")]\r\n        public ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(fixedContainerName));
 
-this.Write("(global::System.Uri serviceRoot) :\r\n                base(serviceRoot, global::Mic" +
-        "rosoft.OData.Client.ODataProtocolVersion.V4)\r\n        {\r\n");
+this.Write("(global::System.Uri serviceRoot) :\r\n                this(serviceRoot, global::Mic" +
+        "rosoft.OData.Client.ODataProtocolVersion.V4)\r\n        {\r\n        }\r\n\r\n        //" +
+        "/ <summary>\r\n        /// Initialize a new ");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(containerName));
+
+this.Write(" object.\r\n        /// </summary>\r\n        [global::System.CodeDom.Compiler.Genera" +
+        "tedCodeAttribute(\"Microsoft.OData.Client.Design.T4\", \"");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
+
+this.Write("\")]\r\n        public ");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(fixedContainerName));
+
+this.Write("(global::System.Uri serviceRoot, global::Microsoft.OData.Client.ODataProtocolVers" +
+        "ion protocolVersion) :\r\n                base(serviceRoot, protocolVersion)\r\n    " +
+        "    {\r\n");
 
 
     }
@@ -6317,8 +6333,19 @@ this.Write(" object.\r\n        \'\'\' </summary>\r\n        <Global.System.Code
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
 this.Write("\")>  _\r\n        Public Sub New(ByVal serviceRoot As Global.System.Uri)\r\n         " +
-        "   MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4" +
-        ")\r\n");
+        "   Me.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)\r\n " +
+        "       End Sub\r\n\r\n        \'\'\' <summary>\r\n        \'\'\' Initialize a new ");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(containerName));
+
+this.Write(" object.\r\n        \'\'\' </summary>\r\n        <Global.System.CodeDom.Compiler.Generat" +
+        "edCodeAttribute(\"Microsoft.OData.Client.Design.T4\", \"");
+
+this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
+
+this.Write("\")>  _\r\n        Public Sub New(ByVal serviceRoot As Global.System.Uri, ByVal prot" +
+        "ocolVersion As Global.Microsoft.OData.Client.ODataProtocolVersion)\r\n            " +
+        "MyBase.New(serviceRoot, protocolVersion)\r\n");
 
 
     }

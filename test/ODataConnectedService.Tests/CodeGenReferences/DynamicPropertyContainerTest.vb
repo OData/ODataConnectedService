@@ -24,7 +24,14 @@ Namespace NS
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
-            MyBase.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
+            Me.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
+        End Sub
+        ''' <summary>
+        ''' Initialize a new Container object.
+        ''' </summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
+        Public Sub New(ByVal serviceRoot As Global.System.Uri, ByVal protocolVersion As Global.Microsoft.OData.Client.ODataProtocolVersion)
+            MyBase.New(serviceRoot, protocolVersion)
             Me.OnContextCreated
             Me.Format.LoadServiceModel = AddressOf GeneratedEdmModel.GetInstance
             Me.Format.UseJson()
