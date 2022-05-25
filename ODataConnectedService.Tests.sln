@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29613.14
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1169
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODataConnectedService", "src\ODataConnectedService\ODataConnectedService.csproj", "{A8BC5B8E-9AB7-4257-B8F1-E7C62169F9B5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODataConnectedService.Tests", "test\ODataConnectedService.Tests\ODataConnectedService.Tests.csproj", "{903B31D0-BE14-4D9E-BA76-186FA82B3A37}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B82FBBC4-0113-4777-A5CD-974C335B2739}"
@@ -14,30 +12,68 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.OData.Cli", "src\Microsoft.OData.Cli\Microsoft.OData.Cli.csproj", "{EF809374-384C-4AC2-981A-C12F0044B5AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.OData.CodeGen", "src\Microsoft.OData.CodeGen\Microsoft.OData.CodeGen.csproj", "{86FAAAEC-3BBD-479C-8A44-D2715A6BD4C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.OData.CodeGen", "src\Microsoft.OData.CodeGen\Microsoft.OData.CodeGen.csproj", "{86FAAAEC-3BBD-479C-8A44-D2715A6BD4C1}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ODataConnectedService.Shared", "src\ODataConnectedService.Shared\ODataConnectedService.Shared.shproj", "{10B6E2F1-AA58-4DF2-BB6D-F45593404D2A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ODataConnectedService_VSIX2022", "src\ODataConnectedService_VSIX2022\ODataConnectedService_VSIX2022.csproj", "{4E596BD1-FA64-41DE-9EC8-D9E48FF6346D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ODataConnectedService_VSIX", "src\ODataConnectedService_VSIX\ODataConnectedService_VSIX.csproj", "{A247C1A4-6174-4EBC-A443-7600B84EEE40}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\ODataConnectedService.Shared\ODataConnectedService.Shared.projitems*{10b6e2f1-aa58-4df2-bb6d-f45593404d2a}*SharedItemsImports = 13
+		src\ODataConnectedService.Shared\ODataConnectedService.Shared.projitems*{4e596bd1-fa64-41de-9ec8-d9e48ff6346d}*SharedItemsImports = 5
+		src\ODataConnectedService.Shared\ODataConnectedService.Shared.projitems*{903b31d0-be14-4d9e-ba76-186fa82b3a37}*SharedItemsImports = 4
+		src\ODataConnectedService.Shared\ODataConnectedService.Shared.projitems*{a247c1a4-6174-4ebc-a443-7600b84eee40}*SharedItemsImports = 5
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A8BC5B8E-9AB7-4257-B8F1-E7C62169F9B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8BC5B8E-9AB7-4257-B8F1-E7C62169F9B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8BC5B8E-9AB7-4257-B8F1-E7C62169F9B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8BC5B8E-9AB7-4257-B8F1-E7C62169F9B5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{903B31D0-BE14-4D9E-BA76-186FA82B3A37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{903B31D0-BE14-4D9E-BA76-186FA82B3A37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{903B31D0-BE14-4D9E-BA76-186FA82B3A37}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{903B31D0-BE14-4D9E-BA76-186FA82B3A37}.Debug|x86.Build.0 = Debug|Any CPU
 		{903B31D0-BE14-4D9E-BA76-186FA82B3A37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{903B31D0-BE14-4D9E-BA76-186FA82B3A37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{903B31D0-BE14-4D9E-BA76-186FA82B3A37}.Release|x86.ActiveCfg = Release|Any CPU
+		{903B31D0-BE14-4D9E-BA76-186FA82B3A37}.Release|x86.Build.0 = Release|Any CPU
 		{EF809374-384C-4AC2-981A-C12F0044B5AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EF809374-384C-4AC2-981A-C12F0044B5AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF809374-384C-4AC2-981A-C12F0044B5AE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EF809374-384C-4AC2-981A-C12F0044B5AE}.Debug|x86.Build.0 = Debug|Any CPU
 		{EF809374-384C-4AC2-981A-C12F0044B5AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF809374-384C-4AC2-981A-C12F0044B5AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF809374-384C-4AC2-981A-C12F0044B5AE}.Release|x86.ActiveCfg = Release|Any CPU
+		{EF809374-384C-4AC2-981A-C12F0044B5AE}.Release|x86.Build.0 = Release|Any CPU
 		{86FAAAEC-3BBD-479C-8A44-D2715A6BD4C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{86FAAAEC-3BBD-479C-8A44-D2715A6BD4C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86FAAAEC-3BBD-479C-8A44-D2715A6BD4C1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{86FAAAEC-3BBD-479C-8A44-D2715A6BD4C1}.Debug|x86.Build.0 = Debug|Any CPU
 		{86FAAAEC-3BBD-479C-8A44-D2715A6BD4C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86FAAAEC-3BBD-479C-8A44-D2715A6BD4C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86FAAAEC-3BBD-479C-8A44-D2715A6BD4C1}.Release|x86.ActiveCfg = Release|Any CPU
+		{86FAAAEC-3BBD-479C-8A44-D2715A6BD4C1}.Release|x86.Build.0 = Release|Any CPU
+		{4E596BD1-FA64-41DE-9EC8-D9E48FF6346D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E596BD1-FA64-41DE-9EC8-D9E48FF6346D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E596BD1-FA64-41DE-9EC8-D9E48FF6346D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4E596BD1-FA64-41DE-9EC8-D9E48FF6346D}.Debug|x86.Build.0 = Debug|Any CPU
+		{4E596BD1-FA64-41DE-9EC8-D9E48FF6346D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E596BD1-FA64-41DE-9EC8-D9E48FF6346D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E596BD1-FA64-41DE-9EC8-D9E48FF6346D}.Release|x86.ActiveCfg = Release|Any CPU
+		{4E596BD1-FA64-41DE-9EC8-D9E48FF6346D}.Release|x86.Build.0 = Release|Any CPU
+		{A247C1A4-6174-4EBC-A443-7600B84EEE40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A247C1A4-6174-4EBC-A443-7600B84EEE40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A247C1A4-6174-4EBC-A443-7600B84EEE40}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A247C1A4-6174-4EBC-A443-7600B84EEE40}.Debug|x86.Build.0 = Debug|Any CPU
+		{A247C1A4-6174-4EBC-A443-7600B84EEE40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A247C1A4-6174-4EBC-A443-7600B84EEE40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A247C1A4-6174-4EBC-A443-7600B84EEE40}.Release|x86.ActiveCfg = Release|Any CPU
+		{A247C1A4-6174-4EBC-A443-7600B84EEE40}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

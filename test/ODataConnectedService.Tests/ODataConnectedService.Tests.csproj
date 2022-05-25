@@ -48,13 +48,6 @@
     <AssemblyOriginatorKeyFile>OcsKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.OData.ConnectedService.Fakes">
-      <HintPath>FakesAssemblies\Microsoft.OData.ConnectedService.Fakes.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -68,6 +61,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ExtensionMethodsTests.cs" />
@@ -120,6 +114,9 @@
     <PackageReference Include="Microsoft.VisualStudio.ConnectedServices">
       <Version>2.0.0</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Shell.14.0">
+      <Version>14.3.25407</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Shell.Immutable.11.0">
       <Version>11.0.50727</Version>
     </PackageReference>
@@ -158,10 +155,6 @@
       <Project>{86faaaec-3bbd-479c-8a44-d2715a6bd4c1}</Project>
       <Name>Microsoft.OData.CodeGen</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\ODataConnectedService\ODataConnectedService.csproj">
-      <Project>{a8bc5b8e-9ab7-4257-b8f1-e7c62169f9b5}</Project>
-      <Name>ODataConnectedService</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CodeGenReferences\*.cs" />
@@ -192,7 +185,6 @@
     <EmbeddedResource Include="..\..\src\Microsoft.OData.CodeGen\Templates\ODataT4CodeGenFilesManager.ttinclude">
       <Link>Templates\ODataT4CodeGenFilesManager.ttinclude</Link>
     </EmbeddedResource>
-    <None Include="35MSSharedLib1024.snk" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\..\src\Microsoft.OData.CodeGen\Templates\ODataT4CodeGenerator.tt">
@@ -266,6 +258,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup />
+  <Import Project="..\..\src\ODataConnectedService.Shared\ODataConnectedService.Shared.projitems" Label="Shared" />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
