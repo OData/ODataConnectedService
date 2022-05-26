@@ -20,7 +20,7 @@
     <SkipStrongNamesExe>$(MSBuildThisFileDirectory)packages\Microsoft.Web.SkipStrongNames.1.0.0\tools\SkipStrongNames.exe</SkipStrongNamesExe>
     <SkipStrongNamesXml>$(MSBuildThisFileDirectory)tools\SkipStrongNames.xml</SkipStrongNamesXml>
     <AdditionalRestoreProps></AdditionalRestoreProps>
-    <VisualStudioVersion>14.0</VisualStudioVersion>
+    <VisualStudioVersion>17.0</VisualStudioVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -36,8 +36,8 @@
 
   <Target Name="DisableBuildVsix">
     <Message Text="DisableBuildVsix in DTTP"/>
-    <Exec Command='copy .\src\ODataConnectedService.csproj .\src\ODataConnectedService.csproj.bak' />
-    <RegexReplace Condition="'$(UseDTTP)' == 'true'" Files=".\src\ODataConnectedService.csproj" Find=".*Import Project=.*Microsoft.VsSDK.targets&quot;.*/>" Replace=" " WarnOnNoMatch="true"/>
+    <Exec Command='copy .\src\ODataConnectedService\ODataConnectedService.csproj .\src\ODataConnectedService\ODataConnectedService.csproj.bak' />
+    <RegexReplace Condition="'$(UseDTTP)' == 'true'" Files=".\src\ODataConnectedService\ODataConnectedService.csproj" Find=".*Import Project=.*Microsoft.VsSDK.targets&quot;.*/>" Replace=" " WarnOnNoMatch="true"/>
   </Target>
 
   <Target Name="RestoreSkipStrongNames" DependsOnTargets="DownloadNuGet">
