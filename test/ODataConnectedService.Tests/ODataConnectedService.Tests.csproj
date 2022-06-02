@@ -192,7 +192,6 @@
     <EmbeddedResource Include="..\..\src\Microsoft.OData.CodeGen\Templates\ODataT4CodeGenFilesManager.ttinclude">
       <Link>Templates\ODataT4CodeGenFilesManager.ttinclude</Link>
     </EmbeddedResource>
-    <None Include="35MSSharedLib1024.snk" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\..\src\Microsoft.OData.CodeGen\Templates\ODataT4CodeGenerator.tt">

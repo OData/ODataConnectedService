@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>61e9e534-c672-4109-a6e1-9aa6f14b6c54</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>ODataConnectedService.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\EdmHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ExtensionMethods.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ExtensionsHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ProjectHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\UserSettingsPersistenceHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ConnectedServiceFileHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ConnectedServiceMessageLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ConnectedServicePackageInstaller.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\SchemaTypeModelToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\UserSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ODataConnectedServiceHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ODataConnectedServiceInstance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ODataConnectedServiceProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ODataConnectedServiceWizard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AdvancedSettingsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ConfigODataEndpointViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\OperationImportsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SchemaTypesViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AdvancedSettings.xaml.cs">
+      <DependentUpon>AdvancedSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ConfigODataEndpoint.xaml.cs">
+      <DependentUpon>ConfigODataEndpoint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\OperationImports.xaml.cs">
+      <DependentUpon>OperationImports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SchemaTypes.xaml.cs">
+      <DependentUpon>SchemaTypes.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Views\AdvancedSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\ConfigODataEndpoint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\OperationImports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\SchemaTypes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)License.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)Resources\ExtensionIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)Resources\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="$(MSBuildThisFileDirectory)Resources\Icon.png" />
+  </ItemGroup>
+</Project>
