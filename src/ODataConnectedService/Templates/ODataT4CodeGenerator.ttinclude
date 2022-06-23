@@ -34,6 +34,7 @@
 <#@ Import Namespace="System.Text"#>
 <#@ Import Namespace="System.Net"#>
 <#@ Import Namespace="System.Reflection"#>
+<#@ Import Namespace= "Microsoft.OData.ConnectedService.Common"#>
 <#@include file="ODataT4CodeGenFilesManager.ttinclude"
 #><#
     CodeGenerationContext context;
@@ -157,31 +158,7 @@ public string MetadataDocumentUri
             throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" is not a valid MetadataDocumentUri because is it not a valid absolute Uri. The MetadataDocumentUri must be set to an absolute Uri referencing the $metadata endpoint of an OData service.", value));
         }
 
-        if (uri.Scheme == "http" || uri.Scheme == "https")
-        {
-            UriBuilder uriBuilder;
-            bool preserveQueryAndFragment = true;
-            if (uri.Segments.Last().StartsWith("$metadata", StringComparison.InvariantCultureIgnoreCase))
-            {
-                preserveQueryAndFragment = !uri.AbsolutePath.EndsWith("/", StringComparison.Ordinal);
-                var absolutePathUri = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/')).Uri;
-                uriBuilder = new UriBuilder(absolutePathUri);
-            }
-            else
-            {
-                var absolutePathUri = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/') + "/").Uri;
-                uriBuilder = new UriBuilder(new Uri(absolutePathUri, "$metadata"));
-            }
-            if (preserveQueryAndFragment)
-            {
-                uriBuilder.Query = uri.Query.TrimStart('?');
-                uriBuilder.Fragment = uri.Fragment.TrimStart('#');
-            }
-            uriBuilder.UserName = uri.UserInfo;
-
-            value = uriBuilder.Uri.AbsoluteUri;
-        }
-
+        value = uri.CleanMetadataUri().ToString();
         this.metadataDocumentUri = value;
     }
 }

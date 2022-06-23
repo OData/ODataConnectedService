@@ -26,12 +26,12 @@ namespace Microsoft.OData.ConnectedService.Templates
     using System.Text;
     using System.Net;
     using System.Reflection;
+    using Microsoft.OData.ConnectedService.Common;
     using System.Security;
     using Microsoft.VisualStudio.TextTemplating;
     using Microsoft.VisualStudio.ConnectedServices;
     using EnvDTE;
-    using Microsoft.OData.ConnectedService.Common;
-
+    
     /// <summary>
     /// Class to produce the template output
     /// </summary>
@@ -304,10 +304,7 @@ public string MetadataDocumentUri
             throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" is not a valid MetadataDocumentUri because is it not a valid absolute Uri. The MetadataDocumentUri must be set to an absolute Uri referencing the $metadata endpoint of an OData service.", value));
         }
 
-        uri = uri.CleanMetadataUri();
-
-        value = uri.AbsoluteUri;
-
+        value = uri.CleanMetadataUri().ToString();
         this.metadataDocumentUri = value;
     }
 }
