@@ -15,7 +15,7 @@ variables:
   signingConfigFiles: '*.*'
   productBinPath: '$(connectedServiceDir)\src\ODataConnectedService\bin\$(BuildConfiguration)'
   productFiles: 'Microsoft.OData.ConnectedService.*?(*.dll|*.config|*.pdb)'
-  productBinPath1: '$(connectedServiceDir)\src\ODataConnectedService.VS2022Plus\bin\$(BuildConfiguration)'
+  productBinPath1: '$(connectedServiceDir)\src\ODataConnectedService_VS2022Plus\bin\$(BuildConfiguration)'
   productFiles1: 'Microsoft.OData.ConnectedService.VS2022Plus.*?(*.dll|*.config|*.pdb)'
   testBinPath: '$(connectedServiceDir)\test\ODataConnectedService.Tests\bin\$(BuildConfiguration)\'
   vsixPath: '$(productBinPath)'
