@@ -3,7 +3,7 @@
   <UsingTask TaskName="SkipStrongNames.CheckSkipStrongNamesStatus" AssemblyFile="$(SkipStrongNamesExe)" />
 
   <ItemGroup>
-    <SolutionsToBuild Include="ODataConnectedService.sln">
+    <SolutionsToBuild Include="ODataCodeGenTools.sln">
       <BuildInParallel>$(BuildInParallel)</BuildInParallel>
     </SolutionsToBuild>
   </ItemGroup>

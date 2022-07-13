@@ -1,28 +1,38 @@
-ODataConnectedService
+OData CodeGenerator Tools
  ============= 
  Component | Build  | Status 
 --------|--------- |---------
 Connected Service|Rolling | [![Build Status](https://dev.azure.com/dotnet/OData/_apis/build/status/OData.ODataConnectedService?branchName=master)](https://dev.azure.com/dotnet/OData/_build/latest?definitionId=136&branchName=master)
 
- ## Introduction 
-This is the official OData Connected Service repository which allows users to generate proxy classes from the OData Metadata.
-These proxy classes are used by OData client to interact with an OData service. OData Connected Service works for both VB.NET and C# projects. 
-OData Connected Service lets app developers connect their applications to OData Services (both V3 & V4) and generate the client proxy files for the services. 
-It supports Visual Studio 2017 and Visual Studio 2019. 
+## Introduction 
+This is the official OData CodeGenerator tools repository. The OData CodeGenerator tools allow users to generate proxy classes from OData Metadata. These proxy classes are used by OData client to interact with an OData service. These tools work for both VB.NET and C# projects. 
+
+The OData Code Generator tools in this repository are: 
+1. OData Connected Service
+2. OData CLI. 
+
+These tools lets app developers connect their applications to OData Services (both V3 & V4) and generate the client proxy files for the services.
+
+OData Connected Service supports Visual Studio 2017, Visual Studio 2019 and Visual Studio 2022.  
 
 This project is ready to be used in production environment and is currently actively being supported.
 
 To learn more about OData please visit the [OData website](https://www.odata.org/).
 To learn more about Microsoft OData Libraries see [documention here](https://docs.microsoft.com/en-us/odata/).
 
-## Why OData Connected Service
-Do you have an OData service you would like to integrate in your Microsoft .NET application? OData Connected service makes your life easier since you can use it to automatically 
-generate proxy classes which are much easier to call. The ability of OData Connected service to rapidly generate and update these classes makes your development faster.
-Please check on the [documentation on how to install and use Connected service to generate these classes](https://docs.microsoft.com/odata/connectedservice/getting-started).
+## Why OData Code Generator Tools? 
+Do you have an OData service you would like to integrate in your Microsoft .NET application? The OData Code Generator tools make your life easier since you can use them to automatically 
+generate proxy classes which are much easier to call. The ability of these tools to rapidly generate and update these classes makes your development faster.
+Please check on the documentation on:
+
+1. [How to install and use Connected service to generate these classes](https://docs.microsoft.com/odata/connectedservice/getting-started).
+
+2.  [How to install and use OData CLI to generate these classes](https://docs.microsoft.com/en-us/odata/odatacli/getting-started).
+
 
 ## Getting started
 
-To get started with Microsoft OData Connected Service, please [check on the documentation](https://docs.microsoft.com/odata/connectedservice/getting-started).
+To get started with these OData Code Generator tools, please check on the documentation links shared above.
 
 ### OData Connected Service Extension
 The OData Connected Service documentation and other artifacts can be found in the two following places:
@@ -31,22 +41,35 @@ The OData Connected Service documentation and other artifacts can be found in th
 * [Releases](https://github.com/OData/ODataConnectedService/releases)
 * [Documentation](https://docs.microsoft.com/odata/connectedservice/getting-started)
 
-### Building
-In order to build the application Visual Studio 2019/2017 is the recommended development environment with the VSIX development tools installed.
+### OData CLI 
+The OData CLI documentation and other artifacts can be found in the two following places:
+* [Source Code](https://github.com/OData/ODataConnectedService)
+* [dotnet tool](https://www.nuget.org/packages/Microsoft.OData.Cli/)
+* [EXE](https://www.nuget.org/packages/Microsoft.OData.Cli.Exe/)
+* [Documentation](https://docs.microsoft.com/en-us/odata/odatacli/getting-started)
 
-The repository has 2 projects which are 
-1. The main ODataConnectedService project `ODataConnectedService.sln`
-2. The ODataConnectedServiceTests project `ODataConnectedService.Tests.sln`
+### Building
+In order to build the application Visual Studio 2019/2017/2022 is the recommended development environment with the VSIX development tools installed.
+
+The repository has 6 projects in one solution. The projects are: 
+
+1. Microsoft.OData.Cli
+2. Microsoft.OData.CodeGen
+3. ODataConnectedService
+4. ODataConnectedService.Shared
+5. ODataConnectdService.Tests
+6. ODataConnectedService.VS2022Plus
 
 #### Building in visual studio
-Open the `ODataConnectedService.sln` in visual studio and install any suggested extensions that may be missing in your instance.
+Open the `ODataCodeGenTools.sln` in visual studio and install any suggested extensions that may be missing in your instance.
 Build and run the project. 
 
 While developing if you encounter any issues do check the FAQ section below for frequently asked questions
+
 #### Unit Tests
 
-The `ODataConnectedService.Tests.sln` contains the unit tests for the OData connected service. The folder structure of the tests mirrors the folder structure
-of the `ODataConnectedService` project. The base namespace for tests is `Microsoft.OData.ConnectedService.Tests`. Furthermore each test class has the same name
+The `ODataConnectedService.Tests` project contains the unit tests for the OData connected service. The folder structure of the tests mirrors the folder structure
+of the `ODataConnectedService.Shared` project. The base namespace for tests is `Microsoft.OData.ConnectedService.Tests`. Furthermore each test class has the same name
 as the class it is testing, followed by the suffix `Test`.
 
 Example: for some class `Microsoft.OData.ConnectedService.X.Y` located in `src\X\Y.cs`,
