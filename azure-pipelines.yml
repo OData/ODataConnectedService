@@ -10,17 +10,21 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   connectedServiceDir: '$(Build.SourcesDirectory)'
-  sln: '$(connectedServiceDir)\ODataConnectedService.sln'
-  testSln: '$(connectedServiceDir)\ODataConnectedService.Tests.sln'
+  sln: '$(connectedServiceDir)\ODataCodeGenTools.sln'
   signigConfigPath: '$(connectedServiceDir)\configs'
   signingConfigFiles: '*.*'
   productBinPath: '$(connectedServiceDir)\src\ODataConnectedService\bin\$(BuildConfiguration)'
   productFiles: 'Microsoft.OData.ConnectedService.*?(*.dll|*.config|*.pdb)'
+  productBinPathVs2022Plus: '$(connectedServiceDir)\src\ODataConnectedService_VS2022Plus\bin\$(BuildConfiguration)'
+  productFilesVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.*?(*.dll|*.config|*.pdb)'
   testBinPath: '$(connectedServiceDir)\test\ODataConnectedService.Tests\bin\$(BuildConfiguration)\'
   vsixPath: '$(productBinPath)'
   vsixFile: 'Microsoft.OData.ConnectedService.vsix'
+  vsixFileVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.vsix'
   signingFiles: 'Microsoft.OData.ConnectedService.dll'
+  signingFilesVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.dll'
   mainDll: 'Microsoft.OData.ConnectedService.dll'
+  mainDllVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.dll'
   testDll: 'ODataConnectedService.Tests.dll'
   snExe: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\sn.exe'
   snExe64: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\x64\sn.exe'
@@ -37,26 +41,14 @@ stages:
         versionSpec: '>=5.2.0'
 
     - task: NuGetCommand@2
-      displayName: 'Nuget restore - ODataConnectedService.sln'
+      displayName: 'Nuget restore - ODataCodeGenTools.sln'
       inputs:
         restoreSolution: '$(sln)'
 
     - task: VSBuild@1
-      displayName: 'Build solution - ODataConnectedService.sln'
+      displayName: 'Build solution - ODataCodeGenTools.sln'
       inputs:
         solution: '$(sln)'
-        platform: '$(buildPlatform)'
-        configuration: '$(buildConfiguration)'
-
-    - task: NuGetCommand@2
-      displayName: 'Nuget restore tests - ODataConnectedServiceTests.sln'
-      inputs:
-        restoreSolution: '$(testSln)'
-
-    - task: VSBuild@1
-      displayName: 'Build tests solution - ODataConnectedServiceTests.sln'
-      inputs:
-        solution: '$(testSln)'
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
 
@@ -78,6 +70,14 @@ stages:
         OverWrite: true
 
     - task: CopyFiles@2
+      displayName: 'Copy Files - 2022plus VSIX to Artifacts Staging'
+      inputs:
+        SourceFolder: '$(productBinPathVs2022Plus)'
+        Contents: 'Microsoft.OData.ConnectedService.VS2022Plus.vsix'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)\VSIX2022plus'
+        OverWrite: true
+
+    - task: CopyFiles@2
       displayName: 'Copy Files - Stage Product'
       inputs:
         SourceFolder: '$(productBinPath)'
@@ -85,11 +85,26 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)\Product'
         OverWrite: true
 
+    - task: CopyFiles@2
+      displayName: 'Copy Files - Stage Product 2022plus'
+      inputs:
+        SourceFolder: '$(productBinPathVs2022Plus)'
+        Contents: '$(productFilesVs2022Plus)'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)\Product2022plus'
+        OverWrite: true
+
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact - VSIX'
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)\VSIX'
         ArtifactName: 'VSIX'
+        publishLocation: 'Container'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact - VSIX2022plus'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)\VSIX2022plus'
+        ArtifactName: 'VSIX2022plus'
         publishLocation: 'Container'
 
     - publish: configs
@@ -139,4 +154,49 @@ stages:
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)/SignedVSIX'
               ArtifactName: 'SignedVSIX'
+              publishLocation: 'Container'
+
+- stage: CodeSign2
+  condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
+  jobs:
+  - deployment: CodeSign
+    displayName: Code Signing
+    pool:
+      vmImage: windows-latest    
+    environment: Code Sign - Approvals
+    variables:
+    - group: Code Signing
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: custom
+              custom: tool
+              arguments: install --tool-path . SignClient
+            displayName: Install SignTool tool
+          
+          # Sign the vsix archive as well as files contained in the vsix that are listed in config/filelist.txt
+          # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
+          - pwsh: |
+              .\SignClient "Sign" `
+              --baseDirectory "$(Pipeline.Workspace)/VSIX2022Plus" `
+              --input "$(vsixFileVs2022Plus)" `
+              --output "$(Build.ArtifactStagingDirectory)/SignedVSIX2022Plus" `
+              --config "$(Pipeline.Workspace)/configs/SignClient.json" `
+              --filelist "$(Pipeline.Workspace)/configs/filelist.txt" `
+              --user "$(SignClientUser)" `
+              --secret "$(SignClientSecret)" `
+              --name "OData Connected Service 2022+" `
+              --description "OData Connected Service 2022+" `
+              --descriptionUrl "https://github.com/OData/ODataConnectedService" 
+            displayName: Code signing - VSIX2022Plus
+
+          # publish the signed vsix as an artifact so we can download it after the build
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact: SignedVSIX2022Plus'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)/SignedVSIX2022Plus'
+              ArtifactName: 'SignedVSIX2022Plus'
               publishLocation: 'Container'
