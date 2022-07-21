@@ -138,7 +138,7 @@ namespace Microsoft.OData.Cli
                 (
                     GenerateOptions options,
                     IConsole console
-                ) 
+                )
                 => HandleGenerateCommand(options, console));
         }
 
@@ -185,10 +185,10 @@ namespace Microsoft.OData.Cli
             catch (Exception ex)
             {
                 console.Error.Write(ex.Message);
-                return 0;
+                return 1;
             }
 
-            return 1;
+            return 0;
         }
 
         private Version GetMetadataVersion(GenerateOptions generateOptions)
@@ -203,7 +203,7 @@ namespace Microsoft.OData.Cli
             serviceConfiguration.WebProxyNetworkCredentialsUsername = generateOptions.WebProxyNetworkCredentialsUsername;
             serviceConfiguration.WebProxyNetworkCredentialsPassword = generateOptions.WebProxyNetworkCredentialsPassword;
             serviceConfiguration.WebProxyNetworkCredentialsDomain = generateOptions.WebProxyNetworkCredentialsDomain;
-            
+
             version = MetadataReader.GetMetadataVersion(serviceConfiguration);
             return version;
         }
@@ -232,7 +232,7 @@ namespace Microsoft.OData.Cli
 
             Project project = ProjectHelper.CreateProjectInstance(generateOptions.OutputDir);
             BaseCodeGenDescriptor codeGenDescriptor = new CodeGenDescriptorFactory().Create(
-                Constants.EdmxVersion4, 
+                Constants.EdmxVersion4,
                 new ODataCliFileHandler(new ODataCliMessageLogger(console), project),
                 new ODataCliMessageLogger(console),
                 new ODataCliPackageInstaller(project, new ODataCliMessageLogger(console)));
