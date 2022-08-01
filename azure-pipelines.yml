@@ -181,7 +181,7 @@ stages:
           # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
           - pwsh: |
               .\SignClient "Sign" `
-              --baseDirectory "$(Pipeline.Workspace)/VSIX2022Plus" `
+              --baseDirectory "$(Pipeline.Workspace)/VSIX2022plus" `
               --input "$(vsixFileVs2022Plus)" `
               --output "$(Build.ArtifactStagingDirectory)/SignedVSIX2022Plus" `
               --config "$(Pipeline.Workspace)/configs/SignClient.json" `
@@ -191,7 +191,7 @@ stages:
               --name "OData Connected Service 2022+" `
               --description "OData Connected Service 2022+" `
               --descriptionUrl "https://github.com/OData/ODataConnectedService" 
-            displayName: Code signing - VSIX2022Plus
+            displayName: Code signing - VSIX2022plus
 
           # publish the signed vsix as an artifact so we can download it after the build
           - task: PublishBuildArtifacts@1
