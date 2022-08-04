@@ -54,11 +54,14 @@ namespace Microsoft.OData.ConnectedService.Common
             if (uri.Scheme == "http" || uri.Scheme == "https")
             {
                 UriBuilder uriBuilder;
+
+                /// Evaluates to true if Query and Fragment properties are present in the Uri 
                 bool preserveQueryAndFragment = true;
+
                 if (uri.Segments.Last().StartsWith("$metadata", StringComparison.InvariantCultureIgnoreCase))
                 {
                     preserveQueryAndFragment = !uri.AbsolutePath.EndsWith("/", StringComparison.Ordinal);
-                    var absolutePathUri = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/')).Uri;
+                    Uri absolutePathUri = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/')).Uri;
                     uriBuilder = new UriBuilder(absolutePathUri);
                 }
                 else
@@ -66,6 +69,7 @@ namespace Microsoft.OData.ConnectedService.Common
                     var absolutePathUri = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/') + "/").Uri;
                     uriBuilder = new UriBuilder(new Uri(absolutePathUri, "$metadata"));
                 }
+
                 if (preserveQueryAndFragment)
                 {
                     uriBuilder.Query = uri.Query.TrimStart('?');
