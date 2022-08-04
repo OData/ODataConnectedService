@@ -6,12 +6,8 @@
 //---------------------------------------------------------------------------------
 
 using System;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using System.Xml;
 using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService.Views;
@@ -49,7 +45,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         {
             try
             {
-                this.MetadataTempPath = GetMetadata(out var version);
+                var serviceConfiguration = GetServiceConfiguration();
+                this.MetadataTempPath = Microsoft.OData.CodeGen.Common.MetadataReader.GetMetadataVersion(serviceConfiguration, out var version);
                 // Makes sense to add MRU endpoint at this point since GetMetadata manipulates UserSettings.Endpoint
                 UserSettings.AddMruEndpoint(UserSettings.Endpoint);
                 this.EdmxVersion = version;
@@ -68,111 +65,24 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
         }
 
-        internal string GetMetadata(out Version edmxVersion)
-        {
-            if (string.IsNullOrEmpty(UserSettings.Endpoint))
-            {
-                throw new ArgumentNullException("OData Service Endpoint", string.Format(CultureInfo.InvariantCulture, Constants.InputServiceEndpointMsg));
-            }
-
-            if (UserSettings.Endpoint.StartsWith("https:", StringComparison.Ordinal)
-                || UserSettings.Endpoint.StartsWith("http", StringComparison.Ordinal))
-            {
-                if (!Uri.TryCreate(UserSettings.Endpoint, UriKind.Absolute, out var uri))
-                {
-                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" is not a valid MetadataDocumentUri because is it not a valid absolute Uri. The MetadataDocumentUri must be set to an absolute Uri referencing the $metadata endpoint of an OData service.", UserSettings.Endpoint));
-                }
-
-                uri = uri.CleanMetadataUri();
-
-                UserSettings.Endpoint = uri.AbsoluteUri;
-            }
-
-            Stream metadataStream;
-            var metadataUri = new Uri(UserSettings.Endpoint);
-            if (!metadataUri.IsFile)
-            {
-                var webRequest = (HttpWebRequest)WebRequest.Create(metadataUri);
-                if (!string.IsNullOrEmpty(UserSettings.CustomHttpHeaders))
-                {
-                    var headerElements = UserSettings.CustomHttpHeaders.Split(new [] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var headerElement in headerElements)
-                    {
-                        // Trim header for empty spaces
-                        var header = headerElement.Trim();
-                        webRequest.Headers.Add(header);
-                    }
-                }
-
-                if (UserSettings.IncludeWebProxy)
-                {
-                    if (!string.IsNullOrEmpty(UserSettings.WebProxyHost))
-                    {
-                        var proxy = new WebProxy(UserSettings.WebProxyHost);
-                        if (UserSettings.IncludeWebProxyNetworkCredentials)
-                        {
-                            proxy.Credentials = new NetworkCredential(
-                                UserSettings.WebProxyNetworkCredentialsUsername,
-                                UserSettings.WebProxyNetworkCredentialsPassword,
-                                UserSettings.WebProxyNetworkCredentialsDomain);
-                        }
-
-                        webRequest.Proxy = proxy;
-                    }
-                    
-                }
-
-                WebResponse webResponse = webRequest.GetResponse();
-                metadataStream = webResponse.GetResponseStream();
-            }
-            else
-            {
-                // Set up XML secure resolver
-                var xmlUrlResolver = new XmlUrlResolver
-                {
-                    Credentials = CredentialCache.DefaultNetworkCredentials
-                };
-
-                metadataStream = (Stream)xmlUrlResolver.GetEntity(metadataUri, null, typeof(Stream));
-            }
-
-            var workFile = Path.GetTempFileName();
-
-            try
-            {
-                using (XmlReader reader = XmlReader.Create(metadataStream))
-                {
-                    using (var writer = XmlWriter.Create(workFile))
-                    {
-                        while (reader.NodeType != XmlNodeType.Element)
-                        {
-                            reader.Read();
-                        }
-
-                        if (reader.EOF)
-                        {
-                            throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "The metadata is an empty file"));
-                        }
-
-                        Constants.SupportedEdmxNamespaces.TryGetValue(reader.NamespaceURI, out edmxVersion);
-                        writer.WriteNode(reader, false);
-                    }
-                }
-                return workFile;
-            }
-            catch (WebException e)
-            {
-                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "Cannot access {0}", UserSettings.Endpoint), e);
-            }
-            finally
-            {
-                this.DisposeStream(metadataStream);
-            }
-        }
-
         private void DisposeStream(Stream stream)
         {
             stream?.Dispose();
+        }
+
+        private ServiceConfiguration GetServiceConfiguration()
+        {
+            ServiceConfiguration serviceConfiguration = new ServiceConfiguration();
+            serviceConfiguration.Endpoint = this.UserSettings.Endpoint;
+            serviceConfiguration.CustomHttpHeaders = this.UserSettings.CustomHttpHeaders;
+            serviceConfiguration.WebProxyHost = this.UserSettings.WebProxyHost;
+            serviceConfiguration.IncludeWebProxy = this.UserSettings.IncludeWebProxy;
+            serviceConfiguration.IncludeWebProxyNetworkCredentials = this.UserSettings.IncludeWebProxyNetworkCredentials;
+            serviceConfiguration.WebProxyNetworkCredentialsUsername = this.UserSettings.WebProxyNetworkCredentialsUsername;
+            serviceConfiguration.WebProxyNetworkCredentialsPassword = this.UserSettings.WebProxyNetworkCredentialsPassword;
+            serviceConfiguration.WebProxyNetworkCredentialsDomain = this.UserSettings.WebProxyNetworkCredentialsDomain;
+
+            return serviceConfiguration;
         }
     }
 }
