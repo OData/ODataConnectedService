@@ -160,12 +160,27 @@ public string MetadataDocumentUri
 
         if (uri.Scheme == "http" || uri.Scheme == "https")
         {
-            value = uri.Scheme + "://" + uri.Authority + uri.AbsolutePath;
-            value = value.TrimEnd('/');
-            if (!value.EndsWith("$metadata"))
+            UriBuilder uriBuilder;
+            bool preserveQueryAndFragment = true;
+            if (uri.Segments.Last().StartsWith("$metadata", StringComparison.InvariantCultureIgnoreCase))
             {
-                value += "/$metadata";
+                preserveQueryAndFragment = !uri.AbsolutePath.EndsWith("/", StringComparison.Ordinal);
+                var absolutePathUri = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/')).Uri;
+                uriBuilder = new UriBuilder(absolutePathUri);
             }
+            else
+            {
+                var absolutePathUri = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/') + "/").Uri;
+                uriBuilder = new UriBuilder(new Uri(absolutePathUri, "$metadata"));
+            }
+            if (preserveQueryAndFragment)
+            {
+                uriBuilder.Query = uri.Query.TrimStart('?');
+                uriBuilder.Fragment = uri.Fragment.TrimStart('#');
+            }
+            uriBuilder.UserName = uri.UserInfo;
+
+            value = uriBuilder.Uri.AbsoluteUri;
         }
 
         this.metadataDocumentUri = value;
