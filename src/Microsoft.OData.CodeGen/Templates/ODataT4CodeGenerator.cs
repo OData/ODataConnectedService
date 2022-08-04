@@ -28,6 +28,7 @@ namespace Microsoft.OData.CodeGen.Templates
     using System.Text;
     using System.Net;
     using System.Reflection;
+    using Microsoft.OData.ConnectedService.Common;
     using System.Security;
     using Microsoft.VisualStudio.TextTemplating;
     using Microsoft.VisualStudio.ConnectedServices;
