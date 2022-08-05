@@ -27,13 +27,9 @@ namespace Microsoft.OData.CodeGen.Templates
     using Microsoft.OData.CodeGen.Logging;
     using System.Text;
     using System.Net;
-    using System.Reflection;
-    using Microsoft.OData.ConnectedService.Common;
     using System.Security;
-    using Microsoft.VisualStudio.TextTemplating;
-    using Microsoft.VisualStudio.ConnectedServices;
-    using EnvDTE;
-    
+    using Microsoft.OData.CodeGen.Common;
+
     /// <summary>
     /// Class to produce the template output
     /// </summary>
@@ -306,7 +302,7 @@ public string MetadataDocumentUri
             throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" is not a valid MetadataDocumentUri because is it not a valid absolute Uri. The MetadataDocumentUri must be set to an absolute Uri referencing the $metadata endpoint of an OData service.", value));
         }
 
-        value = uri.CleanMetadataUri().ToString();
+        value = MetadataReader.CleanMetadataUri(uri).ToString();
         this.metadataDocumentUri = value;
     }
 }
