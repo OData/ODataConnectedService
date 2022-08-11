@@ -157,6 +157,7 @@ namespace Microsoft.OData.CodeGen.Common
                     uriBuilder.Query = uri.Query.TrimStart('?');
                     uriBuilder.Fragment = uri.Fragment.TrimStart('#');
                 }
+
                 uriBuilder.UserName = uri.UserInfo;
 
                 return new Uri(uriBuilder.Uri.AbsoluteUri);
