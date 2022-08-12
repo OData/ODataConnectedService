@@ -23,6 +23,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public UserSettings UserSettings { get; internal set; }
 
+        public ServiceConfiguration ServiceConfiguration { get; set; }
+
         public event EventHandler<EventArgs> PageEntering;
 
         public ConfigODataEndpointViewModel(UserSettings userSettings) : base()
@@ -45,9 +47,10 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         {
             try
             {
-                var serviceConfiguration = GetServiceConfiguration();
-                this.MetadataTempPath = CodeGen.Common.MetadataReader.GetMetadataVersion(serviceConfiguration, out var version);
+                ServiceConfiguration = GetServiceConfiguration();
+                this.MetadataTempPath = CodeGen.Common.MetadataReader.GetMetadataVersion(ServiceConfiguration, out var version);
                 // Makes sense to add MRU endpoint at this point since GetMetadata manipulates UserSettings.Endpoint
+                UserSettings.Endpoint = ServiceConfiguration.Endpoint;
                 UserSettings.AddMruEndpoint(UserSettings.Endpoint);
                 this.EdmxVersion = version;
                 PageLeaving?.Invoke(this, EventArgs.Empty);
