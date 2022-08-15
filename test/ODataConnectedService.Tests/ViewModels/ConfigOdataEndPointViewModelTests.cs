@@ -54,6 +54,13 @@ namespace ODataConnectedService.Tests.ViewModels
             Assert.IsFalse(pageNavigationResult.IsSuccess);
             Assert.IsTrue(pageNavigationResult.ShowMessageBoxOnFailure);
 
+            //Provide a url without $metadata
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://mysite/ODataService/$metadata";
+            pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
+
+            //Check if $metadata is appended as the last segment if it was not the last segment of the url
+            Assert.AreEqual("http://mysite/ODataService/$metadata", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
+
             //Provide a url with "$metadata" as the last segment in the url
             configOdataEndPointViewModel.UserSettings.Endpoint = "http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0#fragment";
             _ = configOdataEndPointViewModel.OnPageLeavingAsync(null);
@@ -61,12 +68,19 @@ namespace ODataConnectedService.Tests.ViewModels
             //Check if the url is detected as valid and is unmodified
             Assert.AreEqual("http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0#fragment", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
 
-            //Provide a url without $metadata
+            //Provide a url with query and fragment segments without $metadata
             configOdataEndPointViewModel.UserSettings.Endpoint = "http://user:password@mysite/ODataService?$schemaversion=2.0#fragment";
             pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
             //Check if $metadata is appended as the last segment if it was not the last segment of the url
             Assert.AreEqual("http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0#fragment", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
+
+            //Provide a url with a fragment segment without $metadata
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://user:password@mysite/ODataService#fragment";
+            pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
+
+            //Check if $metadata is appended as the last segment if it was not the last segment of the url
+            Assert.AreEqual("http://user:password@mysite/ODataService/$metadata#fragment", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
 
             //Check if an exception is thrown for an invalid url and the user is notified
             pageNavigationResult = pageNavigationResultTask?.Result;
