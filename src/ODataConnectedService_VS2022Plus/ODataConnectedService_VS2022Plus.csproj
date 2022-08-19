@@ -88,6 +88,13 @@
     <PackageReference Include="Microsoft.OData.Edm">
       <Version>7.6.3</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.2.32505.173" ExcludeAssets="runtime">
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.3.2093">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.ConnectedServices">
       <Version>16.2.45</Version>
     </PackageReference>

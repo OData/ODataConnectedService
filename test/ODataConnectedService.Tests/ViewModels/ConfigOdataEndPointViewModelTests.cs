@@ -43,14 +43,14 @@ namespace ODataConnectedService.Tests.ViewModels
             Task<PageNavigationResult> pageNavigationResultTask;
             PageNavigationResult pageNavigationResult;
 
-            File.WriteAllText("EdmxFile.xml",edmx);
+            File.WriteAllText("EdmxFile.xml", edmx);
 
             //Check if an error is thrown if the on leaving the page without providing the endpoint
             pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
             pageNavigationResult = pageNavigationResultTask?.Result;
             Assert.IsNotNull(pageNavigationResult.ErrorMessage);
-            Assert.IsTrue(pageNavigationResult.ErrorMessage.Contains(Constants.InputServiceEndpointMsg),"User is not prompted to enter endpoint");
+            Assert.IsTrue(pageNavigationResult.ErrorMessage.Contains(Constants.InputServiceEndpointMsg), "User is not prompted to enter endpoint");
             Assert.IsFalse(pageNavigationResult.IsSuccess);
             Assert.IsTrue(pageNavigationResult.ShowMessageBoxOnFailure);
 
@@ -58,8 +58,50 @@ namespace ODataConnectedService.Tests.ViewModels
             configOdataEndPointViewModel.UserSettings.Endpoint = "http://mysite/ODataService";
             pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
-            //Check if $metadata is apended if the url does not have it added at the end
-            Assert.AreEqual(configOdataEndPointViewModel.UserSettings.Endpoint, "http://mysite/ODataService/$metadata");
+            //Check if $metadata is appended as the last segment if it was not the last segment of the url
+            Assert.AreEqual("http://mysite/ODataService/$metadata", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
+
+            //Provide a url with $metadata/
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://mysite/ODataService/$metadata/";
+            pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
+
+            //Check if $metadata is appended as the last segment and '/' is removed
+            Assert.AreEqual("http://mysite/ODataService/$metadata", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
+
+            //Provide a url with "$metadata" as the last segment in the url with fragment and query segments
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0#fragment";
+            _ = configOdataEndPointViewModel.OnPageLeavingAsync(null);
+
+            //Check if the url is detected as valid and is unmodified
+            Assert.AreEqual("http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0#fragment", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
+
+            //Provide a url with query and fragment segments without $metadata
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://user:password@mysite/ODataService?$schemaversion=2.0#fragment";
+            pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
+
+            //Check if $metadata is appended as the last segment
+            Assert.AreEqual("http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0#fragment", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
+
+            //Provide a url with a fragment segment without $metadata
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://user:password@mysite/ODataService#fragment";
+            pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
+
+            //Check if $metadata is appended as the last segment
+            Assert.AreEqual("http://user:password@mysite/ODataService/$metadata#fragment", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
+
+            //Provide a url with $metadata and a fragment segment without a query segment
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://user:password@mysite/ODataService/$metadata#fragment";
+            pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
+
+            //Check if $metadata is appended as the last segment
+            Assert.AreEqual("http://user:password@mysite/ODataService/$metadata#fragment", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
+
+            //Provide a url with $metadata and a query segment without a fragment segment
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0";
+            pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
+
+            //Check if $metadata is appended as the last segment
+            Assert.AreEqual("http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
 
             //Check if an exception is thrown for an invalid url and the user is notified
             pageNavigationResult = pageNavigationResultTask?.Result;
@@ -70,7 +112,7 @@ namespace ODataConnectedService.Tests.ViewModels
             Assert.IsTrue(pageNavigationResult.ShowMessageBoxOnFailure);
 
 
-            configOdataEndPointViewModel.UserSettings.Endpoint = Path.Combine(Directory.GetCurrentDirectory(),"EdmxFile.xml");
+            configOdataEndPointViewModel.UserSettings.Endpoint = Path.Combine(Directory.GetCurrentDirectory(), "EdmxFile.xml");
             pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
             //Check if any errors were reported
@@ -84,7 +126,7 @@ namespace ODataConnectedService.Tests.ViewModels
             Assert.AreEqual(expectedTempfileContent.Trim(), actualTempFileContent.Trim(), "temp metadata file not properly written");
 
             //Check if Edmx verison of has correctly been detected
-            Assert.AreEqual(configOdataEndPointViewModel.EdmxVersion.ToString(),"4.0.0.0","Version not properly detected");
+            Assert.AreEqual(configOdataEndPointViewModel.EdmxVersion.ToString(), "4.0.0.0", "Version not properly detected");
         }
     }
 }
