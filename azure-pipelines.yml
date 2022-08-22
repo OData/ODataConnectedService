@@ -101,10 +101,10 @@ stages:
         publishLocation: 'Container'
 
     - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact - VSIX2022plus'
+      displayName: 'Publish Artifact - VSIX2022Plus'
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)\VSIX2022plus'
-        ArtifactName: 'VSIX2022plus'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)\VSIX2022Plus'
+        ArtifactName: 'VSIX2022Plus'
         publishLocation: 'Container'
 
     - publish: configs
