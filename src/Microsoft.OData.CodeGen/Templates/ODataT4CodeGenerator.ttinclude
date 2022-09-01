@@ -8,7 +8,7 @@
 //---------------------------------------------------------------------------------
 */
 #>
-<#@ template debug="true" hostSpecific="true" visibility="internal" linePragmas="false"#>
+<#@ template debug="true" hostSpecific="true" visibility="public" linePragmas="false"#>
 <#@ output extension=".cs" #>
 <#@ Assembly Name="System.Core.dll" #>
 <#@ Assembly Name="System.Runtime.dll" #>
