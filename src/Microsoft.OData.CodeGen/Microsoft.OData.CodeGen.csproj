@@ -139,7 +139,7 @@
       <Version>7.6.3</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.3</Version>
+      <Version>13.0.1</Version>
     </PackageReference>
     <PackageReference Include="System.Text.Encodings.Web">
       <Version>4.7.2</Version>
