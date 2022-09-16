@@ -22,12 +22,12 @@ namespace Microsoft.OData.CodeGen.Common
     public static class MetadataReader
     {
         /// <summary>
-        /// Reads the metadata version from the metadata url prvided.
+        /// Reads the metadata from a provided endpoint, writes to a temporary file and outputs the file path and metadata version
         /// </summary>
         /// <param name="serviceConfiguration">The <see cref="ServiceConfiguration"/> of the metadata provided.</param>
-        /// <param name="edmxVersion">of the metadata</param>
-        /// <returns>The <see cref="String"/> of the metadata</returns>
-        public static string GetMetadataVersion(ServiceConfiguration serviceConfiguration, out Version edmxVersion)
+        /// <param name="edmxVersion">Edmx version of the metadata.</param>
+        /// <returns>Location of the metadata file.</returns>
+        public static string ProcessServiceMetadata(ServiceConfiguration serviceConfiguration, out Version edmxVersion)
         {
             if (string.IsNullOrEmpty(serviceConfiguration.Endpoint))
             {
@@ -37,7 +37,7 @@ namespace Microsoft.OData.CodeGen.Common
             if (serviceConfiguration.Endpoint.StartsWith("https:", StringComparison.Ordinal)
                 || serviceConfiguration.Endpoint.StartsWith("http", StringComparison.Ordinal))
             {
-                if (!Uri.TryCreate(serviceConfiguration.Endpoint, UriKind.Absolute, out var uri))
+                if (!Uri.TryCreate(serviceConfiguration.Endpoint, UriKind.Absolute, out Uri uri))
                 {
                     throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" is not a valid MetadataDocumentUri because is it not a valid absolute Uri. The MetadataDocumentUri must be set to an absolute Uri referencing the $metadata endpoint of an OData service.", serviceConfiguration.Endpoint));
                 }
@@ -142,20 +142,20 @@ namespace Microsoft.OData.CodeGen.Common
             {
                 UriBuilder uriBuilder;
 
-                /// Evaluates to true if Query and Fragment properties are present in the Uri 
+                // Evaluates to true if Query and Fragment properties are present in the Uri 
                 bool preserveQueryAndFragment = true;
 
                 if (uri.Segments.Last().Equals("$metadata", StringComparison.InvariantCultureIgnoreCase) | uri.Segments.Last().Equals("$metadata/", StringComparison.InvariantCultureIgnoreCase))
                 {
                     preserveQueryAndFragment = !uri.AbsolutePath.EndsWith("/", StringComparison.Ordinal);
-                    Uri absolutePathUri = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/')).Uri;
-                    uriBuilder = new UriBuilder(absolutePathUri);
+                    uriBuilder = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/'));
                 }
-                else
+                else if (!uri.AbsolutePath.EndsWith("/", StringComparison.Ordinal))
                 {
-                    var absolutePathUri = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/') + "/").Uri;
-                    uriBuilder = new UriBuilder(new Uri(absolutePathUri, "$metadata"));
+                    uriBuilder = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath + "/$metadata");
                 }
+                else uriBuilder = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath + "$metadata");
+
 
                 if (preserveQueryAndFragment)
                 {
@@ -165,10 +165,10 @@ namespace Microsoft.OData.CodeGen.Common
 
                 uriBuilder.UserName = uri.UserInfo;
 
-                return new Uri(uriBuilder.Uri.AbsoluteUri);
+                return uriBuilder.Uri;
             }
 
-            return new Uri(uri.AbsoluteUri);
+            return uri;
         }
     }
 }

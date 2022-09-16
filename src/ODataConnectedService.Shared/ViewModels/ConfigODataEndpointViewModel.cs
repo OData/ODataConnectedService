@@ -51,7 +51,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             try
             {
                 ServiceConfiguration = GetServiceConfiguration();
-                this.MetadataTempPath = CodeGen.Common.MetadataReader.GetMetadataVersion(ServiceConfiguration, out var version);
+                this.MetadataTempPath = CodeGen.Common.MetadataReader.ProcessServiceMetadata(ServiceConfiguration, out var version);
                 // Makes sense to add MRU endpoint at this point since GetMetadata manipulates UserSettings.Endpoint
                 UserSettings.Endpoint = ServiceConfiguration.Endpoint;
                 UserSettings.AddMruEndpoint(UserSettings.Endpoint);

@@ -120,7 +120,7 @@ namespace Microsoft.OData.ConnectedService.Views
             try
             {
                 var serviceConfiguration = GetServiceConfiguration();
-                connectedServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath = CodeGen.Common.MetadataReader.GetMetadataVersion(serviceConfiguration, out var version);
+                connectedServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath = CodeGen.Common.MetadataReader.ProcessServiceMetadata(serviceConfiguration, out var version);
                 connectedServiceWizard.ConfigODataEndpointViewModel.EdmxVersion = version;
                 if (version == Constants.EdmxVersion4)
                 {
