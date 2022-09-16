@@ -22,11 +22,11 @@ namespace Microsoft.OData.CodeGen.Common
     public static class MetadataReader
     {
         /// <summary>
-        /// Reads the metadata version from the metadata url prvided.
+        /// Reads the metadata version from the metadata URL provided.
         /// </summary>
         /// <param name="serviceConfiguration">The <see cref="ServiceConfiguration"/> of the metadata provided.</param>
-        /// <param name="edmxVersion">of the metadata</param>
-        /// <returns>The <see cref="String"/> of the metadata</returns>
+        /// <param name="edmxVersion">Edmx version of the metadata.</param>
+        /// <returns>Location of the metadata file.</returns>
         public static string GetMetadataVersion(ServiceConfiguration serviceConfiguration, out Version edmxVersion)
         {
             if (string.IsNullOrEmpty(serviceConfiguration.Endpoint))
@@ -148,13 +148,11 @@ namespace Microsoft.OData.CodeGen.Common
                 if (uri.Segments.Last().Equals("$metadata", StringComparison.InvariantCultureIgnoreCase) | uri.Segments.Last().Equals("$metadata/", StringComparison.InvariantCultureIgnoreCase))
                 {
                     preserveQueryAndFragment = !uri.AbsolutePath.EndsWith("/", StringComparison.Ordinal);
-                    Uri absolutePathUri = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/')).Uri;
-                    uriBuilder = new UriBuilder(absolutePathUri);
+                    uriBuilder = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/'));
                 }
                 else
                 {
-                    var absolutePathUri = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/') + "/").Uri;
-                    uriBuilder = new UriBuilder(new Uri(absolutePathUri, "$metadata"));
+                    uriBuilder = new UriBuilder(new Uri(new Uri(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath), "$metadata"));
                 }
 
                 if (preserveQueryAndFragment)
