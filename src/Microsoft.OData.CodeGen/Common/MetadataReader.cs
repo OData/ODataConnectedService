@@ -22,12 +22,13 @@ namespace Microsoft.OData.CodeGen.Common
     public static class MetadataReader
     {
         /// <summary>
-        /// Reads the metadata version from the metadata URL provided.
+        /// Reads the metadata from a provided endpoint and writes to a temporary file.
+        /// Reads and outputs the metadata version from the metadata URL provided.
         /// </summary>
         /// <param name="serviceConfiguration">The <see cref="ServiceConfiguration"/> of the metadata provided.</param>
         /// <param name="edmxVersion">Edmx version of the metadata.</param>
         /// <returns>Location of the metadata file.</returns>
-        public static string GetMetadataVersion(ServiceConfiguration serviceConfiguration, out Version edmxVersion)
+        public static string ProcessServiceMetadata(ServiceConfiguration serviceConfiguration, out Version edmxVersion)
         {
             if (string.IsNullOrEmpty(serviceConfiguration.Endpoint))
             {
@@ -152,7 +153,8 @@ namespace Microsoft.OData.CodeGen.Common
                 }
                 else
                 {
-                    uriBuilder = new UriBuilder(new Uri(new Uri(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath), "$metadata"));
+
+                    uriBuilder = new UriBuilder(new Uri(new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/') + "/").Uri, "$metadata"));
                 }
 
                 if (preserveQueryAndFragment)
@@ -163,10 +165,10 @@ namespace Microsoft.OData.CodeGen.Common
 
                 uriBuilder.UserName = uri.UserInfo;
 
-                return new Uri(uriBuilder.Uri.AbsoluteUri);
+                return uriBuilder.Uri;
             }
 
-            return new Uri(uri.AbsoluteUri);
+            return uri;
         }
     }
 }
