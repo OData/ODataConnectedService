@@ -38,7 +38,7 @@ namespace Microsoft.OData.CodeGen.Common
             if (serviceConfiguration.Endpoint.StartsWith("https:", StringComparison.Ordinal)
                 || serviceConfiguration.Endpoint.StartsWith("http", StringComparison.Ordinal))
             {
-                if (!Uri.TryCreate(serviceConfiguration.Endpoint, UriKind.Absolute, out var uri))
+                if (!Uri.TryCreate(serviceConfiguration.Endpoint, UriKind.Absolute, out Uri uri))
                 {
                     throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" is not a valid MetadataDocumentUri because is it not a valid absolute Uri. The MetadataDocumentUri must be set to an absolute Uri referencing the $metadata endpoint of an OData service.", serviceConfiguration.Endpoint));
                 }
@@ -143,7 +143,7 @@ namespace Microsoft.OData.CodeGen.Common
             {
                 UriBuilder uriBuilder;
 
-                /// Evaluates to true if Query and Fragment properties are present in the Uri 
+                // Evaluates to true if Query and Fragment properties are present in the Uri 
                 bool preserveQueryAndFragment = true;
 
                 if (uri.Segments.Last().Equals("$metadata", StringComparison.InvariantCultureIgnoreCase) | uri.Segments.Last().Equals("$metadata/", StringComparison.InvariantCultureIgnoreCase))
@@ -153,7 +153,6 @@ namespace Microsoft.OData.CodeGen.Common
                 }
                 else
                 {
-
                     uriBuilder = new UriBuilder(new Uri(new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/') + "/").Uri, "$metadata"));
                 }
 
