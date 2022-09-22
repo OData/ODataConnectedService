@@ -152,7 +152,8 @@ namespace Microsoft.OData.CodeGen.Common
                 }
                 else if (!uri.AbsolutePath.EndsWith("/", StringComparison.Ordinal))
                 {
-                    uriBuilder = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath + "/$metadata");
+                    var absolutePathUri = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/') + "/").Uri;
+                    uriBuilder = new UriBuilder(new Uri(absolutePathUri, "$metadata"));
                 }
                 else uriBuilder = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath + "$metadata");
 
