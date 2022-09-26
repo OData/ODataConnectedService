@@ -160,7 +160,7 @@ public string MetadataDocumentUri
             throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" is not a valid MetadataDocumentUri because is it not a valid absolute Uri. The MetadataDocumentUri must be set to an absolute Uri referencing the $metadata endpoint of an OData service.", value));
         }
 
-        value = uri.CleanMetadataUri().ToString();
+        value = uri.CleanMetadataUri().AbsoluteUri;
         this.metadataDocumentUri = value;
     }
 }
