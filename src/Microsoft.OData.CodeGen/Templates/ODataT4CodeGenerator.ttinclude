@@ -18,13 +18,16 @@
 <#@ Assembly Name="System.Windows.Forms.dll" #>
 <#@ Assembly Name="Microsoft.OData.Edm.dll" #>
 <#@ Import Namespace="System" #>
-<#@ Import Namespace="System.IO" #>
+<#@ Import Namespace="System.Collections.Generic" #>
 <#@ Import Namespace="System.Diagnostics" #>
 <#@ Import Namespace="System.Globalization" #>
+<#@ Import Namespace="System.IO" #>
 <#@ Import Namespace="System.Linq" #>
+<#@ Import Namespace="System.Net"#>
+<#@ Import Namespace="System.Security"#>
+<#@ Import Namespace="System.Text"#>
 <#@ Import Namespace="System.Xml"#>
 <#@ Import Namespace="System.Xml.Linq" #>
-<#@ Import Namespace="System.Collections.Generic" #>
 <#@ Import Namespace="Microsoft.OData.Edm.Csdl" #>
 <#@ Import Namespace="Microsoft.OData.Edm" #>
 <#@ Import Namespace="Microsoft.OData.Edm.Validation" #>
@@ -33,8 +36,7 @@
 <#@ Import Namespace="Microsoft.OData.Edm.Vocabularies.Community.V1" #>
 <#@ Import Namespace="Microsoft.OData.CodeGen.FileHandling" #>
 <#@ Import Namespace="Microsoft.OData.CodeGen.Logging" #>
-<#@ Import Namespace="System.Text"#>
-<#@ Import Namespace="System.Net"#>
+<#@ Import Namespace= "Microsoft.OData.CodeGen.Common"#>
 <#@include file="ODataT4CodeGenFilesManager.ttinclude"
 #><#
     CodeGenerationContext context;
@@ -158,16 +160,7 @@ public string MetadataDocumentUri
             throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" is not a valid MetadataDocumentUri because is it not a valid absolute Uri. The MetadataDocumentUri must be set to an absolute Uri referencing the $metadata endpoint of an OData service.", value));
         }
 
-        if (uri.Scheme == "http" || uri.Scheme == "https")
-        {
-            value = uri.Scheme + "://" + uri.Authority + uri.AbsolutePath;
-            value = value.TrimEnd('/');
-            if (!value.EndsWith("$metadata"))
-            {
-                value += "/$metadata";
-            }
-        }
-
+        value = uri.CleanMetadataUri().AbsoluteUri;
         this.metadataDocumentUri = value;
     }
 }

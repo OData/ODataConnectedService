@@ -119,7 +119,8 @@ namespace Microsoft.OData.ConnectedService.Views
             // get Operation Imports and bound operations from metadata for excluding ExcludedOperationImports and ExcludedBoundOperations
             try
             {
-                connectedServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath = connectedServiceWizard.ConfigODataEndpointViewModel.GetMetadata(out var version);
+                var serviceConfiguration = GetServiceConfiguration();
+                connectedServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath = CodeGen.Common.MetadataReader.ProcessServiceMetadata(serviceConfiguration, out var version);
                 connectedServiceWizard.ConfigODataEndpointViewModel.EdmxVersion = version;
                 if (version == Constants.EdmxVersion4)
                 {
@@ -146,6 +147,21 @@ namespace Microsoft.OData.ConnectedService.Views
         private ODataConnectedServiceWizard GetODataConnectedServiceWizard()
         {
             return (ODataConnectedServiceWizard)((ConfigODataEndpointViewModel)this.DataContext).Wizard;
+        }
+
+        private ServiceConfiguration GetServiceConfiguration()
+        {
+            ServiceConfiguration serviceConfiguration = new ServiceConfiguration();
+            serviceConfiguration.Endpoint = this.UserSettings.Endpoint;
+            serviceConfiguration.CustomHttpHeaders = this.UserSettings.CustomHttpHeaders;
+            serviceConfiguration.WebProxyHost = this.UserSettings.WebProxyHost;
+            serviceConfiguration.IncludeWebProxy = this.UserSettings.IncludeWebProxy;
+            serviceConfiguration.IncludeWebProxyNetworkCredentials = this.UserSettings.IncludeWebProxyNetworkCredentials;
+            serviceConfiguration.WebProxyNetworkCredentialsUsername = this.UserSettings.WebProxyNetworkCredentialsUsername;
+            serviceConfiguration.WebProxyNetworkCredentialsPassword = this.UserSettings.WebProxyNetworkCredentialsPassword;
+            serviceConfiguration.WebProxyNetworkCredentialsDomain = this.UserSettings.WebProxyNetworkCredentialsDomain;
+
+            return serviceConfiguration;
         }
     }
 }

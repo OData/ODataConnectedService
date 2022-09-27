@@ -10,13 +10,16 @@
 namespace Microsoft.OData.CodeGen.Templates
 {
     using System;
-    using System.IO;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
+    using System.IO;
     using System.Linq;
+    using System.Net;
+    using System.Security;
+    using System.Text;
     using System.Xml;
     using System.Xml.Linq;
-    using System.Collections.Generic;
     using Microsoft.OData.Edm.Csdl;
     using Microsoft.OData.Edm;
     using Microsoft.OData.Edm.Validation;
@@ -25,9 +28,7 @@ namespace Microsoft.OData.CodeGen.Templates
     using Microsoft.OData.Edm.Vocabularies.Community.V1;
     using Microsoft.OData.CodeGen.FileHandling;
     using Microsoft.OData.CodeGen.Logging;
-    using System.Text;
-    using System.Net;
-    using System.Security;
+    using Microsoft.OData.CodeGen.Common;
     
     /// <summary>
     /// Class to produce the template output
@@ -301,16 +302,7 @@ public string MetadataDocumentUri
             throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" is not a valid MetadataDocumentUri because is it not a valid absolute Uri. The MetadataDocumentUri must be set to an absolute Uri referencing the $metadata endpoint of an OData service.", value));
         }
 
-        if (uri.Scheme == "http" || uri.Scheme == "https")
-        {
-            value = uri.Scheme + "://" + uri.Authority + uri.AbsolutePath;
-            value = value.TrimEnd('/');
-            if (!value.EndsWith("$metadata"))
-            {
-                value += "/$metadata";
-            }
-        }
-
+        value = uri.CleanMetadataUri().AbsoluteUri;
         this.metadataDocumentUri = value;
     }
 }

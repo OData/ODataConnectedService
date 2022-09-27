@@ -98,28 +98,28 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void GetMetadataDocumentUriShouldAddSlashAndMetadataSurfix()
+        public void GetMetadataDocumentUriShouldAddSlashAndMetadataSuffix()
         {
             codeGenerator.MetadataDocumentUri = "http://services.odata.org/Experimental/OData/OData.svc";
             codeGenerator.MetadataDocumentUri.Should().Be(MetadataUri);
         }
 
         [TestMethod]
-        public void GetMetadataDocumentUriShouldAddMetadataSurfix()
+        public void GetMetadataDocumentUriShouldAddMetadataSuffix()
         {
             codeGenerator.MetadataDocumentUri = "http://services.odata.org/Experimental/OData/OData.svc/";
             codeGenerator.MetadataDocumentUri.Should().Be(MetadataUri);
         }
 
         [TestMethod]
-        public void GetMetadataDocumentUriShouldNotAddMetadataSurfix()
+        public void GetMetadataDocumentUriShouldNotAddMetadataSuffix()
         {
             codeGenerator.MetadataDocumentUri = "http://services.odata.org/Experimental/OData/OData.svc/$metadata";
             codeGenerator.MetadataDocumentUri.Should().Be(MetadataUri);
         }
 
         [TestMethod]
-        public void GetMetadataDocumentUriWithSlashShouldNotAddMetadataSurfix()
+        public void GetMetadataDocumentUriWithSlashShouldNotAddMetadataSuffix()
         {
             codeGenerator.MetadataDocumentUri = "http://services.odata.org/Experimental/OData/OData.svc/$metadata/";
             codeGenerator.MetadataDocumentUri.Should().Be(MetadataUri);
@@ -136,14 +136,14 @@ namespace ODataConnectedService.Tests
         public void GetMetadataDocumentUriWithLocalhostShouldContainPortNumber()
         {
             codeGenerator.MetadataDocumentUri = "http://localhost:8080/Aruba.svc/?query=0";
-            codeGenerator.MetadataDocumentUri.Should().Be("http://localhost:8080/Aruba.svc/$metadata");
+            codeGenerator.MetadataDocumentUri.Should().Be("http://localhost:8080/Aruba.svc/$metadata?query=0");
         }
-        
+
         [TestMethod]
-        public void GetMetadataDocumentUriShouldNotAddMetadataSurfixForFilePath()
+        public void GetMetadataDocumentUriShouldNotAddMetadataSuffixForFilePath()
         {
-            codeGenerator.MetadataDocumentUri = "File://C://Odata//edmx";
-            codeGenerator.MetadataDocumentUri.Should().Be("File://C://Odata//edmx");
+            codeGenerator.MetadataDocumentUri = "file:///C://Odata//edmx";
+            codeGenerator.MetadataDocumentUri.Should().Be("file:///C://Odata//edmx");
         }
     }
 }
