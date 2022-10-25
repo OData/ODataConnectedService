@@ -133,3 +133,4 @@ This project has adopted the [.NET Foundation Contributor Covenant Code of Condu
 This project is supported by the [.NET Foundation](https://dotnetfoundation.org).
 
 OData Connected Service is a Copyright &copy; .NET Foundation and other contributors. It is licensed under [MIT License](https://github.com/OData/ODataConnectedService/blob/master/License.txt)
+
