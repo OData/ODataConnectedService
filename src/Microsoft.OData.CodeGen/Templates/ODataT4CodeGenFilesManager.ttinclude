@@ -10,6 +10,7 @@
 #><#@ assembly name="EnvDTE.dll"
 #><#@ assembly name="Microsoft.OData.ConnectedService.dll"
 #><#@ assembly name="Microsoft.VisualStudio.ConnectedServices.dll"
+#><#@ assembly name="Microsoft.OData.ConnectedService.VS2022Plus.dll"
 #><#@ assembly name="System.Xml.Linq.dll"
 #><#@ assembly name="Microsoft.OData.CodeGen.dll"
 #><#@ import namespace="System"
