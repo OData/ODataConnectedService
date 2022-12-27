@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 // <copyright file="GenerateCommand.cs" company=".NET Foundation">
 //      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
 //      See License.txt in the project root for license information.
@@ -68,6 +68,15 @@ namespace Microsoft.OData.Cli
             };
 
             this.AddOption(ns);
+
+            Option noTracking = new Option<bool>(new[] { "--no-tracking", "-n" })
+            {
+                Name = "notracking",
+                Description = "Disables entity and property tracking."
+            };
+            noTracking.SetDefaultValue(false);
+
+            this.AddOption(noTracking);
 
             Option upperCamelCase = new Option<bool>(new[] { "--upper-camel-case", "-ucc" })
             {
@@ -203,6 +212,7 @@ namespace Microsoft.OData.Cli
             serviceConfiguration.WebProxyNetworkCredentialsUsername = generateOptions.WebProxyNetworkCredentialsUsername;
             serviceConfiguration.WebProxyNetworkCredentialsPassword = generateOptions.WebProxyNetworkCredentialsPassword;
             serviceConfiguration.WebProxyNetworkCredentialsDomain = generateOptions.WebProxyNetworkCredentialsDomain;
+            serviceConfiguration.UseDataServiceCollection = !generateOptions.NoTracking;
 
             return serviceConfiguration;
         }
@@ -228,6 +238,7 @@ namespace Microsoft.OData.Cli
             serviceConfigurationV4.ExcludedOperationImports = generateOptions.ExcludedOperationImports;
             serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = generateOptions.IgnoreUnexpectedElements;
             serviceConfigurationV4.EnableNamingAlias = generateOptions.UpperCamelCase;
+            serviceConfigurationV4.UseDataServiceCollection = !generateOptions.NoTracking;
 
             Project project = ProjectHelper.CreateProjectInstance(generateOptions.OutputDir);
             BaseCodeGenDescriptor codeGenDescriptor = new CodeGenDescriptorFactory().Create(
@@ -253,6 +264,7 @@ namespace Microsoft.OData.Cli
             serviceConfiguration.WebProxyNetworkCredentialsPassword = generateOptions.WebProxyNetworkCredentialsPassword;
             serviceConfiguration.WebProxyNetworkCredentialsDomain = generateOptions.WebProxyNetworkCredentialsDomain;
             serviceConfiguration.NamespacePrefix = generateOptions.NamespacePrefix;
+            serviceConfiguration.UseDataServiceCollection = !generateOptions.NoTracking;
 
             Project project = ProjectHelper.CreateProjectInstance(generateOptions.OutputDir);
             BaseCodeGenDescriptor codeGenDescriptor = new CodeGenDescriptorFactory().Create(
