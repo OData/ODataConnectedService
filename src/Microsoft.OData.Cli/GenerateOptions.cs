@@ -41,6 +41,11 @@ namespace Microsoft.OData.Cli
         public string NamespacePrefix { get; set; }
 
         /// <summary>
+        /// Disables entity and property tracking
+        /// </summary>
+        public bool NoTracking { get; set; }
+
+        /// <summary>
         /// Disables/Enables upper camel casing
         /// </summary>
         public bool UpperCamelCase { get; set; }
