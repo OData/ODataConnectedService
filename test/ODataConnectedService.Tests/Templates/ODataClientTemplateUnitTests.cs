@@ -10,9 +10,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using Microsoft.OData.CodeGen.Templates;
 using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.OData.CodeGen.Templates;
 
 namespace ODataConnectedService.Tests
 {
@@ -335,12 +335,12 @@ namespace ODataConnectedService.Tests
                     return new HashSet<string>(StringComparer.Ordinal)
                     {
                         "abstract", "as", "base", "byte", "bool", "break", "case", "catch", "char", "checked", "class", "const", "continue",
-				        "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "for",
-				        "foreach", "finally", "fixed", "float", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock",
-			            "long", "namespace", "new", "null", "object", "operator", "out", "override", "params", "private", "protected", "public",
-				        "readonly", "ref", "return", "sbyte", "sealed", "string", "short", "sizeof", "stackalloc", "static", "struct", "switch",
-				        "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "volatile",
-				        "void", "while"
+                        "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "for",
+                        "foreach", "finally", "fixed", "float", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock",
+                        "long", "namespace", "new", "null", "object", "operator", "out", "override", "params", "private", "protected", "public",
+                        "readonly", "ref", "return", "sbyte", "sealed", "string", "short", "sizeof", "stackalloc", "static", "struct", "switch",
+                        "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "volatile",
+                        "void", "while"
                     };
                 }
             }
@@ -372,7 +372,9 @@ namespace ODataConnectedService.Tests
 
             internal override string UriEntityOperationParameterConstructor
             {
-                get { return "new global::Microsoft.OData.Client.UriEntityOperationParameter(\"{0}\", {1}, {2})";
+                get
+                {
+                    return "new global::Microsoft.OData.Client.UriEntityOperationParameter(\"{0}\", {1}, {2})";
                 }
             }
 
@@ -2645,7 +2647,7 @@ namespace ODataConnectedService.Tests
             Context = new ODataT4CodeGenerator.CodeGenerationContext(DupNamesEdmx, namespacePrefix);
             var template = new ODataClientTemplateImp(Context);
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
-            template.SetPropertyIdentifierMappingsIfNameConflicts(complexType.Name, complexType);
+            template.SetPropertyIdentifierMappings(complexType.Name, complexType);
             template.WritePropertiesForStructuredType(complexType);
 
             Type propertyOptionsType = typeof(ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions);
@@ -2676,9 +2678,9 @@ namespace ODataConnectedService.Tests
                 new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
                     PropertyType = "String",
                     OriginalPropertyName = "name",
-                    PropertyName = "name",
-                    FixedPropertyName = "name",
-                    PrivatePropertyName = "_name",
+                    PropertyName = "Name",
+                    FixedPropertyName = "Name",
+                    PrivatePropertyName = "_Name",
                     PropertyInitializationValue = null,
                     PropertyAttribute = "",
                     PropertyDescription = null,
@@ -2727,7 +2729,7 @@ namespace ODataConnectedService.Tests
             Context.EnableNamingAlias = true;
             var template = new ODataClientTemplateImp(Context);
             var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
-            template.SetPropertyIdentifierMappingsIfNameConflicts(complexType.Name, complexType);
+            template.SetPropertyIdentifierMappings(complexType.Name, complexType);
             template.WritePropertiesForStructuredType(complexType);
 
             Type propertyOptionsType = typeof(ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions);
@@ -2802,6 +2804,187 @@ namespace ODataConnectedService.Tests
         }
 
         #endregion
+
+        #region Tests for invalid identifiers
+
+        private const string InvalidNamesEdmx = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
+  <edmx:DataServices>
+    <Schema Namespace=""Namespace1"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
+      <ComplexType Name=""ComplexType"">
+        <Property Name=""Name with Spaces"" Type=""Edm.String"" Nullable=""false"" />
+        <Property Name=""Invalid$characters"" Type=""Edm.String"" Nullable=""false"" />
+        <Property Name=""Invalid ! characters"" Type=""Edm.String"" Nullable=""false"" />
+        <Property Name=""Context"" Type=""Edm.String"" Nullable=""false"" />
+      </ComplexType>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>";
+
+        [TestMethod]
+        public void WriteInvalidNames()
+        {
+            var namespacePrefix = string.Empty;
+            Context = new ODataT4CodeGenerator.CodeGenerationContext(InvalidNamesEdmx, namespacePrefix);
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            template.SetPropertyIdentifierMappings(complexType.Name, complexType);
+            template.WritePropertiesForStructuredType(complexType);
+
+            Type propertyOptionsType = typeof(ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions);
+            var expectedActions = new List<string>
+            {
+                $"WritePropertyForStructuredType({propertyOptionsType})",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
+                $"WritePropertyForStructuredType({propertyOptionsType})"
+            };
+            template.CalledActions.Should().Contain(expectedActions);
+
+            var expectedUsedPropertyOptions = new List<ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions> {
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Name with Spaces",
+                    PropertyName = "NameWithSpaces",
+                    FixedPropertyName = "NameWithSpaces",
+                    PrivatePropertyName = "_NameWithSpaces",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Invalid$characters",
+                    PropertyName = "Invalid_characters",
+                    FixedPropertyName = "Invalid_characters",
+                    PrivatePropertyName = "_Invalid_characters",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Invalid ! characters",
+                    PropertyName = "Invalid_Characters",
+                    FixedPropertyName = "Invalid_Characters",
+                    PrivatePropertyName = "_Invalid_Characters",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Context",
+                    PropertyName = "Context1",
+                    FixedPropertyName = "Context1",
+                    PrivatePropertyName = "_Context1",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+            };
+            template.UsedPropertyOptions.Should().Equal(expectedUsedPropertyOptions);
+        }
+
+        [TestMethod]
+        public void WriteInvalidNamesWithCamelCase()
+        {
+            var namespacePrefix = string.Empty;
+            Context = new ODataT4CodeGenerator.CodeGenerationContext(InvalidNamesEdmx, namespacePrefix);
+            Context.EnableNamingAlias = true;
+            var template = new ODataClientTemplateImp(Context);
+            var complexType = Context.GetSchemaElements("Namespace1").OfType<IEdmComplexType>().First();
+            template.SetPropertyIdentifierMappings(complexType.Name, complexType);
+            template.WritePropertiesForStructuredType(complexType);
+
+            Type propertyOptionsType = typeof(ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions);
+            var expectedActions = new List<string>
+            {
+                $"WritePropertyForStructuredType({propertyOptionsType})",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
+                $"WritePropertyForStructuredType({propertyOptionsType})",
+                $"WritePropertyForStructuredType({propertyOptionsType})"
+            };
+            template.CalledActions.Should().Contain(expectedActions);
+
+            var expectedUsedPropertyOptions = new List<ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions> {
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Name with Spaces",
+                    PropertyName = "NameWithSpaces",
+                    FixedPropertyName = "NameWithSpaces",
+                    PrivatePropertyName = "_NameWithSpaces",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Invalid$characters",
+                    PropertyName = "Invalid_characters",
+                    FixedPropertyName = "Invalid_characters",
+                    PrivatePropertyName = "_Invalid_characters",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Invalid ! characters",
+                    PropertyName = "Invalid_Characters",
+                    FixedPropertyName = "Invalid_Characters",
+                    PrivatePropertyName = "_Invalid_Characters",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "Context",
+                    PropertyName = "Context1",
+                    FixedPropertyName = "Context1",
+                    PrivatePropertyName = "_Context1",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+            };
+            template.UsedPropertyOptions.Should().Equal(expectedUsedPropertyOptions);
+        }
+
+        #endregion Tests for invalid identifiers
 
         [TestMethod]
         public void GetFixedNameShouldReadNonKeywords()

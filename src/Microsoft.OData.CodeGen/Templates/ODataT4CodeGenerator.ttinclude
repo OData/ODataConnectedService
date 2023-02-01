@@ -37,6 +37,8 @@
 <#@ Import Namespace="Microsoft.OData.CodeGen.FileHandling" #>
 <#@ Import Namespace="Microsoft.OData.CodeGen.Logging" #>
 <#@ Import Namespace= "Microsoft.OData.CodeGen.Common"#>
+<#@ Import Namespace= "System.CodeDom.Compiler"#>
+<#@ Import Namespace= "System.Text.RegularExpressions"#>
 <#@include file="ODataT4CodeGenFilesManager.ttinclude"
 #><#
     CodeGenerationContext context;
@@ -2321,7 +2323,9 @@ public abstract class ODataClientTemplate : TemplateBase
         foreach (IEdmProperty property in properties.Where(i => i.PropertyKind == EdmPropertyKind.Navigation))
         {
             string propertyType;
-            string propertyName = this.context.EnableNamingAlias ? Customization.CustomizeNaming(property.Name) : property.Name;
+            string propertyName = IdentifierMappings.ContainsKey(property.Name) ?
+                IdentifierMappings[property.Name] : (this.context.EnableNamingAlias ? Customization.CustomizeNaming(property.Name) : property.Name);
+
             if (property.Type is Microsoft.OData.Edm.EdmCollectionTypeReference)
             {
                 propertyType = GetSourceOrReturnTypeName(property.Type);
@@ -2350,6 +2354,7 @@ public abstract class ODataClientTemplate : TemplateBase
         IEdmEntityType current = entityType;
         while (current != null)
         {
+            this.SetPropertyIdentifierMappings(entityType.Name, entityType);
             this.WritePropertiesForSingleType(current.DeclaredProperties);
             current = (IEdmEntityType)current.BaseType;
         }
@@ -2389,7 +2394,6 @@ public abstract class ODataClientTemplate : TemplateBase
 
         this.WriteObsoleteAttribute(GetRevisionAnnotations(entityType), /* isClass */ true);
         this.WriteStructurdTypeDeclaration(entityType, this.BaseEntityType);
-        this.SetPropertyIdentifierMappingsIfNameConflicts(entityType.Name, entityType);
         this.WriteTypeStaticCreateMethod(entityType.Name, entityType);
         this.WritePropertiesForStructuredType(entityType);
 
@@ -2407,7 +2411,7 @@ public abstract class ODataClientTemplate : TemplateBase
     {
         this.WriteSummaryCommentForStructuredType(this.context.EnableNamingAlias ? Customization.CustomizeNaming(complexType.Name) : complexType.Name, GetDescriptionAnnotation(complexType)?.Value);
         this.WriteStructurdTypeDeclaration(complexType, string.Empty);
-        this.SetPropertyIdentifierMappingsIfNameConflicts(complexType.Name, complexType);
+        this.SetPropertyIdentifierMappings(complexType.Name, complexType);
         this.WriteTypeStaticCreateMethod(complexType.Name, complexType);
         this.WritePropertiesForStructuredType(complexType);
 
@@ -2761,6 +2765,143 @@ public abstract class ODataClientTemplate : TemplateBase
                     IdentifierMappings.Add(property.Name, renamedPropertyName);
             }
         }
+    }
+
+    /// <summary>
+    /// Set all property mappings for <paramref name="structuredType"/>
+    /// </summary>
+    /// <param name="typeName">Name of type used to verify conflicts against <paramref name="structuredType"/></param>
+    /// <param name="structuredType">Type object to map properties</param>
+    internal void SetPropertyIdentifierMappings(string typeName, IEdmStructuredType structuredType)
+    {
+        this.SetPropertyIdentifierMappingsIfNameConflicts(typeName, structuredType);
+        this.SetPropertyIdentifierMappingsIfBaseConflicts(structuredType);
+        this.SetPropertyIdentifierMappingsIfInvalidIdentifier(structuredType);
+    }
+
+    /// <summary>
+    /// List of base class properties that should not be used in generated classes
+    /// </summary>
+    private static readonly IEnumerable<string> BaseClassProperties = typeof(Client.DataServiceQuerySingle<object>).GetProperties().Select(prop => prop.Name);
+
+    /// <summary>
+    /// Map identifiers that conflict with base class identifiers to unique identifier<br />
+    /// to avoid generating code that does not compile
+    /// </summary>
+    /// <param name="structuredType">Object containing DeclaredProperties to map</param>
+    internal void SetPropertyIdentifierMappingsIfBaseConflicts(IEdmStructuredType structuredType)
+    {
+        Func<string, string> customizePropertyName = (name) => { return this.context.EnableNamingAlias ? Customization.CustomizeNaming(name) : name; };
+
+        // PropertyName in VB is case-insensitive.
+        bool isLanguageCaseSensitive = this.context.TargetLanguage == LanguageOption.CSharp;
+
+        var baseProperties = BaseClassProperties;
+        if (!isLanguageCaseSensitive)
+        {
+            baseProperties = BaseClassProperties.Select(prop => prop.ToUpperInvariant());
+        }
+
+        var propertiesToRename = structuredType.DeclaredProperties.Where(prop => baseProperties.Contains((isLanguageCaseSensitive ? prop.Name : prop.Name.ToUpperInvariant())));
+        UniqueIdentifierService uniqueIdentifierService =
+            new UniqueIdentifierService(BaseClassProperties, isLanguageCaseSensitive);
+
+        foreach (var property in propertiesToRename)
+        {
+            var customizedPropertyName = customizePropertyName(property.Name);
+            var renamedPropertyName = uniqueIdentifierService.GetUniqueIdentifier(customizedPropertyName);
+            IdentifierMappings.Add(property.Name, renamedPropertyName);
+        }
+    }
+
+    /// <summary>
+    /// CSharp code provider instance
+    /// </summary>
+    private static readonly CodeDomProvider CSharpProvider = new Microsoft.CSharp.CSharpCodeProvider();
+
+    /// <summary>
+    /// VB code provider instance
+    /// </summary>
+    private static readonly CodeDomProvider VBProvider = new Microsoft.VisualBasic.VBCodeProvider();
+
+    /// <summary>
+    /// Map invalid identifiers to valid names to avoid generating code that does not compile
+    /// </summary>
+    /// <param name="structuredType">Object containing properties to map</param>
+    internal void SetPropertyIdentifierMappingsIfInvalidIdentifier(IEdmStructuredType structuredType)
+    {
+        Func<string, string> customizePropertyName = (name) => { return this.context.EnableNamingAlias ? Customization.CustomizeNaming(name) : name; };
+        var codeDomProvider = (this.context.TargetLanguage == LanguageOption.CSharp ? CSharpProvider : VBProvider);
+        var propertiesToRename = structuredType.DeclaredProperties.Where(prop => !codeDomProvider.IsValidIdentifier(prop.Name)
+            || !char.IsUpper(prop.Name.First()));
+
+        foreach (var property in propertiesToRename)
+        {
+            var customizedPropertyName = customizePropertyName(property.Name);
+            var validName = GetValidIdentifier(customizedPropertyName);
+            if (!IdentifierMappings.ContainsKey(customizedPropertyName))
+            {
+                IdentifierMappings.Add(property.Name, validName);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Regex to match a string that begins with a numeric character, used to prefix leading numbers in valid identifiers
+    /// </summary>
+    private static readonly Regex RegexMatchNumericStart = new Regex(@"^\d.*$", RegexOptions.Compiled);
+
+    /// <summary>
+    /// Regex match any non-identifier characters, used to generate valid identifiers
+    /// </summary>
+    private static readonly Regex RegexMatchNonIdentifier = new Regex("[^A-Za-z0-9_]+", RegexOptions.Compiled);
+
+    /// <summary>
+    /// Default replacement character used to replace non-alphanumeric characters in valid identifiers
+    /// </summary>
+    private const string DefaultReplacementCharacter = "_";
+
+    /// <summary>
+    /// Get a valid identifier for <paramref name="name"/><br />
+    /// - Removes spaces, capitalize before space<br />
+    /// - Replace non-alphanumeric characters with replacement character<br />
+    /// - Prefixes <paramref name="name"/>with underscore (_) if it doesn't start with<br />
+    /// a letter, underscore, or '@'<br />
+    /// - Capitalizes property identifiers
+    /// </summary>
+    /// <remarks>
+    /// C# and VB use very similar rules for identifier names
+    /// </remarks>
+    /// <param name="name">Identifier to validate and modify</param>
+    /// <returns>Modified <paramref name="name"/> or <paramref name="name"/> if no changes are needed</returns>
+    private static string GetValidIdentifier(string name)
+    {
+        var validName = name;
+        if (!string.IsNullOrWhiteSpace(validName))
+        {
+            // Spaces are not permitted, capitalize and strip spaces
+            if (validName.Contains(" "))
+            {
+                validName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(validName);
+                validName = validName.Replace(" ", "");
+            }
+
+            // Replace non-alphanumeric characters
+            validName = RegexMatchNonIdentifier.Replace(validName, DefaultReplacementCharacter);
+
+            // Prefix initial numbers with an underscore to meet requirements
+            if (RegexMatchNumericStart.IsMatch(validName))
+            {
+                validName = $"{DefaultReplacementCharacter}{validName}";
+            }
+
+            // Capitalize identifier for consistency
+            if (validName.First() != '_' && validName.First() != '@' && !char.IsUpper(validName.First()))
+            {
+                validName = validName.First().ToString().ToUpper() + validName.Substring(1);
+            }
+        }
+        return validName;
     }
 
     internal void WriteTypeStaticCreateMethod(string typeName, IEdmStructuredType structuredType)
