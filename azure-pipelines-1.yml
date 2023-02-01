@@ -10,7 +10,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   rootDir: '$(Build.SourcesDirectory)'
-  sln: '$(rootDir)\OData.Cli.sln'
+  sln: '$(rootDir)\ODataCodeGenTools.sln'
   signigConfigPath: '$(rootDir)\configs'
   signingConfigFiles: '*.*'
   productBinPath: '$(rootDir)\src\Microsoft.OData.Cli\bin\$(BuildConfiguration)'
@@ -34,12 +34,12 @@ stages:
         versionSpec: '>=5.2.0'
 
     - task: NuGetCommand@2
-      displayName: 'Nuget restore - OData.Cli.sln'
+      displayName: 'Nuget restore - ODataCodeGenTools.sln'
       inputs:
         restoreSolution: '$(sln)'
 
     - task: VSBuild@1
-      displayName: 'Build solution - OData.Cli.sln'
+      displayName: 'Build solution - ODataCodeGenTools.sln'
       inputs:
         solution: '$(sln)'
         platform: '$(buildPlatform)'
