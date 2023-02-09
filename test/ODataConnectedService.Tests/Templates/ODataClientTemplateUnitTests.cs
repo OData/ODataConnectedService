@@ -2678,9 +2678,9 @@ namespace ODataConnectedService.Tests
                 new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
                     PropertyType = "String",
                     OriginalPropertyName = "name",
-                    PropertyName = "Name",
-                    FixedPropertyName = "Name",
-                    PrivatePropertyName = "_Name",
+                    PropertyName = "name",
+                    FixedPropertyName = "name",
+                    PrivatePropertyName = "_name",
                     PropertyInitializationValue = null,
                     PropertyAttribute = "",
                     PropertyDescription = null,
