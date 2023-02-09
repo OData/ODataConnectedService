@@ -2866,15 +2866,14 @@ public abstract class ODataClientTemplate : TemplateBase
     /// - Removes spaces, capitalize before space<br />
     /// - Replace non-alphanumeric characters with replacement character<br />
     /// - Prefixes <paramref name="name"/>with underscore (_) if it doesn't start with<br />
-    /// a letter, underscore, or '@'<br />
-    /// - Capitalizes property identifiers
+    /// a letter, underscore, or '@'
     /// </summary>
     /// <remarks>
     /// C# and VB use very similar rules for identifier names
     /// </remarks>
     /// <param name="name">Identifier to validate and modify</param>
     /// <returns>Modified <paramref name="name"/> or <paramref name="name"/> if no changes are needed</returns>
-    private static string GetValidIdentifier(string name)
+    private string GetValidIdentifier(string name)
     {
         var validName = name;
         if (!string.IsNullOrWhiteSpace(validName))
@@ -2896,7 +2895,7 @@ public abstract class ODataClientTemplate : TemplateBase
             }
 
             // Capitalize identifier for consistency
-            if (validName.First() != '_' && validName.First() != '@' && !char.IsUpper(validName.First()))
+            if (this.context.EnableNamingAlias && validName.First() != '_' && validName.First() != '@' && !char.IsUpper(validName.First()))
             {
                 validName = validName.First().ToString().ToUpper() + validName.Substring(1);
             }
