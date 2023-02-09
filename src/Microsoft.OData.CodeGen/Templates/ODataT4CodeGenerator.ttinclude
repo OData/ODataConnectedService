@@ -4371,19 +4371,19 @@ namespace <#= fullNamespace #>
         /// Initialize a new <#= singleTypeName #> object.
         /// </summary>
         public <#= singleTypeName #>(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) {}
+            : base(context, path) { }
 
         /// <summary>
         /// Initialize a new <#= singleTypeName #> object.
         /// </summary>
         public <#= singleTypeName #>(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) {}
+            : base(context, path, isComposable) { }
 
         /// <summary>
         /// Initialize a new <#= singleTypeName #> object.
         /// </summary>
         public <#= singleTypeName #>(<#= baseTypeName #> query)
-            : base(query) {}
+            : base(query) { }
 
 <#+
     }
@@ -4613,13 +4613,13 @@ namespace <#= fullNamespace #>
 
                     if (!global::Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, <#= this.context.IgnoreUnexpectedElementsAndAttributes ? "true" : "false" #>, out edmModel, out errors))
                     {
-	                    global::System.Text.StringBuilder errorMessages = new global::System.Text.StringBuilder();
-	                    foreach (var error in errors)
-	                    {
-		                    errorMessages.Append(error.ErrorMessage);
-		                    errorMessages.Append("; ");
-	                    }
-	                    throw new global::System.InvalidOperationException(errorMessages.ToString());
+                        global::System.Text.StringBuilder errorMessages = new global::System.Text.StringBuilder();
+                        foreach (var error in errors)
+                        {
+                            errorMessages.Append(error.ErrorMessage);
+                            errorMessages.Append("; ");
+                        }
+                        throw new global::System.InvalidOperationException(errorMessages.ToString());
                     }
 
                     return edmModel;
@@ -4795,7 +4795,6 @@ namespace <#= fullNamespace #>
         WriteObsoleteAttribute(propertyOptions.RevisionAnnotations);
 #>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
-
 <#+
         if (this.context.EnableNamingAlias || IdentifierMappings.ContainsKey(propertyOptions.OriginalPropertyName))
         {
