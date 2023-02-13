@@ -41,6 +41,12 @@ namespace Microsoft.OData.Cli
         public string NamespacePrefix { get; set; }
 
         /// <summary>
+        /// Allows the DataServiceContext to keep track of changes made to entities on the client side. This option generates events that are triggered when properties of the entities change.
+        /// Aligns with "Enable Entity and Property Tracking" advanced option in the VS Extension
+        /// </summary>
+        public bool UseDataServiceCollection { get; set; }
+
+        /// <summary>
         /// Disables/Enables upper camel casing
         /// </summary>
         public bool UpperCamelCase { get; set; }

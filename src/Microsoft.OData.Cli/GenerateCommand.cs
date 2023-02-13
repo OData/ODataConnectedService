@@ -69,6 +69,14 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(ns);
 
+            Option useDataServiceCollection = new Option<bool>(new[] { "--use-data-service-collection", "-dsc" })
+            {
+                Name = "use-data-service-collection",
+                Description = "Allows the DataServiceContext to keep track of changes made to entities on the client side. This option generates events that are triggered when properties of the entities change. Aligns with the \"Enable Entity and Property Tracking\" advanced option in the VS Extension."
+            };
+
+            this.AddOption(useDataServiceCollection);
+
             Option upperCamelCase = new Option<bool>(new[] { "--upper-camel-case", "-ucc" })
             {
                 Name = "upper-camel-case",
@@ -228,6 +236,7 @@ namespace Microsoft.OData.Cli
             serviceConfigurationV4.ExcludedOperationImports = generateOptions.ExcludedOperationImports;
             serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = generateOptions.IgnoreUnexpectedElements;
             serviceConfigurationV4.EnableNamingAlias = generateOptions.UpperCamelCase;
+            serviceConfigurationV4.UseDataServiceCollection = generateOptions.UseDataServiceCollection;
 
             Project project = ProjectHelper.CreateProjectInstance(generateOptions.OutputDir);
             BaseCodeGenDescriptor codeGenDescriptor = new CodeGenDescriptorFactory().Create(
@@ -253,6 +262,7 @@ namespace Microsoft.OData.Cli
             serviceConfiguration.WebProxyNetworkCredentialsPassword = generateOptions.WebProxyNetworkCredentialsPassword;
             serviceConfiguration.WebProxyNetworkCredentialsDomain = generateOptions.WebProxyNetworkCredentialsDomain;
             serviceConfiguration.NamespacePrefix = generateOptions.NamespacePrefix;
+            serviceConfiguration.UseDataServiceCollection= generateOptions.UseDataServiceCollection;
 
             Project project = ProjectHelper.CreateProjectInstance(generateOptions.OutputDir);
             BaseCodeGenDescriptor codeGenDescriptor = new CodeGenDescriptorFactory().Create(
