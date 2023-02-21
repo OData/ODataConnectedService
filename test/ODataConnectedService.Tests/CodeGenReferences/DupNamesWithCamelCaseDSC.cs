@@ -25,6 +25,7 @@ namespace DupNames.DSC
                 this(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
         {
         }
+
         /// <summary>
         /// Initialize a new EntityContainer object.
         /// </summary>
@@ -240,11 +241,11 @@ namespace DupNames.DSC
             : base(query) { }
 
         /// <summary>
-        /// There are no comments for DupPropertyName in the schema.
+        /// There are no comments for DupPropertyName1 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         [global::Microsoft.OData.Client.OriginalNameAttribute("dupPropertyName")]
-        public virtual global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DSC.DupWithTypeName1> DupPropertyName
+        public virtual global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DSC.DupWithTypeName1> DupPropertyName1
         {
             get
             {
@@ -252,15 +253,15 @@ namespace DupNames.DSC
                 {
                     throw new global::System.NotSupportedException("The previous function is not composable.");
                 }
-                if ((this._DupPropertyName == null))
+                if ((this._DupPropertyName1 == null))
                 {
-                    this._DupPropertyName = Context.CreateQuery<global::DupNames.DSC.DupWithTypeName1>(GetPath("dupPropertyName"));
+                    this._DupPropertyName1 = Context.CreateQuery<global::DupNames.DSC.DupWithTypeName1>(GetPath("dupPropertyName"));
                 }
-                return this._DupPropertyName;
+                return this._DupPropertyName1;
             }
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        private global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DSC.DupWithTypeName1> _DupPropertyName;
+        private global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DSC.DupWithTypeName1> _DupPropertyName1;
     }
     /// <summary>
     /// There are no comments for DupWithTypeName in the schema.

@@ -27,6 +27,7 @@ Namespace DupNames
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             Me.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
         End Sub
+
         ''' <summary>
         ''' Initialize a new EntityContainer object.
         ''' </summary>
@@ -221,23 +222,23 @@ Namespace DupNames
             MyBase.New(query)
         End Sub
         ''' <summary>
-        ''' There are no comments for DupPropertyName in the schema.
+        ''' There are no comments for DupPropertyName1 in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.Microsoft.OData.Client.OriginalNameAttribute("dupPropertyName")>  _
-        Public Overridable ReadOnly Property DupPropertyName() As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName1)
+        Public Overridable ReadOnly Property DupPropertyName1() As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName1)
             Get
                 If Not Me.IsComposable Then
                     Throw New Global.System.NotSupportedException("The previous function is not composable.")
                 End If
-                If (Me._DupPropertyName Is Nothing) Then
-                    Me._DupPropertyName = Context.CreateQuery(Of DupNames.DupWithTypeName1)(GetPath("dupPropertyName"))
+                If (Me._DupPropertyName1 Is Nothing) Then
+                    Me._DupPropertyName1 = Context.CreateQuery(Of DupNames.DupWithTypeName1)(GetPath("dupPropertyName"))
                 End If
-                Return Me._DupPropertyName
+                Return Me._DupPropertyName1
             End Get
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Private _DupPropertyName As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName1)
+        Private _DupPropertyName1 As Global.Microsoft.OData.Client.DataServiceQuery(Of DupNames.DupWithTypeName1)
     End Class
     ''' <summary>
     ''' There are no comments for DupWithTypeName in the schema.
