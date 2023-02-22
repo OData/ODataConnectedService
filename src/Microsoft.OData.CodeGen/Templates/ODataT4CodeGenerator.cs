@@ -10,7 +10,6 @@
 namespace Microsoft.OData.CodeGen.Templates
 {
     using System;
-    using System.CodeDom.Compiler;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
@@ -19,7 +18,6 @@ namespace Microsoft.OData.CodeGen.Templates
     using System.Net;
     using System.Security;
     using System.Text;
-    using System.Text.RegularExpressions;
     using System.Xml;
     using System.Xml.Linq;
     using Microsoft.OData.Edm.Csdl;
@@ -31,6 +29,8 @@ namespace Microsoft.OData.CodeGen.Templates
     using Microsoft.OData.CodeGen.FileHandling;
     using Microsoft.OData.CodeGen.Logging;
     using Microsoft.OData.CodeGen.Common;
+    using System.CodeDom.Compiler;
+    using System.Text.RegularExpressions;
     
     /// <summary>
     /// Class to produce the template output
@@ -2955,7 +2955,14 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             var customizedPropertyName = customizePropertyName(property.Name);
             var renamedPropertyName = uniqueIdentifierService.GetUniqueIdentifier(customizedPropertyName);
-            IdentifierMappings.Add(property.Name, renamedPropertyName);
+            if (IdentifierMappings.ContainsKey(property.Name))
+            {
+                IdentifierMappings[property.Name] = renamedPropertyName;
+            }
+            else
+            {
+                IdentifierMappings.Add(property.Name, renamedPropertyName);
+            }
         }
     }
 
@@ -2978,13 +2985,20 @@ public abstract class ODataClientTemplate : TemplateBase
         Func<string, string> customizePropertyName = (name) => { return this.context.EnableNamingAlias ? Customization.CustomizeNaming(name) : name; };
         var codeDomProvider = (this.context.TargetLanguage == LanguageOption.CSharp ? CSharpProvider : VBProvider);
         var propertiesToRename = structuredType.DeclaredProperties.Where(prop => !codeDomProvider.IsValidIdentifier(prop.Name)
-            || !char.IsUpper(prop.Name.First()));
+            && !LanguageKeywords.Contains(prop.Name));
 
         foreach (var property in propertiesToRename)
         {
             var customizedPropertyName = customizePropertyName(property.Name);
             var validName = GetValidIdentifier(customizedPropertyName);
-            if (!IdentifierMappings.ContainsKey(customizedPropertyName))
+            if (IdentifierMappings.ContainsKey(property.Name))
+            {
+                if (!codeDomProvider.IsValidIdentifier(IdentifierMappings[property.Name]))
+                {
+                    IdentifierMappings[property.Name] = validName;
+                }
+            }
+            else
             {
                 IdentifierMappings.Add(property.Name, validName);
             }
@@ -3011,15 +3025,14 @@ public abstract class ODataClientTemplate : TemplateBase
     /// - Removes spaces, capitalize before space<br />
     /// - Replace non-alphanumeric characters with replacement character<br />
     /// - Prefixes <paramref name="name"/>with underscore (_) if it doesn't start with<br />
-    /// a letter, underscore, or '@'<br />
-    /// - Capitalizes property identifiers
+    /// a letter, underscore, or '@'
     /// </summary>
     /// <remarks>
     /// C# and VB use very similar rules for identifier names
     /// </remarks>
     /// <param name="name">Identifier to validate and modify</param>
     /// <returns>Modified <paramref name="name"/> or <paramref name="name"/> if no changes are needed</returns>
-    private static string GetValidIdentifier(string name)
+    private string GetValidIdentifier(string name)
     {
         var validName = name;
         if (!string.IsNullOrWhiteSpace(validName))
@@ -3041,7 +3054,7 @@ public abstract class ODataClientTemplate : TemplateBase
             }
 
             // Capitalize identifier for consistency
-            if (validName.First() != '_' && validName.First() != '@' && !char.IsUpper(validName.First()))
+            if (this.context.EnableNamingAlias && validName.First() != '_' && validName.First() != '@' && !char.IsUpper(validName.First()))
             {
                 validName = validName.First().ToString().ToUpper() + validName.Substring(1);
             }
@@ -4604,8 +4617,8 @@ this.Write(" object.\r\n        /// </summary>\r\n        public ");
 this.Write(this.ToStringHelper.ToStringWithCulture(singleTypeName));
 
 this.Write("(global::Microsoft.OData.Client.DataServiceContext context, string path)\r\n       " +
-        "     : base(context, path) {}\r\n\r\n        /// <summary>\r\n        /// Initialize a" +
-        " new ");
+        "     : base(context, path) { }\r\n\r\n        /// <summary>\r\n        /// Initialize " +
+        "a new ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(singleTypeName));
 
@@ -4614,8 +4627,8 @@ this.Write(" object.\r\n        /// </summary>\r\n        public ");
 this.Write(this.ToStringHelper.ToStringWithCulture(singleTypeName));
 
 this.Write("(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isC" +
-        "omposable)\r\n            : base(context, path, isComposable) {}\r\n\r\n        /// <s" +
-        "ummary>\r\n        /// Initialize a new ");
+        "omposable)\r\n            : base(context, path, isComposable) { }\r\n\r\n        /// <" +
+        "summary>\r\n        /// Initialize a new ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(singleTypeName));
 
@@ -4627,7 +4640,7 @@ this.Write("(");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(baseTypeName));
 
-this.Write(" query)\r\n            : base(query) {}\r\n\r\n");
+this.Write(" query)\r\n            : base(query) { }\r\n\r\n");
 
 
     }
@@ -5042,13 +5055,13 @@ this.Write(this.ToStringHelper.ToStringWithCulture(this.context.IgnoreUnexpected
 
 this.Write(@", out edmModel, out errors))
                     {
-	                    global::System.Text.StringBuilder errorMessages = new global::System.Text.StringBuilder();
-	                    foreach (var error in errors)
-	                    {
-		                    errorMessages.Append(error.ErrorMessage);
-		                    errorMessages.Append(""; "");
-	                    }
-	                    throw new global::System.InvalidOperationException(errorMessages.ToString());
+                        global::System.Text.StringBuilder errorMessages = new global::System.Text.StringBuilder();
+                        foreach (var error in errors)
+                        {
+                            errorMessages.Append(error.ErrorMessage);
+                            errorMessages.Append(""; "");
+                        }
+                        throw new global::System.InvalidOperationException(errorMessages.ToString());
                     }
 
                     return edmModel;
@@ -5347,7 +5360,7 @@ this.Write("        [global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Mi
 
 this.Write(this.ToStringHelper.ToStringWithCulture(T4Version));
 
-this.Write("\")]\r\n\r\n");
+this.Write("\")]\r\n");
 
 
         if (this.context.EnableNamingAlias || IdentifierMappings.ContainsKey(propertyOptions.OriginalPropertyName))
@@ -5758,9 +5771,7 @@ this.Write("\")]\r\n");
 
 this.Write("        public virtual ");
 
-this.Write(this.ToStringHelper.ToStringWithCulture(hideBaseMethod ? this.OverloadsModifier : string.Empty));
-
-this.Write(" ");
+this.Write(this.ToStringHelper.ToStringWithCulture(hideBaseMethod ? $"{this.OverloadsModifier} " : string.Empty));
 
 this.Write(this.ToStringHelper.ToStringWithCulture(isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName)));
 
