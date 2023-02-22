@@ -281,7 +281,6 @@ namespace DupNames
         /// There are no comments for Property dupWithTypeName in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        [global::Microsoft.OData.Client.OriginalNameAttribute("dupWithTypeName")]
         public virtual global::System.Nullable<int> dupWithTypeName
         {
             get
@@ -325,7 +324,6 @@ namespace DupNames
         /// There are no comments for Property dupWithTypeName1 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        [global::Microsoft.OData.Client.OriginalNameAttribute("dupWithTypeName1")]
         [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "dupWithTypeName1 is required.")]
         public virtual global::System.Guid dupWithTypeName1
         {
@@ -413,7 +411,6 @@ namespace DupNames
         /// There are no comments for Property dupPropertyName in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        [global::Microsoft.OData.Client.OriginalNameAttribute("dupPropertyName")]
         public virtual global::System.Collections.ObjectModel.Collection<global::DupNames.DupWithTypeName1> dupPropertyName
         {
             get
@@ -463,7 +460,6 @@ namespace DupNames
         /// There are no comments for Property dupWithComplexTypeName in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        [global::Microsoft.OData.Client.OriginalNameAttribute("dupWithComplexTypeName")]
         public virtual global::System.Nullable<int> dupWithComplexTypeName
         {
             get
@@ -506,7 +502,6 @@ namespace DupNames
         /// There are no comments for Property _DupWithComplexTypeName2 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        [global::Microsoft.OData.Client.OriginalNameAttribute("_DupWithComplexTypeName2")]
         public virtual global::System.Nullable<int> _DupWithComplexTypeName2
         {
             get
@@ -528,7 +523,6 @@ namespace DupNames
         /// There are no comments for Property __DupWithComplexTypeName2 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        [global::Microsoft.OData.Client.OriginalNameAttribute("__DupWithComplexTypeName2")]
         public virtual global::System.Nullable<int> __DupWithComplexTypeName2
         {
             get
@@ -597,7 +591,6 @@ namespace DupNames
         /// There are no comments for Property dupWithTypeName in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        [global::Microsoft.OData.Client.OriginalNameAttribute("dupWithTypeName")]
         [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "dupWithTypeName is required.")]
         public virtual global::System.Guid dupWithTypeName
         {
@@ -620,7 +613,6 @@ namespace DupNames
         /// There are no comments for Property dupwithtypeName in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        [global::Microsoft.OData.Client.OriginalNameAttribute("dupwithtypeName")]
         [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "dupwithtypeName is required.")]
         public virtual global::System.Guid dupwithtypeName
         {

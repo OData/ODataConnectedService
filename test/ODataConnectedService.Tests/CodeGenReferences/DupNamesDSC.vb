@@ -260,7 +260,6 @@ Namespace DupNames.DSC
         ''' There are no comments for Property dupWithTypeName in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        <Global.Microsoft.OData.Client.OriginalNameAttribute("dupWithTypeName")>  _
         Public Overridable Property dupWithTypeName() As Global.System.Nullable(Of Integer)
             Get
                 Return Me._dupWithTypeName
@@ -305,7 +304,6 @@ Namespace DupNames.DSC
         ''' There are no comments for Property dupWithTypeName1 in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        <Global.Microsoft.OData.Client.OriginalNameAttribute("dupWithTypeName1")>  _
         <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
         Public Overridable Property dupWithTypeName1() As Global.System.Guid
             Get
@@ -394,7 +392,6 @@ Namespace DupNames.DSC
         ''' There are no comments for Property dupPropertyName in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        <Global.Microsoft.OData.Client.OriginalNameAttribute("dupPropertyName")>  _
         Public Overridable Property dupPropertyName() As Global.Microsoft.OData.Client.DataServiceCollection(Of DupNames.DSC.DupWithTypeName1)
             Get
                 Return Me._dupPropertyName
@@ -459,7 +456,6 @@ Namespace DupNames.DSC
         ''' There are no comments for Property dupWithComplexTypeName in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        <Global.Microsoft.OData.Client.OriginalNameAttribute("dupWithComplexTypeName")>  _
         Public Overridable Property dupWithComplexTypeName() As Global.System.Nullable(Of Integer)
             Get
                 Return Me._dupWithComplexTypeName
@@ -502,7 +498,6 @@ Namespace DupNames.DSC
         ''' There are no comments for Property _DupWithComplexTypeName2 in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        <Global.Microsoft.OData.Client.OriginalNameAttribute("_DupWithComplexTypeName2")>  _
         Public Overridable Property _DupWithComplexTypeName2() As Global.System.Nullable(Of Integer)
             Get
                 Return Me.__DupWithComplexTypeName21
@@ -524,7 +519,6 @@ Namespace DupNames.DSC
         ''' There are no comments for Property __DupWithComplexTypeName2 in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        <Global.Microsoft.OData.Client.OriginalNameAttribute("__DupWithComplexTypeName2")>  _
         Public Overridable Property __DupWithComplexTypeName2() As Global.System.Nullable(Of Integer)
             Get
                 Return Me.___DupWithComplexTypeName2
