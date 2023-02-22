@@ -2810,7 +2810,14 @@ public abstract class ODataClientTemplate : TemplateBase
         {
             var customizedPropertyName = customizePropertyName(property.Name);
             var renamedPropertyName = uniqueIdentifierService.GetUniqueIdentifier(customizedPropertyName);
-            IdentifierMappings.Add(property.Name, renamedPropertyName);
+            if (IdentifierMappings.ContainsKey(property.Name))
+            {
+                IdentifierMappings[property.Name] = renamedPropertyName;
+            }
+            else
+            {
+                IdentifierMappings.Add(property.Name, renamedPropertyName);
+            }
         }
     }
 
@@ -2833,13 +2840,20 @@ public abstract class ODataClientTemplate : TemplateBase
         Func<string, string> customizePropertyName = (name) => { return this.context.EnableNamingAlias ? Customization.CustomizeNaming(name) : name; };
         var codeDomProvider = (this.context.TargetLanguage == LanguageOption.CSharp ? CSharpProvider : VBProvider);
         var propertiesToRename = structuredType.DeclaredProperties.Where(prop => !codeDomProvider.IsValidIdentifier(prop.Name)
-            || !char.IsUpper(prop.Name.First()));
+            && !LanguageKeywords.Contains(prop.Name));
 
         foreach (var property in propertiesToRename)
         {
             var customizedPropertyName = customizePropertyName(property.Name);
             var validName = GetValidIdentifier(customizedPropertyName);
-            if (!IdentifierMappings.ContainsKey(customizedPropertyName))
+            if (IdentifierMappings.ContainsKey(property.Name))
+            {
+                if (!codeDomProvider.IsValidIdentifier(IdentifierMappings[property.Name]))
+                {
+                    IdentifierMappings[property.Name] = validName;
+                }
+            }
+            else
             {
                 IdentifierMappings.Add(property.Name, validName);
             }
@@ -4993,7 +5007,7 @@ namespace <#= fullNamespace #>
 <#+
         }
 #>
-        public virtual <#= hideBaseMethod ? this.OverloadsModifier : string.Empty #> <#= isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName) #> <#= functionName #>(<#= parameters #><#= useEntityReference ? ", bool useEntityReference = false" : string.Empty #>)
+        public virtual <#= hideBaseMethod ? $"{this.OverloadsModifier} " : string.Empty #><#= isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName) #> <#= functionName #>(<#= parameters #><#= useEntityReference ? ", bool useEntityReference = false" : string.Empty #>)
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);
