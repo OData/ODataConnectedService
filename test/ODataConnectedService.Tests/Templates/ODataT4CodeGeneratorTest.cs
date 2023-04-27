@@ -127,6 +127,7 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
 
             // Assert
             GeneratedCodeHelpers.VerifyGeneratedCode(expected, output);
+            GeneratedCodeHelpers.VerifyGeneratedCodeCompiles(output, lang);
         }
     }
 }
