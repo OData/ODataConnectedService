@@ -1,7 +1,7 @@
 trigger:
 - master
 
-name: 'ODataConnectedService'
+name: 'ODataCodeGenTools'
 
 pool:
   vmImage: 'windows-latest'
@@ -17,14 +17,18 @@ variables:
   productFiles: 'Microsoft.OData.ConnectedService.*?(*.dll|*.config|*.pdb)'
   productBinPathVs2022Plus: '$(connectedServiceDir)\src\ODataConnectedService_VS2022Plus\bin\$(BuildConfiguration)'
   productFilesVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.*?(*.dll|*.config|*.pdb)'
+  productFilesODataCLI: 'Microsoft.OData.Cli.*?(*.dll|*.config|*.pdb)'
   testBinPath: '$(connectedServiceDir)\test\ODataConnectedService.Tests\bin\$(BuildConfiguration)\'
   vsixPath: '$(productBinPath)'
   vsixFile: 'Microsoft.OData.ConnectedService.vsix'
   vsixFileVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.vsix'
+  nupkgFileODataCLI: 'Microsoft.OData.Cli.nupkg'
   signingFiles: 'Microsoft.OData.ConnectedService.dll'
   signingFilesVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.dll'
+  signingFilesODataCLI: 'Microsoft.OData.Cli.dll'
   mainDll: 'Microsoft.OData.ConnectedService.dll'
   mainDllVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.dll'
+  mainDllODataCLI: 'Microsoft.OData.Cli.dll'
   testDll: 'ODataConnectedService.Tests.dll'
   snExe: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\sn.exe'
   snExe64: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\x64\sn.exe'
@@ -51,6 +55,14 @@ stages:
         solution: '$(sln)'
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
+      
+    - task: DotNetCoreCLI@2
+      displayName: 'Pack Microsoft.OData.Cli package'
+      inputs:
+        command: pack
+        packagesToPack: src/Microsoft.OData.Cli/Microsoft.OData.Cli.csproj
+        outputDir: '$(Build.ArtifactStagingDirectory)\ODataCLINupkg'
+        nobuild: true
 
     - task: VSTest@2
       displayName: 'Run tests'
@@ -105,6 +117,13 @@ stages:
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)\VSIX2022Plus'
         ArtifactName: 'VSIX2022Plus'
+        publishLocation: 'Container'
+        
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact - ODataCLINupkg'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)\ODataCLINupkg'
+        ArtifactName: 'ODataCLINupkg'
         publishLocation: 'Container'
 
     - publish: configs
@@ -199,4 +218,47 @@ stages:
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)/SignedVSIX2022Plus'
               ArtifactName: 'SignedVSIX2022Plus'
+              publishLocation: 'Container'
+              
+- stage: CodeSignODataCLI
+  condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
+  jobs:
+  - deployment: CodeSign
+    displayName: Code Signing
+    pool:
+      vmImage: windows-latest    
+    environment: Code Sign - Approvals
+    variables:
+    - group: Code Signing
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: custom
+              custom: tool
+              arguments: install --tool-path . SignClient
+            displayName: Install SignTool tool
+
+          # Sign the vsix archive as well as files contained in the vsix that are listed in config/filelist.txt
+          # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
+          - pwsh: |
+              .\SignClient "Sign" `
+              --baseDirectory "$(Pipeline.Workspace)\ODataCLINupkg" `
+              --input "$(nupkgFileODataCLI)" `
+              --output "$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg" `
+              --config "$(Pipeline.Workspace)\configs\SignClient.json" `
+              --filelist "$(Pipeline.Workspace)\configs\filelist.txt" `
+              --user "$(SignClientUser)" `
+              --secret "$(SignClientSecret)" `
+              --name "OData CLI" `
+              --description "OData CLI" `
+              --descriptionUrl "https://github.com/OData/ODataConnectedService" 
+            displayName: Code signing - ODataCLINupkg
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact - Nuget Packages'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg'
+              ArtifactName: SignedODataCLINupkg
               publishLocation: 'Container'
