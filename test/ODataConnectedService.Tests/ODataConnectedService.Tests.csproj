@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" DefaultTargets="Build"
-  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -161,7 +160,50 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CodeGenReferences\*.cs" />
-    <EmbeddedResource Include="CodeGenReferences\*.vb" />
+    <EmbeddedResource Include="CodeGenReferences\AbstractEntityTypeWithoutKey.vb" />
+    <EmbeddedResource Include="CodeGenReferences\BoundActionsAndFunctionsMarkedObsolete.vb" />
+    <EmbeddedResource Include="CodeGenReferences\DupNamesDSC.vb" />
+    <EmbeddedResource Include="CodeGenReferences\DupNamesWithCamelCase.vb" />
+    <EmbeddedResource Include="CodeGenReferences\DynamicPropertyContainerTest.vb" />
+    <EmbeddedResource Include="CodeGenReferences\EmptySchemaDSC.vb" />
+    <EmbeddedResource Include="CodeGenReferences\EntitiesEnumsFunctionsSelectTypes.vb" />
+    <EmbeddedResource Include="CodeGenReferences\EntityBooleanPropertyWithDefaultValue.vb" />
+    <EmbeddedResource Include="CodeGenReferences\EntityBooleanPropertyWithDefaultValueDSC.vb" />
+    <EmbeddedResource Include="CodeGenReferences\EntityHierarchyWithIDAndIdDSC.vb" />
+    <EmbeddedResource Include="CodeGenReferences\EntityPropertiesWithDefaultValues.vb" />
+    <EmbeddedResource Include="CodeGenReferences\EntitySetMarkedObsolete.vb" />
+    <EmbeddedResource Include="CodeGenReferences\EntityTypeMarkedObsolete.vb" />
+    <EmbeddedResource Include="CodeGenReferences\FunctionsAndActionImportsMarkedObsolete.vb" />
+    <EmbeddedResource Include="CodeGenReferences\KeywordsAsNames.vb" />
+    <EmbeddedResource Include="CodeGenReferences\MaxLength.vb" />
+    <EmbeddedResource Include="CodeGenReferences\MaxLengthDSC.vb" />
+    <EmbeddedResource Include="CodeGenReferences\MergedFunctionalTest.vb" />
+    <EmbeddedResource Include="CodeGenReferences\MergedFunctionalTestDSC.vb" />
+    <EmbeddedResource Include="CodeGenReferences\Multiplicity.vb" />
+    <EmbeddedResource Include="CodeGenReferences\MultiplicityDSC.vb" />
+    <EmbeddedResource Include="CodeGenReferences\MultiReferenceModel.vb" />
+    <EmbeddedResource Include="CodeGenReferences\MultiReferenceModelDSC.vb" />
+    <EmbeddedResource Include="CodeGenReferences\MultiReferenceModelRelativeUri.vb" />
+    <EmbeddedResource Include="CodeGenReferences\NamespaceInKeywords.vb" />
+    <EmbeddedResource Include="CodeGenReferences\NamespaceInKeywordsWithRefModel.vb" />
+    <EmbeddedResource Include="CodeGenReferences\NamespaceInKeywordsWithRefModelDSC.vb" />
+    <EmbeddedResource Include="CodeGenReferences\NamespacePrefixWithDoubleNamespaces.vb" />
+    <EmbeddedResource Include="CodeGenReferences\NamespacePrefixWithInheritence.vb" />
+    <EmbeddedResource Include="CodeGenReferences\NamespacePrefixWithSingleNamespace.vb" />
+    <EmbeddedResource Include="CodeGenReferences\OverrideOperations.vb" />
+    <EmbeddedResource Include="CodeGenReferences\PrefixConflictDSC.vb" />
+    <EmbeddedResource Include="CodeGenReferences\PropertyAndNavPropertiesMarkedObsolete.vb" />
+    <EmbeddedResource Include="CodeGenReferences\SampleServiceV2.vb" />
+    <EmbeddedResource Include="CodeGenReferences\SampleServiceV3.vb" />
+    <EmbeddedResource Include="CodeGenReferences\Simple.vb" />
+    <EmbeddedResource Include="CodeGenReferences\SimpleDSC.vb" />
+    <EmbeddedResource Include="CodeGenReferences\SingletonsMarkedObsolete.vb" />
+    <EmbeddedResource Include="CodeGenReferences\SourceParameterOrKeysProperty.vb" />
+    <EmbeddedResource Include="CodeGenReferences\SourceParameterOrKeysPropertyDSC.vb" />
+    <EmbeddedResource Include="CodeGenReferences\UnexpectedElementsAndAttributes.vb" />
+    <EmbeddedResource Include="CodeGenReferences\UpperCamelCaseWithNamespacePrefix.vb" />
+    <EmbeddedResource Include="CodeGenReferences\UpperCamelCaseWithoutNamespacePrefix.vb" />
+    <EmbeddedResource Include="CodeGenReferences\UpperCamelCaseWithoutNamespacePrefixDSC.vb" />
     <EmbeddedResource Include="CodeGenReferences\MultiReferenceModelCoreTerms.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

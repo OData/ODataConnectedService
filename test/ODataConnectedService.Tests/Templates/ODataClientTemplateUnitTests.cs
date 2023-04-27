@@ -737,6 +737,18 @@ namespace ODataConnectedService.Tests
             {
                 // this method is called internally by other language specific write methods
             }
+
+            internal override string StripNullableFromTypeName(string typeName)
+            {
+                const string nullablePrefix = "Nullable<";
+                int indexOfNullablePrefix = typeName.IndexOf(nullablePrefix);
+                if (indexOfNullablePrefix == -1)
+                {
+                    return typeName;
+                }
+
+                return typeName.Substring(indexOfNullablePrefix + nullablePrefix.Length).TrimEnd('>');
+            }
         }
 
         private static ODataT4CodeGenerator.CodeGenerationContext Context;

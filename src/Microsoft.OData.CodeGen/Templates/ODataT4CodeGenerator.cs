@@ -1745,6 +1745,15 @@ public abstract class ODataClientTemplate : TemplateBase
     protected abstract void WriteRequiredAttribute(string errorMessage);
     #endregion Language specific write methods.
 
+    /// <summary>
+    /// Given a nullable type name, e.g. Nullable<T>, returns
+    /// the underlying type name T. If the type name is not
+    /// a Nullable<T>, then returns T.
+    /// </summary>
+    /// <param name="typeName">The type name.</param>
+    /// <returns>The underlying type name.</returns>
+    internal abstract string StripNullableFromTypeName(string typeName);
+
     internal HashSet<EdmPrimitiveTypeKind> ClrReferenceTypes { get {
         if (clrReferenceTypes == null)
         {
@@ -3736,9 +3745,11 @@ internal static class Utils
             }
 
             string valueClrType = GetClrTypeName(edmTypeReference, useDataServiceCollection, clientTemplate, context);
-            // If it's a Nullable<T> type, then strip away the Nullable and treat it as T for the purpose of value initialization
-            // We make the assumption that if the type name has type parameters, then it's Nullable<T>
-            valueClrType = valueClrType.Substring(valueClrType.IndexOf('<') + 1).TrimEnd('>');
+            // If it's a Nullable<T> type, then we need to use the underlying T to generate initialization code correctly
+            // The property initializers below do not expect that the specified default to be null. Since the default
+            // value of a Nullable<T> is null, it's not worth the effort to handle that edge case, Instead we
+            // assume the user will not specify "null" as the default value of a nullable property since it's redundant.
+            valueClrType = clientTemplate.StripNullableFromTypeName(valueClrType);
             string defaultValue = structuredProperty.DefaultValueString;
             bool isCSharpTemplate = clientTemplate is ODataClientCSharpTemplate;
             if (edmTypeReference.Definition.TypeKind == EdmTypeKind.Enum)
@@ -4119,6 +4130,18 @@ public sealed class ODataClientCSharpTemplate : ODataClientTemplate
         return CSharpKeywords;
     } }
     private HashSet<string> CSharpKeywords;
+
+    internal override string StripNullableFromTypeName(string typeName)
+    {
+        const string nullablePrefix = "Nullable<";
+        int indexOfNullablePrefix = typeName.IndexOf(nullablePrefix);
+        if (indexOfNullablePrefix == -1)
+        {
+            return typeName;
+        }
+
+        return typeName.Substring(indexOfNullablePrefix + nullablePrefix.Length).TrimEnd('>');
+    }
 
     internal override void WriteFileHeader()
     {
@@ -6241,6 +6264,18 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
         return VBKeywords;
     } }
     private HashSet<string> VBKeywords;
+
+    internal override string StripNullableFromTypeName(string typeName)
+    {
+        const string nullablePrefix = "Nullable(Of ";
+        int indexOfNullablePrefix = typeName.IndexOf(nullablePrefix);
+        if (indexOfNullablePrefix == -1)
+        {
+            return typeName;
+        }
+
+        return typeName.Substring(indexOfNullablePrefix + nullablePrefix.Length).TrimEnd(')');
+    }
 
     internal override void WriteFileHeader()
     {
