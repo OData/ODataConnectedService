@@ -2,14 +2,27 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net472;net6.0</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
     <RootNamespace>Microsoft.OData.Cli</RootNamespace>
-    <AssemblyName>odata-cli</AssemblyName>
+    <AssemblyName>Microsoft.OData.Cli</AssemblyName>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
+    <Version>0.1.0</Version>
+    <Authors>Microsoft</Authors>
+    <Product>Microsoft.OData.Cli</Product>
+    <Description>The odata-cli is a CLI tool for generating strongly typed C# and Visual Basic client code for a specified OData service. It generates a DataServiceContext class to interact with the service and CLR types for each entity type and complex type in the service model. It does exactly what the OData Connected Service does.  </Description>
+    <PackageTags>odata</PackageTags>
+    <Copyright>Copyright 2022</Copyright>
+    <RepositoryUrl>https://github.com/OData/ODataConnectedService/tree/master/src/Microsoft.OData.Cli</RepositoryUrl>
+    <PackageLicenseFile>License.txt</PackageLicenseFile>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>tools\OcsKey.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build" Version="17.0.0" />
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.0.0" />
+    <PackageReference Include="Microsoft.Build" Version="17.0.0" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.Build.Locator" Version="1.4.1" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.0.0" ExcludeAssets="runtime" />
     <PackageReference Include="NuGet.PackageManagement" Version="6.1.0" />
     <PackageReference Include="NuGet.Protocol" Version="6.3.1" />
     <PackageReference Include="System.CodeDom" Version="7.0.0-preview.1.22076.8" />
@@ -19,6 +32,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.OData.CodeGen\Microsoft.OData.CodeGen.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="LICENSE.txt" Pack="true" Visible="false" PackagePath="$(PackageLicenseFile)" />
   </ItemGroup>
 
 </Project>
