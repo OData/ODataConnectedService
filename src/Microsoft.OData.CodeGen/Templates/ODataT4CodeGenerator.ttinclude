@@ -3603,6 +3603,7 @@ internal static class Utils
             }
 
             string valueClrType = GetClrTypeName(edmTypeReference, useDataServiceCollection, clientTemplate, context);
+
             // If it's a Nullable<T> type, then we need to use the underlying T to generate initialization code correctly
             // The property initializers below do not expect that the specified default to be null. Since the default
             // value of a Nullable<T> is null, it's not worth the effort to handle that edge case, Instead we
@@ -3613,7 +3614,7 @@ internal static class Utils
             if (edmTypeReference.Definition.TypeKind == EdmTypeKind.Enum)
             {
                 var enumValues = defaultValue.Split(',');
-                string fullenumTypeName = GetClrTypeName(edmTypeReference, useDataServiceCollection, clientTemplate, context);
+                string fullEnumTypeName = GetClrTypeName(edmTypeReference, useDataServiceCollection, clientTemplate, context);
                 string enumTypeName = GetClrTypeName(edmTypeReference, useDataServiceCollection, clientTemplate, context, false, false);
                 List<string> customizedEnumValues = new List<string>();
                 foreach (var enumValue in enumValues)
@@ -3629,7 +3630,7 @@ internal static class Utils
                     var customizedEnumValue = context.EnableNamingAlias ? Customization.CustomizeNaming(currentEnumValue) : currentEnumValue;
                     if (isCSharpTemplate)
                     {
-                        currentEnumValue = "(" + fullenumTypeName + ")" + clientTemplate.EnumTypeName + ".Parse(" + clientTemplate.SystemTypeTypeName + ".GetType(\"" + enumTypeName + "\"), \"" + customizedEnumValue + "\")";
+                        currentEnumValue = "(" + fullEnumTypeName + ")" + clientTemplate.EnumTypeName + ".Parse(" + clientTemplate.SystemTypeTypeName + ".GetType(\"" + enumTypeName + "\"), \"" + customizedEnumValue + "\")";
                     }
                     else
                     {

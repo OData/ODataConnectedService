@@ -86,7 +86,7 @@ namespace Namespace1
         <Property Name=""SingleProp"" Type=""Edm.Single"" Nullable=""false"" DefaultValue=""50.2"" />
         <Property Name=""NullableSingleProp"" Type=""Edm.Single"" DefaultValue=""50.2"" />
         <Property Name=""SinglePropWithLetter"" Type=""Edm.Single"" Nullable=""false"" DefaultValue=""51.2f"" />
-        <Property Name=""NullanleSinglePropWithLetter"" Type=""Edm.Single"" DefaultValue=""51.2f"" />
+        <Property Name=""NullableSinglePropWithLetter"" Type=""Edm.Single"" DefaultValue=""51.2f"" />
         <Property Name=""DoubleProp"" Type=""Edm.Double"" Nullable=""false"" DefaultValue=""52.2"" />
         <Property Name=""NullableDoubleProp"" Type=""Edm.Double"" DefaultValue=""52.2"" />
         <Property Name=""DecimalProp"" Type=""Edm.Decimal"" Nullable=""false"" DefaultValue=""53.2"" />
@@ -432,27 +432,27 @@ namespace Namespace1
         partial void OnSinglePropWithLetterChanging(float value);
         partial void OnSinglePropWithLetterChanged();
         /// <summary>
-        /// There are no comments for Property NullanleSinglePropWithLetter in the schema.
+        /// There are no comments for Property NullableSinglePropWithLetter in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
 
-        public virtual global::System.Nullable<float> NullanleSinglePropWithLetter
+        public virtual global::System.Nullable<float> NullableSinglePropWithLetter
         {
             get
             {
-                return this._NullanleSinglePropWithLetter;
+                return this._NullableSinglePropWithLetter;
             }
             set
             {
-                this.OnNullanleSinglePropWithLetterChanging(value);
-                this._NullanleSinglePropWithLetter = value;
-                this.OnNullanleSinglePropWithLetterChanged();
+                this.OnNullableSinglePropWithLetterChanging(value);
+                this._NullableSinglePropWithLetter = value;
+                this.OnNullableSinglePropWithLetterChanged();
             }
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
-        private global::System.Nullable<float> _NullanleSinglePropWithLetter = 51.2f;
-        partial void OnNullanleSinglePropWithLetterChanging(global::System.Nullable<float> value);
-        partial void OnNullanleSinglePropWithLetterChanged();
+        private global::System.Nullable<float> _NullableSinglePropWithLetter = 51.2f;
+        partial void OnNullableSinglePropWithLetterChanging(global::System.Nullable<float> value);
+        partial void OnNullableSinglePropWithLetterChanged();
         /// <summary>
         /// There are no comments for Property DoubleProp in the schema.
         /// </summary>

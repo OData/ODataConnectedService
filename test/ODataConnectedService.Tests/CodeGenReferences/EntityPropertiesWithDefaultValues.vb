@@ -82,7 +82,7 @@ Namespace Namespace1
  "        <Property Name=""SingleProp"" Type=""Edm.Single"" Nullable=""false"" DefaultValue=""50.2"" />" & _
  "        <Property Name=""NullableSingleProp"" Type=""Edm.Single"" DefaultValue=""50.2"" />" & _
  "        <Property Name=""SinglePropWithLetter"" Type=""Edm.Single"" Nullable=""false"" DefaultValue=""51.2f"" />" & _
- "        <Property Name=""NullanleSinglePropWithLetter"" Type=""Edm.Single"" DefaultValue=""51.2f"" />" & _
+ "        <Property Name=""NullableSinglePropWithLetter"" Type=""Edm.Single"" DefaultValue=""51.2f"" />" & _
  "        <Property Name=""DoubleProp"" Type=""Edm.Double"" Nullable=""false"" DefaultValue=""52.2"" />" & _
  "        <Property Name=""NullableDoubleProp"" Type=""Edm.Double"" DefaultValue=""52.2"" />" & _
  "        <Property Name=""DecimalProp"" Type=""Edm.Decimal"" Nullable=""false"" DefaultValue=""53.2"" />" & _
@@ -398,24 +398,24 @@ Namespace Namespace1
         Partial Private Sub OnSinglePropWithLetterChanged()
         End Sub
         ''' <summary>
-        ''' There are no comments for Property NullanleSinglePropWithLetter in the schema.
+        ''' There are no comments for Property NullableSinglePropWithLetter in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
-        Public Overridable Property NullanleSinglePropWithLetter() As Global.System.Nullable(Of Single)
+        Public Overridable Property NullableSinglePropWithLetter() As Global.System.Nullable(Of Single)
             Get
-                Return Me._NullanleSinglePropWithLetter
+                Return Me._NullableSinglePropWithLetter
             End Get
             Set
-                Me.OnNullanleSinglePropWithLetterChanging(value)
-                Me._NullanleSinglePropWithLetter = value
-                Me.OnNullanleSinglePropWithLetterChanged
+                Me.OnNullableSinglePropWithLetterChanging(value)
+                Me._NullableSinglePropWithLetter = value
+                Me.OnNullableSinglePropWithLetterChanged
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
-        Private _NullanleSinglePropWithLetter As Global.System.Nullable(Of Single) = 51.2f
-        Partial Private Sub OnNullanleSinglePropWithLetterChanging(ByVal value As Global.System.Nullable(Of Single))
+        Private _NullableSinglePropWithLetter As Global.System.Nullable(Of Single) = 51.2f
+        Partial Private Sub OnNullableSinglePropWithLetterChanging(ByVal value As Global.System.Nullable(Of Single))
         End Sub
-        Partial Private Sub OnNullanleSinglePropWithLetterChanged()
+        Partial Private Sub OnNullableSinglePropWithLetterChanged()
         End Sub
         ''' <summary>
         ''' There are no comments for Property DoubleProp in the schema.
