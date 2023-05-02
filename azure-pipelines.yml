@@ -22,7 +22,6 @@ variables:
   vsixPath: '$(productBinPath)'
   vsixFile: 'Microsoft.OData.ConnectedService.vsix'
   vsixFileVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.vsix'
-  nupkgFileODataCLI: 'Microsoft.OData.Cli.nupkg'
   signingFiles: 'Microsoft.OData.ConnectedService.dll'
   signingFilesVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.dll'
   signingFilesODataCLI: 'Microsoft.OData.Cli.dll'
@@ -246,7 +245,7 @@ stages:
           - pwsh: |
               .\SignClient "Sign" `
               --baseDirectory "$(Pipeline.Workspace)\ODataCLINupkg" `
-              --input "$(nupkgFileODataCLI)" `
+              --input "$(Build.ArtifactStagingDirectory)\ODataCLINupkg" `
               --output "$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg" `
               --config "$(Pipeline.Workspace)\configs\SignClient.json" `
               --filelist "$(Pipeline.Workspace)\configs\filelist.txt" `
