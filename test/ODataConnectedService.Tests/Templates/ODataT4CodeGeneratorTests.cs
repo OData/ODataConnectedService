@@ -727,7 +727,7 @@ namespace ODataConnectedService.Tests
             if (CompileGeneratedCode && !generateMultipleFiles)
             {
                 // Comment next line to not to verify that the generated code can be compiled successfully
-                GeneratedCodeShouldCompile(code, isCSharp);
+                GeneratedCodeHelpers.VerifyGeneratedCodeCompiles(code, isCSharp);
             }
 
             return code;
@@ -768,7 +768,7 @@ namespace ODataConnectedService.Tests
 
             if (CompileGeneratedCode)
             {
-                GeneratedCodeShouldCompile(code, isCSharp);
+                GeneratedCodeHelpers.VerifyGeneratedCodeCompiles(code, isCSharp);
             }
 
             return code;
@@ -800,49 +800,6 @@ namespace ODataConnectedService.Tests
 
                 return output + error;
             }
-        }
-
-        private static void GeneratedCodeShouldCompile(string source, bool isCSharp)
-        {
-            var compilerOptions = new CompilerParameters
-            {
-                GenerateExecutable = false,
-                GenerateInMemory = true,
-                IncludeDebugInformation = false,
-                TreatWarningsAsErrors = false,
-                WarningLevel = 0, // TODO: Switch on warning levels once we resolve why warnings are still being treated as errors.
-                ReferencedAssemblies =
-                {
-                    typeof(DataServiceContext).Assembly.Location,
-                    typeof(IEdmModel).Assembly.Location,
-                    typeof(GeographyPoint).Assembly.Location,
-                    typeof(ODataVersion).Assembly.Location,
-                    AssemblyRef.SystemRuntime,
-                    AssemblyRef.SystemXmlReaderWriter,
-                    AssemblyRef.SystemIO,
-                    AssemblyRef.System,
-                    AssemblyRef.SystemCore,
-                    AssemblyRef.SystemXml,
-                    typeof(RequiredAttribute).Assembly.Location
-                }
-            };
-
-            CodeDomProvider codeProvider = null;
-            if (isCSharp)
-            {
-                using (codeProvider = new CSharpCodeProvider())
-                {
-                }
-            }
-            else
-            {
-                using (codeProvider = new VBCodeProvider())
-                {
-                }
-            }
-
-            var results = codeProvider.CompileAssemblyFromSource(compilerOptions, source);
-            results.Errors.Should().BeEmpty();
         }
 
         [TestMethod]

@@ -107,5 +107,27 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
             var output = generator.TransformText();
             GeneratedCodeHelpers.VerifyGeneratedCode(expected, output);
         }
+
+        [TestMethod]
+        [DataRow(ODataT4CodeGenerator.LanguageOption.CSharp, "EntityPropertiesWithDefaultValues.cs")]
+        [DataRow(ODataT4CodeGenerator.LanguageOption.VB, "EntityPropertiesWithDefaultValues.vb")]
+        public void TestPropertyInitializersGeneratedForDefaultValues(ODataT4CodeGenerator.LanguageOption lang, string expectedCodeFile)
+        {
+            // Arrange
+            string edmx = GeneratedCodeHelpers.LoadReferenceContent("EntityPropertiesWithDefaultValues.xml");
+            string expected = GeneratedCodeHelpers.LoadReferenceContent(expectedCodeFile);
+            var generator = new ODataT4CodeGenerator()
+            {
+                Edmx = edmx,
+                TargetLanguage = lang
+            };
+
+            // Act
+            string output = generator.TransformText();
+
+            // Assert
+            GeneratedCodeHelpers.VerifyGeneratedCode(expected, output);
+            GeneratedCodeHelpers.VerifyGeneratedCodeCompiles(output, lang);
+        }
     }
 }

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+	<edmx:DataServices>
+		<Schema Namespace="Namespace1" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+			<EntityType Name="EntityType">
+				<Key>
+					<PropertyRef Name="Id" />
+				</Key>
+				<Property Name="Id" Type="Edm.Int32" Nullable="false" />
+				<Property Name="BooleanPropFalse" Type="Edm.Boolean" Nullable="false" DefaultValue="False" />
+				<Property Name="NullableBooleanPropFalse" Type="Edm.Boolean" DefaultValue="False" />
+				<Property Name="BooleanPropTrue" Type="Edm.Boolean" Nullable="false" DefaultValue="True" />
+				<Property Name="NullableBooleanPropTrue" Type="Edm.Boolean" DefaultValue="True" />
+				<Property Name="IntProp" Type="Edm.Int32" Nullable="false" DefaultValue="50" />
+				<Property Name="NullableIntProp" Type="Edm.Int32" DefaultValue="50" />
+				<Property Name="SingleProp" Type="Edm.Single" Nullable="false" DefaultValue="50.2" />
+				<Property Name="NullableSingleProp" Type="Edm.Single" DefaultValue="50.2" />
+				<Property Name="SinglePropWithLetter" Type="Edm.Single" Nullable="false" DefaultValue="51.2f" />
+				<Property Name="NullableSinglePropWithLetter" Type="Edm.Single" DefaultValue="51.2f" />
+				<Property Name="DoubleProp" Type="Edm.Double" Nullable="false" DefaultValue="52.2" />
+				<Property Name="NullableDoubleProp" Type="Edm.Double" DefaultValue="52.2" />
+				<Property Name="DecimalProp" Type="Edm.Decimal" Nullable="false" DefaultValue="53.2" />
+				<Property Name="NullableDecimalProp" Type="Edm.Decimal" DefaultValue="53.2" />
+				<Property Name="DecimalPropWithLetter" Type="Edm.Decimal" Nullable="false" DefaultValue="54.2m" />
+				<Property Name="NullableDecimalPropWithLetter" Type="Edm.Decimal" DefaultValue="54.2m" />
+				<Property Name="DateProp" Type="Edm.Date" Nullable="false" DefaultValue="2020-02-02" />
+				<Property Name="NullableDateProp" Type="Edm.Date" DefaultValue="2020-02-02" />
+				<Property Name="DateTimeOffsetProp" Type="Edm.DateTimeOffset" Nullable="false" DefaultValue="2020-02-02T22:44:00"/>
+				<Property Name="NullableDateTimeOffsetProp" Type="Edm.DateTimeOffset" DefaultValue="2020-02-02T22:44:00"/>
+				<Property Name="TimeOfDayProp" Type="Edm.TimeOfDay" Nullable="false" DefaultValue="22:44"/>
+				<Property Name="NullableTimeOfDayProp" Type="Edm.TimeOfDay" DefaultValue="22:44"/>
+				<Property Name="DurationProp" Type="Edm.Duration" Nullable="false" DefaultValue="P11DT23H59M59.999999999999S"/>
+				<Property Name="NullableDurationProp" Type="Edm.Duration" DefaultValue="P11DT23H59M59.999999999999S"/>
+				<Property Name="StringProp" Type="Edm.String" Nullable="false" DefaultValue="Foo" />
+				<Property Name="NullableStringProp" Type="Edm.String" DefaultValue="Foo" />
+				<Property Name="GuidProp" Type="Edm.Guid" Nullable="false" DefaultValue="123e4567-e89b-12d3-a456-426614174000" />
+				<Property Name="NullableGuidProp" Type="Edm.Guid" DefaultValue="123e4567-e89b-12d3-a456-426614174000" />
+				<Property Name="EnumProp" Type="Namespace1.SomeEnumType" Nullable="false" DefaultValue="EnumValue1" />
+				<Property Name="NullableEnumProp" Type="Namespace1.SomeEnumType" DefaultValue="EnumValue1" />
+				<Property Name="BinaryProp" Type="Edm.Binary" Nullable="false" DefaultValue="ab" />
+				<Property Name="NullableBinaryProp" Type="Edm.Binary" DefaultValue="ab" />
+			</EntityType>
+			<EnumType Name="SomeEnumType">
+				<Member Name="EnumVal1" Value="0"/>
+				<Member Name="EnumVal2" Value="1"/>
+			</EnumType>
+			<EntityContainer Name="EntityContainer">
+				<EntitySet Name="Set1" EntityType="Namespace1.EntityType" />
+			</EntityContainer>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

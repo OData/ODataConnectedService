@@ -5,11 +5,21 @@
 // </copyright>
 //---------------------------------------------------------------------------------
 
+using Microsoft.CSharp;
+using Microsoft.OData.Edm;
+using Microsoft.OData;
+using Microsoft.Spatial;
+using Microsoft.VisualBasic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.CodeDom.Compiler;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Data.Services.Client;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.OData.CodeGen.Templates;
+using FluentAssertions;
 
 namespace ODataConnectedService.Tests.TestHelpers
 {
@@ -57,6 +67,68 @@ namespace ODataConnectedService.Tests.TestHelpers
             normalized = Regex.Replace(normalized, @"\s+", "");
 
             return normalized;
+        }
+
+        public static void VerifyGeneratedCodeCompiles(string source, bool isCSharp)
+        {
+            var results = CompileCode(source, isCSharp);
+            results.Errors.Should().BeEmpty();
+        }
+
+        public static void VerifyGeneratedCodeCompiles(string source, ODataT4CodeGenerator.LanguageOption lang)
+        {
+            var results = CompileCode(source, lang);
+            results.Errors.Should().BeEmpty();
+        }
+
+        private static CompilerResults CompileCode(string source, ODataT4CodeGenerator.LanguageOption lang)
+        {
+            bool isCSharp = lang == ODataT4CodeGenerator.LanguageOption.CSharp;
+            return CompileCode(source, isCSharp);
+        }
+
+        private static CompilerResults CompileCode(string source, bool isCSharp)
+        {
+            var compilerOptions = new CompilerParameters
+            {
+                GenerateExecutable = false,
+                GenerateInMemory = true,
+                IncludeDebugInformation = false,
+                TreatWarningsAsErrors = false,
+                WarningLevel = 0, // TODO: Switch on warning levels once we resolve why warnings are still being treated as errors.
+                ReferencedAssemblies =
+                {
+                    typeof(DataServiceContext).Assembly.Location,
+                    typeof(Microsoft.OData.Client.DataServiceContext).Assembly.Location,
+                    typeof(IEdmModel).Assembly.Location,
+                    typeof(GeographyPoint).Assembly.Location,
+                    typeof(ODataVersion).Assembly.Location,
+                    AssemblyRef.SystemRuntime,
+                    AssemblyRef.SystemXmlReaderWriter,
+                    AssemblyRef.SystemIO,
+                    AssemblyRef.System,
+                    AssemblyRef.SystemCore,
+                    AssemblyRef.SystemXml,
+                    typeof(RequiredAttribute).Assembly.Location
+                }
+            };
+
+            CodeDomProvider codeProvider = null;
+            if (isCSharp)
+            {
+                using (codeProvider = new CSharpCodeProvider())
+                {
+                }
+            }
+            else
+            {
+                using (codeProvider = new VBCodeProvider())
+                {
+                }
+            }
+
+            CompilerResults results = codeProvider.CompileAssemblyFromSource(compilerOptions, source);
+            return results;
         }
     }
 }

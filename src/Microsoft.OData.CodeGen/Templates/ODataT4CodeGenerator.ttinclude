@@ -1603,6 +1603,15 @@ public abstract class ODataClientTemplate : TemplateBase
     protected abstract void WriteRequiredAttribute(string errorMessage);
     #endregion Language specific write methods.
 
+    /// <summary>
+    /// Given a nullable type name, e.g. Nullable<T>, returns
+    /// the underlying type name T. If the type name is not
+    /// a Nullable<T>, then returns T.
+    /// </summary>
+    /// <param name="typeName">The type name.</param>
+    /// <returns>The underlying type name.</returns>
+    internal abstract string StripNullableFromTypeName(string typeName);
+
     internal HashSet<EdmPrimitiveTypeKind> ClrReferenceTypes { get {
         if (clrReferenceTypes == null)
         {
@@ -3581,118 +3590,120 @@ internal static class Utils
         if (edmCollectionTypeReference == null)
         {
             IEdmStructuralProperty structuredProperty = property as IEdmStructuralProperty;
-            if (structuredProperty != null)
-            {
-                if (!string.IsNullOrEmpty(structuredProperty.DefaultValueString))
-                {
-                    string valueClrType = GetClrTypeName(edmTypeReference, useDataServiceCollection, clientTemplate, context);
-                    string defaultValue = structuredProperty.DefaultValueString;
-                    bool isCSharpTemplate = clientTemplate is ODataClientCSharpTemplate;
-                    if (edmTypeReference.Definition.TypeKind == EdmTypeKind.Enum)
-                    {
-                        var enumValues = defaultValue.Split(',');
-                        string fullenumTypeName = GetClrTypeName(edmTypeReference, useDataServiceCollection, clientTemplate, context);
-                        string enumTypeName = GetClrTypeName(edmTypeReference, useDataServiceCollection, clientTemplate, context, false, false);
-                        List<string> customizedEnumValues = new List<string>();
-                        foreach(var enumValue in enumValues)
-                        {
-                            string currentEnumValue = enumValue.Trim();
-                            int indexFirst = currentEnumValue.IndexOf('\'') + 1;
-                            int indexLast = currentEnumValue.LastIndexOf('\'');
-                            if (indexFirst > 0 && indexLast > indexFirst)
-                            {
-                                currentEnumValue = currentEnumValue.Substring(indexFirst, indexLast - indexFirst);
-                            }
-
-                            var customizedEnumValue = context.EnableNamingAlias ? Customization.CustomizeNaming(currentEnumValue) : currentEnumValue;
-                            if (isCSharpTemplate)
-                            {
-                                currentEnumValue = "(" + fullenumTypeName + ")" + clientTemplate.EnumTypeName + ".Parse(" + clientTemplate.SystemTypeTypeName + ".GetType(\"" + enumTypeName + "\"), \"" + customizedEnumValue  + "\")";
-                            }
-                            else
-                            {
-                                currentEnumValue = clientTemplate.EnumTypeName + ".Parse(" + clientTemplate.SystemTypeTypeName + ".GetType(\"" + enumTypeName + "\"), \"" + currentEnumValue  + "\")";
-                            }
-                            customizedEnumValues.Add(currentEnumValue);
-                        }
-                        if (isCSharpTemplate)
-                        {
-                            return string.Join(" | ", customizedEnumValues);
-                        }
-                        else
-                        {
-                            return string.Join(" Or ", customizedEnumValues);
-                        }
-                    }
-
-                    if (valueClrType.Equals(clientTemplate.StringTypeName))
-                    {
-                        defaultValue = "\"" + defaultValue + "\"";
-                    }
-                    else if (valueClrType.Equals(clientTemplate.BooleanTypeName))
-                    {
-                        // EDMX specifies boolean defaults with capital letter, C# needs this string to be lower case.
-                        if (isCSharpTemplate)
-                            defaultValue = defaultValue.ToLower();
-                    }
-                    else if (valueClrType.Equals(clientTemplate.BinaryTypeName))
-                    {
-                        defaultValue = "System.Text.Encoding.UTF8.GetBytes(\"" + defaultValue + "\")";
-                    }
-                    else if (valueClrType.Equals(clientTemplate.SingleTypeName))
-                    {
-                        if (isCSharpTemplate)
-                        {
-                            defaultValue = defaultValue.EndsWith("f", StringComparison.OrdinalIgnoreCase) ? defaultValue : defaultValue + "f";
-                        }
-                        else
-                        {
-                            defaultValue = defaultValue.EndsWith("f", StringComparison.OrdinalIgnoreCase) ? defaultValue : defaultValue + "F";
-                        }
-                    }
-                    else if (valueClrType.Equals(clientTemplate.DecimalTypeName))
-                    {
-                        if (isCSharpTemplate)
-                        {
-                            // decimal in C# must be initialized with 'm' at the end, like Decimal dec = 3.00m
-                            defaultValue = defaultValue.EndsWith("m", StringComparison.OrdinalIgnoreCase) ? defaultValue : defaultValue + "m";
-                        }
-                        else
-                        {
-                            // decimal in VB must be initialized with 'D' at the end, like Decimal dec = 3.00D
-                            defaultValue = defaultValue.ToLower(CultureInfo.InvariantCulture).Replace("m", "D");
-                            defaultValue = defaultValue.EndsWith("D", StringComparison.OrdinalIgnoreCase) ? defaultValue : defaultValue + "D";
-                        }
-                    }
-                    else if (valueClrType.Equals(clientTemplate.GuidTypeName)
-                        | valueClrType.Equals(clientTemplate.DateTimeOffsetTypeName)
-                        | valueClrType.Equals(clientTemplate.DateTypeName)
-                        | valueClrType.Equals(clientTemplate.TimeOfDayTypeName))
-                    {
-                        defaultValue = valueClrType + ".Parse(\"" + defaultValue + "\")";
-                    }
-                    else if (valueClrType.Equals(clientTemplate.DurationTypeName))
-                    {
-                        defaultValue = clientTemplate.XmlConvertClassName + ".ToTimeSpan(\"" + defaultValue + "\")";
-                    }
-                    else if (valueClrType.Contains("Microsoft.Spatial"))
-                    {
-                        defaultValue = string.Format(CultureInfo.InvariantCulture, clientTemplate.GeoTypeInitializePattern, valueClrType, defaultValue);
-                    }
-
-                    return defaultValue;
-                }
-                else
-                {
-                    // doesn't have a default value
-                    return null;
-                }
-            }
-            else
+            if (structuredProperty == null)
             {
                 // only structured property has default value
                 return null;
             }
+
+            if (string.IsNullOrEmpty(structuredProperty.DefaultValueString))
+            {
+                // doesn't have a default value
+                return null;
+            }
+
+            string valueClrType = GetClrTypeName(edmTypeReference, useDataServiceCollection, clientTemplate, context);
+
+            // If it's a Nullable<T> type, then we need to use the underlying T to generate initialization code correctly
+            // The property initializers below do not expect that the specified default to be null. Since the default
+            // value of a Nullable<T> is null, it's not worth the effort to handle that edge case, Instead we
+            // assume the user will not specify "null" as the default value of a nullable property since it's redundant.
+            valueClrType = clientTemplate.StripNullableFromTypeName(valueClrType);
+            string defaultValue = structuredProperty.DefaultValueString;
+            bool isCSharpTemplate = clientTemplate is ODataClientCSharpTemplate;
+            if (edmTypeReference.Definition.TypeKind == EdmTypeKind.Enum)
+            {
+                var enumValues = defaultValue.Split(',');
+                string fullEnumTypeName = GetClrTypeName(edmTypeReference, useDataServiceCollection, clientTemplate, context);
+                string enumTypeName = GetClrTypeName(edmTypeReference, useDataServiceCollection, clientTemplate, context, false, false);
+                List<string> customizedEnumValues = new List<string>();
+                foreach (var enumValue in enumValues)
+                {
+                    string currentEnumValue = enumValue.Trim();
+                    int indexFirst = currentEnumValue.IndexOf('\'') + 1;
+                    int indexLast = currentEnumValue.LastIndexOf('\'');
+                    if (indexFirst > 0 && indexLast > indexFirst)
+                    {
+                        currentEnumValue = currentEnumValue.Substring(indexFirst, indexLast - indexFirst);
+                    }
+
+                    var customizedEnumValue = context.EnableNamingAlias ? Customization.CustomizeNaming(currentEnumValue) : currentEnumValue;
+                    if (isCSharpTemplate)
+                    {
+                        currentEnumValue = "(" + fullEnumTypeName + ")" + clientTemplate.EnumTypeName + ".Parse(" + clientTemplate.SystemTypeTypeName + ".GetType(\"" + enumTypeName + "\"), \"" + customizedEnumValue + "\")";
+                    }
+                    else
+                    {
+                        currentEnumValue = clientTemplate.EnumTypeName + ".Parse(" + clientTemplate.SystemTypeTypeName + ".GetType(\"" + enumTypeName + "\"), \"" + currentEnumValue + "\")";
+                    }
+                    customizedEnumValues.Add(currentEnumValue);
+                }
+                if (isCSharpTemplate)
+                {
+                    return string.Join(" | ", customizedEnumValues);
+                }
+                else
+                {
+                    return string.Join(" Or ", customizedEnumValues);
+                }
+            }
+
+            if (valueClrType.Equals(clientTemplate.StringTypeName))
+            {
+                defaultValue = "\"" + defaultValue + "\"";
+            }
+            else if (valueClrType.Equals(clientTemplate.BooleanTypeName))
+            {
+                // EDMX specifies boolean defaults with capital letter, C# needs this string to be lower case.
+                if (isCSharpTemplate)
+                    defaultValue = defaultValue.ToLower();
+            }
+            else if (valueClrType.Equals(clientTemplate.BinaryTypeName))
+            {
+                defaultValue = "System.Text.Encoding.UTF8.GetBytes(\"" + defaultValue + "\")";
+            }
+            else if (valueClrType.Equals(clientTemplate.SingleTypeName))
+            {
+                if (isCSharpTemplate)
+                {
+                    defaultValue = defaultValue.EndsWith("f", StringComparison.OrdinalIgnoreCase) ? defaultValue : defaultValue + "f";
+                }
+                else
+                {
+                    defaultValue = defaultValue.EndsWith("f", StringComparison.OrdinalIgnoreCase) ? defaultValue : defaultValue + "F";
+                }
+            }
+            else if (valueClrType.Equals(clientTemplate.DecimalTypeName))
+            {
+                if (isCSharpTemplate)
+                {
+                    // decimal in C# must be initialized with 'm' at the end, like Decimal dec = 3.00m
+                    defaultValue = defaultValue.EndsWith("m", StringComparison.OrdinalIgnoreCase) ? defaultValue : defaultValue + "m";
+                }
+                else
+                {
+                    // decimal in VB must be initialized with 'D' at the end, like Decimal dec = 3.00D
+                    defaultValue = defaultValue.ToLower(CultureInfo.InvariantCulture).Replace("m", "D");
+                    defaultValue = defaultValue.EndsWith("D", StringComparison.OrdinalIgnoreCase) ? defaultValue : defaultValue + "D";
+                }
+            }
+            else if (valueClrType.Equals(clientTemplate.GuidTypeName)
+                | valueClrType.Equals(clientTemplate.DateTimeOffsetTypeName)
+                | valueClrType.Equals(clientTemplate.DateTypeName)
+                | valueClrType.Equals(clientTemplate.TimeOfDayTypeName))
+            {
+                defaultValue = valueClrType + ".Parse(\"" + defaultValue + "\")";
+            }
+            else if (valueClrType.Equals(clientTemplate.DurationTypeName))
+            {
+                defaultValue = clientTemplate.XmlConvertClassName + ".ToTimeSpan(\"" + defaultValue + "\")";
+            }
+            else if (valueClrType.Contains("Microsoft.Spatial"))
+            {
+                defaultValue = string.Format(CultureInfo.InvariantCulture, clientTemplate.GeoTypeInitializePattern, valueClrType, defaultValue);
+            }
+
+            return defaultValue;
         }
         else
         {
@@ -3978,6 +3989,18 @@ public sealed class ODataClientCSharpTemplate : ODataClientTemplate
         return CSharpKeywords;
     } }
     private HashSet<string> CSharpKeywords;
+
+    internal override string StripNullableFromTypeName(string typeName)
+    {
+        const string nullablePrefix = "Nullable<";
+        int indexOfNullablePrefix = typeName.IndexOf(nullablePrefix);
+        if (indexOfNullablePrefix == -1)
+        {
+            return typeName;
+        }
+
+        return typeName.Substring(indexOfNullablePrefix + nullablePrefix.Length).TrimEnd('>');
+    }
 
     internal override void WriteFileHeader()
     {
@@ -5161,6 +5184,18 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
         return VBKeywords;
     } }
     private HashSet<string> VBKeywords;
+
+    internal override string StripNullableFromTypeName(string typeName)
+    {
+        const string nullablePrefix = "Nullable(Of ";
+        int indexOfNullablePrefix = typeName.IndexOf(nullablePrefix);
+        if (indexOfNullablePrefix == -1)
+        {
+            return typeName;
+        }
+
+        return typeName.Substring(indexOfNullablePrefix + nullablePrefix.Length).TrimEnd(')');
+    }
 
     internal override void WriteFileHeader()
     {
