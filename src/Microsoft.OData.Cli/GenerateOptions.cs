@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------------
 // <copyright file="GenerateOptions.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //----------------------------------------------------------------------------
@@ -30,15 +30,20 @@ namespace Microsoft.OData.Cli
         public string Proxy { get; set; }
 
         /// <summary>
-        /// The name of the generated file name 
+        /// The name of the generated file name
         /// </summary>
         public string FileName { get; set; }
 
         /// <summary>
-        /// The namespace of the client code generated. 
+        /// The namespace of the client code generated.
         /// Example: ODataCliCodeGeneratorSample.NorthWindModel or ODataCliCodeGeneratorSample or it could be a name related to the OData endpoint.
         /// </summary>
         public string NamespacePrefix { get; set; }
+
+        /// <summary>
+        /// Disables entity and property tracking
+        /// </summary>
+        public bool EnableTracking { get; set; }
 
         /// <summary>
         /// Disables/Enables upper camel casing
@@ -109,6 +114,5 @@ namespace Microsoft.OData.Cli
         /// A flag to indicate whether to include web proxy network credentials or not.
         /// </summary>
         public bool IncludeWebProxyNetworkCredentials { get; set; }
-
     }
 }
