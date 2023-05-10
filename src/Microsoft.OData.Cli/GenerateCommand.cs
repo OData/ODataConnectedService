@@ -1,6 +1,6 @@
-//-----------------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------------
 // <copyright file="GenerateCommand.cs" company=".NET Foundation">
-//      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
+//      Copyright (c) .NET Foundation and Contributors. All rights reserved.
 //      See License.txt in the project root for license information.
 // </copyright>
 //----------------------------------------------------------------------------
@@ -69,14 +69,14 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(ns);
 
-            Option noTracking = new Option<bool>(new[] { "--no-tracking", "-n" })
+            Option enableTracking = new Option<bool>(new[] { "--enable-tracking", "-et" })
             {
-                Name = "notracking",
-                Description = "Disables entity and property tracking."
+                Name = "enable-tracking",
+                Description = "Enable entity and property tracking."
             };
-            noTracking.SetDefaultValue(false);
+            enableTracking.SetDefaultValue(false);
 
-            this.AddOption(noTracking);
+            this.AddOption(enableTracking);
 
             Option upperCamelCase = new Option<bool>(new[] { "--upper-camel-case", "-ucc" })
             {
@@ -212,7 +212,7 @@ namespace Microsoft.OData.Cli
             serviceConfiguration.WebProxyNetworkCredentialsUsername = generateOptions.WebProxyNetworkCredentialsUsername;
             serviceConfiguration.WebProxyNetworkCredentialsPassword = generateOptions.WebProxyNetworkCredentialsPassword;
             serviceConfiguration.WebProxyNetworkCredentialsDomain = generateOptions.WebProxyNetworkCredentialsDomain;
-            serviceConfiguration.UseDataServiceCollection = !generateOptions.NoTracking;
+            serviceConfiguration.UseDataServiceCollection = generateOptions.EnableTracking;
 
             return serviceConfiguration;
         }
@@ -238,7 +238,7 @@ namespace Microsoft.OData.Cli
             serviceConfigurationV4.ExcludedOperationImports = generateOptions.ExcludedOperationImports;
             serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = generateOptions.IgnoreUnexpectedElements;
             serviceConfigurationV4.EnableNamingAlias = generateOptions.UpperCamelCase;
-            serviceConfigurationV4.UseDataServiceCollection = !generateOptions.NoTracking;
+            serviceConfigurationV4.UseDataServiceCollection = generateOptions.EnableTracking;
 
             Project project = ProjectHelper.CreateProjectInstance(generateOptions.OutputDir);
             BaseCodeGenDescriptor codeGenDescriptor = new CodeGenDescriptorFactory().Create(
@@ -264,7 +264,7 @@ namespace Microsoft.OData.Cli
             serviceConfiguration.WebProxyNetworkCredentialsPassword = generateOptions.WebProxyNetworkCredentialsPassword;
             serviceConfiguration.WebProxyNetworkCredentialsDomain = generateOptions.WebProxyNetworkCredentialsDomain;
             serviceConfiguration.NamespacePrefix = generateOptions.NamespacePrefix;
-            serviceConfiguration.UseDataServiceCollection = !generateOptions.NoTracking;
+            serviceConfiguration.UseDataServiceCollection = generateOptions.EnableTracking;
 
             Project project = ProjectHelper.CreateProjectInstance(generateOptions.OutputDir);
             BaseCodeGenDescriptor codeGenDescriptor = new CodeGenDescriptorFactory().Create(
