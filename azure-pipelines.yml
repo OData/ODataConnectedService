@@ -129,8 +129,16 @@ stages:
       displayName: Publish Signing Scripts
       artifact: configs
 
+    - task: PowerShell@2
+      displayName: 'Execute PowerShell Script'
+      inputs:
+        targetType: 'inline'
+        script: |
+          # PowerShell commands go here
+          Write-Host Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\ODataCLINupkg -filter "*.nupkg" -Name `
+
 - stage: CodeSign
-  condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
+  #condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
   jobs:
   - deployment: CodeSign
     displayName: Code Signing
@@ -173,54 +181,9 @@ stages:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)/SignedVSIX'
               ArtifactName: 'SignedVSIX'
               publishLocation: 'Container'
-
-- stage: CodeSign2
-  condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
-  jobs:
-  - deployment: CodeSign
-    displayName: Code Signing
-    pool:
-      vmImage: windows-latest    
-    environment: Code Sign - Approvals
-    variables:
-    - group: Code Signing
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: DotNetCoreCLI@2
-            inputs:
-              command: custom
-              custom: tool
-              arguments: install --tool-path . SignClient
-            displayName: Install SignTool tool
-          
-          # Sign the vsix archive as well as files contained in the vsix that are listed in config/filelist.txt
-          # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
-          - pwsh: |
-              .\SignClient "Sign" `
-              --baseDirectory "$(Pipeline.Workspace)/VSIX2022Plus" `
-              --input "$(vsixFileVs2022Plus)" `
-              --output "$(Build.ArtifactStagingDirectory)/SignedVSIX2022Plus" `
-              --config "$(Pipeline.Workspace)/configs/SignClient.json" `
-              --filelist "$(Pipeline.Workspace)/configs/filelist.txt" `
-              --user "$(SignClientUser)" `
-              --secret "$(SignClientSecret)" `
-              --name "OData Connected Service 2022+" `
-              --description "OData Connected Service 2022+" `
-              --descriptionUrl "https://github.com/OData/ODataConnectedService" 
-            displayName: Code signing - VSIX2022Plus
-
-          # publish the signed vsix as an artifact so we can download it after the build
-          - task: PublishBuildArtifacts@1
-            displayName: 'Publish Artifact: SignedVSIX2022Plus'
-            inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)/SignedVSIX2022Plus'
-              ArtifactName: 'SignedVSIX2022Plus'
-              publishLocation: 'Container'
-              
+           
 - stage: CodeSignODataCLI
-  condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
+  #condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
   jobs:
   - deployment: CodeSign
     displayName: Code Signing
@@ -245,7 +208,7 @@ stages:
           - pwsh: |
               .\SignClient "Sign" `
               --baseDirectory "$(Pipeline.Workspace)\ODataCLINupkg" `
-              --input "Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\ODataCLINupkg | Select-Object -ExpandProperty Name `
+              --input "Get-ChildItem -Path D:\a\1\a\ODataCLINupkg -filter *.nupkg -Name" `
               --output "$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg" `
               --config "$(Pipeline.Workspace)\configs\SignClient.json" `
               --filelist "$(Pipeline.Workspace)\configs\filelist.txt" `
