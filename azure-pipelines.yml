@@ -132,12 +132,12 @@ stages:
     - task: PowerShell@2
       displayName: 'Execute PowerShell Script'
       inputs:
-      targetType: 'inline'
-      script: |
-        # PowerShell commands go here
-        $folderPath = "path/to/folder"
-        $file = Get-ChildItem -Path $folderPath | Select-Object -ExpandProperty BaseName
-        Write-Host "File Name: $file"
+        targetType: 'inline'
+        script: |
+          # PowerShell commands go here
+          $folderPath = "path/to/folder"
+          $file = Get-ChildItem -Path $folderPath | Select-Object -ExpandProperty BaseName
+          Write-Host "File Name: $file"
            
 - stage: CodeSignODataCLI
   #condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
