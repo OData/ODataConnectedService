@@ -135,7 +135,7 @@ stages:
         targetType: 'inline'
         script: |
           # PowerShell commands go here
-          Write-Host Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\ODataCLINupkg | Select-Object -ExpandProperty Name `
+          Write-Host Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\ODataCLINupkg | ForEach-Object { $_.Name } `
            
 - stage: CodeSignODataCLI
   #condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
@@ -163,7 +163,7 @@ stages:
           - pwsh: |
               .\SignClient "Sign" `
               --baseDirectory "$(Pipeline.Workspace)\ODataCLINupkg" `
-              --input "Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\ODataCLINupkg | Select-Object -ExpandProperty Name `
+              --input "Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\ODataCLINupkg | ForEach-Object { $_.Name } `
               --output "$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg" `
               --config "$(Pipeline.Workspace)\configs\SignClient.json" `
               --filelist "$(Pipeline.Workspace)\configs\filelist.txt" `
