@@ -125,6 +125,14 @@ stages:
         ArtifactName: 'ODataCLINupkg'
         publishLocation: 'Container'
 
+    - task: PowerShell@2
+      displayName: 'Get File Name'
+      inputs:
+        targetType: 'inline'
+        script: |
+          $nupkgFile = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)\ODataCLINupkg" -Filter *.nupkg | ForEach-Object { $_.Name } | Select-Object -First 1 `
+          Write-Host "$(nupkgFile)"
+
     - publish: configs
       displayName: Publish Signing Scripts
       artifact: configs
