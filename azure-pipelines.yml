@@ -136,6 +136,51 @@ stages:
         script: |
           # PowerShell commands go here
           Write-Host Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\ODataCLINupkg -filter "*.nupkg" -Name `
+
+- stage: CodeSign
+  condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
+  jobs:
+  - deployment: CodeSign
+    displayName: Code Signing
+    pool:
+      vmImage: windows-latest    
+    environment: Code Sign - Approvals
+    variables:
+    - group: Code Signing
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: custom
+              custom: tool
+              arguments: install --tool-path . SignClient
+            displayName: Install SignTool tool
+          
+          # Sign the vsix archive as well as files contained in the vsix that are listed in config/filelist.txt
+          # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
+          - pwsh: |
+              .\SignClient "Sign" `
+              --baseDirectory "$(Pipeline.Workspace)/VSIX" `
+              --input "$(vsixFile)" `
+              --output "$(Build.ArtifactStagingDirectory)/SignedVSIX" `
+              --config "$(Pipeline.Workspace)/configs/SignClient.json" `
+              --filelist "$(Pipeline.Workspace)/configs/filelist.txt" `
+              --user "$(SignClientUser)" `
+              --secret "$(SignClientSecret)" `
+              --name "OData Connected Service" `
+              --description "OData Connected Service" `
+              --descriptionUrl "https://github.com/OData/ODataConnectedService" 
+            displayName: Code signing - VSIX
+
+          # publish the signed vsix as an artifact so we can download it after the build
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact: SignedVSIX'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)/SignedVSIX'
+              ArtifactName: 'SignedVSIX'
+              publishLocation: 'Container'
            
 - stage: CodeSignODataCLI
   #condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
