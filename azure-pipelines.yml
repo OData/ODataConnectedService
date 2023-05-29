@@ -135,7 +135,7 @@ stages:
         targetType: 'inline'
         script: |
           # PowerShell commands go here
-          Write-Host Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\ODataCLINupkg | ForEach-Object { $_.Name } `
+          Write-Host Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\ODataCLINupkg -filter "*.nupkg" -Name `
            
 - stage: CodeSignODataCLI
   #condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
