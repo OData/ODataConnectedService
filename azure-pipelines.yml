@@ -130,7 +130,7 @@ stages:
       artifact: configs
 
 - stage: CodeSign
-  condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
+  #condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
   jobs:
   - deployment: CodeSign
     displayName: Code Signing
@@ -175,7 +175,7 @@ stages:
               publishLocation: 'Container'
 
 - stage: CodeSign2
-  condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
+  #condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
   jobs:
   - deployment: CodeSign
     displayName: Code Signing
@@ -220,7 +220,7 @@ stages:
               publishLocation: 'Container'
               
 - stage: CodeSignODataCLI
-  condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
+  #condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
   jobs:
   - deployment: CodeSign
     displayName: Code Signing
