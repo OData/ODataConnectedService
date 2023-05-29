@@ -135,9 +135,7 @@ stages:
         targetType: 'inline'
         script: |
           # PowerShell commands go here
-          $folderPath = "path/to/folder"
-          $file = "Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\ODataCLINupkg | Select-Object -ExpandProperty Name `
-          Write-Host "File Name: $file"
+          Write-Host Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\ODataCLINupkg | Select-Object -ExpandProperty Name `
            
 - stage: CodeSignODataCLI
   #condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
