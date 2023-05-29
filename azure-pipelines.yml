@@ -136,7 +136,7 @@ stages:
         script: |
           # PowerShell commands go here
           $folderPath = "path/to/folder"
-          $file = Get-ChildItem -Path $folderPath | Select-Object -ExpandProperty BaseName
+          $file = "Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\ODataCLINupkg | Select-Object -ExpandProperty Name `
           Write-Host "File Name: $file"
            
 - stage: CodeSignODataCLI
