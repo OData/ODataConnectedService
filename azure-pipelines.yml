@@ -245,7 +245,9 @@ stages:
           - pwsh: |
               .\SignClient "Sign" `
               --baseDirectory "$(Pipeline.Workspace)\ODataCLINupkg" `
-              --input "Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\ODataCLINupkg -filter *.nupkg -Name" `
+              $nupkgFile = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)\ODataCLINupkg" -Filter *.nupkg | ForEach-Object { $_.Name } | Select-Object -First 1 `
+              Write-Host "$nupkgFile" `
+              --input "$nupkgFile `
               --output "$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg" `
               --config "$(Pipeline.Workspace)\configs\SignClient.json" `
               --filelist "$(Pipeline.Workspace)\configs\filelist.txt" `
