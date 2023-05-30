@@ -125,12 +125,20 @@ stages:
         ArtifactName: 'ODataCLINupkg'
         publishLocation: 'Container'
 
+    - task: PowerShell@2
+      displayName: 'Get File Name'
+      inputs:
+        targetType: 'inline'
+        script: |
+          $nupkgFile = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)\ODataCLINupkg" -Filter *.nupkg | ForEach-Object { $_.Name } | Select-Object -First 1 `
+          Write-Host "$nupkgFile"
+
     - publish: configs
       displayName: Publish Signing Scripts
       artifact: configs
 
 - stage: CodeSign
-  condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
+  #condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
   jobs:
   - deployment: CodeSign
     displayName: Code Signing
@@ -153,6 +161,7 @@ stages:
           # Sign the vsix archive as well as files contained in the vsix that are listed in config/filelist.txt
           # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
           - pwsh: |
+              Write-Host "$nupkgFile"
               .\SignClient "Sign" `
               --baseDirectory "$(Pipeline.Workspace)/VSIX" `
               --input "$(vsixFile)" `
