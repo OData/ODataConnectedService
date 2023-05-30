@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
     <RootNamespace>Microsoft.OData.Cli</RootNamespace>
     <AssemblyName>Microsoft.OData.Cli</AssemblyName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
