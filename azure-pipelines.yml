@@ -125,14 +125,6 @@ stages:
         ArtifactName: 'ODataCLINupkg'
         publishLocation: 'Container'
 
-    - task: PowerShell@2
-      displayName: 'Get File Name'
-      inputs:
-        targetType: 'inline'
-        script: |
-          $nupkgFile = $nupkgFile = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)\ODataCLINupkg" -Filter *.nupkg | Select-Object -First 1 -ExpandProperty Name
-          Write-Host "$nupkgFile"
-
     - publish: configs
       displayName: Publish Signing Scripts
       artifact: configs
@@ -253,7 +245,7 @@ stages:
           - pwsh: |
               .\SignClient "Sign" `
               --baseDirectory "$(Pipeline.Workspace)\ODataCLINupkg" `
-              --input "Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\ODataCLINupkg -filter *.nupkg -Name" `
+              --input Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)\ODataCLINupkg" -Filter *.nupkg | ForEach-Object { $_.Name } | Select-Object -First 1 `
               --output "$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg" `
               --config "$(Pipeline.Workspace)\configs\SignClient.json" `
               --filelist "$(Pipeline.Workspace)\configs\filelist.txt" `
