@@ -22,6 +22,7 @@ variables:
   vsixPath: '$(productBinPath)'
   vsixFile: 'Microsoft.OData.ConnectedService.vsix'
   vsixFileVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.vsix'
+  nupkgFile: 'Microsoft.OData.Cli.nupkg'
   signingFiles: 'Microsoft.OData.ConnectedService.dll'
   signingFilesVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.dll'
   signingFilesODataCLI: 'Microsoft.OData.Cli.dll'
@@ -124,7 +125,14 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)\ODataCLINupkg'
         ArtifactName: 'ODataCLINupkg'
         publishLocation: 'Container'
-
+        
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+            $nupFile = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)\ODataCLINupkg" -Filter *.nupkg | Select-Object -First 1 -ExpandProperty Name
+            Write-Host "##vso[task.setvariable variable=nupkgFile]$nupFile"
+            
     - publish: configs
       displayName: Publish Signing Scripts
       artifact: configs
@@ -245,7 +253,7 @@ stages:
           - pwsh: |
               .\SignClient "Sign" `
               --baseDirectory "$(Pipeline.Workspace)\ODataCLINupkg" `
-              --input "$(Get-ChildItem -Path '$(Build.ArtifactStagingDirectory)\ODataCLINupkg' -Filter *.nupkg | Select-Object -First 1 -ExpandProperty Name)" `
+              --input "$(nupkgFile)" `
               --output "$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg" `
               --config "$(Pipeline.Workspace)\configs\SignClient.json" `
               --filelist "$(Pipeline.Workspace)\configs\filelist.txt" `
