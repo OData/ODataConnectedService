@@ -131,7 +131,7 @@ stages:
         targetType: 'inline'
         script: |
           $nupkgFile = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)\ODataCLINupkg" -Filter *.nupkg | ForEach-Object { $_.Name } | Select-Object -First 1 `
-          Write-Host "$(nupkgFile)"
+          Write-Host "$nupkgFile"
 
     - publish: configs
       displayName: Publish Signing Scripts
