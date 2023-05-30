@@ -130,7 +130,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          $nupkgFile = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)\ODataCLINupkg" -Filter *.nupkg | ForEach-Object { $_.Name } | Select-Object -First 1 `
+          $nupkgFile = $nupkgFile = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)\ODataCLINupkg" -Filter *.nupkg | Select-Object -First 1 -ExpandProperty Name
           Write-Host "$nupkgFile"
 
     - publish: configs
