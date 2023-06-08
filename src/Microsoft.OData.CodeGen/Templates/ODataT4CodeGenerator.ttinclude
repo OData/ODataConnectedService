@@ -52,6 +52,7 @@
             MetadataFileRelativePath = this.MetadataFileRelativePath,
             MakeTypesInternal = this.MakeTypesInternal,
             MultipleFilesManager = new FilesManager(null),
+            NoTimestamp = this.NoTimestamp,
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedBoundOperations = this.ExcludedBoundOperations,
@@ -92,6 +93,7 @@
             MetadataFileRelativePath = this.MetadataFileRelativePath,
             MakeTypesInternal = this.MakeTypesInternal,
             MultipleFilesManager = new FilesManager(null),
+            NoTimestamp = this.NoTimestamp,
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedBoundOperations = this.ExcludedBoundOperations,
@@ -244,6 +246,15 @@ public bool IgnoreUnexpectedElementsAndAttributes
 /// otherwise "public" is used
 /// </summary>
 public bool MakeTypesInternal
+{
+    get;
+    set;
+}
+
+/// <summary>
+/// true to disable the Generation date timestamp, false to include the timestamp
+/// </summary>
+public bool NoTimestamp
 {
     get;
     set;
@@ -593,6 +604,7 @@ private void ApplyParametersFromConfigurationClass()
     this.EnableNamingAlias = Configuration.EnableNamingAlias;
     this.IgnoreUnexpectedElementsAndAttributes = Configuration.IgnoreUnexpectedElementsAndAttributes;
     this.MakeTypesInternal = Configuration.MakeTypesInternal;
+    this.NoTimestamp = Configuration.NoTimestamp;
     this.MetadataFilePath = Configuration.MetadataFilePath;
     this.MetadataFileRelativePath = Configuration.MetadataFileRelativePath;
     this.GenerateMultipleFiles = Configuration.GenerateMultipleFiles;
@@ -1041,6 +1053,15 @@ public class CodeGenerationContext
 	/// This is useful if you don't want the generated classes to be visible outside the assembly
 	/// </summary>
     public bool MakeTypesInternal
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
+    /// true to disable the Generation date timestamp, false to include the timestamp
+    /// </summary>
+    public bool NoTimestamp
     {
         get;
         set;
@@ -4014,7 +4035,14 @@ public sealed class ODataClientCSharpTemplate : ODataClientTemplate
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+<#+
+    if (!this.context.NoTimestamp)
+    {
+#>
 // Generation date: <#= DateTime.Now.ToString(global::System.Globalization.CultureInfo.CurrentCulture) #>
+<#+
+    }
+#>
 <#+
     }
 
@@ -5211,9 +5239,14 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
 
 Option Strict Off
 Option Explicit On
-
-
+<#+
+    if (!this.context.NoTimestamp)
+    {
+#>
 'Generation date: <#= DateTime.Now.ToString(System.Globalization.CultureInfo.CurrentCulture) #>
+<#+
+    }
+#>
 <#+
     }
 

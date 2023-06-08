@@ -77,6 +77,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
                         UseNamespacePrefix = true,
                         NamespacePrefix = "Namespace",
                         MakeTypesInternal = true,
+                        NoTimestamp = true,
                         GeneratedFileNamePrefix = "GeneratedCode",
                         GenerateMultipleFiles = true,
                         OpenGeneratedFilesInIDE = true,
@@ -104,6 +105,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
                         UseNamespacePrefix = false,
                         NamespacePrefix = "Namespace",
                         MakeTypesInternal = false,
+                        NoTimestamp = false,
                         GeneratedFileNamePrefix = "Reference",
                         GenerateMultipleFiles = false,
                         OpenGeneratedFilesInIDE = false,
@@ -137,6 +139,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             Assert.AreEqual(serviceConfig.EnableNamingAlias, generator.EnableNamingAlias);
             Assert.AreEqual(serviceConfig.IgnoreUnexpectedElementsAndAttributes, generator.IgnoreUnexpectedElementsAndAttributes);
             Assert.AreEqual(serviceConfig.MakeTypesInternal, generator.MakeTypesInternal);
+            Assert.AreEqual(serviceConfig.NoTimestamp, generator.NoTimestamp);
             Assert.AreEqual(serviceConfig.NamespacePrefix, generator.NamespacePrefix);
             Assert.AreEqual(serviceConfig.ExcludedOperationImports, generator.ExcludedOperationImports);
             Assert.AreEqual(serviceConfig.ExcludedSchemaTypes, generator.ExcludedSchemaTypes);
@@ -328,7 +331,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             {
                 languageOption = ODataT4CodeGenerator.LanguageOption.CSharp;
             }
-            else 
+            else
             {
                 languageOption = ODataT4CodeGenerator.LanguageOption.VB;
             }
@@ -877,7 +880,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
         }
     }
 
-    class TestV3CodeGenDescriptor: V3CodeGenDescriptor
+    class TestV3CodeGenDescriptor : V3CodeGenDescriptor
     {
         public TestV3CodeGenDescriptor(IFileHandler fileHandler, IMessageLogger messageLogger, IPackageInstaller packageInstaller) : base(fileHandler, messageLogger, packageInstaller)
         {

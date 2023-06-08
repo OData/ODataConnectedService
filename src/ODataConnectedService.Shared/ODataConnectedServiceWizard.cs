@@ -11,12 +11,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.Models;
-using Microsoft.OData.CodeGen;
+using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.ViewModels;
 using Microsoft.OData.ConnectedService.Views;
 using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.ConnectedServices;
-using Microsoft.OData.ConnectedService.Common;
 
 namespace Microsoft.OData.ConnectedService
 {
@@ -187,6 +186,7 @@ namespace Microsoft.OData.ConnectedService
 
                     if (ServiceConfig.EdmxVersion == Constants.EdmxVersion4)
                     {
+                        advancedSettings.NoTimestamp.IsEnabled = !Context.IsUpdating;
                         advancedSettings.IncludeT4File.IsEnabled = !Context.IsUpdating;
                     }
                 }
