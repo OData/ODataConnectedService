@@ -83,7 +83,6 @@
     <Compile Include="FileHandling\ODataFileOptions.cs" />
     <Compile Include="Logging\IMessageLogger.cs" />
     <Compile Include="Logging\LogMessageCategory.cs" />
-    <Compile Include="Logging\LogMessageCategory.cs" />
     <Compile Include="PackageInstallation\IPackageInstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\BoundOperationModel.cs" />
