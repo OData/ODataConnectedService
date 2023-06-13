@@ -5,8 +5,6 @@
 // </copyright>
 //----------------------------------------------------------------------------
 
-using System.Collections.Generic;
-
 namespace Microsoft.OData.Cli
 {
     /// <summary>
@@ -63,17 +61,17 @@ namespace Microsoft.OData.Cli
         /// <summary>
         /// Comma-separated list of the names of operation imports to exclude from the generated code. Example: ExcludedOperationImport1,ExcludedOperationImport2.
         /// </summary>
-        public List<string> ExcludedOperationImports { get; set; }
+        public string ExcludedOperationImports { get; set; }
 
         /// <summary>
         /// Comma-separated list of the names of bound operations to exclude from the generated code.Example: BoundOperation1,BoundOperation2.
         /// </summary>
-        public List<string> ExcludedBoundOperations { get; set; }
+        public string ExcludedBoundOperations { get; set; }
 
         /// <summary>
         /// Comma-separated list of the names of entity types to exclude from the generated code.Example: EntityType1,EntityType2,EntityType3.
         /// </summary>
-        public List<string> ExcludedSchemaTypes { get; set; }
+        public string ExcludedSchemaTypes { get; set; }
 
         /// <summary>
         /// This flag indicates whether to ignore unexpected elements and attributes in the metadata document and generate the client code if any.
