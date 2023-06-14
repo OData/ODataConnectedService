@@ -169,19 +169,19 @@ namespace Namespace1
         /// Initialize a new eventSingle object.
         /// </summary>
         public eventSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) { }
+            : base(context, path) {}
 
         /// <summary>
         /// Initialize a new eventSingle object.
         /// </summary>
         public eventSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) { }
+            : base(context, path, isComposable) {}
 
         /// <summary>
         /// Initialize a new eventSingle object.
         /// </summary>
         public eventSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<@event> query)
-            : base(query) { }
+            : base(query) {}
 
         /// <summary>
         /// There are no comments for event1 in the schema.

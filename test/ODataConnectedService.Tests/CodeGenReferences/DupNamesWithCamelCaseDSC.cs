@@ -226,19 +226,19 @@ namespace DupNames.DSC
         /// Initialize a new DupWithTypeNameSingle object.
         /// </summary>
         public DupWithTypeNameSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) { }
+            : base(context, path) {}
 
         /// <summary>
         /// Initialize a new DupWithTypeNameSingle object.
         /// </summary>
         public DupWithTypeNameSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) { }
+            : base(context, path, isComposable) {}
 
         /// <summary>
         /// Initialize a new DupWithTypeNameSingle object.
         /// </summary>
         public DupWithTypeNameSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<DupWithTypeName> query)
-            : base(query) { }
+            : base(query) {}
 
         /// <summary>
         /// There are no comments for DupPropertyName1 in the schema.
@@ -653,19 +653,19 @@ namespace DupNames.DSC
         /// Initialize a new DupWithTypeName1Single object.
         /// </summary>
         public DupWithTypeName1Single(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) { }
+            : base(context, path) {}
 
         /// <summary>
         /// Initialize a new DupWithTypeName1Single object.
         /// </summary>
         public DupWithTypeName1Single(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) { }
+            : base(context, path, isComposable) {}
 
         /// <summary>
         /// Initialize a new DupWithTypeName1Single object.
         /// </summary>
         public DupWithTypeName1Single(global::Microsoft.OData.Client.DataServiceQuerySingle<DupWithTypeName1> query)
-            : base(query) { }
+            : base(query) {}
 
     }
     /// <summary>

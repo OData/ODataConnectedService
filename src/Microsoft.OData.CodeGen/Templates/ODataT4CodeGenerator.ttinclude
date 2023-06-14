@@ -18,6 +18,7 @@
 <#@ Assembly Name="System.Windows.Forms.dll" #>
 <#@ Assembly Name="Microsoft.OData.Edm.dll" #>
 <#@ Import Namespace="System" #>
+<#@ Import Namespace= "System.CodeDom.Compiler"#>
 <#@ Import Namespace="System.Collections.Generic" #>
 <#@ Import Namespace="System.Diagnostics" #>
 <#@ Import Namespace="System.Globalization" #>
@@ -26,6 +27,7 @@
 <#@ Import Namespace="System.Net"#>
 <#@ Import Namespace="System.Security"#>
 <#@ Import Namespace="System.Text"#>
+<#@ Import Namespace= "System.Text.RegularExpressions"#>
 <#@ Import Namespace="System.Xml"#>
 <#@ Import Namespace="System.Xml.Linq" #>
 <#@ Import Namespace="Microsoft.OData.Edm.Csdl" #>
@@ -37,8 +39,6 @@
 <#@ Import Namespace="Microsoft.OData.CodeGen.FileHandling" #>
 <#@ Import Namespace="Microsoft.OData.CodeGen.Logging" #>
 <#@ Import Namespace= "Microsoft.OData.CodeGen.Common"#>
-<#@ Import Namespace= "System.CodeDom.Compiler"#>
-<#@ Import Namespace= "System.Text.RegularExpressions"#>
 <#@include file="ODataT4CodeGenFilesManager.ttinclude"
 #><#
     CodeGenerationContext context;
@@ -2802,7 +2802,7 @@ public abstract class ODataClientTemplate : TemplateBase
             baseProperties = BaseClassProperties.Select(prop => prop.ToUpperInvariant());
         }
 
-        var propertiesToRename = structuredType.DeclaredProperties.Where(prop => baseProperties.Contains((isLanguageCaseSensitive ? prop.Name : prop.Name.ToUpperInvariant())));
+        var propertiesToRename = structuredType.DeclaredProperties.Where(prop => baseProperties.Contains((isLanguageCaseSensitive ? customizePropertyName(prop.Name) : prop.Name.ToUpperInvariant())));
         UniqueIdentifierService uniqueIdentifierService =
             new UniqueIdentifierService(BaseClassProperties, isLanguageCaseSensitive);
 
@@ -4385,19 +4385,19 @@ namespace <#= fullNamespace #>
         /// Initialize a new <#= singleTypeName #> object.
         /// </summary>
         public <#= singleTypeName #>(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) { }
+            : base(context, path) {}
 
         /// <summary>
         /// Initialize a new <#= singleTypeName #> object.
         /// </summary>
         public <#= singleTypeName #>(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) { }
+            : base(context, path, isComposable) {}
 
         /// <summary>
         /// Initialize a new <#= singleTypeName #> object.
         /// </summary>
         public <#= singleTypeName #>(<#= baseTypeName #> query)
-            : base(query) { }
+            : base(query) {}
 
 <#+
     }
@@ -4827,7 +4827,6 @@ namespace <#= fullNamespace #>
             WriteRequiredAttribute($"{propertyOptions.PropertyName} is required.");
         }
 #>
-
 <#+
         if (!string.IsNullOrEmpty(propertyOptions.PropertyAttribute))
         {

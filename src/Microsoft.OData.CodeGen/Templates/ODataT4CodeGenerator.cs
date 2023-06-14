@@ -10,6 +10,7 @@
 namespace Microsoft.OData.CodeGen.Templates
 {
     using System;
+    using System.CodeDom.Compiler;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
@@ -18,6 +19,7 @@ namespace Microsoft.OData.CodeGen.Templates
     using System.Net;
     using System.Security;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Xml;
     using System.Xml.Linq;
     using Microsoft.OData.Edm.Csdl;
@@ -29,8 +31,6 @@ namespace Microsoft.OData.CodeGen.Templates
     using Microsoft.OData.CodeGen.FileHandling;
     using Microsoft.OData.CodeGen.Logging;
     using Microsoft.OData.CodeGen.Common;
-    using System.CodeDom.Compiler;
-    using System.Text.RegularExpressions;
     
     /// <summary>
     /// Class to produce the template output
@@ -2947,7 +2947,7 @@ public abstract class ODataClientTemplate : TemplateBase
             baseProperties = BaseClassProperties.Select(prop => prop.ToUpperInvariant());
         }
 
-        var propertiesToRename = structuredType.DeclaredProperties.Where(prop => baseProperties.Contains((isLanguageCaseSensitive ? prop.Name : prop.Name.ToUpperInvariant())));
+        var propertiesToRename = structuredType.DeclaredProperties.Where(prop => baseProperties.Contains((isLanguageCaseSensitive ? customizePropertyName(prop.Name) : prop.Name.ToUpperInvariant())));
         UniqueIdentifierService uniqueIdentifierService =
             new UniqueIdentifierService(BaseClassProperties, isLanguageCaseSensitive);
 
@@ -4617,8 +4617,8 @@ this.Write(" object.\r\n        /// </summary>\r\n        public ");
 this.Write(this.ToStringHelper.ToStringWithCulture(singleTypeName));
 
 this.Write("(global::Microsoft.OData.Client.DataServiceContext context, string path)\r\n       " +
-        "     : base(context, path) { }\r\n\r\n        /// <summary>\r\n        /// Initialize " +
-        "a new ");
+        "     : base(context, path) {}\r\n\r\n        /// <summary>\r\n        /// Initialize a" +
+        " new ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(singleTypeName));
 
@@ -4627,8 +4627,8 @@ this.Write(" object.\r\n        /// </summary>\r\n        public ");
 this.Write(this.ToStringHelper.ToStringWithCulture(singleTypeName));
 
 this.Write("(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isC" +
-        "omposable)\r\n            : base(context, path, isComposable) { }\r\n\r\n        /// <" +
-        "summary>\r\n        /// Initialize a new ");
+        "omposable)\r\n            : base(context, path, isComposable) {}\r\n\r\n        /// <s" +
+        "ummary>\r\n        /// Initialize a new ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(singleTypeName));
 
@@ -4640,7 +4640,7 @@ this.Write("(");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(baseTypeName));
 
-this.Write(" query)\r\n            : base(query) { }\r\n\r\n");
+this.Write(" query)\r\n            : base(query) {}\r\n\r\n");
 
 
     }
