@@ -249,6 +249,7 @@ namespace Microsoft.OData.Cli
                     fileOptions = configFile.ExtendedData;
                 }
 
+                var namespacePrefix = GetConfigValue(generateOptions.NamespacePrefix, fileOptions?.NamespacePrefix);
                 serviceConfig = new TServiceConfig
                 {
                     Endpoint = GetConfigValue(generateOptions.MetadataUri, fileOptions?.Endpoint),
@@ -262,8 +263,8 @@ namespace Microsoft.OData.Cli
                     WebProxyNetworkCredentialsUsername = GetConfigValue(generateOptions.WebProxyNetworkCredentialsUsername, fileOptions?.WebProxyNetworkCredentialsUsername),
                     WebProxyNetworkCredentialsPassword = GetConfigValue(generateOptions.WebProxyNetworkCredentialsDomain, fileOptions?.WebProxyNetworkCredentialsPassword),
                     WebProxyNetworkCredentialsDomain = GetConfigValue(generateOptions.WebProxyNetworkCredentialsPassword, fileOptions?.WebProxyNetworkCredentialsDomain),
-                    NamespacePrefix = GetConfigValue(generateOptions.NamespacePrefix, fileOptions?.NamespacePrefix),
-                    UseNamespacePrefix = (fileOptions?.UseNamespacePrefix ?? false) || (!string.IsNullOrWhiteSpace(serviceConfig.NamespacePrefix)),
+                    NamespacePrefix = namespacePrefix,
+                    UseNamespacePrefix = (fileOptions?.UseNamespacePrefix ?? false) || (!string.IsNullOrWhiteSpace(namespacePrefix)),
                     UseDataServiceCollection = generateOptions.EnableTracking || (fileOptions?.UseDataServiceCollection ?? false),
                     MakeTypesInternal = generateOptions.EnableInternal || (fileOptions?.MakeTypesInternal ?? false),
                     GenerateMultipleFiles = generateOptions.MultipleFiles || (fileOptions?.GenerateMultipleFiles ?? false),
