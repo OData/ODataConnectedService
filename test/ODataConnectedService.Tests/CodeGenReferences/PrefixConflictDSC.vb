@@ -26,7 +26,6 @@ Namespace PrefixConflict.DSC
         Public Sub New(ByVal serviceRoot As Global.System.Uri)
             Me.New(serviceRoot, Global.Microsoft.OData.Client.ODataProtocolVersion.V4)
         End Sub
-
         ''' <summary>
         ''' Initialize a new EntityContainer object.
         ''' </summary>

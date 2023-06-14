@@ -24,7 +24,6 @@ namespace PrefixConflict
                 this(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
         {
         }
-
         /// <summary>
         /// Initialize a new EntityContainer object.
         /// </summary>
