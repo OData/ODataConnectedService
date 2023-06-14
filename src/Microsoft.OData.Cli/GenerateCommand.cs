@@ -267,7 +267,7 @@ namespace Microsoft.OData.Cli
                     UseDataServiceCollection = generateOptions.EnableTracking || (fileOptions?.UseDataServiceCollection ?? false),
                     MakeTypesInternal = generateOptions.EnableInternal || (fileOptions?.MakeTypesInternal ?? false),
                     GenerateMultipleFiles = generateOptions.MultipleFiles || (fileOptions?.GenerateMultipleFiles ?? false),
-                    ExcludedSchemaTypes = GetValue(generateOptions.ExcludedSchemaTypes, fileOptions?.ExcludedSchemaTypes),
+                    ExcludedSchemaTypes = GetConfigValue(generateOptions.ExcludedSchemaTypes, fileOptions?.ExcludedSchemaTypes),
                 };
 
                 if (serviceConfig is ServiceConfigurationV4)
