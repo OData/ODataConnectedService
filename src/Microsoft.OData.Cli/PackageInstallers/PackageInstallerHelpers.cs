@@ -90,7 +90,7 @@ namespace Microsoft.OData.Cli.PackageInstallers
         /// </summary>
         /// <param name="packageId">The package to install</param>
         /// <param name="projectTargetVersion">The version of .net framework that the project targets.</param>
-        /// <returns>A completed task of the package installation</returns>
+        /// <returns>A completed task of the package installation.</returns>
         internal async Task InstallPackagesOnDotNetV4FrameworkProjects(string packageId, string projectTargetVersion)
         {
             using (SourceCacheContext cacheContext = new SourceCacheContext())
