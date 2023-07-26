@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFrameworks>net6.0</TargetFrameworks>
     <PackAsTool>true</PackAsTool>
-    <ToolCommandName>Microsoft.OData.Cli</ToolCommandName>
+    <ToolCommandName>odata-cli</ToolCommandName>
     <RootNamespace>Microsoft.OData.Cli</RootNamespace>
     <AssemblyName>Microsoft.OData.Cli</AssemblyName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
