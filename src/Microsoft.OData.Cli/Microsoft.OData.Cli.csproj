@@ -3,10 +3,12 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>net6.0</TargetFrameworks>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>Microsoft.OData.Cli</ToolCommandName>
     <RootNamespace>Microsoft.OData.Cli</RootNamespace>
     <AssemblyName>Microsoft.OData.Cli</AssemblyName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
     <Authors>Microsoft</Authors>
     <Product>Microsoft.OData.Cli</Product>
     <Description>The odata-cli is a CLI tool for generating strongly typed C# and Visual Basic client code for a specified OData service. It generates a DataServiceContext class to interact with the service and CLR types for each entity type and complex type in the service model. It does exactly what the OData Connected Service does.  </Description>
@@ -17,6 +19,7 @@
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>tools\OcsKey.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   
   <ItemGroup>
@@ -35,6 +38,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="LICENSE.txt" Pack="true" Visible="false" PackagePath="$(PackageLicenseFile)" />
   </ItemGroup>
 </Project>
