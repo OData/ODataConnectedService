@@ -117,6 +117,10 @@ OData Connected Service is considered a stable product. Below are some planned i
 
 There are many ways for you to contribute to OData Connected services. The easiest way is to participate in discussion of features and issues. You can also contribute by sending pull requests of features or bug fixes to us. Contribution to the documentations is also highly welcomed. Please refer to the [CONTRIBUTING.md](https://github.com/OData/ODataConnectedService/blob/master/CONTRIBUTING.MD) for more details.
 
+### Reporting Security Issues
+
+Security issues and bugs should be reported privately, via email, to the Microsoft Security Response Center (MSRC) <secure@microsoft.com>. You should receive a response within 24 hours. If for some reason you do not, please follow up via email to ensure we received your original message. Further information, including the MSRC PGP key, can be found in the [Security TechCenter](https://www.microsoft.com/msrc/faqs-report-an-issue). You can also find these instructions in this repo's [SECURITY.md](./SECURITY.md).
+
 ###  Support
 
 - Issues: Report issues on [Github issues](https://github.com/OData/ODataConnectedService/issues).
