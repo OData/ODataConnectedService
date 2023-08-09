@@ -44,7 +44,7 @@ namespace Microsoft.OData.Cli
             Option connectedServiceFile = new Option<string>(new[] { "--connected-service-file", "-c" })
             {
                 Name = "connected-service-file",
-                Description = "Full path to JSon OData Connected Service Config File (e.g., ConnectedService.json)",
+                Description = "Full path to JSON OData Connected Service Config File (e.g., ConnectedService.json)",
                 IsRequired = false
             };
 
