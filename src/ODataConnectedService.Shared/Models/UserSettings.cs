@@ -69,6 +69,7 @@ namespace Microsoft.OData.CodeGen.Models
         /// <param name="logger">The logger to use.</param>
         /// <param name="configName">The name to use for the config file.</param>
         public UserSettings(ConnectedServiceLogger logger, string configName = "Settings")
+            : base()
         {
             this.configName = configName;
             this.logger = logger;
