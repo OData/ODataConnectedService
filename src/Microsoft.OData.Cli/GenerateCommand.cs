@@ -286,6 +286,7 @@ namespace Microsoft.OData.Cli
             return serviceConfig;
         }
 
+        /// <summary>
         /// Read and deserialize <paramref name="fileName"/> into <see cref="ConfigJsonFile"/>
         /// </summary>
         /// <param name="fileName">Name of config file to read</param>
@@ -300,34 +301,31 @@ namespace Microsoft.OData.Cli
             {
                 if (File.Exists(fileName))
                 {
-                    string configFileText;
-                    try
-                    {
-                        configFileText = File.ReadAllText(fileName);
-                        if (string.IsNullOrWhiteSpace(configFileText))
-                        {
-                            throw new Exception($"Config file '{fileName}' is empty.");
-                        }
-                    }
-
-                    catch (Exception ex)
-                    {
-                        throw new Exception($"Failed to load configuration file '{fileName}': {ex.Message}");
-                    }
-
-                    try
-                    {
-                        configFileData = JsonConvert.DeserializeObject<CliConnectedServiceJsonFileData>(configFileText);
-                    }
-
-                    catch (JsonException ex)
-                    {
-                        throw new Exception($"Contents of the config file ('{fileName}') could not be deserialized: {ex.Message}");
-                    }
-                }
-                else
-                {
                     throw new ArgumentException($"Specified config file does not exist: '{fileName}'", nameof(fileName));
+                }
+
+                string configFileText;
+                try
+                {
+                    configFileText = File.ReadAllText(fileName);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to load configuration file '{fileName}': {ex.Message}");
+                }
+
+                if (string.IsNullOrWhiteSpace(configFileText))
+                {
+                    throw new Exception($"Config file '{fileName}' is empty.");
+                }
+
+                try
+                {
+                    configFileData = JsonConvert.DeserializeObject<CliConnectedServiceJsonFileData>(configFileText);
+                }
+                catch (JsonException ex)
+                {
+                    throw new Exception($"Contents of the config file ('{fileName}') could not be deserialized: {ex.Message}");
                 }
             }
 
