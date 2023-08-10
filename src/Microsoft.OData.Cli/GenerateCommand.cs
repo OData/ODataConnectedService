@@ -6,7 +6,6 @@
 //----------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.NamingConventionBinder;
 using System.IO;
@@ -249,26 +248,26 @@ namespace Microsoft.OData.Cli
                     fileOptions = configFile.ExtendedData;
                 }
 
-                var namespacePrefix = GetConfigValue(generateOptions.NamespacePrefix, fileOptions?.NamespacePrefix);
+                var namespacePrefix = string.IsNullOrEmpty(generateOptions.NamespacePrefix) ? fileOptions?.NamespacePrefix : generateOptions.NamespacePrefix;
                 serviceConfig = new TServiceConfig
                 {
-                    Endpoint = GetConfigValue(generateOptions.MetadataUri, fileOptions?.Endpoint),
-                    ServiceName = GetConfigValue(fileOptions?.ServiceName, Constants.DefaultServiceName),
-                    GeneratedFileNamePrefix = GetConfigValue(generateOptions.FileName, fileOptions?.GeneratedFileNamePrefix),
-                    CustomHttpHeaders = GetConfigValue(generateOptions.CustomHeaders, fileOptions?.CustomHttpHeaders),
-                    WebProxyHost = GetConfigValue(generateOptions.WebProxyHost, fileOptions?.WebProxyHost),
+                    Endpoint = string.IsNullOrEmpty(generateOptions.MetadataUri) ? fileOptions?.Endpoint : generateOptions.MetadataUri,
+                    ServiceName = string.IsNullOrEmpty(fileOptions?.ServiceName) ? Constants.DefaultServiceName : fileOptions?.ServiceName,
+                    GeneratedFileNamePrefix = string.IsNullOrEmpty(generateOptions.FileName) ? fileOptions?.GeneratedFileNamePrefix : generateOptions.FileName,
+                    CustomHttpHeaders = string.IsNullOrEmpty(generateOptions.CustomHeaders) ? fileOptions?.CustomHttpHeaders : generateOptions.CustomHeaders,
+                    WebProxyHost = string.IsNullOrEmpty(generateOptions.WebProxyHost) ? fileOptions?.WebProxyHost : generateOptions.WebProxyHost,
                     IncludeWebProxy = generateOptions.IncludeWebProxy || (fileOptions?.IncludeWebProxy ?? false),
                     IncludeWebProxyNetworkCredentials = generateOptions.IncludeWebProxyNetworkCredentials
                         || (fileOptions?.IncludeWebProxyNetworkCredentials ?? false),
-                    WebProxyNetworkCredentialsUsername = GetConfigValue(generateOptions.WebProxyNetworkCredentialsUsername, fileOptions?.WebProxyNetworkCredentialsUsername),
-                    WebProxyNetworkCredentialsPassword = GetConfigValue(generateOptions.WebProxyNetworkCredentialsDomain, fileOptions?.WebProxyNetworkCredentialsPassword),
-                    WebProxyNetworkCredentialsDomain = GetConfigValue(generateOptions.WebProxyNetworkCredentialsPassword, fileOptions?.WebProxyNetworkCredentialsDomain),
+                    WebProxyNetworkCredentialsUsername = string.IsNullOrEmpty(generateOptions.WebProxyNetworkCredentialsUsername) ? fileOptions?.WebProxyNetworkCredentialsUsername : generateOptions.WebProxyNetworkCredentialsUsername,
+                    WebProxyNetworkCredentialsPassword = string.IsNullOrEmpty(generateOptions.WebProxyNetworkCredentialsDomain) ? fileOptions?.WebProxyNetworkCredentialsPassword : generateOptions.WebProxyNetworkCredentialsDomain,
+                    WebProxyNetworkCredentialsDomain = string.IsNullOrEmpty(generateOptions.WebProxyNetworkCredentialsPassword) ? fileOptions?.WebProxyNetworkCredentialsDomain : generateOptions.WebProxyNetworkCredentialsPassword,
                     NamespacePrefix = namespacePrefix,
                     UseNamespacePrefix = (fileOptions?.UseNamespacePrefix ?? false) || (!string.IsNullOrWhiteSpace(namespacePrefix)),
                     UseDataServiceCollection = generateOptions.EnableTracking || (fileOptions?.UseDataServiceCollection ?? false),
                     MakeTypesInternal = generateOptions.EnableInternal || (fileOptions?.MakeTypesInternal ?? false),
                     GenerateMultipleFiles = generateOptions.MultipleFiles || (fileOptions?.GenerateMultipleFiles ?? false),
-                    ExcludedSchemaTypes = GetConfigValue(generateOptions.ExcludedSchemaTypes, fileOptions?.ExcludedSchemaTypes),
+                    ExcludedSchemaTypes = generateOptions.ExcludedSchemaTypes != null && generateOptions.ExcludedSchemaTypes.Any() ? generateOptions.ExcludedSchemaTypes : fileOptions?.ExcludedSchemaTypes,
                 };
 
                 if (serviceConfig is ServiceConfigurationV4)
@@ -278,48 +277,13 @@ namespace Microsoft.OData.Cli
                     serviceConfigurationV4.EnableNamingAlias = generateOptions.UpperCamelCase || (fileOptions?.EnableNamingAlias ?? false);
                     serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = generateOptions.IgnoreUnexpectedElements || (fileOptions?.IgnoreUnexpectedElementsAndAttributes ?? false);
                     serviceConfigurationV4.IncludeT4File = fileOptions?.IncludeT4File ?? false;
-                    serviceConfigurationV4.ExcludedOperationImports = GetValue(generateOptions.ExcludedOperationImports, fileOptions?.ExcludedOperationImports);
-                    serviceConfigurationV4.ExcludedBoundOperations = GetValue(generateOptions.ExcludedBoundOperations, fileOptions?.ExcludedBoundOperations);
+                    serviceConfigurationV4.ExcludedOperationImports = generateOptions.ExcludedOperationImports != null && generateOptions.ExcludedOperationImports.Any() ? generateOptions.ExcludedOperationImports : fileOptions?.ExcludedOperationImports;
+                    serviceConfigurationV4.ExcludedBoundOperations = generateOptions.ExcludedBoundOperations != null && generateOptions.ExcludedBoundOperations.Any() ? generateOptions.ExcludedBoundOperations : fileOptions?.ExcludedBoundOperations;
                     serviceConfigurationV4.NoTimestamp = generateOptions.NoTimestamp || (fileOptions?.NoTimestamp ?? false);
                 }
             }
 
             return serviceConfig;
-        }
-
-        /// <summary>
-        /// Select <paramref name="alternateValue"/> if <paramref name="configValue"/> is null or empty
-        /// </summary>
-        /// <param name="configValue">Source value to use if not null or empty</param>
-        /// <param name="alternateValue">Alternate value to use if <paramref name="configValue"/> is null or empty</param>
-        /// <returns><paramref name="configValue"/> if not null or empty, otherwise <paramref name="alternateValue"/></returns>
-        private static string GetConfigValue(string configValue, string alternateValue)
-        {
-            var value = configValue;
-            if (string.IsNullOrEmpty(value))
-            {
-                value = alternateValue;
-            }
-
-            return value;
-        }
-
-        /// <summary>
-        /// Select <paramref name="alternateValue"/> if <paramref name="sourceValue"/> is null or empty
-        /// </summary>
-        /// <typeparam name="T">Type of lists</typeparam>
-        /// <param name="sourceValue">Source list to use if not null or empty</param>
-        /// <param name="alternateValue">Alternate list to use if <paramref name="sourceValue"/> is null or empty</param>
-        /// <returns><paramref name="sourceValue"/> if not null or empty, otherwise <paramref name="alternateValue"/></returns>
-        private static List<T> GetValue<T>(List<T> sourceValue, List<T> alternateValue)
-        {
-            var value = sourceValue;
-            if (value == null || !value.Any())
-            {
-                value = alternateValue;
-            }
-
-            return value;
         }
 
         /// Read and deserialize <paramref name="fileName"/> into <see cref="ConfigJsonFile"/>
