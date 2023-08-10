@@ -5,6 +5,8 @@
 // </copyright>
 //----------------------------------------------------------------------------
 
+using Microsoft.OData.CodeGen.Models;
+
 namespace Microsoft.OData.Cli.Models
 {
     /// <summary>
