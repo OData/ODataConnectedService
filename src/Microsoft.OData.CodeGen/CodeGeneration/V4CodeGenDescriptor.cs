@@ -28,7 +28,6 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
         {
             ClientNuGetPackageName = Common.Constants.V4ClientNuGetPackage;
             ClientDocUri = Common.Constants.V4DocUri;
-            //  ServiceConfiguration = base.ServiceConfiguration as ServiceConfigurationV4;
             CodeGeneratorFactory = codeGeneratorFactory;
         }
 
