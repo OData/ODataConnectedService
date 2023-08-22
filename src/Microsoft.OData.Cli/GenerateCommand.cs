@@ -255,6 +255,10 @@ namespace Microsoft.OData.Cli
             }
 
             var namespacePrefix = string.IsNullOrEmpty(generateOptions.NamespacePrefix) ? fileOptions?.NamespacePrefix : generateOptions.NamespacePrefix;
+            var excludedSchemaTypes = generateOptions.ExcludedSchemaTypes?.Split(",").Select(type => type.Trim()).ToList();
+            var excludedBoundOperations = generateOptions.ExcludedBoundOperations?.Split(",").Select(type => type.Trim()).ToList();
+            var excludedOperationImports = generateOptions.ExcludedOperationImports?.Split(",").Select(type => type.Trim()).ToList();
+
             serviceConfig = new TServiceConfig
             {
                 Endpoint = string.IsNullOrEmpty(generateOptions.MetadataUri) ? fileOptions?.Endpoint : generateOptions.MetadataUri,
@@ -273,7 +277,7 @@ namespace Microsoft.OData.Cli
                 UseDataServiceCollection = generateOptions.EnableTracking || (fileOptions?.UseDataServiceCollection ?? false),
                 MakeTypesInternal = generateOptions.EnableInternal || (fileOptions?.MakeTypesInternal ?? false),
                 GenerateMultipleFiles = generateOptions.MultipleFiles || (fileOptions?.GenerateMultipleFiles ?? false),
-                ExcludedSchemaTypes = generateOptions.ExcludedSchemaTypes != null && generateOptions.ExcludedSchemaTypes.Any() ? generateOptions.ExcludedSchemaTypes : fileOptions?.ExcludedSchemaTypes,
+                ExcludedSchemaTypes = excludedSchemaTypes != null && excludedSchemaTypes.Any() ? excludedSchemaTypes : fileOptions?.ExcludedSchemaTypes,
             };
 
             if (serviceConfig is ServiceConfigurationV4)
@@ -283,8 +287,8 @@ namespace Microsoft.OData.Cli
                 serviceConfigurationV4.EnableNamingAlias = generateOptions.UpperCamelCase || (fileOptions?.EnableNamingAlias ?? false);
                 serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = generateOptions.IgnoreUnexpectedElements || (fileOptions?.IgnoreUnexpectedElementsAndAttributes ?? false);
                 serviceConfigurationV4.IncludeT4File = fileOptions?.IncludeT4File ?? false;
-                serviceConfigurationV4.ExcludedOperationImports = generateOptions.ExcludedOperationImports != null && generateOptions.ExcludedOperationImports.Any() ? generateOptions.ExcludedOperationImports : fileOptions?.ExcludedOperationImports;
-                serviceConfigurationV4.ExcludedBoundOperations = generateOptions.ExcludedBoundOperations != null && generateOptions.ExcludedBoundOperations.Any() ? generateOptions.ExcludedBoundOperations : fileOptions?.ExcludedBoundOperations;
+                serviceConfigurationV4.ExcludedOperationImports = excludedOperationImports != null && excludedOperationImports.Any() ? excludedOperationImports : fileOptions?.ExcludedOperationImports;
+                serviceConfigurationV4.ExcludedBoundOperations = excludedBoundOperations != null && excludedBoundOperations.Any() ? excludedBoundOperations : fileOptions?.ExcludedBoundOperations;
                 serviceConfigurationV4.NoTimestamp = generateOptions.NoTimestamp || (fileOptions?.NoTimestamp ?? false);
             }
 
