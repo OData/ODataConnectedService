@@ -26,9 +26,9 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// User settings.
         /// </summary>
         /// <remarks>
-        /// <see cref="Models.UserSettings"/>
+        /// <see cref="Models.ConnectedServiceUserSettings"/>
         /// </remarks>
-        public UserSettings UserSettings { get; set; }
+        public ConnectedServiceUserSettings ConnectedServiceUserSettings { get; set; }
 
         /// <summary>
         /// A dictionary that contains schema type full names with it's related models.
@@ -109,7 +109,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         internal bool IsEntered;
 
-        public SchemaTypesViewModel(UserSettings userSettings = null) : base()
+        public SchemaTypesViewModel(ConnectedServiceUserSettings userSettings = null) : base()
         {
             Title = "Schema Types";
             Description = "Select schema types with its bound operations to include in the generated code.";
@@ -117,7 +117,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             SchemaTypes = new List<SchemaTypeModel>();
             SchemaTypeModelMap = new Dictionary<string, SchemaTypeModel>();
             RelatedTypes = new Dictionary<string, ICollection<string>>();
-            this.UserSettings = userSettings;
+            this.ConnectedServiceUserSettings = userSettings;
         }
 
         /// <summary>
@@ -203,13 +203,13 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// </summary>
         public void SaveToUserSettings()
         {
-            if (this.UserSettings != null)
+            if (this.ConnectedServiceUserSettings != null)
             {
-                UserSettings.ExcludedSchemaTypes = this.ExcludedSchemaTypeNames?.Any() == true
+                ConnectedServiceUserSettings.ExcludedSchemaTypes = this.ExcludedSchemaTypeNames?.Any() == true
                     ? this.ExcludedSchemaTypeNames.ToList()
                     : new List<string>();
 
-                UserSettings.ExcludedBoundOperations = this.ExcludedBoundOperationsNames?.Any() == true
+                ConnectedServiceUserSettings.ExcludedBoundOperations = this.ExcludedBoundOperationsNames?.Any() == true
                     ? this.ExcludedBoundOperationsNames.ToList()
                     : new List<string>();
             }
@@ -220,19 +220,19 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// </summary>
         public void LoadFromUserSettings()
         {
-            if (UserSettings != null)
+            if (ConnectedServiceUserSettings != null)
             {
-                if (UserSettings.ExcludedSchemaTypes?.Any() == true)
+                if (ConnectedServiceUserSettings.ExcludedSchemaTypes?.Any() == true)
                 {
-                    ExcludeSchemaTypes(UserSettings.ExcludedSchemaTypes ?? Enumerable.Empty<string>(), UserSettings.ExcludedBoundOperations ?? Enumerable.Empty<string>());
+                    ExcludeSchemaTypes(ConnectedServiceUserSettings.ExcludedSchemaTypes ?? Enumerable.Empty<string>(), ConnectedServiceUserSettings.ExcludedBoundOperations ?? Enumerable.Empty<string>());
                 }
 
-                if (UserSettings.ExcludedBoundOperations?.Any() == true)
+                if (ConnectedServiceUserSettings.ExcludedBoundOperations?.Any() == true)
                 {
                     foreach (var schemaType in SchemaTypes)
                     {
                         ExcludeBoundOperations(schemaType,
-                            UserSettings.ExcludedBoundOperations ?? Enumerable.Empty<string>());
+                            ConnectedServiceUserSettings.ExcludedBoundOperations ?? Enumerable.Empty<string>());
                     }
                 }
             }

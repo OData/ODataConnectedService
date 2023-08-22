@@ -15,16 +15,16 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 {
     internal class AdvancedSettingsViewModel : ConnectedServiceWizardPage
     {
-        public UserSettings UserSettings { get; internal set; }
+        public ConnectedServiceUserSettings ConnectedServiceUserSettings { get; internal set; }
 
         internal bool IsEntered;
 
-        public AdvancedSettingsViewModel(UserSettings userSettings) : base()
+        public AdvancedSettingsViewModel(ConnectedServiceUserSettings userSettings) : base()
         {
             this.Title = "Settings";
             this.Description = "Advanced settings for generating client proxy";
             this.Legend = "Settings";
-            this.UserSettings = userSettings;
+            this.ConnectedServiceUserSettings = userSettings;
         }
 
         public event EventHandler<EventArgs> PageEntering;

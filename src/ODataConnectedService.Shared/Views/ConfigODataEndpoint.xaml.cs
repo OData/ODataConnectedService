@@ -19,7 +19,7 @@ namespace Microsoft.OData.ConnectedService.Views
     /// </summary>
     public partial class ConfigODataEndpoint : UserControl
     {
-        internal UserSettings UserSettings { get; set; }
+        internal ConnectedServiceUserSettings ConnectedServiceUserSettings { get; set; }
 
         public ConfigODataEndpoint()
         {
@@ -29,7 +29,7 @@ namespace Microsoft.OData.ConnectedService.Views
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             ODataConnectedServiceWizard connectedServiceWizard = GetODataConnectedServiceWizard();
-            UserSettings = connectedServiceWizard.UserSettings;
+            ConnectedServiceUserSettings = connectedServiceWizard.ConnectedServiceUserSettings;
 
             if (Endpoint.Items.Count > 0 && !connectedServiceWizard.Context.IsUpdating)
             {
@@ -111,7 +111,7 @@ namespace Microsoft.OData.ConnectedService.Views
             // connectedServiceData not expected to be null at this point
             if (connectedServiceData.ExtendedData != null)
             {
-                this.UserSettings.CopyPropertiesFrom(connectedServiceData.ExtendedData);
+                this.ConnectedServiceUserSettings.CopyPropertiesFrom(connectedServiceData.ExtendedData);
             }
 
             ODataConnectedServiceWizard connectedServiceWizard = GetODataConnectedServiceWizard();
@@ -129,12 +129,12 @@ namespace Microsoft.OData.ConnectedService.Views
                     IEnumerable<Edm.IEdmSchemaType> entityTypes = EdmHelper.GetSchemaTypes(model);
                     IDictionary<Edm.IEdmType, List<Edm.IEdmOperation>> boundOperations = EdmHelper.GetBoundOperations(model);
                     connectedServiceWizard.SchemaTypesViewModel.LoadSchemaTypes(entityTypes, boundOperations);
-                    connectedServiceWizard.ProcessedEndpointForSchemaTypes = this.UserSettings.Endpoint;
+                    connectedServiceWizard.ProcessedEndpointForSchemaTypes = this.ConnectedServiceUserSettings.Endpoint;
                     connectedServiceWizard.SchemaTypesViewModel.LoadFromUserSettings();
 
                     IEnumerable<Edm.IEdmOperationImport> operations = EdmHelper.GetOperationImports(model);
                     connectedServiceWizard.OperationImportsViewModel.LoadOperationImports(operations, new HashSet<string>(), new Dictionary<string, SchemaTypeModel>());
-                    connectedServiceWizard.ProcessedEndpointForOperationImports = this.UserSettings.Endpoint;
+                    connectedServiceWizard.ProcessedEndpointForOperationImports = this.ConnectedServiceUserSettings.Endpoint;
                     connectedServiceWizard.OperationImportsViewModel.LoadFromUserSettings();
                 }
             }
@@ -152,14 +152,14 @@ namespace Microsoft.OData.ConnectedService.Views
         private ServiceConfiguration GetServiceConfiguration()
         {
             ServiceConfiguration serviceConfiguration = new ServiceConfiguration();
-            serviceConfiguration.Endpoint = this.UserSettings.Endpoint;
-            serviceConfiguration.CustomHttpHeaders = this.UserSettings.CustomHttpHeaders;
-            serviceConfiguration.WebProxyHost = this.UserSettings.WebProxyHost;
-            serviceConfiguration.IncludeWebProxy = this.UserSettings.IncludeWebProxy;
-            serviceConfiguration.IncludeWebProxyNetworkCredentials = this.UserSettings.IncludeWebProxyNetworkCredentials;
-            serviceConfiguration.WebProxyNetworkCredentialsUsername = this.UserSettings.WebProxyNetworkCredentialsUsername;
-            serviceConfiguration.WebProxyNetworkCredentialsPassword = this.UserSettings.WebProxyNetworkCredentialsPassword;
-            serviceConfiguration.WebProxyNetworkCredentialsDomain = this.UserSettings.WebProxyNetworkCredentialsDomain;
+            serviceConfiguration.Endpoint = this.ConnectedServiceUserSettings.Endpoint;
+            serviceConfiguration.CustomHttpHeaders = this.ConnectedServiceUserSettings.CustomHttpHeaders;
+            serviceConfiguration.WebProxyHost = this.ConnectedServiceUserSettings.WebProxyHost;
+            serviceConfiguration.IncludeWebProxy = this.ConnectedServiceUserSettings.IncludeWebProxy;
+            serviceConfiguration.IncludeWebProxyNetworkCredentials = this.ConnectedServiceUserSettings.IncludeWebProxyNetworkCredentials;
+            serviceConfiguration.WebProxyNetworkCredentialsUsername = this.ConnectedServiceUserSettings.WebProxyNetworkCredentialsUsername;
+            serviceConfiguration.WebProxyNetworkCredentialsPassword = this.ConnectedServiceUserSettings.WebProxyNetworkCredentialsPassword;
+            serviceConfiguration.WebProxyNetworkCredentialsDomain = this.ConnectedServiceUserSettings.WebProxyNetworkCredentialsDomain;
 
             return serviceConfiguration;
         }

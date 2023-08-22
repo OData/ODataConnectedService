@@ -14,7 +14,7 @@ namespace Microsoft.OData.ConnectedService.Common
     {
         public string ProviderId { get; set; }
 
-        public UserSettings ExtendedData { get; set; }
+        public ConnectedServiceUserSettings ExtendedData { get; set; }
     }
     #endregion
 }

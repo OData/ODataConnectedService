@@ -27,9 +27,9 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// User settings.
         /// </summary>
         /// <remarks>
-        /// <see cref="Models.UserSettings"/>
+        /// <see cref="Models.ConnectedServiceUserSettings"/>
         /// </remarks>
-        public UserSettings UserSettings { get; internal set; }
+        public ConnectedServiceUserSettings ConnectedServiceUserSettings { get; internal set; }
 
         private long _operationImportsCount = 0;
 
@@ -40,14 +40,14 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         internal bool IsEntered;
 
-        public OperationImportsViewModel(UserSettings userSettings = null) : base()
+        public OperationImportsViewModel(ConnectedServiceUserSettings userSettings = null) : base()
         {
             Title = "Function/Action Imports";
             Description = "Select function and action imports to include in the generated code.";
             Legend = "Function/Action Imports Selection";
             OperationImports = new List<OperationImportModel>();
             IsSupportedODataVersion = true;
-            this.UserSettings = userSettings;
+            this.ConnectedServiceUserSettings = userSettings;
         }
 
         /// <summary>
@@ -290,9 +290,9 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// </summary>
         private void SaveToUserSettings()
         {
-            if (this.UserSettings != null)
+            if (this.ConnectedServiceUserSettings != null)
             {
-                UserSettings.ExcludedOperationImports = this.ExcludedOperationImportsNames?.Any() == true
+                ConnectedServiceUserSettings.ExcludedOperationImports = this.ExcludedOperationImportsNames?.Any() == true
                     ? this.ExcludedOperationImportsNames.ToList()
                     : new List<string>();
             }
@@ -303,11 +303,11 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// </summary>
         public void LoadFromUserSettings()
         {
-            if (UserSettings != null)
+            if (ConnectedServiceUserSettings != null)
             {
-                if (UserSettings.ExcludedOperationImports?.Any() == true)
+                if (ConnectedServiceUserSettings.ExcludedOperationImports?.Any() == true)
                 {
-                    ExcludeOperationImports(UserSettings.ExcludedOperationImports ?? Enumerable.Empty<string>());
+                    ExcludeOperationImports(ConnectedServiceUserSettings.ExcludedOperationImports ?? Enumerable.Empty<string>());
                 }
             }
         }

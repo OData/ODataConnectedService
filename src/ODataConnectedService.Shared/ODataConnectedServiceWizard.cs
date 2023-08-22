@@ -37,7 +37,7 @@ namespace Microsoft.OData.ConnectedService
 
         public Version EdmxVersion => ConfigODataEndpointViewModel.EdmxVersion;
 
-        public UserSettings UserSettings { get; internal set; }
+        public ConnectedServiceUserSettings ConnectedServiceUserSettings { get; internal set; }
 
         public ServiceConfigurationV4 ServiceConfig { get; private set; }
 
@@ -49,17 +49,17 @@ namespace Microsoft.OData.ConnectedService
         {
             Context = context;
             // We only use most recently used endpoints from the config file saved in user's isolated storage
-            // The UserSettings constructor will load those endpoints
-            UserSettings = new UserSettings(context?.Logger);
+            // The ConnectedServiceUserSettings constructor will load those endpoints
+            ConnectedServiceUserSettings = new ConnectedServiceUserSettings(context?.Logger);
 
             // Since ServiceConfigurationV4 is a derived type of ServiceConfiguration,
             // we can deserialize a ServiceConfiguration into a ServiceConfigurationV4.
             ServiceConfig = Context?.GetExtendedDesignerData<ServiceConfigurationV4>();
 
-            ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(UserSettings);
-            AdvancedSettingsViewModel = new AdvancedSettingsViewModel(UserSettings);
-            SchemaTypesViewModel = new SchemaTypesViewModel(UserSettings);
-            OperationImportsViewModel = new OperationImportsViewModel(UserSettings);
+            ConfigODataEndpointViewModel = new ConfigODataEndpointViewModel(ConnectedServiceUserSettings);
+            AdvancedSettingsViewModel = new AdvancedSettingsViewModel(ConnectedServiceUserSettings);
+            SchemaTypesViewModel = new SchemaTypesViewModel(ConnectedServiceUserSettings);
+            OperationImportsViewModel = new OperationImportsViewModel(ConnectedServiceUserSettings);
 
             OperationImportsViewModel.PageEntering += OperationImportsViewModel_PageEntering;
             SchemaTypesViewModel.PageEntering += SchemaTypeSelectionViewModel_PageEntering;
@@ -87,7 +87,7 @@ namespace Microsoft.OData.ConnectedService
 
         public override async Task<ConnectedServiceInstance> GetFinishedServiceInstanceAsync()
         {
-            // ensure that the data has been loaded from wizard pages and saved to UserSettings
+            // ensure that the data has been loaded from wizard pages and saved to ConnectedServiceUserSettings
             if (Context.IsUpdating)
             {
                 if (!OperationImportsViewModel.IsEntered)
@@ -109,9 +109,9 @@ namespace Microsoft.OData.ConnectedService
                 }
             }
 
-            UserSettings.Save();
-            ServiceInstance.InstanceId = UserSettings.GeneratedFileNamePrefix;
-            ServiceInstance.Name = UserSettings.ServiceName;
+            ConnectedServiceUserSettings.Save();
+            ServiceInstance.InstanceId = ConnectedServiceUserSettings.GeneratedFileNamePrefix;
+            ServiceInstance.Name = ConnectedServiceUserSettings.ServiceName;
             ServiceInstance.MetadataTempFilePath = ConfigODataEndpointViewModel.MetadataTempPath;
             ServiceInstance.ServiceConfig = CreateServiceConfiguration();
 
@@ -129,7 +129,7 @@ namespace Microsoft.OData.ConnectedService
             if (ConfigODataEndpointViewModel.EdmxVersion == Constants.EdmxVersion4)
             {
                 var serviceConfigurationV4 = new ServiceConfigurationV4();
-                serviceConfigurationV4.CopyPropertiesFrom(UserSettings);
+                serviceConfigurationV4.CopyPropertiesFrom(ConnectedServiceUserSettings);
 
                 serviceConfigurationV4.ExcludedOperationImports = OperationImportsViewModel.ExcludedOperationImportsNames.ToList();
                 serviceConfigurationV4.ExcludedBoundOperations = SchemaTypesViewModel.ExcludedBoundOperationsNames.ToList();
@@ -140,7 +140,7 @@ namespace Microsoft.OData.ConnectedService
             {
                 serviceConfiguration = new ServiceConfiguration();
 
-                serviceConfiguration.CopyPropertiesFrom(UserSettings);
+                serviceConfiguration.CopyPropertiesFrom(ConnectedServiceUserSettings);
             }
 
             serviceConfiguration.ExcludedSchemaTypes = SchemaTypesViewModel.ExcludedSchemaTypeNames.ToList();
@@ -156,7 +156,7 @@ namespace Microsoft.OData.ConnectedService
                 return;
             }
 
-            UserSettings.CopyPropertiesFrom(ServiceConfig);
+            ConnectedServiceUserSettings.CopyPropertiesFrom(ServiceConfig);
         }
 
         #region "Event Handlers"
@@ -197,7 +197,7 @@ namespace Microsoft.OData.ConnectedService
         {
             if (sender is OperationImportsViewModel operationImportsViewModel)
             {
-                if (ProcessedEndpointForOperationImports != UserSettings.Endpoint)
+                if (ProcessedEndpointForOperationImports != ConnectedServiceUserSettings.Endpoint)
                 {
                     if (ConfigODataEndpointViewModel.EdmxVersion != Constants.EdmxVersion4)
                     {
@@ -216,7 +216,7 @@ namespace Microsoft.OData.ConnectedService
                     }
                 }
 
-                ProcessedEndpointForOperationImports = UserSettings.Endpoint;
+                ProcessedEndpointForOperationImports = ConnectedServiceUserSettings.Endpoint;
             }
         }
 
@@ -224,7 +224,7 @@ namespace Microsoft.OData.ConnectedService
         {
             if (sender is SchemaTypesViewModel entityTypeViewModel)
             {
-                if (ProcessedEndpointForSchemaTypes != UserSettings.Endpoint)
+                if (ProcessedEndpointForSchemaTypes != ConnectedServiceUserSettings.Endpoint)
                 {
                     var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
                     var entityTypes = EdmHelper.GetSchemaTypes(model);
@@ -239,7 +239,7 @@ namespace Microsoft.OData.ConnectedService
                     }
                 }
 
-                ProcessedEndpointForSchemaTypes = UserSettings.Endpoint;
+                ProcessedEndpointForSchemaTypes = ConnectedServiceUserSettings.Endpoint;
             }
         }
 

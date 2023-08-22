@@ -15,9 +15,9 @@ namespace ODataConnectedService.Tests
 {
     public class ExtensionMethodsTests
     {
-        private static UserSettings CreateUserSettings()
+        private static ConnectedServiceUserSettings CreateUserSettings()
         {
-            var userSettings = new UserSettings(configName: "TestSettings");
+            var userSettings = new ConnectedServiceUserSettings(configName: "TestSettings");
 
             userSettings.CustomHttpHeaders = "Key:Test";
             userSettings.EnableNamingAlias = true;
@@ -120,7 +120,7 @@ namespace ODataConnectedService.Tests
         {
             var serviceConfig = CreateServiceConfiguration();
 
-            var userSettings = new UserSettings(configName: "TestUserSettings");
+            var userSettings = new ConnectedServiceUserSettings(configName: "TestUserSettings");
 
             userSettings.CopyPropertiesFrom(serviceConfig);
 

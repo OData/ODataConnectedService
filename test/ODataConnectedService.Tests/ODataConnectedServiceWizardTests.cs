@@ -24,7 +24,6 @@ using Xunit;
 
 namespace ODataConnectedService.Tests
 {
-
     public sealed class ODataConnectedServiceWizardTests : IDisposable
     {
         readonly UserSettings initialSettings;
@@ -731,13 +730,13 @@ namespace ODataConnectedService.Tests
                 advancedPage.OnPageLeavingAsync(null).Wait();
 
                 endpointPage.OnPageEnteringAsync(null).Wait();
-                Assert.Equal(Constants.DefaultServiceName, endpointPage.UserSettings.ServiceName);
-                Assert.Equal(MetadataPath, endpointPage.UserSettings.Endpoint);
-                endpointPage.UserSettings.ServiceName = "Service";
-                endpointPage.UserSettings.IncludeCustomHeaders = true;
-                endpointPage.UserSettings.StoreCustomHttpHeaders = true;
-                endpointPage.UserSettings.StoreWebProxyNetworkCredentials = true;
-                endpointPage.UserSettings.CustomHttpHeaders = "A:b";
+                Assert.Equal(Constants.DefaultServiceName, endpointPage.ConnectedServiceUserSettings.ServiceName);
+                Assert.Equal(MetadataPath, endpointPage.ConnectedServiceUserSettings.Endpoint);
+                endpointPage.ConnectedServiceUserSettings.ServiceName = "Service";
+                endpointPage.ConnectedServiceUserSettings.IncludeCustomHeaders = true;
+                endpointPage.ConnectedServiceUserSettings.StoreCustomHttpHeaders = true;
+                endpointPage.ConnectedServiceUserSettings.StoreWebProxyNetworkCredentials = true;
+                endpointPage.ConnectedServiceUserSettings.CustomHttpHeaders = "A:b";
                 endpointPage.OnPageLeavingAsync(null).Wait();
 
                 advancedPage.OnPageEnteringAsync(null).Wait();
