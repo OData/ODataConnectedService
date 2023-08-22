@@ -117,5 +117,10 @@ namespace Microsoft.OData.Cli
         /// A flag to indicate whether to include web proxy network credentials or not.
         /// </summary>
         public bool IncludeWebProxyNetworkCredentials { get; set; }
+
+        /// <summary>
+        /// Full path to OData Connected Service Config file (i.e., ConnectedService.json)
+        /// </summary>
+        public string ConnectedServiceFile { get; set; }
     }
 }
