@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------------
-// <copyright file="ConnectedServiceUserSettings.cs" company=".NET Foundation">
+// <copyright file="UserSettings.cs" company=".NET Foundation">
 //      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
 //      See License.txt in the project root for license information.
 // </copyright>
@@ -13,10 +13,10 @@ using System.Runtime.Serialization;
 namespace Microsoft.OData.CodeGen.Models
 {
     /// <summary>
-    /// Represents CLI options in OData Connected Service Config File
+    /// Represents options in OData Connected Service Config File
     /// </summary>
     [DataContract]
-    public class CliUserSettings : INotifyPropertyChanged
+    public class UserSettings : INotifyPropertyChanged
     {
         #region Private Members
 

@@ -84,7 +84,7 @@
     <Compile Include="Logging\IMessageLogger.cs" />
     <Compile Include="Logging\LogMessageCategory.cs" />
     <Compile Include="Logging\LogMessageCategory.cs" />
-    <Compile Include="Models\CliUserSettings.cs" />
+    <Compile Include="Models\UserSettings.cs" />
     <Compile Include="PackageInstallation\IPackageInstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\BoundOperationModel.cs" />

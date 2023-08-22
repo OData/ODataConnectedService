@@ -245,7 +245,7 @@ namespace Microsoft.OData.Cli
 
             TServiceConfig serviceConfig = null;
             var configFile = ReadConfigFile(generateOptions.ConnectedServiceFile);
-            CliUserSettings fileOptions = null;
+            UserSettings fileOptions = null;
             if (configFile != null)
             {
                 fileOptions = configFile.ExtendedData;

@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace Microsoft.OData.CodeGen.Models
 {
     [DataContract]
-    public class ConnectedServiceUserSettings : CliUserSettings
+    public class ConnectedServiceUserSettings : UserSettings
     {
         #region Const Members
 
