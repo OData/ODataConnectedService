@@ -244,11 +244,14 @@ namespace Microsoft.OData.Cli
             }
 
             TServiceConfig serviceConfig = null;
-            var configFile = ReadConfigFile(generateOptions.ConnectedServiceFile);
             UserSettings fileOptions = null;
-            if (configFile != null)
+            if (!string.IsNullOrWhiteSpace(generateOptions.ConnectedServiceFile))
             {
-                fileOptions = configFile.ExtendedData;
+                var configFileData = ReadConfigFile(generateOptions.ConnectedServiceFile);
+                if (configFileData != null)
+                {
+                    fileOptions = configFileData.ExtendedData;
+                }
             }
 
             var namespacePrefix = string.IsNullOrEmpty(generateOptions.NamespacePrefix) ? fileOptions?.NamespacePrefix : generateOptions.NamespacePrefix;
@@ -292,46 +295,44 @@ namespace Microsoft.OData.Cli
         /// Read and deserialize <paramref name="fileName"/> into <see cref="ConfigJsonFile"/>
         /// </summary>
         /// <param name="fileName">Name of config file to read</param>
-        /// <returns><see cref="CliConnectedServiceJsonFileData"/> if <paramref name="fileName"/> exists and is readable, otherwise null</returns>
+        /// <returns><see cref="CliConnectedServiceJsonFileData"/> read from <paramref name="fileName"/></returns>
         /// <exception cref="Exception">Thrown on deserialization errors</exception>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="fileName"/> does not exist</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="fileName"/> is null/empty or does not exist</exception>
         private CliConnectedServiceJsonFileData ReadConfigFile(string fileName)
         {
-            CliConnectedServiceJsonFileData configFileData = null;
-
-            if (!string.IsNullOrWhiteSpace(fileName))
+            if (string.IsNullOrWhiteSpace(fileName))
             {
-                if (!File.Exists(fileName))
-                {
-                    throw new ArgumentException($"Specified config file does not exist: '{fileName}'", nameof(fileName));
-                }
-
-                string configFileText;
-                try
-                {
-                    configFileText = File.ReadAllText(fileName);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Failed to load configuration file '{fileName}': {ex.Message}");
-                }
-
-                if (string.IsNullOrWhiteSpace(configFileText))
-                {
-                    throw new Exception($"Config file '{fileName}' is empty.");
-                }
-
-                try
-                {
-                    configFileData = JsonConvert.DeserializeObject<CliConnectedServiceJsonFileData>(configFileText);
-                }
-                catch (JsonException ex)
-                {
-                    throw new Exception($"Contents of the config file ('{fileName}') could not be deserialized: {ex.Message}");
-                }
+                throw new ArgumentException($"{nameof(fileName)} cannot be null/empty", nameof(fileName));
             }
 
-            return configFileData;
+            if (!File.Exists(fileName))
+            {
+                throw new ArgumentException($"Specified config file does not exist: '{fileName}'", nameof(fileName));
+            }
+
+            string configFileText;
+            try
+            {
+                configFileText = File.ReadAllText(fileName);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to load configuration file '{fileName}': {ex.Message}", ex);
+            }
+
+            if (string.IsNullOrWhiteSpace(configFileText))
+            {
+                throw new Exception($"Config file '{fileName}' is empty.");
+            }
+
+            try
+            {
+                return JsonConvert.DeserializeObject<CliConnectedServiceJsonFileData>(configFileText);
+            }
+            catch (JsonException ex)
+            {
+                throw new Exception($"Contents of the config file ('{fileName}') could not be deserialized: {ex.Message}", ex);
+            }
         }
 
         private async Task GenerateCodeForV4Clients(GenerateOptions generateOptions, IConsole console)
