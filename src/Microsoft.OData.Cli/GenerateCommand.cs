@@ -87,9 +87,9 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(upperCamelCase);
 
-            Option internalModifier = new Option<bool>(new[] { "--internal", "-i" })
+            Option internalModifier = new Option<bool>(new[] { "--enable-internal", "-i" })
             {
-                Name = "internal",
+                Name = "enable-internal",
                 Description = "Apply the \"internal\" class modifier on generated classes instead of \"public\" thereby making them invisible outside the assembly."
             };
 
