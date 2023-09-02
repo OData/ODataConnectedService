@@ -23,14 +23,18 @@ namespace Microsoft.OData.Cli
         /// </summary>
         private static void RegisterMsBuild()
         {
+            string pathToMsBuildExeInLatestVisualStudioVersion = string.Empty;
             const string defaultInstallDirOfVisualStudio = @"C:\Program Files\Microsoft Visual Studio\";
-            var installDirOfLatestVisualStudio = Directory.GetDirectories(defaultInstallDirOfVisualStudio, "????", SearchOption.TopDirectoryOnly)
-                .Where(x => Path.GetFileName(x).All(char.IsDigit))
-                .MaxBy(x => Path.GetFileName(x));
+            if (Directory.Exists(defaultInstallDirOfVisualStudio))
+            {
+                var installDirOfLatestVisualStudio = Directory.GetDirectories(defaultInstallDirOfVisualStudio, "????", SearchOption.TopDirectoryOnly)
+                    .Where(x => Path.GetFileName(x).All(char.IsDigit))
+                    .MaxBy(x => Path.GetFileName(x));
 
-            string pathToMsBuildExeInLatestVisualStudioVersion = Path.Combine(
-                Directory.GetDirectories(installDirOfLatestVisualStudio, "*", SearchOption.TopDirectoryOnly).FirstOrDefault() ?? string.Empty,
-                "MSBuild", "Current", "Bin", "MSBuild.exe");
+                pathToMsBuildExeInLatestVisualStudioVersion = Path.Combine(
+                    Directory.GetDirectories(installDirOfLatestVisualStudio, "*", SearchOption.TopDirectoryOnly).FirstOrDefault() ?? string.Empty,
+                    "MSBuild", "Current", "Bin", "MSBuild.exe");
+            }
 
             if (File.Exists(pathToMsBuildExeInLatestVisualStudioVersion))
             {
