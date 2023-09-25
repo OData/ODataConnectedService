@@ -52,7 +52,7 @@
                 </CheckBox>
                 <CheckBox x:Name="NoTimestamp" IsChecked="{Binding Path=UserSettings.NoTimestamp, Mode=TwoWay}"
 					HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5">
-                    <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Disable the generation timestamp in generated files (Enable this if you don't need generation timestamps in generated files.)</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Omit generation timestamp in generated files (Enable this if you don't need generation timestamps in generated files.)</TextBlock>
                 </CheckBox>
                 <CheckBox x:Name="IncludeT4File" Content="Add code templates (Whether to include the T4 files into this project.)" IsChecked="{Binding Path=UserSettings.IncludeT4File, Mode=TwoWay}"
             		HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 15" FontWeight="Medium"/>
