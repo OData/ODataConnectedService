@@ -4181,7 +4181,6 @@ this.Write("\r\n//\r\n//     Changes to this file may cause incorrect behavior a
         "f\r\n//     the code is regenerated.\r\n// </auto-generated>\r\n//--------------------" +
         "----------------------------------------------------------\r\n\r\n");
 
-
     if (!this.context.NoTimestamp)
     {
 
