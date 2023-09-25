@@ -397,7 +397,7 @@ public bool MakeTypesInternal
 }
 
 /// <summary>
-/// true to disable the Generation date timestamp, false to include the timestamp
+/// true to omit generation timestamp; otherwise false.
 /// </summary>
 public bool NoTimestamp
 {
