@@ -44,7 +44,7 @@ namespace Microsoft.OData.Cli
         public bool EnableTracking { get; set; }
 
         /// <summary>
-        /// Do not insert the Generation date timestamp in generated files
+        /// Omit generation timestamp in generated files.
         /// </summary>
         public bool NoTimestamp { get; set; }
 
