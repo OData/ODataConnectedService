@@ -98,7 +98,7 @@ namespace Microsoft.OData.Cli
             Option noTimestamp = new Option<bool>(new[] { "--no-timestamp", "-nt" })
             {
                 Name = "no-timestamp",
-                Description = "Removes the Generation date timestamp in generated files.",
+                Description = "Omit generation timestamp in generated files.",
             };
             noTimestamp.SetDefaultValue(false);
             this.AddOption(noTimestamp);
