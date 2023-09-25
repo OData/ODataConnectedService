@@ -6,22 +6,21 @@
 //---------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using System.Net;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Xml;
 using FluentAssertions;
+using Microsoft.OData.CodeGen.Templates;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ODataConnectedService.Tests.TestHelpers;
 
 namespace ODataConnectedService.Tests
 {
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Net;
-    using System.Reflection;
-    using System.Text.RegularExpressions;
-    using Microsoft.OData.CodeGen.Templates;
-    using ODataConnectedService.Tests.TestHelpers;
-
     [TestClass]
     public class ODataT4CodeGeneratorTests
     {
