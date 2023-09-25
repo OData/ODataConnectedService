@@ -2323,8 +2323,15 @@ public abstract class ODataClientTemplate : TemplateBase
         foreach (IEdmProperty property in properties.Where(i => i.PropertyKind == EdmPropertyKind.Navigation))
         {
             string propertyType;
-            string propertyName = IdentifierMappings.ContainsKey(property.Name) ?
-                IdentifierMappings[property.Name] : (this.context.EnableNamingAlias ? Customization.CustomizeNaming(property.Name) : property.Name);
+            string propertyName;
+            if (IdentifierMappings.TryGetValue(property.Name, out var mappedPropertyName))
+            {
+                propertyName = mappedPropertyName;
+            }
+            else
+            {
+                propertyName = this.context.EnableNamingAlias ? Customization.CustomizeNaming(property.Name) : property.Name;
+            }
 
             if (property.Type is Microsoft.OData.Edm.EdmCollectionTypeReference)
             {
