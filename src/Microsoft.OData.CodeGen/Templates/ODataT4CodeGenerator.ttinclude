@@ -4042,8 +4042,6 @@ public sealed class ODataClientCSharpTemplate : ODataClientTemplate
 // Generation date: <#= DateTime.Now.ToString(global::System.Globalization.CultureInfo.CurrentCulture) #>
 <#+
     }
-#>
-<#+
     }
 
     internal override void WriteNamespaceStart(string fullNamespace)
@@ -5246,8 +5244,6 @@ Option Explicit On
 'Generation date: <#= DateTime.Now.ToString(System.Globalization.CultureInfo.CurrentCulture) #>
 <#+
     }
-#>
-<#+
     }
 
     internal override void WriteNamespaceStart(string fullNamespace)
