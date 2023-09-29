@@ -5,21 +5,21 @@
 // </copyright>
 //---------------------------------------------------------------------------------
 
-using Microsoft.CSharp;
-using Microsoft.OData.Edm;
-using Microsoft.OData;
-using Microsoft.Spatial;
-using Microsoft.VisualBasic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.CodeDom.Compiler;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Services.Client;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Data.Services.Client;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.OData.CodeGen.Templates;
 using FluentAssertions;
+using Microsoft.CSharp;
+using Microsoft.OData;
+using Microsoft.OData.CodeGen.Templates;
+using Microsoft.OData.Edm;
+using Microsoft.Spatial;
+using Microsoft.VisualBasic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ODataConnectedService.Tests.TestHelpers
 {
@@ -62,6 +62,31 @@ namespace ODataConnectedService.Tests.TestHelpers
                "global::System.CodeDom.Compiler.GeneratedCodeAttribute\\(.*\\)",
                "global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData.Client.Design.T4\", \"" + T4Version + "\")",
                RegexOptions.Multiline);
+
+            //Remove the spaces from the string to avoid indentation change errors
+            normalized = Regex.Replace(normalized, @"\s+", "");
+
+            return normalized;
+        }
+
+        public static void VerifyGeneratedCodeNoTimestamp(string expectedCode, string actualCode)
+        {
+            var normalizedExpected = NormalizeGeneratedCode(expectedCode);
+            var normalizedActual = NormalizeGeneratedCodeKeepGenerationDate(actualCode);
+            Assert.AreEqual(normalizedExpected, normalizedActual);
+
+            var normalizedActualWithoutTimestamp = NormalizeGeneratedCode(actualCode);
+            Assert.AreEqual(normalizedActualWithoutTimestamp, normalizedActual);
+        }
+
+        public static string NormalizeGeneratedCodeKeepGenerationDate(string code)
+        {
+            var normalized = Regex.Replace(code, "//     Runtime Version:.*", string.Empty, RegexOptions.Multiline);
+            normalized = Regex.Replace(normalized, "'     Runtime Version:.*", string.Empty, RegexOptions.Multiline);
+            normalized = Regex.Replace(normalized,
+                "global::System.CodeDom.Compiler.GeneratedCodeAttribute\\(.*\\)",
+                "global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData.Client.Design.T4\", \"" + T4Version + "\")",
+                RegexOptions.Multiline);
 
             //Remove the spaces from the string to avoid indentation change errors
             normalized = Regex.Replace(normalized, @"\s+", "");

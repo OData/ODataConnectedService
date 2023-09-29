@@ -73,6 +73,7 @@ namespace Microsoft.OData.CodeGen.Templates
             MetadataFileRelativePath = this.MetadataFileRelativePath,
             MakeTypesInternal = this.MakeTypesInternal,
             MultipleFilesManager = new FilesManager(null),
+            NoTimestamp = this.NoTimestamp,
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedBoundOperations = this.ExcludedBoundOperations,
@@ -113,6 +114,7 @@ namespace Microsoft.OData.CodeGen.Templates
             MetadataFileRelativePath = this.MetadataFileRelativePath,
             MakeTypesInternal = this.MakeTypesInternal,
             MultipleFilesManager = new FilesManager(null),
+            NoTimestamp = this.NoTimestamp,
             GenerateMultipleFiles = this.GenerateMultipleFiles,
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedBoundOperations = this.ExcludedBoundOperations,
@@ -203,6 +205,9 @@ public static class Configuration
 	// If set to true, generated types will have an "internal" class modifier ("Friend" in VB) instead of "public"
 	// thereby making them invisible outside the assembly
 	public const bool MakeTypesInternal = false;
+
+	// If set to true, generation timestamps will be left out of generated files
+	public const bool NoTimestamp = false;
 
 	//This files indicates whether to generate the files into multiple files or single.
     //If set to true then multiple files will be generated. Otherwise only a single file is generated.
@@ -386,6 +391,15 @@ public bool IgnoreUnexpectedElementsAndAttributes
 /// otherwise "public" is used
 /// </summary>
 public bool MakeTypesInternal
+{
+    get;
+    set;
+}
+
+/// <summary>
+/// true to omit generation timestamp; otherwise false.
+/// </summary>
+public bool NoTimestamp
 {
     get;
     set;
@@ -735,6 +749,7 @@ private void ApplyParametersFromConfigurationClass()
     this.EnableNamingAlias = Configuration.EnableNamingAlias;
     this.IgnoreUnexpectedElementsAndAttributes = Configuration.IgnoreUnexpectedElementsAndAttributes;
     this.MakeTypesInternal = Configuration.MakeTypesInternal;
+    this.NoTimestamp = Configuration.NoTimestamp;
     this.MetadataFilePath = Configuration.MetadataFilePath;
     this.MetadataFileRelativePath = Configuration.MetadataFileRelativePath;
     this.GenerateMultipleFiles = Configuration.GenerateMultipleFiles;
@@ -1183,6 +1198,15 @@ public class CodeGenerationContext
 	/// This is useful if you don't want the generated classes to be visible outside the assembly
 	/// </summary>
     public bool MakeTypesInternal
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
+    /// true to omit generation timestamp; otherwise false.
+    /// </summary>
+    public bool NoTimestamp
     {
         get;
         set;
@@ -4155,14 +4179,20 @@ this.Write(this.ToStringHelper.ToStringWithCulture(Environment.Version));
 
 this.Write("\r\n//\r\n//     Changes to this file may cause incorrect behavior and will be lost i" +
         "f\r\n//     the code is regenerated.\r\n// </auto-generated>\r\n//--------------------" +
-        "----------------------------------------------------------\r\n\r\n// Generation date" +
-        ": ");
+        "----------------------------------------------------------\r\n\r\n");
+
+
+    if (!this.context.NoTimestamp)
+    {
+
+this.Write("// Generation date: ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(DateTime.Now.ToString(global::System.Globalization.CultureInfo.CurrentCulture)));
 
 this.Write("\r\n");
 
 
+    }
     }
 
     internal override void WriteNamespaceStart(string fullNamespace)
@@ -6296,15 +6326,20 @@ this.Write(@"
 
 Option Strict Off
 Option Explicit On
+");
 
 
-'Generation date: ");
+    if (!this.context.NoTimestamp)
+    {
+
+this.Write("\'Generation date: ");
 
 this.Write(this.ToStringHelper.ToStringWithCulture(DateTime.Now.ToString(System.Globalization.CultureInfo.CurrentCulture)));
 
 this.Write("\r\n");
 
 
+    }
     }
 
     internal override void WriteNamespaceStart(string fullNamespace)

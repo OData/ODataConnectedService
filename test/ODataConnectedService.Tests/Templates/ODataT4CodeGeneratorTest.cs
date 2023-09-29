@@ -5,8 +5,8 @@
 // </copyright>
 //---------------------------------------------------------------------------------
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.OData.CodeGen.Templates;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ODataConnectedService.Tests.TestHelpers;
 
 namespace Microsoft.OData.ConnectedService.Tests.Templates
@@ -15,7 +15,7 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
     public class ODataT4CodeGeneratorTest
     {
 
-        
+
         [TestMethod]
         public void TestEntitiesComplexTypesEnumsFunctions()
         {
@@ -61,6 +61,22 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
             GeneratedCodeHelpers.VerifyGeneratedCode(expected, output);
         }
 
+
+        [TestMethod]
+        public void TestEntitiesComplexTypesEnumFunctionsWithNoTimestamp()
+        {
+            string edmx = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctions.xml");
+            string expected = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctions.cs");
+            var generator = new ODataT4CodeGenerator()
+            {
+                Edmx = edmx,
+                TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp,
+                NoTimestamp = true,
+            };
+            var output = generator.TransformText();
+            GeneratedCodeHelpers.VerifyGeneratedCodeNoTimestamp(expected, output);
+        }
+
         [TestMethod]
         public void TestEntitiesComplexTypesEnumFunctionsDSCWithInternalTypes()
         {
@@ -76,6 +92,38 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
             };
             var output = generator.TransformText();
             GeneratedCodeHelpers.VerifyGeneratedCode(expected, output);
+        }
+
+        [TestMethod]
+        public void TestEntitiesComplexTypesEnumFunctionsDSCWithNoTimestamp()
+        {
+            string edmx = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctions.xml");
+            string expected = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctionsDSC.cs");
+            var generator = new ODataT4CodeGenerator()
+            {
+                Edmx = edmx,
+                TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp,
+                UseDataServiceCollection = true,
+                NoTimestamp = true,
+            };
+            var output = generator.TransformText();
+            GeneratedCodeHelpers.VerifyGeneratedCodeNoTimestamp(expected, output);
+        }
+        [TestMethod]
+        public void TestEntitiesComplexTypesEnumFunctionsDSCWithInternalTypesWithNoTimestamp()
+        {
+            string edmx = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctions.xml");
+            string expected = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctionsDSCWithInternalTypes.cs");
+            var generator = new ODataT4CodeGenerator()
+            {
+                Edmx = edmx,
+                TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp,
+                UseDataServiceCollection = true,
+                MakeTypesInternal = true,
+                NoTimestamp = true,
+            };
+            var output = generator.TransformText();
+            GeneratedCodeHelpers.VerifyGeneratedCodeNoTimestamp(expected, output);
         }
 
         [TestMethod]

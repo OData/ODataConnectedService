@@ -65,6 +65,8 @@ namespace Microsoft.OData.CodeGen.Models
 
         private bool ignoreUnexpectedElementsAndAttributes;
 
+        private bool noTimestamp;
+
         private bool includeT4File;
 
         private bool includeWebProxy;
@@ -232,6 +234,17 @@ namespace Microsoft.OData.CodeGen.Models
             set
             {
                 ignoreUnexpectedElementsAndAttributes = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DataMember]
+        public bool NoTimestamp
+        {
+            get { return noTimestamp; }
+            set
+            {
+                noTimestamp = value;
                 OnPropertyChanged();
             }
         }

@@ -50,6 +50,10 @@
                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5">
                     <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Make generated types internal (Enable this if you don't want to expose the generated types outside of your assembly.)</TextBlock>
                 </CheckBox>
+                <CheckBox x:Name="NoTimestamp" IsChecked="{Binding Path=UserSettings.NoTimestamp, Mode=TwoWay}"
+					HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5">
+                    <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Omit generation timestamp in generated files (Enable this if you don't need generation timestamps in generated files.)</TextBlock>
+                </CheckBox>
                 <CheckBox x:Name="IncludeT4File" Content="Add code templates (Whether to include the T4 files into this project.)" IsChecked="{Binding Path=UserSettings.IncludeT4File, Mode=TwoWay}"
             		HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 15" FontWeight="Medium"/>
                 <CheckBox x:Name="OpenGeneratedFilesInIDE" Content="Open generated files in the IDE when generation completes." IsChecked="{Binding Path=UserSettings.OpenGeneratedFilesInIDE, Mode=TwoWay}"

@@ -44,6 +44,11 @@ namespace Microsoft.OData.Cli
         public bool EnableTracking { get; set; }
 
         /// <summary>
+        /// Omit generation timestamp in generated files.
+        /// </summary>
+        public bool NoTimestamp { get; set; }
+
+        /// <summary>
         /// Disables/Enables upper camel casing
         /// </summary>
         public bool UpperCamelCase { get; set; }

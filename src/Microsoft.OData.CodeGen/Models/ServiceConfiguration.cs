@@ -32,7 +32,7 @@ namespace Microsoft.OData.CodeGen.Models
         public string WebProxyNetworkCredentialsDomain { get; set; }
         public bool IncludeCustomHeaders { get; set; }
         public bool StoreCustomHttpHeaders { get; set; }
-        public List<string> ExcludedSchemaTypes { get; set; }        
+        public List<string> ExcludedSchemaTypes { get; set; }
 
     }
 
@@ -43,5 +43,6 @@ namespace Microsoft.OData.CodeGen.Models
         public bool IncludeT4File { get; set; }
         public List<string> ExcludedOperationImports { get; set; }
         public List<string> ExcludedBoundOperations { get; set; }
+        public bool NoTimestamp { get; set; }
     }
 }

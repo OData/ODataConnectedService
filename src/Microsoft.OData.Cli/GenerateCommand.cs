@@ -95,6 +95,14 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(internalModifier);
 
+            Option noTimestamp = new Option<bool>(new[] { "--no-timestamp", "-nt" })
+            {
+                Name = "no-timestamp",
+                Description = "Omit generation timestamp in generated files.",
+            };
+            noTimestamp.SetDefaultValue(false);
+            this.AddOption(noTimestamp);
+
             Option multipleFiles = new Option<bool>(new[] { "--multiple-files" })
             {
                 Name = "multiple-files",
@@ -240,6 +248,7 @@ namespace Microsoft.OData.Cli
             serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = generateOptions.IgnoreUnexpectedElements;
             serviceConfigurationV4.EnableNamingAlias = generateOptions.UpperCamelCase;
             serviceConfigurationV4.UseDataServiceCollection = generateOptions.EnableTracking;
+            serviceConfigurationV4.NoTimestamp = generateOptions.NoTimestamp;
 
             Project project = ProjectHelper.CreateProjectInstance(generateOptions.OutputDir);
             BaseCodeGenDescriptor codeGenDescriptor = new CodeGenDescriptorFactory().Create(

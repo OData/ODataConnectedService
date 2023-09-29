@@ -28,7 +28,6 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
         {
             ClientNuGetPackageName = Common.Constants.V4ClientNuGetPackage;
             ClientDocUri = Common.Constants.V4DocUri;
-          //  ServiceConfiguration = base.ServiceConfiguration as ServiceConfigurationV4;
             CodeGeneratorFactory = codeGeneratorFactory;
         }
 
@@ -95,7 +94,7 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
                 await writer.WriteLineAsync("</edmx:Edmx>");
             }
 
-            await FileHandler.AddFileAsync(csdlTempFile, metadataFile, new ODataFileOptions { SuppressOverwritePrompt = true});
+            await FileHandler.AddFileAsync(csdlTempFile, metadataFile, new ODataFileOptions { SuppressOverwritePrompt = true });
 
             FileHandler.SetFileAsEmbeddedResource(csdlFileName);
 
@@ -162,12 +161,13 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
             t4CodeGenerator.EnableNamingAlias = serviceConfiguration.EnableNamingAlias;
             t4CodeGenerator.NamespacePrefix = serviceConfiguration.NamespacePrefix;
             t4CodeGenerator.MakeTypesInternal = serviceConfiguration.MakeTypesInternal;
+            t4CodeGenerator.NoTimestamp = serviceConfiguration.NoTimestamp;
             t4CodeGenerator.GenerateMultipleFiles = serviceConfiguration.GenerateMultipleFiles;
             t4CodeGenerator.ExcludedOperationImports = serviceConfiguration.ExcludedOperationImports;
             t4CodeGenerator.ExcludedBoundOperations = serviceConfiguration.ExcludedBoundOperations;
             t4CodeGenerator.ExcludedSchemaTypes = serviceConfiguration.ExcludedSchemaTypes;
             var headers = new List<string>();
-            if (serviceConfiguration.CustomHttpHeaders !=null)
+            if (serviceConfiguration.CustomHttpHeaders != null)
             {
                 var headerElements = serviceConfiguration.CustomHttpHeaders.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var headerElement in headerElements)
@@ -191,7 +191,7 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
             // Csdl file name is this format [ServiceName]Csdl.xml
             var csdlFileName = string.Concat(serviceConfiguration.ServiceName, Common.Constants.CsdlFileNameSuffix);
             var metadataFile = Path.Combine(referenceFolder, csdlFileName);
-            await FileHandler.AddFileAsync(tempFile, metadataFile, new ODataFileOptions { SuppressOverwritePrompt = true});
+            await FileHandler.AddFileAsync(tempFile, metadataFile, new ODataFileOptions { SuppressOverwritePrompt = true });
 
             FileHandler.SetFileAsEmbeddedResource(csdlFileName);
             t4CodeGenerator.EmitContainerPropertyAttribute = FileHandler.EmitContainerPropertyAttribute();
@@ -213,7 +213,7 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
             }
 
             var outputFile = Path.Combine(referenceFolder, $"{this.GeneratedFileNamePrefix(serviceConfiguration.GeneratedFileNamePrefix)}{(languageOption == LanguageOption.GenerateCSharpCode ? ".cs" : ".vb")}");
-            await FileHandler.AddFileAsync(tempFile, outputFile, new ODataFileOptions { SuppressOverwritePrompt = true});
+            await FileHandler.AddFileAsync(tempFile, outputFile, new ODataFileOptions { SuppressOverwritePrompt = true });
             t4CodeGenerator.MultipleFilesManager?.GenerateFiles(serviceConfiguration.GenerateMultipleFiles, FileHandler, MessageLogger, referenceFolder, true, serviceConfiguration.OpenGeneratedFilesInIDE);
             await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Client Proxy for OData V4 was generated.");
         }

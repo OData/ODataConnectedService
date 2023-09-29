@@ -5,33 +5,22 @@
 // </copyright>
 //---------------------------------------------------------------------------------
 
-using FluentAssertions;
-using Microsoft.CSharp;
-using Microsoft.OData.Edm;
-using Microsoft.Spatial;
-using Microsoft.VisualBasic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.CodeDom.Compiler;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
-using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Xml;
+using FluentAssertions;
+using Microsoft.OData.CodeGen.Templates;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ODataConnectedService.Tests.TestHelpers;
 
 namespace ODataConnectedService.Tests
 {
-    using System.Reflection;
-    using Microsoft.OData;
-    using System.Text.RegularExpressions;
-    using Microsoft.OData.CodeGen.Templates;
-    using Microsoft.OData.Client;
-    using System.Collections.Generic;
-    using System.Net;
-    using ODataConnectedService.Tests.TestHelpers;
-    using System.Globalization;
-    using System.ComponentModel.DataAnnotations;
-
     [TestClass]
     public class ODataT4CodeGeneratorTests
     {
@@ -90,7 +79,7 @@ namespace ODataConnectedService.Tests
             {
                 T4TransformToolPath = T4TransformToolPathVSVer2017Community;
             }
-            else if(File.Exists(T4TransformToolPathVer11))
+            else if (File.Exists(T4TransformToolPathVer11))
             {
                 T4TransformToolPath = T4TransformToolPathVer11;
             }
@@ -186,7 +175,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void CodeGenSimpleEdmxMultipleFiles()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SimpleMultipleFiles.Metadata, null, true, false, generateMultipleFiles : true);
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SimpleMultipleFiles.Metadata, null, true, false, generateMultipleFiles: true);
 
             string expectedTestType = GeneratedCodeHelpers.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFileContent("SimpleMultipleTestType.cs"));
             string actualTestType = GeneratedCodeHelpers.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "TestType.cs")));
@@ -405,7 +394,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void CodeGenWithMultiReferenceModelRelativeUri()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MultiReferenceModelRelativeUri.Metadata, null, true, false, metadataDocumentUri: ODataT4CodeGeneratorTestDescriptors.EdmxWithMultiReferenceModelRelativeUriFilePath );
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MultiReferenceModelRelativeUri.Metadata, null, true, false, metadataDocumentUri: ODataT4CodeGeneratorTestDescriptors.EdmxWithMultiReferenceModelRelativeUriFilePath);
             ODataT4CodeGeneratorTestDescriptors.MultiReferenceModelRelativeUri.Verify(code, true /*isCSharp*/, false /*useDSC*/);
 
             code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MultiReferenceModelRelativeUri.Metadata, null, false, false, metadataDocumentUri: ODataT4CodeGeneratorTestDescriptors.EdmxWithMultiReferenceModelRelativeUriFilePath);
@@ -590,7 +579,7 @@ namespace ODataConnectedService.Tests
                 $"{@namespace}PublicTransportation"
             };
 
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntitiesEnumsFunctionsSelectTypes.Metadata, null, true, false, false, false, null, true,excludedSchemaTypes : excludedSchemaTypes);
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntitiesEnumsFunctionsSelectTypes.Metadata, null, true, false, false, false, null, true, excludedSchemaTypes: excludedSchemaTypes);
             ODataT4CodeGeneratorTestDescriptors.EntitiesEnumsFunctionsSelectTypes.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
             code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntitiesEnumsFunctionsSelectTypes.Metadata, null, false/*isCSharp*/, false, false, false, null, true, excludedSchemaTypes: excludedSchemaTypes);
@@ -676,9 +665,8 @@ namespace ODataConnectedService.Tests
             bool useDataServiceCollection, bool enableNamingAlias = false,
             bool ignoreUnexpectedElementsAndAttributes = false,
             Func<Uri, WebProxy, IList<string>, XmlReader> getReferencedModelReaderFunc = null,
-            bool appendDSCSuffix = false, string MetadataFilePath = null, bool generateMultipleFiles = false, string metadataDocumentUri = null,
-            IEnumerable<string> excludedSchemaTypes = default(List<string>))
-
+            bool appendDSCSuffix = false, string MetadataFilePath = null, bool generateMultipleFiles = false, bool noTimestamp = false,
+            string metadataDocumentUri = null, IEnumerable<string> excludedSchemaTypes = default(List<string>))
         {
             if (useDataServiceCollection
                 && appendDSCSuffix) // hack now
@@ -703,6 +691,7 @@ namespace ODataConnectedService.Tests
                 EnableNamingAlias = enableNamingAlias,
                 IgnoreUnexpectedElementsAndAttributes = ignoreUnexpectedElementsAndAttributes,
                 GenerateMultipleFiles = generateMultipleFiles,
+                NoTimestamp = noTimestamp,
                 ExcludedSchemaTypes = excludedSchemaTypes
             };
 
@@ -779,7 +768,7 @@ namespace ODataConnectedService.Tests
             Assert.IsNotNull(filename, "null filename");
             Assert.IsTrue(File.Exists(filename) && !Directory.Exists(filename), "missing file: {0}", filename);
 
-            using(var process = new Process())
+            using (var process = new Process())
             {
                 process.StartInfo.FileName = filename;
                 process.StartInfo.Arguments = arguments;

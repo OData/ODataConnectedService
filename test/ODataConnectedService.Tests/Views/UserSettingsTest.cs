@@ -32,6 +32,7 @@ namespace ODataConnectedService.Tests.Views
             userSettings.GeneratedFileNamePrefix = "MyPrefix";
             userSettings.GenerateMultipleFiles = true;
             userSettings.MakeTypesInternal = true;
+            userSettings.NoTimestamp = true;
 
             // Save settings
             userSettings.Save();
@@ -43,6 +44,7 @@ namespace ODataConnectedService.Tests.Views
             Assert.Equal("MyPrefix", settings.GeneratedFileNamePrefix);
             Assert.True(settings.GenerateMultipleFiles);
             Assert.True(settings.MakeTypesInternal);
+            Assert.True(settings.NoTimestamp);
         }
 
         [Fact]
@@ -65,7 +67,7 @@ namespace ODataConnectedService.Tests.Views
 
             // Add an endpoint.
             userSettings.AddMruEndpoint(endpoint1);
-            Assert.Single(userSettings.MruEndpoints);            
+            Assert.Single(userSettings.MruEndpoints);
 
             // Add another endpoint.The latest endpoint to be added is at the top of the MruList.
             userSettings.AddMruEndpoint(endpoint2);
