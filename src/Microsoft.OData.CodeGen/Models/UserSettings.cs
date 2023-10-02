@@ -34,6 +34,8 @@ namespace Microsoft.OData.CodeGen.Models
 
         private bool makeTypesInternal;
 
+        private bool noTimestamp;
+
         private bool generateMultipleFiles;
 
         private string customHttpHeaders;
@@ -168,6 +170,20 @@ namespace Microsoft.OData.CodeGen.Models
             set
             {
                 makeTypesInternal = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Omit generation timestamp in generated files.
+        /// </summary>
+        [DataMember]
+        public bool NoTimestamp
+        {
+            get { return noTimestamp; }
+            set
+            {
+                noTimestamp = value;
                 OnPropertyChanged();
             }
         }

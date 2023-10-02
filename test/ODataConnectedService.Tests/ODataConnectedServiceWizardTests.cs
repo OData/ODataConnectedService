@@ -26,17 +26,17 @@ namespace ODataConnectedService.Tests
 {
     public sealed class ODataConnectedServiceWizardTests : IDisposable
     {
-        readonly UserSettings initialSettings;
+        readonly ConnectedServiceUserSettings initialSettings;
         readonly string MetadataPath = Path.GetFullPath("TestMetadataCsdl.xml");
         readonly string MetadataPathV3 = Path.GetFullPath("TestMetadataCsdlV3.xml");
         readonly string MetadataPathSimple = Path.GetFullPath("TestMetadataCsdlSimple.xml");
 
         public ODataConnectedServiceWizardTests()
         {
-            initialSettings = new UserSettings();
+            initialSettings = new ConnectedServiceUserSettings();
             initialSettings.Load();
             // Reset user settings
-            new UserSettings().Save();
+            new ConnectedServiceUserSettings().Save();
         }
 
         // Will be executed after every test to restore initial settings
@@ -99,7 +99,7 @@ namespace ODataConnectedService.Tests
         [Fact]
         public void TestLoadUserSettingsWhenWizardIsCreated()
         {
-            var settings = new UserSettings();
+            var settings = new ConnectedServiceUserSettings();
             settings.ServiceName = "OData Service";
             settings.AddMruEndpoint("Endpoint");
             settings.Save();
@@ -107,8 +107,8 @@ namespace ODataConnectedService.Tests
             var context = new TestConnectedServiceProviderContext();
             using (var wizard = new ODataConnectedServiceWizard(context))
             {
-                Assert.Equal("OData Service", wizard.UserSettings.ServiceName);
-                Assert.Contains("Endpoint", wizard.UserSettings.MruEndpoints);
+                Assert.Equal("OData Service", wizard.ConnectedServiceUserSettings.ServiceName);
+                Assert.Contains("Endpoint", wizard.ConnectedServiceUserSettings.MruEndpoints);
             }
         }
 
@@ -122,22 +122,22 @@ namespace ODataConnectedService.Tests
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
                 endpointPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).Wait();
-                Assert.Equal(Constants.DefaultServiceName, endpointPage.UserSettings.ServiceName);
-                Assert.Null(endpointPage.UserSettings.Endpoint);
+                Assert.Equal(Constants.DefaultServiceName, endpointPage.ConnectedServiceUserSettings.ServiceName);
+                Assert.Null(endpointPage.ConnectedServiceUserSettings.Endpoint);
                 Assert.Null(endpointPage.EdmxVersion);
-                Assert.False(endpointPage.UserSettings.IncludeCustomHeaders);
-                Assert.False(endpointPage.UserSettings.StoreCustomHttpHeaders);
-                Assert.Null(endpointPage.UserSettings.CustomHttpHeaders);
-                Assert.False(endpointPage.UserSettings.IncludeWebProxy);
-                Assert.Null(endpointPage.UserSettings.WebProxyHost);
-                Assert.False(endpointPage.UserSettings.IncludeWebProxyNetworkCredentials);
-                Assert.False(endpointPage.UserSettings.StoreWebProxyNetworkCredentials);
-                Assert.Null(endpointPage.UserSettings.WebProxyNetworkCredentialsDomain);
-                Assert.Null(endpointPage.UserSettings.WebProxyNetworkCredentialsUsername);
-                Assert.Null(endpointPage.UserSettings.WebProxyNetworkCredentialsPassword);
+                Assert.False(endpointPage.ConnectedServiceUserSettings.IncludeCustomHeaders);
+                Assert.False(endpointPage.ConnectedServiceUserSettings.StoreCustomHttpHeaders);
+                Assert.Null(endpointPage.ConnectedServiceUserSettings.CustomHttpHeaders);
+                Assert.False(endpointPage.ConnectedServiceUserSettings.IncludeWebProxy);
+                Assert.Null(endpointPage.ConnectedServiceUserSettings.WebProxyHost);
+                Assert.False(endpointPage.ConnectedServiceUserSettings.IncludeWebProxyNetworkCredentials);
+                Assert.False(endpointPage.ConnectedServiceUserSettings.StoreWebProxyNetworkCredentials);
+                Assert.Null(endpointPage.ConnectedServiceUserSettings.WebProxyNetworkCredentialsDomain);
+                Assert.Null(endpointPage.ConnectedServiceUserSettings.WebProxyNetworkCredentialsUsername);
+                Assert.Null(endpointPage.ConnectedServiceUserSettings.WebProxyNetworkCredentialsPassword);
 
                 var operationsPage = wizard.OperationImportsViewModel;
-                endpointPage.UserSettings.Endpoint = MetadataPath;
+                endpointPage.ConnectedServiceUserSettings.Endpoint = MetadataPath;
                 endpointPage.MetadataTempPath = MetadataPath;
                 endpointPage.EdmxVersion = Constants.EdmxVersion4;
                 operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
@@ -252,17 +252,17 @@ namespace ODataConnectedService.Tests
 
                 var advancedPage = wizard.AdvancedSettingsViewModel;
                 advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(typesPage)).Wait();
-                Assert.Equal(Constants.DefaultReferenceFileName, advancedPage.UserSettings.GeneratedFileNamePrefix);
-                Assert.False(advancedPage.UserSettings.UseNamespacePrefix);
-                Assert.Null(advancedPage.UserSettings.NamespacePrefix);
-                Assert.True(advancedPage.UserSettings.UseDataServiceCollection);
-                Assert.True(advancedPage.UserSettings.EnableNamingAlias);
-                Assert.False(advancedPage.UserSettings.OpenGeneratedFilesInIDE);
-                Assert.False(advancedPage.UserSettings.IncludeT4File);
-                Assert.False(advancedPage.UserSettings.GenerateMultipleFiles);
-                Assert.True(advancedPage.UserSettings.IgnoreUnexpectedElementsAndAttributes);
-                Assert.False(advancedPage.UserSettings.MakeTypesInternal);
-                Assert.False(advancedPage.UserSettings.OmitVersioningInfo);
+                Assert.Equal(Constants.DefaultReferenceFileName, advancedPage.ConnectedServiceUserSettings.GeneratedFileNamePrefix);
+                Assert.False(advancedPage.ConnectedServiceUserSettings.UseNamespacePrefix);
+                Assert.Null(advancedPage.ConnectedServiceUserSettings.NamespacePrefix);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.UseDataServiceCollection);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.EnableNamingAlias);
+                Assert.False(advancedPage.ConnectedServiceUserSettings.OpenGeneratedFilesInIDE);
+                Assert.False(advancedPage.ConnectedServiceUserSettings.IncludeT4File);
+                Assert.False(advancedPage.ConnectedServiceUserSettings.GenerateMultipleFiles);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.IgnoreUnexpectedElementsAndAttributes);
+                Assert.False(advancedPage.ConnectedServiceUserSettings.MakeTypesInternal);
+                Assert.False(advancedPage.ConnectedServiceUserSettings.OmitVersioningInfo);
             }
         }
 
@@ -278,19 +278,19 @@ namespace ODataConnectedService.Tests
 
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
                 endpointPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).Wait();
-                Assert.Equal("https://service/$metadata", endpointPage.UserSettings.Endpoint);
-                Assert.Equal("MyService", endpointPage.UserSettings.ServiceName);
-                Assert.True(endpointPage.UserSettings.IncludeCustomHeaders);
-                Assert.True(endpointPage.UserSettings.StoreCustomHttpHeaders);
-                Assert.Equal("Key1:Val1\nKey2:Val2", endpointPage.UserSettings.CustomHttpHeaders);
-                Assert.True(endpointPage.UserSettings.IncludeWebProxy);
-                Assert.Equal("http://localhost:8080", endpointPage.UserSettings.WebProxyHost);
-                Assert.True(endpointPage.UserSettings.IncludeWebProxyNetworkCredentials);
-                Assert.True(endpointPage.UserSettings.StoreWebProxyNetworkCredentials);
-                Assert.Equal("domain", endpointPage.UserSettings.WebProxyNetworkCredentialsDomain);
+                Assert.Equal("https://service/$metadata", endpointPage.ConnectedServiceUserSettings.Endpoint);
+                Assert.Equal("MyService", endpointPage.ConnectedServiceUserSettings.ServiceName);
+                Assert.True(endpointPage.ConnectedServiceUserSettings.IncludeCustomHeaders);
+                Assert.True(endpointPage.ConnectedServiceUserSettings.StoreCustomHttpHeaders);
+                Assert.Equal("Key1:Val1\nKey2:Val2", endpointPage.ConnectedServiceUserSettings.CustomHttpHeaders);
+                Assert.True(endpointPage.ConnectedServiceUserSettings.IncludeWebProxy);
+                Assert.Equal("http://localhost:8080", endpointPage.ConnectedServiceUserSettings.WebProxyHost);
+                Assert.True(endpointPage.ConnectedServiceUserSettings.IncludeWebProxyNetworkCredentials);
+                Assert.True(endpointPage.ConnectedServiceUserSettings.StoreWebProxyNetworkCredentials);
+                Assert.Equal("domain", endpointPage.ConnectedServiceUserSettings.WebProxyNetworkCredentialsDomain);
                 // username and password are not restored from the config
-                Assert.Equal("username", endpointPage.UserSettings.WebProxyNetworkCredentialsUsername);
-                Assert.Equal("password", endpointPage.UserSettings.WebProxyNetworkCredentialsPassword);
+                Assert.Equal("username", endpointPage.ConnectedServiceUserSettings.WebProxyNetworkCredentialsUsername);
+                Assert.Equal("password", endpointPage.ConnectedServiceUserSettings.WebProxyNetworkCredentialsPassword);
 
                 var operationsPage = wizard.OperationImportsViewModel;
                 endpointPage.MetadataTempPath = MetadataPath;
@@ -417,17 +417,17 @@ namespace ODataConnectedService.Tests
 
                 var advancedPage = wizard.AdvancedSettingsViewModel;
                 advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(typesPage)).Wait();
-                Assert.Equal("GeneratedCode", advancedPage.UserSettings.GeneratedFileNamePrefix);
-                Assert.True(advancedPage.UserSettings.UseNamespacePrefix);
-                Assert.Equal("Namespace", advancedPage.UserSettings.NamespacePrefix);
-                Assert.True(advancedPage.UserSettings.UseDataServiceCollection);
-                Assert.True(advancedPage.UserSettings.EnableNamingAlias);
-                Assert.True(advancedPage.UserSettings.OpenGeneratedFilesInIDE);
-                Assert.True(advancedPage.UserSettings.IncludeT4File);
-                Assert.True(advancedPage.UserSettings.GenerateMultipleFiles);
-                Assert.True(advancedPage.UserSettings.IgnoreUnexpectedElementsAndAttributes);
-                Assert.True(advancedPage.UserSettings.MakeTypesInternal);
-                Assert.True(advancedPage.UserSettings.OmitVersioningInfo);
+                Assert.Equal("GeneratedCode", advancedPage.ConnectedServiceUserSettings.GeneratedFileNamePrefix);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.UseNamespacePrefix);
+                Assert.Equal("Namespace", advancedPage.ConnectedServiceUserSettings.NamespacePrefix);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.UseDataServiceCollection);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.EnableNamingAlias);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.OpenGeneratedFilesInIDE);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.IncludeT4File);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.GenerateMultipleFiles);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.IgnoreUnexpectedElementsAndAttributes);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.MakeTypesInternal);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.OmitVersioningInfo);
             }
         }
 
@@ -469,19 +469,19 @@ namespace ODataConnectedService.Tests
             using (var wizard = new ODataConnectedServiceWizard(context))
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
-                endpointPage.UserSettings.ServiceName = "TestService";
-                endpointPage.UserSettings.Endpoint = MetadataPath;
+                endpointPage.ConnectedServiceUserSettings.ServiceName = "TestService";
+                endpointPage.ConnectedServiceUserSettings.Endpoint = MetadataPath;
                 endpointPage.EdmxVersion = Constants.EdmxVersion4;
-                endpointPage.UserSettings.IncludeCustomHeaders = true;
-                endpointPage.UserSettings.StoreCustomHttpHeaders = true;
-                endpointPage.UserSettings.CustomHttpHeaders = "Key:val";
-                endpointPage.UserSettings.IncludeWebProxy = true;
-                endpointPage.UserSettings.WebProxyHost = "http://localhost:8080";
-                endpointPage.UserSettings.IncludeWebProxyNetworkCredentials = true;
-                endpointPage.UserSettings.StoreWebProxyNetworkCredentials = true;
-                endpointPage.UserSettings.WebProxyNetworkCredentialsDomain = "domain";
-                endpointPage.UserSettings.WebProxyNetworkCredentialsUsername = "user";
-                endpointPage.UserSettings.WebProxyNetworkCredentialsPassword = "pass";
+                endpointPage.ConnectedServiceUserSettings.IncludeCustomHeaders = true;
+                endpointPage.ConnectedServiceUserSettings.StoreCustomHttpHeaders = true;
+                endpointPage.ConnectedServiceUserSettings.CustomHttpHeaders = "Key:val";
+                endpointPage.ConnectedServiceUserSettings.IncludeWebProxy = true;
+                endpointPage.ConnectedServiceUserSettings.WebProxyHost = "http://localhost:8080";
+                endpointPage.ConnectedServiceUserSettings.IncludeWebProxyNetworkCredentials = true;
+                endpointPage.ConnectedServiceUserSettings.StoreWebProxyNetworkCredentials = true;
+                endpointPage.ConnectedServiceUserSettings.WebProxyNetworkCredentialsDomain = "domain";
+                endpointPage.ConnectedServiceUserSettings.WebProxyNetworkCredentialsUsername = "user";
+                endpointPage.ConnectedServiceUserSettings.WebProxyNetworkCredentialsPassword = "pass";
 
                 var operationsPage = wizard.OperationImportsViewModel;
                 endpointPage.OnPageLeavingAsync(new WizardLeavingArgs(operationsPage)).Wait();
@@ -524,16 +524,16 @@ namespace ODataConnectedService.Tests
                 };
 
                 var advancedPage = wizard.AdvancedSettingsViewModel;
-                advancedPage.UserSettings.GeneratedFileNamePrefix = "GeneratedFile";
-                advancedPage.UserSettings.UseNamespacePrefix = true;
-                advancedPage.UserSettings.NamespacePrefix = "TestNamespace";
-                advancedPage.UserSettings.UseDataServiceCollection = true;
-                advancedPage.UserSettings.EnableNamingAlias = true;
-                advancedPage.UserSettings.MakeTypesInternal = true;
-                advancedPage.UserSettings.IncludeT4File = true;
-                advancedPage.UserSettings.GenerateMultipleFiles = true;
-                advancedPage.UserSettings.OpenGeneratedFilesInIDE = true;
-                advancedPage.UserSettings.OmitVersioningInfo = true;
+                advancedPage.ConnectedServiceUserSettings.GeneratedFileNamePrefix = "GeneratedFile";
+                advancedPage.ConnectedServiceUserSettings.UseNamespacePrefix = true;
+                advancedPage.ConnectedServiceUserSettings.NamespacePrefix = "TestNamespace";
+                advancedPage.ConnectedServiceUserSettings.UseDataServiceCollection = true;
+                advancedPage.ConnectedServiceUserSettings.EnableNamingAlias = true;
+                advancedPage.ConnectedServiceUserSettings.MakeTypesInternal = true;
+                advancedPage.ConnectedServiceUserSettings.IncludeT4File = true;
+                advancedPage.ConnectedServiceUserSettings.GenerateMultipleFiles = true;
+                advancedPage.ConnectedServiceUserSettings.OpenGeneratedFilesInIDE = true;
+                advancedPage.ConnectedServiceUserSettings.OmitVersioningInfo = true;
 
                 operationsPage.OnPageLeavingAsync(new WizardLeavingArgs(typesPage)).Wait();
                 typesPage.OnPageLeavingAsync(new WizardLeavingArgs(advancedPage)).Wait();
@@ -542,7 +542,7 @@ namespace ODataConnectedService.Tests
                 var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
 
                 // saved user settings
-                var settings = new UserSettings();
+                var settings = new ConnectedServiceUserSettings();
                 settings.Load();
                 Assert.Equal("TestService", settings.ServiceName);
                 Assert.Equal(MetadataPath, settings.Endpoint);
@@ -687,7 +687,7 @@ namespace ODataConnectedService.Tests
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
                 endpointPage.OnPageEnteringAsync(null).Wait();
-                endpointPage.UserSettings.Endpoint = MetadataPath;
+                endpointPage.ConnectedServiceUserSettings.Endpoint = MetadataPath;
                 endpointPage.OnPageLeavingAsync(null).Wait();
 
                 var typesPage = wizard.SchemaTypesViewModel;
@@ -723,10 +723,10 @@ namespace ODataConnectedService.Tests
 
                 var advancedPage = wizard.AdvancedSettingsViewModel;
                 advancedPage.OnPageEnteringAsync(null).Wait();
-                advancedPage.UserSettings.UseDataServiceCollection = true;
-                advancedPage.UserSettings.MakeTypesInternal = true;
-                advancedPage.UserSettings.UseNamespacePrefix = true;
-                advancedPage.UserSettings.OmitVersioningInfo = true;
+                advancedPage.ConnectedServiceUserSettings.UseDataServiceCollection = true;
+                advancedPage.ConnectedServiceUserSettings.MakeTypesInternal = true;
+                advancedPage.ConnectedServiceUserSettings.UseNamespacePrefix = true;
+                advancedPage.ConnectedServiceUserSettings.OmitVersioningInfo = true;
                 advancedPage.OnPageLeavingAsync(null).Wait();
 
                 endpointPage.OnPageEnteringAsync(null).Wait();
@@ -740,13 +740,13 @@ namespace ODataConnectedService.Tests
                 endpointPage.OnPageLeavingAsync(null).Wait();
 
                 advancedPage.OnPageEnteringAsync(null).Wait();
-                Assert.True(advancedPage.UserSettings.UseNamespacePrefix);
-                Assert.True(advancedPage.UserSettings.UseDataServiceCollection);
-                Assert.True(advancedPage.UserSettings.MakeTypesInternal);
-                Assert.True(advancedPage.UserSettings.OmitVersioningInfo);
-                advancedPage.UserSettings.NamespacePrefix = "MyNamespace";
-                advancedPage.UserSettings.GenerateMultipleFiles = true;
-                advancedPage.UserSettings.UseDataServiceCollection = false;
+                Assert.True(advancedPage.ConnectedServiceUserSettings.UseNamespacePrefix);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.UseDataServiceCollection);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.MakeTypesInternal);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.NoTimestamp);
+                advancedPage.ConnectedServiceUserSettings.NamespacePrefix = "MyNamespace";
+                advancedPage.ConnectedServiceUserSettings.GenerateMultipleFiles = true;
+                advancedPage.ConnectedServiceUserSettings.UseDataServiceCollection = false;
                 advancedPage.OnPageLeavingAsync(null).Wait();
 
                 operationsPage.OnPageEnteringAsync(null).Wait();
@@ -833,27 +833,27 @@ namespace ODataConnectedService.Tests
 
                 var advancedPage = wizard.AdvancedSettingsViewModel;
                 advancedPage.OnPageEnteringAsync(null).Wait();
-                advancedPage.UserSettings.UseDataServiceCollection = true;
-                advancedPage.UserSettings.MakeTypesInternal = true;
-                advancedPage.UserSettings.UseNamespacePrefix = true;
-                advancedPage.UserSettings.OmitVersioningInfo = true;
+                advancedPage.ConnectedServiceUserSettings.UseDataServiceCollection = true;
+                advancedPage.ConnectedServiceUserSettings.MakeTypesInternal = true;
+                advancedPage.ConnectedServiceUserSettings.UseNamespacePrefix = true;
+                advancedPage.ConnectedServiceUserSettings.OmitVersioningInfo = true;
                 advancedPage.OnPageLeavingAsync(null).Wait();
 
                 endpointPage.OnPageEnteringAsync(null).Wait();
-                Assert.Equal(savedConfig.ServiceName, endpointPage.UserSettings.ServiceName);
-                Assert.Equal(savedConfig.Endpoint, endpointPage.UserSettings.Endpoint);
-                endpointPage.UserSettings.IncludeCustomHeaders = true;
-                endpointPage.UserSettings.CustomHttpHeaders = "A:b";
+                Assert.Equal(savedConfig.ServiceName, endpointPage.ConnectedServiceUserSettings.ServiceName);
+                Assert.Equal(savedConfig.Endpoint, endpointPage.ConnectedServiceUserSettings.Endpoint);
+                endpointPage.ConnectedServiceUserSettings.IncludeCustomHeaders = true;
+                endpointPage.ConnectedServiceUserSettings.CustomHttpHeaders = "A:b";
                 endpointPage.OnPageLeavingAsync(null).Wait();
 
                 advancedPage.OnPageEnteringAsync(null).Wait();
-                Assert.True(advancedPage.UserSettings.UseNamespacePrefix);
-                Assert.True(advancedPage.UserSettings.UseDataServiceCollection);
-                Assert.True(advancedPage.UserSettings.MakeTypesInternal);
-                Assert.True(advancedPage.UserSettings.OmitVersioningInfo);
-                advancedPage.UserSettings.NamespacePrefix = "MyNamespace";
-                advancedPage.UserSettings.GenerateMultipleFiles = true;
-                advancedPage.UserSettings.UseDataServiceCollection = false;
+                Assert.True(advancedPage.ConnectedServiceUserSettings.UseNamespacePrefix);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.UseDataServiceCollection);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.MakeTypesInternal);
+                Assert.True(advancedPage.ConnectedServiceUserSettings.OmitVersioningInfo);
+                advancedPage.ConnectedServiceUserSettings.NamespacePrefix = "MyNamespace";
+                advancedPage.ConnectedServiceUserSettings.GenerateMultipleFiles = true;
+                advancedPage.ConnectedServiceUserSettings.UseDataServiceCollection = false;
                 advancedPage.OnPageLeavingAsync(null).Wait();
 
                 operationsPage.OnPageEnteringAsync(null).Wait();
@@ -921,7 +921,7 @@ namespace ODataConnectedService.Tests
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
                 endpointPage.OnPageEnteringAsync(null).Wait();
-                endpointPage.UserSettings.Endpoint = MetadataPath;
+                endpointPage.ConnectedServiceUserSettings.Endpoint = MetadataPath;
                 endpointPage.OnPageLeavingAsync(null).Wait();
 
                 var typesPage = wizard.SchemaTypesViewModel;
@@ -936,7 +936,7 @@ namespace ODataConnectedService.Tests
 
                 // go back to first page and change endpoint
                 endpointPage.OnPageEnteringAsync(null).Wait();
-                endpointPage.UserSettings.Endpoint = MetadataPathSimple;
+                endpointPage.ConnectedServiceUserSettings.Endpoint = MetadataPathSimple;
                 endpointPage.OnPageLeavingAsync(null).Wait();
 
                 typesPage.OnPageEnteringAsync(null).Wait();
@@ -985,7 +985,7 @@ namespace ODataConnectedService.Tests
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
                 endpointPage.OnPageEnteringAsync(null).Wait();
-                endpointPage.UserSettings.Endpoint = MetadataPath;
+                endpointPage.ConnectedServiceUserSettings.Endpoint = MetadataPath;
                 endpointPage.OnPageLeavingAsync(null).Wait();
 
                 var typesPage = wizard.SchemaTypesViewModel;
@@ -1019,7 +1019,7 @@ namespace ODataConnectedService.Tests
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
                 endpointPage.OnPageEnteringAsync(null).Wait();
-                endpointPage.UserSettings.Endpoint = MetadataPath;
+                endpointPage.ConnectedServiceUserSettings.Endpoint = MetadataPath;
                 endpointPage.OnPageLeavingAsync(null).Wait();
 
                 var typesPage = wizard.SchemaTypesViewModel;
@@ -1060,7 +1060,7 @@ namespace ODataConnectedService.Tests
             using (var wizard = new ODataConnectedServiceWizard(context))
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
-                endpointPage.UserSettings.Endpoint = MetadataPathV3;
+                endpointPage.ConnectedServiceUserSettings.Endpoint = MetadataPathV3;
                 endpointPage.OnPageLeavingAsync(null).Wait();
                 Assert.Equal(Constants.EdmxVersion1, endpointPage.EdmxVersion);
 
