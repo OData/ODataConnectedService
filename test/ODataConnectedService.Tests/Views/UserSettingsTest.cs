@@ -16,7 +16,7 @@ namespace ODataConnectedService.Tests.Views
         // Will be executed after every test to set test user settings to a known initial state
         public void Dispose()
         {
-            var userSettings = new ConnectedServiceUserSettings(configName: "TestUserSettings");
+            var userSettings = new UserSettings(configName: "TestUserSettings");
             userSettings.MruEndpoints.Clear();
             userSettings.Save();
         }
@@ -24,10 +24,10 @@ namespace ODataConnectedService.Tests.Views
         [Fact]
         public void SaveSettingsWhenSaveMethodIsCalled()
         {
-            // Create an instance of ConnectedServiceUserSettings
-            var userSettings = new ConnectedServiceUserSettings(configName: "TestUserSettings");
+            // Create an instance of UserSettings
+            var userSettings = new UserSettings(configName: "TestUserSettings");
 
-            // Set ConnectedServiceUserSettings
+            // Set UserSettings
             userSettings.Endpoint = "https://service/$metadata";
             userSettings.GeneratedFileNamePrefix = "MyPrefix";
             userSettings.GenerateMultipleFiles = true;
@@ -38,7 +38,7 @@ namespace ODataConnectedService.Tests.Views
             userSettings.Save();
 
             // Load settings
-            var settings = new ConnectedServiceUserSettings(configName: "TestUserSettings");
+            var settings = new UserSettings(configName: "TestUserSettings");
             settings.Load();
             Assert.Equal("https://service/$metadata", settings.Endpoint);
             Assert.Equal("MyPrefix", settings.GeneratedFileNamePrefix);
@@ -50,8 +50,8 @@ namespace ODataConnectedService.Tests.Views
         [Fact]
         public void AddToTopOfMruList_ShouldAddToTopWithoutDuplicatingOrExceedingMax()
         {
-            // Create an instance of ConnectedServiceUserSettings
-            var userSettings = new ConnectedServiceUserSettings(configName: "TestUserSettings");
+            // Create an instance of UserSettings
+            var userSettings = new UserSettings(configName: "TestUserSettings");
 
             var endpoint1 = "https://service1/$metadata";
             var endpoint2 = "https://service2/$metadata";

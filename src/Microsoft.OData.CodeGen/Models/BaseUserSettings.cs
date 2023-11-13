@@ -16,7 +16,7 @@ namespace Microsoft.OData.CodeGen.Models
     /// Represents options in OData Connected Service Config File
     /// </summary>
     [DataContract]
-    public class UserSettings : INotifyPropertyChanged
+    public class BaseUserSettings : INotifyPropertyChanged
     {
         #region Private Members
 

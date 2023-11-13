@@ -6,12 +6,7 @@
 //---------------------------------------------------------------------------------
 
 using System;
-using System.Globalization;
-using System.IO;
-using System.Net;
 using System.Threading.Tasks;
-using System.Xml;
-using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService.Views;
 using Microsoft.VisualStudio.ConnectedServices;
@@ -24,18 +19,18 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public string MetadataTempPath { get; set; }
 
-        public ConnectedServiceUserSettings ConnectedServiceUserSettings { get; internal set; }
+        public UserSettings UserSettings { get; internal set; }
 
         public ServiceConfiguration ServiceConfiguration { get; set; }
 
         public event EventHandler<EventArgs> PageEntering;
 
-        public ConfigODataEndpointViewModel(ConnectedServiceUserSettings userSettings) : base()
+        public ConfigODataEndpointViewModel(UserSettings userSettings) : base()
         {
             this.Title = "Configure endpoint";
             this.Description = "Enter or choose an OData service endpoint to begin";
             this.Legend = "Endpoint";
-            this.ConnectedServiceUserSettings = userSettings;
+            this.UserSettings = userSettings;
         }
         public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
@@ -52,9 +47,9 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             {
                 ServiceConfiguration = GetServiceConfiguration();
                 this.MetadataTempPath = CodeGen.Common.MetadataReader.ProcessServiceMetadata(ServiceConfiguration, out var version);
-                // Makes sense to add MRU endpoint at this point since GetMetadata manipulates ConnectedServiceUserSettings.Endpoint
-                ConnectedServiceUserSettings.Endpoint = ServiceConfiguration.Endpoint;
-                ConnectedServiceUserSettings.AddMruEndpoint(ConnectedServiceUserSettings.Endpoint);
+                // Makes sense to add MRU endpoint at this point since GetMetadata manipulates UserSettings.Endpoint
+                UserSettings.Endpoint = ServiceConfiguration.Endpoint;
+                UserSettings.AddMruEndpoint(UserSettings.Endpoint);
                 this.EdmxVersion = version;
                 PageLeaving?.Invoke(this, EventArgs.Empty);
                 return base.OnPageLeavingAsync(args);
@@ -74,14 +69,14 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         private ServiceConfiguration GetServiceConfiguration()
         {
             ServiceConfiguration serviceConfiguration = new ServiceConfiguration();
-            serviceConfiguration.Endpoint = this.ConnectedServiceUserSettings.Endpoint;
-            serviceConfiguration.CustomHttpHeaders = this.ConnectedServiceUserSettings.CustomHttpHeaders;
-            serviceConfiguration.WebProxyHost = this.ConnectedServiceUserSettings.WebProxyHost;
-            serviceConfiguration.IncludeWebProxy = this.ConnectedServiceUserSettings.IncludeWebProxy;
-            serviceConfiguration.IncludeWebProxyNetworkCredentials = this.ConnectedServiceUserSettings.IncludeWebProxyNetworkCredentials;
-            serviceConfiguration.WebProxyNetworkCredentialsUsername = this.ConnectedServiceUserSettings.WebProxyNetworkCredentialsUsername;
-            serviceConfiguration.WebProxyNetworkCredentialsPassword = this.ConnectedServiceUserSettings.WebProxyNetworkCredentialsPassword;
-            serviceConfiguration.WebProxyNetworkCredentialsDomain = this.ConnectedServiceUserSettings.WebProxyNetworkCredentialsDomain;
+            serviceConfiguration.Endpoint = this.UserSettings.Endpoint;
+            serviceConfiguration.CustomHttpHeaders = this.UserSettings.CustomHttpHeaders;
+            serviceConfiguration.WebProxyHost = this.UserSettings.WebProxyHost;
+            serviceConfiguration.IncludeWebProxy = this.UserSettings.IncludeWebProxy;
+            serviceConfiguration.IncludeWebProxyNetworkCredentials = this.UserSettings.IncludeWebProxyNetworkCredentials;
+            serviceConfiguration.WebProxyNetworkCredentialsUsername = this.UserSettings.WebProxyNetworkCredentialsUsername;
+            serviceConfiguration.WebProxyNetworkCredentialsPassword = this.UserSettings.WebProxyNetworkCredentialsPassword;
+            serviceConfiguration.WebProxyNetworkCredentialsDomain = this.UserSettings.WebProxyNetworkCredentialsDomain;
 
             return serviceConfiguration;
         }

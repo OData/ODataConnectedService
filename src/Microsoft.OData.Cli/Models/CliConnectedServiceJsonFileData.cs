@@ -18,6 +18,6 @@ namespace Microsoft.OData.Cli.Models
     {
         public string ProviderId { get; set; }
 
-        public UserSettings ExtendedData { get; set; }
+        public BaseUserSettings ExtendedData { get; set; }
     }
 }

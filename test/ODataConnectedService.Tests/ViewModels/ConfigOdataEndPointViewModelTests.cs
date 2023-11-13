@@ -22,13 +22,13 @@ namespace ODataConnectedService.Tests.ViewModels
     public class ConfigOdataEndPointViewModelTests
     {
         private static ConfigODataEndpointViewModel configOdataEndPointViewModel;
-        private static ConnectedServiceUserSettings userSettings;
+        private static UserSettings userSettings;
         private static ODataConnectedServiceWizard serviceWizard;
 
         [TestInitialize]
         public void Init()
         {
-            userSettings = new ConnectedServiceUserSettings();
+            userSettings = new UserSettings();
             serviceWizard = new ODataConnectedServiceWizard(null);
             configOdataEndPointViewModel = new ConfigODataEndpointViewModel(userSettings);
             serviceWizard.Pages.Add(configOdataEndPointViewModel);
@@ -55,49 +55,49 @@ namespace ODataConnectedService.Tests.ViewModels
             Assert.IsTrue(pageNavigationResult.ShowMessageBoxOnFailure);
 
             //Provide a url without $metadata
-            configOdataEndPointViewModel.ConnectedServiceUserSettings.Endpoint = "http://mysite/ODataService";
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://mysite/ODataService";
             pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
             //Check if $metadata is appended as the last segment if it was not the last segment of the url
             Assert.AreEqual("http://mysite/ODataService/$metadata", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
 
             //Provide a url with $metadata/
-            configOdataEndPointViewModel.ConnectedServiceUserSettings.Endpoint = "http://mysite/ODataService/$metadata/";
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://mysite/ODataService/$metadata/";
             pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
             //Check if $metadata is appended as the last segment and '/' is removed
             Assert.AreEqual("http://mysite/ODataService/$metadata", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
 
             //Provide a url with "$metadata" as the last segment in the url with fragment and query segments
-            configOdataEndPointViewModel.ConnectedServiceUserSettings.Endpoint = "http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0#fragment";
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0#fragment";
             _ = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
             //Check if the url is detected as valid and is unmodified
             Assert.AreEqual("http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0#fragment", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
 
             //Provide a url with query and fragment segments without $metadata
-            configOdataEndPointViewModel.ConnectedServiceUserSettings.Endpoint = "http://user:password@mysite/ODataService?$schemaversion=2.0#fragment";
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://user:password@mysite/ODataService?$schemaversion=2.0#fragment";
             pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
             //Check if $metadata is appended as the last segment
             Assert.AreEqual("http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0#fragment", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
 
             //Provide a url with a fragment segment without $metadata
-            configOdataEndPointViewModel.ConnectedServiceUserSettings.Endpoint = "http://user:password@mysite/ODataService#fragment";
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://user:password@mysite/ODataService#fragment";
             pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
             //Check if $metadata is appended as the last segment
             Assert.AreEqual("http://user:password@mysite/ODataService/$metadata#fragment", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
 
             //Provide a url with $metadata and a fragment segment without a query segment
-            configOdataEndPointViewModel.ConnectedServiceUserSettings.Endpoint = "http://user:password@mysite/ODataService/$metadata#fragment";
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://user:password@mysite/ODataService/$metadata#fragment";
             pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
             //Check if $metadata is appended as the last segment
             Assert.AreEqual("http://user:password@mysite/ODataService/$metadata#fragment", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
 
             //Provide a url with $metadata and a query segment without a fragment segment
-            configOdataEndPointViewModel.ConnectedServiceUserSettings.Endpoint = "http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0";
+            configOdataEndPointViewModel.UserSettings.Endpoint = "http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0";
             pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
             //Check if $metadata is appended as the last segment
@@ -112,7 +112,7 @@ namespace ODataConnectedService.Tests.ViewModels
             Assert.IsTrue(pageNavigationResult.ShowMessageBoxOnFailure);
 
 
-            configOdataEndPointViewModel.ConnectedServiceUserSettings.Endpoint = Path.Combine(Directory.GetCurrentDirectory(), "EdmxFile.xml");
+            configOdataEndPointViewModel.UserSettings.Endpoint = Path.Combine(Directory.GetCurrentDirectory(), "EdmxFile.xml");
             pageNavigationResultTask = configOdataEndPointViewModel.OnPageLeavingAsync(null);
 
             //Check if any errors were reported

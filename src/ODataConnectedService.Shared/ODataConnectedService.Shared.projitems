@@ -20,7 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\SchemaTypeModelToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\ConnectedServiceUserSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\UserSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ODataConnectedServiceHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ODataConnectedServiceInstance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ODataConnectedServiceProvider.cs" />

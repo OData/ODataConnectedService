@@ -19,7 +19,7 @@ using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService.ViewModels
 {
-    internal class OperationImportsViewModel: ConnectedServiceWizardPage
+    internal class OperationImportsViewModel : ConnectedServiceWizardPage
     {
         private bool _isSupportedVersion;
 
@@ -27,9 +27,9 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// User settings.
         /// </summary>
         /// <remarks>
-        /// <see cref="Models.ConnectedServiceUserSettings"/>
+        /// <see cref="Models.UserSettings"/>
         /// </remarks>
-        public ConnectedServiceUserSettings ConnectedServiceUserSettings { get; internal set; }
+        public UserSettings UserSettings { get; internal set; }
 
         private long _operationImportsCount = 0;
 
@@ -40,14 +40,14 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         internal bool IsEntered;
 
-        public OperationImportsViewModel(ConnectedServiceUserSettings userSettings = null) : base()
+        public OperationImportsViewModel(UserSettings userSettings = null) : base()
         {
             Title = "Function/Action Imports";
             Description = "Select function and action imports to include in the generated code.";
             Legend = "Function/Action Imports Selection";
             OperationImports = new List<OperationImportModel>();
             IsSupportedODataVersion = true;
-            this.ConnectedServiceUserSettings = userSettings;
+            this.UserSettings = userSettings;
         }
 
         /// <summary>
@@ -290,9 +290,9 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// </summary>
         private void SaveToUserSettings()
         {
-            if (this.ConnectedServiceUserSettings != null)
+            if (this.UserSettings != null)
             {
-                ConnectedServiceUserSettings.ExcludedOperationImports = this.ExcludedOperationImportsNames?.Any() == true
+                UserSettings.ExcludedOperationImports = this.ExcludedOperationImportsNames?.Any() == true
                     ? this.ExcludedOperationImportsNames.ToList()
                     : new List<string>();
             }
@@ -303,11 +303,11 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// </summary>
         public void LoadFromUserSettings()
         {
-            if (ConnectedServiceUserSettings != null)
+            if (UserSettings != null)
             {
-                if (ConnectedServiceUserSettings.ExcludedOperationImports?.Any() == true)
+                if (UserSettings.ExcludedOperationImports?.Any() == true)
                 {
-                    ExcludeOperationImports(ConnectedServiceUserSettings.ExcludedOperationImports ?? Enumerable.Empty<string>());
+                    ExcludeOperationImports(UserSettings.ExcludedOperationImports ?? Enumerable.Empty<string>());
                 }
             }
         }

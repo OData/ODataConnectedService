@@ -26,9 +26,9 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// User settings.
         /// </summary>
         /// <remarks>
-        /// <see cref="Models.ConnectedServiceUserSettings"/>
+        /// <see cref="Models.UserSettings"/>
         /// </remarks>
-        public ConnectedServiceUserSettings ConnectedServiceUserSettings { get; set; }
+        public UserSettings UserSettings { get; set; }
 
         /// <summary>
         /// A dictionary that contains schema type full names with it's related models.
@@ -109,7 +109,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         internal bool IsEntered;
 
-        public SchemaTypesViewModel(ConnectedServiceUserSettings userSettings = null) : base()
+        public SchemaTypesViewModel(UserSettings userSettings = null) : base()
         {
             Title = "Schema Types";
             Description = "Select schema types with its bound operations to include in the generated code.";
@@ -117,7 +117,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             SchemaTypes = new List<SchemaTypeModel>();
             SchemaTypeModelMap = new Dictionary<string, SchemaTypeModel>();
             RelatedTypes = new Dictionary<string, ICollection<string>>();
-            this.ConnectedServiceUserSettings = userSettings;
+            this.UserSettings = userSettings;
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         {
             this.IsEntered = true;
             await base.OnPageEnteringAsync(args).ConfigureAwait(false);
-            View = new SchemaTypes() {DataContext = this};
+            View = new SchemaTypes() { DataContext = this };
             PageEntering?.Invoke(this, EventArgs.Empty);
             if (this.View is SchemaTypes view)
             {
@@ -203,13 +203,13 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// </summary>
         public void SaveToUserSettings()
         {
-            if (this.ConnectedServiceUserSettings != null)
+            if (this.UserSettings != null)
             {
-                ConnectedServiceUserSettings.ExcludedSchemaTypes = this.ExcludedSchemaTypeNames?.Any() == true
+                UserSettings.ExcludedSchemaTypes = this.ExcludedSchemaTypeNames?.Any() == true
                     ? this.ExcludedSchemaTypeNames.ToList()
                     : new List<string>();
 
-                ConnectedServiceUserSettings.ExcludedBoundOperations = this.ExcludedBoundOperationsNames?.Any() == true
+                UserSettings.ExcludedBoundOperations = this.ExcludedBoundOperationsNames?.Any() == true
                     ? this.ExcludedBoundOperationsNames.ToList()
                     : new List<string>();
             }
@@ -220,19 +220,19 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// </summary>
         public void LoadFromUserSettings()
         {
-            if (ConnectedServiceUserSettings != null)
+            if (UserSettings != null)
             {
-                if (ConnectedServiceUserSettings.ExcludedSchemaTypes?.Any() == true)
+                if (UserSettings.ExcludedSchemaTypes?.Any() == true)
                 {
-                    ExcludeSchemaTypes(ConnectedServiceUserSettings.ExcludedSchemaTypes ?? Enumerable.Empty<string>(), ConnectedServiceUserSettings.ExcludedBoundOperations ?? Enumerable.Empty<string>());
+                    ExcludeSchemaTypes(UserSettings.ExcludedSchemaTypes ?? Enumerable.Empty<string>(), UserSettings.ExcludedBoundOperations ?? Enumerable.Empty<string>());
                 }
 
-                if (ConnectedServiceUserSettings.ExcludedBoundOperations?.Any() == true)
+                if (UserSettings.ExcludedBoundOperations?.Any() == true)
                 {
                     foreach (var schemaType in SchemaTypes)
                     {
                         ExcludeBoundOperations(schemaType,
-                            ConnectedServiceUserSettings.ExcludedBoundOperations ?? Enumerable.Empty<string>());
+                            UserSettings.ExcludedBoundOperations ?? Enumerable.Empty<string>());
                     }
                 }
             }

@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------------
-// <copyright file="ConnectedServiceUserSettings.cs" company=".NET Foundation">
+// <copyright file="UserSettings.cs" company=".NET Foundation">
 //      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
 //      See License.txt in the project root for license information.
 // </copyright>
@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace Microsoft.OData.CodeGen.Models
 {
     [DataContract]
-    public class ConnectedServiceUserSettings : UserSettings
+    public class UserSettings : BaseUserSettings
     {
         #region Const Members
 
@@ -64,11 +64,11 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConnectedServiceUserSettings"/> class.
+        /// Initializes a new instance of the <see cref="UserSettings"/> class.
         /// </summary>
         /// <param name="logger">The logger to use.</param>
         /// <param name="configName">The name to use for the config file.</param>
-        public ConnectedServiceUserSettings(ConnectedServiceLogger logger, string configName = "Settings")
+        public UserSettings(ConnectedServiceLogger logger, string configName = "Settings")
             : base()
         {
             this.configName = configName;
@@ -83,7 +83,7 @@ namespace Microsoft.OData.CodeGen.Models
             ExcludedOperationImports = new List<string>();
             ExcludedSchemaTypes = new List<string>();
             MruEndpoints = new ObservableCollection<string>();
-            UserSettingsPersistenceHelper.Load<ConnectedServiceUserSettings>(
+            UserSettingsPersistenceHelper.Load<UserSettings>(
                 providerId: Constants.ProviderId,
                 name: configName,
                 onLoaded: (userSettings) =>
@@ -102,11 +102,11 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConnectedServiceUserSettings"/> class.
+        /// Initializes a new instance of the <see cref="UserSettings"/> class.
         /// </summary>
         /// <param name="configName">The name to use for the config file.</param>
         [JsonConstructor] // Constructor should be used to create a class during deserialization
-        public ConnectedServiceUserSettings(string configName = "Settings")
+        public UserSettings(string configName = "Settings")
             : this(null, configName)
         {
         }
@@ -124,7 +124,7 @@ namespace Microsoft.OData.CodeGen.Models
         /// </summary>
         public void Load()
         {
-            var userSettings = UserSettingsPersistenceHelper.Load<ConnectedServiceUserSettings>(
+            var userSettings = UserSettingsPersistenceHelper.Load<UserSettings>(
                 Constants.ProviderId, configName, null, logger);
 
             if (userSettings != null)
