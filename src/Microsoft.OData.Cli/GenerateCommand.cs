@@ -255,9 +255,9 @@ namespace Microsoft.OData.Cli
             }
 
             var namespacePrefix = string.IsNullOrEmpty(generateOptions.NamespacePrefix) ? fileOptions?.NamespacePrefix : generateOptions.NamespacePrefix;
-            var excludedSchemaTypes = generateOptions.ExcludedSchemaTypes?.Split(",").Select(type => type.Trim()).ToList();
-            var excludedBoundOperations = generateOptions.ExcludedBoundOperations?.Split(",").Select(type => type.Trim()).ToList();
-            var excludedOperationImports = generateOptions.ExcludedOperationImports?.Split(",").Select(type => type.Trim()).ToList();
+            var excludedSchemaTypes = generateOptions.ExcludedSchemaTypes?.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(type => type.Trim()).ToList();
+            var excludedBoundOperations = generateOptions.ExcludedBoundOperations?.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(operation => operation.Trim()).ToList();
+            var excludedOperationImports = generateOptions.ExcludedOperationImports?.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(import => import.Trim()).ToList();
 
             serviceConfig = new TServiceConfig
             {
