@@ -299,10 +299,10 @@ namespace Microsoft.OData.Cli
         /// Read and deserialize <paramref name="fileName"/> into <see cref="ConfigJsonFile"/>
         /// </summary>
         /// <param name="fileName">Name of config file to read</param>
-        /// <returns><see cref="CliConnectedServiceJsonFileData"/> read from <paramref name="fileName"/></returns>
+        /// <returns><see cref="ConnectedServiceFileData"/> read from <paramref name="fileName"/></returns>
         /// <exception cref="Exception">Thrown on deserialization errors</exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="fileName"/> is null/empty or does not exist</exception>
-        private CliConnectedServiceJsonFileData ReadConfigFile(string fileName)
+        private ConnectedServiceFileData ReadConfigFile(string fileName)
         {
             if (string.IsNullOrWhiteSpace(fileName))
             {
@@ -331,7 +331,7 @@ namespace Microsoft.OData.Cli
 
             try
             {
-                return JsonConvert.DeserializeObject<CliConnectedServiceJsonFileData>(configFileText);
+                return JsonConvert.DeserializeObject<ConnectedServiceFileData>(configFileText);
             }
             catch (JsonException ex)
             {
