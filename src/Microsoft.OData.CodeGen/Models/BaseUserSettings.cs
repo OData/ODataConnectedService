@@ -13,7 +13,7 @@ using System.Runtime.Serialization;
 namespace Microsoft.OData.CodeGen.Models
 {
     /// <summary>
-    /// Represents options in OData Connected Service Config File
+    /// Represents OData Connected Service user settings.
     /// </summary>
     [DataContract]
     public class BaseUserSettings : INotifyPropertyChanged
@@ -75,7 +75,7 @@ namespace Microsoft.OData.CodeGen.Models
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Human readable display name of the service instance.
+        /// Gets or sets the human readable display name of the service instance.
         /// </summary>
         [DataMember]
         public string ServiceName
@@ -89,7 +89,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// The URI of the metadata document. The value must be set to a valid service document URI or a local file path
+        /// Gets or sets the URI of the metadata document. The value must be set to a valid service document URI or a local file path.
         /// </summary>
         [DataMember]
         public string Endpoint
@@ -103,7 +103,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// The name of the generated file name, defaults to Reference .vb/.cs
+        /// Gets or sets the name of the generated file name. Defaults to Reference .vb/.cs when not provided.
         /// </summary>
         [DataMember]
         public string GeneratedFileNamePrefix
@@ -117,8 +117,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// True if <see cref="NamespacePrefix"/> is used<br />
-        /// This member appears in config files but is not used
+        /// Gets or sets a value that determines whether to use <see cref="NamespacePrefix"/>.
         /// </summary>
         [DataMember]
         public bool UseNamespacePrefix
@@ -132,9 +131,12 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// The namespace of the client code generated. 
-        /// Example: ODataCliCodeGeneratorSample.NorthWindModel or ODataCliCodeGeneratorSample or it could be a name related to the OData endpoint.
+        /// Gets or sets the namespace for the generated service proxy classes.
         /// </summary>
+        /// <remarks>
+        /// Must be a valid C# identifier name, e.g., MyService.Models.
+        /// When not provided, a namespace that corresponds to the one that the models of the OData service are defined in is used.
+        /// </remarks>
         [DataMember]
         public string NamespacePrefix
         {
@@ -147,7 +149,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Enables entity and property tracking
+        /// Gets or sets a value that determines whether to enable entity and property tracking.
         /// </summary>
         [DataMember]
         public bool UseDataServiceCollection
@@ -161,7 +163,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Apply the "internal" class modifier on generated classes instead of "public" thereby making them invisible outside the assembly.
+        /// Gets or sets a value that determines whether to apply the "internal" class modifier on generated classes instead of "public" thereby making them invisible outside the assembly.
         /// </summary>
         [DataMember]
         public bool MakeTypesInternal
@@ -175,7 +177,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Omit generation timestamp in generated files.
+        /// Gets or sets a value that determines whether to omit generation timestamp in generated files.
         /// </summary>
         [DataMember]
         public bool NoTimestamp
@@ -189,7 +191,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Split the generated classes into separate files instead of generating all the code in a single file.
+        /// Gets or sets a value that determines whether to split the generated classes into separate files instead of generating all the code in a single file.
         /// </summary>
         [DataMember]
         public bool GenerateMultipleFiles
@@ -203,7 +205,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Headers that will get sent along with the request when fetching the metadata document from the service. Format: Header1:HeaderValue, Header2:HeaderValue.
+        /// Gets or sets headers that will get sent along with the request when fetching the metadata document from the service. Format: Header1:HeaderValue, Header2:HeaderValue.
         /// </summary>
         [IgnoreDataMember] // Do not serialize - may contain authentication tokens
         public string CustomHttpHeaders
@@ -217,7 +219,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Disables/Enables upper camel casing
+        /// Gets or sets a value that determines whether to use C# casing style.
         /// </summary>
         [DataMember]
         public bool EnableNamingAlias
@@ -231,7 +233,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// This flag indicates whether to ignore unexpected elements and attributes in the metadata document and generate the client code if any.
+        /// Gets or sets a value that determines whether to ignore unexpected elements and attributes in the metadata document and generate the client code if any.
         /// </summary>
         [DataMember]
         public bool IgnoreUnexpectedElementsAndAttributes
@@ -245,7 +247,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// This flag indicates that T4 file(s) should be generated and included
+        /// Gets or sets a value that determines whether T4 file(s) should be generated and included.
         /// </summary>
         [DataMember]
         public bool IncludeT4File
@@ -259,7 +261,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// A flag to indicate whether to include the web proxy or not
+        /// Gets or sets a value that determines whether to include the web proxy or not.
         /// </summary>
         [DataMember]
         public bool IncludeWebProxy
@@ -273,7 +275,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// This flag indicates that custom http headers should be stored
+        /// Gets or sets a value that determines whether custom http headers should be stored.
         /// </summary>
         [DataMember]
         public bool StoreCustomHttpHeaders
@@ -287,7 +289,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// A web proxy host
+        /// Gets or sets the web proxy host.
         /// </summary>
         [DataMember]
         public string WebProxyHost
@@ -301,7 +303,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// A flag to indicate whether to include web proxy network credentials or not.
+        /// Gets or sets a value that determines whether to include web proxy network credentials or not.
         /// </summary>
         [DataMember]
         public bool IncludeWebProxyNetworkCredentials
@@ -315,8 +317,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// A flag to indicate whether to store web proxy network credentials or not<br />
-        /// This member appears in config files but is not used
+        /// Gets or sets a value that determines whether to store web proxy network credentials or not.
         /// </summary>
         [DataMember]
         public bool StoreWebProxyNetworkCredentials
@@ -330,7 +331,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Web proxy network credentials username
+        /// Gets or sets the web proxy network credentials username.
         /// </summary>
         [IgnoreDataMember] // Do not serialize - security consideration
         public string WebProxyNetworkCredentialsUsername
@@ -344,7 +345,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Web proxy network credentials password
+        /// Gets or sets the web proxy network credentials password.
         /// </summary>
         [IgnoreDataMember] // Do not serialize - security consideration
         public string WebProxyNetworkCredentialsPassword
@@ -358,7 +359,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Web proxy network credentials domain
+        /// Gets or sets the web proxy network credentials domain.
         /// </summary>
         [DataMember]
         public string WebProxyNetworkCredentialsDomain
@@ -372,8 +373,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// A flag to indicate whether to include custom headers or not<br />
-        /// This member appears in config files but is not used
+        /// Gets or sets a value that determines whether to include custom headers or not.
         /// </summary>
         [DataMember]
         public bool IncludeCustomHeaders
@@ -387,7 +387,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Comma-separated list of the names of operation imports to exclude from the generated code. Example: ExcludedOperationImport1,ExcludedOperationImport2.
+        /// Gets or sets the comma-separated list of the names of operation imports to exclude from the generated code. Example: ExcludedOperationImport1,ExcludedOperationImport2.
         /// </summary>
         [DataMember]
         public List<string> ExcludedOperationImports
@@ -401,7 +401,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Comma-separated list of the names of bound operations to exclude from the generated code.Example: BoundOperation1,BoundOperation2.
+        /// Gets or sets the comma-separated list of the names of bound operations to exclude from the generated code.Example: BoundOperation1,BoundOperation2.
         /// </summary>
         [DataMember]
         public List<string> ExcludedBoundOperations
@@ -415,7 +415,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Comma-separated list of the names of entity types to exclude from the generated code.Example: EntityType1,EntityType2,EntityType3.
+        /// Gets or sets the comma-separated list of the names of entity types to exclude from the generated code.Example: EntityType1,EntityType2,EntityType3.
         /// </summary>
         [DataMember]
         public List<string> ExcludedSchemaTypes
