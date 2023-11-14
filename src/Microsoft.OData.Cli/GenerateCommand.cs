@@ -34,7 +34,7 @@ namespace Microsoft.OData.Cli
             Option metadataUri = new Option<string>(new[] { "--metadata-uri", "-m" })
             {
                 Name = "metadata-uri",
-                Description = "The URI of the metadata document. The value must be set to a valid service document URI or a local file path. Optional if connected-service-file is specified and includes the Endpoint value.",
+                Description = "The URI of the metadata document. The value must be set to a valid service document URI or a local file path. Optional if config-file is specified and will override Endpoint specified in config-file.",
                 IsRequired = false
             };
 
@@ -183,13 +183,6 @@ namespace Microsoft.OData.Cli
 
         private async Task<int> HandleGenerateCommand(GenerateOptions options, IConsole console)
         {
-            if (string.IsNullOrWhiteSpace(options.MetadataUri) && string.IsNullOrWhiteSpace(options.ConfigFile))
-            {
-                // A metadata URI or a config file is required
-                console.Error.Write($"One of '{nameof(options.MetadataUri)}' or '{nameof(options.ConfigFile)}' is required");
-                return 1;
-            }
-
             try
             {
                 if (!Directory.Exists(options.OutputDir))
