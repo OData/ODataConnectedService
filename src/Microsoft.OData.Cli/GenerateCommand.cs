@@ -277,7 +277,7 @@ namespace Microsoft.OData.Cli
                 UseDataServiceCollection = generateOptions.EnableTracking || (fileOptions?.UseDataServiceCollection ?? false),
                 MakeTypesInternal = generateOptions.EnableInternal || (fileOptions?.MakeTypesInternal ?? false),
                 GenerateMultipleFiles = generateOptions.MultipleFiles || (fileOptions?.GenerateMultipleFiles ?? false),
-                ExcludedSchemaTypes = excludedSchemaTypes != null && excludedSchemaTypes.Any() ? excludedSchemaTypes : fileOptions?.ExcludedSchemaTypes,
+                ExcludedSchemaTypes = excludedSchemaTypes?.Count > 0 ? excludedSchemaTypes : fileOptions?.ExcludedSchemaTypes,
             };
 
             if (serviceConfig is ServiceConfigurationV4)
@@ -287,8 +287,8 @@ namespace Microsoft.OData.Cli
                 serviceConfigurationV4.EnableNamingAlias = generateOptions.UpperCamelCase || (fileOptions?.EnableNamingAlias ?? false);
                 serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = generateOptions.IgnoreUnexpectedElements || (fileOptions?.IgnoreUnexpectedElementsAndAttributes ?? false);
                 serviceConfigurationV4.IncludeT4File = fileOptions?.IncludeT4File ?? false;
-                serviceConfigurationV4.ExcludedOperationImports = excludedOperationImports != null && excludedOperationImports.Any() ? excludedOperationImports : fileOptions?.ExcludedOperationImports;
-                serviceConfigurationV4.ExcludedBoundOperations = excludedBoundOperations != null && excludedBoundOperations.Any() ? excludedBoundOperations : fileOptions?.ExcludedBoundOperations;
+                serviceConfigurationV4.ExcludedOperationImports = excludedOperationImports?.Count > 0 ? excludedOperationImports : fileOptions?.ExcludedOperationImports;
+                serviceConfigurationV4.ExcludedBoundOperations = excludedBoundOperations?.Count > 0 ? excludedBoundOperations : fileOptions?.ExcludedBoundOperations;
                 serviceConfigurationV4.NoTimestamp = generateOptions.NoTimestamp || (fileOptions?.NoTimestamp ?? false);
             }
 
