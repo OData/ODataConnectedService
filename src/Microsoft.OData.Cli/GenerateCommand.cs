@@ -244,52 +244,49 @@ namespace Microsoft.OData.Cli
             }
 
             TServiceConfig serviceConfig = null;
-            BaseUserSettings fileOptions = null;
+            BaseUserSettings configUserSettings = null;
             if (!string.IsNullOrWhiteSpace(generateOptions.ConnectedServiceFile))
             {
                 var configFileData = ReadConfigFile(generateOptions.ConnectedServiceFile);
-                if (configFileData != null)
-                {
-                    fileOptions = configFileData.ExtendedData;
-                }
+                configUserSettings = configFileData?.ExtendedData;
             }
 
-            var namespacePrefix = string.IsNullOrEmpty(generateOptions.NamespacePrefix) ? fileOptions?.NamespacePrefix : generateOptions.NamespacePrefix;
+            var namespacePrefix = string.IsNullOrEmpty(generateOptions.NamespacePrefix) ? configUserSettings?.NamespacePrefix : generateOptions.NamespacePrefix;
             var excludedSchemaTypes = generateOptions.ExcludedSchemaTypes?.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(type => type.Trim()).ToList();
             var excludedBoundOperations = generateOptions.ExcludedBoundOperations?.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(operation => operation.Trim()).ToList();
             var excludedOperationImports = generateOptions.ExcludedOperationImports?.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(import => import.Trim()).ToList();
 
             serviceConfig = new TServiceConfig
             {
-                Endpoint = string.IsNullOrEmpty(generateOptions.MetadataUri) ? fileOptions?.Endpoint : generateOptions.MetadataUri,
-                ServiceName = string.IsNullOrEmpty(fileOptions?.ServiceName) ? Constants.DefaultServiceName : fileOptions?.ServiceName,
-                GeneratedFileNamePrefix = string.IsNullOrEmpty(generateOptions.FileName) ? fileOptions?.GeneratedFileNamePrefix : generateOptions.FileName,
-                CustomHttpHeaders = string.IsNullOrEmpty(generateOptions.CustomHeaders) ? fileOptions?.CustomHttpHeaders : generateOptions.CustomHeaders,
-                WebProxyHost = string.IsNullOrEmpty(generateOptions.WebProxyHost) ? fileOptions?.WebProxyHost : generateOptions.WebProxyHost,
-                IncludeWebProxy = generateOptions.IncludeWebProxy || (fileOptions?.IncludeWebProxy ?? false),
+                Endpoint = string.IsNullOrEmpty(generateOptions.MetadataUri) ? configUserSettings?.Endpoint : generateOptions.MetadataUri,
+                ServiceName = string.IsNullOrEmpty(configUserSettings?.ServiceName) ? Constants.DefaultServiceName : configUserSettings?.ServiceName,
+                GeneratedFileNamePrefix = string.IsNullOrEmpty(generateOptions.FileName) ? configUserSettings?.GeneratedFileNamePrefix : generateOptions.FileName,
+                CustomHttpHeaders = string.IsNullOrEmpty(generateOptions.CustomHeaders) ? configUserSettings?.CustomHttpHeaders : generateOptions.CustomHeaders,
+                WebProxyHost = string.IsNullOrEmpty(generateOptions.WebProxyHost) ? configUserSettings?.WebProxyHost : generateOptions.WebProxyHost,
+                IncludeWebProxy = generateOptions.IncludeWebProxy || (configUserSettings?.IncludeWebProxy ?? false),
                 IncludeWebProxyNetworkCredentials = generateOptions.IncludeWebProxyNetworkCredentials
-                    || (fileOptions?.IncludeWebProxyNetworkCredentials ?? false),
-                WebProxyNetworkCredentialsUsername = string.IsNullOrEmpty(generateOptions.WebProxyNetworkCredentialsUsername) ? fileOptions?.WebProxyNetworkCredentialsUsername : generateOptions.WebProxyNetworkCredentialsUsername,
-                WebProxyNetworkCredentialsPassword = string.IsNullOrEmpty(generateOptions.WebProxyNetworkCredentialsDomain) ? fileOptions?.WebProxyNetworkCredentialsPassword : generateOptions.WebProxyNetworkCredentialsDomain,
-                WebProxyNetworkCredentialsDomain = string.IsNullOrEmpty(generateOptions.WebProxyNetworkCredentialsPassword) ? fileOptions?.WebProxyNetworkCredentialsDomain : generateOptions.WebProxyNetworkCredentialsPassword,
+                    || (configUserSettings?.IncludeWebProxyNetworkCredentials ?? false),
+                WebProxyNetworkCredentialsUsername = string.IsNullOrEmpty(generateOptions.WebProxyNetworkCredentialsUsername) ? configUserSettings?.WebProxyNetworkCredentialsUsername : generateOptions.WebProxyNetworkCredentialsUsername,
+                WebProxyNetworkCredentialsPassword = string.IsNullOrEmpty(generateOptions.WebProxyNetworkCredentialsDomain) ? configUserSettings?.WebProxyNetworkCredentialsPassword : generateOptions.WebProxyNetworkCredentialsDomain,
+                WebProxyNetworkCredentialsDomain = string.IsNullOrEmpty(generateOptions.WebProxyNetworkCredentialsPassword) ? configUserSettings?.WebProxyNetworkCredentialsDomain : generateOptions.WebProxyNetworkCredentialsPassword,
                 NamespacePrefix = namespacePrefix,
-                UseNamespacePrefix = (fileOptions?.UseNamespacePrefix ?? false) || (!string.IsNullOrWhiteSpace(namespacePrefix)),
-                UseDataServiceCollection = (generateOptions.EnableTracking == null) ? (fileOptions?.UseDataServiceCollection ?? false) : generateOptions.EnableTracking.Value,
-                MakeTypesInternal = (generateOptions.EnableInternal == null) ? (fileOptions?.MakeTypesInternal ?? false) : generateOptions.EnableInternal.Value,
-                GenerateMultipleFiles = (generateOptions.MultipleFiles == null) ? (fileOptions?.GenerateMultipleFiles ?? false) : generateOptions.MultipleFiles.Value,
-                ExcludedSchemaTypes = excludedSchemaTypes?.Count > 0 ? excludedSchemaTypes : fileOptions?.ExcludedSchemaTypes,
+                UseNamespacePrefix = (configUserSettings?.UseNamespacePrefix ?? false) || (!string.IsNullOrWhiteSpace(namespacePrefix)),
+                UseDataServiceCollection = (generateOptions.EnableTracking == null) ? (configUserSettings?.UseDataServiceCollection ?? false) : generateOptions.EnableTracking.Value,
+                MakeTypesInternal = (generateOptions.EnableInternal == null) ? (configUserSettings?.MakeTypesInternal ?? false) : generateOptions.EnableInternal.Value,
+                GenerateMultipleFiles = (generateOptions.MultipleFiles == null) ? (configUserSettings?.GenerateMultipleFiles ?? false) : generateOptions.MultipleFiles.Value,
+                ExcludedSchemaTypes = excludedSchemaTypes?.Count > 0 ? excludedSchemaTypes : configUserSettings?.ExcludedSchemaTypes,
             };
 
             if (serviceConfig is ServiceConfigurationV4)
             {
                 // Add additional V4 properties
                 var serviceConfigurationV4 = serviceConfig as ServiceConfigurationV4;
-                serviceConfigurationV4.EnableNamingAlias = (generateOptions.UpperCamelCase == null) ? (fileOptions?.EnableNamingAlias ?? false) : generateOptions.UpperCamelCase.Value;
-                serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = (generateOptions.IgnoreUnexpectedElements == null) ? (fileOptions?.IgnoreUnexpectedElementsAndAttributes ?? false) : generateOptions.IgnoreUnexpectedElements.Value;
-                serviceConfigurationV4.IncludeT4File = fileOptions?.IncludeT4File ?? false;
-                serviceConfigurationV4.ExcludedOperationImports = excludedOperationImports?.Count > 0 ? excludedOperationImports : fileOptions?.ExcludedOperationImports;
-                serviceConfigurationV4.ExcludedBoundOperations = excludedBoundOperations?.Count > 0 ? excludedBoundOperations : fileOptions?.ExcludedBoundOperations;
-                serviceConfigurationV4.OmitVersioningInfo = (generateOptions.OmitVersioningInfo == null) ? (fileOptions?.OmitVersioningInfo ?? false) : generateOptions.OmitVersioningInfo.Value;
+                serviceConfigurationV4.EnableNamingAlias = (generateOptions.UpperCamelCase == null) ? (configUserSettings?.EnableNamingAlias ?? false) : generateOptions.UpperCamelCase.Value;
+                serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = (generateOptions.IgnoreUnexpectedElements == null) ? (configUserSettings?.IgnoreUnexpectedElementsAndAttributes ?? false) : generateOptions.IgnoreUnexpectedElements.Value;
+                serviceConfigurationV4.IncludeT4File = configUserSettings?.IncludeT4File ?? false;
+                serviceConfigurationV4.ExcludedOperationImports = excludedOperationImports?.Count > 0 ? excludedOperationImports : configUserSettings?.ExcludedOperationImports;
+                serviceConfigurationV4.ExcludedBoundOperations = excludedBoundOperations?.Count > 0 ? excludedBoundOperations : configUserSettings?.ExcludedBoundOperations;
+                serviceConfigurationV4.OmitVersioningInfo = (generateOptions.OmitVersioningInfo == null) ? (configUserSettings?.OmitVersioningInfo ?? false) : generateOptions.OmitVersioningInfo.Value;
             }
 
             return serviceConfig;
