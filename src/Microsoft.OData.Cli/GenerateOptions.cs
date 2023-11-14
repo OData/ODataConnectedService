@@ -121,6 +121,6 @@ namespace Microsoft.OData.Cli
         /// <summary>
         /// Full path to OData Connected Service Config file (i.e., ConnectedService.json)
         /// </summary>
-        public string ConnectedServiceFile { get; set; }
+        public string ConfigFile { get; set; }
     }
 }

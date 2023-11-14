@@ -40,19 +40,29 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(metadataUri);
 
-            Option connectedServiceFile = new Option<string>(new[] { "--connected-service-file", "-c" })
+            Option configFile = new Option<string>(new[] { "--config-file", "-c" })
             {
-                Name = "connected-service-file",
-                Description = "Full path to JSON OData Connected Service Config File (e.g., ConnectedService.json)",
+                Name = "config-file",
+                Description = "Path to the OData Connected Service config file.",
                 IsRequired = false
             };
 
-            this.AddOption(connectedServiceFile);
+            this.AddOption(configFile);
+
+            this.AddValidator((commandResult) =>
+            {
+                var metadataUriValue = commandResult.GetValueForOption(metadataUri) as string;
+                var configFileValue = commandResult.GetValueForOption(configFile) as string;
+                if (string.IsNullOrWhiteSpace(metadataUriValue) && string.IsNullOrWhiteSpace(configFileValue))
+                {
+                    commandResult.ErrorMessage = $"Either of '{metadataUri.Name}' or '{configFile.Name}' options must be specified.";
+                }
+            });
 
             Option fileName = new Option<string>(new[] { "--file-name", "-fn" })
             {
                 Name = "file-name",
-                Description = "The name of the generated file. If not provided then the default name 'Reference.cs/.vb' is used",
+                Description = "The name of the generated file. If not provided then the default name 'Reference.cs/.vb' is used.",
             };
 
             this.AddOption(fileName);
@@ -173,10 +183,10 @@ namespace Microsoft.OData.Cli
 
         private async Task<int> HandleGenerateCommand(GenerateOptions options, IConsole console)
         {
-            if (string.IsNullOrWhiteSpace(options.MetadataUri) && string.IsNullOrWhiteSpace(options.ConnectedServiceFile))
+            if (string.IsNullOrWhiteSpace(options.MetadataUri) && string.IsNullOrWhiteSpace(options.ConfigFile))
             {
                 // A metadata URI or a config file is required
-                console.Error.Write($"One of '{nameof(options.MetadataUri)}' or '{nameof(options.ConnectedServiceFile)}' is required");
+                console.Error.Write($"One of '{nameof(options.MetadataUri)}' or '{nameof(options.ConfigFile)}' is required");
                 return 1;
             }
 
@@ -234,20 +244,14 @@ namespace Microsoft.OData.Cli
         /// <typeparam name="TServiceConfig">Type of <see cref="ServiceConfiguration"/> to return</typeparam>
         /// <param name="generateOptions">Source options used to populate the service configuration</param>
         /// <returns>New <typeparamref name="TServiceConfig"/> from <paramref name="generateOptions"/></returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="generateOptions"/> is null</exception>
         private TServiceConfig GetServiceConfiguration<TServiceConfig>(GenerateOptions generateOptions)
             where TServiceConfig : ServiceConfiguration, new()
         {
-            if (generateOptions == null)
-            {
-                throw new ArgumentNullException(nameof(generateOptions), $"Cannot get service configuration for null '{nameof(GenerateOptions)}' object");
-            }
-
             TServiceConfig serviceConfig = null;
             BaseUserSettings configUserSettings = null;
-            if (!string.IsNullOrWhiteSpace(generateOptions.ConnectedServiceFile))
+            if (!string.IsNullOrWhiteSpace(generateOptions.ConfigFile))
             {
-                var configFileData = ReadConfigFile(generateOptions.ConnectedServiceFile);
+                var configFileData = ReadConfigFile(generateOptions.ConfigFile);
                 configUserSettings = configFileData?.ExtendedData;
             }
 
