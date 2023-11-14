@@ -81,7 +81,7 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(ns);
 
-            Option enableTracking = new Option<bool>(new[] { "--enable-tracking", "-et" })
+            Option enableTracking = new Option<bool?>(new[] { "--enable-tracking", "-et" })
             {
                 Name = "enable-tracking",
                 Description = "Enable entity and property tracking."
@@ -90,7 +90,7 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(enableTracking);
 
-            Option upperCamelCase = new Option<bool>(new[] { "--upper-camel-case", "-ucc" })
+            Option upperCamelCase = new Option<bool?>(new[] { "--upper-camel-case", "-ucc" })
             {
                 Name = "upper-camel-case",
                 Description = "Disables upper camel casing."
@@ -98,7 +98,7 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(upperCamelCase);
 
-            Option internalModifier = new Option<bool>(new[] { "--enable-internal", "-i" })
+            Option internalModifier = new Option<bool?>(new[] { "--enable-internal", "-i" })
             {
                 Name = "enable-internal",
                 Description = "Apply the \"internal\" class modifier on generated classes instead of \"public\" thereby making them invisible outside the assembly."
@@ -106,7 +106,7 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(internalModifier);
 
-            Option noTimestamp = new Option<bool>(new[] { "--omit-versioning-info", "-vi" })
+            Option noTimestamp = new Option<bool?>(new[] { "--omit-versioning-info", "-vi" })
             {
                 Name = "omit-versioning-info",
                 Description = "Omit runtime version and code generation timestamp from the generated files.",
@@ -114,7 +114,7 @@ namespace Microsoft.OData.Cli
             noTimestamp.SetDefaultValue(false);
             this.AddOption(noTimestamp);
 
-            Option multipleFiles = new Option<bool>(new[] { "--multiple-files" })
+            Option multipleFiles = new Option<bool?>(new[] { "--multiple-files" })
             {
                 Name = "multiple-files",
                 Description = "Split the generated classes into separate files instead of generating all the code in a single file."
@@ -146,7 +146,7 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(excludedSchemaTypes);
 
-            Option ignoreUnexpectedElements = new Option<bool>(new[] { "--ignore-unexpected-elements", "-iue" })
+            Option ignoreUnexpectedElements = new Option<bool?>(new[] { "--ignore-unexpected-elements", "-iue" })
             {
                 Name = "ignore-unexpected-elements",
                 Description = "This flag indicates whether to ignore unexpected elements and attributes in the metadata document and generate the client code if any."
@@ -274,9 +274,9 @@ namespace Microsoft.OData.Cli
                 WebProxyNetworkCredentialsDomain = string.IsNullOrEmpty(generateOptions.WebProxyNetworkCredentialsPassword) ? fileOptions?.WebProxyNetworkCredentialsDomain : generateOptions.WebProxyNetworkCredentialsPassword,
                 NamespacePrefix = namespacePrefix,
                 UseNamespacePrefix = (fileOptions?.UseNamespacePrefix ?? false) || (!string.IsNullOrWhiteSpace(namespacePrefix)),
-                UseDataServiceCollection = generateOptions.EnableTracking || (fileOptions?.UseDataServiceCollection ?? false),
-                MakeTypesInternal = generateOptions.EnableInternal || (fileOptions?.MakeTypesInternal ?? false),
-                GenerateMultipleFiles = generateOptions.MultipleFiles || (fileOptions?.GenerateMultipleFiles ?? false),
+                UseDataServiceCollection = (generateOptions.EnableTracking == null) ? (fileOptions?.UseDataServiceCollection ?? false) : generateOptions.EnableTracking.Value,
+                MakeTypesInternal = (generateOptions.EnableInternal == null) ? (fileOptions?.MakeTypesInternal ?? false) : generateOptions.EnableInternal.Value,
+                GenerateMultipleFiles = (generateOptions.MultipleFiles == null) ? (fileOptions?.GenerateMultipleFiles ?? false) : generateOptions.MultipleFiles.Value,
                 ExcludedSchemaTypes = excludedSchemaTypes?.Count > 0 ? excludedSchemaTypes : fileOptions?.ExcludedSchemaTypes,
             };
 
@@ -284,12 +284,12 @@ namespace Microsoft.OData.Cli
             {
                 // Add additional V4 properties
                 var serviceConfigurationV4 = serviceConfig as ServiceConfigurationV4;
-                serviceConfigurationV4.EnableNamingAlias = generateOptions.UpperCamelCase || (fileOptions?.EnableNamingAlias ?? false);
-                serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = generateOptions.IgnoreUnexpectedElements || (fileOptions?.IgnoreUnexpectedElementsAndAttributes ?? false);
+                serviceConfigurationV4.EnableNamingAlias = (generateOptions.UpperCamelCase == null) ? (fileOptions?.EnableNamingAlias ?? false) : generateOptions.UpperCamelCase.Value;
+                serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = (generateOptions.IgnoreUnexpectedElements == null) ? (fileOptions?.IgnoreUnexpectedElementsAndAttributes ?? false) : generateOptions.IgnoreUnexpectedElements.Value;
                 serviceConfigurationV4.IncludeT4File = fileOptions?.IncludeT4File ?? false;
                 serviceConfigurationV4.ExcludedOperationImports = excludedOperationImports?.Count > 0 ? excludedOperationImports : fileOptions?.ExcludedOperationImports;
                 serviceConfigurationV4.ExcludedBoundOperations = excludedBoundOperations?.Count > 0 ? excludedBoundOperations : fileOptions?.ExcludedBoundOperations;
-                serviceConfigurationV4.NoTimestamp = generateOptions.NoTimestamp || (fileOptions?.NoTimestamp ?? false);
+                serviceConfigurationV4.OmitVersioningInfo = (generateOptions.OmitVersioningInfo == null) ? (fileOptions?.OmitVersioningInfo ?? false) : generateOptions.OmitVersioningInfo.Value;
             }
 
             return serviceConfig;

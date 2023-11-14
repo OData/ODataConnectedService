@@ -41,27 +41,27 @@ namespace Microsoft.OData.Cli
         /// <summary>
         /// Disables entity and property tracking
         /// </summary>
-        public bool EnableTracking { get; set; }
+        public bool? EnableTracking { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to omit runtime version and code generation timestamp from the generated files.
         /// </summary>
-        public bool OmitVersioningInfo { get; set; }
+        public bool? OmitVersioningInfo { get; set; }
 
         /// <summary>
         /// Disables/Enables upper camel casing
         /// </summary>
-        public bool UpperCamelCase { get; set; }
+        public bool? UpperCamelCase { get; set; }
 
         /// <summary>
         /// Apply the "internal" class modifier on generated classes instead of "public" thereby making them invisible outside the assembly.
         /// </summary>
-        public bool EnableInternal { get; set; }
+        public bool? EnableInternal { get; set; }
 
         /// <summary>
         /// Split the generated classes into separate files instead of generating all the code in a single file.
         /// </summary>
-        public bool MultipleFiles { get; set; }
+        public bool? MultipleFiles { get; set; }
 
         /// <summary>
         /// Comma-separated list of the names of operation imports to exclude from the generated code. Example: ExcludedOperationImport1,ExcludedOperationImport2.
@@ -81,7 +81,7 @@ namespace Microsoft.OData.Cli
         /// <summary>
         /// This flag indicates whether to ignore unexpected elements and attributes in the metadata document and generate the client code if any.
         /// </summary>
-        public bool IgnoreUnexpectedElements { get; set; }
+        public bool? IgnoreUnexpectedElements { get; set; }
 
         /// <summary>
         /// Full path to output directory
