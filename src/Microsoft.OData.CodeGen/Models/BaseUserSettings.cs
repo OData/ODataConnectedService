@@ -103,7 +103,7 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Gets or sets the name of the generated file name. Defaults to Reference .vb/.cs when not provided.
+        /// Gets or sets the name of the generated file name. Defaults to Reference.vb/.cs when not provided.
         /// </summary>
         [DataMember]
         public string GeneratedFileNamePrefix
