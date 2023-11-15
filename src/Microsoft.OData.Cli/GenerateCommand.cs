@@ -96,8 +96,8 @@ namespace Microsoft.OData.Cli
                 Name = "enable-tracking",
                 Description = "Enable entity and property tracking."
             };
-            enableTracking.SetDefaultValue(false);
 
+            enableTracking.SetDefaultValue(null);
             this.AddOption(enableTracking);
 
             Option upperCamelCase = new Option<bool?>(new[] { "--upper-camel-case", "-ucc" })
@@ -106,6 +106,7 @@ namespace Microsoft.OData.Cli
                 Description = "Disables upper camel casing."
             };
 
+            upperCamelCase.SetDefaultValue(null);
             this.AddOption(upperCamelCase);
 
             Option internalModifier = new Option<bool?>(new[] { "--enable-internal", "-i" })
@@ -121,7 +122,7 @@ namespace Microsoft.OData.Cli
                 Name = "omit-versioning-info",
                 Description = "Omit runtime version and code generation timestamp from the generated files.",
             };
-            noTimestamp.SetDefaultValue(false);
+            noTimestamp.SetDefaultValue(null);
             this.AddOption(noTimestamp);
 
             Option multipleFiles = new Option<bool?>(new[] { "--multiple-files" })
@@ -129,7 +130,7 @@ namespace Microsoft.OData.Cli
                 Name = "multiple-files",
                 Description = "Split the generated classes into separate files instead of generating all the code in a single file."
             };
-
+            multipleFiles.SetDefaultValue(null);
             this.AddOption(multipleFiles);
 
             Option excludedOperationImports = new Option<string>(new[] { "--excluded-operation-imports", "-eoi" })
@@ -161,7 +162,7 @@ namespace Microsoft.OData.Cli
                 Name = "ignore-unexpected-elements",
                 Description = "This flag indicates whether to ignore unexpected elements and attributes in the metadata document and generate the client code if any."
             };
-
+            ignoreUnexpectedElements.SetDefaultValue(null);
             this.AddOption(ignoreUnexpectedElements);
 
             Option outputDir = new Option<string>(new[] { "--outputdir", "-o" })
