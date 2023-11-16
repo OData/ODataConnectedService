@@ -2885,8 +2885,8 @@ public abstract class ODataClientTemplate : TemplateBase
     private const string DefaultPrefixCharacter = "_";
 
     /// <summary>
-    /// Get a valid identifier for <paramref name="name"/><br />
-    /// - Removes characters not permitted by C#/VB identifier specification<br />
+    /// Get a valid C#/VB identifier for <paramref name="name"/> based on C#/VB identifier specification<br />
+    /// - Removes characters not permitted in C#/VB identifiers<br />
     /// - Prefixes <paramref name="name"/>with underscore (_) if it doesn't start with a letter
     /// </summary>
     /// <remarks>
@@ -2909,7 +2909,7 @@ public abstract class ODataClientTemplate : TemplateBase
         var isFirst = true;
         foreach (var segment in segments.Where(token => !string.IsNullOrWhiteSpace(token)))
         {
-            var titleCaseSegment = segment.Substring(0,1).ToUpperInvariant() + segment.Substring(1);
+            var titleCaseSegment = Customization.CustomizeNaming(segment);
 
             if (isFirst && !this.context.EnableNamingAlias)
             {
