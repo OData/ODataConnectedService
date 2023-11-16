@@ -2989,6 +2989,10 @@ public abstract class ODataClientTemplate : TemplateBase
     /// <param name="structuredType">Object containing properties to map</param>
     internal void SetPropertyIdentifierMappingsIfInvalidIdentifier(IEdmStructuredType structuredType)
     {
+        bool isLanguageCaseSensitive = this.context.TargetLanguage == LanguageOption.CSharp;
+        UniqueIdentifierService uniqueIdentifierService =
+            new UniqueIdentifierService(IdentifierMappings.Select(mapping => mapping.Value), isLanguageCaseSensitive);
+
         Func<string, string> customizePropertyName = (name) => { return this.context.EnableNamingAlias ? Customization.CustomizeNaming(name) : name; };
         var codeDomProvider = (this.context.TargetLanguage == LanguageOption.CSharp ? CSharpProvider : VBProvider);
         var propertiesToRename = structuredType.DeclaredProperties.Where(prop => !codeDomProvider.IsValidIdentifier(prop.Name)
@@ -2997,7 +3001,7 @@ public abstract class ODataClientTemplate : TemplateBase
         foreach (var property in propertiesToRename)
         {
             var customizedPropertyName = customizePropertyName(property.Name);
-            var validName = GetValidIdentifier(customizedPropertyName);
+            var validName = uniqueIdentifierService.GetUniqueIdentifier(GetValidIdentifier(customizedPropertyName));
             if (IdentifierMappings.ContainsKey(property.Name))
             {
                 if (!codeDomProvider.IsValidIdentifier(IdentifierMappings[property.Name]))
@@ -3050,7 +3054,7 @@ public abstract class ODataClientTemplate : TemplateBase
         var isFirst = true;
         foreach (var segment in segments.Where(token => !string.IsNullOrWhiteSpace(token)))
         {
-            var titleCaseSegment = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(segment);
+            var titleCaseSegment = segment.Substring(0,1).ToUpperInvariant() + segment.Substring(1);
 
             if (isFirst && !this.context.EnableNamingAlias)
             {
