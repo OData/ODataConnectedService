@@ -3227,7 +3227,7 @@ public abstract class ODataClientTemplate : TemplateBase
             });
         }
 
-        // Private name should not confict with field name
+        // Private name should not conflict with field name
         UniqueIdentifierService uniqueIdentifierService = new UniqueIdentifierService(propertyInfos.Select(_ => _.FixedPropertyName),
             this.context.TargetLanguage == LanguageOption.CSharp);
 
