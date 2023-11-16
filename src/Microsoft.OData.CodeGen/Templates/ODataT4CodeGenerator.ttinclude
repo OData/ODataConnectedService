@@ -2883,7 +2883,7 @@ public abstract class ODataClientTemplate : TemplateBase
     /// <summary>
     /// Get a valid identifier for <paramref name="name"/><br />
     /// - Removes characters not permitted by C#/VB identifier specification<br />
-    /// - Prefixes <paramref name="name"/>with underscore (_) if it doesn't start with a letter, underscore, or '@'
+    /// - Prefixes <paramref name="name"/>with underscore (_) if it doesn't start with a letter
     /// </summary>
     /// <remarks>
     /// C# and VB use very similar rules for identifier names<br />
