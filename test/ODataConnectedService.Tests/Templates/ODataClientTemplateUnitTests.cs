@@ -2812,10 +2812,11 @@ namespace ODataConnectedService.Tests
   <edmx:DataServices>
     <Schema Namespace=""Namespace1"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
       <ComplexType Name=""ComplexType"">
-        <Property Name=""Name with Spaces"" Type=""Edm.String"" Nullable=""false"" />
+        <Property Name=""name with Spaces"" Type=""Edm.String"" Nullable=""false"" />
         <Property Name=""Invalid$characters"" Type=""Edm.String"" Nullable=""false"" />
-        <Property Name=""Invalid ! characters"" Type=""Edm.String"" Nullable=""false"" />
+        <Property Name=""invalid-characters"" Type=""Edm.String"" Nullable=""false"" />
         <Property Name=""Context"" Type=""Edm.String"" Nullable=""false"" />
+        <Property Name=""1numericName"" Type=""Edm.String"" Nullable=""false"" />
       </ComplexType>
     </Schema>
   </edmx:DataServices>
@@ -2844,10 +2845,10 @@ namespace ODataConnectedService.Tests
             var expectedUsedPropertyOptions = new List<ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions> {
                 new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
                     PropertyType = "String",
-                    OriginalPropertyName = "Name with Spaces",
-                    PropertyName = "NameWithSpaces",
-                    FixedPropertyName = "NameWithSpaces",
-                    PrivatePropertyName = "_NameWithSpaces",
+                    OriginalPropertyName = "name with Spaces",
+                    PropertyName = "nameWithSpaces",
+                    FixedPropertyName = "nameWithSpaces",
+                    PrivatePropertyName = "_nameWithSpaces",
                     PropertyInitializationValue = null,
                     PropertyAttribute = "",
                     PropertyDescription = null,
@@ -2859,9 +2860,9 @@ namespace ODataConnectedService.Tests
                 new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
                     PropertyType = "String",
                     OriginalPropertyName = "Invalid$characters",
-                    PropertyName = "Invalid_characters",
-                    FixedPropertyName = "Invalid_characters",
-                    PrivatePropertyName = "_Invalid_characters",
+                    PropertyName = "InvalidCharacters",
+                    FixedPropertyName = "InvalidCharacters",
+                    PrivatePropertyName = "_InvalidCharacters",
                     PropertyInitializationValue = null,
                     PropertyAttribute = "",
                     PropertyDescription = null,
@@ -2872,10 +2873,10 @@ namespace ODataConnectedService.Tests
                 },
                 new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
                     PropertyType = "String",
-                    OriginalPropertyName = "Invalid ! characters",
-                    PropertyName = "Invalid_Characters",
-                    FixedPropertyName = "Invalid_Characters",
-                    PrivatePropertyName = "_Invalid_Characters",
+                    OriginalPropertyName = "invalid-characters",
+                    PropertyName = "invalidCharacters",
+                    FixedPropertyName = "invalidCharacters",
+                    PrivatePropertyName = "_invalidCharacters",
                     PropertyInitializationValue = null,
                     PropertyAttribute = "",
                     PropertyDescription = null,
@@ -2890,6 +2891,20 @@ namespace ODataConnectedService.Tests
                     PropertyName = "Context1",
                     FixedPropertyName = "Context1",
                     PrivatePropertyName = "_Context1",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "1numericName",
+                    PropertyName = "_1numericName",
+                    FixedPropertyName = "_1numericName",
+                    PrivatePropertyName = "__1numericName",
                     PropertyInitializationValue = null,
                     PropertyAttribute = "",
                     PropertyDescription = null,
@@ -2926,7 +2941,7 @@ namespace ODataConnectedService.Tests
             var expectedUsedPropertyOptions = new List<ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions> {
                 new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
                     PropertyType = "String",
-                    OriginalPropertyName = "Name with Spaces",
+                    OriginalPropertyName = "name with Spaces",
                     PropertyName = "NameWithSpaces",
                     FixedPropertyName = "NameWithSpaces",
                     PrivatePropertyName = "_NameWithSpaces",
@@ -2941,9 +2956,9 @@ namespace ODataConnectedService.Tests
                 new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
                     PropertyType = "String",
                     OriginalPropertyName = "Invalid$characters",
-                    PropertyName = "Invalid_characters",
-                    FixedPropertyName = "Invalid_characters",
-                    PrivatePropertyName = "_Invalid_characters",
+                    PropertyName = "InvalidCharacters",
+                    FixedPropertyName = "InvalidCharacters",
+                    PrivatePropertyName = "_InvalidCharacters",
                     PropertyInitializationValue = null,
                     PropertyAttribute = "",
                     PropertyDescription = null,
@@ -2954,10 +2969,10 @@ namespace ODataConnectedService.Tests
                 },
                 new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
                     PropertyType = "String",
-                    OriginalPropertyName = "Invalid ! characters",
-                    PropertyName = "Invalid_Characters",
-                    FixedPropertyName = "Invalid_Characters",
-                    PrivatePropertyName = "_Invalid_Characters",
+                    OriginalPropertyName = "invalid-characters",
+                    PropertyName = "InvalidCharacters1",
+                    FixedPropertyName = "InvalidCharacters1",
+                    PrivatePropertyName = "_InvalidCharacters1",
                     PropertyInitializationValue = null,
                     PropertyAttribute = "",
                     PropertyDescription = null,
@@ -2972,6 +2987,20 @@ namespace ODataConnectedService.Tests
                     PropertyName = "Context1",
                     FixedPropertyName = "Context1",
                     PrivatePropertyName = "_Context1",
+                    PropertyInitializationValue = null,
+                    PropertyAttribute = "",
+                    PropertyDescription = null,
+                    PropertyMaxLength = null,
+                    WriteOnPropertyChanged = false,
+                    IsNullable = false,
+                    RevisionAnnotations = new ConcurrentDictionary<string, string>()
+                },
+                new ODataT4CodeGenerator.ODataClientTemplate.PropertyOptions {
+                    PropertyType = "String",
+                    OriginalPropertyName = "1numericName",
+                    PropertyName = "_1numericName",
+                    FixedPropertyName = "_1numericName",
+                    PrivatePropertyName = "__1numericName",
                     PropertyInitializationValue = null,
                     PropertyAttribute = "",
                     PropertyDescription = null,
