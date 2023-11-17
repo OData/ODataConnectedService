@@ -2937,8 +2937,8 @@ public abstract class ODataClientTemplate : TemplateBase
     private static readonly IEnumerable<string> BaseClassProperties = typeof(Client.DataServiceQuerySingle<object>).GetProperties().Select(prop => prop.Name);
 
     /// <summary>
-    /// Map identifiers that conflict with base class identifiers to unique identifier<br />
-    /// to avoid generating code that does not compile
+    /// Map identifiers that conflict with base class identifiers to TypeNameIdentiferName
+    /// and if still non-unique, add incrementing integer suffix
     /// </summary>
     /// <param name="structuredType">Object containing DeclaredProperties to map</param>
     internal void SetPropertyIdentifierMappingsIfBaseConflicts(IEdmStructuredType structuredType)
@@ -2955,20 +2955,23 @@ public abstract class ODataClientTemplate : TemplateBase
         }
 
         var propertiesToRename = structuredType.DeclaredProperties.Where(prop => baseProperties.Contains((isLanguageCaseSensitive ? customizePropertyName(prop.Name) : prop.Name.ToUpperInvariant())));
-        UniqueIdentifierService uniqueIdentifierService =
-            new UniqueIdentifierService(BaseClassProperties, isLanguageCaseSensitive);
-
-        foreach (var property in propertiesToRename)
+        if (propertiesToRename.Any())
         {
-            var customizedPropertyName = customizePropertyName(property.Name);
-            var renamedPropertyName = uniqueIdentifierService.GetUniqueIdentifier(customizedPropertyName);
-            if (IdentifierMappings.ContainsKey(property.Name))
+            UniqueIdentifierService uniqueIdentifierService =
+                new UniqueIdentifierService(structuredType.DeclaredProperties.Select(prop => prop.Name), isLanguageCaseSensitive);
+
+            var typeName = customizePropertyName(((IEdmNamedElement)structuredType).Name);
+            foreach (var property in propertiesToRename)
             {
-                IdentifierMappings[property.Name] = renamedPropertyName;
-            }
-            else
-            {
-                IdentifierMappings.Add(property.Name, renamedPropertyName);
+                var renamedPropertyName = uniqueIdentifierService.GetUniqueIdentifier(typeName + Customization.CustomizeNaming(property.Name));
+                if (IdentifierMappings.ContainsKey(property.Name))
+                {
+                    IdentifierMappings[property.Name] = renamedPropertyName;
+                }
+                else
+                {
+                    IdentifierMappings.Add(property.Name, renamedPropertyName);
+                }
             }
         }
     }
@@ -3030,8 +3033,8 @@ public abstract class ODataClientTemplate : TemplateBase
     private const string DefaultPrefixCharacter = "_";
 
     /// <summary>
-    /// Get a valid identifier for <paramref name="name"/><br />
-    /// - Removes characters not permitted by C#/VB identifier specification<br />
+    /// Get a valid C#/VB identifier for <paramref name="name"/> based on C#/VB identifier specification<br />
+    /// - Removes characters not permitted in C#/VB identifiers<br />
     /// - Prefixes <paramref name="name"/>with underscore (_) if it doesn't start with a letter
     /// </summary>
     /// <remarks>
@@ -3054,7 +3057,7 @@ public abstract class ODataClientTemplate : TemplateBase
         var isFirst = true;
         foreach (var segment in segments.Where(token => !string.IsNullOrWhiteSpace(token)))
         {
-            var titleCaseSegment = segment.Substring(0,1).ToUpperInvariant() + segment.Substring(1);
+            var titleCaseSegment = Customization.CustomizeNaming(segment);
 
             if (isFirst && !this.context.EnableNamingAlias)
             {
