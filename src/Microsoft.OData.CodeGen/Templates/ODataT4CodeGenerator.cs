@@ -3030,7 +3030,7 @@ public abstract class ODataClientTemplate : TemplateBase
     /// <summary>
     /// Default prefix character used to prefix non-alpha characters in identifiers
     /// </summary>
-    private const string DefaultPrefixCharacter = "_";
+    private const char DefaultPrefixCharacter = '_';
 
     /// <summary>
     /// Get a valid C#/VB identifier for <paramref name="name"/> based on C#/VB identifier specification<br />
