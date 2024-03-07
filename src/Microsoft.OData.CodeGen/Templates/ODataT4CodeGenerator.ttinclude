@@ -2925,6 +2925,11 @@ public abstract class ODataClientTemplate : TemplateBase
             isFirst = false;
         }
 
+        if (validName.Length < 1)
+        {
+            throw new Exception($"Failed to make valid identifier for '{name}'");
+        }
+
         if (!char.IsLetter(validName[0]) && validName[0] != DefaultPrefixCharacter)
         {
             validName.Insert(0, DefaultPrefixCharacter);
