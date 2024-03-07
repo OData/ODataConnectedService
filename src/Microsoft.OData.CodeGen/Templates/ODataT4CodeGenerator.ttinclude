@@ -2925,7 +2925,7 @@ public abstract class ODataClientTemplate : TemplateBase
             isFirst = false;
         }
 
-        if (!char.IsLetter(validName.ToString(), 0) && !validName.ToString().StartsWith(DefaultPrefixCharacter))
+        if (!char.IsLetter(validName[0]) && validName[0] != DefaultPrefixCharacter)
         {
             validName.Insert(0, DefaultPrefixCharacter);
         }
