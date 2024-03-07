@@ -3057,14 +3057,13 @@ public abstract class ODataClientTemplate : TemplateBase
         var isFirst = true;
         foreach (var segment in segments.Where(token => !string.IsNullOrWhiteSpace(token)))
         {
-            var titleCaseSegment = Customization.CustomizeNaming(segment);
-
             if (isFirst && !this.context.EnableNamingAlias)
             {
                 validName.Append(segment);
             }
             else
             {
+                var titleCaseSegment = Customization.CustomizeNaming(segment);
                 validName.Append(titleCaseSegment);
             }
 
