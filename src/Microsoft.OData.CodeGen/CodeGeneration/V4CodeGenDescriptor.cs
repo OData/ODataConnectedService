@@ -161,7 +161,7 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
             t4CodeGenerator.EnableNamingAlias = serviceConfiguration.EnableNamingAlias;
             t4CodeGenerator.NamespacePrefix = serviceConfiguration.NamespacePrefix;
             t4CodeGenerator.MakeTypesInternal = serviceConfiguration.MakeTypesInternal;
-            t4CodeGenerator.NoTimestamp = serviceConfiguration.NoTimestamp;
+            t4CodeGenerator.OmitVersioningInfo = serviceConfiguration.OmitVersioningInfo;
             t4CodeGenerator.GenerateMultipleFiles = serviceConfiguration.GenerateMultipleFiles;
             t4CodeGenerator.ExcludedOperationImports = serviceConfiguration.ExcludedOperationImports;
             t4CodeGenerator.ExcludedBoundOperations = serviceConfiguration.ExcludedBoundOperations;

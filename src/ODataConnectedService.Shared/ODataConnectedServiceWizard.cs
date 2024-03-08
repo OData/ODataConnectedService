@@ -186,7 +186,7 @@ namespace Microsoft.OData.ConnectedService
 
                     if (ServiceConfig.EdmxVersion == Constants.EdmxVersion4)
                     {
-                        advancedSettings.NoTimestamp.IsEnabled = !Context.IsUpdating;
+                        advancedSettings.OmitVersioningInfo.IsEnabled = !Context.IsUpdating;
                         advancedSettings.IncludeT4File.IsEnabled = !Context.IsUpdating;
                     }
                 }

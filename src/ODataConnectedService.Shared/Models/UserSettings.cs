@@ -65,7 +65,7 @@ namespace Microsoft.OData.CodeGen.Models
 
         private bool ignoreUnexpectedElementsAndAttributes;
 
-        private bool noTimestamp;
+        private bool omitVersioningInfo;
 
         private bool includeT4File;
 
@@ -239,12 +239,12 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         [DataMember]
-        public bool NoTimestamp
+        public bool OmitVersioningInfo
         {
-            get { return noTimestamp; }
+            get { return omitVersioningInfo; }
             set
             {
-                noTimestamp = value;
+                omitVersioningInfo = value;
                 OnPropertyChanged();
             }
         }

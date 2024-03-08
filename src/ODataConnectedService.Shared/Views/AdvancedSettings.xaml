@@ -19,7 +19,7 @@
                          HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="250" Margin="20, 5, 0, 0"/>
             <StackPanel x:Name="AdvancedSettingsHyperLinkPanel">
                 <TextBlock x:Name="Label" TextWrapping="WrapWithOverflow" Margin="0, 20, 40, 0">
-                    You can generate the client proxy based on the default settings, or you can click following link for further configuration.
+                    You can generate the client proxy based on the default settings, or you can click following link for further configuration
                 </TextBlock>
                 <TextBlock x:Name="TextBlock" TextWrapping="Wrap" Margin="0,5" >
                     <Hyperlink Name="settings" Click="settings_Click">Advanced Settings</Hyperlink>
@@ -31,7 +31,7 @@
                 <CheckBox x:Name="UseNamespacePrefix" IsChecked="{Binding UserSettings.UseNamespacePrefix, Mode=TwoWay}"
                           HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,5">
                     <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">
-                        Use a custom namespace (It will replace the original namespace in the metadata document, unless the model has several namespaces.)
+                        Use a custom namespace (The supplied namespace will replace the original namespace in the metadata document, unless the model has several namespaces)
                     </TextBlock>
                 </CheckBox>
                 <TextBox x:Name="NamespacePrefix" Text="{Binding Path=UserSettings.NamespacePrefix, Mode=TwoWay}"
@@ -40,25 +40,25 @@
                           HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5, 0, 0" />
             </StackPanel>
             <StackPanel x:Name="AdvancedSettingsForv4" HorizontalAlignment="Left" Margin="10, 5, 0, 0" VerticalAlignment="Top">
-                <CheckBox x:Name="EnableCamelCase" Content="Use c# casing style" IsChecked="{Binding Path=UserSettings.EnableNamingAlias, Mode=TwoWay}"
+                <CheckBox x:Name="EnableCamelCase" Content="Use C# casing style" IsChecked="{Binding Path=UserSettings.EnableNamingAlias, Mode=TwoWay}"
             		HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5"/>
                 <CheckBox x:Name="IgnoreUnknownAttributeOrElement" IsChecked="{Binding Path=UserSettings.IgnoreUnexpectedElementsAndAttributes, Mode=TwoWay}"
             		HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5">
-                    <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Ignore unknown elements (Whether to ignore unexpected elements and attributes in the metadata document and generate the client code if any.)</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Ignore unknown elements (Whether to ignore unexpected elements and attributes in the metadata document and generate the client code if any)</TextBlock>
                 </CheckBox>
                 <CheckBox x:Name="MakeTypesInternal" IsChecked="{Binding Path=UserSettings.MakeTypesInternal, Mode=TwoWay}"
                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5">
-                    <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Make generated types internal (Enable this if you don't want to expose the generated types outside of your assembly.)</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Make generated types internal (Check this if you don't want to expose the generated types outside of your assembly)</TextBlock>
                 </CheckBox>
-                <CheckBox x:Name="NoTimestamp" IsChecked="{Binding Path=UserSettings.NoTimestamp, Mode=TwoWay}"
+                <CheckBox x:Name="OmitVersioningInfo" IsChecked="{Binding Path=UserSettings.OmitVersioningInfo, Mode=TwoWay}"
 					HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5">
-                    <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Omit generation timestamp in generated files (Enable this if you don't need generation timestamps in generated files.)</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Omit runtime version and code generation timestamp from the generated files</TextBlock>
                 </CheckBox>
-                <CheckBox x:Name="IncludeT4File" Content="Add code templates (Whether to include the T4 files into this project.)" IsChecked="{Binding Path=UserSettings.IncludeT4File, Mode=TwoWay}"
+                <CheckBox x:Name="IncludeT4File" Content="Add code templates (Whether to include the T4 files into this project)" IsChecked="{Binding Path=UserSettings.IncludeT4File, Mode=TwoWay}"
             		HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 15" FontWeight="Medium"/>
-                <CheckBox x:Name="OpenGeneratedFilesInIDE" Content="Open generated files in the IDE when generation completes." IsChecked="{Binding Path=UserSettings.OpenGeneratedFilesInIDE, Mode=TwoWay}"
+                <CheckBox x:Name="OpenGeneratedFilesInIDE" Content="Open generated files in the IDE when generation completes" IsChecked="{Binding Path=UserSettings.OpenGeneratedFilesInIDE, Mode=TwoWay}"
                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5"/>
-                <CheckBox x:Name="GenerateMultipleFiles" Content="Generate multiple files." IsChecked="{Binding Path=UserSettings.GenerateMultipleFiles, Mode=TwoWay}"
+                <CheckBox x:Name="GenerateMultipleFiles" Content="Generate multiple files" IsChecked="{Binding Path=UserSettings.GenerateMultipleFiles, Mode=TwoWay}"
                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5"/>
             </StackPanel>
         </StackPanel>

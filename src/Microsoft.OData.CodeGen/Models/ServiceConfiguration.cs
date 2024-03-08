@@ -43,6 +43,6 @@ namespace Microsoft.OData.CodeGen.Models
         public bool IncludeT4File { get; set; }
         public List<string> ExcludedOperationImports { get; set; }
         public List<string> ExcludedBoundOperations { get; set; }
-        public bool NoTimestamp { get; set; }
+        public bool OmitVersioningInfo { get; set; }
     }
 }

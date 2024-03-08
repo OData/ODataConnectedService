@@ -44,9 +44,9 @@ namespace Microsoft.OData.Cli
         public bool EnableTracking { get; set; }
 
         /// <summary>
-        /// Omit generation timestamp in generated files.
+        /// Gets or sets a value indicating whether to omit runtime version and code generation timestamp from the generated files.
         /// </summary>
-        public bool NoTimestamp { get; set; }
+        public bool OmitVersioningInfo { get; set; }
 
         /// <summary>
         /// Disables/Enables upper camel casing

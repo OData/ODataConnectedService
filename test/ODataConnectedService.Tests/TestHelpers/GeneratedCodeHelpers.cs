@@ -54,10 +54,10 @@ namespace ODataConnectedService.Tests.TestHelpers
 
         public static string NormalizeGeneratedCode(string code)
         {
-            var normalized = Regex.Replace(code, "// Generation date:.*", string.Empty, RegexOptions.Multiline);
-            normalized = Regex.Replace(normalized, "'Generation date:.*", string.Empty, RegexOptions.Multiline);
-            normalized = Regex.Replace(normalized, "//     Runtime Version:.*", string.Empty, RegexOptions.Multiline);
-            normalized = Regex.Replace(normalized, "'     Runtime Version:.*", string.Empty, RegexOptions.Multiline);
+            var normalized = Regex.Replace(code, "// Generation date:.*", "// Generation date:", RegexOptions.Multiline);
+            normalized = Regex.Replace(normalized, "'Generation date:.*", "'Generation date:", RegexOptions.Multiline);
+            normalized = Regex.Replace(normalized, "//     Runtime Version:.*", "//     Runtime Version:", RegexOptions.Multiline);
+            normalized = Regex.Replace(normalized, "'     Runtime Version:.*", "'     Runtime Version:", RegexOptions.Multiline);
             normalized = Regex.Replace(normalized,
                "global::System.CodeDom.Compiler.GeneratedCodeAttribute\\(.*\\)",
                "global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"Microsoft.OData.Client.Design.T4\", \"" + T4Version + "\")",
@@ -69,19 +69,18 @@ namespace ODataConnectedService.Tests.TestHelpers
             return normalized;
         }
 
-        public static void VerifyGeneratedCodeNoTimestamp(string expectedCode, string actualCode)
+        public static void VerifyGeneratedCodeOmitVersioningInfo(string expectedCode, string actualCode)
         {
-            var normalizedExpected = NormalizeGeneratedCode(expectedCode);
-            var normalizedActual = NormalizeGeneratedCodeKeepGenerationDate(actualCode);
+            var normalizedExpected = NormalizeGeneratedCodeOmitVersionInfo(expectedCode);
+            var normalizedActual = NormalizeGeneratedCode(actualCode);
             Assert.AreEqual(normalizedExpected, normalizedActual);
-
-            var normalizedActualWithoutTimestamp = NormalizeGeneratedCode(actualCode);
-            Assert.AreEqual(normalizedActualWithoutTimestamp, normalizedActual);
         }
 
-        public static string NormalizeGeneratedCodeKeepGenerationDate(string code)
+        public static string NormalizeGeneratedCodeOmitVersionInfo(string code)
         {
-            var normalized = Regex.Replace(code, "//     Runtime Version:.*", string.Empty, RegexOptions.Multiline);
+            var normalized = Regex.Replace(code, "// Generation date:.*", string.Empty, RegexOptions.Multiline);
+            normalized = Regex.Replace(normalized, "'Generation date:.*", string.Empty, RegexOptions.Multiline);
+            normalized = Regex.Replace(normalized, "//     Runtime Version:.*", string.Empty, RegexOptions.Multiline);
             normalized = Regex.Replace(normalized, "'     Runtime Version:.*", string.Empty, RegexOptions.Multiline);
             normalized = Regex.Replace(normalized,
                 "global::System.CodeDom.Compiler.GeneratedCodeAttribute\\(.*\\)",
