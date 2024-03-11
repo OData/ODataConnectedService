@@ -743,7 +743,7 @@ namespace ODataConnectedService.Tests
                 Assert.True(advancedPage.UserSettings.UseNamespacePrefix);
                 Assert.True(advancedPage.UserSettings.UseDataServiceCollection);
                 Assert.True(advancedPage.UserSettings.MakeTypesInternal);
-                Assert.True(advancedPage.UserSettings.NoTimestamp);
+                Assert.True(advancedPage.UserSettings.OmitVersioningInfo);
                 advancedPage.UserSettings.NamespacePrefix = "MyNamespace";
                 advancedPage.UserSettings.GenerateMultipleFiles = true;
                 advancedPage.UserSettings.UseDataServiceCollection = false;
@@ -850,7 +850,7 @@ namespace ODataConnectedService.Tests
                 Assert.True(advancedPage.UserSettings.UseNamespacePrefix);
                 Assert.True(advancedPage.UserSettings.UseDataServiceCollection);
                 Assert.True(advancedPage.UserSettings.MakeTypesInternal);
-                Assert.True(advancedPage.UserSettings.NoTimestamp);
+                Assert.True(advancedPage.UserSettings.OmitVersioningInfo);
                 advancedPage.UserSettings.NamespacePrefix = "MyNamespace";
                 advancedPage.UserSettings.GenerateMultipleFiles = true;
                 advancedPage.UserSettings.UseDataServiceCollection = false;

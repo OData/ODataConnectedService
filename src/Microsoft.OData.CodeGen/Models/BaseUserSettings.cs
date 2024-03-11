@@ -34,7 +34,7 @@ namespace Microsoft.OData.CodeGen.Models
 
         private bool makeTypesInternal;
 
-        private bool noTimestamp;
+        private bool omitVersioningInfo;
 
         private bool generateMultipleFiles;
 
@@ -177,15 +177,15 @@ namespace Microsoft.OData.CodeGen.Models
         }
 
         /// <summary>
-        /// Gets or sets a value that determines whether to omit generation timestamp in generated files.
+        /// Gets or sets a value indicating whether to omit runtime version and code generation timestamp from the generated files.
         /// </summary>
         [DataMember]
-        public bool NoTimestamp
+        public bool OmitVersioningInfo
         {
-            get { return noTimestamp; }
+            get { return omitVersioningInfo; }
             set
             {
-                noTimestamp = value;
+                omitVersioningInfo = value;
                 OnPropertyChanged();
             }
         }
