@@ -33,7 +33,7 @@ namespace ODataConnectedService.Tests
             userSettings.IncludeWebProxy = true;
             userSettings.IncludeWebProxyNetworkCredentials = true;
             userSettings.MakeTypesInternal = true;
-            userSettings.NoTimestamp = true;
+            userSettings.OmitVersioningInfo = true;
             userSettings.NamespacePrefix = "Test";
             userSettings.OpenGeneratedFilesInIDE = true;
             userSettings.ServiceName = "Test";
@@ -66,7 +66,7 @@ namespace ODataConnectedService.Tests
             serviceConfig.IncludeWebProxy = true;
             serviceConfig.IncludeWebProxyNetworkCredentials = true;
             serviceConfig.MakeTypesInternal = true;
-            serviceConfig.NoTimestamp = true;
+            serviceConfig.OmitVersioningInfo = true;
             serviceConfig.NamespacePrefix = "Test";
             serviceConfig.OpenGeneratedFilesInIDE = true;
             serviceConfig.ServiceName = "Test";
@@ -103,7 +103,7 @@ namespace ODataConnectedService.Tests
             Assert.True(serviceConfig.IncludeWebProxy);
             Assert.True(serviceConfig.IncludeWebProxyNetworkCredentials);
             Assert.True(serviceConfig.MakeTypesInternal);
-            Assert.True(serviceConfig.NoTimestamp);
+            Assert.True(serviceConfig.OmitVersioningInfo);
             Assert.Equal("Test", serviceConfig.NamespacePrefix);
             Assert.True(serviceConfig.OpenGeneratedFilesInIDE);
             Assert.Equal("Test", serviceConfig.ServiceName);
@@ -138,7 +138,7 @@ namespace ODataConnectedService.Tests
             Assert.True(userSettings.IncludeWebProxy);
             Assert.True(userSettings.IncludeWebProxyNetworkCredentials);
             Assert.True(userSettings.MakeTypesInternal);
-            Assert.True(userSettings.NoTimestamp);
+            Assert.True(userSettings.OmitVersioningInfo);
             Assert.Equal("Test", userSettings.NamespacePrefix);
             Assert.True(userSettings.OpenGeneratedFilesInIDE);
             Assert.Equal("Test", userSettings.ServiceName);

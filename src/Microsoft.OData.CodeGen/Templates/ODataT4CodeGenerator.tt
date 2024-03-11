@@ -36,8 +36,8 @@ public static class Configuration
 	// thereby making them invisible outside the assembly
 	public const bool MakeTypesInternal = false;
 
-	// If set to true, generation timestamps will be left out of generated files
-	public const bool NoTimestamp = false;
+	// This flag indicates whether to omit runtime version and code generation timestamp from the generated files
+	public const bool OmitVersioningInfo = false;
 
 	//This files indicates whether to generate the files into multiple files or single.
     //If set to true then multiple files will be generated. Otherwise only a single file is generated.

@@ -32,7 +32,7 @@ namespace ODataConnectedService.Tests.Views
             userSettings.GeneratedFileNamePrefix = "MyPrefix";
             userSettings.GenerateMultipleFiles = true;
             userSettings.MakeTypesInternal = true;
-            userSettings.NoTimestamp = true;
+            userSettings.OmitVersioningInfo = true;
 
             // Save settings
             userSettings.Save();
@@ -44,7 +44,7 @@ namespace ODataConnectedService.Tests.Views
             Assert.Equal("MyPrefix", settings.GeneratedFileNamePrefix);
             Assert.True(settings.GenerateMultipleFiles);
             Assert.True(settings.MakeTypesInternal);
-            Assert.True(settings.NoTimestamp);
+            Assert.True(settings.OmitVersioningInfo);
         }
 
         [Fact]

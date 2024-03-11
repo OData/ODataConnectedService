@@ -77,7 +77,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
                         UseNamespacePrefix = true,
                         NamespacePrefix = "Namespace",
                         MakeTypesInternal = true,
-                        NoTimestamp = true,
+                        OmitVersioningInfo = true,
                         GeneratedFileNamePrefix = "GeneratedCode",
                         GenerateMultipleFiles = true,
                         OpenGeneratedFilesInIDE = true,
@@ -105,7 +105,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
                         UseNamespacePrefix = false,
                         NamespacePrefix = "Namespace",
                         MakeTypesInternal = false,
-                        NoTimestamp = false,
+                        OmitVersioningInfo = false,
                         GeneratedFileNamePrefix = "Reference",
                         GenerateMultipleFiles = false,
                         OpenGeneratedFilesInIDE = false,
@@ -139,7 +139,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             Assert.AreEqual(serviceConfig.EnableNamingAlias, generator.EnableNamingAlias);
             Assert.AreEqual(serviceConfig.IgnoreUnexpectedElementsAndAttributes, generator.IgnoreUnexpectedElementsAndAttributes);
             Assert.AreEqual(serviceConfig.MakeTypesInternal, generator.MakeTypesInternal);
-            Assert.AreEqual(serviceConfig.NoTimestamp, generator.NoTimestamp);
+            Assert.AreEqual(serviceConfig.OmitVersioningInfo, generator.OmitVersioningInfo);
             Assert.AreEqual(serviceConfig.NamespacePrefix, generator.NamespacePrefix);
             Assert.AreEqual(serviceConfig.ExcludedOperationImports, generator.ExcludedOperationImports);
             Assert.AreEqual(serviceConfig.ExcludedSchemaTypes, generator.ExcludedSchemaTypes);

@@ -665,7 +665,7 @@ namespace ODataConnectedService.Tests
             bool useDataServiceCollection, bool enableNamingAlias = false,
             bool ignoreUnexpectedElementsAndAttributes = false,
             Func<Uri, WebProxy, IList<string>, XmlReader> getReferencedModelReaderFunc = null,
-            bool appendDSCSuffix = false, string MetadataFilePath = null, bool generateMultipleFiles = false, bool noTimestamp = false,
+            bool appendDSCSuffix = false, string MetadataFilePath = null, bool generateMultipleFiles = false, bool omitVersioningInfo = false,
             string metadataDocumentUri = null, IEnumerable<string> excludedSchemaTypes = default(List<string>))
         {
             if (useDataServiceCollection
@@ -691,7 +691,7 @@ namespace ODataConnectedService.Tests
                 EnableNamingAlias = enableNamingAlias,
                 IgnoreUnexpectedElementsAndAttributes = ignoreUnexpectedElementsAndAttributes,
                 GenerateMultipleFiles = generateMultipleFiles,
-                NoTimestamp = noTimestamp,
+                OmitVersioningInfo = omitVersioningInfo,
                 ExcludedSchemaTypes = excludedSchemaTypes
             };
 

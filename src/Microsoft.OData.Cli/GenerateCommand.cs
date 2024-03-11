@@ -95,10 +95,10 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(internalModifier);
 
-            Option noTimestamp = new Option<bool>(new[] { "--no-timestamp", "-nt" })
+            Option noTimestamp = new Option<bool>(new[] { "--omit-versioning-info", "-vi" })
             {
-                Name = "no-timestamp",
-                Description = "Omit generation timestamp in generated files.",
+                Name = "omit-versioning-info",
+                Description = "Omit runtime version and code generation timestamp from the generated files.",
             };
             noTimestamp.SetDefaultValue(false);
             this.AddOption(noTimestamp);
@@ -248,7 +248,7 @@ namespace Microsoft.OData.Cli
             serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = generateOptions.IgnoreUnexpectedElements;
             serviceConfigurationV4.EnableNamingAlias = generateOptions.UpperCamelCase;
             serviceConfigurationV4.UseDataServiceCollection = generateOptions.EnableTracking;
-            serviceConfigurationV4.NoTimestamp = generateOptions.NoTimestamp;
+            serviceConfigurationV4.OmitVersioningInfo = generateOptions.OmitVersioningInfo;
 
             Project project = ProjectHelper.CreateProjectInstance(generateOptions.OutputDir);
             BaseCodeGenDescriptor codeGenDescriptor = new CodeGenDescriptorFactory().Create(

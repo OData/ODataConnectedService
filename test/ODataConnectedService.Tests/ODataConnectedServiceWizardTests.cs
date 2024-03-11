@@ -71,7 +71,7 @@ namespace ODataConnectedService.Tests
                 EnableNamingAlias = true,
                 OpenGeneratedFilesInIDE = true,
                 MakeTypesInternal = true,
-                NoTimestamp = true,
+                OmitVersioningInfo = true,
                 IgnoreUnexpectedElementsAndAttributes = true,
                 IncludeT4File = true,
                 ExcludedOperationImports = new List<string>()
@@ -263,7 +263,7 @@ namespace ODataConnectedService.Tests
                 Assert.False(advancedPage.UserSettings.GenerateMultipleFiles);
                 Assert.True(advancedPage.UserSettings.IgnoreUnexpectedElementsAndAttributes);
                 Assert.False(advancedPage.UserSettings.MakeTypesInternal);
-                Assert.False(advancedPage.UserSettings.NoTimestamp);
+                Assert.False(advancedPage.UserSettings.OmitVersioningInfo);
             }
         }
 
@@ -428,7 +428,7 @@ namespace ODataConnectedService.Tests
                 Assert.True(advancedPage.UserSettings.GenerateMultipleFiles);
                 Assert.True(advancedPage.UserSettings.IgnoreUnexpectedElementsAndAttributes);
                 Assert.True(advancedPage.UserSettings.MakeTypesInternal);
-                Assert.True(advancedPage.UserSettings.NoTimestamp);
+                Assert.True(advancedPage.UserSettings.OmitVersioningInfo);
             }
         }
 
@@ -459,7 +459,7 @@ namespace ODataConnectedService.Tests
                 var advancedView = advancedPage.View as AdvancedSettings;
                 Assert.False(advancedView.IncludeT4File.IsEnabled);
                 Assert.False(advancedView.GenerateMultipleFiles.IsEnabled);
-                Assert.False(advancedView.NoTimestamp.IsEnabled);
+                Assert.False(advancedView.OmitVersioningInfo.IsEnabled);
             }
         }
 
@@ -534,7 +534,7 @@ namespace ODataConnectedService.Tests
                 advancedPage.UserSettings.IncludeT4File = true;
                 advancedPage.UserSettings.GenerateMultipleFiles = true;
                 advancedPage.UserSettings.OpenGeneratedFilesInIDE = true;
-                advancedPage.UserSettings.NoTimestamp = true;
+                advancedPage.UserSettings.OmitVersioningInfo = true;
 
                 operationsPage.OnPageLeavingAsync(new WizardLeavingArgs(typesPage)).Wait();
                 typesPage.OnPageLeavingAsync(new WizardLeavingArgs(advancedPage)).Wait();
@@ -617,7 +617,7 @@ namespace ODataConnectedService.Tests
                 Assert.True(config.IncludeT4File);
                 Assert.True(config.GenerateMultipleFiles);
                 Assert.True(config.OpenGeneratedFilesInIDE);
-                Assert.True(config.NoTimestamp);
+                Assert.True(config.OmitVersioningInfo);
             }
         }
 
@@ -676,7 +676,7 @@ namespace ODataConnectedService.Tests
                 Assert.True(config.IncludeT4File);
                 Assert.True(config.GenerateMultipleFiles);
                 Assert.True(config.OpenGeneratedFilesInIDE);
-                Assert.True(config.NoTimestamp);
+                Assert.True(config.OmitVersioningInfo);
             }
         }
 
@@ -727,7 +727,7 @@ namespace ODataConnectedService.Tests
                 advancedPage.UserSettings.UseDataServiceCollection = true;
                 advancedPage.UserSettings.MakeTypesInternal = true;
                 advancedPage.UserSettings.UseNamespacePrefix = true;
-                advancedPage.UserSettings.NoTimestamp = true;
+                advancedPage.UserSettings.OmitVersioningInfo = true;
                 advancedPage.OnPageLeavingAsync(null).Wait();
 
                 endpointPage.OnPageEnteringAsync(null).Wait();
@@ -744,7 +744,7 @@ namespace ODataConnectedService.Tests
                 Assert.True(advancedPage.UserSettings.UseNamespacePrefix);
                 Assert.True(advancedPage.UserSettings.UseDataServiceCollection);
                 Assert.True(advancedPage.UserSettings.MakeTypesInternal);
-                Assert.True(advancedPage.UserSettings.NoTimestamp);
+                Assert.True(advancedPage.UserSettings.OmitVersioningInfo);
                 advancedPage.UserSettings.NamespacePrefix = "MyNamespace";
                 advancedPage.UserSettings.GenerateMultipleFiles = true;
                 advancedPage.UserSettings.UseDataServiceCollection = false;
@@ -781,7 +781,7 @@ namespace ODataConnectedService.Tests
                 Assert.Equal("A:b", config.CustomHttpHeaders);
                 Assert.True(config.GenerateMultipleFiles);
                 Assert.True(config.MakeTypesInternal);
-                Assert.True(config.NoTimestamp);
+                Assert.True(config.OmitVersioningInfo);
                 Assert.True(config.UseNamespacePrefix);
                 Assert.Equal("MyNamespace", config.NamespacePrefix);
                 Assert.False(config.UseDataServiceCollection);
@@ -837,7 +837,7 @@ namespace ODataConnectedService.Tests
                 advancedPage.UserSettings.UseDataServiceCollection = true;
                 advancedPage.UserSettings.MakeTypesInternal = true;
                 advancedPage.UserSettings.UseNamespacePrefix = true;
-                advancedPage.UserSettings.NoTimestamp = true;
+                advancedPage.UserSettings.OmitVersioningInfo = true;
                 advancedPage.OnPageLeavingAsync(null).Wait();
 
                 endpointPage.OnPageEnteringAsync(null).Wait();
@@ -851,7 +851,7 @@ namespace ODataConnectedService.Tests
                 Assert.True(advancedPage.UserSettings.UseNamespacePrefix);
                 Assert.True(advancedPage.UserSettings.UseDataServiceCollection);
                 Assert.True(advancedPage.UserSettings.MakeTypesInternal);
-                Assert.True(advancedPage.UserSettings.NoTimestamp);
+                Assert.True(advancedPage.UserSettings.OmitVersioningInfo);
                 advancedPage.UserSettings.NamespacePrefix = "MyNamespace";
                 advancedPage.UserSettings.GenerateMultipleFiles = true;
                 advancedPage.UserSettings.UseDataServiceCollection = false;
@@ -887,7 +887,7 @@ namespace ODataConnectedService.Tests
                 Assert.Equal("A:b", config.CustomHttpHeaders);
                 Assert.True(config.GenerateMultipleFiles);
                 Assert.True(config.MakeTypesInternal);
-                Assert.True(config.NoTimestamp);
+                Assert.True(config.OmitVersioningInfo);
                 Assert.True(config.UseNamespacePrefix);
                 Assert.Equal("MyNamespace", config.NamespacePrefix);
                 Assert.False(config.UseDataServiceCollection);
