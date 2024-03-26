@@ -117,7 +117,7 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(internalModifier);
 
-            Option noTimestamp = new Option<bool?>(new[] { "--omit-versioning-info", "-vi" })
+            Option omitVersioningInfo = new Option<bool?>(new[] { "--omit-versioning-info", "-vi" })
             {
                 Name = "omit-versioning-info",
                 Description = "Omit runtime version and code generation timestamp from the generated files.",
