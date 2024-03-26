@@ -308,7 +308,7 @@ namespace Microsoft.OData.Cli
 
             if (!File.Exists(fileName))
             {
-                throw new ArgumentException($"Specified config file does not exist: '{fileName}'", nameof(fileName));
+                throw new FileNotFoundException($"Specified config file does not exist: '{fileName}'", fileName);
             }
 
             string configFileText;
@@ -316,7 +316,7 @@ namespace Microsoft.OData.Cli
             {
                 configFileText = File.ReadAllText(fileName);
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
                 throw new Exception($"Failed to load configuration file '{fileName}': {ex.Message}", ex);
             }
