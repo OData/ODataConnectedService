@@ -24,6 +24,7 @@ namespace Namespace1
                 this(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
         {
         }
+
         /// <summary>
         /// Initialize a new New object.
         /// </summary>
@@ -168,25 +169,25 @@ namespace Namespace1
         /// Initialize a new eventSingle object.
         /// </summary>
         public eventSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) { }
+            : base(context, path) {}
 
         /// <summary>
         /// Initialize a new eventSingle object.
         /// </summary>
         public eventSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) { }
+            : base(context, path, isComposable) {}
 
         /// <summary>
         /// Initialize a new eventSingle object.
         /// </summary>
         public eventSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<@event> query)
-            : base(query) { }
+            : base(query) {}
 
         /// <summary>
-        /// There are no comments for event in the schema.
+        /// There are no comments for event1 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public virtual global::Namespace1.eventSingle @event
+        public virtual global::Namespace1.eventSingle event1
         {
             get
             {
@@ -194,15 +195,15 @@ namespace Namespace1
                 {
                     throw new global::System.NotSupportedException("The previous function is not composable.");
                 }
-                if ((this._event == null))
+                if ((this._event1 == null))
                 {
-                    this._event = new global::Namespace1.eventSingle(this.Context, GetPath("event"));
+                    this._event1 = new global::Namespace1.eventSingle(this.Context, GetPath("event"));
                 }
-                return this._event;
+                return this._event1;
             }
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        private global::Namespace1.eventSingle _event;
+        private global::Namespace1.eventSingle _event1;
     }
     /// <summary>
     /// There are no comments for event in the schema.
