@@ -34,7 +34,7 @@ namespace Microsoft.OData.Cli
             Option metadataUri = new Option<string>(new[] { "--metadata-uri", "-m" })
             {
                 Name = "metadata-uri",
-                Description = "The URI of the metadata document. The value must be set to a valid service document URI or a local file path. Optional if config-file is specified and will override Endpoint specified in config-file.",
+                Description = "The URI of the metadata document. The value must be set to a valid service document URI or a local file path. Optional if config file is specified. If specified, it will take precedence over the value in config file.",
                 IsRequired = false
             };
 
