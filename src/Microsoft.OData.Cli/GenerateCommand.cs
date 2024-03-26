@@ -123,8 +123,8 @@ namespace Microsoft.OData.Cli
                 Description = "Omit runtime version and code generation timestamp from the generated files.",
             };
 
-            noTimestamp.SetDefaultValue(null);
-            this.AddOption(noTimestamp);
+            omitVersioningInfo.SetDefaultValue(null);
+            this.AddOption(omitVersioningInfo);
 
             Option multipleFiles = new Option<bool?>(new[] { "--multiple-files" })
             {
@@ -164,7 +164,7 @@ namespace Microsoft.OData.Cli
                 Name = "ignore-unexpected-elements",
                 Description = "This flag indicates whether to ignore unexpected elements and attributes in the metadata document and generate the client code if any."
             };
-            
+
             ignoreUnexpectedElements.SetDefaultValue(null);
             this.AddOption(ignoreUnexpectedElements);
 
