@@ -122,6 +122,7 @@ namespace Microsoft.OData.Cli
                 Name = "omit-versioning-info",
                 Description = "Omit runtime version and code generation timestamp from the generated files.",
             };
+
             noTimestamp.SetDefaultValue(null);
             this.AddOption(noTimestamp);
 
