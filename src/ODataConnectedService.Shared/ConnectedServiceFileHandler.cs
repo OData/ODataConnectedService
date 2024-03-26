@@ -81,9 +81,9 @@ namespace Microsoft.OData.ConnectedService
                     if (reference.SourceProject == null)
                     {
                         // Assembly reference (For project reference, SourceProject != null)
-                        if (reference.Name.Equals("Microsoft.OData.Client", StringComparison.Ordinal) && string.Compare(reference.Version, "7.6.4.0", StringComparison.Ordinal) > 0)
+                        if (reference.Name.Equals("Microsoft.OData.Client", StringComparison.Ordinal))
                         {
-                            return true;
+                            return Version.Parse(reference.Version) > Version.Parse("7.6.4.0");
                         }
                     }
                 }
