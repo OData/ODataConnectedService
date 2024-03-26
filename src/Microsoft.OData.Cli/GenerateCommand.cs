@@ -308,7 +308,7 @@ namespace Microsoft.OData.Cli
 
             if (!File.Exists(fileName))
             {
-                throw new FileNotFoundException($"Specified config file does not exist: '{fileName}'", fileName);
+                throw new Exception($"Specified config file does not exist: '{fileName}'");
             }
 
             string configFileText;
