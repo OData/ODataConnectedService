@@ -293,7 +293,7 @@ namespace Microsoft.OData.Cli
         }
 
         /// <summary>
-        /// Read and deserialize <paramref name="fileName"/> into <see cref="ConfigJsonFile"/>
+        /// Read and deserialize <paramref name="fileName"/> into <see cref="ConnectedServiceFileData"/>
         /// </summary>
         /// <param name="fileName">Name of config file to read</param>
         /// <returns><see cref="ConnectedServiceFileData"/> read from <paramref name="fileName"/></returns>
