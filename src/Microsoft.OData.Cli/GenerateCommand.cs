@@ -131,6 +131,7 @@ namespace Microsoft.OData.Cli
                 Name = "multiple-files",
                 Description = "Split the generated classes into separate files instead of generating all the code in a single file."
             };
+
             multipleFiles.SetDefaultValue(null);
             this.AddOption(multipleFiles);
 
