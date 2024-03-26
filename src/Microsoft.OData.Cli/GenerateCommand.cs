@@ -278,10 +278,9 @@ namespace Microsoft.OData.Cli
                 ExcludedSchemaTypes = excludedSchemaTypes?.Count > 0 ? excludedSchemaTypes : configUserSettings?.ExcludedSchemaTypes,
             };
 
-            if (serviceConfig is ServiceConfigurationV4)
+            if (serviceConfig is ServiceConfigurationV4 serviceConfigurationV4)
             {
                 // Add additional V4 properties
-                var serviceConfigurationV4 = serviceConfig as ServiceConfigurationV4;
                 serviceConfigurationV4.EnableNamingAlias = (generateOptions.UpperCamelCase == null) ? (configUserSettings?.EnableNamingAlias ?? false) : generateOptions.UpperCamelCase.Value;
                 serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = (generateOptions.IgnoreUnexpectedElements == null) ? (configUserSettings?.IgnoreUnexpectedElementsAndAttributes ?? false) : generateOptions.IgnoreUnexpectedElements.Value;
                 serviceConfigurationV4.IncludeT4File = configUserSettings?.IncludeT4File ?? false;
