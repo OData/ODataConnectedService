@@ -62,7 +62,7 @@ namespace Microsoft.OData.Cli
             Option fileName = new Option<string>(new[] { "--file-name", "-fn" })
             {
                 Name = "file-name",
-                Description = "The name of the generated file. If not provided then the default name 'Reference.cs/.vb' is used.",
+                Description = "The name of the generated file. If not provided, the default name 'Reference.cs/.vb' is used.",
             };
 
             this.AddOption(fileName);
