@@ -164,6 +164,7 @@ namespace Microsoft.OData.Cli
                 Name = "ignore-unexpected-elements",
                 Description = "This flag indicates whether to ignore unexpected elements and attributes in the metadata document and generate the client code if any."
             };
+            
             ignoreUnexpectedElements.SetDefaultValue(null);
             this.AddOption(ignoreUnexpectedElements);
 
