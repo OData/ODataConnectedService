@@ -8,9 +8,9 @@
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.OData.ConnectedService;
 using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.Models;
+using Microsoft.OData.ConnectedService;
 using Microsoft.OData.ConnectedService.ViewModels;
 using Microsoft.VisualStudio.ConnectedServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

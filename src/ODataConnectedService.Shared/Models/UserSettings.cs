@@ -8,8 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.ConnectedService.Common;
@@ -19,7 +17,7 @@ using Newtonsoft.Json;
 namespace Microsoft.OData.CodeGen.Models
 {
     [DataContract]
-    public class UserSettings : INotifyPropertyChanged
+    public class UserSettings : BaseUserSettings
     {
         #region Const Members
 
@@ -39,61 +37,9 @@ namespace Microsoft.OData.CodeGen.Models
 
         private ObservableCollection<string> mruEndpoints;
 
-        private string serviceName;
-
-        private string endpoint;
-
-        private string generatedFileNamePrefix;
-
-        private bool useNamespacePrefix;
-
-        private string namespacePrefix;
-
-        private bool useDataServiceCollection;
-
-        private bool makeTypesInternal;
-
         private bool openGeneratedFilesInIDE;
 
-        private bool generateMultipleFiles;
-
-        private string customHttpHeaders;
-
-        private bool storeCustomHttpHeaders;
-
-        private bool enableNamingAlias;
-
-        private bool ignoreUnexpectedElementsAndAttributes;
-
-        private bool omitVersioningInfo;
-
-        private bool includeT4File;
-
-        private bool includeWebProxy;
-
-        private string webProxyHost;
-
-        private bool includeWebProxyNetworkCredentials;
-
-        private bool storeWebProxyNetworkCredentials;
-
-        private string webProxyNetworkCredentialsUsername;
-
-        private string webProxyNetworkCredentialsPassword;
-
-        private string webProxyNetworkCredentialsDomain;
-
-        private bool includeCustomHeaders;
-
-        private List<string> excludedOperationImports;
-
-        private List<string> excludedBoundOperations;
-
-        private List<string> excludedSchemaTypes;
-
         #endregion Private Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         [DataMember]
         public ObservableCollection<string> MruEndpoints
@@ -102,83 +48,6 @@ namespace Microsoft.OData.CodeGen.Models
             set
             {
                 mruEndpoints = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public string ServiceName
-        {
-            get { return serviceName; }
-            set
-            {
-                serviceName = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public string Endpoint
-        {
-            get { return endpoint; }
-            set
-            {
-                endpoint = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public string GeneratedFileNamePrefix
-        {
-            get { return generatedFileNamePrefix; }
-            set
-            {
-                generatedFileNamePrefix = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public bool UseNamespacePrefix
-        {
-            get { return useNamespacePrefix; }
-            set
-            {
-                useNamespacePrefix = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public string NamespacePrefix
-        {
-            get { return namespacePrefix; }
-            set
-            {
-                namespacePrefix = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public bool UseDataServiceCollection
-        {
-            get { return useDataServiceCollection; }
-            set
-            {
-                useDataServiceCollection = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public bool MakeTypesInternal
-        {
-            get { return makeTypesInternal; }
-            set
-            {
-                makeTypesInternal = value;
                 OnPropertyChanged();
             }
         }
@@ -194,215 +63,13 @@ namespace Microsoft.OData.CodeGen.Models
             }
         }
 
-        [DataMember]
-        public bool GenerateMultipleFiles
-        {
-            get { return generateMultipleFiles; }
-            set
-            {
-                generateMultipleFiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [IgnoreDataMember] // Do not serialize - may contain authentication tokens
-        public string CustomHttpHeaders
-        {
-            get { return customHttpHeaders; }
-            set
-            {
-                customHttpHeaders = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public bool EnableNamingAlias
-        {
-            get { return enableNamingAlias; }
-            set
-            {
-                enableNamingAlias = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public bool IgnoreUnexpectedElementsAndAttributes
-        {
-            get { return ignoreUnexpectedElementsAndAttributes; }
-            set
-            {
-                ignoreUnexpectedElementsAndAttributes = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public bool OmitVersioningInfo
-        {
-            get { return omitVersioningInfo; }
-            set
-            {
-                omitVersioningInfo = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public bool IncludeT4File
-        {
-            get { return includeT4File; }
-            set
-            {
-                includeT4File = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public bool IncludeWebProxy
-        {
-            get { return includeWebProxy; }
-            set
-            {
-                includeWebProxy = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public bool StoreCustomHttpHeaders
-        {
-            get { return storeCustomHttpHeaders; }
-            set
-            {
-                storeCustomHttpHeaders = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public string WebProxyHost
-        {
-            get { return webProxyHost; }
-            set
-            {
-                webProxyHost = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public bool IncludeWebProxyNetworkCredentials
-        {
-            get { return includeWebProxyNetworkCredentials; }
-            set
-            {
-                includeWebProxyNetworkCredentials = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public bool StoreWebProxyNetworkCredentials
-        {
-            get { return storeWebProxyNetworkCredentials; }
-            set
-            {
-                storeWebProxyNetworkCredentials = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [IgnoreDataMember] // Do not serialize - security consideration
-        public string WebProxyNetworkCredentialsUsername
-        {
-            get { return webProxyNetworkCredentialsUsername; }
-            set
-            {
-                webProxyNetworkCredentialsUsername = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [IgnoreDataMember] // Do not serialize - security consideration
-        public string WebProxyNetworkCredentialsPassword
-        {
-            get { return webProxyNetworkCredentialsPassword; }
-            set
-            {
-                webProxyNetworkCredentialsPassword = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public string WebProxyNetworkCredentialsDomain
-        {
-            get { return webProxyNetworkCredentialsDomain; }
-            set
-            {
-                webProxyNetworkCredentialsDomain = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public bool IncludeCustomHeaders
-        {
-            get { return includeCustomHeaders; }
-            set
-            {
-                includeCustomHeaders = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public List<string> ExcludedOperationImports
-        {
-            get { return excludedOperationImports; }
-            set
-            {
-                excludedOperationImports = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public List<string> ExcludedBoundOperations
-        {
-            get { return excludedBoundOperations; }
-            set
-            {
-                excludedBoundOperations = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DataMember]
-        public List<string> ExcludedSchemaTypes
-        {
-            get { return excludedSchemaTypes; }
-            set
-            {
-                excludedSchemaTypes = value;
-                OnPropertyChanged();
-            }
-        }
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="UserSettings"/> class.
         /// </summary>
         /// <param name="logger">The logger to use.</param>
         /// <param name="configName">The name to use for the config file.</param>
         public UserSettings(ConnectedServiceLogger logger, string configName = "Settings")
+            : base()
         {
             this.configName = configName;
             this.logger = logger;

@@ -24,7 +24,6 @@ using Xunit;
 
 namespace ODataConnectedService.Tests
 {
-
     public sealed class ODataConnectedServiceWizardTests : IDisposable
     {
         readonly UserSettings initialSettings;

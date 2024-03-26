@@ -2,15 +2,15 @@
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using Microsoft.OData.CodeGen.Common;
-using Microsoft.OData.CodeGen.Models;
-using Microsoft.OData.ConnectedService.ViewModels;
-using Newtonsoft.Json;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Globalization;
+using Microsoft.OData.CodeGen.Common;
+using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService.Common;
+using Microsoft.OData.ConnectedService.ViewModels;
+using Newtonsoft.Json;
 
 namespace Microsoft.OData.ConnectedService.Views
 {
@@ -73,22 +73,22 @@ namespace Microsoft.OData.ConnectedService.Views
 
             if (!File.Exists(openFileDialog.FileName))
             {
-               MessageBox.Show(
-                   $"File \"{openFileDialog.FileName}\" does not exists.",
-                   string.Format(CultureInfo.InvariantCulture, fileDialogTitle),
-                   MessageBoxButton.OK,
-                   MessageBoxImage.Warning);
-               return;
+                MessageBox.Show(
+                    $"File \"{openFileDialog.FileName}\" does not exists.",
+                    string.Format(CultureInfo.InvariantCulture, fileDialogTitle),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
             }
 
             var jsonFileText = File.ReadAllText(openFileDialog.FileName);
             if (string.IsNullOrWhiteSpace(jsonFileText))
             {
-               MessageBox.Show("Config file is empty.",
-                   string.Format(CultureInfo.InvariantCulture, fileDialogTitle),
-                   MessageBoxButton.OK,
-                   MessageBoxImage.Warning);
-               return;
+                MessageBox.Show("Config file is empty.",
+                    string.Format(CultureInfo.InvariantCulture, fileDialogTitle),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
             }
 
             ConnectedServiceJsonFileData connectedServiceData;
