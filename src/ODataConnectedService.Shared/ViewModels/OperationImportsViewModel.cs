@@ -19,7 +19,7 @@ using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService.ViewModels
 {
-    internal class OperationImportsViewModel: ConnectedServiceWizardPage
+    internal class OperationImportsViewModel : ConnectedServiceWizardPage
     {
         private bool _isSupportedVersion;
 

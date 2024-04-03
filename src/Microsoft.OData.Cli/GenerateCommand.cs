@@ -12,9 +12,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Build.Evaluation;
+using Microsoft.OData.Cli.Models;
 using Microsoft.OData.CodeGen.CodeGeneration;
 using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.Models;
+using Newtonsoft.Json;
 
 namespace Microsoft.OData.Cli
 {
@@ -32,16 +34,35 @@ namespace Microsoft.OData.Cli
             Option metadataUri = new Option<string>(new[] { "--metadata-uri", "-m" })
             {
                 Name = "metadata-uri",
-                Description = "The URI of the metadata document. The value must be set to a valid service document URI or a local file path.",
-                IsRequired = true
+                Description = "The URI of the metadata document. The value must be set to a valid service document URI or a local file path. Optional if config file is specified. If specified, it will take precedence over the value in config file.",
+                IsRequired = false
             };
 
             this.AddOption(metadataUri);
 
+            Option configFile = new Option<string>(new[] { "--config-file", "-c" })
+            {
+                Name = "config-file",
+                Description = "Path to the OData Connected Service config file.",
+                IsRequired = false
+            };
+
+            this.AddOption(configFile);
+
+            this.AddValidator((commandResult) =>
+            {
+                var metadataUriValue = commandResult.GetValueForOption(metadataUri) as string;
+                var configFileValue = commandResult.GetValueForOption(configFile) as string;
+                if (string.IsNullOrWhiteSpace(metadataUriValue) && string.IsNullOrWhiteSpace(configFileValue))
+                {
+                    commandResult.ErrorMessage = $"Either of '{metadataUri.Name}' or '{configFile.Name}' options must be specified.";
+                }
+            });
+
             Option fileName = new Option<string>(new[] { "--file-name", "-fn" })
             {
                 Name = "file-name",
-                Description = "The name of the generated file. If not provided then the default name 'Reference.cs/.vb' is used",
+                Description = "The name of the generated file. If not provided, the default name 'Reference.cs/.vb' is used.",
             };
 
             this.AddOption(fileName);
@@ -70,24 +91,25 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(ns);
 
-            Option enableTracking = new Option<bool>(new[] { "--enable-tracking", "-et" })
+            Option enableTracking = new Option<bool?>(new[] { "--enable-tracking", "-et" })
             {
                 Name = "enable-tracking",
                 Description = "Enable entity and property tracking."
             };
-            enableTracking.SetDefaultValue(false);
 
+            enableTracking.SetDefaultValue(null);
             this.AddOption(enableTracking);
 
-            Option upperCamelCase = new Option<bool>(new[] { "--upper-camel-case", "-ucc" })
+            Option upperCamelCase = new Option<bool?>(new[] { "--upper-camel-case", "-ucc" })
             {
                 Name = "upper-camel-case",
                 Description = "Disables upper camel casing."
             };
 
+            upperCamelCase.SetDefaultValue(null);
             this.AddOption(upperCamelCase);
 
-            Option internalModifier = new Option<bool>(new[] { "--enable-internal", "-i" })
+            Option internalModifier = new Option<bool?>(new[] { "--enable-internal", "-i" })
             {
                 Name = "enable-internal",
                 Description = "Apply the \"internal\" class modifier on generated classes instead of \"public\" thereby making them invisible outside the assembly."
@@ -95,20 +117,22 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(internalModifier);
 
-            Option noTimestamp = new Option<bool>(new[] { "--omit-versioning-info", "-vi" })
+            Option omitVersioningInfo = new Option<bool?>(new[] { "--omit-versioning-info", "-vi" })
             {
                 Name = "omit-versioning-info",
                 Description = "Omit runtime version and code generation timestamp from the generated files.",
             };
-            noTimestamp.SetDefaultValue(false);
-            this.AddOption(noTimestamp);
 
-            Option multipleFiles = new Option<bool>(new[] { "--multiple-files" })
+            omitVersioningInfo.SetDefaultValue(null);
+            this.AddOption(omitVersioningInfo);
+
+            Option multipleFiles = new Option<bool?>(new[] { "--multiple-files" })
             {
                 Name = "multiple-files",
                 Description = "Split the generated classes into separate files instead of generating all the code in a single file."
             };
 
+            multipleFiles.SetDefaultValue(null);
             this.AddOption(multipleFiles);
 
             Option excludedOperationImports = new Option<string>(new[] { "--excluded-operation-imports", "-eoi" })
@@ -135,12 +159,13 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(excludedSchemaTypes);
 
-            Option ignoreUnexpectedElements = new Option<bool>(new[] { "--ignore-unexpected-elements", "-iue" })
+            Option ignoreUnexpectedElements = new Option<bool?>(new[] { "--ignore-unexpected-elements", "-iue" })
             {
                 Name = "ignore-unexpected-elements",
                 Description = "This flag indicates whether to ignore unexpected elements and attributes in the metadata document and generate the client code if any."
             };
 
+            ignoreUnexpectedElements.SetDefaultValue(null);
             this.AddOption(ignoreUnexpectedElements);
 
             Option outputDir = new Option<string>(new[] { "--outputdir", "-o" })
@@ -190,7 +215,7 @@ namespace Microsoft.OData.Cli
                     }
                 }
 
-                ServiceConfiguration config = GetServiceConfiguration(options);
+                ServiceConfiguration config = GetServiceConfiguration<ServiceConfiguration>(options);
                 MetadataReader.ProcessServiceMetadata(config, out Version version);
                 if (version == Constants.EdmxVersion4)
                 {
@@ -210,46 +235,110 @@ namespace Microsoft.OData.Cli
             return 0;
         }
 
-        private ServiceConfiguration GetServiceConfiguration(GenerateOptions generateOptions)
+        /// <summary>
+        /// Get a <see cref="ServiceConfiguration"/> object from <paramref name="generateOptions"/>
+        /// </summary>
+        /// <typeparam name="TServiceConfig">Type of <see cref="ServiceConfiguration"/> to return</typeparam>
+        /// <param name="generateOptions">Source options used to populate the service configuration</param>
+        /// <returns>New <typeparamref name="TServiceConfig"/> from <paramref name="generateOptions"/></returns>
+        private TServiceConfig GetServiceConfiguration<TServiceConfig>(GenerateOptions generateOptions)
+            where TServiceConfig : ServiceConfiguration, new()
         {
-            ServiceConfiguration serviceConfiguration = new ServiceConfiguration();
-            serviceConfiguration.Endpoint = generateOptions.MetadataUri;
-            serviceConfiguration.CustomHttpHeaders = generateOptions.CustomHeaders;
-            serviceConfiguration.WebProxyHost = generateOptions.WebProxyHost;
-            serviceConfiguration.IncludeWebProxy = generateOptions.IncludeWebProxy;
-            serviceConfiguration.IncludeWebProxyNetworkCredentials = generateOptions.IncludeWebProxyNetworkCredentials;
-            serviceConfiguration.WebProxyNetworkCredentialsUsername = generateOptions.WebProxyNetworkCredentialsUsername;
-            serviceConfiguration.WebProxyNetworkCredentialsPassword = generateOptions.WebProxyNetworkCredentialsPassword;
-            serviceConfiguration.WebProxyNetworkCredentialsDomain = generateOptions.WebProxyNetworkCredentialsDomain;
-            serviceConfiguration.UseDataServiceCollection = generateOptions.EnableTracking;
+            TServiceConfig serviceConfig = null;
+            BaseUserSettings configUserSettings = null;
+            if (!string.IsNullOrWhiteSpace(generateOptions.ConfigFile))
+            {
+                var configFileData = ReadConfigFile(generateOptions.ConfigFile);
+                configUserSettings = configFileData?.ExtendedData;
+            }
 
-            return serviceConfiguration;
+            var namespacePrefix = string.IsNullOrEmpty(generateOptions.NamespacePrefix) ? configUserSettings?.NamespacePrefix : generateOptions.NamespacePrefix;
+            var excludedSchemaTypes = generateOptions.ExcludedSchemaTypes?.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(type => type.Trim()).ToList();
+            var excludedBoundOperations = generateOptions.ExcludedBoundOperations?.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(operation => operation.Trim()).ToList();
+            var excludedOperationImports = generateOptions.ExcludedOperationImports?.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(import => import.Trim()).ToList();
+
+            serviceConfig = new TServiceConfig
+            {
+                Endpoint = string.IsNullOrEmpty(generateOptions.MetadataUri) ? configUserSettings?.Endpoint : generateOptions.MetadataUri,
+                ServiceName = string.IsNullOrEmpty(configUserSettings?.ServiceName) ? Constants.DefaultServiceName : configUserSettings?.ServiceName,
+                GeneratedFileNamePrefix = string.IsNullOrEmpty(generateOptions.FileName) ? configUserSettings?.GeneratedFileNamePrefix : generateOptions.FileName,
+                CustomHttpHeaders = string.IsNullOrEmpty(generateOptions.CustomHeaders) ? configUserSettings?.CustomHttpHeaders : generateOptions.CustomHeaders,
+                WebProxyHost = string.IsNullOrEmpty(generateOptions.WebProxyHost) ? configUserSettings?.WebProxyHost : generateOptions.WebProxyHost,
+                IncludeWebProxy = generateOptions.IncludeWebProxy || (configUserSettings?.IncludeWebProxy ?? false),
+                IncludeWebProxyNetworkCredentials = generateOptions.IncludeWebProxyNetworkCredentials
+                    || (configUserSettings?.IncludeWebProxyNetworkCredentials ?? false),
+                WebProxyNetworkCredentialsUsername = string.IsNullOrEmpty(generateOptions.WebProxyNetworkCredentialsUsername) ? configUserSettings?.WebProxyNetworkCredentialsUsername : generateOptions.WebProxyNetworkCredentialsUsername,
+                WebProxyNetworkCredentialsPassword = string.IsNullOrEmpty(generateOptions.WebProxyNetworkCredentialsDomain) ? configUserSettings?.WebProxyNetworkCredentialsPassword : generateOptions.WebProxyNetworkCredentialsDomain,
+                WebProxyNetworkCredentialsDomain = string.IsNullOrEmpty(generateOptions.WebProxyNetworkCredentialsPassword) ? configUserSettings?.WebProxyNetworkCredentialsDomain : generateOptions.WebProxyNetworkCredentialsPassword,
+                NamespacePrefix = namespacePrefix,
+                UseNamespacePrefix = (configUserSettings?.UseNamespacePrefix ?? false) || (!string.IsNullOrWhiteSpace(namespacePrefix)),
+                UseDataServiceCollection = (generateOptions.EnableTracking == null) ? (configUserSettings?.UseDataServiceCollection ?? false) : generateOptions.EnableTracking.Value,
+                MakeTypesInternal = (generateOptions.EnableInternal == null) ? (configUserSettings?.MakeTypesInternal ?? false) : generateOptions.EnableInternal.Value,
+                GenerateMultipleFiles = (generateOptions.MultipleFiles == null) ? (configUserSettings?.GenerateMultipleFiles ?? false) : generateOptions.MultipleFiles.Value,
+                ExcludedSchemaTypes = excludedSchemaTypes?.Count > 0 ? excludedSchemaTypes : configUserSettings?.ExcludedSchemaTypes,
+            };
+
+            if (serviceConfig is ServiceConfigurationV4 serviceConfigurationV4)
+            {
+                // Add additional V4 properties
+                serviceConfigurationV4.EnableNamingAlias = (generateOptions.UpperCamelCase == null) ? (configUserSettings?.EnableNamingAlias ?? false) : generateOptions.UpperCamelCase.Value;
+                serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = (generateOptions.IgnoreUnexpectedElements == null) ? (configUserSettings?.IgnoreUnexpectedElementsAndAttributes ?? false) : generateOptions.IgnoreUnexpectedElements.Value;
+                serviceConfigurationV4.IncludeT4File = configUserSettings?.IncludeT4File ?? false;
+                serviceConfigurationV4.ExcludedOperationImports = excludedOperationImports?.Count > 0 ? excludedOperationImports : configUserSettings?.ExcludedOperationImports;
+                serviceConfigurationV4.ExcludedBoundOperations = excludedBoundOperations?.Count > 0 ? excludedBoundOperations : configUserSettings?.ExcludedBoundOperations;
+                serviceConfigurationV4.OmitVersioningInfo = (generateOptions.OmitVersioningInfo == null) ? (configUserSettings?.OmitVersioningInfo ?? false) : generateOptions.OmitVersioningInfo.Value;
+            }
+
+            return serviceConfig;
+        }
+
+        /// <summary>
+        /// Read and deserialize <paramref name="fileName"/> into <see cref="ConnectedServiceFileData"/>
+        /// </summary>
+        /// <param name="fileName">Name of config file to read</param>
+        /// <returns><see cref="ConnectedServiceFileData"/> read from <paramref name="fileName"/></returns>
+        /// <exception cref="Exception">Thrown on deserialization errors</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="fileName"/> is null/empty or does not exist</exception>
+        private ConnectedServiceFileData ReadConfigFile(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                throw new ArgumentException($"{nameof(fileName)} cannot be null/empty", nameof(fileName));
+            }
+
+            if (!File.Exists(fileName))
+            {
+                throw new Exception($"Specified config file does not exist: '{fileName}'");
+            }
+
+            string configFileText;
+            try
+            {
+                configFileText = File.ReadAllText(fileName);
+            }
+            catch (IOException ex)
+            {
+                throw new Exception($"Failed to load configuration file '{fileName}': {ex.Message}", ex);
+            }
+
+            if (string.IsNullOrWhiteSpace(configFileText))
+            {
+                throw new Exception($"Config file '{fileName}' is empty.");
+            }
+
+            try
+            {
+                return JsonConvert.DeserializeObject<ConnectedServiceFileData>(configFileText);
+            }
+            catch (JsonException ex)
+            {
+                throw new Exception($"Contents of the config file ('{fileName}') could not be deserialized: {ex.Message}", ex);
+            }
         }
 
         private async Task GenerateCodeForV4Clients(GenerateOptions generateOptions, IConsole console)
         {
-            var serviceConfigurationV4 = new ServiceConfigurationV4();
-            serviceConfigurationV4.Endpoint = generateOptions.MetadataUri;
-            serviceConfigurationV4.ServiceName = Constants.DefaultServiceName;
-            serviceConfigurationV4.GeneratedFileNamePrefix = generateOptions.FileName;
-            serviceConfigurationV4.CustomHttpHeaders = generateOptions.CustomHeaders;
-            serviceConfigurationV4.WebProxyHost = generateOptions.WebProxyHost;
-            serviceConfigurationV4.IncludeWebProxy = generateOptions.IncludeWebProxy;
-            serviceConfigurationV4.IncludeWebProxyNetworkCredentials = generateOptions.IncludeWebProxyNetworkCredentials;
-            serviceConfigurationV4.WebProxyNetworkCredentialsUsername = generateOptions.WebProxyNetworkCredentialsUsername;
-            serviceConfigurationV4.WebProxyNetworkCredentialsPassword = generateOptions.WebProxyNetworkCredentialsPassword;
-            serviceConfigurationV4.WebProxyNetworkCredentialsDomain = generateOptions.WebProxyNetworkCredentialsDomain;
-            serviceConfigurationV4.NamespacePrefix = generateOptions.NamespacePrefix;
-            serviceConfigurationV4.MakeTypesInternal = generateOptions.EnableInternal;
-            serviceConfigurationV4.GenerateMultipleFiles = generateOptions.MultipleFiles;
-            serviceConfigurationV4.ExcludedSchemaTypes = generateOptions.ExcludedSchemaTypes?.Split(",").Select(type => type.Trim()).ToList();
-            serviceConfigurationV4.ExcludedBoundOperations = generateOptions.ExcludedBoundOperations?.Split(",").Select(type => type.Trim()).ToList();
-            serviceConfigurationV4.ExcludedOperationImports = generateOptions.ExcludedOperationImports?.Split(",").Select(type => type.Trim()).ToList();
-            serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = generateOptions.IgnoreUnexpectedElements;
-            serviceConfigurationV4.EnableNamingAlias = generateOptions.UpperCamelCase;
-            serviceConfigurationV4.UseDataServiceCollection = generateOptions.EnableTracking;
-            serviceConfigurationV4.OmitVersioningInfo = generateOptions.OmitVersioningInfo;
-
+            var serviceConfiguration = GetServiceConfiguration<ServiceConfigurationV4>(generateOptions);
             Project project = ProjectHelper.CreateProjectInstance(generateOptions.OutputDir);
             BaseCodeGenDescriptor codeGenDescriptor = new CodeGenDescriptorFactory().Create(
                 Constants.EdmxVersion4,
@@ -257,25 +346,12 @@ namespace Microsoft.OData.Cli
                 new ODataCliMessageLogger(console),
                 new ODataCliPackageInstaller(project, new ODataCliMessageLogger(console)));
             await codeGenDescriptor.AddNugetPackagesAsync().ConfigureAwait(false);
-            await codeGenDescriptor.AddGeneratedClientCodeAsync(generateOptions.MetadataUri, generateOptions.OutputDir, LanguageOption.GenerateCSharpCode, serviceConfigurationV4).ConfigureAwait(false);
+            await codeGenDescriptor.AddGeneratedClientCodeAsync(serviceConfiguration.Endpoint, generateOptions.OutputDir, LanguageOption.GenerateCSharpCode, serviceConfiguration).ConfigureAwait(false);
         }
 
         private async Task GenerateCodeForV3Clients(GenerateOptions generateOptions, IConsole console)
         {
-            var serviceConfiguration = new ServiceConfiguration();
-            serviceConfiguration.Endpoint = generateOptions.MetadataUri;
-            serviceConfiguration.ServiceName = Constants.DefaultServiceName;
-            serviceConfiguration.GeneratedFileNamePrefix = generateOptions.FileName;
-            serviceConfiguration.CustomHttpHeaders = generateOptions.CustomHeaders;
-            serviceConfiguration.WebProxyHost = generateOptions.WebProxyHost;
-            serviceConfiguration.IncludeWebProxy = generateOptions.IncludeWebProxy;
-            serviceConfiguration.IncludeWebProxyNetworkCredentials = generateOptions.IncludeWebProxyNetworkCredentials;
-            serviceConfiguration.WebProxyNetworkCredentialsUsername = generateOptions.WebProxyNetworkCredentialsUsername;
-            serviceConfiguration.WebProxyNetworkCredentialsPassword = generateOptions.WebProxyNetworkCredentialsPassword;
-            serviceConfiguration.WebProxyNetworkCredentialsDomain = generateOptions.WebProxyNetworkCredentialsDomain;
-            serviceConfiguration.NamespacePrefix = generateOptions.NamespacePrefix;
-            serviceConfiguration.UseDataServiceCollection = generateOptions.EnableTracking;
-
+            var serviceConfiguration = GetServiceConfiguration<ServiceConfiguration>(generateOptions);
             Project project = ProjectHelper.CreateProjectInstance(generateOptions.OutputDir);
             BaseCodeGenDescriptor codeGenDescriptor = new CodeGenDescriptorFactory().Create(
                 Constants.EdmxVersion3,
@@ -284,7 +360,7 @@ namespace Microsoft.OData.Cli
                 new ODataCliPackageInstaller(project,
                 new ODataCliMessageLogger(console)));
             await codeGenDescriptor.AddNugetPackagesAsync().ConfigureAwait(false);
-            await codeGenDescriptor.AddGeneratedClientCodeAsync(generateOptions.MetadataUri, generateOptions.OutputDir, LanguageOption.GenerateCSharpCode, serviceConfiguration).ConfigureAwait(false);
+            await codeGenDescriptor.AddGeneratedClientCodeAsync(serviceConfiguration.Endpoint, generateOptions.OutputDir, LanguageOption.GenerateCSharpCode, serviceConfiguration).ConfigureAwait(false);
         }
     }
 }

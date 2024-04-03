@@ -130,7 +130,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         {
             this.IsEntered = true;
             await base.OnPageEnteringAsync(args).ConfigureAwait(false);
-            View = new SchemaTypes() {DataContext = this};
+            View = new SchemaTypes() { DataContext = this };
             PageEntering?.Invoke(this, EventArgs.Empty);
             if (this.View is SchemaTypes view)
             {

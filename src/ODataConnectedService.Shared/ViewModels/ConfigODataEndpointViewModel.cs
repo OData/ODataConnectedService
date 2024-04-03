@@ -6,12 +6,7 @@
 //---------------------------------------------------------------------------------
 
 using System;
-using System.Globalization;
-using System.IO;
-using System.Net;
 using System.Threading.Tasks;
-using System.Xml;
-using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService.Views;
 using Microsoft.VisualStudio.ConnectedServices;
