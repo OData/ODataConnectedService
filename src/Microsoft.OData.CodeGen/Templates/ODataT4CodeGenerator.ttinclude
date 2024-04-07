@@ -18,6 +18,7 @@
 <#@ Assembly Name="System.Windows.Forms.dll" #>
 <#@ Assembly Name="Microsoft.OData.Edm.dll" #>
 <#@ Import Namespace="System" #>
+<#@ Import Namespace= "System.CodeDom.Compiler"#>
 <#@ Import Namespace="System.Collections.Generic" #>
 <#@ Import Namespace="System.Diagnostics" #>
 <#@ Import Namespace="System.Globalization" #>
@@ -26,6 +27,7 @@
 <#@ Import Namespace="System.Net"#>
 <#@ Import Namespace="System.Security"#>
 <#@ Import Namespace="System.Text"#>
+<#@ Import Namespace= "System.Text.RegularExpressions"#>
 <#@ Import Namespace="System.Xml"#>
 <#@ Import Namespace="System.Xml.Linq" #>
 <#@ Import Namespace="Microsoft.OData.Edm.Csdl" #>
@@ -2321,7 +2323,16 @@ public abstract class ODataClientTemplate : TemplateBase
         foreach (IEdmProperty property in properties.Where(i => i.PropertyKind == EdmPropertyKind.Navigation))
         {
             string propertyType;
-            string propertyName = this.context.EnableNamingAlias ? Customization.CustomizeNaming(property.Name) : property.Name;
+            string propertyName;
+            if (IdentifierMappings.TryGetValue(property.Name, out var mappedPropertyName))
+            {
+                propertyName = mappedPropertyName;
+            }
+            else
+            {
+                propertyName = this.context.EnableNamingAlias ? Customization.CustomizeNaming(property.Name) : property.Name;
+            }
+
             if (property.Type is Microsoft.OData.Edm.EdmCollectionTypeReference)
             {
                 propertyType = GetSourceOrReturnTypeName(property.Type);
@@ -2350,6 +2361,7 @@ public abstract class ODataClientTemplate : TemplateBase
         IEdmEntityType current = entityType;
         while (current != null)
         {
+            this.SetPropertyIdentifierMappings(entityType.Name, entityType);
             this.WritePropertiesForSingleType(current.DeclaredProperties);
             current = (IEdmEntityType)current.BaseType;
         }
@@ -2389,7 +2401,6 @@ public abstract class ODataClientTemplate : TemplateBase
 
         this.WriteObsoleteAttribute(GetRevisionAnnotations(entityType), /* isClass */ true);
         this.WriteStructurdTypeDeclaration(entityType, this.BaseEntityType);
-        this.SetPropertyIdentifierMappingsIfNameConflicts(entityType.Name, entityType);
         this.WriteTypeStaticCreateMethod(entityType.Name, entityType);
         this.WritePropertiesForStructuredType(entityType);
 
@@ -2407,7 +2418,7 @@ public abstract class ODataClientTemplate : TemplateBase
     {
         this.WriteSummaryCommentForStructuredType(this.context.EnableNamingAlias ? Customization.CustomizeNaming(complexType.Name) : complexType.Name, GetDescriptionAnnotation(complexType)?.Value);
         this.WriteStructurdTypeDeclaration(complexType, string.Empty);
-        this.SetPropertyIdentifierMappingsIfNameConflicts(complexType.Name, complexType);
+        this.SetPropertyIdentifierMappings(complexType.Name, complexType);
         this.WriteTypeStaticCreateMethod(complexType.Name, complexType);
         this.WritePropertiesForStructuredType(complexType);
 
@@ -2763,6 +2774,170 @@ public abstract class ODataClientTemplate : TemplateBase
         }
     }
 
+    /// <summary>
+    /// Set all property mappings for <paramref name="structuredType"/>
+    /// </summary>
+    /// <param name="typeName">Name of type used to verify conflicts against <paramref name="structuredType"/></param>
+    /// <param name="structuredType">Type object to map properties</param>
+    internal void SetPropertyIdentifierMappings(string typeName, IEdmStructuredType structuredType)
+    {
+        this.SetPropertyIdentifierMappingsIfNameConflicts(typeName, structuredType);
+        this.SetPropertyIdentifierMappingsIfBaseConflicts(structuredType);
+        this.SetPropertyIdentifierMappingsIfInvalidIdentifier(structuredType);
+    }
+
+    /// <summary>
+    /// List of base class properties that should not be used in generated classes
+    /// </summary>
+    private static readonly IEnumerable<string> BaseClassProperties = typeof(Client.DataServiceQuerySingle<object>).GetProperties().Select(prop => prop.Name);
+
+    /// <summary>
+    /// Map identifiers that conflict with base class identifiers to TypeNameIdentiferName
+    /// and if still non-unique, add incrementing integer suffix
+    /// </summary>
+    /// <param name="structuredType">Object containing DeclaredProperties to map</param>
+    internal void SetPropertyIdentifierMappingsIfBaseConflicts(IEdmStructuredType structuredType)
+    {
+        Func<string, string> customizePropertyName = (name) => { return this.context.EnableNamingAlias ? Customization.CustomizeNaming(name) : name; };
+
+        // PropertyName in VB is case-insensitive.
+        bool isLanguageCaseSensitive = this.context.TargetLanguage == LanguageOption.CSharp;
+
+        var baseProperties = BaseClassProperties;
+        if (!isLanguageCaseSensitive)
+        {
+            baseProperties = BaseClassProperties.Select(prop => prop.ToUpperInvariant());
+        }
+
+        var propertiesToRename = structuredType.DeclaredProperties.Where(prop => baseProperties.Contains((isLanguageCaseSensitive ? customizePropertyName(prop.Name) : prop.Name.ToUpperInvariant())));
+        if (propertiesToRename.Any())
+        {
+            UniqueIdentifierService uniqueIdentifierService =
+                new UniqueIdentifierService(structuredType.DeclaredProperties.Select(prop => prop.Name), isLanguageCaseSensitive);
+
+            var typeName = customizePropertyName(((IEdmNamedElement)structuredType).Name);
+            foreach (var property in propertiesToRename)
+            {
+                var renamedPropertyName = uniqueIdentifierService.GetUniqueIdentifier(typeName + Customization.CustomizeNaming(property.Name));
+                if (IdentifierMappings.ContainsKey(property.Name))
+                {
+                    IdentifierMappings[property.Name] = renamedPropertyName;
+                }
+                else
+                {
+                    IdentifierMappings.Add(property.Name, renamedPropertyName);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// CSharp code provider instance
+    /// </summary>
+    private static readonly CodeDomProvider CSharpProvider = new Microsoft.CSharp.CSharpCodeProvider();
+
+    /// <summary>
+    /// VB code provider instance
+    /// </summary>
+    private static readonly CodeDomProvider VBProvider = new Microsoft.VisualBasic.VBCodeProvider();
+
+    /// <summary>
+    /// Map invalid identifiers to valid names to avoid generating code that does not compile
+    /// </summary>
+    /// <param name="structuredType">Object containing properties to map</param>
+    internal void SetPropertyIdentifierMappingsIfInvalidIdentifier(IEdmStructuredType structuredType)
+    {
+        bool isLanguageCaseSensitive = this.context.TargetLanguage == LanguageOption.CSharp;
+        UniqueIdentifierService uniqueIdentifierService =
+            new UniqueIdentifierService(IdentifierMappings.Select(mapping => mapping.Value), isLanguageCaseSensitive);
+
+        Func<string, string> customizePropertyName = (name) => { return this.context.EnableNamingAlias ? Customization.CustomizeNaming(name) : name; };
+        var codeDomProvider = (this.context.TargetLanguage == LanguageOption.CSharp ? CSharpProvider : VBProvider);
+        var propertiesToRename = structuredType.DeclaredProperties.Where(prop => !codeDomProvider.IsValidIdentifier(prop.Name)
+            && !LanguageKeywords.Contains(prop.Name));
+
+        foreach (var property in propertiesToRename)
+        {
+            var customizedPropertyName = customizePropertyName(property.Name);
+            var validName = uniqueIdentifierService.GetUniqueIdentifier(GetValidIdentifier(customizedPropertyName));
+            if (IdentifierMappings.ContainsKey(property.Name))
+            {
+                if (!codeDomProvider.IsValidIdentifier(IdentifierMappings[property.Name]))
+                {
+                    IdentifierMappings[property.Name] = validName;
+                }
+            }
+            else
+            {
+                IdentifierMappings.Add(property.Name, validName);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Regex match any non-identifier characters, used to generate valid identifiers<br />
+    /// See C# definitions: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/lexical-structure#643-identifiers <br />
+    /// See VB definitions: https://learn.microsoft.com/en-us/dotnet/visual-basic/reference/language-specification/lexical-grammar#identifiers <br />
+    /// See Unicode character class definitions: https://www.unicode.org/reports/tr18/#General_Category_Property
+    /// </summary>
+    private static readonly Regex RegexMatchNonIdentifier = new Regex(@"[^\p{L}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\p{Cf}]", RegexOptions.Compiled);
+
+    /// <summary>
+    /// Default prefix character used to prefix non-alpha characters in identifiers
+    /// </summary>
+    private const char DefaultPrefixCharacter = '_';
+
+    /// <summary>
+    /// Get a valid C#/VB identifier for <paramref name="name"/> based on C#/VB identifier specification<br />
+    /// - Removes characters not permitted in C#/VB identifiers<br />
+    /// - Prefixes <paramref name="name"/>with underscore (_) if it doesn't start with a letter
+    /// </summary>
+    /// <remarks>
+    /// C# and VB use very similar rules for identifier names<br />
+    /// See C# definitions: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/lexical-structure#643-identifiers <br />
+    /// See VB definitions: https://learn.microsoft.com/en-us/dotnet/visual-basic/reference/language-specification/lexical-grammar#identifiers
+    /// </remarks>
+    /// <param name="name">Identifier to validate and modify</param>
+    /// <returns>Modified <paramref name="name"/> or <paramref name="name"/> unchanged if no changes are needed</returns>
+    private string GetValidIdentifier(string name)
+    {
+        var codeDomProvider = (this.context.TargetLanguage == LanguageOption.CSharp ? CSharpProvider : VBProvider);
+        if (codeDomProvider.IsValidIdentifier(name))
+        {
+            return name;
+        }
+
+        var segments = RegexMatchNonIdentifier.Split(name);
+        var validName = new StringBuilder();
+        var isFirst = true;
+        foreach (var segment in segments.Where(token => !string.IsNullOrWhiteSpace(token)))
+        {
+            if (isFirst && !this.context.EnableNamingAlias)
+            {
+                validName.Append(segment);
+            }
+            else
+            {
+                var titleCaseSegment = Customization.CustomizeNaming(segment);
+                validName.Append(titleCaseSegment);
+            }
+
+            isFirst = false;
+        }
+
+        if (validName.Length < 1)
+        {
+            throw new Exception($"Failed to make valid identifier for '{name}'");
+        }
+
+        if (!char.IsLetter(validName[0]) && validName[0] != DefaultPrefixCharacter)
+        {
+            validName.Insert(0, DefaultPrefixCharacter);
+        }
+
+        return validName.ToString();
+    }
+
     internal void WriteTypeStaticCreateMethod(string typeName, IEdmStructuredType structuredType)
     {
         Debug.Assert(structuredType != null, "structuredType != null");
@@ -2918,7 +3093,7 @@ public abstract class ODataClientTemplate : TemplateBase
             });
         }
 
-        // Private name should not confict with field name
+        // Private name should not conflict with field name
         UniqueIdentifierService uniqueIdentifierService = new UniqueIdentifierService(propertyInfos.Select(_ => _.FixedPropertyName),
             this.context.TargetLanguage == LanguageOption.CSharp);
 
@@ -4473,13 +4648,13 @@ namespace <#= fullNamespace #>
 
                     if (!global::Microsoft.OData.Edm.Csdl.CsdlReader.TryParse(reader, <#= this.context.IgnoreUnexpectedElementsAndAttributes ? "true" : "false" #>, out edmModel, out errors))
                     {
-	                    global::System.Text.StringBuilder errorMessages = new global::System.Text.StringBuilder();
-	                    foreach (var error in errors)
-	                    {
-		                    errorMessages.Append(error.ErrorMessage);
-		                    errorMessages.Append("; ");
-	                    }
-	                    throw new global::System.InvalidOperationException(errorMessages.ToString());
+                        global::System.Text.StringBuilder errorMessages = new global::System.Text.StringBuilder();
+                        foreach (var error in errors)
+                        {
+                            errorMessages.Append(error.ErrorMessage);
+                            errorMessages.Append("; ");
+                        }
+                        throw new global::System.InvalidOperationException(errorMessages.ToString());
                     }
 
                     return edmModel;
@@ -4655,7 +4830,6 @@ namespace <#= fullNamespace #>
         WriteObsoleteAttribute(propertyOptions.RevisionAnnotations);
 #>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "<#=T4Version#>")]
-
 <#+
         if (this.context.EnableNamingAlias || IdentifierMappings.ContainsKey(propertyOptions.OriginalPropertyName))
         {
@@ -4674,7 +4848,6 @@ namespace <#= fullNamespace #>
             WriteRequiredAttribute($"{propertyOptions.PropertyName} is required.");
         }
 #>
-
 <#+
         if (!string.IsNullOrEmpty(propertyOptions.PropertyAttribute))
         {
@@ -4854,7 +5027,7 @@ namespace <#= fullNamespace #>
 <#+
         }
 #>
-        public virtual <#= hideBaseMethod ? this.OverloadsModifier : string.Empty #> <#= isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName) #> <#= functionName #>(<#= parameters #><#= useEntityReference ? ", bool useEntityReference = false" : string.Empty #>)
+        public virtual <#= hideBaseMethod ? $"{this.OverloadsModifier} " : string.Empty #><#= isReturnEntity ? returnTypeNameWithSingleSuffix : string.Format(CultureInfo.InvariantCulture, this.DataServiceQuerySingleStructureTemplate, returnTypeName) #> <#= functionName #>(<#= parameters #><#= useEntityReference ? ", bool useEntityReference = false" : string.Empty #>)
         {
             global::System.Uri requestUri;
             Context.TryGetUri(this, out requestUri);

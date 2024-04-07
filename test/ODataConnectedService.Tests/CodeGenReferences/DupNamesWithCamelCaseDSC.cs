@@ -25,6 +25,7 @@ namespace DupNames.DSC
                 this(serviceRoot, global::Microsoft.OData.Client.ODataProtocolVersion.V4)
         {
         }
+
         /// <summary>
         /// Initialize a new EntityContainer object.
         /// </summary>
@@ -225,26 +226,26 @@ namespace DupNames.DSC
         /// Initialize a new DupWithTypeNameSingle object.
         /// </summary>
         public DupWithTypeNameSingle(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) { }
+            : base(context, path) {}
 
         /// <summary>
         /// Initialize a new DupWithTypeNameSingle object.
         /// </summary>
         public DupWithTypeNameSingle(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) { }
+            : base(context, path, isComposable) {}
 
         /// <summary>
         /// Initialize a new DupWithTypeNameSingle object.
         /// </summary>
         public DupWithTypeNameSingle(global::Microsoft.OData.Client.DataServiceQuerySingle<DupWithTypeName> query)
-            : base(query) { }
+            : base(query) {}
 
         /// <summary>
-        /// There are no comments for DupPropertyName in the schema.
+        /// There are no comments for DupPropertyName1 in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
         [global::Microsoft.OData.Client.OriginalNameAttribute("dupPropertyName")]
-        public virtual global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DSC.DupWithTypeName1> DupPropertyName
+        public virtual global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DSC.DupWithTypeName1> DupPropertyName1
         {
             get
             {
@@ -252,15 +253,15 @@ namespace DupNames.DSC
                 {
                     throw new global::System.NotSupportedException("The previous function is not composable.");
                 }
-                if ((this._DupPropertyName == null))
+                if ((this._DupPropertyName1 == null))
                 {
-                    this._DupPropertyName = Context.CreateQuery<global::DupNames.DSC.DupWithTypeName1>(GetPath("dupPropertyName"));
+                    this._DupPropertyName1 = Context.CreateQuery<global::DupNames.DSC.DupWithTypeName1>(GetPath("dupPropertyName"));
                 }
-                return this._DupPropertyName;
+                return this._DupPropertyName1;
             }
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        private global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DSC.DupWithTypeName1> _DupPropertyName;
+        private global::Microsoft.OData.Client.DataServiceQuery<global::DupNames.DSC.DupWithTypeName1> _DupPropertyName1;
     }
     /// <summary>
     /// There are no comments for DupWithTypeName in the schema.
@@ -652,19 +653,19 @@ namespace DupNames.DSC
         /// Initialize a new DupWithTypeName1Single object.
         /// </summary>
         public DupWithTypeName1Single(global::Microsoft.OData.Client.DataServiceContext context, string path)
-            : base(context, path) { }
+            : base(context, path) {}
 
         /// <summary>
         /// Initialize a new DupWithTypeName1Single object.
         /// </summary>
         public DupWithTypeName1Single(global::Microsoft.OData.Client.DataServiceContext context, string path, bool isComposable)
-            : base(context, path, isComposable) { }
+            : base(context, path, isComposable) {}
 
         /// <summary>
         /// Initialize a new DupWithTypeName1Single object.
         /// </summary>
         public DupWithTypeName1Single(global::Microsoft.OData.Client.DataServiceQuerySingle<DupWithTypeName1> query)
-            : base(query) { }
+            : base(query) {}
 
     }
     /// <summary>
