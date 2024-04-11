@@ -424,7 +424,7 @@ namespace ODataConnectedService.Tests.ViewModels
                 }
             })
             {
-                objectSelection.ExcludeBoundOperations(schemaTypeModel, new string[] { "BoundOperation1(Test.Type1)" });
+                SchemaTypesViewModel.ExcludeBoundOperations(schemaTypeModel, new string[] { "BoundOperation1(Test.Type1)" });
 
                 schemaTypeModel.BoundOperations.ShouldAllBeEquivalentTo(new List<BoundOperationModel>
                 {

@@ -217,7 +217,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// <param name="operationImport">Operation import.</param>
         /// <param name="excludedTypes">A collection of excluded types.</param>
         /// <returns>true if the operation import should be included, otherwise false.</returns>
-        public bool IsOperationImportIncluded(IEdmOperationImport operationImport, ICollection<string> excludedTypes)
+        public static bool IsOperationImportIncluded(IEdmOperationImport operationImport, ICollection<string> excludedTypes)
         {
             IEnumerable<IEdmOperationParameter> parameters = operationImport.Operation.Parameters;
 

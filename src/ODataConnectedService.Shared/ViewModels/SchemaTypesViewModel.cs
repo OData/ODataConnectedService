@@ -578,7 +578,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// <param name="operation">Bound operation.</param>
         /// <param name="excludedTypes">A collection of excluded types.</param>
         /// <returns>true if the bound operation should be included, otherwise false.</returns>
-        public bool IsBoundOperationIncluded(IEdmOperation operation, ICollection<string> excludedTypes)
+        public static bool IsBoundOperationIncluded(IEdmOperation operation, ICollection<string> excludedTypes)
         {
             IEnumerable<IEdmOperationParameter> parameters = operation.Parameters;
 
@@ -614,7 +614,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// </remarks>
         /// <param name="schemaType">The schema type.</param>
         /// <param name="operationsToExclude">A list of operation imports to be exclude.</param>
-        public void ExcludeBoundOperations(SchemaTypeModel schemaType, IEnumerable<string> operationsToExclude)
+        public static void ExcludeBoundOperations(SchemaTypeModel schemaType, IEnumerable<string> operationsToExclude)
         {
             foreach (var operationModel in schemaType.BoundOperations)
             {
