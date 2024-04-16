@@ -17,9 +17,7 @@ namespace ODataConnectedService.Tests
     public class UniqueIdentifierServiceTests
     {
         private ODataT4CodeGenerator.UniqueIdentifierService uniqueIdentifierService;
-        private readonly HashSet<string> keywords = new HashSet<string> { "bool", "int", "string" };
         private List<string> existingIdentifiers = new List<string> { "Name" };
-        private const string FixPattern = "@{0}";
 
         [TestMethod]
         public void GetUniqueIdentifierShouldReadUniqueIdentifier()

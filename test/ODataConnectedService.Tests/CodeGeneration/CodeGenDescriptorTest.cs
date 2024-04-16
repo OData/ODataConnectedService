@@ -387,7 +387,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             Assert.IsNotNull(csdlFilePath);
         }
 
-        public void TestAddGeneratedClientCode_GeneratesT4Templates_AllSettingsSet()
+        public static void TestAddGeneratedClientCode_GeneratesT4Templates_AllSettingsSet()
         {
             var serviceName = "MyService";
             var referenceFolderPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName);
@@ -935,7 +935,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             return generator;
         }
 
-        public class TestHttpCreator : ODataT4CodeGenerator.IHttpRequestCreator
+        public class TestHttpCreator : ODataT4CodeGenerator.IHttpRequestCreator, IDisposable
         {
             internal Mock<HttpWebRequest> mock;
             private WebResponse response;
@@ -948,14 +948,17 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
                 this.mock = new Mock<HttpWebRequest>();
                 mock.Setup(inst => inst.GetResponse()).Returns(response);
                 mock.SetupProperty(inst => inst.Proxy);
-
-
-
             }
 
             public HttpWebRequest Create(System.Uri metadataUri)
             {
                 return this.mock.Object;
+            }
+
+            public void Dispose()
+            {
+                response?.Dispose();
+                GC.SuppressFinalize(this);
             }
         }
 

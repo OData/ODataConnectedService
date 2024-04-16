@@ -16,7 +16,7 @@ using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService.Common
 {
-    public class EdmHelper
+    internal static class EdmHelper
     {
         private static IDictionary<IEdmType, List<IEdmOperation>> _boundOperations = null;
 

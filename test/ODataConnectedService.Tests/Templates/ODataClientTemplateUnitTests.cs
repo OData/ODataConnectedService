@@ -743,7 +743,7 @@ namespace ODataConnectedService.Tests
             internal override string StripNullableFromTypeName(string typeName)
             {
                 const string nullablePrefix = "Nullable<";
-                int indexOfNullablePrefix = typeName.IndexOf(nullablePrefix);
+                int indexOfNullablePrefix = typeName.IndexOf(nullablePrefix, StringComparison.Ordinal);
                 if (indexOfNullablePrefix == -1)
                 {
                     return typeName;
@@ -2103,15 +2103,6 @@ namespace ODataConnectedService.Tests
         #endregion
 
         #region Tests for WriteStructuredTypeDeclaration
-
-        private const string ComplexTypeEdmx = @"<?xml version=""1.0"" encoding=""utf-8""?>
-<edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
-  <edmx:DataServices>
-    <Schema Namespace=""Namespace1"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
-      <ComplexType Name=""ComplexType"" Abstract=""true""/>
-    </Schema>
-  </edmx:DataServices>
-</edmx:Edmx>";
 
         private const string InheritedComplexTypeEdmx = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">

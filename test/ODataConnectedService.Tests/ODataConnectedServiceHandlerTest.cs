@@ -56,11 +56,11 @@ namespace Microsoft.OData.ConnectedService.Tests
         }
 
         [DataTestMethod]
-        [DataRow("AddServiceInstanceAsync", 4, "V4", false)]
-        [DataRow("AddServiceInstanceAsync", 4, "V4", true)]
-        [DataRow("UpdateServiceInstanceAsync", 4, "V4", false)]
-        [DataRow("UpdateServiceInstanceAsync", 4, "V4", true)]
-        public void TestAddUpdateServiceInstance_SavesCustomHttpHeadersToDesignerDataAccordingToStoreCustomHttpHeaders(string method, int edmxVersion, string generatorVersion, bool store)
+        [DataRow("AddServiceInstanceAsync", 4, false)]
+        [DataRow("AddServiceInstanceAsync", 4, true)]
+        [DataRow("UpdateServiceInstanceAsync", 4, false)]
+        [DataRow("UpdateServiceInstanceAsync", 4, true)]
+        public void TestAddUpdateServiceInstance_SavesCustomHttpHeadersToDesignerDataAccordingToStoreCustomHttpHeaders(string method, int edmxVersion, bool store)
         {
             var descriptorFactory = new TestCodeGenDescriptorFactory();
             var serviceHandler = new ODataConnectedServiceHandler(descriptorFactory);
@@ -86,11 +86,11 @@ namespace Microsoft.OData.ConnectedService.Tests
         }
 
         [DataTestMethod]
-        [DataRow("AddServiceInstanceAsync", 4, "V4", false)]
-        [DataRow("AddServiceInstanceAsync", 4, "V4", true)]
-        [DataRow("UpdateServiceInstanceAsync", 4, "V4", false)]
-        [DataRow("UpdateServiceInstanceAsync", 4, "V4", true)]
-        public void TestAddUpdateServiceInstance_SavesWebProxyDetailsToDesignerDataAccordingToStoreWebProxyNetworkCredentials(string method, int edmxVersion, string generatorVersion, bool store)
+        [DataRow("AddServiceInstanceAsync", 4, false)]
+        [DataRow("AddServiceInstanceAsync", 4, true)]
+        [DataRow("UpdateServiceInstanceAsync", 4, false)]
+        [DataRow("UpdateServiceInstanceAsync", 4, true)]
+        public void TestAddUpdateServiceInstance_SavesWebProxyDetailsToDesignerDataAccordingToStoreWebProxyNetworkCredentials(string method, int edmxVersion, bool store)
         {
             var descriptorFactory = new TestCodeGenDescriptorFactory();
             var serviceHandler = new ODataConnectedServiceHandler(descriptorFactory);

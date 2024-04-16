@@ -14,7 +14,7 @@ using Microsoft.VisualStudio.ConnectedServices;
 
 namespace Microsoft.OData.ConnectedService.Common
 {
-    public class UserSettingsPersistenceHelper
+    internal static class UserSettingsPersistenceHelper
     {
         /// <summary>
         /// Saves user settings to isolated storage.  The data is stored with the user's roaming profile.
@@ -24,12 +24,12 @@ namespace Microsoft.OData.ConnectedService.Common
         /// </remarks>
         public static void Save(object userSettings, string providerId, string name, Action onSaved, ConnectedServiceLogger logger)
         {
-            var fileName = UserSettingsPersistenceHelper.GetStorageFileName(providerId, name);
+            var fileName = GetStorageFileName(providerId, name);
 
-            UserSettingsPersistenceHelper.ExecuteNoncriticalOperation(
+            ExecuteNoncriticalOperation(
                 () =>
                 {
-                    using (IsolatedStorageFile file = UserSettingsPersistenceHelper.GetIsolatedStorageFile())
+                    using (IsolatedStorageFile file = GetIsolatedStorageFile())
                     {
                         IsolatedStorageFileStream stream = null;
                         try
@@ -67,13 +67,13 @@ namespace Microsoft.OData.ConnectedService.Common
         /// </remarks>
         public static T Load<T>(string providerId, string name, Action<T> onLoaded, ConnectedServiceLogger logger) where T : class
         {
-            var fileName = UserSettingsPersistenceHelper.GetStorageFileName(providerId, name);
+            var fileName = GetStorageFileName(providerId, name);
             T result = null;
 
-            UserSettingsPersistenceHelper.ExecuteNoncriticalOperation(
+            ExecuteNoncriticalOperation(
                 () =>
                 {
-                    using (IsolatedStorageFile file = UserSettingsPersistenceHelper.GetIsolatedStorageFile())
+                    using (IsolatedStorageFile file = GetIsolatedStorageFile())
                     {
                         if (file.FileExists(fileName))
                         {
@@ -134,7 +134,7 @@ namespace Microsoft.OData.ConnectedService.Common
             }
             catch (Exception ex)
             {
-                logger?.WriteMessageAsync(LoggerMessageCategory.Warning, failureMessage, failureMessageArg, ex);
+                logger?.WriteMessageAsync(LoggerMessageCategory.Warning, failureMessage, failureMessageArg, ex).Wait();
             }
         }
 

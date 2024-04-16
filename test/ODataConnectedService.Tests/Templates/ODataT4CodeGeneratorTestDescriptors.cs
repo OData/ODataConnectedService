@@ -28,7 +28,7 @@ namespace ODataConnectedService.Tests
         private const string ExpectedVB = "ExpectedVB";
         private const string T4Version = "#VersionNumber#";
 
-        public class ODataT4CodeGeneratorTestsDescriptor
+        internal class ODataT4CodeGeneratorTestsDescriptor
         {
             /// <summary>
             /// Edmx Metadata to generate code from.
@@ -53,8 +53,11 @@ namespace ODataConnectedService.Tests
 
         internal static void ValidateXMLFile(string tempFilePath)
         {
-            var doc = new XmlDocument();
-            doc.Load(tempFilePath);
+            var doc = new XmlDocument { XmlResolver = null };
+            using (var reader = XmlReader.Create(tempFilePath, new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit }))
+            {
+                doc.Load(reader);
+            }
         }
 
         internal static void ValidateEdmx(string tempFilePath)
@@ -66,7 +69,7 @@ namespace ODataConnectedService.Tests
                 {
                     IEdmModel edmModel = null;
                     IEnumerable<EdmError> edmErrors = null;
-                    CsdlReader.TryParse(xmlReader, out edmModel, out edmErrors);
+                    CsdlReader.TryParse(xmlReader, out edmModel, out edmErrors).Should().BeTrue();
                     edmErrors.Should().BeEmpty();
                 };
             };
@@ -183,13 +186,13 @@ namespace ODataConnectedService.Tests
         }
 
         #region EntityBooleanPropertyWithDefaultValue
-        public static string EdmxEntityBooleanPropertyWithDefaultValue = LoadContentFromBaseline("EntityBooleanPropertyWithDefaultValue.xml");
-        public static string EntityBooleanPropertyWithDefaultValueCSharp = LoadContentFromBaseline("EntityBooleanPropertyWithDefaultValue.cs");
-        public static string EntityBooleanPropertyWithDefaultValueCSharpUseDSC = LoadContentFromBaseline("EntityBooleanPropertyWithDefaultValueDSC.cs");
-        public static string EntityBooleanPropertyWithDefaultValueVB = LoadContentFromBaseline("EntityBooleanPropertyWithDefaultValue.vb");
-        public static string EntityBooleanPropertyWithDefaultValueVBUseDSC = LoadContentFromBaseline("EntityBooleanPropertyWithDefaultValueDSC.vb");
+        private static string EdmxEntityBooleanPropertyWithDefaultValue = LoadContentFromBaseline("EntityBooleanPropertyWithDefaultValue.xml");
+        private static string EntityBooleanPropertyWithDefaultValueCSharp = LoadContentFromBaseline("EntityBooleanPropertyWithDefaultValue.cs");
+        private static string EntityBooleanPropertyWithDefaultValueCSharpUseDSC = LoadContentFromBaseline("EntityBooleanPropertyWithDefaultValueDSC.cs");
+        private static string EntityBooleanPropertyWithDefaultValueVB = LoadContentFromBaseline("EntityBooleanPropertyWithDefaultValue.vb");
+        private static string EntityBooleanPropertyWithDefaultValueVBUseDSC = LoadContentFromBaseline("EntityBooleanPropertyWithDefaultValueDSC.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor EntityBooleanPropertyWithDefaultValue = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor EntityBooleanPropertyWithDefaultValue = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxEntityBooleanPropertyWithDefaultValue,
             ExpectedResults = new Dictionary<string, string>()
@@ -205,11 +208,11 @@ namespace ODataConnectedService.Tests
 
         #region EntityHierarchyWithIDAndId
 
-        public static string EdmxEntityHierarchyWithIDAndId = LoadContentFromBaseline("EntityHierarchyWithIDAndId.xml");
-        public static string EntityHierarchyWithIDAndIdCSharpUseDSC = LoadContentFromBaseline("EntityHierarchyWithIDAndIdDSC.cs");
-        public static string EntityHierarchyWithIDAndIdVBUseDSC = LoadContentFromBaseline("EntityHierarchyWithIDAndIdDSC.vb");
+        private static string EdmxEntityHierarchyWithIDAndId = LoadContentFromBaseline("EntityHierarchyWithIDAndId.xml");
+        private static string EntityHierarchyWithIDAndIdCSharpUseDSC = LoadContentFromBaseline("EntityHierarchyWithIDAndIdDSC.cs");
+        private static string EntityHierarchyWithIDAndIdVBUseDSC = LoadContentFromBaseline("EntityHierarchyWithIDAndIdDSC.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor EntityHierarchyWithIDAndId = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor EntityHierarchyWithIDAndId = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxEntityHierarchyWithIDAndId,
             ExpectedResults = new Dictionary<string, string>() { { ExpectedCSharpUseDSC, EntityHierarchyWithIDAndIdCSharpUseDSC }, { ExpectedVBUseDSC, EntityHierarchyWithIDAndIdVBUseDSC } },
@@ -220,13 +223,13 @@ namespace ODataConnectedService.Tests
 
         #region Simple
 
-        public static string EdmxSimple = LoadContentFromBaseline("Simple.xml");
-        public static string SimpleCSharp = LoadContentFromBaseline("Simple.cs");
-        public static string SimpleCSharpUseDSC = LoadContentFromBaseline("SimpleDSC.cs");
-        public static string SimpleVB = LoadContentFromBaseline("Simple.vb");
-        public static string SimpleVBUseDSC = LoadContentFromBaseline("SimpleDSC.vb");
+        private static string EdmxSimple = LoadContentFromBaseline("Simple.xml");
+        private static string SimpleCSharp = LoadContentFromBaseline("Simple.cs");
+        private static string SimpleCSharpUseDSC = LoadContentFromBaseline("SimpleDSC.cs");
+        private static string SimpleVB = LoadContentFromBaseline("Simple.vb");
+        private static string SimpleVBUseDSC = LoadContentFromBaseline("SimpleDSC.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor Simple = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor Simple = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxSimple,
             ExpectedResults = new Dictionary<string, string>() { { ExpectedCSharp, SimpleCSharp }, { ExpectedCSharpUseDSC, SimpleCSharpUseDSC }, { ExpectedVB, SimpleVB }, { ExpectedVBUseDSC, SimpleVBUseDSC } },
@@ -236,13 +239,13 @@ namespace ODataConnectedService.Tests
 
         #region MaxLength
 
-        public static string EdmxMaxLength = LoadContentFromBaseline("MaxLength.xml");
-        public static string MaxLengthCSharp = LoadContentFromBaseline("MaxLength.cs");
-        public static string MaxLengthCSharpUseDSC = LoadContentFromBaseline("MaxLengthDSC.cs");
-        public static string MaxLengthVB = LoadContentFromBaseline("MaxLength.vb");
-        public static string MaxLengthVBUseDSC = LoadContentFromBaseline("MaxLengthDSC.vb");
+        private static string EdmxMaxLength = LoadContentFromBaseline("MaxLength.xml");
+        private static string MaxLengthCSharp = LoadContentFromBaseline("MaxLength.cs");
+        private static string MaxLengthCSharpUseDSC = LoadContentFromBaseline("MaxLengthDSC.cs");
+        private static string MaxLengthVB = LoadContentFromBaseline("MaxLength.vb");
+        private static string MaxLengthVBUseDSC = LoadContentFromBaseline("MaxLengthDSC.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor MaxLength = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor MaxLength = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxMaxLength,
             ExpectedResults = new Dictionary<string, string>() { { ExpectedCSharp, MaxLengthCSharp }, { ExpectedCSharpUseDSC, MaxLengthCSharpUseDSC }, { ExpectedVB, MaxLengthVB }, { ExpectedVBUseDSC, MaxLengthVBUseDSC } },
@@ -252,9 +255,9 @@ namespace ODataConnectedService.Tests
         #endregion
 
         #region SimpleMultipleFiles
-        public static string EdmxSimpleMultipleFiles = LoadContentFromBaseline("SimpleMultipleFiles.xml");
-        public static string SimpleMultipleFilesCSharp = LoadContentFromBaseline("SimpleMultipleFilesMain.cs");
-        public static ODataT4CodeGeneratorTestsDescriptor SimpleMultipleFiles = new ODataT4CodeGeneratorTestsDescriptor()
+        private static string EdmxSimpleMultipleFiles = LoadContentFromBaseline("SimpleMultipleFiles.xml");
+        private static string SimpleMultipleFilesCSharp = LoadContentFromBaseline("SimpleMultipleFilesMain.cs");
+        internal static ODataT4CodeGeneratorTestsDescriptor SimpleMultipleFiles = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxSimpleMultipleFiles,
             ExpectedResults = new Dictionary<string, string>() { { ExpectedCSharp, SimpleMultipleFilesCSharp }, { ExpectedCSharpUseDSC, SimpleCSharpUseDSC }, { ExpectedVB, SimpleVB }, { ExpectedVBUseDSC, SimpleVBUseDSC } },
@@ -263,9 +266,9 @@ namespace ODataConnectedService.Tests
         #endregion
 
         #region SameNamedEntityMultipleFiles
-        public static string EdmxSameNamedEntityMultipleFiles = LoadContentFromBaseline("SameNamedEntityMultipleFiles.xml");
-        public static string SameNamedEntityMultipleFilesNamespace1CSharp = LoadContentFromBaseline("SameNamedEntityMultipleFilesNamespace1Main.cs");
-        public static ODataT4CodeGeneratorTestsDescriptor SameNamedEntityMultipleFiles = new ODataT4CodeGeneratorTestsDescriptor()
+        private static string EdmxSameNamedEntityMultipleFiles = LoadContentFromBaseline("SameNamedEntityMultipleFiles.xml");
+        private static string SameNamedEntityMultipleFilesNamespace1CSharp = LoadContentFromBaseline("SameNamedEntityMultipleFilesNamespace1Main.cs");
+        internal static ODataT4CodeGeneratorTestsDescriptor SameNamedEntityMultipleFiles = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxSameNamedEntityMultipleFiles,
             ExpectedResults = new Dictionary<string, string>() { { ExpectedCSharp, SameNamedEntityMultipleFilesNamespace1CSharp } },
@@ -275,11 +278,11 @@ namespace ODataConnectedService.Tests
 
         #region NamespacePrefix
 
-        public static string EdmxNamespacePrefixWithSingleNamespace = LoadContentFromBaseline("NamespacePrefixWithSingleNamespace.xml");
-        public static string NamespacePrefixWithSingleNamespaceCSharp = LoadContentFromBaseline("NamespacePrefixWithSingleNamespace.cs");
-        public static string NamespacePrefixWithSingleNamespaceVB = LoadContentFromBaseline("NamespacePrefixWithSingleNamespace.vb");
+        private static string EdmxNamespacePrefixWithSingleNamespace = LoadContentFromBaseline("NamespacePrefixWithSingleNamespace.xml");
+        private static string NamespacePrefixWithSingleNamespaceCSharp = LoadContentFromBaseline("NamespacePrefixWithSingleNamespace.cs");
+        private static string NamespacePrefixWithSingleNamespaceVB = LoadContentFromBaseline("NamespacePrefixWithSingleNamespace.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor NamespacePrefixWithSingleNamespace = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor NamespacePrefixWithSingleNamespace = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxNamespacePrefixWithSingleNamespace,
             ExpectedResults = new Dictionary<string, string>()
@@ -290,11 +293,11 @@ namespace ODataConnectedService.Tests
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, NamespacePrefixWithSingleNamespace.ExpectedResults, isCSharp, useDSC, "NamespacePrefixWithSingleNamespace"),
         };
 
-        public static string EdmxNamespacePrefixWithDoubleNamespaces = LoadContentFromBaseline("NamespacePrefixWithDoubleNamespaces.xml");
-        public static string NamespacePrefixWithDoubleNamespacesCSharp = LoadContentFromBaseline("NamespacePrefixWithDoubleNamespaces.cs");
-        public static string NamespacePrefixWithDoubleNamespacesVB = LoadContentFromBaseline("NamespacePrefixWithDoubleNamespaces.vb");
+        private static string EdmxNamespacePrefixWithDoubleNamespaces = LoadContentFromBaseline("NamespacePrefixWithDoubleNamespaces.xml");
+        private static string NamespacePrefixWithDoubleNamespacesCSharp = LoadContentFromBaseline("NamespacePrefixWithDoubleNamespaces.cs");
+        private static string NamespacePrefixWithDoubleNamespacesVB = LoadContentFromBaseline("NamespacePrefixWithDoubleNamespaces.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor NamespacePrefixWithDoubleNamespaces = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor NamespacePrefixWithDoubleNamespaces = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxNamespacePrefixWithDoubleNamespaces,
             ExpectedResults = new Dictionary<string, string>()
@@ -305,11 +308,11 @@ namespace ODataConnectedService.Tests
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, NamespacePrefixWithDoubleNamespaces.ExpectedResults, isCSharp, useDSC, "NamespacePrefixWithDoubleNamespaces"),
         };
 
-        public static string EdmxNamespacePrefixWithInheritence = LoadContentFromBaseline("NamespacePrefixWithInheritence.xml");
-        public static string NamespacePrefixWithInheritenceCSharp = LoadContentFromBaseline("NamespacePrefixWithInheritence.cs");
-        public static string NamespacePrefixWithInheritenceVB = LoadContentFromBaseline("NamespacePrefixWithInheritence.vb");
+        private static string EdmxNamespacePrefixWithInheritence = LoadContentFromBaseline("NamespacePrefixWithInheritence.xml");
+        private static string NamespacePrefixWithInheritenceCSharp = LoadContentFromBaseline("NamespacePrefixWithInheritence.cs");
+        private static string NamespacePrefixWithInheritenceVB = LoadContentFromBaseline("NamespacePrefixWithInheritence.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor NamespacePrefixWithInheritence = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor NamespacePrefixWithInheritence = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxNamespacePrefixWithInheritence,
             ExpectedResults = new Dictionary<string, string>()
@@ -324,10 +327,10 @@ namespace ODataConnectedService.Tests
 
         #region NamespacePrefixRepeatWithSchemaNameSpace
 
-        public static string EdmxNamespacePrefixRepeatWithSchemaNameSpace = LoadContentFromBaseline("NamespacePrefixRepeatWithSchemaNameSpace.xml");
-        public static string NamespacePrefixRepeatWithSchemaNameSpaceCSharp = LoadContentFromBaseline("NamespacePrefixRepeatWithSchemaNameSpace.cs");
+        private static string EdmxNamespacePrefixRepeatWithSchemaNameSpace = LoadContentFromBaseline("NamespacePrefixRepeatWithSchemaNameSpace.xml");
+        private static string NamespacePrefixRepeatWithSchemaNameSpaceCSharp = LoadContentFromBaseline("NamespacePrefixRepeatWithSchemaNameSpace.cs");
 
-        public static ODataT4CodeGeneratorTestsDescriptor NamespacePrefixRepeatWithSchemaNameSpace = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor NamespacePrefixRepeatWithSchemaNameSpace = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxNamespacePrefixRepeatWithSchemaNameSpace,
             ExpectedResults = new Dictionary<string, string>()
@@ -341,11 +344,11 @@ namespace ODataConnectedService.Tests
 
         #region KeywordsAsNames
 
-        public static string EdmxKeywordsAsNames = LoadContentFromBaseline("KeywordsAsNames.xml");
-        public static string KeywordsAsNamesCSharp = LoadContentFromBaseline("KeywordsAsNames.cs");
-        public static string KeywordsAsNamesVB = LoadContentFromBaseline("KeywordsAsNames.vb");
+        private static string EdmxKeywordsAsNames = LoadContentFromBaseline("KeywordsAsNames.xml");
+        private static string KeywordsAsNamesCSharp = LoadContentFromBaseline("KeywordsAsNames.cs");
+        private static string KeywordsAsNamesVB = LoadContentFromBaseline("KeywordsAsNames.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor KeywordsAsNames = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor KeywordsAsNames = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxKeywordsAsNames,
             ExpectedResults = new Dictionary<string, string>()
@@ -360,13 +363,13 @@ namespace ODataConnectedService.Tests
 
         #region MergedFunctionalTest
 
-        public static string EdmxMergedFunctionalTest = LoadContentFromBaseline("MergedFunctionalTest.xml");
-        public static string MergedFunctionalTestCSharp = LoadContentFromBaseline("MergedFunctionalTest.cs");
-        public static string MergedFunctionalTestVB = LoadContentFromBaseline("MergedFunctionalTest.vb");
-        public static string MergedFunctionalTestCSharpUseDSC = LoadContentFromBaseline("MergedFunctionalTestDSC.cs");
-        public static string MergedFunctionalTestVBUseDSC = LoadContentFromBaseline("MergedFunctionalTestDSC.vb");
+        private static string EdmxMergedFunctionalTest = LoadContentFromBaseline("MergedFunctionalTest.xml");
+        private static string MergedFunctionalTestCSharp = LoadContentFromBaseline("MergedFunctionalTest.cs");
+        private static string MergedFunctionalTestVB = LoadContentFromBaseline("MergedFunctionalTest.vb");
+        private static string MergedFunctionalTestCSharpUseDSC = LoadContentFromBaseline("MergedFunctionalTestDSC.cs");
+        private static string MergedFunctionalTestVBUseDSC = LoadContentFromBaseline("MergedFunctionalTestDSC.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor MergedFunctionalTest = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor MergedFunctionalTest = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxMergedFunctionalTest,
             ExpectedResults = new Dictionary<string, string>()
@@ -383,13 +386,13 @@ namespace ODataConnectedService.Tests
 
         #region Multiplicity
 
-        public static string EdmxMultiplicity = LoadContentFromBaseline("Multiplicity.xml");
-        public static string MultiplicityCSharp = LoadContentFromBaseline("Multiplicity.cs");
-        public static string MultiplicityVB = LoadContentFromBaseline("Multiplicity.vb");
-        public static string MultiplicityCSharpUseDSC = LoadContentFromBaseline("MultiplicityDSC.cs");
-        public static string MultiplicityVBUseDSC = LoadContentFromBaseline("MultiplicityDSC.vb");
+        private static string EdmxMultiplicity = LoadContentFromBaseline("Multiplicity.xml");
+        private static string MultiplicityCSharp = LoadContentFromBaseline("Multiplicity.cs");
+        private static string MultiplicityVB = LoadContentFromBaseline("Multiplicity.vb");
+        private static string MultiplicityCSharpUseDSC = LoadContentFromBaseline("MultiplicityDSC.cs");
+        private static string MultiplicityVBUseDSC = LoadContentFromBaseline("MultiplicityDSC.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor Multiplicity = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor Multiplicity = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxMultiplicity,
             ExpectedResults = new Dictionary<string, string>()
@@ -406,11 +409,11 @@ namespace ODataConnectedService.Tests
 
         #region EmptySchema
 
-        public static string EdmxEmptySchema = LoadContentFromBaseline("EmptySchema.xml");
-        public static string EmptySchemaCSharp = LoadContentFromBaseline("EmptySchema.cs");
-        public static string EmptySchemaVBUseDSC = LoadContentFromBaseline("EmptySchemaDSC.vb");
+        private static string EdmxEmptySchema = LoadContentFromBaseline("EmptySchema.xml");
+        private static string EmptySchemaCSharp = LoadContentFromBaseline("EmptySchema.cs");
+        private static string EmptySchemaVBUseDSC = LoadContentFromBaseline("EmptySchemaDSC.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor EmptySchema = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor EmptySchema = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxEmptySchema,
             ExpectedResults = new Dictionary<string, string>()
@@ -425,11 +428,11 @@ namespace ODataConnectedService.Tests
 
         #region NamespaceInKeywords
 
-        public static string EdmxNamespaceInKeywords = LoadContentFromBaseline("NamespaceInKeywords.xml");
-        public static string NamespaceInKeywordsCSharp = LoadContentFromBaseline("NamespaceInKeywords.cs");
-        public static string NamespaceInKeywordsVB = LoadContentFromBaseline("NamespaceInKeywords.vb");
+        private static string EdmxNamespaceInKeywords = LoadContentFromBaseline("NamespaceInKeywords.xml");
+        private static string NamespaceInKeywordsCSharp = LoadContentFromBaseline("NamespaceInKeywords.cs");
+        private static string NamespaceInKeywordsVB = LoadContentFromBaseline("NamespaceInKeywords.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor NamespaceInKeywords = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor NamespaceInKeywords = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxNamespaceInKeywords,
             ExpectedResults = new Dictionary<string, string>()
@@ -444,14 +447,14 @@ namespace ODataConnectedService.Tests
 
         #region NamespaceInKeywordsWithRefModel
 
-        public static string EdmxNamespaceInKeywordsWithRefModel = LoadContentFromBaseline("NamespaceInKeywordsWithRefModel.xml");
-        public static string EdmxNamespaceInKeywordsWithRefModelReferencedEdmx = LoadContentFromBaseline("NamespaceInKeywordsWithRefModelReferenced.xml");
-        public static string NamespaceInKeywordsWithRefModelCSharp = LoadContentFromBaseline("NamespaceInKeywordsWithRefModel.cs");
-        public static string NamespaceInKeywordsWithRefModelVB = LoadContentFromBaseline("NamespaceInKeywordsWithRefModel.vb");
-        public static string NamespaceInKeywordsWithRefModelCSharpUseDSC = LoadContentFromBaseline("NamespaceInKeywordsWithRefModelDSC.cs");
-        public static string NamespaceInKeywordsWithRefModelVBUseDSC = LoadContentFromBaseline("NamespaceInKeywordsWithRefModelDSC.vb");
+        private static string EdmxNamespaceInKeywordsWithRefModel = LoadContentFromBaseline("NamespaceInKeywordsWithRefModel.xml");
+        private static string EdmxNamespaceInKeywordsWithRefModelReferencedEdmx = LoadContentFromBaseline("NamespaceInKeywordsWithRefModelReferenced.xml");
+        private static string NamespaceInKeywordsWithRefModelCSharp = LoadContentFromBaseline("NamespaceInKeywordsWithRefModel.cs");
+        private static string NamespaceInKeywordsWithRefModelVB = LoadContentFromBaseline("NamespaceInKeywordsWithRefModel.vb");
+        private static string NamespaceInKeywordsWithRefModelCSharpUseDSC = LoadContentFromBaseline("NamespaceInKeywordsWithRefModelDSC.cs");
+        private static string NamespaceInKeywordsWithRefModelVBUseDSC = LoadContentFromBaseline("NamespaceInKeywordsWithRefModelDSC.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor NamespaceInKeywordsWithRefModel = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor NamespaceInKeywordsWithRefModel = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxNamespaceInKeywordsWithRefModel,
             GetReferencedModelReaderFunc = (url,proxy,headers) => XmlReader.Create(new MemoryStream(Encoding.UTF8.GetBytes(EdmxNamespaceInKeywordsWithRefModelReferencedEdmx))),
@@ -469,19 +472,19 @@ namespace ODataConnectedService.Tests
 
         #region MultiReferenceModel
 
-        public static string EdmxWithMultiReferenceModel = LoadContentFromBaseline("MultiReferenceModel.xml");
-        public static string MultiReferenceModelCoreTermsEdmx = LoadContentFromBaseline("MultiReferenceModelCoreTerms.xml");
-        public static string MultiReferenceModelDeviceModelTermsEdmx = LoadContentFromBaseline("MultiReferenceModelDeviceModelTerms.xml");
-        public static string MultiReferenceModelGPSEdmx = LoadContentFromBaseline("MultiReferenceModelGPS.xml");
-        public static string MultiReferenceModelLocationEdmx = LoadContentFromBaseline("MultiReferenceModelLocation.xml");
-        public static string MultiReferenceModelMapEdmx = LoadContentFromBaseline("MultiReferenceModelMap.xml");
+        private static string EdmxWithMultiReferenceModel = LoadContentFromBaseline("MultiReferenceModel.xml");
+        private static string MultiReferenceModelCoreTermsEdmx = LoadContentFromBaseline("MultiReferenceModelCoreTerms.xml");
+        private static string MultiReferenceModelDeviceModelTermsEdmx = LoadContentFromBaseline("MultiReferenceModelDeviceModelTerms.xml");
+        private static string MultiReferenceModelGPSEdmx = LoadContentFromBaseline("MultiReferenceModelGPS.xml");
+        private static string MultiReferenceModelLocationEdmx = LoadContentFromBaseline("MultiReferenceModelLocation.xml");
+        private static string MultiReferenceModelMapEdmx = LoadContentFromBaseline("MultiReferenceModelMap.xml");
 
-        public static string MultiReferenceModelCSharp = LoadContentFromBaseline("MultiReferenceModel.cs");
-        public static string MultiReferenceModelVB = LoadContentFromBaseline("MultiReferenceModel.vb");
-        public static string MultiReferenceModelCSharpUseDSC = LoadContentFromBaseline("MultiReferenceModelDSC.cs");
-        public static string MultiReferenceModelVBUseDSC = LoadContentFromBaseline("MultiReferenceModelDSC.vb");
+        private static string MultiReferenceModelCSharp = LoadContentFromBaseline("MultiReferenceModel.cs");
+        private static string MultiReferenceModelVB = LoadContentFromBaseline("MultiReferenceModel.vb");
+        private static string MultiReferenceModelCSharpUseDSC = LoadContentFromBaseline("MultiReferenceModelDSC.cs");
+        private static string MultiReferenceModelVBUseDSC = LoadContentFromBaseline("MultiReferenceModelDSC.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor MultiReferenceModel = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor MultiReferenceModel = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxWithMultiReferenceModel,
             GetReferencedModelReaderFunc = (url,proxy,headers) =>
@@ -530,12 +533,12 @@ namespace ODataConnectedService.Tests
 
         #region MultiReferenceModelRelativeUri
 
-        public static string EdmxWithMultiReferenceModelRelativeUriFilePath = GetAbsoluteUriOfFile("MultiReferenceModelRelativeUri.xml");
+        internal static string EdmxWithMultiReferenceModelRelativeUriFilePath = GetAbsoluteUriOfFile("MultiReferenceModelRelativeUri.xml");
 
-        public static string MultiReferenceModelRelativeUriCSharp = LoadContentFromBaseline("MultiReferenceModelRelativeUri.cs");
-        public static string MultiReferenceModelRelativeUriVB = LoadContentFromBaseline("MultiReferenceModelRelativeUri.vb");
+        private static string MultiReferenceModelRelativeUriCSharp = LoadContentFromBaseline("MultiReferenceModelRelativeUri.cs");
+        private static string MultiReferenceModelRelativeUriVB = LoadContentFromBaseline("MultiReferenceModelRelativeUri.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor MultiReferenceModelRelativeUri = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor MultiReferenceModelRelativeUri = new ODataT4CodeGeneratorTestsDescriptor()
         {
             ExpectedResults = new Dictionary<string, string>()
             {
@@ -549,11 +552,11 @@ namespace ODataConnectedService.Tests
 
         #region UpperCamelCaseWithNamespacePrefix
 
-        public static string EdmxUpperCamelCaseWithNamespacePrefix = LoadContentFromBaseline("UpperCamelCaseWithNamespacePrefix.xml");
-        public static string UpperCamelCaseWithNamespacePrefixCSharp = LoadContentFromBaseline("UpperCamelCaseWithNamespacePrefix.cs");
-        public static string UpperCamelCaseWithNamespacePrefixVB = LoadContentFromBaseline("UpperCamelCaseWithNamespacePrefix.vb");
+        private static string EdmxUpperCamelCaseWithNamespacePrefix = LoadContentFromBaseline("UpperCamelCaseWithNamespacePrefix.xml");
+        private static string UpperCamelCaseWithNamespacePrefixCSharp = LoadContentFromBaseline("UpperCamelCaseWithNamespacePrefix.cs");
+        private static string UpperCamelCaseWithNamespacePrefixVB = LoadContentFromBaseline("UpperCamelCaseWithNamespacePrefix.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor UpperCamelCaseWithNamespacePrefix = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor UpperCamelCaseWithNamespacePrefix = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxUpperCamelCaseWithNamespacePrefix,
             ExpectedResults = new Dictionary<string, string>()
@@ -568,13 +571,13 @@ namespace ODataConnectedService.Tests
 
         #region UpperCamelCaseWithoutNamespacePrefix
 
-        public static string EdmxUpperCamelCaseWithoutNamespacePrefix = LoadContentFromBaseline("UpperCamelCaseWithoutNamespacePrefix.xml");
-        public static string UpperCamelCaseWithoutNamespacePrefixCSharp = LoadContentFromBaseline("UpperCamelCaseWithoutNamespacePrefix.cs");
-        public static string UpperCamelCaseWithoutNamespacePrefixVB = LoadContentFromBaseline("UpperCamelCaseWithoutNamespacePrefix.vb");
-        public static string UpperCamelCaseWithoutNamespacePrefixCSharpUseDSC = LoadContentFromBaseline("UpperCamelCaseWithoutNamespacePrefixDSC.cs");
-        public static string UpperCamelCaseWithoutNamespacePrefixVBUseDSC = LoadContentFromBaseline("UpperCamelCaseWithoutNamespacePrefixDSC.vb");
+        private static string EdmxUpperCamelCaseWithoutNamespacePrefix = LoadContentFromBaseline("UpperCamelCaseWithoutNamespacePrefix.xml");
+        private static string UpperCamelCaseWithoutNamespacePrefixCSharp = LoadContentFromBaseline("UpperCamelCaseWithoutNamespacePrefix.cs");
+        private static string UpperCamelCaseWithoutNamespacePrefixVB = LoadContentFromBaseline("UpperCamelCaseWithoutNamespacePrefix.vb");
+        private static string UpperCamelCaseWithoutNamespacePrefixCSharpUseDSC = LoadContentFromBaseline("UpperCamelCaseWithoutNamespacePrefixDSC.cs");
+        private static string UpperCamelCaseWithoutNamespacePrefixVBUseDSC = LoadContentFromBaseline("UpperCamelCaseWithoutNamespacePrefixDSC.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor UpperCamelCaseWithoutNamespacePrefix = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor UpperCamelCaseWithoutNamespacePrefix = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxUpperCamelCaseWithoutNamespacePrefix,
             ExpectedResults = new Dictionary<string, string>()
@@ -591,10 +594,10 @@ namespace ODataConnectedService.Tests
 
         #region IgnoreUnexpectedElementsAndAttributes
 
-        public static string EdmxUnexpectedElementsAndAttributes = LoadContentFromBaseline("UnexpectedElementsAndAttributes.xml");
-        public static string UnexpectedElementsAndAttributesCSharp = LoadContentFromBaseline("UnexpectedElementsAndAttributes.cs");
-        public static string UnexpectedElementsAndAttributesVB = LoadContentFromBaseline("UnexpectedElementsAndAttributes.vb");
-        public static ODataT4CodeGeneratorTestsDescriptor IgnoreUnexpectedElementsAndAttributes = new ODataT4CodeGeneratorTestsDescriptor()
+        private static string EdmxUnexpectedElementsAndAttributes = LoadContentFromBaseline("UnexpectedElementsAndAttributes.xml");
+        private static string UnexpectedElementsAndAttributesCSharp = LoadContentFromBaseline("UnexpectedElementsAndAttributes.cs");
+        private static string UnexpectedElementsAndAttributesVB = LoadContentFromBaseline("UnexpectedElementsAndAttributes.vb");
+        internal static ODataT4CodeGeneratorTestsDescriptor IgnoreUnexpectedElementsAndAttributes = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxUnexpectedElementsAndAttributes,
             ExpectedResults = new Dictionary<string, string>()
@@ -608,11 +611,11 @@ namespace ODataConnectedService.Tests
         #endregion
 
         #region PrefixConflict
-        public static string EdmxPrefixConflict = LoadContentFromBaseline("PrefixConflict.xml");
-        public static string PrefixConflictCSharp = LoadContentFromBaseline("PrefixConflict.cs");
-        public static string PrefixConflictVBUseDSC = LoadContentFromBaseline("PrefixConflictDSC.vb");
+        private static string EdmxPrefixConflict = LoadContentFromBaseline("PrefixConflict.xml");
+        private static string PrefixConflictCSharp = LoadContentFromBaseline("PrefixConflict.cs");
+        private static string PrefixConflictVBUseDSC = LoadContentFromBaseline("PrefixConflictDSC.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor PrefixConflict = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor PrefixConflict = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxPrefixConflict,
             ExpectedResults = new Dictionary<string, string>()
@@ -626,13 +629,13 @@ namespace ODataConnectedService.Tests
 
         #region DupNames
 
-        public static string EdmxDupNames = LoadContentFromBaseline("DupNames.xml");
-        public static string DupNamesCSharp = LoadContentFromBaseline("DupNames.cs");
-        public static string DupNamesVBUseDSC = LoadContentFromBaseline("DupNamesDSC.vb");
-        public static string DupNamesWithCamelCaseCSharpUseDSC = LoadContentFromBaseline("DupNamesWithCamelCaseDSC.cs");
-        public static string DupNamesWithCamelCaseVB = LoadContentFromBaseline("DupNamesWithCamelCase.vb");
+        private static string EdmxDupNames = LoadContentFromBaseline("DupNames.xml");
+        private static string DupNamesCSharp = LoadContentFromBaseline("DupNames.cs");
+        private static string DupNamesVBUseDSC = LoadContentFromBaseline("DupNamesDSC.vb");
+        private static string DupNamesWithCamelCaseCSharpUseDSC = LoadContentFromBaseline("DupNamesWithCamelCaseDSC.cs");
+        private static string DupNamesWithCamelCaseVB = LoadContentFromBaseline("DupNamesWithCamelCase.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor DupNames = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor DupNames = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxDupNames,
             ExpectedResults = new Dictionary<string, string>()
@@ -643,7 +646,7 @@ namespace ODataConnectedService.Tests
             Verify = (code, isCSharp, useDSC) => VerifyGeneratedCode(code, DupNames.ExpectedResults, isCSharp, useDSC, "DupNames"),
         };
 
-        public static ODataT4CodeGeneratorTestsDescriptor DupNamesWithCamelCase = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor DupNamesWithCamelCase = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxDupNames,
             ExpectedResults = new Dictionary<string, string>()
@@ -657,11 +660,11 @@ namespace ODataConnectedService.Tests
 
         #region OverrideOperations
 
-        public static string EdmxOverrideOperations = LoadContentFromBaseline("OverrideOperations.xml");
-        public static string OverrideOperationsCSharpUseDSC = LoadContentFromBaseline("OverrideOperationsDSC.cs");
-        public static string OverrideOperationsVB = LoadContentFromBaseline("OverrideOperations.vb");
+        private static string EdmxOverrideOperations = LoadContentFromBaseline("OverrideOperations.xml");
+        private static string OverrideOperationsCSharpUseDSC = LoadContentFromBaseline("OverrideOperationsDSC.cs");
+        private static string OverrideOperationsVB = LoadContentFromBaseline("OverrideOperations.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor OverrideOperations = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor OverrideOperations = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxOverrideOperations,
             ExpectedResults = new Dictionary<string, string>()
@@ -674,11 +677,11 @@ namespace ODataConnectedService.Tests
         #endregion
 
         #region AbstractEntityTypeWithoutKey
-        public static string EdmxAbstractEntityTypeWithoutKey = LoadContentFromBaseline("AbstractEntityTypeWithoutKey.xml");
-        public static string AbstractEntityTypeWithoutKeyCSharpUseDSC = LoadContentFromBaseline("AbstractEntityTypeWithoutKeyDSC.cs");
-        public static string AbstractEntityTypeWithoutKeyVB = LoadContentFromBaseline("AbstractEntityTypeWithoutKey.vb");
+        private static string EdmxAbstractEntityTypeWithoutKey = LoadContentFromBaseline("AbstractEntityTypeWithoutKey.xml");
+        private static string AbstractEntityTypeWithoutKeyCSharpUseDSC = LoadContentFromBaseline("AbstractEntityTypeWithoutKeyDSC.cs");
+        private static string AbstractEntityTypeWithoutKeyVB = LoadContentFromBaseline("AbstractEntityTypeWithoutKey.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor AbstractEntityTypeWithoutKey = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor AbstractEntityTypeWithoutKey = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxAbstractEntityTypeWithoutKey,
             ExpectedResults = new Dictionary<string, string>()
@@ -691,11 +694,11 @@ namespace ODataConnectedService.Tests
         #endregion
 
         #region EntitiesEnumsFunctionsSelectTypes
-        public static string EdmxEntitiesEnumsFunctionsSelectTypes = LoadContentFromBaseline("EntitiesEnumsFunctions.xml");
-        public static string EntitiesEnumsFunctionsSelectTypesCSharp = LoadContentFromBaseline("EntitiesEnumsFunctionsSelectTypes.cs");
-        public static string EntitiesEnumsFunctionsSelectTypesVB = LoadContentFromBaseline("EntitiesEnumsFunctionsSelectTypes.vb");
+        private static string EdmxEntitiesEnumsFunctionsSelectTypes = LoadContentFromBaseline("EntitiesEnumsFunctions.xml");
+        private static string EntitiesEnumsFunctionsSelectTypesCSharp = LoadContentFromBaseline("EntitiesEnumsFunctionsSelectTypes.cs");
+        private static string EntitiesEnumsFunctionsSelectTypesVB = LoadContentFromBaseline("EntitiesEnumsFunctionsSelectTypes.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor EntitiesEnumsFunctionsSelectTypes = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor EntitiesEnumsFunctionsSelectTypes = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxEntitiesEnumsFunctionsSelectTypes,
             ExpectedResults = new Dictionary<string, string>()
@@ -709,13 +712,13 @@ namespace ODataConnectedService.Tests
 
         #region SourceParameterOrKeysProperty
 
-        public static string EdmxSourceParameterOrKeysProperty = LoadContentFromBaseline("SourceParameterOrKeysProperty.xml");
-        public static string SourceParameterOrKeysPropertyCSharp = LoadContentFromBaseline("SourceParameterOrKeysProperty.cs");
-        public static string SourceParameterOrKeysPropertyCSharpUseDSC = LoadContentFromBaseline("SourceParameterOrKeysPropertyDSC.cs");
-        public static string SourceParameterOrKeysPropertyVB = LoadContentFromBaseline("SourceParameterOrKeysProperty.vb");
-        public static string SourceParameterOrKeysPropertyVBUseDSC = LoadContentFromBaseline("SourceParameterOrKeysPropertyDSC.vb");
+        private static string EdmxSourceParameterOrKeysProperty = LoadContentFromBaseline("SourceParameterOrKeysProperty.xml");
+        private static string SourceParameterOrKeysPropertyCSharp = LoadContentFromBaseline("SourceParameterOrKeysProperty.cs");
+        private static string SourceParameterOrKeysPropertyCSharpUseDSC = LoadContentFromBaseline("SourceParameterOrKeysPropertyDSC.cs");
+        private static string SourceParameterOrKeysPropertyVB = LoadContentFromBaseline("SourceParameterOrKeysProperty.vb");
+        private static string SourceParameterOrKeysPropertyVBUseDSC = LoadContentFromBaseline("SourceParameterOrKeysPropertyDSC.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor SourceParameterOrKeysProperty = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor SourceParameterOrKeysProperty = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxSourceParameterOrKeysProperty,
             ExpectedResults = new Dictionary<string, string>() { { ExpectedCSharp, SourceParameterOrKeysPropertyCSharp }, { ExpectedCSharpUseDSC, SourceParameterOrKeysPropertyCSharpUseDSC }, { ExpectedVB, SourceParameterOrKeysPropertyVB }, { ExpectedVBUseDSC, SourceParameterOrKeysPropertyVBUseDSC } },
@@ -724,11 +727,11 @@ namespace ODataConnectedService.Tests
         #endregion
 
         #region EntityTypeMarkedObsolete
-        public static string EdmxEntityTypeMarkedObsolete = LoadContentFromBaseline("EntityTypeMarkedObsolete.xml");
-        public static string EntityTypeMarkedObsoleteCSharp = LoadContentFromBaseline("EntityTypeMarkedObsolete.cs");
-        public static string EntityTypeMarkedObsoleteVB = LoadContentFromBaseline("EntityTypeMarkedObsolete.vb");
+        private static string EdmxEntityTypeMarkedObsolete = LoadContentFromBaseline("EntityTypeMarkedObsolete.xml");
+        private static string EntityTypeMarkedObsoleteCSharp = LoadContentFromBaseline("EntityTypeMarkedObsolete.cs");
+        private static string EntityTypeMarkedObsoleteVB = LoadContentFromBaseline("EntityTypeMarkedObsolete.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor EntityTypeMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor EntityTypeMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxEntityTypeMarkedObsolete,
             ExpectedResults = new Dictionary<string, string>()
@@ -741,11 +744,11 @@ namespace ODataConnectedService.Tests
         #endregion
 
         #region EntitySetMarkedObsolete
-        public static string EdmxEntitySetMarkedObsolete = LoadContentFromBaseline("EntitySetMarkedObsolete.xml");
-        public static string EntitySetMarkedObsoleteCSharp = LoadContentFromBaseline("EntitySetMarkedObsolete.cs");
-        public static string EntitySetMarkedObsoleteVB = LoadContentFromBaseline("EntitySetMarkedObsolete.vb");
+        private static string EdmxEntitySetMarkedObsolete = LoadContentFromBaseline("EntitySetMarkedObsolete.xml");
+        private static string EntitySetMarkedObsoleteCSharp = LoadContentFromBaseline("EntitySetMarkedObsolete.cs");
+        private static string EntitySetMarkedObsoleteVB = LoadContentFromBaseline("EntitySetMarkedObsolete.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor EntitySetMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor EntitySetMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxEntitySetMarkedObsolete,
             ExpectedResults = new Dictionary<string, string>()
@@ -758,11 +761,11 @@ namespace ODataConnectedService.Tests
         #endregion
 
         #region BoundActionsAndFunctionsMarkedObsolete
-        public static string EdmxBoundActionsAndFunctionsMarkedObsolete = LoadContentFromBaseline("BoundActionsAndFunctionsMarkedObsolete.xml");
-        public static string BoundActionsAndFunctionsMarkedObsoleteCSharp = LoadContentFromBaseline("BoundActionsAndFunctionsMarkedObsolete.cs");
-        public static string BoundActionsAndFunctionsMarkedObsoleteVB = LoadContentFromBaseline("BoundActionsAndFunctionsMarkedObsolete.vb");
+        private static string EdmxBoundActionsAndFunctionsMarkedObsolete = LoadContentFromBaseline("BoundActionsAndFunctionsMarkedObsolete.xml");
+        private static string BoundActionsAndFunctionsMarkedObsoleteCSharp = LoadContentFromBaseline("BoundActionsAndFunctionsMarkedObsolete.cs");
+        private static string BoundActionsAndFunctionsMarkedObsoleteVB = LoadContentFromBaseline("BoundActionsAndFunctionsMarkedObsolete.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor BoundActionsAndFunctionsMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor BoundActionsAndFunctionsMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxBoundActionsAndFunctionsMarkedObsolete,
             ExpectedResults = new Dictionary<string, string>()
@@ -775,11 +778,11 @@ namespace ODataConnectedService.Tests
         #endregion
 
         #region EntityAndNavPropertiesMarkedObsolete
-        public static string EdmxPropertyAndNavPropertiesMarkedObsolete = LoadContentFromBaseline("PropertyAndNavPropertiesMarkedObsolete.xml");
-        public static string PropertyAndNavPropertiesMarkedObsoleteCSharp = LoadContentFromBaseline("PropertyAndNavPropertiesMarkedObsolete.cs");
-        public static string PropertyAndNavPropertiesMarkedObsoleteVB = LoadContentFromBaseline("PropertyAndNavPropertiesMarkedObsolete.vb");
+        private static string EdmxPropertyAndNavPropertiesMarkedObsolete = LoadContentFromBaseline("PropertyAndNavPropertiesMarkedObsolete.xml");
+        private static string PropertyAndNavPropertiesMarkedObsoleteCSharp = LoadContentFromBaseline("PropertyAndNavPropertiesMarkedObsolete.cs");
+        private static string PropertyAndNavPropertiesMarkedObsoleteVB = LoadContentFromBaseline("PropertyAndNavPropertiesMarkedObsolete.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor PropertyAndNavPropertiesMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor PropertyAndNavPropertiesMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxPropertyAndNavPropertiesMarkedObsolete,
             ExpectedResults = new Dictionary<string, string>()
@@ -792,11 +795,11 @@ namespace ODataConnectedService.Tests
         #endregion
 
         #region FunctionsAndActionImportsMarkedObsolete
-        public static string EdmxFunctionsAndActionImportsMarkedObsolete = LoadContentFromBaseline("FunctionsAndActionImportsMarkedObsolete.xml");
-        public static string FunctionsAndActionImportsMarkedObsoleteCSharp = LoadContentFromBaseline("FunctionsAndActionImportsMarkedObsolete.cs");
-        public static string FunctionsAndActionImportsMarkedObsoleteVB = LoadContentFromBaseline("FunctionsAndActionImportsMarkedObsolete.vb");
+        private static string EdmxFunctionsAndActionImportsMarkedObsolete = LoadContentFromBaseline("FunctionsAndActionImportsMarkedObsolete.xml");
+        private static string FunctionsAndActionImportsMarkedObsoleteCSharp = LoadContentFromBaseline("FunctionsAndActionImportsMarkedObsolete.cs");
+        private static string FunctionsAndActionImportsMarkedObsoleteVB = LoadContentFromBaseline("FunctionsAndActionImportsMarkedObsolete.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor FunctionsAndActionImportsMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor FunctionsAndActionImportsMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxFunctionsAndActionImportsMarkedObsolete,
             ExpectedResults = new Dictionary<string, string>()
@@ -809,11 +812,11 @@ namespace ODataConnectedService.Tests
         #endregion
 
         #region SingletonsMarkedObsolete
-        public static string EdmxSingletonsMarkedObsolete = LoadContentFromBaseline("SingletonsMarkedObsolete.xml");
-        public static string SingletonsMarkedObsoleteCSharp = LoadContentFromBaseline("SingletonsMarkedObsolete.cs");
-        public static string SingletonsMarkedObsoleteVB = LoadContentFromBaseline("SingletonsMarkedObsolete.vb");
+        private static string EdmxSingletonsMarkedObsolete = LoadContentFromBaseline("SingletonsMarkedObsolete.xml");
+        private static string SingletonsMarkedObsoleteCSharp = LoadContentFromBaseline("SingletonsMarkedObsolete.cs");
+        private static string SingletonsMarkedObsoleteVB = LoadContentFromBaseline("SingletonsMarkedObsolete.vb");
 
-        public static ODataT4CodeGeneratorTestsDescriptor SingletonsMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
+        internal static ODataT4CodeGeneratorTestsDescriptor SingletonsMarkedObsolete = new ODataT4CodeGeneratorTestsDescriptor()
         {
             Metadata = EdmxSingletonsMarkedObsolete,
             ExpectedResults = new Dictionary<string, string>()
@@ -826,8 +829,8 @@ namespace ODataConnectedService.Tests
         #endregion
 
         #region RevisionsAnnotationMissingProperties
-        public static string EdmxRevisionsAnnotationMissingRevisionKind = LoadContentFromBaseline("RevisionsAnnotationMissingRevisionKind.xml");
-        public static string EdmxRevisionsAnnotationMissingDescription = LoadContentFromBaseline("RevisionsAnnotationMissingDescription.xml");
+        internal static string EdmxRevisionsAnnotationMissingRevisionKind = LoadContentFromBaseline("RevisionsAnnotationMissingRevisionKind.xml");
+        internal static string EdmxRevisionsAnnotationMissingDescription = LoadContentFromBaseline("RevisionsAnnotationMissingDescription.xml");
         #endregion
     }
 }

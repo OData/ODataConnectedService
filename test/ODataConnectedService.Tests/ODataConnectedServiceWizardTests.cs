@@ -1078,19 +1078,6 @@ namespace ODataConnectedService.Tests
         }
     }
 
-    internal class OperationImportModelComparer : IEqualityComparer<OperationImportModel>
-    {
-        public bool Equals(OperationImportModel x, OperationImportModel y)
-        {
-            return x.Name == y.Name && x.IsSelected == y.IsSelected;
-        }
-
-        public int GetHashCode(OperationImportModel obj)
-        {
-            return obj.Name.GetHashCode();
-        }
-    }
-
     internal class TestConnectedServiceProviderContext : ConnectedServiceProviderContext
     {
         ServiceConfigurationV4 savedData;
