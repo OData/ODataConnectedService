@@ -168,6 +168,14 @@ namespace Microsoft.OData.Cli
             ignoreUnexpectedElements.SetDefaultValue(null);
             this.AddOption(ignoreUnexpectedElements);
 
+            Option serviceName = new Option<string>(new[] { "--service-name", "-sn" })
+            {
+                Name = "service-name",
+                Description = $"The name of the generated service. If not provided, the default name '{Constants.DefaultServiceName}' is used."
+            };
+
+            this.AddOption(serviceName);
+
             Option outputDir = new Option<string>(new[] { "--outputdir", "-o" })
             {
                 Name = "outputdir",
@@ -260,7 +268,11 @@ namespace Microsoft.OData.Cli
             serviceConfig = new TServiceConfig
             {
                 Endpoint = string.IsNullOrEmpty(generateOptions.MetadataUri) ? configUserSettings?.Endpoint : generateOptions.MetadataUri,
-                ServiceName = string.IsNullOrEmpty(configUserSettings?.ServiceName) ? Constants.DefaultServiceName : configUserSettings?.ServiceName,
+                ServiceName = string.IsNullOrEmpty(generateOptions.ServiceName)
+                    ? string.IsNullOrEmpty(configUserSettings?.ServiceName)
+                        ? Constants.DefaultServiceName
+                        : configUserSettings?.ServiceName
+                    : generateOptions.ServiceName,
                 GeneratedFileNamePrefix = string.IsNullOrEmpty(generateOptions.FileName) ? configUserSettings?.GeneratedFileNamePrefix : generateOptions.FileName,
                 CustomHttpHeaders = string.IsNullOrEmpty(generateOptions.CustomHeaders) ? configUserSettings?.CustomHttpHeaders : generateOptions.CustomHeaders,
                 WebProxyHost = string.IsNullOrEmpty(generateOptions.WebProxyHost) ? configUserSettings?.WebProxyHost : generateOptions.WebProxyHost,

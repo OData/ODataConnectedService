@@ -87,6 +87,11 @@ namespace Microsoft.OData.Cli
         public bool? IgnoreUnexpectedElements { get; set; }
 
         /// <summary>
+        /// Gets or sets the the name of the generated service.
+        /// </summary>
+        public string ServiceName { get; set; }
+
+        /// <summary>
         /// Gets or sets the path to output directory
         /// </summary>
         public string OutputDir { get; set; }
