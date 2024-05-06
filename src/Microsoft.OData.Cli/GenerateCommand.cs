@@ -6,6 +6,7 @@
 //----------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.NamingConventionBinder;
 using System.IO;
@@ -62,7 +63,7 @@ namespace Microsoft.OData.Cli
             Option fileName = new Option<string>(new[] { "--file-name", "-fn" })
             {
                 Name = "file-name",
-                Description = "The name of the generated file. If not provided, the default name 'Reference.cs/.vb' is used.",
+                Description = "The name of the generated file. If not provided, the default name 'Reference.cs/.vb' is used."
             };
 
             this.AddOption(fileName);
@@ -91,25 +92,23 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(ns);
 
-            Option enableTracking = new Option<bool?>(new[] { "--enable-tracking", "-et" })
+            Option enableTracking = new Option<bool>(new[] { "--enable-tracking", "-et" })
             {
                 Name = "enable-tracking",
                 Description = "Enable entity and property tracking."
             };
 
-            enableTracking.SetDefaultValue(null);
             this.AddOption(enableTracking);
 
-            Option upperCamelCase = new Option<bool?>(new[] { "--upper-camel-case", "-ucc" })
+            Option upperCamelCase = new Option<bool>(new[] { "--upper-camel-case", "-ucc" })
             {
                 Name = "upper-camel-case",
                 Description = "Disables upper camel casing."
             };
 
-            upperCamelCase.SetDefaultValue(null);
             this.AddOption(upperCamelCase);
 
-            Option internalModifier = new Option<bool?>(new[] { "--enable-internal", "-i" })
+            Option internalModifier = new Option<bool>(new[] { "--enable-internal", "-i" })
             {
                 Name = "enable-internal",
                 Description = "Apply the \"internal\" class modifier on generated classes instead of \"public\" thereby making them invisible outside the assembly."
@@ -117,22 +116,20 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(internalModifier);
 
-            Option omitVersioningInfo = new Option<bool?>(new[] { "--omit-versioning-info", "-vi" })
+            Option omitVersioningInfo = new Option<bool>(new[] { "--omit-versioning-info", "-vi" })
             {
                 Name = "omit-versioning-info",
-                Description = "Omit runtime version and code generation timestamp from the generated files.",
+                Description = "Omit runtime version and code generation timestamp from the generated files."
             };
 
-            omitVersioningInfo.SetDefaultValue(null);
             this.AddOption(omitVersioningInfo);
 
-            Option multipleFiles = new Option<bool?>(new[] { "--multiple-files" })
+            Option multipleFiles = new Option<bool>(new[] { "--multiple-files" })
             {
                 Name = "multiple-files",
                 Description = "Split the generated classes into separate files instead of generating all the code in a single file."
             };
 
-            multipleFiles.SetDefaultValue(null);
             this.AddOption(multipleFiles);
 
             Option excludedOperationImports = new Option<string>(new[] { "--excluded-operation-imports", "-eoi" })
@@ -159,13 +156,12 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(excludedSchemaTypes);
 
-            Option ignoreUnexpectedElements = new Option<bool?>(new[] { "--ignore-unexpected-elements", "-iue" })
+            Option ignoreUnexpectedElements = new Option<bool>(new[] { "--ignore-unexpected-elements", "-iue" })
             {
                 Name = "ignore-unexpected-elements",
                 Description = "This flag indicates whether to ignore unexpected elements and attributes in the metadata document and generate the client code if any."
             };
 
-            ignoreUnexpectedElements.SetDefaultValue(null);
             this.AddOption(ignoreUnexpectedElements);
 
             Option outputDir = new Option<string>(new[] { "--outputdir", "-o" })
@@ -252,10 +248,36 @@ namespace Microsoft.OData.Cli
                 configUserSettings = configFileData?.ExtendedData;
             }
 
-            var namespacePrefix = string.IsNullOrEmpty(generateOptions.NamespacePrefix) ? configUserSettings?.NamespacePrefix : generateOptions.NamespacePrefix;
-            var excludedSchemaTypes = generateOptions.ExcludedSchemaTypes?.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(type => type.Trim()).ToList();
-            var excludedBoundOperations = generateOptions.ExcludedBoundOperations?.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(operation => operation.Trim()).ToList();
-            var excludedOperationImports = generateOptions.ExcludedOperationImports?.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(import => import.Trim()).ToList();
+            // If the command line option for the namespace prefix is empty, then no namespace prefix should be applied.
+            string namespacePrefix = generateOptions.NamespacePrefix?.Trim();
+            if (namespacePrefix == null)
+            {
+                namespacePrefix = configUserSettings?.NamespacePrefix;
+            }
+
+            // If the command line option for the excluded schema types is empty, then no schema types should be excluded.
+            List<string> excludedSchemaTypes = generateOptions.ExcludedSchemaTypes?.Split(",", StringSplitOptions.RemoveEmptyEntries)
+                .Select(type => type.Trim()).Where(type => type != string.Empty).ToList();
+            if (excludedSchemaTypes == null)
+            {
+                excludedSchemaTypes = configUserSettings?.ExcludedSchemaTypes;
+            }
+
+            // If the command line option for the excluded bound operations is empty, then no bound operations should be excluded.
+            List<string> excludedBoundOperations = generateOptions.ExcludedBoundOperations?.Split(",", StringSplitOptions.RemoveEmptyEntries)
+                .Select(operation => operation.Trim()).Where(operation => operation != string.Empty).ToList();
+            if (excludedBoundOperations == null)
+            {
+                excludedBoundOperations = configUserSettings?.ExcludedBoundOperations;
+            }
+
+            // If the command line option for the excluded operation imports is empty, then no operation imports should be excluded.
+            List<string> excludedOperationImports = generateOptions.ExcludedOperationImports?.Split(",", StringSplitOptions.RemoveEmptyEntries)
+                .Select(d => d.Trim()).Where(import => import != string.Empty).ToList(); ;
+            if (excludedOperationImports == null)
+            {
+                excludedOperationImports = configUserSettings?.ExcludedOperationImports;
+            }
 
             serviceConfig = new TServiceConfig
             {
@@ -271,11 +293,11 @@ namespace Microsoft.OData.Cli
                 WebProxyNetworkCredentialsPassword = string.IsNullOrEmpty(generateOptions.WebProxyNetworkCredentialsDomain) ? configUserSettings?.WebProxyNetworkCredentialsPassword : generateOptions.WebProxyNetworkCredentialsDomain,
                 WebProxyNetworkCredentialsDomain = string.IsNullOrEmpty(generateOptions.WebProxyNetworkCredentialsPassword) ? configUserSettings?.WebProxyNetworkCredentialsDomain : generateOptions.WebProxyNetworkCredentialsPassword,
                 NamespacePrefix = namespacePrefix,
-                UseNamespacePrefix = (configUserSettings?.UseNamespacePrefix ?? false) || (!string.IsNullOrWhiteSpace(namespacePrefix)),
+                UseNamespacePrefix = !string.IsNullOrWhiteSpace(namespacePrefix),
                 UseDataServiceCollection = (generateOptions.EnableTracking == null) ? (configUserSettings?.UseDataServiceCollection ?? false) : generateOptions.EnableTracking.Value,
                 MakeTypesInternal = (generateOptions.EnableInternal == null) ? (configUserSettings?.MakeTypesInternal ?? false) : generateOptions.EnableInternal.Value,
                 GenerateMultipleFiles = (generateOptions.MultipleFiles == null) ? (configUserSettings?.GenerateMultipleFiles ?? false) : generateOptions.MultipleFiles.Value,
-                ExcludedSchemaTypes = excludedSchemaTypes?.Count > 0 ? excludedSchemaTypes : configUserSettings?.ExcludedSchemaTypes,
+                ExcludedSchemaTypes = excludedSchemaTypes,
             };
 
             if (serviceConfig is ServiceConfigurationV4 serviceConfigurationV4)
@@ -284,8 +306,8 @@ namespace Microsoft.OData.Cli
                 serviceConfigurationV4.EnableNamingAlias = (generateOptions.UpperCamelCase == null) ? (configUserSettings?.EnableNamingAlias ?? false) : generateOptions.UpperCamelCase.Value;
                 serviceConfigurationV4.IgnoreUnexpectedElementsAndAttributes = (generateOptions.IgnoreUnexpectedElements == null) ? (configUserSettings?.IgnoreUnexpectedElementsAndAttributes ?? false) : generateOptions.IgnoreUnexpectedElements.Value;
                 serviceConfigurationV4.IncludeT4File = configUserSettings?.IncludeT4File ?? false;
-                serviceConfigurationV4.ExcludedOperationImports = excludedOperationImports?.Count > 0 ? excludedOperationImports : configUserSettings?.ExcludedOperationImports;
-                serviceConfigurationV4.ExcludedBoundOperations = excludedBoundOperations?.Count > 0 ? excludedBoundOperations : configUserSettings?.ExcludedBoundOperations;
+                serviceConfigurationV4.ExcludedOperationImports = excludedOperationImports;
+                serviceConfigurationV4.ExcludedBoundOperations = excludedBoundOperations;
                 serviceConfigurationV4.OmitVersioningInfo = (generateOptions.OmitVersioningInfo == null) ? (configUserSettings?.OmitVersioningInfo ?? false) : generateOptions.OmitVersioningInfo.Value;
             }
 
