@@ -125,5 +125,10 @@ namespace Microsoft.OData.Cli
         /// Gets or sets the path to OData Connected Service config file (i.e., ConnectedService.json)
         /// </summary>
         public string ConfigFile { get; set; }
+
+        /// <summary>
+        /// Gets or sets the human-readable display name of the service instance.
+        /// </summary>
+        public string ServiceName { get; set; }
     }
 }

@@ -300,5 +300,20 @@ namespace Microsoft.OData.Cli.Tests.Command
 
             parseResult.Invoke();
         }
+
+        [Theory]
+        [InlineData("", null)]
+        [InlineData($"--service-name SampleServiceV4", "SampleServiceV4")]
+        [InlineData("-s SampleServiceV4", "SampleServiceV4")]
+        public void TestServiceNameCommandLineOption(string serviceNameOption, string expectedArgumentValue)
+        {
+            var parseResult = this.generateCommand.Parse($"--metadata-uri {this.metadataUri} --outputdir {this.outputDir} {serviceNameOption}");
+            this.generateCommand.Handler = CommandHandler.Create((GenerateOptions generateOptions, IConsole _) =>
+            {
+                Assert.Equal(expectedArgumentValue, generateOptions.ServiceName);
+            });
+
+            parseResult.Invoke();
+        }
     }
 }

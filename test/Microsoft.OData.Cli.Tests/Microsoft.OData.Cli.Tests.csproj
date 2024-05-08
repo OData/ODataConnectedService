@@ -25,6 +25,7 @@
     <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4MultipleOptionsProxy.cs" />
     <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4NamespacePrefixProxy.cs" />
     <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4Proxy.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4ServiceNameProxy.cs" />
     <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4UpperCamelCaseProxy.cs" />
   </ItemGroup>
 
@@ -42,6 +43,7 @@
     <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.Order.cs" />
     <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.cs" />
     <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4NamespacePrefixProxy.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4ServiceNameProxy.cs" />
     <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4Proxy.cs" />
     <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4UpperCamelCaseProxy.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -78,6 +80,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="CodeGeneration\Artifacts\SampleServiceV4ExcludedBoundOperationsConnectedService.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4ServiceNameConnectedService.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="CodeGeneration\Artifacts\SampleServiceV4FileNameConnectedService.json">

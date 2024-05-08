@@ -173,6 +173,14 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(outputDir);
 
+            Option serviceName = new Option<string>(new[] { "--service-name", "-s" })
+            {
+                Name = "service-name",
+                Description = $"Human-readable display name of the service instance. If not provided, the default name '{Constants.DefaultServiceName}' is used."
+            };
+
+            this.AddOption(serviceName);
+
             this.Handler = CommandHandler.Create(
                 (
                     GenerateOptions options,
@@ -282,7 +290,7 @@ namespace Microsoft.OData.Cli
             serviceConfig = new TServiceConfig
             {
                 Endpoint = string.IsNullOrEmpty(generateOptions.MetadataUri) ? configUserSettings?.Endpoint : generateOptions.MetadataUri,
-                ServiceName = string.IsNullOrEmpty(configUserSettings?.ServiceName) ? Constants.DefaultServiceName : configUserSettings?.ServiceName,
+                ServiceName = !string.IsNullOrEmpty(generateOptions.ServiceName) ? generateOptions.ServiceName : (string.IsNullOrEmpty(configUserSettings?.ServiceName) ? Constants.DefaultServiceName : configUserSettings?.ServiceName),
                 GeneratedFileNamePrefix = string.IsNullOrEmpty(generateOptions.FileName) ? configUserSettings?.GeneratedFileNamePrefix : generateOptions.FileName,
                 CustomHttpHeaders = string.IsNullOrEmpty(generateOptions.CustomHeaders) ? configUserSettings?.CustomHttpHeaders : generateOptions.CustomHeaders,
                 WebProxyHost = string.IsNullOrEmpty(generateOptions.WebProxyHost) ? configUserSettings?.WebProxyHost : generateOptions.WebProxyHost,

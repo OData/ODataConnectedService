@@ -7,6 +7,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Build.Evaluation;
 using Microsoft.OData.CodeGen.Common;
@@ -67,7 +68,7 @@ namespace Microsoft.OData.Cli
                             //<ItemGroup>
                             //    <Compile Include="Reference.cs" />
                             //</ItemGroup>
-                            if (!Path.GetFileName(targetPath).Equals(Constants.DefaultServiceName+"Csdl.xml") && project.GetItemsByEvaluatedInclude(Path.GetFileName(targetPath)).Count == 0)
+                            if (!Path.GetFileName(targetPath).EndsWith(Constants.CsdlFileNameSuffix) && project.GetItemsByEvaluatedInclude(Path.GetFileName(targetPath)).Count == 0)
                             {
                                 ProjectHelper.AddProjectItem(this.project, "Compile", Path.GetFileName(targetPath));
                             }
@@ -105,9 +106,9 @@ namespace Microsoft.OData.Cli
             {
                 this.project = ProjectHelper.ReloadProject(this.project.DirectoryPath);
 
-                if (this.project.GetItems("EmbeddedResource").Count == 0)
+                if (!this.project.GetItems(Constants.EmbeddedResourceTag).Any(pi => pi.EvaluatedInclude.Equals(fileName)))
                 {
-                    ProjectHelper.AddProjectItem(this.project, "EmbeddedResource", fileName);
+                    ProjectHelper.AddProjectItem(this.project, Constants.EmbeddedResourceTag, fileName);
                 }
             }
         }

@@ -7,6 +7,7 @@
 
 using System.CommandLine;
 using System.CommandLine.Parsing;
+using System.Text.RegularExpressions;
 using Microsoft.OData.CodeGen.Common;
 
 namespace Microsoft.OData.Cli.Tests.CodeGeneration
@@ -364,6 +365,9 @@ namespace Microsoft.OData.Cli.Tests.CodeGeneration
                     ],
                     [
                         $"--file-name \"Reference\" --config-file {Path.Combine(Environment.CurrentDirectory, "CodeGeneration\\Artifacts\\SampleServiceV4FileNameConnectedService.json")}"
+                    ],
+                    [
+                        $"--service-name \"{Constants.DefaultServiceName}\" --config-file {Path.Combine(Environment.CurrentDirectory, "CodeGeneration\\Artifacts\\SampleServiceV4ServiceNameConnectedService.json")}"
                     ]
                 ];
         }
@@ -446,6 +450,43 @@ namespace Microsoft.OData.Cli.Tests.CodeGeneration
             var expectedCode = CodeVerificationHelper.LoadReferenceContent("SampleServiceV4Proxy.cs");
 
             CodeVerificationHelper.VerifyGeneratedCode(expectedCode, generatedCode);
+        }
+
+        public static IEnumerable<object[]> GetCodeGeneratedForServiceNameOptionTestData()
+        {
+            return
+                [
+                    [
+                        $"--service-name SampleServiceV4"
+                    ],
+                    [
+                        $"--config-file {Path.Combine(Environment.CurrentDirectory, "CodeGeneration\\Artifacts\\SampleServiceV4ServiceNameConnectedService.json")}"
+                    ]
+                ];
+        }
+
+        [Theory]
+        [MemberData(nameof(GetCodeGeneratedForServiceNameOptionTestData))]
+        public void TestCodeGeneratedForServiceNameOption(string commandLine)
+        {
+            var parseResult = this.generateCommand.Parse($"--metadata-uri {this.metadataUri} --outputdir {this.outputDir} {commandLine}");
+
+            parseResult.Invoke();
+
+            var outputCsdlFile = Assert.Single(Directory.GetFiles(outputDir, "SampleServiceV4Csdl.xml"));
+            var sampleServiceV4ProxyFile = Assert.Single(Directory.GetFiles(outputDir, $"{Constants.DefaultReferenceFileName}.cs"));
+
+            var inputCsdlContent = File.ReadAllText(metadataUri);
+            var outputCsdlContent = File.ReadAllText(outputCsdlFile);
+
+            var generatedCode = File.ReadAllText(sampleServiceV4ProxyFile);
+            var expectedCode = CodeVerificationHelper.LoadReferenceContent("SampleServiceV4ServiceNameProxy.cs");
+
+            CodeVerificationHelper.VerifyGeneratedCode(expectedCode, generatedCode);
+            // Output CSDL file doesn't contain the XML declaration header
+            Assert.EndsWith(
+                Regex.Replace(outputCsdlContent, @"\s+", ""),
+                Regex.Replace(inputCsdlContent, @"\s+", ""));
         }
 
         public void Dispose()
