@@ -19,6 +19,7 @@ variables:
   productFilesVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.*?(*.dll|*.config|*.pdb)'
   productFilesODataCLI: 'Microsoft.OData.Cli.*?(*.dll|*.config|*.pdb)'
   testBinPath: '$(connectedServiceDir)\test\ODataConnectedService.Tests\bin\$(BuildConfiguration)\'
+  testBinPathODataCLI: '$(connectedServiceDir)\test\Microsoft.OData.Cli.Tests\bin\$(BuildConfiguration)\'
   vsixPath: '$(productBinPath)'
   vsixFile: 'Microsoft.OData.ConnectedService.vsix'
   vsixFileVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.vsix'
@@ -30,6 +31,7 @@ variables:
   mainDllVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.dll'
   mainDllODataCLI: 'Microsoft.OData.Cli.dll'
   testDll: 'ODataConnectedService.Tests.dll'
+  testDllODataCLI: 'Microsoft.OData.Cli.Tests.dll'
   snExe: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\sn.exe'
   snExe64: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\x64\sn.exe'
 
@@ -73,6 +75,13 @@ stages:
         configuration: '$(buildConfiguration)'
         searchFolder:  '$(System.DefaultWorkingDirectory)'
 
+    - task: DotNetCoreCLI@2
+      displayName: Unit Tests (Microsoft.OData.Cli.Tests)
+      inputs:
+        command: test
+        projects: $(connectedServiceDir)\test\Microsoft.OData.Cli.Tests\Microsoft.OData.Cli.Tests.csproj
+        arguments: --configuration $(buildConfiguration) --no-build
+        
     - task: CopyFiles@2
       displayName: 'Copy Files - VSIX to Artifacts Staging'
       inputs:
