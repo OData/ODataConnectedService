@@ -73,9 +73,8 @@ stages:
         configuration: '$(buildConfiguration)'
         searchFolder:  '$(System.DefaultWorkingDirectory)'
         resultsFolder: '$(Agent.TempDirectory)\TestResults'
-        otherConsoleOptions: '/collect:"Code Coverage"'
+        otherConsoleOptions: '/collect:"Code Coverage;Format=Cobertura"'
         runSettingsFile: '$(Build.SourcesDirectory)\test.runsettings'
-        #codeCoverageEnabled: true
 
     - task: CmdLine@2
       displayName: Install ReportGenerator tool for code coverage
