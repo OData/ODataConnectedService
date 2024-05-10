@@ -18,7 +18,7 @@ variables:
   productBinPathVs2022Plus: '$(connectedServiceDir)\src\ODataConnectedService_VS2022Plus\bin\$(BuildConfiguration)'
   productFilesVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.*?(*.dll|*.config|*.pdb)'
   productFilesODataCLI: 'Microsoft.OData.Cli.*?(*.dll|*.config|*.pdb)'
-  testBinPath: '$(connectedServiceDir)\test\ODataConnectedService.Tests\bin\$(BuildConfiguration)\'
+  testBinPath: '$(connectedServiceDir)\test\ODataConnectedService.Tests\bin\$(BuildConfiguration)'
   vsixPath: '$(productBinPath)'
   vsixFile: 'Microsoft.OData.ConnectedService.vsix'
   vsixFileVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.vsix'
@@ -65,14 +65,33 @@ stages:
         nobuild: true
 
     - task: VSTest@2
-      displayName: 'Run tests'
+      displayName: 'Unit Tests (ODataConnectedService.Tests)'
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: '$(testBinPath)\$(testDll)'
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
         searchFolder:  '$(System.DefaultWorkingDirectory)'
+        resultsFolder: '$(Agent.TempDirectory)\TestResults'
+        otherConsoleOptions: '/collect:"Code Coverage;Format=Cobertura"'
+        runSettingsFile: '$(Build.SourcesDirectory)\test.runsettings'
 
+    - task: CmdLine@2
+      displayName: Install ReportGenerator tool for code coverage
+      inputs:
+        script: dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.5.8
+
+    - task: CmdLine@2
+      displayName: Create code coverage report
+      inputs:
+        script: reportgenerator -reports:$(Agent.TempDirectory)/TestResults/**/*.cobertura.xml -targetdir:$(Build.SourcesDirectory) -reporttypes:"Cobertura"
+
+    - task: PublishCodeCoverageResults@1
+      displayName: Publish code coverage
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: $(Build.SourcesDirectory)/Cobertura.xml
+    
     - task: CopyFiles@2
       displayName: 'Copy Files - VSIX to Artifacts Staging'
       inputs:
