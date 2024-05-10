@@ -73,7 +73,7 @@ stages:
         configuration: '$(buildConfiguration)'
         searchFolder:  '$(System.DefaultWorkingDirectory)'
         resultsFolder: '$(Agent.TempDirectory)\TestResults'
-        otherConsoleOptions: '/collect:"Code Coverage;Format=Cobertura"'
+        otherConsoleOptions: '/collect:"Code Coverage"'
         runSettingsFile: '$(Build.SourcesDirectory)\test.runsettings'
         #codeCoverageEnabled: true
 
