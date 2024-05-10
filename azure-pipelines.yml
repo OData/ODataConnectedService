@@ -65,7 +65,7 @@ stages:
         nobuild: true
 
     - task: VSTest@2
-      displayName: 'Run tests'
+      displayName: 'Unit Tests (ODataConnectedService.Tests)'
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: '$(testBinPath)\$(testDll)'
@@ -75,7 +75,7 @@ stages:
         resultsFolder: '$(Agent.TempDirectory)\TestResults'
         otherConsoleOptions: '/collect:"Code Coverage;Format=Cobertura"'
         runSettingsFile: '$(Build.SourcesDirectory)\test.runsettings'
-        codeCoverageEnabled: true
+        #codeCoverageEnabled: true
 
     - task: CmdLine@2
       displayName: Install ReportGenerator tool for code coverage
