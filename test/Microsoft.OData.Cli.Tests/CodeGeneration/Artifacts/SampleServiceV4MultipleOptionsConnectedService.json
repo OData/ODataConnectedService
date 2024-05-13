@@ -1,0 +1,52 @@
+﻿{
+  "ProviderId": "Microsoft.OData.ConnectedService",
+  "Version": "1.1.0.0",
+  "GettingStartedDocument": {
+    "Uri": "http://odata.github.io/odata.net/"
+  },
+  "ExtendedData": {
+    "EnableNamingAlias": false,
+    "IgnoreUnexpectedElementsAndAttributes": false,
+    "IncludeT4File": false,
+    "ExcludedOperationImports": [
+      "BackupDataSource",
+      "RepairDataSource"
+    ],
+    "ExcludedBoundOperations": [
+      "RateCustomer(SampleServiceV4.Models.Customer)",
+      "ProcessOrder(SampleServiceV4.Models.Order)"
+    ],
+    "ExcludedSchemaTypes": [
+      "SampleServiceV4.Models.Address",
+      "SampleServiceV4.Models.City"
+    ],
+    "OmitVersioningInfo": true,
+    "ServiceName": "OData Service",
+    "Endpoint": "",
+    "EdmxVersion": {
+      "Major": 4,
+      "Minor": 0,
+      "Build": 0,
+      "Revision": 0,
+      "MajorRevision": 0,
+      "MinorRevision": 0
+    },
+    "GeneratedFileNamePrefix": "Reference",
+    "UseNamespacePrefix": true,
+    "NamespacePrefix": "Client",
+    "UseDataServiceCollection": true,
+    "MakeTypesInternal": true,
+    "OpenGeneratedFilesInIDE": false,
+    "GenerateMultipleFiles": false,
+    "CustomHttpHeaders": null,
+    "IncludeWebProxy": false,
+    "WebProxyHost": null,
+    "IncludeWebProxyNetworkCredentials": false,
+    "StoreWebProxyNetworkCredentials": false,
+    "WebProxyNetworkCredentialsUsername": null,
+    "WebProxyNetworkCredentialsPassword": null,
+    "WebProxyNetworkCredentialsDomain": null,
+    "IncludeCustomHeaders": false,
+    "StoreCustomHttpHeaders": false
+  }
+}

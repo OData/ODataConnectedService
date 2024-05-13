@@ -29,8 +29,8 @@
     <PackageReference Include="NuGet.PackageManagement" Version="6.1.0" />
     <PackageReference Include="NuGet.Protocol" Version="6.3.3" />
     <PackageReference Include="System.CodeDom" Version="7.0.0-preview.1.22076.8" />
-    <PackageReference Include="System.CommandLine" Version="2.0.0-beta3.22114.1" />
-    <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta3.22114.1" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+    <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta4.22272.1" />
   </ItemGroup>
 
   <ItemGroup>

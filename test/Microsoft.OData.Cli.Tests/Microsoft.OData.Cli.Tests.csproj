@@ -1,0 +1,120 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4EnableInternalProxy.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4EnableTrackingProxy.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4ExcludedBoundOperationsProxy.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4ExcludedOperationImportsProxy.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4ExcludedSchemaTypesProxy.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.Address.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.City.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.Customer.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.Default.ExtensionMethods.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.Models.ExtensionMethods.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.Order.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4MultipleOptionsProxy.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4NamespacePrefixProxy.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4Proxy.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4ServiceNameProxy.cs" />
+    <Compile Remove="CodeGeneration\Artifacts\SampleServiceV4UpperCamelCaseProxy.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4EnableInternalProxy.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4EnableTrackingProxy.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4ExcludedBoundOperationsProxy.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4ExcludedOperationImportsProxy.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4ExcludedSchemaTypesProxy.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.Address.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.City.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.Customer.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.Default.ExtensionMethods.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.Models.ExtensionMethods.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.Order.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesProxy.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4NamespacePrefixProxy.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4ServiceNameProxy.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4Proxy.cs" />
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4UpperCamelCaseProxy.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="CodeGeneration\Artifacts\SampleServiceV4MultipleOptionsProxy.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Build" Version="17.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.5.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Microsoft.OData.Cli\Microsoft.OData.Cli.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4ExcludedSchemaTypesConnectedService.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4ExcludedBoundOperationsConnectedService.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4ServiceNameConnectedService.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4FileNameConnectedService.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4NamespacePrefixConnectedService.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4ExcludedOperationImportsConnectedService.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4MultipleFilesConnectedService.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4MultipleOptionsConnectedService.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4OmitVersioningInfoConnectedService.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4EnableTrackingConnectedService.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4EnableInternalConnectedService.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4UpperCamelCaseConnectedService.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4LowerCamelCase.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

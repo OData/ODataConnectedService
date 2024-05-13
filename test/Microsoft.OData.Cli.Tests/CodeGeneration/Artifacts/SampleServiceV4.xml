@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+  <edmx:DataServices>
+    <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="SampleServiceV4.Models">
+      <EntityType Name="Customer">
+        <Key>
+          <PropertyRef Name="Id"/>
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="Name" Type="Edm.String" Nullable="false"/>
+        <NavigationProperty Name="Orders" Type="Collection(SampleServiceV4.Models.Order)"/>
+      </EntityType>
+      <EntityType Name="Order">
+        <Key>
+          <PropertyRef Name="Id"/>
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="Amount" Type="Edm.Decimal" Nullable="false" Scale="Variable"/>
+        <NavigationProperty Name="Customer" Type="SampleServiceV4.Models.Customer" Nullable="false"/>
+      </EntityType>
+      <ComplexType Name="Address">
+        <Property Name="Street" Type="Edm.String" Nullable="false"/>
+        <Property Name="City" Type="SampleServiceV4.Models.City" Nullable="false"/>
+      </ComplexType>
+      <ComplexType Name="City">
+        <Property Name="Name" Type="Edm.String" Nullable="false"/>
+      </ComplexType>
+    </Schema>
+    <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="SampleServiceV4.Default">
+      <Function Name="GetTopCustomers" IsBound="true">
+        <Parameter Name="bindingParameter" Type="Collection(SampleServiceV4.Models.Customer)"/>
+        <ReturnType Type="Collection(SampleServiceV4.Models.Customer)"/>
+      </Function>
+      <Action Name="RateCustomer" IsBound="true">
+        <Parameter Name="bindingParameter" Type="SampleServiceV4.Models.Customer"/>
+        <Parameter Name="rating" Type="Edm.Int32" Nullable="false"/>
+      </Action>
+      <Action Name="ProcessOrder" IsBound="true">
+        <Parameter Name="bindingParameter" Type="SampleServiceV4.Models.Order"/>
+      </Action>
+      <Action Name="BackupDataSource"/>
+      <Action Name="ResetDataSource"/>
+      <Action Name="RepairDataSource"/>
+      <EntityContainer Name="Container">
+        <EntitySet Name="Customers" EntityType="SampleServiceV4.Models.Customer">
+          <NavigationPropertyBinding Path="Orders" Target="Orders"/>
+        </EntitySet>
+        <EntitySet Name="Orders" EntityType="SampleServiceV4.Models.Order">
+          <NavigationPropertyBinding Path="Customer" Target="Customers"/>
+        </EntitySet>
+        <ActionImport Name="BackupDataSource" Action="SampleServiceV4.Default.BackupDataSource"/>
+        <ActionImport Name="ResetDataSource" Action="SampleServiceV4.Default.ResetDataSource"/>
+        <ActionImport Name="RepairDataSource" Action="SampleServiceV4.Default.RepairDataSource"/>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

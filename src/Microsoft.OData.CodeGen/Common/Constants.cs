@@ -48,6 +48,8 @@ namespace Microsoft.OData.CodeGen.Common
         public const string InputServiceEndpointMsg = "Please input the service endpoint";
         public const string CsdlFileNameSuffix = "Csdl.xml";
 
+        public const string EmbeddedResourceTag = "EmbeddedResource";
+
         public static string[] V3NuGetPackages = {
             V3ClientNuGetPackage,
             V3ODataNuGetPackage,
