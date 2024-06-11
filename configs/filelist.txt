@@ -1,1 +1,2 @@
 Microsoft.OData.ConnectedService.dll
+Microsoft.OData.ConnectedService.VS2022Plus.dll
