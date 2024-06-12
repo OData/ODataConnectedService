@@ -157,26 +157,31 @@ stages:
             inputs:
               command: custom
               custom: tool
-              arguments: install --tool-path . SignClient
+              arguments: install --tool-path . --prerelease sign
             displayName: Install SignTool tool
           
-          # Sign the vsix archive as well as files contained in the vsix that are listed in config/filelist.txt
-          # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
-          - pwsh: |
-              .\SignClient "Sign" `
-              --baseDirectory "$(Pipeline.Workspace)/VSIX" `
-              --input "$(vsixFile)" `
-              --output "$(Build.ArtifactStagingDirectory)/SignedVSIX" `
-              --config "$(Pipeline.Workspace)/configs/SignClient.json" `
-              --filelist "$(Pipeline.Workspace)/configs/filelist.txt" `
-              --user "$(SignClientUser)" `
-              --secret "$(SignClientSecret)" `
-              --name "OData Connected Service" `
-              --description "OData Connected Service" `
-              --descriptionUrl "https://github.com/OData/ODataConnectedService" 
+          # Sign the VSIX archive as well as files contained in the VSIX that are listed in config/filelist.txt
+          # For more info about the Sign CLI tool, visit: https://github.com/dotnet/sign
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: 'Code Signing'
+              scriptType: pscore
+              scriptLocation: inlineScript
+              inlineScript: |
+                .\sign code azure-key-vault `
+                "**/*.{dll,vsix,zip,nupkg}" `
+                --base-directory "$(Pipeline.Workspace)/VSIX" `
+                --output "$(Build.ArtifactStagingDirectory)/SignedVSIX" `
+                --file-list "$(Pipeline.Workspace)/configs/filelist.txt" `
+                --publisher-name "Microsoft OData" `
+                --description "OData Connected Service" `
+                --description-url "https://github.com/OData/ODataConnectedService" `
+                --azure-key-vault-managed-identity `
+                --azure-key-vault-certificate "$(SignKeyVaultCertificate)" `
+                --azure-key-vault-url "$(SignKeyVaultUrl)"
             displayName: Code signing - VSIX
 
-          # publish the signed vsix as an artifact so we can download it after the build
+          # Publish the signed VSIX as an artifact so we can download it after the build
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifact: SignedVSIX'
             inputs:
@@ -202,26 +207,31 @@ stages:
             inputs:
               command: custom
               custom: tool
-              arguments: install --tool-path . SignClient
+              arguments: install --tool-path . --prerelease sign
             displayName: Install SignTool tool
           
-          # Sign the vsix archive as well as files contained in the vsix that are listed in config/filelist.txt
-          # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
-          - pwsh: |
-              .\SignClient "Sign" `
-              --baseDirectory "$(Pipeline.Workspace)/VSIX2022Plus" `
-              --input "$(vsixFileVs2022Plus)" `
-              --output "$(Build.ArtifactStagingDirectory)/SignedVSIX2022Plus" `
-              --config "$(Pipeline.Workspace)/configs/SignClient.json" `
-              --filelist "$(Pipeline.Workspace)/configs/filelist.txt" `
-              --user "$(SignClientUser)" `
-              --secret "$(SignClientSecret)" `
-              --name "OData Connected Service 2022+" `
-              --description "OData Connected Service 2022+" `
-              --descriptionUrl "https://github.com/OData/ODataConnectedService" 
+          # Sign the VSIX archive as well as files contained in the VSIX that are listed in config/filelist.txt
+          # For more info about the SignClient tool, visit: https://github.com/dotnet/sign
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: 'Code Signing'
+              scriptType: pscore
+              scriptLocation: inlineScript
+              inlineScript: |
+                .\sign code azure-key-vault `
+                "**/*.{dll,vsix,zip,nupkg}" `
+                --base-directory "$(Pipeline.Workspace)/VSIX2022Plus" `
+                --output "$(Build.ArtifactStagingDirectory)/SignedVSIX2022Plus" `
+                --file-list "$(Pipeline.Workspace)/configs/filelist.txt" `
+                --publisher-name "Microsoft OData" `
+                --description "OData Connected Service 2022+" `
+                --description-url "https://github.com/OData/ODataConnectedService" `
+                --azure-key-vault-managed-identity `
+                --azure-key-vault-certificate "$(SignKeyVaultCertificate)" `
+                --azure-key-vault-url "$(SignKeyVaultUrl)"
             displayName: Code signing - VSIX2022Plus
 
-          # publish the signed vsix as an artifact so we can download it after the build
+          # Publish the signed VSIX as an artifact so we can download it after the build
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifact: SignedVSIX2022Plus'
             inputs:
@@ -260,24 +270,31 @@ stages:
             inputs:
               command: custom
               custom: tool
-              arguments: install --tool-path . SignClient
+              arguments: install --tool-path . --prerelease sign
             displayName: Install SignTool tool
+            
+          # Sign the CLI
+          # For more info about the Sign CLI tool, visit: https://github.com/dotnet/sign
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: 'Code Signing'
+              scriptType: pscore
+              scriptLocation: inlineScript
+              inlineScript: |
+                .\sign code azure-key-vault `
+                "**/*.{dll,zip,nupkg}" `
+                --base-directory "$(Pipeline.Workspace)\ODataCLINupkg" `
+                --output "$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg" `
+                --file-list "$(Pipeline.Workspace)\configs\filelist.txt" `
+                --publisher-name "Microsoft OData" `
+                --description "OData CLI" `
+                --description-url "https://github.com/OData/ODataConnectedService" `
+                --azure-key-vault-managed-identity `
+                --azure-key-vault-certificate "$(SignKeyVaultCertificate)" `
+                --azure-key-vault-url "$(SignKeyVaultUrl)"
+            displayName: Code signing - ODataCLINupkg              
 
-          # Sign the vsix archive as well as files contained in the vsix that are listed in config/filelist.txt
-          # For more info about the SignClient tool, visit: https://github.com/dotnet/SignService
-          - pwsh: |
-              .\SignClient "Sign" `
-              --baseDirectory "$(Pipeline.Workspace)\ODataCLINupkg" `
-              --input "$(nupkgFile)" `
-              --output "$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg" `
-              --config "$(Pipeline.Workspace)\configs\SignClient.json" `
-              --filelist "$(Pipeline.Workspace)\configs\filelist.txt" `
-              --user "$(SignClientUser)" `
-              --secret "$(SignClientSecret)" `
-              --name "OData CLI" `
-              --description "OData CLI" `
-              --descriptionUrl "https://github.com/OData/ODataConnectedService" 
-            displayName: Code signing - ODataCLINupkg
+          # Publish the signed CLI as an artifact so we can download it after the build
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifact - Nuget Packages'
             inputs:

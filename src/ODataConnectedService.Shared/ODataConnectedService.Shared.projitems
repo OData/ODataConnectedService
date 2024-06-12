@@ -60,16 +60,4 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="$(MSBuildThisFileDirectory)License.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)Resources\ExtensionIcon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)Resources\Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="$(MSBuildThisFileDirectory)Resources\Icon.png" />
-  </ItemGroup>
 </Project>
