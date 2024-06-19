@@ -173,7 +173,7 @@ stages:
                 --base-directory "$(Pipeline.Workspace)/VSIX" `
                 --output "$(Build.ArtifactStagingDirectory)/SignedVSIX" `
                 --file-list "$(Pipeline.Workspace)/configs/filelist.txt" `
-                --publisher-name "Microsoft OData" `
+                --publisher-name "OData Labs" `
                 --description "OData Connected Service" `
                 --description-url "https://github.com/OData/ODataConnectedService" `
                 --azure-key-vault-managed-identity `
@@ -223,7 +223,7 @@ stages:
                 --base-directory "$(Pipeline.Workspace)/VSIX2022Plus" `
                 --output "$(Build.ArtifactStagingDirectory)/SignedVSIX2022Plus" `
                 --file-list "$(Pipeline.Workspace)/configs/filelist.txt" `
-                --publisher-name "Microsoft OData" `
+                --publisher-name "OData Labs" `
                 --description "OData Connected Service 2022+" `
                 --description-url "https://github.com/OData/ODataConnectedService" `
                 --azure-key-vault-managed-identity `
@@ -282,11 +282,11 @@ stages:
               scriptLocation: inlineScript
               inlineScript: |
                 .\sign code azure-key-vault `
-                "**/*.{dll,zip,nupkg}" `
+                "**/*.{{dll,exe,zip,nupkg}}" `
                 --base-directory "$(Pipeline.Workspace)\ODataCLINupkg" `
                 --output "$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg" `
                 --file-list "$(Pipeline.Workspace)\configs\filelist.txt" `
-                --publisher-name "Microsoft OData" `
+                --publisher-name "OData Labs" `
                 --description "OData CLI" `
                 --description-url "https://github.com/OData/ODataConnectedService" `
                 --azure-key-vault-managed-identity `
