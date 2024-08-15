@@ -575,7 +575,10 @@ namespace SampleServiceV4.Default
                 try
                 {
                     var assembly = global::System.Reflection.Assembly.GetExecutingAssembly();
-                    var resourcePath = global::System.Linq.Enumerable.Single(assembly.GetManifestResourceNames(), str => str.EndsWith(filePath));
+                    // If multiple resource names end with the file name, select the shortest one.
+                    var resourcePath = global::System.Linq.Enumerable.First(
+                        global::System.Linq.Enumerable.OrderBy(assembly.GetManifestResourceNames(), n => n.Length),
+                        str => str.EndsWith(filePath));
                     global::System.IO.Stream stream = assembly.GetManifestResourceStream(resourcePath);
                     return global::System.Xml.XmlReader.Create(new global::System.IO.StreamReader(stream));
                 }
