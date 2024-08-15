@@ -7300,7 +7300,11 @@ this.Write(@""")>  _
             Private Shared Function CreateXmlReader() As Global.System.Xml.XmlReader
                 Try
                     Dim assembly As Global.System.Reflection.Assembly = Global.System.Reflection.Assembly.GetExecutingAssembly()
-                    Dim resourcePath As Global.System.String = Global.System.Linq.Enumerable.Single(assembly.GetManifestResourceNames(), Function(str) str.EndsWith(filePath))
+                    ' If multiple resource names end with the file name, select the shortest one.
+                    Dim resourcePath As Global.System.String =
+                        Global.System.Linq.Enumerable.First(
+                            Global.System.Linq.Enumerable.OrderBy(assembly.GetManifestResourceNames(), Function(n) n.Length),
+                            Function(str) str.EndsWith(filePath))
                     Dim stream As Global.System.IO.Stream = assembly.GetManifestResourceStream(resourcePath)
                     Return Global.System.Xml.XmlReader.Create(New Global.System.IO.StreamReader(stream))
                 Catch e As Global.System.Xml.XmlException
