@@ -8,7 +8,6 @@
 using System;
 using System.Threading.Tasks;
 using EnvDTE;
-using Microsoft.OData.CodeGen;
 using Microsoft.OData.CodeGen.FileHandling;
 using Microsoft.VisualStudio.ConnectedServices;
 using VSLangProj;
@@ -23,15 +22,18 @@ namespace Microsoft.OData.ConnectedService
         private ConnectedServiceHandlerContext Context;
         public Project Project { get; private set; }
 
+        private VSProject VSProject;
+
         /// <summary>
         /// Creates an instance of <see cref="ConnectedServiceFileHandler"/>
         /// </summary>
         /// <param name="context">The <see cref="ConnectedServiceHandlerContext"/ object></param>
         /// <param name="project">An object of the project.</param>
-        public ConnectedServiceFileHandler(ConnectedServiceHandlerContext context, Project project )
+        public ConnectedServiceFileHandler(ConnectedServiceHandlerContext context, Project project)
         {
             this.Context = context;
             this.Project = project;
+            this.VSProject = project?.Object as VSProject;
         }
 
         /// <summary>
@@ -73,7 +75,7 @@ namespace Microsoft.OData.ConnectedService
         /// <returns>A value of either true or false</returns>
         public bool EmitContainerPropertyAttribute()
         {
-            var vsProject = this.Project.Object as VSProject;
+            var vsProject = this.VSProject;
             if (vsProject != null)
             {
                 foreach (Reference reference in vsProject.References)

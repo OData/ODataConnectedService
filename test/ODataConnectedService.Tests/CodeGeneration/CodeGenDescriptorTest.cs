@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using EnvDTE;
 using Microsoft.OData.CodeGen.CodeGeneration;
 using Microsoft.OData.CodeGen.Common;
@@ -206,12 +207,10 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             //The file manager expects the files to have been saved in the Temp directory
             // when ODataT4CodeGenerator.TransformText() was called. Since we're using a dummy code generator
             // we need to manually ensure those files exist
-            var file1TempPath = Path.Combine(Path.GetTempPath(), "File1.cs");
-            File.WriteAllText(file1TempPath, "Contents1");
-            var file2TempPath = Path.Combine(Path.GetTempPath(), "File2.cs");
-            File.WriteAllText(file2TempPath, "Contents2");
-
+            codeGen.MultipleFilesManager.GenerateFiles(true).Wait();
             codeGenDescriptor.AddGeneratedClientCodeAsync(serviceConfig.Endpoint, referenceFolderPath, LanguageOption.GenerateCSharpCode, serviceConfig).Wait();
+            var file1TempPath = codeGen.MultipleFilesManager.files[0].TemporaryFilePath;
+            var file2TempPath = codeGen.MultipleFilesManager.files[1].TemporaryFilePath;
             var expectedMainFilePath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "Main.cs");
             var mainFile = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == expectedMainFilePath);
             Assert.IsNotNull(mainFile);
@@ -890,9 +889,9 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
 
     class TestODataT4CodeGenerator : ODataT4CodeGenerator
     {
-        public override string TransformText()
+        public override Task<string> TransformTextAsync()
         {
-            return "Generated code";
+            return Task.FromResult("Generated code");
         }
     }
     class TestODataT4CodeGeneratorUsingProxy : ODataT4CodeGenerator

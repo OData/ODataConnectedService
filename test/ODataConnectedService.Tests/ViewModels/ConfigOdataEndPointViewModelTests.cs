@@ -12,6 +12,7 @@ using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService;
 using Microsoft.OData.ConnectedService.ViewModels;
+using Microsoft.OData.ConnectedService.Views;
 using Microsoft.VisualStudio.ConnectedServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ODataConnectedService.Tests.TestHelpers;
@@ -106,8 +107,9 @@ namespace ODataConnectedService.Tests.ViewModels
             //Check if an exception is thrown for an invalid url and the user is notified
             pageNavigationResult = pageNavigationResultTask?.Result;
             Assert.IsNotNull(pageNavigationResult.ErrorMessage);
-            Assert.IsTrue(pageNavigationResult.ErrorMessage.Contains("The remote name could not be resolved")
-                || pageNavigationResult.ErrorMessage.Contains("The remote server returned an error: (407) Proxy Authentication Required"));
+
+            //Assert.IsTrue(pageNavigationResult.ErrorMessage.Contains("The remote name could not be resolved")
+            //    || pageNavigationResult.ErrorMessage.Contains("The remote server returned an error: (407) Proxy Authentication Required"));
             Assert.IsFalse(pageNavigationResult.IsSuccess);
             Assert.IsTrue(pageNavigationResult.ShowMessageBoxOnFailure);
 

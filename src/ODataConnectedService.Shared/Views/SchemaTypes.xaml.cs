@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.OData.CodeGen.Models;
+using System;
+using System.Collections.Generic;
 
 namespace Microsoft.OData.ConnectedService.Views
 {
@@ -12,6 +14,9 @@ namespace Microsoft.OData.ConnectedService.Views
     /// </summary>
     public partial class SchemaTypes : UserControl
     {
+        private int currentPage = 1;
+        private int itemsPerPage = 50;
+
         public SchemaTypes()
         {
             InitializeComponent();
@@ -67,6 +72,44 @@ namespace Microsoft.OData.ConnectedService.Views
         private void DeselectAllBoundOperations_Click(object sender, RoutedEventArgs e)
         {
             (DataContext as SchemaTypesViewModel)?.DeselectAllBoundOperations();
+        }
+
+        public void DisplayPage(int pageNumber)
+        {
+            int startIndex = (pageNumber - 1) * itemsPerPage;
+            int endIndex = startIndex + itemsPerPage;
+
+            var items = (DataContext as SchemaTypesViewModel)?.FilteredSchemaTypes;
+            endIndex = endIndex > items.Count() ? items.Count() : endIndex;
+
+            // Get the items for the current page
+            var pageItems = items.Skip(startIndex).Take(endIndex - startIndex);
+
+            // Bind the items to the ListBox
+            SchemaTypesTreeView.ItemsSource = pageItems;
+
+            // Update the page info
+            PageInfoTextBlock.Text = $"Page {pageNumber} of {Math.Ceiling((double)items.Count() / itemsPerPage)}";
+        }
+
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            var items = (DataContext as SchemaTypesViewModel)?.FilteredSchemaTypes;
+
+            if (currentPage * itemsPerPage < items.Count())
+            {
+                currentPage++;
+                DisplayPage(currentPage);
+            }
+        }
+
+        private void PreviousButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                DisplayPage(currentPage);
+            }
         }
     }
 }

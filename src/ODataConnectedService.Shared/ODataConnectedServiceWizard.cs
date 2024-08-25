@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OData.CodeGen.Common;
@@ -45,6 +46,7 @@ namespace Microsoft.OData.ConnectedService
 
         internal string ProcessedEndpointForSchemaTypes;
 
+
         public ODataConnectedServiceWizard(ConnectedServiceProviderContext context)
         {
             Context = context;
@@ -62,6 +64,7 @@ namespace Microsoft.OData.ConnectedService
             OperationImportsViewModel = new OperationImportsViewModel(UserSettings);
 
             OperationImportsViewModel.PageEntering += OperationImportsViewModel_PageEntering;
+
             SchemaTypesViewModel.PageEntering += SchemaTypeSelectionViewModel_PageEntering;
             SchemaTypesViewModel.PageLeaving += SchemaTypeSelectionViewModel_PageLeaving;
 
@@ -206,7 +209,7 @@ namespace Microsoft.OData.ConnectedService
                         return;
                     }
 
-                    var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+                    var model = this.ConfigODataEndpointViewModel.Model;
                     var operations = EdmHelper.GetOperationImports(model);
                     OperationImportsViewModel.LoadOperationImports(operations, new HashSet<string>(SchemaTypesViewModel.ExcludedSchemaTypeNames), SchemaTypesViewModel.SchemaTypeModelMap);
 
@@ -216,6 +219,10 @@ namespace Microsoft.OData.ConnectedService
                     }
                 }
 
+                if (operationImportsViewModel.View is OperationImports view)
+                {
+                    view.SelectedOperationImportsCount.Text = operationImportsViewModel.OperationImports.Count(x => x.IsSelected).ToString(CultureInfo.InvariantCulture);
+                }
                 ProcessedEndpointForOperationImports = UserSettings.Endpoint;
             }
         }
@@ -226,7 +233,7 @@ namespace Microsoft.OData.ConnectedService
             {
                 if (ProcessedEndpointForSchemaTypes != UserSettings.Endpoint)
                 {
-                    var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+                    var model = this.ConfigODataEndpointViewModel.Model;
                     var entityTypes = EdmHelper.GetSchemaTypes(model);
                     var boundOperations = EdmHelper.GetBoundOperations(model);
                     SchemaTypesViewModel.LoadSchemaTypes(entityTypes, boundOperations);
@@ -243,9 +250,31 @@ namespace Microsoft.OData.ConnectedService
             }
         }
 
+        public void ConfigODataEndpoint_PageLeaving(object sender, EventArgs e)
+        {
+            if (sender is ConfigODataEndpointViewModel entityConfigODataEndpoint)
+            {
+                ConfigODataEndpointViewModel.MetadataTempPath = entityConfigODataEndpoint.MetadataTempPath;
+                ConfigODataEndpointViewModel.EdmxVersion = EdmxVersion;
+                if (EdmxVersion == Constants.EdmxVersion4)
+                {
+                    IEnumerable<IEdmSchemaType> entityTypes = EdmHelper.GetSchemaTypes(ConfigODataEndpointViewModel.Model);
+                    IDictionary<IEdmType, List<IEdmOperation>> boundOperations = EdmHelper.GetBoundOperations(ConfigODataEndpointViewModel.Model);
+                    SchemaTypesViewModel.LoadSchemaTypes(entityTypes, boundOperations);
+                    ProcessedEndpointForSchemaTypes = this.UserSettings.Endpoint;
+                    SchemaTypesViewModel.LoadFromUserSettings();
+
+                    IEnumerable<IEdmOperationImport> operations = EdmHelper.GetOperationImports(ConfigODataEndpointViewModel.Model);
+                    OperationImportsViewModel.LoadOperationImports(operations, new HashSet<string>(), new Dictionary<string, SchemaTypeModel>());
+                    ProcessedEndpointForOperationImports = UserSettings.Endpoint;
+                    OperationImportsViewModel.LoadFromUserSettings();
+                }
+            }
+        }
+
         public void SchemaTypeSelectionViewModel_PageLeaving(object sender, EventArgs args)
         {
-            var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+            var model = this.ConfigODataEndpointViewModel.Model;
 
             // exclude related operation imports for excluded types
             var operations = EdmHelper.GetOperationImports(model);

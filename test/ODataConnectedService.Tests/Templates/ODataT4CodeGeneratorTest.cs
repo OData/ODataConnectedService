@@ -5,6 +5,7 @@
 // </copyright>
 //---------------------------------------------------------------------------------
 
+using System.Threading.Tasks;
 using Microsoft.OData.CodeGen.Templates;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ODataConnectedService.Tests.TestHelpers;
@@ -15,7 +16,7 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
     public class ODataT4CodeGeneratorTest
     {
         [TestMethod]
-        public void TestEntitiesComplexTypesEnumsFunctions()
+        public async Task TestEntitiesComplexTypesEnumsFunctionsAsync()
         {
             string edmx = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctions.xml");
             string expected = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctions.cs");
@@ -24,12 +25,12 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
                 Edmx = edmx,
                 TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp
             };
-            var output = generator.TransformText();
+            var output = await generator.TransformTextAsync().ConfigureAwait(false);
             GeneratedCodeHelpers.VerifyGeneratedCode(expected, output);
         }
 
         [TestMethod]
-        public void TestEntitiesComplexTypesEnumsFunctionsDSC()
+        public async Task TestEntitiesComplexTypesEnumsFunctionsDSCAsync()
         {
             string edmx = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctions.xml");
             string expected = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctionsDSC.cs");
@@ -39,12 +40,12 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
                 TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp,
                 UseDataServiceCollection = true
             };
-            var output = generator.TransformText();
+            var output = await generator.TransformTextAsync().ConfigureAwait(false);
             GeneratedCodeHelpers.VerifyGeneratedCode(expected, output);
         }
 
         [TestMethod]
-        public void TestEntitiesComplexTypesEnumFunctionsWithInternalTypes()
+        public async Task TestEntitiesComplexTypesEnumFunctionsWithInternalTypesAsync()
         {
             string edmx = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctions.xml");
             string expected = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctionsWithInternalTypes.cs");
@@ -55,13 +56,13 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
                 MakeTypesInternal = true
 
             };
-            var output = generator.TransformText();
+            var output = await generator.TransformTextAsync().ConfigureAwait(false);
             GeneratedCodeHelpers.VerifyGeneratedCode(expected, output);
         }
 
 
         [TestMethod]
-        public void TestEntitiesComplexTypesEnumFunctionsWithNoVersioningInfo()
+        public async Task TestEntitiesComplexTypesEnumFunctionsWithNoVersioningInfoAsync()
         {
             string edmx = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctions.xml");
             string expected = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctions.cs");
@@ -71,12 +72,12 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
                 TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp,
                 OmitVersioningInfo = true,
             };
-            var output = generator.TransformText();
+            var output = await generator.TransformTextAsync().ConfigureAwait(false);
             GeneratedCodeHelpers.VerifyGeneratedCodeOmitVersioningInfo(expected, output);
         }
 
         [TestMethod]
-        public void TestEntitiesComplexTypesEnumFunctionsDSCWithInternalTypes()
+        public async Task TestEntitiesComplexTypesEnumFunctionsDSCWithInternalTypesAsync()
         {
             string edmx = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctions.xml");
             string expected = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctionsDSCWithInternalTypes.cs");
@@ -88,12 +89,12 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
                 MakeTypesInternal = true
 
             };
-            var output = generator.TransformText();
+            var output = await generator.TransformTextAsync().ConfigureAwait(false);
             GeneratedCodeHelpers.VerifyGeneratedCode(expected, output);
         }
 
         [TestMethod]
-        public void TestEntitiesComplexTypesEnumFunctionsDSCWithNoVersioningInfo()
+        public async Task TestEntitiesComplexTypesEnumFunctionsDSCWithNoVersioningInfoAsync()
         {
             string edmx = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctions.xml");
             string expected = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctionsDSC.cs");
@@ -104,12 +105,12 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
                 UseDataServiceCollection = true,
                 OmitVersioningInfo = true,
             };
-            var output = generator.TransformText();
+            var output = await generator.TransformTextAsync().ConfigureAwait(false);
             GeneratedCodeHelpers.VerifyGeneratedCodeOmitVersioningInfo(expected, output);
         }
 
         [TestMethod]
-        public void TestEntitiesComplexTypesEnumFunctionsDSCWithInternalTypesWithNoVersioningInfo()
+        public async Task TestEntitiesComplexTypesEnumFunctionsDSCWithInternalTypesWithNoVersioningInfoAsync()
         {
             string edmx = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctions.xml");
             string expected = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctionsDSCWithInternalTypes.cs");
@@ -121,12 +122,12 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
                 MakeTypesInternal = true,
                 OmitVersioningInfo = true,
             };
-            var output = generator.TransformText();
+            var output = await generator.TransformTextAsync().ConfigureAwait(false);
             GeneratedCodeHelpers.VerifyGeneratedCodeOmitVersioningInfo(expected, output);
         }
 
         [TestMethod]
-        public void TestTypeDefinitionsParamsConvertedToUnderlyingType()
+        public async Task TestTypeDefinitionsParamsConvertedToUnderlyingTypeAsync()
         {
             string edmx = GeneratedCodeHelpers.LoadReferenceContent("TypeDefinitions.xml");
             string expected = GeneratedCodeHelpers.LoadReferenceContent("TypeDefinitionsParamsConvertedToUnderlyingType.cs");
@@ -135,12 +136,12 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
                 Edmx = edmx,
                 TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp
             };
-            var output = generator.TransformText();
+            var output = await generator.TransformTextAsync().ConfigureAwait(false);
             GeneratedCodeHelpers.VerifyGeneratedCode(expected, output);
         }
 
         [TestMethod]
-        public void TestExcludedOperationImportsNotIncludeInGeneratedCode()
+        public async Task TestExcludedOperationImportsNotIncludeInGeneratedCodeAsync()
         {
             string edmx = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctions.xml");
             string expected = GeneratedCodeHelpers.LoadReferenceContent("EntitiesEnumsFunctionsDSCExcludeOperationImports.cs");
@@ -151,14 +152,14 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
                 ExcludedOperationImports = new string[] { "GetPersonWithMostFriends", "ResetDataSource" },
                 TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp
             };
-            var output = generator.TransformText();
+            var output = await generator.TransformTextAsync().ConfigureAwait(false);
             GeneratedCodeHelpers.VerifyGeneratedCode(expected, output);
         }
 
         [TestMethod]
         [DataRow(ODataT4CodeGenerator.LanguageOption.CSharp, "EntityPropertiesWithDefaultValues.cs")]
         [DataRow(ODataT4CodeGenerator.LanguageOption.VB, "EntityPropertiesWithDefaultValues.vb")]
-        public void TestPropertyInitializersGeneratedForDefaultValues(ODataT4CodeGenerator.LanguageOption lang, string expectedCodeFile)
+        public async Task TestPropertyInitializersGeneratedForDefaultValuesAsync(ODataT4CodeGenerator.LanguageOption lang, string expectedCodeFile)
         {
             // Arrange
             string edmx = GeneratedCodeHelpers.LoadReferenceContent("EntityPropertiesWithDefaultValues.xml");
@@ -170,7 +171,7 @@ namespace Microsoft.OData.ConnectedService.Tests.Templates
             };
 
             // Act
-            string output = generator.TransformText();
+            string output = await generator.TransformTextAsync().ConfigureAwait(false);
 
             // Assert
             GeneratedCodeHelpers.VerifyGeneratedCode(expected, output);

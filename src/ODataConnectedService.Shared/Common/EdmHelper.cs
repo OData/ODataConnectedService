@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
@@ -26,43 +27,46 @@ namespace Microsoft.OData.ConnectedService.Common
         /// <param name="path">Edmx file path.</param>
         /// <param name="context">ConnectedServiceContext object.</param>
         /// <returns>Edm model</returns>
-        public static IEdmModel GetEdmModelFromFile(string path, ConnectedServiceContext context = null)
+        public static Task<IEdmModel> GetEdmModelFromFileAsync(string path, ConnectedServiceContext context = null)
         {
             var xmlSettings = new XmlReaderSettings
             {
                 DtdProcessing = DtdProcessing.Parse
             };
 
-            using (var reader = XmlReader.Create(path, xmlSettings))
-            {
-                try
-                {
-                    var result = CsdlReader.TryParse(reader, true /* ignoreUnexpectedAttributes */, out var model, out var errors);
-                    if (result)
-                    {
-                        return model;
-                    }
+           return Task.Run(() =>
+             {
+                 using (var reader = XmlReader.Create(path, xmlSettings))
+                 {
+                     try
+                     {
+                         var result = CsdlReader.TryParse(reader, ignoreUnexpectedAttributesAndElements: true, out var model, out var errors);
+                         if (result)
+                         {
+                             return model;
+                         }
 
-                    if (context != null)
-                    {
-                        foreach (var error in errors)
-                        {
-                            var task = context.Logger?.WriteMessageAsync(LoggerMessageCategory.Warning,
-                                error.ErrorMessage);
-                            task?.RunSynchronously();
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    if (context != null)
-                    {
-                        var task = context.Logger?.WriteMessageAsync(LoggerMessageCategory.Warning, ex.Message);
-                        task?.RunSynchronously();
-                    }
-                }
-            }
-            return null;
+                         if (context != null)
+                         {
+                             foreach (var error in errors)
+                             {
+                                 var task = context.Logger?.WriteMessageAsync(LoggerMessageCategory.Warning,
+                                     error.ErrorMessage);
+                                 task?.RunSynchronously();
+                             }
+                         }
+                     }
+                     catch (Exception ex)
+                     {
+                         if (context != null)
+                         {
+                             var task = context.Logger?.WriteMessageAsync(LoggerMessageCategory.Warning, ex.Message);
+                             task?.RunSynchronously();
+                         }
+                     }
+                 }
+                 return null;
+             });
         }
 
         /// <summary>

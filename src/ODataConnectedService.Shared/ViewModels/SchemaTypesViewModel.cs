@@ -22,6 +22,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 {
     internal class SchemaTypesViewModel : ConnectedServiceWizardPage
     {
+        private const int DebounceTimeInMilliseconds = 250;
+
         /// <summary>
         /// User settings.
         /// </summary>
@@ -40,7 +42,17 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// </summary>
         public IEnumerable<SchemaTypeModel> SchemaTypes { get; set; }
 
+        public event EventHandler<EventArgs> PageLeaving;
+
         private string _searchText;
+
+        private System.Windows.Threading.DispatcherTimer _searchTimer;
+
+        private void OnSearchTimerTick(object sender, EventArgs e)
+        {
+            _searchTimer?.Stop();
+            RefreshPaginatorView();
+        }
 
         /// <summary>
         /// Text to filter displayed schema types or it's bound operations.
@@ -53,7 +65,16 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                 _searchText = value;
 
                 this.OnPropertyChanged(nameof(SearchText));
-                this.OnPropertyChanged(nameof(FilteredSchemaTypes));
+                _searchTimer?.Stop();
+                _searchTimer?.Start();
+            }
+        }
+
+        private void RefreshPaginatorView()
+        {
+            if (this.View is SchemaTypes schemaView)
+            {
+                schemaView.DisplayPage(1);
             }
         }
 
@@ -105,8 +126,6 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public event EventHandler<EventArgs> PageEntering;
 
-        public event EventHandler<EventArgs> PageLeaving;
-
         internal bool IsEntered;
 
         public SchemaTypesViewModel(UserSettings userSettings = null) : base()
@@ -128,17 +147,25 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// <param name="args">Event arguments being passed to the method.</param>
         public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
+            _searchTimer = new System.Windows.Threading.DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(DebounceTimeInMilliseconds)
+            };
+            _searchTimer.Tick += OnSearchTimerTick;
+            this.View = new SchemaTypes() { DataContext = this };
+
             this.IsEntered = true;
-            await base.OnPageEnteringAsync(args).ConfigureAwait(false);
-            View = new SchemaTypes() { DataContext = this };
-            PageEntering?.Invoke(this, EventArgs.Empty);
+            this.PageEntering?.Invoke(this, EventArgs.Empty);
+
             if (this.View is SchemaTypes view)
             {
                 view.SelectedSchemaTypesCount.Text = SchemaTypes.Count(x => x.IsSelected).ToString(CultureInfo.InvariantCulture);
                 view.SelectedBoundOperationsCount.Text = SchemaTypes
                     .Where(x => x.IsSelected && x.BoundOperations?.Any() == true).SelectMany(x => x.BoundOperations)
                     .Count(x => x.IsSelected).ToString(CultureInfo.InvariantCulture);
+                view.DisplayPage(1);
             }
+            await base.OnPageEnteringAsync(args).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -155,7 +182,12 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
             var correctTypeSelection = true;
 
-            PageLeaving?.Invoke(this, EventArgs.Empty);
+            if (Wizard is ODataConnectedServiceWizard wizard)
+            {
+                Model = wizard.ConfigODataEndpointViewModel.Model ?? await EdmHelper.GetEdmModelFromFileAsync(wizard.ConfigODataEndpointViewModel.MetadataTempPath).ConfigureAwait(false);
+            }
+
+            this.PageLeaving?.Invoke(this, EventArgs.Empty);
 
             // Check each excluded schema type and check if they are required. If so, then automatically select them.
             foreach (var schemaType in ExcludedSchemaTypeNames)
@@ -452,7 +484,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// </summary>
         public void ClearSchemaTypes()
         {
-            SchemaTypes = Enumerable.Empty<SchemaTypeModel>();
+            SchemaTypes = new List<SchemaTypeModel>();
             _schemaTypesCount = 0;
         }
 
@@ -493,6 +525,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                     .Where(o => !o.IsSelected).Select(o => o.Name).OrderBy(x => x);
             }
         }
+
+        public IEdmModel Model { get; private set; }
 
         /// <summary>
         /// Loads bound operations except the ones that require a type that is excluded.

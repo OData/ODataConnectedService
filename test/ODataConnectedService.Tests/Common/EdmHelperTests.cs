@@ -12,6 +12,7 @@ using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.OData.ConnectedService.Common;
+using System.Threading.Tasks;
 
 namespace ODataConnectedService.Tests
 {
@@ -22,7 +23,7 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void TestGetEdmFromFile()
         {
-            var model = EdmHelper.GetEdmModelFromFile(MetadataPath);
+            var model = EdmHelper.GetEdmModelFromFileAsync(MetadataPath);
             Assert.IsNotNull(model);
         }
 
@@ -43,9 +44,9 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void TestGetSchemaTypes()
+        public async Task TestGetSchemaTypesAsync()
         {
-            var model = EdmHelper.GetEdmModelFromFile(MetadataPath);
+            var model = await EdmHelper.GetEdmModelFromFileAsync(MetadataPath).ConfigureAwait(false);
             var schemaTypes = EdmHelper.GetSchemaTypes(model);
             var actualSchemaTypes = new List<string>();
 
@@ -86,9 +87,9 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void TestGetOperationImports()
+        public async Task TestGetOperationImports()
         {
-            var model = EdmHelper.GetEdmModelFromFile(MetadataPath);
+            var model = await EdmHelper.GetEdmModelFromFileAsync(MetadataPath).ConfigureAwait(false);
             var operationImports = EdmHelper.GetOperationImports(model);
 
             var actualOperationImports = new List<string>();
@@ -122,9 +123,9 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void TestGetBoundOperations()
+        public async Task TestGetBoundOperationsAsync()
         {
-            var model = EdmHelper.GetEdmModelFromFile(MetadataPath);
+            var model = await EdmHelper.GetEdmModelFromFileAsync(MetadataPath).ConfigureAwait(false);
             var boundOperations = EdmHelper.GetBoundOperations(model);
 
             var actualBoundOperations = new List<string>();

@@ -13,6 +13,7 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Xml;
 using FluentAssertions;
 using Microsoft.OData.CodeGen.Templates;
@@ -139,43 +140,43 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void CodeGenSimpleEdmx()
+        public async Task CodeGenSimpleEdmxAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.Simple.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.Simple.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.Simple.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.Simple.Metadata, null, true, true, false, false, null, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.Simple.Metadata, null, true, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.Simple.Verify(code, true/*isCSharp*/, true/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.Simple.Metadata, null, false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.Simple.Metadata, null, false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.Simple.Verify(code, false/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.Simple.Metadata, null, false, true, false, false, null, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.Simple.Metadata, null, false, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.Simple.Verify(code, false/*isCSharp*/, true/*useDSC*/);
         }
 
 
 
         [TestMethod]
-        public void CodeGenMaxLengthEdmx()
+        public async Task CodeGenMaxLengthEdmxAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MaxLength.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.MaxLength.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.MaxLength.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MaxLength.Metadata, null, true, true, false, false, null, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.MaxLength.Metadata, null, true, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.MaxLength.Verify(code, true/*isCSharp*/, true/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MaxLength.Metadata, null, false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.MaxLength.Metadata, null, false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.MaxLength.Verify(code, false/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MaxLength.Metadata, null, false, true, false, false, null, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.MaxLength.Metadata, null, false, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.MaxLength.Verify(code, false/*isCSharp*/, true/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenSimpleEdmxMultipleFiles()
+        public async Task CodeGenSimpleEdmxMultipleFilesAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SimpleMultipleFiles.Metadata, null, true, false, generateMultipleFiles: true);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.SimpleMultipleFiles.Metadata, null, true, false, generateMultipleFiles: true).ConfigureAwait(false);
 
             string expectedTestType = GeneratedCodeHelpers.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFileContent("SimpleMultipleTestType.cs"));
             string actualTestType = GeneratedCodeHelpers.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "TestType.cs")));
@@ -196,9 +197,9 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void CodeGenSameNamedEntityEdmxMultipleFiles()
+        public async Task CodeGenSameNamedEntityEdmxMultipleFilesAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SameNamedEntityMultipleFiles.Metadata, null, true, false, generateMultipleFiles: true);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.SameNamedEntityMultipleFiles.Metadata, null, true, false, generateMultipleFiles: true).ConfigureAwait(false);
 
             string expectedNamespace1TestType = GeneratedCodeHelpers.NormalizeGeneratedCode(ODataT4CodeGeneratorTestDescriptors.GetFileContent("SameNamedEntityMultipleNamespace1TestType.cs"));
             string actualNamespace1TestType = GeneratedCodeHelpers.NormalizeGeneratedCode(File.ReadAllText(Path.Combine(Path.GetTempPath(), "Namespace1.TestType.cs")));
@@ -221,25 +222,25 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void CodeGenEntityBooleanPropertyWithDefaultValueEdmx()
+        public async Task CodeGenEntityBooleanPropertyWithDefaultValueEdmxAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Metadata, null, true, true, false, false, null, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Metadata, null, true, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Verify(code, true/*isCSharp*/, true/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Metadata, null, false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Metadata, null, false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Verify(code, false/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Metadata, null, false, true, false, false, null, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Metadata, null, false, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.EntityBooleanPropertyWithDefaultValue.Verify(code, false/*isCSharp*/, true/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenEntityHierarchyWithIDAndId()
+        public async Task CodeGenEntityHierarchyWithIDAndIdAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityHierarchyWithIDAndId.Metadata, null, true, true, false, false, null, true);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.EntityHierarchyWithIDAndId.Metadata, null, true, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.EntityHierarchyWithIDAndId.Verify(code, true/*isCSharp*/, true/*useDSC*/);
 
             // TODO: enable VB tests
@@ -249,18 +250,18 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void CodeGenSourceParameterOrKeysPropertyEdmx()
+        public async Task CodeGenSourceParameterOrKeysPropertyEdmxAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Metadata, null, true, true, false, false, null, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Metadata, null, true, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Verify(code, true/*isCSharp*/, true/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Metadata, null, false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Metadata, null, false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Verify(code, false/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Metadata, null, false, true, false, false, null, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Metadata, null, false, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.SourceParameterOrKeysProperty.Verify(code, false/*isCSharp*/, true/*useDSC*/);
         }
 
@@ -285,7 +286,7 @@ namespace ODataConnectedService.Tests
 ";
             try
             {
-                CodeGenWithT4Template(invalidEdmxDsvGreaterThanMdsv, null, true, false);
+                CodeGenWithT4TemplateAsync(invalidEdmxDsvGreaterThanMdsv, null, true, false);
             }
             catch (InvalidOperationException ex)
             {
@@ -294,78 +295,78 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void CodeGenSetNamespacePrefixWithSingleNamespace()
+        public async Task CodeGenSetNamespacePrefixWithSingleNamespaceAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithSingleNamespace.Metadata, "NamespacePrefixWithSingleNamespace", true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithSingleNamespace.Metadata, "NamespacePrefixWithSingleNamespace", true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithSingleNamespace.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithSingleNamespace.Metadata, "NamespacePrefixWithSingleNamespace", false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithSingleNamespace.Metadata, "NamespacePrefixWithSingleNamespace", false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithSingleNamespace.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenSetNamespacePrefixWithDoubleNamespaces()
+        public async Task CodeGenSetNamespacePrefixWithDoubleNamespacesAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithDoubleNamespaces.Metadata, "Foo", true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithDoubleNamespaces.Metadata, "Foo", true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithDoubleNamespaces.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithDoubleNamespaces.Metadata, "Foo", false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithDoubleNamespaces.Metadata, "Foo", false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithDoubleNamespaces.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenSetNamespacePrefixWithInheritence()
+        public async Task CodeGenSetNamespacePrefixWithInheritenceAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithInheritence.Metadata, "Foo", true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithInheritence.Metadata, "Foo", true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithInheritence.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithInheritence.Metadata, "Foo", false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithInheritence.Metadata, "Foo", false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.NamespacePrefixWithInheritence.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void MergedFunctionalTest()
+        public async Task MergedFunctionalTestAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MergedFunctionalTest.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.MergedFunctionalTest.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.MergedFunctionalTest.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MergedFunctionalTest.Metadata, null, true, true, false, false, null, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.MergedFunctionalTest.Metadata, null, true, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.MergedFunctionalTest.Verify(code, true/*isCSharp*/, true/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MergedFunctionalTest.Metadata, null, false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.MergedFunctionalTest.Metadata, null, false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.MergedFunctionalTest.Verify(code, false/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MergedFunctionalTest.Metadata, null, false, true, false, false, null, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.MergedFunctionalTest.Metadata, null, false, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.MergedFunctionalTest.Verify(code, false/*isCSharp*/, true/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenWithKeywordsAsNames()
+        public async Task CodeGenWithKeywordsAsNames()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.KeywordsAsNames.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.KeywordsAsNames.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.KeywordsAsNames.Verify(code, true /*isCSharp*/, false /*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.KeywordsAsNames.Metadata, null, false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.KeywordsAsNames.Metadata, null, false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.KeywordsAsNames.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenWithNamespaceInKeywords()
+        public async Task CodeGenWithNamespaceInKeywordsAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywords.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywords.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywords.Verify(code, true /*isCSharp*/, false /*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywords.Metadata, null, false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywords.Metadata, null, false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywords.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenWithNamespaceInKeywordsWithRefModel()
+        public async Task CodeGenWithNamespaceInKeywordsWithRefModelAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywordsWithRefModel.Metadata, null, true, false, true, getReferencedModelReaderFunc: ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywordsWithRefModel.GetReferencedModelReaderFunc);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywordsWithRefModel.Metadata, null, true, false, true, getReferencedModelReaderFunc: ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywordsWithRefModel.GetReferencedModelReaderFunc).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywordsWithRefModel.Verify(code, true /*isCSharp*/, false /*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywordsWithRefModel.Metadata, null, false, false, true, getReferencedModelReaderFunc: ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywordsWithRefModel.GetReferencedModelReaderFunc);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywordsWithRefModel.Metadata, null, false, false, true, getReferencedModelReaderFunc: ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywordsWithRefModel.GetReferencedModelReaderFunc).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywordsWithRefModel.Verify(code, false/*isCSharp*/, false/*useDSC*/);
 
             //code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywordsWithRefModel.Metadata, null, true, true, false, false, ODataT4CodeGeneratorTestDescriptors.NamespaceInKeywordsWithRefModel.GetReferencedModelReaderFunc, true);
@@ -376,12 +377,12 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void CodeGenWithMultiReferenceModel()
+        public async Task CodeGenWithMultiReferenceModelAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MultiReferenceModel.Metadata, null, true, false, getReferencedModelReaderFunc: ODataT4CodeGeneratorTestDescriptors.MultiReferenceModel.GetReferencedModelReaderFunc);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.MultiReferenceModel.Metadata, null, true, false, getReferencedModelReaderFunc: ODataT4CodeGeneratorTestDescriptors.MultiReferenceModel.GetReferencedModelReaderFunc).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.MultiReferenceModel.Verify(code, true /*isCSharp*/, false /*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MultiReferenceModel.Metadata, null, false, false, getReferencedModelReaderFunc: ODataT4CodeGeneratorTestDescriptors.MultiReferenceModel.GetReferencedModelReaderFunc);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.MultiReferenceModel.Metadata, null, false, false, getReferencedModelReaderFunc: ODataT4CodeGeneratorTestDescriptors.MultiReferenceModel.GetReferencedModelReaderFunc).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.MultiReferenceModel.Verify(code, false/*isCSharp*/, false/*useDSC*/);
 
             //code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MultiReferenceModel.Metadata, null, true, true, false, false, ODataT4CodeGeneratorTestDescriptors.MultiReferenceModel.GetReferencedModelReaderFunc, true);
@@ -392,39 +393,39 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void CodeGenWithMultiReferenceModelRelativeUri()
+        public async Task CodeGenWithMultiReferenceModelRelativeUriAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MultiReferenceModelRelativeUri.Metadata, null, true, false, metadataDocumentUri: ODataT4CodeGeneratorTestDescriptors.EdmxWithMultiReferenceModelRelativeUriFilePath);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.MultiReferenceModelRelativeUri.Metadata, null, true, false, metadataDocumentUri: ODataT4CodeGeneratorTestDescriptors.EdmxWithMultiReferenceModelRelativeUriFilePath).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.MultiReferenceModelRelativeUri.Verify(code, true /*isCSharp*/, false /*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MultiReferenceModelRelativeUri.Metadata, null, false, false, metadataDocumentUri: ODataT4CodeGeneratorTestDescriptors.EdmxWithMultiReferenceModelRelativeUriFilePath);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.MultiReferenceModelRelativeUri.Metadata, null, false, false, metadataDocumentUri: ODataT4CodeGeneratorTestDescriptors.EdmxWithMultiReferenceModelRelativeUriFilePath).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.MultiReferenceModelRelativeUri.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenWithUpperCamelCaseWithNamespacePrefix()
+        public async Task CodeGenWithUpperCamelCaseWithNamespacePrefixAsync()
         {
             const string namespacePrefix = "namespacePrefix";
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithNamespacePrefix.Metadata, namespacePrefix, true, false, true);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithNamespacePrefix.Metadata, namespacePrefix, true, false, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithNamespacePrefix.Verify(code, true /*isCSharp*/, false /*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithNamespacePrefix.Metadata, namespacePrefix, false, false, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithNamespacePrefix.Metadata, namespacePrefix, false, false, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithNamespacePrefix.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenWithUpperCamelCaseWithoutNamespacePrefix()
+        public async Task CodeGenWithUpperCamelCaseWithoutNamespacePrefixAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithoutNamespacePrefix.Metadata, null, true, false, true);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithoutNamespacePrefix.Metadata, null, true, false, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithoutNamespacePrefix.Verify(code, true /*isCSharp*/, false /*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithoutNamespacePrefix.Metadata, null, false, false, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithoutNamespacePrefix.Metadata, null, false, false, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithoutNamespacePrefix.Verify(code, false/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithoutNamespacePrefix.Metadata, null, true, true, true, false, null, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithoutNamespacePrefix.Metadata, null, true, true, true, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithoutNamespacePrefix.Verify(code, true/*isCSharp*/, true/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithoutNamespacePrefix.Metadata, null, false, true, true, false, null, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithoutNamespacePrefix.Metadata, null, false, true, true, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.UpperCamelCaseWithoutNamespacePrefix.Verify(code, false/*isCSharp*/, true/*useDSC*/);
         }
 
@@ -471,101 +472,101 @@ namespace ODataConnectedService.Tests
 
         //TODO: Need To Confirm the behavior about Empty Schema
         [TestMethod]
-        public void EmptySchema()
+        public async Task EmptySchemaAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EmptySchema.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.EmptySchema.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.EmptySchema.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EmptySchema.Metadata, null, false, true, false, false, null, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.EmptySchema.Metadata, null, false, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.EmptySchema.Verify(code, false/*isCSharp*/, true/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenWithIgnoreUnexpectedElementsAndAttributes()
+        public async Task CodeGenWithIgnoreUnexpectedElementsAndAttributesAsync()
         {
-            Action action = () => CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.IgnoreUnexpectedElementsAndAttributes.Metadata, null, true, false);
+            Func<Task<string>> action = async () => await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.IgnoreUnexpectedElementsAndAttributes.Metadata, null, true, false).ConfigureAwait(false);
             action.ShouldThrow<InvalidOperationException>().WithMessage("The attribute 'FixLength' was not expected in the given context.");
 
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.IgnoreUnexpectedElementsAndAttributes.Metadata, null, true, false, false, true);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.IgnoreUnexpectedElementsAndAttributes.Metadata, null, true, false, false, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.IgnoreUnexpectedElementsAndAttributes.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.IgnoreUnexpectedElementsAndAttributes.Metadata, null, false, false, false, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.IgnoreUnexpectedElementsAndAttributes.Metadata, null, false, false, false, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.IgnoreUnexpectedElementsAndAttributes.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenPrefixConflictTest()
+        public async Task CodeGenPrefixConflictTestAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.PrefixConflict.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.PrefixConflict.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.PrefixConflict.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.PrefixConflict.Metadata, null, false, true, false, false, null, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.PrefixConflict.Metadata, null, false, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.PrefixConflict.Verify(code, false/*isCSharp*/, true/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenDupNamesTest()
+        public async Task CodeGenDupNamesTestAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.DupNames.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.DupNames.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.DupNames.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.DupNames.Metadata, null, false, true, false, false, null, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.DupNames.Metadata, null, false, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.DupNames.Verify(code, false/*isCSharp*/, true/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenDupNamesWithCamelCaseTest()
+        public async Task CodeGenDupNamesWithCamelCaseTestAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.DupNamesWithCamelCase.Metadata, null, true, true, true, false, null, true);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.DupNamesWithCamelCase.Metadata, null, true, true, true, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.DupNamesWithCamelCase.Verify(code, true/*isCSharp*/, true/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.DupNamesWithCamelCase.Metadata, null, false, false, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.DupNamesWithCamelCase.Metadata, null, false, false, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.DupNamesWithCamelCase.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenOverrideOperationsTest()
+        public async Task CodeGenOverrideOperationsTestAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.OverrideOperations.Metadata, null, true, true, false, false, null, true);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.OverrideOperations.Metadata, null, true, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.OverrideOperations.Verify(code, true/*isCSharp*/, true/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.OverrideOperations.Metadata, null, false, false, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.OverrideOperations.Metadata, null, false, false, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.OverrideOperations.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenAbstractEntityTypeWithoutKeyTest()
+        public async Task CodeGenAbstractEntityTypeWithoutKeyTestAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Metadata, null, true, true, false, false, null, true);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Metadata, null, true, true, false, false, null, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Verify(code, true/*isCSharp*/, true/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Metadata, null, false, false, true);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Metadata, null, false, false, true).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenUsingTempMetadataFileTest()
+        public async Task CodeGenUsingTempMetadataFileTestAsync()
         {
             MetadataFilePath = "tempMetadata.xml";
             File.Delete(MetadataFilePath);
-            CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Metadata, null, true, true, false, false, null, true, MetadataFilePath);
+            await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Metadata, null, true, true, false, false, null, true, MetadataFilePath).ConfigureAwait(false);
             Action action = () => ODataT4CodeGeneratorTestDescriptors.ValidateXMLFile(MetadataFilePath);
             action.ShouldNotThrow<XmlException>();
             ODataT4CodeGeneratorTestDescriptors.ValidateEdmx(MetadataFilePath);
         }
 
         [TestMethod]
-        public void CodeGenUsingTempMetadataFileForVBTest()
+        public async Task CodeGenUsingTempMetadataFileForVBTestAsync()
         {
             MetadataFilePath = "tempMetadata.xml";
             File.Delete(MetadataFilePath);
-            CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Metadata, null, false, true, false, false, null, true, MetadataFilePath);
+            await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.AbstractEntityTypeWithoutKey.Metadata, null, false, true, false, false, null, true, MetadataFilePath).ConfigureAwait(false);
             Action action = () => ODataT4CodeGeneratorTestDescriptors.ValidateXMLFile(MetadataFilePath);
             action.ShouldNotThrow<XmlException>();
         }
 
         [TestMethod]
-        public void CodeGenSelectingSchemaTypesTest()
+        public async Task CodeGenSelectingSchemaTypesTestAsync()
         {
             string @namespace = "Microsoft.OData.Service.Sample.TrippinInMemory.Models.";
             List<string> excludedSchemaTypes = new List<string>()
@@ -579,89 +580,89 @@ namespace ODataConnectedService.Tests
                 $"{@namespace}PublicTransportation"
             };
 
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntitiesEnumsFunctionsSelectTypes.Metadata, null, true, false, false, false, null, true, excludedSchemaTypes: excludedSchemaTypes);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.EntitiesEnumsFunctionsSelectTypes.Metadata, null, true, false, false, false, null, true, excludedSchemaTypes: excludedSchemaTypes).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.EntitiesEnumsFunctionsSelectTypes.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntitiesEnumsFunctionsSelectTypes.Metadata, null, false/*isCSharp*/, false, false, false, null, true, excludedSchemaTypes: excludedSchemaTypes);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.EntitiesEnumsFunctionsSelectTypes.Metadata, null, false, false, false, false, null, true, excludedSchemaTypes: excludedSchemaTypes).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.EntitiesEnumsFunctionsSelectTypes.Verify(code, false/*isCSharp*/, false/*useDSC*/);
 
         }
 
         [TestMethod]
-        public void CodeGenEntityTypeMarkedObsoleteEdmx()
+        public async Task CodeGenEntityTypeMarkedObsoleteEdmxAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityTypeMarkedObsolete.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.EntityTypeMarkedObsolete.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.EntityTypeMarkedObsolete.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntityTypeMarkedObsolete.Metadata, null, false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.EntityTypeMarkedObsolete.Metadata, null, false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.EntityTypeMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenEntitySetMarkedObsoleteEdmx()
+        public async Task CodeGenEntitySetMarkedObsoleteEdmxAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntitySetMarkedObsolete.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.EntitySetMarkedObsolete.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.EntitySetMarkedObsolete.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EntitySetMarkedObsolete.Metadata, null, false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.EntitySetMarkedObsolete.Metadata, null, false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.EntitySetMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenBoundActionsAndFunctionsMarkedObsoleteEdmx()
+        public async Task CodeGenBoundActionsAndFunctionsMarkedObsoleteEdmxAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.BoundActionsAndFunctionsMarkedObsolete.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.BoundActionsAndFunctionsMarkedObsolete.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.BoundActionsAndFunctionsMarkedObsolete.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.BoundActionsAndFunctionsMarkedObsolete.Metadata, null, false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.BoundActionsAndFunctionsMarkedObsolete.Metadata, null, false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.BoundActionsAndFunctionsMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenPropertyAndNavPropertiesMarkedObsoleteEdmx()
+        public async Task CodeGenPropertyAndNavPropertiesMarkedObsoleteEdmxAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.PropertyAndNavPropertiesMarkedObsolete.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.PropertyAndNavPropertiesMarkedObsolete.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.PropertyAndNavPropertiesMarkedObsolete.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.PropertyAndNavPropertiesMarkedObsolete.Metadata, null, false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.PropertyAndNavPropertiesMarkedObsolete.Metadata, null, false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.PropertyAndNavPropertiesMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenFunctionsAndActionImportsMarkedObsoleteEdmx()
+        public async Task CodeGenFunctionsAndActionImportsMarkedObsoleteEdmxAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.FunctionsAndActionImportsMarkedObsolete.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.FunctionsAndActionImportsMarkedObsolete.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.FunctionsAndActionImportsMarkedObsolete.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.FunctionsAndActionImportsMarkedObsolete.Metadata, null, false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.FunctionsAndActionImportsMarkedObsolete.Metadata, null, false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.FunctionsAndActionImportsMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
-        public void CodeGenSingletonsMarkedObsoleteEdmx()
+        public async Task CodeGenSingletonsMarkedObsoleteEdmxAsync()
         {
-            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SingletonsMarkedObsolete.Metadata, null, true, false);
+            string code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.SingletonsMarkedObsolete.Metadata, null, true, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.SingletonsMarkedObsolete.Verify(code, true/*isCSharp*/, false/*useDSC*/);
 
-            code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.SingletonsMarkedObsolete.Metadata, null, false, false);
+            code = await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.SingletonsMarkedObsolete.Metadata, null, false, false).ConfigureAwait(false);
             ODataT4CodeGeneratorTestDescriptors.SingletonsMarkedObsolete.Verify(code, false/*isCSharp*/, false/*useDSC*/);
         }
 
         [TestMethod]
         public void RevisionsAnnotationMissingRevisionKindThrows()
         {
-            Action act = () => CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EdmxRevisionsAnnotationMissingRevisionKind, null, true, false);
+            Func<Task<string>> act = async () => await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.EdmxRevisionsAnnotationMissingRevisionKind, null, true, false).ConfigureAwait(false);
             act.ShouldThrow<Exception>().WithMessage("Kind property is missing from the Annotation Xml");
         }
 
         [TestMethod]
         public void RevisionsAnnotationMissingDescriptionThrows()
         {
-            Action act = () => CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.EdmxRevisionsAnnotationMissingDescription, null, true, false);
+            Func<Task<string>> act = async () => await CodeGenWithT4TemplateAsync(ODataT4CodeGeneratorTestDescriptors.EdmxRevisionsAnnotationMissingDescription, null, true, false).ConfigureAwait(false);
             act.ShouldThrow<Exception>().WithMessage("Description property is missing from the Annotation Xml");
         }
 
-        private static string CodeGenWithT4Template(string edmx, string namespacePrefix, bool isCSharp,
+        private static async Task<string> CodeGenWithT4TemplateAsync(string edmx, string namespacePrefix, bool isCSharp,
             bool useDataServiceCollection, bool enableNamingAlias = false,
             bool ignoreUnexpectedElementsAndAttributes = false,
             Func<Uri, WebProxy, IList<string>, XmlReader> getReferencedModelReaderFunc = null,
@@ -711,7 +712,7 @@ namespace ODataConnectedService.Tests
                 t4CodeGenerator.UseDataServiceCollection = true;
             }
 
-            string code = t4CodeGenerator.TransformText();
+            string code = await t4CodeGenerator.TransformTextAsync().ConfigureAwait(false);
 
             if (CompileGeneratedCode && !generateMultipleFiles)
             {
@@ -792,7 +793,7 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void GenerateDynamicPropertyContainer()
+        public async Task GenerateDynamicPropertyContainerAsync()
         {
             var edmx = @"<?xml version=""1.0"" standalone=""yes"" ?>
 <edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
@@ -839,7 +840,7 @@ namespace ODataConnectedService.Tests
                     EmitContainerPropertyAttribute = true
                 };
 
-                var generatedCode = t4CodeGenerator.TransformText();
+                var generatedCode = await t4CodeGenerator.TransformTextAsync().ConfigureAwait(false);
                 var expectedCode = ODataT4CodeGeneratorTestDescriptors.GetFileContent(expectedCodeFileName);
 
                 var normalizedGeneratedCode = GeneratedCodeHelpers.NormalizeGeneratedCode(generatedCode);
@@ -851,7 +852,7 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void GenerateDynamicPropertyContainerWithNonConflictingName()
+        public async Task GenerateDynamicPropertyContainerWithNonConflictingNameAsync()
         {
             // Edmx with declared property named DynamicProperties
             var edmx = @"<?xml version=""1.0"" standalone=""yes"" ?>
@@ -905,7 +906,7 @@ namespace ODataConnectedService.Tests
                     EmitContainerPropertyAttribute = true
                 };
 
-                var generatedCode = t4CodeGenerator.TransformText();
+                var generatedCode = await t4CodeGenerator.TransformTextAsync().ConfigureAwait(false);
                 var normalizedGeneratedCode = GeneratedCodeHelpers.NormalizeGeneratedCode(generatedCode);
 
                 Assert.IsTrue(normalizedGeneratedCode.IndexOf(containerPropertyAttributeSnippet, StringComparison.Ordinal) > 0);
@@ -913,7 +914,7 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void GenerateDynamicPropertyContainerWithInheritance()
+        public async Task GenerateDynamicPropertyContainerWithInheritanceAsync()
         {
             // Edmx with declared property named DynamicProperties
             var edmx = @"<?xml version=""1.0"" standalone=""yes"" ?>
@@ -965,7 +966,7 @@ namespace ODataConnectedService.Tests
                     EmitContainerPropertyAttribute = true
                 };
 
-                var generatedCode = t4CodeGenerator.TransformText();
+                var generatedCode = await t4CodeGenerator.TransformTextAsync().ConfigureAwait(false);
                 var normalizedGeneratedCode = GeneratedCodeHelpers.NormalizeGeneratedCode(generatedCode);
 
                 Assert.IsTrue(normalizedGeneratedCode.IndexOf(containerPropertyAttributeSnippet, StringComparison.Ordinal) > 0);

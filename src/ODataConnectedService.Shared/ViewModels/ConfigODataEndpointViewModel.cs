@@ -6,10 +6,15 @@
 //---------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.Models;
+using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Views;
+using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.ConnectedServices;
+using static Microsoft.VisualStudio.Shell.ThreadedWaitDialogHelper;
 
 namespace Microsoft.OData.ConnectedService.ViewModels
 {
@@ -24,6 +29,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         public ServiceConfiguration ServiceConfiguration { get; set; }
 
         public event EventHandler<EventArgs> PageEntering;
+
+        public IEdmModel Model { get; set; }
 
         public ConfigODataEndpointViewModel(UserSettings userSettings) : base()
         {
@@ -41,30 +48,40 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
         public event EventHandler<EventArgs> PageLeaving;
 
-        public override Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
+        public override async Task<PageNavigationResult> OnPageLeavingAsync(WizardLeavingArgs args)
         {
             try
             {
+                if (View is ConfigODataEndpoint view)
+                {
+                    view.NavigationProgressBar.Visibility = System.Windows.Visibility.Visible;
+                }
+                this.PageLeaving?.Invoke(this, EventArgs.Empty);
                 ServiceConfiguration = GetServiceConfiguration();
-                this.MetadataTempPath = CodeGen.Common.MetadataReader.ProcessServiceMetadata(ServiceConfiguration, out var version);
+                ServiceConfiguration.Endpoint = CodeGen.Common.MetadataReader.NormalizeUri(ServiceConfiguration);
+                var (path, version) = await CodeGen.Common.MetadataReader.ProcessServiceMetadata(ServiceConfiguration).ConfigureAwait(false);
+
+                this.MetadataTempPath = path;
+                this.EdmxVersion = version;
+                Model = await EdmHelper.GetEdmModelFromFileAsync(this.MetadataTempPath).ConfigureAwait(false);
+
                 // Makes sense to add MRU endpoint at this point since GetMetadata manipulates UserSettings.Endpoint
                 UserSettings.Endpoint = ServiceConfiguration.Endpoint;
                 UserSettings.AddMruEndpoint(UserSettings.Endpoint);
-                this.EdmxVersion = version;
                 PageLeaving?.Invoke(this, EventArgs.Empty);
-                return base.OnPageLeavingAsync(args);
+                return await base.OnPageLeavingAsync(args).ConfigureAwait(false);
             }
             catch (Exception e)
             {
-                return Task.FromResult(
-                    new PageNavigationResult
-                    {
-                        ErrorMessage = e.Message,
-                        IsSuccess = false,
-                        ShowMessageBoxOnFailure = true
-                    });
+                return new PageNavigationResult
+                {
+                    ErrorMessage = e.Message,
+                    IsSuccess = false,
+                    ShowMessageBoxOnFailure = true
+                };
             }
         }
+
 
         private ServiceConfiguration GetServiceConfiguration()
         {

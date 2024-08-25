@@ -4,12 +4,15 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.ViewModels;
+using Microsoft.OData.Edm;
+using Microsoft.VisualStudio.ConnectedServices;
 using Newtonsoft.Json;
 
 namespace Microsoft.OData.ConnectedService.Views
@@ -55,7 +58,7 @@ namespace Microsoft.OData.ConnectedService.Views
             }
         }
 
-        private void OpenConnectedServiceJsonFileButton_Click(object sender, RoutedEventArgs e)
+        private async void OpenConnectedServiceJsonFileButton_Click(object sender, RoutedEventArgs e)
         {
             var fileDialogTitle = "Open OData Connected Service Config File";
 
@@ -120,11 +123,14 @@ namespace Microsoft.OData.ConnectedService.Views
             try
             {
                 var serviceConfiguration = GetServiceConfiguration();
-                connectedServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath = CodeGen.Common.MetadataReader.ProcessServiceMetadata(serviceConfiguration, out var version);
+                serviceConfiguration.Endpoint = CodeGen.Common.MetadataReader.NormalizeUri(serviceConfiguration);
+                var (path, version) = await CodeGen.Common.MetadataReader.ProcessServiceMetadata(serviceConfiguration).ConfigureAwait(false);
+                connectedServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath = path;
                 connectedServiceWizard.ConfigODataEndpointViewModel.EdmxVersion = version;
+                
                 if (version == Constants.EdmxVersion4)
                 {
-                    Edm.IEdmModel model = EdmHelper.GetEdmModelFromFile(connectedServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath);
+                    Edm.IEdmModel model = connectedServiceWizard.ConfigODataEndpointViewModel.Model ?? await EdmHelper.GetEdmModelFromFileAsync(connectedServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath).ConfigureAwait(false);
 
                     IEnumerable<Edm.IEdmSchemaType> entityTypes = EdmHelper.GetSchemaTypes(model);
                     IDictionary<Edm.IEdmType, List<Edm.IEdmOperation>> boundOperations = EdmHelper.GetBoundOperations(model);

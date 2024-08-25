@@ -120,6 +120,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
         }
 
+        public IEdmModel Model { get; set; }
+
         public event EventHandler<EventArgs> PageEntering;
 
         /// <summary>
@@ -132,13 +134,18 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         {
             this.IsEntered = true;
             await base.OnPageEnteringAsync(args).ConfigureAwait(false);
-            this.View = new OperationImports { DataContext = this };
-            this.PageEntering?.Invoke(this, EventArgs.Empty);
-            if (this.View is OperationImports view)
+
+            View = new OperationImports { DataContext = this };
+
+            if (Wizard is ODataConnectedServiceWizard wizard)
             {
-                view.SelectedOperationImportsCount.Text = OperationImports.Count(x => x.IsSelected).ToString(CultureInfo.InvariantCulture);
+                Model = Model ?? wizard.ConfigODataEndpointViewModel.Model ?? await EdmHelper.GetEdmModelFromFileAsync(wizard.ConfigODataEndpointViewModel.MetadataTempPath).ConfigureAwait(false);
             }
+
+            this.PageEntering?.Invoke(this, EventArgs.Empty);
+
         }
+
 
         /// <summary>
         /// Executed when leaving the page for selecting operation imports.

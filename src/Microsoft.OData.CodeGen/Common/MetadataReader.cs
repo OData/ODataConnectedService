@@ -11,6 +11,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.OData.CodeGen.Models;
 
@@ -27,28 +28,11 @@ namespace Microsoft.OData.CodeGen.Common
         /// <param name="serviceConfiguration">The <see cref="ServiceConfiguration"/> of the metadata provided.</param>
         /// <param name="edmxVersion">Edmx version of the metadata.</param>
         /// <returns>Location of the metadata file.</returns>
-        public static string ProcessServiceMetadata(ServiceConfiguration serviceConfiguration, out Version edmxVersion)
+        public static async Task<(string Location, Version EdmxVersion)> ProcessServiceMetadata(ServiceConfiguration serviceConfiguration)
         {
-            if (string.IsNullOrEmpty(serviceConfiguration.Endpoint))
-            {
-                throw new ArgumentNullException("OData Service Endpoint", string.Format(CultureInfo.InvariantCulture, Constants.InputServiceEndpointMsg));
-            }
-
-            if (serviceConfiguration.Endpoint.StartsWith("https:", StringComparison.Ordinal)
-                || serviceConfiguration.Endpoint.StartsWith("http", StringComparison.Ordinal))
-            {
-                if (!Uri.TryCreate(serviceConfiguration.Endpoint, UriKind.Absolute, out Uri uri))
-                {
-                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" is not a valid MetadataDocumentUri because is it not a valid absolute Uri. The MetadataDocumentUri must be set to an absolute Uri referencing the $metadata endpoint of an OData service.", serviceConfiguration.Endpoint));
-                }
-
-                uri = CleanMetadataUri(uri);
-
-                serviceConfiguration.Endpoint = uri.AbsoluteUri;
-            }
+            Uri metadataUri = new Uri(MetadataReader.NormalizeUri(serviceConfiguration));
 
             Stream metadataStream;
-            Uri metadataUri = new Uri(serviceConfiguration.Endpoint);
 
             if (!metadataUri.IsFile)
             {
@@ -57,7 +41,7 @@ namespace Microsoft.OData.CodeGen.Common
                 if (serviceConfiguration.CustomHttpHeaders != null)
                 {
                     var headerElements = serviceConfiguration.CustomHttpHeaders.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                    
+
                     foreach (var headerElement in headerElements)
                     {
                         // Trim header for empty spaces
@@ -81,7 +65,7 @@ namespace Microsoft.OData.CodeGen.Common
                     webRequest.Proxy = proxy;
                 }
 
-                WebResponse webResponse = webRequest.GetResponse();
+                WebResponse webResponse = await webRequest.GetResponseAsync();
                 metadataStream = webResponse.GetResponseStream();
             }
             else
@@ -89,14 +73,14 @@ namespace Microsoft.OData.CodeGen.Common
                 // Set up XML secure resolver
                 var xmlUrlResolver = new XmlUrlResolver
                 {
-                    Credentials = CredentialCache.DefaultNetworkCredentials
+                    Credentials = CredentialCache.DefaultNetworkCredentials,
                 };
 
                 metadataStream = (Stream)xmlUrlResolver.GetEntity(metadataUri, null, typeof(Stream));
             }
 
-            var workFile = Path.GetTempFileName();
-
+            string workFile = Path.GetTempFileName();
+            Version edmxVersion;
             try
             {
                 using (XmlReader reader = XmlReader.Create(metadataStream))
@@ -118,7 +102,7 @@ namespace Microsoft.OData.CodeGen.Common
                     }
                 }
 
-                return workFile;
+                return (workFile, edmxVersion);
             }
             catch (WebException e)
             {
@@ -126,9 +110,32 @@ namespace Microsoft.OData.CodeGen.Common
 
             }
             finally
-            { 
+            {
                 metadataStream?.Dispose();
             }
+        }
+
+        public static string NormalizeUri(ServiceConfiguration serviceConfiguration)
+        {
+            if (string.IsNullOrEmpty(serviceConfiguration.Endpoint))
+            {
+                throw new ArgumentNullException("OData Service Endpoint", string.Format(CultureInfo.InvariantCulture, Constants.InputServiceEndpointMsg));
+            }
+
+            if (serviceConfiguration.Endpoint.StartsWith("https:", StringComparison.Ordinal)
+                || serviceConfiguration.Endpoint.StartsWith("http", StringComparison.Ordinal))
+            {
+                if (!Uri.TryCreate(serviceConfiguration.Endpoint, UriKind.Absolute, out Uri uri))
+                {
+                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" is not a valid MetadataDocumentUri because is it not a valid absolute Uri. The MetadataDocumentUri must be set to an absolute Uri referencing the $metadata endpoint of an OData service.", serviceConfiguration.Endpoint));
+                }
+
+                uri = CleanMetadataUri(uri);
+
+                return uri.AbsoluteUri;
+            }
+
+            return serviceConfiguration.Endpoint;
         }
 
         /// <summary>

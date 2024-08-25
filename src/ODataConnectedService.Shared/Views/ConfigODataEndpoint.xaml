@@ -22,6 +22,7 @@
         Margin="10,0,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top">
+        <ProgressBar Height="20" x:Name="NavigationProgressBar" IsIndeterminate="True" Visibility="Collapsed"/>
         <TextBlock
             x:Name="ServiceName1"
             Margin="0,0,10,0"

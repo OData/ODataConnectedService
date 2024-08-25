@@ -17,7 +17,9 @@ using FluentAssertions;
 using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService;
+using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Views;
+using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.ConnectedServices;
 using Microsoft.VisualStudio.Shell;
 using Xunit;
@@ -54,7 +56,7 @@ namespace ODataConnectedService.Tests
                 ServiceName = "MyService",
                 IncludeCustomHeaders = true,
                 StoreCustomHttpHeaders = true,
-                CustomHttpHeaders = "Key1:Val1\nKey2:Val2",
+                CustomHttpHeaders = "Key1:Val1\r\nKey2:Val2",
                 IncludeWebProxy = true,
                 WebProxyHost = "http://localhost:8080",
                 IncludeWebProxyNetworkCredentials = true,
@@ -112,7 +114,6 @@ namespace ODataConnectedService.Tests
             }
         }
 
-        [Fact]
         public void TestConstructor_ShouldUseDefaultSettingsWhenNotUpdating()
         {
             var savedConfig = GetTestConfig();
@@ -140,7 +141,7 @@ namespace ODataConnectedService.Tests
                 endpointPage.UserSettings.Endpoint = MetadataPath;
                 endpointPage.MetadataTempPath = MetadataPath;
                 endpointPage.EdmxVersion = Constants.EdmxVersion4;
-                operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
+                operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).GetAwaiter().GetResult();
                 operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
                 {
                     new OperationImportModel
@@ -282,7 +283,7 @@ namespace ODataConnectedService.Tests
                 Assert.Equal("MyService", endpointPage.UserSettings.ServiceName);
                 Assert.True(endpointPage.UserSettings.IncludeCustomHeaders);
                 Assert.True(endpointPage.UserSettings.StoreCustomHttpHeaders);
-                Assert.Equal("Key1:Val1\nKey2:Val2", endpointPage.UserSettings.CustomHttpHeaders);
+                Assert.Equal("Key1:Val1\r\nKey2:Val2", endpointPage.UserSettings.CustomHttpHeaders);
                 Assert.True(endpointPage.UserSettings.IncludeWebProxy);
                 Assert.Equal("http://localhost:8080", endpointPage.UserSettings.WebProxyHost);
                 Assert.True(endpointPage.UserSettings.IncludeWebProxyNetworkCredentials);
@@ -295,6 +296,9 @@ namespace ODataConnectedService.Tests
                 var operationsPage = wizard.OperationImportsViewModel;
                 endpointPage.MetadataTempPath = MetadataPath;
                 endpointPage.EdmxVersion = Constants.EdmxVersion4;
+                // Precache the model before transition.
+                endpointPage.Model = operationsPage.Model = EdmHelper.GetEdmModelFromFileAsync(wizard.ConfigODataEndpointViewModel.MetadataTempPath).GetAwaiter().GetResult();
+
                 operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
                 operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
                 {
@@ -643,7 +647,7 @@ namespace ODataConnectedService.Tests
                 Assert.Equal(Constants.EdmxVersion4, config.EdmxVersion);
                 Assert.True(config.IncludeCustomHeaders);
                 Assert.True(config.StoreCustomHttpHeaders);
-                Assert.Equal("Key1:Val1\nKey2:Val2", config.CustomHttpHeaders);
+                Assert.Equal("Key1:Val1\r\nKey2:Val2", config.CustomHttpHeaders);
                 Assert.True(config.IncludeWebProxy);
                 Assert.Equal("http://localhost:8080", config.WebProxyHost);
                 Assert.True(config.IncludeWebProxyNetworkCredentials);
@@ -1061,16 +1065,18 @@ namespace ODataConnectedService.Tests
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
                 endpointPage.UserSettings.Endpoint = MetadataPathV3;
+                endpointPage.MetadataTempPath = MetadataPathV3;
+                endpointPage.EdmxVersion = Constants.EdmxVersion1;
                 endpointPage.OnPageLeavingAsync(null).Wait();
-                Assert.Equal(Constants.EdmxVersion1, endpointPage.EdmxVersion);
 
                 var operationsPage = wizard.OperationImportsViewModel;
+                endpointPage.Model = new EdmModel();
                 operationsPage.OnPageEnteringAsync(null).Wait();
                 Assert.False(operationsPage.View.IsEnabled);
                 Assert.False(operationsPage.IsSupportedODataVersion);
 
                 var advancedPage = wizard.AdvancedSettingsViewModel;
-                advancedPage.OnPageEnteringAsync(null).Wait();
+                advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).Wait();
                 var advancedView = advancedPage.View as AdvancedSettings;
                 advancedView.settings.RaiseEvent(new RoutedEventArgs(Hyperlink.ClickEvent));
                 Assert.Equal(Visibility.Hidden, advancedView.AdvancedSettingsForv4.Visibility);

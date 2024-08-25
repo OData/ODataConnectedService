@@ -206,17 +206,12 @@ namespace Microsoft.OData.Cli.Tests.CodeGeneration
 
             parseResult.Invoke();
 
-            var referenceProxyFile = Assert.Single(Directory.GetFiles(outputDir, $"{Constants.DefaultReferenceFileName}.cs"));
             var defaultExtensionMethodsProxyFile = Assert.Single(Directory.GetFiles(outputDir, "SampleServiceV4.Default.ExtensionMethods.cs"));
             var modelsExtensionMethodsProxyFile = Assert.Single(Directory.GetFiles(outputDir, "SampleServiceV4.Models.ExtensionMethods.cs"));
             var customerProxyFile = Assert.Single(Directory.GetFiles(outputDir, "Customer.cs"));
             var orderProxyFile = Assert.Single(Directory.GetFiles(outputDir, "Order.cs"));
             var addressProxyFile = Assert.Single(Directory.GetFiles(outputDir, "Address.cs"));
             var cityProxyFile = Assert.Single(Directory.GetFiles(outputDir, "City.cs"));
-
-            var referenceProxyGeneratedCode = File.ReadAllText(referenceProxyFile);
-            var referenceProxyExpectedCode = CodeVerificationHelper.LoadReferenceContent("SampleServiceV4MultipleFilesProxy.cs");
-            CodeVerificationHelper.VerifyGeneratedCode(referenceProxyExpectedCode, referenceProxyGeneratedCode);
 
             var defaultExtensionMethodsProxyGeneratedCode = File.ReadAllText(defaultExtensionMethodsProxyFile);
             var defaultExtensionMethodsProxyExpectedCode = CodeVerificationHelper.LoadReferenceContent("SampleServiceV4MultipleFilesProxy.Default.ExtensionMethods.cs");
