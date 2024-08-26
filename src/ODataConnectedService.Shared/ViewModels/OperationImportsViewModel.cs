@@ -143,7 +143,6 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             }
 
             this.PageEntering?.Invoke(this, EventArgs.Empty);
-
         }
 
 
