@@ -36,13 +36,13 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
 
         public override async Task AddNugetPackagesAsync()
         {
-            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Adding Nuget Packages...").ConfigureAwait(true);
+            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Adding Nuget Packages...").ConfigureAwait(false);
 
 
             foreach (var nugetPackage in Common.Constants.V4NuGetPackages)
-                await PackageInstaller.CheckAndInstallNuGetPackageAsync(Common.Constants.NuGetOnlineRepository, nugetPackage).ConfigureAwait(true);
+                await PackageInstaller.CheckAndInstallNuGetPackageAsync(Common.Constants.NuGetOnlineRepository, nugetPackage).ConfigureAwait(false);
 
-            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Nuget Packages were installed.").ConfigureAwait(true);
+            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Nuget Packages were installed.").ConfigureAwait(false);
         }
 
         public override async Task AddGeneratedClientCodeAsync(string metadata, string outputDirectory, LanguageOption languageOption, ServiceConfiguration serviceConfiguration)
