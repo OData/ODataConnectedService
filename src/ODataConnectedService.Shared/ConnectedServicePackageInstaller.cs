@@ -85,7 +85,7 @@ namespace Microsoft.OData.ConnectedService
             }
             else
             {
-                await (this.MessageLogger?.WriteMessageAsync(LogMessageCategory.Error, $"The packages were not installed. An error occurred during the installation of packages.")).ConfigureAwait(false);
+                await (this.MessageLogger?.WriteMessageAsync(LogMessageCategory.Error, "The packages were not installed. An error occurred during the installation of packages.")).ConfigureAwait(false);
             }
         }
     }

@@ -266,7 +266,7 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
-        public void CodeGen_DSVGreaterThanMDSV()
+        public async Task CodeGen_DSVGreaterThanMDSVAsync()
         {
             var invalidEdmxDsvGreaterThanMdsv = @"<?xml version=""1.0"" standalone=""yes"" ?>
 <edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
@@ -286,7 +286,7 @@ namespace ODataConnectedService.Tests
 ";
             try
             {
-                CodeGenWithT4TemplateAsync(invalidEdmxDsvGreaterThanMdsv, null, true, false);
+                await CodeGenWithT4TemplateAsync(invalidEdmxDsvGreaterThanMdsv, null, true, false).ConfigureAwait(false);
             }
             catch (InvalidOperationException ex)
             {
