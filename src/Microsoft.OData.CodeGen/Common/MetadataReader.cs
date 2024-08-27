@@ -22,15 +22,29 @@ namespace Microsoft.OData.CodeGen.Common
     /// </summary>
     public static class MetadataReader
     {
+
+
         /// <summary>
         /// Reads the metadata from a provided endpoint, writes to a temporary file and outputs the file path and metadata version
         /// </summary>
         /// <param name="serviceConfiguration">The <see cref="ServiceConfiguration"/> of the metadata provided.</param>
         /// <param name="edmxVersion">Edmx version of the metadata.</param>
-        /// <returns>Location of the metadata file.</returns>
-        public static async Task<(string Location, Version EdmxVersion)> ProcessServiceMetadata(ServiceConfiguration serviceConfiguration)
+        public static string ProcessServiceMetadata(ServiceConfiguration serviceConfiguration, out Version EdmxVersion)
         {
-            Uri metadataUri = new Uri(MetadataReader.NormalizeUri(serviceConfiguration));
+            (string location, Version version) = ProcessServiceMetadataAsync(serviceConfiguration).GetAwaiter().GetResult();
+            EdmxVersion = version;
+            return location;
+        }
+
+        /// <summary>
+        /// Reads the metadata from a provided endpoint, writes to a temporary file and outputs the file path and metadata version
+        /// </summary>
+        /// <param name="serviceConfiguration">The <see cref="ServiceConfiguration"/> of the metadata provided.</param>
+        /// <param name="edmxVersion">Edmx version of the metadata.</param>
+        /// <returns>A task that resolves the location of the metadata file and the Edm version.</returns>
+        public static async Task<(string Location, Version EdmxVersion)> ProcessServiceMetadataAsync(ServiceConfiguration serviceConfiguration)
+        {
+            Uri metadataUri = new Uri(MetadataReader.ValidateAndNormalizeUri(serviceConfiguration.Endpoint));
 
             Stream metadataStream;
 
@@ -115,19 +129,26 @@ namespace Microsoft.OData.CodeGen.Common
             }
         }
 
-        public static string NormalizeUri(ServiceConfiguration serviceConfiguration)
+        /// <summary>
+        /// Validates that the uri has a valid scheme and is an absolute uri.
+        /// </summary>
+        /// <param name="serviceConfiguration">Service configuration.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">Thrown when a null endpoint is provided.</exception>
+        /// <exception cref="ArgumentException">Thrown when an </exception>
+        public static string ValidateAndNormalizeUri(string endpoint)
         {
-            if (string.IsNullOrEmpty(serviceConfiguration.Endpoint))
+            if (string.IsNullOrEmpty(endpoint))
             {
                 throw new ArgumentNullException("OData Service Endpoint", string.Format(CultureInfo.InvariantCulture, Constants.InputServiceEndpointMsg));
             }
 
-            if (serviceConfiguration.Endpoint.StartsWith("https:", StringComparison.Ordinal)
-                || serviceConfiguration.Endpoint.StartsWith("http", StringComparison.Ordinal))
+            if (endpoint.StartsWith("https:", StringComparison.Ordinal)
+                || endpoint.StartsWith("http", StringComparison.Ordinal))
             {
-                if (!Uri.TryCreate(serviceConfiguration.Endpoint, UriKind.Absolute, out Uri uri))
+                if (!Uri.TryCreate(endpoint, UriKind.Absolute, out Uri uri))
                 {
-                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" is not a valid MetadataDocumentUri because is it not a valid absolute Uri. The MetadataDocumentUri must be set to an absolute Uri referencing the $metadata endpoint of an OData service.", serviceConfiguration.Endpoint));
+                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The value \"{0}\" is not a valid MetadataDocumentUri because is it not a valid Uri. The MetadataDocumentUri must be set to an absolute Uri referencing the $metadata endpoint of an OData service.", endpoint));
                 }
 
                 uri = CleanMetadataUri(uri);
@@ -135,7 +156,7 @@ namespace Microsoft.OData.CodeGen.Common
                 return uri.AbsoluteUri;
             }
 
-            return serviceConfiguration.Endpoint;
+            return endpoint;
         }
 
         /// <summary>
@@ -162,8 +183,10 @@ namespace Microsoft.OData.CodeGen.Common
                     var absolutePathUri = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath.TrimEnd('/') + "/").Uri;
                     uriBuilder = new UriBuilder(new Uri(absolutePathUri, "$metadata"));
                 }
-                else uriBuilder = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath + "$metadata");
-
+                else
+                {
+                    uriBuilder = new UriBuilder(uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath + "$metadata");
+                }
 
                 if (preserveQueryAndFragment)
                 {

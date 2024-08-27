@@ -207,7 +207,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             //The file manager expects the files to have been saved in the Temp directory
             // when ODataT4CodeGenerator.TransformText() was called. Since we're using a dummy code generator
             // we need to manually ensure those files exist
-            codeGen.MultipleFilesManager.GenerateFiles(true).Wait();
+            codeGen.MultipleFilesManager.GenerateFilesAsync(true).Wait();
             codeGenDescriptor.AddGeneratedClientCodeAsync(serviceConfig.Endpoint, referenceFolderPath, LanguageOption.GenerateCSharpCode, serviceConfig).Wait();
             var file1TempPath = codeGen.MultipleFilesManager.files[0].TemporaryFilePath;
             var file2TempPath = codeGen.MultipleFilesManager.files[1].TemporaryFilePath;

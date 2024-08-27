@@ -58,20 +58,20 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                 }
                 this.PageLeaving?.Invoke(this, EventArgs.Empty);
                 ServiceConfiguration = GetServiceConfiguration();
-                ServiceConfiguration.Endpoint = CodeGen.Common.MetadataReader.NormalizeUri(ServiceConfiguration);
+                ServiceConfiguration.Endpoint = CodeGen.Common.MetadataReader.ValidateAndNormalizeUri(ServiceConfiguration.Endpoint);
 
                 // Makes sense to add MRU endpoint at this point since NormalizeUri can manipulate the Endpoint
                 UserSettings.Endpoint = ServiceConfiguration.Endpoint;
                 UserSettings.AddMruEndpoint(UserSettings.Endpoint);
 
-                var (path, version) = await CodeGen.Common.MetadataReader.ProcessServiceMetadata(ServiceConfiguration).ConfigureAwait(false);
+                var (path, version) = await CodeGen.Common.MetadataReader.ProcessServiceMetadataAsync(ServiceConfiguration).ConfigureAwait(true);
 
                 this.MetadataTempPath = path;
                 this.EdmxVersion = version;
-                Model = await EdmHelper.GetEdmModelFromFileAsync(this.MetadataTempPath).ConfigureAwait(false);
+                Model = await EdmHelper.GetEdmModelFromFileAsync(this.MetadataTempPath).ConfigureAwait(true);
 
                 PageLeaving?.Invoke(this, EventArgs.Empty);
-                return await base.OnPageLeavingAsync(args).ConfigureAwait(false);
+                return await base.OnPageLeavingAsync(args).ConfigureAwait(true);
             }
             catch (Exception e)
             {

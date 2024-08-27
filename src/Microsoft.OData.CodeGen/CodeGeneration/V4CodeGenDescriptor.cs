@@ -216,18 +216,18 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
 
             using (StreamWriter writer = File.CreateText(tempFile))
             {
-                await writer.WriteAsync(generationContent);
-                await writer.FlushAsync();
+                await writer.WriteAsync(generationContent).ConfigureAwait(false);
+                await writer.FlushAsync().ConfigureAwait(false);
             }
 
             var outputFile = Path.Combine(referenceFolder, $"{this.GeneratedFileNamePrefix(serviceConfiguration.GeneratedFileNamePrefix)}{(languageOption == LanguageOption.GenerateCSharpCode ? ".cs" : ".vb")}");
-            await FileHandler.AddFileAsync(tempFile, outputFile, new ODataFileOptions { SuppressOverwritePrompt = true });
+            await FileHandler.AddFileAsync(tempFile, outputFile, new ODataFileOptions { SuppressOverwritePrompt = true }).ConfigureAwait(false);
 
             if (t4CodeGenerator.MultipleFilesManager != null)
             {
                 await t4CodeGenerator.MultipleFilesManager?.CopyGeneratedFilesAsync(serviceConfiguration.GenerateMultipleFiles, FileHandler, MessageLogger, referenceFolder, fileCreated: true, serviceConfiguration.OpenGeneratedFilesInIDE);
             }
-            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Client Proxy for OData V4 was generated.");
+            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Client Proxy for OData V4 was generated.").ConfigureAwait(false);
         }
     }
 }

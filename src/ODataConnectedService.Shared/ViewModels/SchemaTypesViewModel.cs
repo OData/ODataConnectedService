@@ -184,7 +184,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
             if (Wizard is ODataConnectedServiceWizard wizard)
             {
-                Model = wizard.ConfigODataEndpointViewModel.Model ?? await EdmHelper.GetEdmModelFromFileAsync(wizard.ConfigODataEndpointViewModel.MetadataTempPath).ConfigureAwait(false);
+                Model = wizard.ConfigODataEndpointViewModel.Model ?? await EdmHelper.GetEdmModelFromFileAsync(wizard.ConfigODataEndpointViewModel.MetadataTempPath).ConfigureAwait(true);
             }
 
             this.PageLeaving?.Invoke(this, EventArgs.Empty);
@@ -217,12 +217,12 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
             if (!correctTypeSelection)
             {
-                return await Task.FromResult(new PageNavigationResult
+                return new PageNavigationResult
                 {
                     ErrorMessage = $"{numberOfTypesToBeIncluded} {Constants.SchemaTypesWillAutomaticallyBeIncluded}",
                     IsSuccess = correctTypeSelection,
                     ShowMessageBoxOnFailure = true
-                }).ConfigureAwait(false);
+                };
             }
             else
             {

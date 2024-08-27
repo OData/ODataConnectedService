@@ -28,46 +28,43 @@ namespace Microsoft.OData.ConnectedService.Common
         /// <param name="context">ConnectedServiceContext object.</param>
         /// <returns>Edm model</returns>
         public static Task<IEdmModel> GetEdmModelFromFileAsync(string path, ConnectedServiceContext context = null)
+        => Task.Run(() =>
         {
             var xmlSettings = new XmlReaderSettings
             {
                 DtdProcessing = DtdProcessing.Parse
             };
+            using (var reader = XmlReader.Create(path, xmlSettings))
+            {
+                try
+                {
+                    var result = CsdlReader.TryParse(reader, ignoreUnexpectedAttributesAndElements: true, out var model, out var errors);
+                    if (result)
+                    {
+                        return model;
+                    }
 
-           return Task.Run(() =>
-             {
-                 using (var reader = XmlReader.Create(path, xmlSettings))
-                 {
-                     try
-                     {
-                         var result = CsdlReader.TryParse(reader, ignoreUnexpectedAttributesAndElements: true, out var model, out var errors);
-                         if (result)
-                         {
-                             return model;
-                         }
-
-                         if (context != null)
-                         {
-                             foreach (var error in errors)
-                             {
-                                 var task = context.Logger?.WriteMessageAsync(LoggerMessageCategory.Warning,
-                                     error.ErrorMessage);
-                                 task?.RunSynchronously();
-                             }
-                         }
-                     }
-                     catch (Exception ex)
-                     {
-                         if (context != null)
-                         {
-                             var task = context.Logger?.WriteMessageAsync(LoggerMessageCategory.Warning, ex.Message);
-                             task?.RunSynchronously();
-                         }
-                     }
-                 }
-                 return null;
-             });
-        }
+                    if (context != null)
+                    {
+                        foreach (var error in errors)
+                        {
+                            var task = context.Logger?.WriteMessageAsync(LoggerMessageCategory.Warning,
+                                error.ErrorMessage);
+                            task?.RunSynchronously();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (context != null)
+                    {
+                        var task = context.Logger?.WriteMessageAsync(LoggerMessageCategory.Warning, ex.Message);
+                        task?.RunSynchronously();
+                    }
+                }
+            }
+            return null;
+        });
 
         /// <summary>
         /// Gets all the operation imports in the model

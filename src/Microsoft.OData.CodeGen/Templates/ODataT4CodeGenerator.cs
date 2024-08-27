@@ -1822,7 +1822,7 @@ public abstract class ODataClientTemplate : TemplateBase
         this.WriteFileHeader();
         context.MultipleFilesManager.EndBlock();
         this.WriteNamespaces();
-        await context.MultipleFilesManager.GenerateFiles(context.GenerateMultipleFiles);
+        await context.MultipleFilesManager.GenerateFilesAsync(context.GenerateMultipleFiles);
         return context.MultipleFilesManager.Template.ToString();
     }
 
@@ -8666,7 +8666,7 @@ public class FilesManager {
     /// </summary>
     /// <param name="split">If true the function is executed and multiple files generated
     /// otherwise only a single file is generated.</param>
-    public virtual async Task GenerateFiles(bool split)
+    public virtual async Task GenerateFilesAsync(bool split)
     {
         if (split)
         {
@@ -8681,13 +8681,17 @@ public class FilesManager {
                 if (block.IsContainer) continue;
                 string fileName = Path.Combine(outputPath, block.Name);
                 string content = headerText + Template.ToString(block.Start, block.Length) + footerText;
-                await CreateFileAsync(fileName, content);
+                await CreateFileAsync(fileName, content).ConfigureAwait(false);
                 block.TemporaryFilePath = fileName;
                 Template.Remove(block.Start, block.Length);
             }
         }
     }
 
+    /// <summary>
+    /// Copies the generated file asyncronously using the file handler.
+    /// </summary>
+    /// <param name="split">If true the function is executed and multiple files generated otherwise only a single file is generated.</param>
     public virtual async Task CopyGeneratedFilesAsync(bool split, IFileHandler handlerHelper, IMessageLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE)
     {
         if (split)
@@ -8709,7 +8713,7 @@ public class FilesManager {
                     {
                         await logger?.WriteMessageAsync(LogMessageCategory.Information,
                             "\"{0}\" has been {1}.", block.Name, fileExists ? "updated" : "added");
-                    }, System.Threading.Tasks.TaskContinuationOptions.ExecuteSynchronously);
+                    }, System.Threading.Tasks.TaskContinuationOptions.ExecuteSynchronously).ConfigureAwait(false);
 
             }
         }
@@ -8725,8 +8729,9 @@ public class FilesManager {
         using (FileStream fileStream = File.OpenWrite(fileName))
         using (var writer = new StreamWriter(fileStream))
         {
+            // Truncates the file so if it exists the older content is overwritten.
             fileStream.SetLength(0);
-            await writer.WriteAsync(content);
+            await writer.WriteAsync(content).ConfigureAwait(false);
         }
     }
 

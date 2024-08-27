@@ -74,6 +74,10 @@ namespace Microsoft.OData.ConnectedService.Views
             (DataContext as SchemaTypesViewModel)?.DeselectAllBoundOperations();
         }
 
+        /// <summary>
+        /// Paginates data for schema types to allow the UI to render only one page of items at a time making the UI more responsive.
+        /// </summary>
+        /// <param name="pageNumber">The page to view indexes start from 1.</param>
         public void DisplayPage(int pageNumber)
         {
             int startIndex = (pageNumber - 1) * itemsPerPage;
@@ -92,6 +96,9 @@ namespace Microsoft.OData.ConnectedService.Views
             PageInfoTextBlock.Text = $"Page {pageNumber} of {Math.Ceiling((double)items.Count() / itemsPerPage)}";
         }
 
+        /// <summary>
+        /// Event handler that moves to the next page while ensuring to check bounds.
+        /// </summary>
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
             var items = (DataContext as SchemaTypesViewModel)?.FilteredSchemaTypes;
@@ -103,6 +110,9 @@ namespace Microsoft.OData.ConnectedService.Views
             }
         }
 
+        /// <summary>
+        /// Event handler that moves to the previous page while ensuring to check bounds.
+        /// </summary>
         private void PreviousButton_Click(object sender, RoutedEventArgs e)
         {
             if (currentPage > 1)

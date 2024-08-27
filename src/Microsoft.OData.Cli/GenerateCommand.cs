@@ -220,8 +220,9 @@ namespace Microsoft.OData.Cli
                 }
 
                 ServiceConfiguration config = GetServiceConfiguration<ServiceConfiguration>(options);
-                config.Endpoint = MetadataReader.NormalizeUri(config);
-                var (_, version) = await MetadataReader.ProcessServiceMetadata(config);
+                config.Endpoint = MetadataReader.ValidateAndNormalizeUri(config.Endpoint);
+
+                var (_, version) = await MetadataReader.ProcessServiceMetadataAsync(config).ConfigureAwait(false);
                 if (version == Constants.EdmxVersion4)
                 {
                     await GenerateCodeForV4Clients(options, console).ConfigureAwait(false);

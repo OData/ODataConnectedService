@@ -123,14 +123,14 @@ namespace Microsoft.OData.ConnectedService.Views
             try
             {
                 var serviceConfiguration = GetServiceConfiguration();
-                serviceConfiguration.Endpoint = CodeGen.Common.MetadataReader.NormalizeUri(serviceConfiguration);
-                var (path, version) = await CodeGen.Common.MetadataReader.ProcessServiceMetadata(serviceConfiguration).ConfigureAwait(false);
+                serviceConfiguration.Endpoint = CodeGen.Common.MetadataReader.ValidateAndNormalizeUri(serviceConfiguration.Endpoint);
+                var (path, version) = await CodeGen.Common.MetadataReader.ProcessServiceMetadataAsync(serviceConfiguration).ConfigureAwait(true);
                 connectedServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath = path;
                 connectedServiceWizard.ConfigODataEndpointViewModel.EdmxVersion = version;
                 
                 if (version == Constants.EdmxVersion4)
                 {
-                    Edm.IEdmModel model = connectedServiceWizard.ConfigODataEndpointViewModel.Model ?? await EdmHelper.GetEdmModelFromFileAsync(connectedServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath).ConfigureAwait(false);
+                    Edm.IEdmModel model = connectedServiceWizard.ConfigODataEndpointViewModel.Model ?? await EdmHelper.GetEdmModelFromFileAsync(connectedServiceWizard.ConfigODataEndpointViewModel.MetadataTempPath).ConfigureAwait(true);
 
                     IEnumerable<Edm.IEdmSchemaType> entityTypes = EdmHelper.GetSchemaTypes(model);
                     IDictionary<Edm.IEdmType, List<Edm.IEdmOperation>> boundOperations = EdmHelper.GetBoundOperations(model);

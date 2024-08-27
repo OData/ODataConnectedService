@@ -139,7 +139,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
 
             if (Wizard is ODataConnectedServiceWizard wizard)
             {
-                Model = Model ?? wizard.ConfigODataEndpointViewModel.Model ?? await EdmHelper.GetEdmModelFromFileAsync(wizard.ConfigODataEndpointViewModel.MetadataTempPath).ConfigureAwait(false);
+                Model = Model ?? wizard.ConfigODataEndpointViewModel.Model ?? await EdmHelper.GetEdmModelFromFileAsync(wizard.ConfigODataEndpointViewModel.MetadataTempPath).ConfigureAwait(true);
             }
 
             this.PageEntering?.Invoke(this, EventArgs.Empty);
