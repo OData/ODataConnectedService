@@ -36,13 +36,13 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
 
         public override async Task AddNugetPackagesAsync()
         {
-            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Adding Nuget Packages...").ConfigureAwait(false);
+            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Adding Nuget Packages...").ConfigureAwait(true);
 
 
             foreach (var nugetPackage in Common.Constants.V4NuGetPackages)
-                await PackageInstaller.CheckAndInstallNuGetPackageAsync(Common.Constants.NuGetOnlineRepository, nugetPackage).ConfigureAwait(false);
+                await PackageInstaller.CheckAndInstallNuGetPackageAsync(Common.Constants.NuGetOnlineRepository, nugetPackage).ConfigureAwait(true);
 
-            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Nuget Packages were installed.").ConfigureAwait(false);
+            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Nuget Packages were installed.").ConfigureAwait(true);
         }
 
         public override async Task AddGeneratedClientCodeAsync(string metadata, string outputDirectory, LanguageOption languageOption, ServiceConfiguration serviceConfiguration)
@@ -54,7 +54,7 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
             }
             else
             {
-                await AddGeneratedCodeAsync(metadata, outputDirectory, languageOption, serviceConfigurationV4);
+                await AddGeneratedCodeAsync(metadata, outputDirectory, languageOption, serviceConfigurationV4).ConfigureAwait(true);
             }
         }
 
@@ -92,10 +92,10 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
             using (StreamWriter writer = File.CreateText(csdlTempFile))
             {
                 await writer.WriteLineAsync("<edmx:Edmx Version=\"4.0\" xmlns:edmx=\"http://docs.oasis-open.org/odata/ns/edmx\">");
-                await writer.WriteLineAsync("</edmx:Edmx>");
+                await writer.WriteLineAsync("</edmx:Edmx>").ConfigureAwait(true);
             }
 
-            await FileHandler.AddFileAsync(csdlTempFile, metadataFile, new ODataFileOptions { SuppressOverwritePrompt = true });
+            await FileHandler.AddFileAsync(csdlTempFile, metadataFile, new ODataFileOptions { SuppressOverwritePrompt = true }).ConfigureAwait(true);
 
             FileHandler.SetFileAsEmbeddedResource(csdlFileName);
 
@@ -201,7 +201,7 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
             t4CodeGenerator.MetadataFilePath = metadataFile;
             t4CodeGenerator.MetadataFileRelativePath = csdlFileName;
 
-            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Client Proxy for OData V4 Generation Starting.");
+            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Client Proxy for OData V4 Generation Starting.").ConfigureAwait(true);
 
             var generationContent = await t4CodeGenerator.TransformTextAsync();
 
@@ -209,7 +209,7 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
             {
                 foreach (var err in t4CodeGenerator.Errors)
                 {
-                    await MessageLogger.WriteMessageAsync(LogMessageCategory.Warning, err.ToString()).ConfigureAwait(false);
+                    await MessageLogger.WriteMessageAsync(LogMessageCategory.Warning, err.ToString()).ConfigureAwait(true);
                 }
             }
 
@@ -221,13 +221,13 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
             }
 
             var outputFile = Path.Combine(referenceFolder, $"{this.GeneratedFileNamePrefix(serviceConfiguration.GeneratedFileNamePrefix)}{(languageOption == LanguageOption.GenerateCSharpCode ? ".cs" : ".vb")}");
-            await FileHandler.AddFileAsync(tempFile, outputFile, new ODataFileOptions { SuppressOverwritePrompt = true }).ConfigureAwait(false);
+            await FileHandler.AddFileAsync(tempFile, outputFile, new ODataFileOptions { SuppressOverwritePrompt = true }).ConfigureAwait(true);
 
             if (t4CodeGenerator.MultipleFilesManager != null)
             {
                 await t4CodeGenerator.MultipleFilesManager?.CopyGeneratedFilesAsync(serviceConfiguration.GenerateMultipleFiles, FileHandler, MessageLogger, referenceFolder, fileCreated: true, serviceConfiguration.OpenGeneratedFilesInIDE);
             }
-            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Client Proxy for OData V4 was generated.").ConfigureAwait(false);
+            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Client Proxy for OData V4 was generated.").ConfigureAwait(true);
         }
     }
 }
