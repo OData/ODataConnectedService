@@ -79,6 +79,7 @@
     <Compile Include="Common\MetadataReader.cs" />
     <Compile Include="FileHandling\IFileHandler.cs" />
     <Compile Include="FileHandling\ODataFileOptions.cs" />
+    <Compile Include="Threading\IThreadHelper.cs" />
     <Compile Include="Logging\IMessageLogger.cs" />
     <Compile Include="Logging\LogMessageCategory.cs" />
     <Compile Include="Models\BaseUserSettings.cs" />

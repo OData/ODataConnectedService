@@ -91,16 +91,16 @@ namespace Microsoft.OData.Cli
         /// Emits the container property attribute. The lastest version gets installed. so we'll always emit this property.
         /// </summary>
         /// <returns>A bool indicating whether to emit the container property or not</returns>
-        public bool EmitContainerPropertyAttribute()
+        public Task<bool> EmitContainerPropertyAttributeAsync()
         {
-            return true;
+            return Task.FromResult(true);
         }
 
         /// <summary>
         /// Sets the CSDL file as an embedded resource
         /// </summary>
         /// <param name="fileName">The name of the file to set as embedded resource</param>
-        public void SetFileAsEmbeddedResource(string fileName)
+        public Task SetFileAsEmbeddedResourceAsync(string fileName)
         {
             if (this.project != null)
             {
@@ -111,6 +111,8 @@ namespace Microsoft.OData.Cli
                     ProjectHelper.AddProjectItem(this.project, Constants.EmbeddedResourceTag, fileName);
                 }
             }
+
+            return Task.CompletedTask;
         }
     }
 }

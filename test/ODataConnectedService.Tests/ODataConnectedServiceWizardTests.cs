@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using FluentAssertions;
@@ -96,7 +97,7 @@ namespace ODataConnectedService.Tests
             };
         }
 
-        [Fact]
+        [StaFact]
         public void TestLoadUserSettingsWhenWizardIsCreated()
         {
             var settings = new UserSettings();
@@ -112,8 +113,8 @@ namespace ODataConnectedService.Tests
             }
         }
 
-        [Fact]
-        public void TestConstructor_ShouldUseDefaultSettingsWhenNotUpdating()
+        [StaFact]
+        public async Task TestConstructor_ShouldUseDefaultSettingsWhenNotUpdatingAsync()
         {
             var savedConfig = GetTestConfig();
             var context = new TestConnectedServiceProviderContext(false, savedConfig);
@@ -121,7 +122,7 @@ namespace ODataConnectedService.Tests
             using (var wizard = new ODataConnectedServiceWizard(context))
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
-                endpointPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).Wait();
+                await endpointPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).ConfigureAwait(true);
                 Assert.Equal(Constants.DefaultServiceName, endpointPage.UserSettings.ServiceName);
                 Assert.Null(endpointPage.UserSettings.Endpoint);
                 Assert.Null(endpointPage.EdmxVersion);
@@ -140,7 +141,7 @@ namespace ODataConnectedService.Tests
                 endpointPage.UserSettings.Endpoint = MetadataPath;
                 endpointPage.MetadataTempPath = MetadataPath;
                 endpointPage.EdmxVersion = Constants.EdmxVersion4;
-                operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
+                await operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).ConfigureAwait(true);
                 operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
                 {
                     new OperationImportModel
@@ -167,7 +168,7 @@ namespace ODataConnectedService.Tests
                 });
 
                 var typesPage = wizard.SchemaTypesViewModel;
-                typesPage.OnPageEnteringAsync(new WizardEnteringArgs(operationsPage)).Wait();
+                await typesPage.OnPageEnteringAsync(new WizardEnteringArgs(operationsPage)).ConfigureAwait(true);
                 typesPage.SchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>
                 {
                     new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline", "Airline")
@@ -251,7 +252,7 @@ namespace ODataConnectedService.Tests
                 });
 
                 var advancedPage = wizard.AdvancedSettingsViewModel;
-                advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(typesPage)).Wait();
+                await advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(typesPage)).ConfigureAwait(true);
                 Assert.Equal(Constants.DefaultReferenceFileName, advancedPage.UserSettings.GeneratedFileNamePrefix);
                 Assert.False(advancedPage.UserSettings.UseNamespacePrefix);
                 Assert.Null(advancedPage.UserSettings.NamespacePrefix);
@@ -266,8 +267,8 @@ namespace ODataConnectedService.Tests
             }
         }
 
-        [Fact]
-        public void TestConstructor_LoadsSavedConfigWhenUpdating()
+        [StaFact]
+        public async Task TestConstructor_LoadsSavedConfigWhenUpdatingAsync()
         {
             var savedConfig = GetTestConfig();
             var context = new TestConnectedServiceProviderContext(true, savedConfig);
@@ -277,7 +278,7 @@ namespace ODataConnectedService.Tests
                 Assert.Equal(savedConfig, wizard.ServiceConfig);
 
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
-                endpointPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).Wait();
+                await endpointPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).ConfigureAwait(true);
                 Assert.Equal("https://service/$metadata", endpointPage.UserSettings.Endpoint);
                 Assert.Equal("MyService", endpointPage.UserSettings.ServiceName);
                 Assert.True(endpointPage.UserSettings.IncludeCustomHeaders);
@@ -295,7 +296,8 @@ namespace ODataConnectedService.Tests
                 var operationsPage = wizard.OperationImportsViewModel;
                 endpointPage.MetadataTempPath = MetadataPath;
                 endpointPage.EdmxVersion = Constants.EdmxVersion4;
-                operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
+
+                await operationsPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).ConfigureAwait(true);
                 operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
                 {
                     new OperationImportModel
@@ -322,7 +324,8 @@ namespace ODataConnectedService.Tests
                 });
 
                 var typesPage = wizard.SchemaTypesViewModel;
-                typesPage.OnPageEnteringAsync(new WizardEnteringArgs(operationsPage)).Wait();
+
+                await typesPage.OnPageEnteringAsync(new WizardEnteringArgs(operationsPage)).ConfigureAwait(true);
                 typesPage.SchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>
                 {
                     new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline", "Airline")
@@ -416,7 +419,8 @@ namespace ODataConnectedService.Tests
                 });
 
                 var advancedPage = wizard.AdvancedSettingsViewModel;
-                advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(typesPage)).Wait();
+
+                await advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(typesPage)).ConfigureAwait(true);
                 Assert.Equal("GeneratedCode", advancedPage.UserSettings.GeneratedFileNamePrefix);
                 Assert.True(advancedPage.UserSettings.UseNamespacePrefix);
                 Assert.Equal("Namespace", advancedPage.UserSettings.NamespacePrefix);
@@ -431,8 +435,8 @@ namespace ODataConnectedService.Tests
             }
         }
 
-        [Fact]
-        public void TestDisableReadOnlyFieldsWhenUpdating()
+        [StaFact]
+        public async Task TestDisableReadOnlyFieldsWhenUpdating()
         {
             ServiceConfigurationV4 savedConfig = GetTestConfig();
             var context = new TestConnectedServiceProviderContext(true, savedConfig);
@@ -440,7 +444,7 @@ namespace ODataConnectedService.Tests
             {
                 // endpoint page
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
-                endpointPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).Wait();
+                await endpointPage.OnPageEnteringAsync(new WizardEnteringArgs(null)).ConfigureAwait(true);
                 var endpointView = endpointPage.View as ConfigODataEndpoint;
 
                 Assert.False(endpointView.ServiceName.IsEnabled);
@@ -454,7 +458,8 @@ namespace ODataConnectedService.Tests
 
                 // advanced settings page
                 var advancedPage = wizard.AdvancedSettingsViewModel;
-                advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).Wait();
+
+                await advancedPage.OnPageEnteringAsync(new WizardEnteringArgs(endpointPage)).ConfigureAwait(true);
                 var advancedView = advancedPage.View as AdvancedSettings;
                 Assert.False(advancedView.IncludeT4File.IsEnabled);
                 Assert.False(advancedView.GenerateMultipleFiles.IsEnabled);
@@ -462,8 +467,8 @@ namespace ODataConnectedService.Tests
             }
         }
 
-        [Fact]
-        public void TestGetFinishedServiceInstanceAsync_SavesUserSettingsAndReturnsServiceInstanceWithConfigFromTheWizard()
+        [StaFact]
+        public async Task TestGetFinishedServiceInstanceAsync_SavesUserSettingsAndReturnsServiceInstanceWithConfigFromTheWizardAsync()
         {
             var context = new TestConnectedServiceProviderContext(false);
             using (var wizard = new ODataConnectedServiceWizard(context))
@@ -484,7 +489,8 @@ namespace ODataConnectedService.Tests
                 endpointPage.UserSettings.WebProxyNetworkCredentialsPassword = "pass";
 
                 var operationsPage = wizard.OperationImportsViewModel;
-                endpointPage.OnPageLeavingAsync(new WizardLeavingArgs(operationsPage)).Wait();
+
+                await endpointPage.OnPageLeavingAsync(new WizardLeavingArgs(operationsPage)).ConfigureAwait(true);
                 operationsPage.OperationImports = new List<OperationImportModel>()
                 {
                     new OperationImportModel() { Name = "GetNearestAirport", IsSelected = false },
@@ -493,7 +499,8 @@ namespace ODataConnectedService.Tests
                 };
 
                 var typesPage = wizard.SchemaTypesViewModel;
-                typesPage.OnPageEnteringAsync(new WizardEnteringArgs(operationsPage)).Wait();
+
+                await typesPage.OnPageEnteringAsync(new WizardEnteringArgs(operationsPage)).ConfigureAwait(true);
                 typesPage.SchemaTypes = new List<SchemaTypeModel>()
                 {
                     new SchemaTypeModel("Microsoft.OData.Service.Sample.TrippinInMemory.Models.Airline", "Airline") { IsSelected = false },
@@ -535,10 +542,10 @@ namespace ODataConnectedService.Tests
                 advancedPage.UserSettings.OpenGeneratedFilesInIDE = true;
                 advancedPage.UserSettings.OmitVersioningInfo = true;
 
-                operationsPage.OnPageLeavingAsync(new WizardLeavingArgs(typesPage)).Wait();
-                typesPage.OnPageLeavingAsync(new WizardLeavingArgs(advancedPage)).Wait();
-                advancedPage.OnPageLeavingAsync(new WizardLeavingArgs(null)).Wait();
-                var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+                await operationsPage.OnPageLeavingAsync(new WizardLeavingArgs(typesPage)).ConfigureAwait(true);
+                await typesPage.OnPageLeavingAsync(new WizardLeavingArgs(advancedPage)).ConfigureAwait(true);
+                await advancedPage.OnPageLeavingAsync(new WizardLeavingArgs(null)).ConfigureAwait(true);
+                ODataConnectedServiceInstance serviceInstance = (ODataConnectedServiceInstance)await wizard.GetFinishedServiceInstanceAsync().ConfigureAwait(true);
                 var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
 
                 // saved user settings
@@ -620,8 +627,8 @@ namespace ODataConnectedService.Tests
             }
         }
 
-        [Fact]
-        public void GetFinishedServiceInstanceAsync_WhenUpdating_ShouldUseSavedConfigWhenUserDoesNotVisitPages()
+        [StaFact]
+        public async Task GetFinishedServiceInstanceAsync_WhenUpdating_ShouldUseSavedConfigWhenUserDoesNotVisitPagesAsync()
         {
             var savedConfig = GetTestConfig();
             savedConfig.Endpoint = MetadataPath;
@@ -629,10 +636,10 @@ namespace ODataConnectedService.Tests
             using (var wizard = new ODataConnectedServiceWizard(context))
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
-                endpointPage.OnPageEnteringAsync(null).Wait();
-                endpointPage.OnPageLeavingAsync(null).Wait();
+                await endpointPage.OnPageEnteringAsync(null).ConfigureAwait(true);
+                await endpointPage.OnPageLeavingAsync(null).ConfigureAwait(true);
 
-                var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+                var serviceInstance = (ODataConnectedServiceInstance)await wizard.GetFinishedServiceInstanceAsync().ConfigureAwait(true);
                 var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
 
                 Assert.Equal("GeneratedCode", serviceInstance.InstanceId);
@@ -679,19 +686,19 @@ namespace ODataConnectedService.Tests
             }
         }
 
-        [Fact]
-        public void ShouldPreserveState_WhenMovingBetweenPagesAndBack()
+        [StaFact]
+        public async Task ShouldPreserveState_WhenMovingBetweenPagesAndBack()
         {
             var context = new TestConnectedServiceProviderContext();
             using (var wizard = new ODataConnectedServiceWizard(context))
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
-                endpointPage.OnPageEnteringAsync(null).Wait();
+                await endpointPage.OnPageEnteringAsync(null).ConfigureAwait(true);
                 endpointPage.UserSettings.Endpoint = MetadataPath;
-                endpointPage.OnPageLeavingAsync(null).Wait();
+                await endpointPage.OnPageLeavingAsync(null).ConfigureAwait(true);
 
                 var typesPage = wizard.SchemaTypesViewModel;
-                typesPage.OnPageEnteringAsync(null).Wait();
+                await typesPage.OnPageEnteringAsync(null).ConfigureAwait(true);
                 var typesPageView = typesPage.View as SchemaTypes;
                 Assert.Equal(typesPage.SchemaTypesCount, typesPage.SchemaTypes.Count());
                 Assert.Equal(typesPage.BoundOperationsCount, typesPage.SchemaTypes.SelectMany(x => x.BoundOperations).Count());
@@ -707,10 +714,10 @@ namespace ODataConnectedService.Tests
                 Assert.Equal(typesPageView?.SelectedBoundOperationsCount.Text,
                     (typesPage.BoundOperationsCount -
                      typesPage.ExcludedBoundOperationsNames.Count()).ToString(CultureInfo.InvariantCulture));
-                typesPage.OnPageLeavingAsync(null).Wait();
+                await typesPage.OnPageLeavingAsync(null).ConfigureAwait(true);
 
                 var operationsPage = wizard.OperationImportsViewModel;
-                operationsPage.OnPageEnteringAsync(null).Wait();
+                await operationsPage.OnPageEnteringAsync(null);
                 var operationsPageView = operationsPage.View as OperationImports;
                 Assert.Equal(operationsPage.OperationImportsCount, operationsPage.OperationImports.Count());
                 Assert.Equal(operationsPageView?.SelectedOperationImportsCount.Text, operationsPage.OperationImportsCount.ToString(CultureInfo.InvariantCulture));
@@ -719,17 +726,17 @@ namespace ODataConnectedService.Tests
                 Assert.Equal(operationsPageView?.SelectedOperationImportsCount.Text,
                     (operationsPage.OperationImportsCount - operationsPage.ExcludedOperationImportsNames.Count())
                     .ToString(CultureInfo.InvariantCulture));
-                operationsPage.OnPageLeavingAsync(null).Wait();
+                await operationsPage.OnPageLeavingAsync(null);
 
                 var advancedPage = wizard.AdvancedSettingsViewModel;
-                advancedPage.OnPageEnteringAsync(null).Wait();
+                await advancedPage.OnPageEnteringAsync(null);
                 advancedPage.UserSettings.UseDataServiceCollection = true;
                 advancedPage.UserSettings.MakeTypesInternal = true;
                 advancedPage.UserSettings.UseNamespacePrefix = true;
                 advancedPage.UserSettings.OmitVersioningInfo = true;
-                advancedPage.OnPageLeavingAsync(null).Wait();
+                await advancedPage.OnPageLeavingAsync(null);
 
-                endpointPage.OnPageEnteringAsync(null).Wait();
+                await endpointPage.OnPageEnteringAsync(null);
                 Assert.Equal(Constants.DefaultServiceName, endpointPage.UserSettings.ServiceName);
                 Assert.Equal(MetadataPath, endpointPage.UserSettings.Endpoint);
                 endpointPage.UserSettings.ServiceName = "Service";
@@ -737,9 +744,9 @@ namespace ODataConnectedService.Tests
                 endpointPage.UserSettings.StoreCustomHttpHeaders = true;
                 endpointPage.UserSettings.StoreWebProxyNetworkCredentials = true;
                 endpointPage.UserSettings.CustomHttpHeaders = "A:b";
-                endpointPage.OnPageLeavingAsync(null).Wait();
+                await endpointPage.OnPageLeavingAsync(null);
 
-                advancedPage.OnPageEnteringAsync(null).Wait();
+                await advancedPage.OnPageEnteringAsync(null);
                 Assert.True(advancedPage.UserSettings.UseNamespacePrefix);
                 Assert.True(advancedPage.UserSettings.UseDataServiceCollection);
                 Assert.True(advancedPage.UserSettings.MakeTypesInternal);
@@ -747,9 +754,9 @@ namespace ODataConnectedService.Tests
                 advancedPage.UserSettings.NamespacePrefix = "MyNamespace";
                 advancedPage.UserSettings.GenerateMultipleFiles = true;
                 advancedPage.UserSettings.UseDataServiceCollection = false;
-                advancedPage.OnPageLeavingAsync(null).Wait();
+                await advancedPage.OnPageLeavingAsync(null);
 
-                operationsPage.OnPageEnteringAsync(null).Wait();
+                await operationsPage.OnPageEnteringAsync(null);
                 operationNearestAirport = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport");
                 Assert.False(operationNearestAirport.IsSelected);
                 Assert.Equal(operationsPageView?.SelectedOperationImportsCount.Text,
@@ -757,9 +764,9 @@ namespace ODataConnectedService.Tests
                     .ToString(CultureInfo.InvariantCulture));
                 var operationResetDataSource = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "ResetDataSource");
                 operationResetDataSource.IsSelected = false;
-                operationsPage.OnPageLeavingAsync(null).Wait();
+                await operationsPage.OnPageLeavingAsync(null);
 
-                typesPage.OnPageEnteringAsync(null).Wait();
+                await typesPage.OnPageEnteringAsync(null);
                 typeEmployee = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Employee");
                 Assert.False(typeEmployee.IsSelected);
                 Assert.Equal(typesPageView?.SelectedSchemaTypesCount.Text,
@@ -767,9 +774,9 @@ namespace ODataConnectedService.Tests
                 typeEmployee.IsSelected = true;
                 var typeFlight = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Flight");
                 typeFlight.IsSelected = false;
-                typesPage.OnPageLeavingAsync(null).Wait();
+                await typesPage.OnPageLeavingAsync(null);
 
-                var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+                var serviceInstance = (ODataConnectedServiceInstance)await wizard.GetFinishedServiceInstanceAsync();
                 var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
 
                 Assert.Equal("Service", config.ServiceName);
@@ -800,8 +807,8 @@ namespace ODataConnectedService.Tests
             }
         }
 
-        [Fact]
-        public void ShouldPreserveState_WhenMovingBetweenPagesAndBack_WhenUpdating()
+        [StaFact]
+        public async Task ShouldPreserveState_WhenMovingBetweenPagesAndBack_WhenUpdating()
         {
             var savedConfig = GetTestConfig();
             savedConfig.Endpoint = MetadataPath;
@@ -809,44 +816,44 @@ namespace ODataConnectedService.Tests
             using (var wizard = new ODataConnectedServiceWizard(context))
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
-                endpointPage.OnPageEnteringAsync(null).Wait();
-                endpointPage.OnPageLeavingAsync(null).Wait();
+                await endpointPage.OnPageEnteringAsync(null);
+                await endpointPage.OnPageLeavingAsync(null);
 
                 var typesPage = wizard.SchemaTypesViewModel;
-                typesPage.OnPageEnteringAsync(null).Wait();
+                await typesPage.OnPageEnteringAsync(null);
                 var typeGender = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "PersonGender");
                 Assert.False(typeGender.IsSelected);
                 typeGender.IsSelected = true;
                 var typePerson = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Person");
                 Assert.False(typePerson.IsSelected);
-                typesPage.OnPageLeavingAsync(null).Wait();
+                await typesPage.OnPageLeavingAsync(null);
 
                 var operationsPage = wizard.OperationImportsViewModel;
-                operationsPage.OnPageEnteringAsync(null).Wait();
+                await operationsPage.OnPageEnteringAsync(null);
                 var operationNearestAirport = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport");
                 Assert.True(operationNearestAirport.IsSelected);
                 operationNearestAirport.IsSelected = false;
-                operationsPage.OnPageLeavingAsync(null).Wait();
+                await operationsPage.OnPageLeavingAsync(null);
 
                 var boundOperationGetFavoriteAirline = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Person").BoundOperations.FirstOrDefault(o => o.Name == "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)");
                 Assert.False(boundOperationGetFavoriteAirline.IsSelected);
 
                 var advancedPage = wizard.AdvancedSettingsViewModel;
-                advancedPage.OnPageEnteringAsync(null).Wait();
+                await advancedPage.OnPageEnteringAsync(null);
                 advancedPage.UserSettings.UseDataServiceCollection = true;
                 advancedPage.UserSettings.MakeTypesInternal = true;
                 advancedPage.UserSettings.UseNamespacePrefix = true;
                 advancedPage.UserSettings.OmitVersioningInfo = true;
-                advancedPage.OnPageLeavingAsync(null).Wait();
+                await advancedPage.OnPageLeavingAsync(null);
 
-                endpointPage.OnPageEnteringAsync(null).Wait();
+                await endpointPage.OnPageEnteringAsync(null);
                 Assert.Equal(savedConfig.ServiceName, endpointPage.UserSettings.ServiceName);
                 Assert.Equal(savedConfig.Endpoint, endpointPage.UserSettings.Endpoint);
                 endpointPage.UserSettings.IncludeCustomHeaders = true;
                 endpointPage.UserSettings.CustomHttpHeaders = "A:b";
-                endpointPage.OnPageLeavingAsync(null).Wait();
+                await endpointPage.OnPageLeavingAsync(null);
 
-                advancedPage.OnPageEnteringAsync(null).Wait();
+                await advancedPage.OnPageEnteringAsync(null);
                 Assert.True(advancedPage.UserSettings.UseNamespacePrefix);
                 Assert.True(advancedPage.UserSettings.UseDataServiceCollection);
                 Assert.True(advancedPage.UserSettings.MakeTypesInternal);
@@ -854,17 +861,17 @@ namespace ODataConnectedService.Tests
                 advancedPage.UserSettings.NamespacePrefix = "MyNamespace";
                 advancedPage.UserSettings.GenerateMultipleFiles = true;
                 advancedPage.UserSettings.UseDataServiceCollection = false;
-                advancedPage.OnPageLeavingAsync(null).Wait();
+                await advancedPage.OnPageLeavingAsync(null);
 
-                operationsPage.OnPageEnteringAsync(null).Wait();
+                await operationsPage.OnPageEnteringAsync(null);
                 operationNearestAirport = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport");
                 Assert.False(operationNearestAirport.IsSelected);
                 var operationResetDataSource = operationsPage.OperationImports.FirstOrDefault(o => o.Name == "ResetDataSource");
                 Assert.False(operationResetDataSource.IsSelected);
                 operationResetDataSource.IsSelected = true;
-                operationsPage.OnPageLeavingAsync(null).Wait();
+                await operationsPage.OnPageLeavingAsync(null);
 
-                typesPage.OnPageEnteringAsync(null).Wait();
+                await typesPage.OnPageEnteringAsync(null);
                 typeGender = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "PersonGender");
                 Assert.True(typeGender.IsSelected);
                 var typeFlight = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Flight");
@@ -873,9 +880,9 @@ namespace ODataConnectedService.Tests
                 Assert.False(typePerson.IsSelected);
                 boundOperationGetFavoriteAirline = typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Person").BoundOperations.FirstOrDefault(o => o.Name == "GetFavoriteAirline(Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person)");
                 Assert.False(boundOperationGetFavoriteAirline.IsSelected);
-                typesPage.OnPageLeavingAsync(null).Wait();
+                await typesPage.OnPageLeavingAsync(null);
 
-                var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+                var serviceInstance = await wizard.GetFinishedServiceInstanceAsync() as ODataConnectedServiceInstance;
                 var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
 
                 Assert.Equal(savedConfig.ServiceName, config.ServiceName);
@@ -913,42 +920,42 @@ namespace ODataConnectedService.Tests
             }
         }
 
-        [Fact]
-        public void ShouldReloadOperationsAndTypesForNewEndpoint_WhenEndpointIsChangedBeforeFinishing()
+        [StaFact]
+        public async Task ShouldReloadOperationsAndTypesForNewEndpoint_WhenEndpointIsChangedBeforeFinishingAsync()
         {
             var context = new TestConnectedServiceProviderContext();
             using (var wizard = new ODataConnectedServiceWizard(context))
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
-                endpointPage.OnPageEnteringAsync(null).Wait();
+                await endpointPage.OnPageEnteringAsync(null);
                 endpointPage.UserSettings.Endpoint = MetadataPath;
-                endpointPage.OnPageLeavingAsync(null).Wait();
+                await endpointPage.OnPageLeavingAsync(null);
 
                 var typesPage = wizard.SchemaTypesViewModel;
-                typesPage.OnPageEnteringAsync(null).Wait();
+                await typesPage.OnPageEnteringAsync(null);
                 typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "Employee").IsSelected = false;
-                typesPage.OnPageLeavingAsync(null).Wait();
+                await typesPage.OnPageLeavingAsync(null);
 
                 var operationsPage = wizard.OperationImportsViewModel;
-                operationsPage.OnPageEnteringAsync(null).Wait();
+                await operationsPage.OnPageEnteringAsync(null);
                 operationsPage.OperationImports.FirstOrDefault(o => o.Name == "GetNearestAirport").IsSelected = false;
-                operationsPage.OnPageLeavingAsync(null).Wait();
+                await operationsPage.OnPageLeavingAsync(null);
 
                 // go back to first page and change endpoint
-                endpointPage.OnPageEnteringAsync(null).Wait();
+                await endpointPage.OnPageEnteringAsync(null);
                 endpointPage.UserSettings.Endpoint = MetadataPathSimple;
-                endpointPage.OnPageLeavingAsync(null).Wait();
+                await endpointPage.OnPageLeavingAsync(null);
 
-                typesPage.OnPageEnteringAsync(null).Wait();
+                await typesPage.OnPageEnteringAsync(null);
                 typesPage.SchemaTypes.ShouldBeEquivalentTo(new List<SchemaTypeModel>()
                 {
                     new SchemaTypeModel("SimpleService.Models.OtherThing", "OtherThing") { IsSelected = true },
                     new SchemaTypeModel("SimpleService.Models.Thing", "Thing") { IsSelected = true }
                 });
                 typesPage.SchemaTypes.FirstOrDefault(t => t.ShortName == "OtherThing").IsSelected = false;
-                typesPage.OnPageLeavingAsync(null).Wait();
+                await typesPage.OnPageLeavingAsync(null);
 
-                operationsPage.OnPageEnteringAsync(null).Wait();
+                await operationsPage.OnPageEnteringAsync(null);
                 operationsPage.OperationImports.ShouldBeEquivalentTo(new List<OperationImportModel>()
                 {
                     new OperationImportModel
@@ -968,7 +975,7 @@ namespace ODataConnectedService.Tests
                 });
                 operationsPage.OperationImports.FirstOrDefault(o => o.Name == "ResetThings").IsSelected = false;
 
-                var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+                var serviceInstance = await wizard.GetFinishedServiceInstanceAsync() as ODataConnectedServiceInstance;
                 var config = serviceInstance.ServiceConfig as ServiceConfigurationV4;
 
                 Assert.Equal(MetadataPathSimple, config.Endpoint);
@@ -977,28 +984,28 @@ namespace ODataConnectedService.Tests
             }
         }
 
-        [Fact]
-        public void ShouldDeselectOperations_WhenRelatedTypeIsDeselectedBefore()
+        [StaFact]
+        public async Task ShouldDeselectOperations_WhenRelatedTypeIsDeselectedBeforeAsync()
         {
             var context = new TestConnectedServiceProviderContext();
             using (var wizard = new ODataConnectedServiceWizard(context))
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
-                endpointPage.OnPageEnteringAsync(null).Wait();
+                await endpointPage.OnPageEnteringAsync(null);
                 endpointPage.UserSettings.Endpoint = MetadataPath;
-                endpointPage.OnPageLeavingAsync(null).Wait();
+                await endpointPage.OnPageLeavingAsync(null);
 
                 var typesPage = wizard.SchemaTypesViewModel;
-                typesPage.OnPageEnteringAsync(null).Wait();
+                await typesPage.OnPageEnteringAsync(null);
                 typesPage.SchemaTypes.First(t => t.ShortName == "Airport").IsSelected = false;
-                typesPage.OnPageLeavingAsync(null).Wait();
+                await typesPage.OnPageLeavingAsync(null);
 
                 var operationsPage = wizard.OperationImportsViewModel;
-                operationsPage.OnPageEnteringAsync(null).Wait();
+                await operationsPage.OnPageEnteringAsync(null);
                 operationsPage.OperationImports.First(o => o.Name == "GetNearestAirport").IsSelected.Should().BeFalse();
-                operationsPage.OnPageLeavingAsync(null).Wait();
+                await operationsPage.OnPageLeavingAsync(null);
 
-                var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+                var serviceInstance = await wizard.GetFinishedServiceInstanceAsync() as ODataConnectedServiceInstance;
                 var config = serviceInstance?.ServiceConfig as ServiceConfigurationV4;
 
                 config?.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string> { "GetNearestAirport" });
@@ -1011,28 +1018,28 @@ namespace ODataConnectedService.Tests
             }
         }
 
-        [Fact]
-        public void ShouldDeselectBoundOperations_WhenRelatedTypeIsDeselectedBefore()
+        [StaFact]
+        public async Task ShouldDeselectBoundOperations_WhenRelatedTypeIsDeselectedBefore()
         {
             var context = new TestConnectedServiceProviderContext();
             using (var wizard = new ODataConnectedServiceWizard(context))
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
-                endpointPage.OnPageEnteringAsync(null).Wait();
+                await endpointPage.OnPageEnteringAsync(null);
                 endpointPage.UserSettings.Endpoint = MetadataPath;
-                endpointPage.OnPageLeavingAsync(null).Wait();
+                await endpointPage.OnPageLeavingAsync(null);
 
                 var typesPage = wizard.SchemaTypesViewModel;
-                typesPage.OnPageEnteringAsync(null).Wait();
+                await typesPage.OnPageEnteringAsync(null);
                 typesPage.SchemaTypes.First(t => t.ShortName == "Person").IsSelected = false;
-                typesPage.OnPageLeavingAsync(null).Wait();
+                await typesPage.OnPageLeavingAsync(null);
 
                 var operationsPage = wizard.OperationImportsViewModel;
-                operationsPage.OnPageEnteringAsync(null).Wait();
+                await operationsPage.OnPageEnteringAsync(null);
                 operationsPage.OperationImports.First(o => o.Name == "GetPersonWithMostFriends").IsSelected.Should().BeFalse();
-                operationsPage.OnPageLeavingAsync(null).Wait();
+                await operationsPage.OnPageLeavingAsync(null);
 
-                var serviceInstance = wizard.GetFinishedServiceInstanceAsync().Result as ODataConnectedServiceInstance;
+                var serviceInstance = await wizard.GetFinishedServiceInstanceAsync() as ODataConnectedServiceInstance;
                 var config = serviceInstance?.ServiceConfig as ServiceConfigurationV4;
 
                 config?.ExcludedOperationImports.ShouldBeEquivalentTo(new List<string> { "GetPersonWithMostFriends" });
@@ -1054,23 +1061,23 @@ namespace ODataConnectedService.Tests
         }
 
         [Fact]
-        public void UnsupportedFeaturesAreDisabledOrHidden_WhenServiceIsV3OrLess()
+        public async Task UnsupportedFeaturesAreDisabledOrHidden_WhenServiceIsV3OrLessAsync()
         {
             var context = new TestConnectedServiceProviderContext();
             using (var wizard = new ODataConnectedServiceWizard(context))
             {
                 var endpointPage = wizard.ConfigODataEndpointViewModel;
                 endpointPage.UserSettings.Endpoint = MetadataPathV3;
-                endpointPage.OnPageLeavingAsync(null).Wait();
+                await endpointPage.OnPageLeavingAsync(null);
                 Assert.Equal(Constants.EdmxVersion1, endpointPage.EdmxVersion);
 
                 var operationsPage = wizard.OperationImportsViewModel;
-                operationsPage.OnPageEnteringAsync(null).Wait();
+                await operationsPage.OnPageEnteringAsync(null);
                 Assert.False(operationsPage.View.IsEnabled);
                 Assert.False(operationsPage.IsSupportedODataVersion);
 
                 var advancedPage = wizard.AdvancedSettingsViewModel;
-                advancedPage.OnPageEnteringAsync(null).Wait();
+                await advancedPage.OnPageEnteringAsync(null);
                 var advancedView = advancedPage.View as AdvancedSettings;
                 advancedView.settings.RaiseEvent(new RoutedEventArgs(Hyperlink.ClickEvent));
                 Assert.Equal(Visibility.Hidden, advancedView.AdvancedSettingsForv4.Visibility);

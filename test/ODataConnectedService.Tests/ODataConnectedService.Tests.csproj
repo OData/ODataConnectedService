@@ -72,6 +72,7 @@
     <Compile Include="Converters\SchemaTypeModelToVisibilityConverterTests.cs" />
     <Compile Include="ODataConnectedServiceWizardTests.cs" />
     <Compile Include="Common\ProjectHelperTests.cs" />
+    <Compile Include="TestHelpers\TestThreadHelper.cs" />
     <Compile Include="ViewModels\ConfigOdataEndPointViewModelTests.cs" />
     <Compile Include="Properties\AssemblyRefs.cs" />
     <Compile Include="Templates\CodeGenerationContextTest.cs" />
@@ -143,6 +144,9 @@
       <Version>2.4.1</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Xunit.StaFact">
+      <Version>1.1.11</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using EnvDTE;
 using Microsoft.OData.CodeGen.CodeGeneration;
 using Microsoft.OData.CodeGen.Common;
@@ -312,6 +313,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
         [DataRow("vb", "TestConfigBasicVB.txt")]
         public void TestAddGeneratedClientCode_GeneratesT4TemplateFiles(string lang, string referenceFile)
         {
+
             var serviceName = "MyService";
             var referenceFolderPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName);
             ServiceConfiguration serviceConfig = new ServiceConfigurationV4()
@@ -678,7 +680,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             handlerHelper.ServicesRootFolder = ServicesRootFolder;
             ConnectedServiceHandlerContext context = new TestConnectedServiceHandlerContext(serviceInstance, handlerHelper);
 
-            var descriptor = new TestV3CodeGenDescriptor(new ConnectedServiceFileHandler(context, project), new ConnectedServiceMessageLogger(context), new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)));
+            var descriptor = new TestV3CodeGenDescriptor(new ConnectedServiceFileHandler(context, project, new TestThreadHelper()), new ConnectedServiceMessageLogger(context), new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)));
 
             descriptor.AddNugetPackagesAsync().Wait();
             var installer = descriptor.PackageInstaller as TestVsPackageInstaller;
@@ -712,7 +714,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             handlerHelper.ServicesRootFolder = ServicesRootFolder;
             ConnectedServiceHandlerContext context = new TestConnectedServiceHandlerContext(serviceInstance, handlerHelper);
 
-            var descriptor = new TestV3CodeGenDescriptor(new ConnectedServiceFileHandler(context, project), new ConnectedServiceMessageLogger(context), new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)));
+            var descriptor = new TestV3CodeGenDescriptor(new ConnectedServiceFileHandler(context, project, new TestThreadHelper()), new ConnectedServiceMessageLogger(context), new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)));
             descriptor.AddGeneratedClientCodeAsync(serviceConfig.Endpoint, referenceFolderPath, LanguageOption.GenerateCSharpCode, serviceConfig).Wait();
             var addedFile = handlerHelper.AddedFiles.FirstOrDefault();
             var generatedCode = File.ReadAllText(addedFile.SourceFile);
@@ -746,7 +748,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             handlerHelper.ServicesRootFolder = ServicesRootFolder;
             ConnectedServiceHandlerContext context = new TestConnectedServiceHandlerContext(serviceInstance, handlerHelper);
 
-            var descriptor = new TestV3CodeGenDescriptor(new ConnectedServiceFileHandler(context, project), new ConnectedServiceMessageLogger(context), new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)));
+            var descriptor = new TestV3CodeGenDescriptor(new ConnectedServiceFileHandler(context, project, new TestThreadHelper()), new ConnectedServiceMessageLogger(context), new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)));
             descriptor.AddGeneratedClientCodeAsync(serviceConfig.Endpoint, referenceFolderPath, LanguageOption.GenerateVBCode, serviceConfig).Wait();
             var addedFile = handlerHelper.AddedFiles.FirstOrDefault();
             var generatedCode = File.ReadAllText(addedFile.SourceFile);
@@ -780,7 +782,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             handlerHelper.ServicesRootFolder = ServicesRootFolder;
             ConnectedServiceHandlerContext context = new TestConnectedServiceHandlerContext(serviceInstance, handlerHelper);
 
-            var descriptor = new TestV3CodeGenDescriptor(new ConnectedServiceFileHandler(context, project), new ConnectedServiceMessageLogger(context), new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)));
+            var descriptor = new TestV3CodeGenDescriptor(new ConnectedServiceFileHandler(context, project, new TestThreadHelper()), new ConnectedServiceMessageLogger(context), new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)));
             descriptor.AddGeneratedClientCodeAsync(serviceConfig.Endpoint, referenceFolderPath, LanguageOption.GenerateCSharpCode, serviceConfig).Wait();
             var addedFile = handlerHelper.AddedFiles.FirstOrDefault();
             var generatedCode = File.ReadAllText(addedFile.SourceFile);
@@ -814,7 +816,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             handlerHelper.ServicesRootFolder = ServicesRootFolder;
             ConnectedServiceHandlerContext context = new TestConnectedServiceHandlerContext(serviceInstance, handlerHelper);
 
-            var descriptor = new TestV3CodeGenDescriptor(new ConnectedServiceFileHandler(context, project), new ConnectedServiceMessageLogger(context), new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)));
+            var descriptor = new TestV3CodeGenDescriptor(new ConnectedServiceFileHandler(context, project, new TestThreadHelper()), new ConnectedServiceMessageLogger(context), new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)));
             descriptor.AddGeneratedClientCodeAsync(serviceConfig.Endpoint, referenceFolderPath, LanguageOption.GenerateVBCode, serviceConfig).Wait();
             var addedFile = handlerHelper.AddedFiles.FirstOrDefault();
             var generatedCode = File.ReadAllText(addedFile.SourceFile);
@@ -838,7 +840,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             handlerHelper.ServicesRootFolder = ServicesRootFolder;
             ConnectedServiceHandlerContext context = new TestConnectedServiceHandlerContext(serviceInstance, handlerHelper);
 
-            return new TestV4CodeGenDescriptor(new ConnectedServiceFileHandler(context, project), new ConnectedServiceMessageLogger(context), new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)), codeGenFactory);
+            return new TestV4CodeGenDescriptor(new ConnectedServiceFileHandler(context, project, new TestThreadHelper()), new ConnectedServiceMessageLogger(context), new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)), codeGenFactory);
         }
 
         static Project CreateTestProject(string projectPath, ODataT4CodeGenerator.LanguageOption targetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp)

@@ -11,9 +11,11 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using EnvDTE;
+using Microsoft.OData.CodeGen;
 using Microsoft.OData.CodeGen.CodeGeneration;
 using Microsoft.OData.ConnectedService.Common;
 using Microsoft.VisualStudio.ConnectedServices;
+using ODataConnectedService.Shared;
 
 namespace Microsoft.OData.ConnectedService
 {
@@ -49,7 +51,6 @@ namespace Microsoft.OData.ConnectedService
         {
             Project project = ProjectHelper.GetProjectFromHierarchy(context.ProjectHierarchy);
             var serviceInstance = (ODataConnectedServiceInstance)context.ServiceInstance;
-
             var codeGenDescriptor = await GenerateCodeAsync(serviceInstance.ServiceConfig.Endpoint, serviceInstance.ServiceConfig.EdmxVersion, context, project).ConfigureAwait(false);            
             if (!serviceInstance.ServiceConfig.StoreCustomHttpHeaders)
             {
@@ -89,7 +90,9 @@ namespace Microsoft.OData.ConnectedService
                 languageOption = LanguageOption.GenerateCSharpCode;
             }
 
-            BaseCodeGenDescriptor codeGenDescriptor = codeGenDescriptorFactory.Create(edmxVersion, new ConnectedServiceFileHandler(context, project), new ConnectedServiceMessageLogger(context), new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)));
+            var vsThreadHelper = new ConnectedServiceThreadHelper();
+
+            BaseCodeGenDescriptor codeGenDescriptor = codeGenDescriptorFactory.Create(edmxVersion, new ConnectedServiceFileHandler(context, project, vsThreadHelper), new ConnectedServiceMessageLogger(context), new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)));
             await codeGenDescriptor.AddNugetPackagesAsync().ConfigureAwait(false);
             await codeGenDescriptor.AddGeneratedClientCodeAsync(metadataUri, outputDirectory, (Microsoft.OData.CodeGen.Common.LanguageOption)languageOption, ((ODataConnectedServiceInstance)context.ServiceInstance).ServiceConfig).ConfigureAwait(false);
             return codeGenDescriptor;

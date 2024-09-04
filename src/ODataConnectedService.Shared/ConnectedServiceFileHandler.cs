@@ -11,7 +11,10 @@ using EnvDTE;
 using Microsoft.OData.CodeGen;
 using Microsoft.OData.CodeGen.FileHandling;
 using Microsoft.VisualStudio.ConnectedServices;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Threading;
 using VSLangProj;
+using Task = System.Threading.Tasks.Task;
 
 namespace Microsoft.OData.ConnectedService
 {
@@ -21,6 +24,8 @@ namespace Microsoft.OData.ConnectedService
     public class ConnectedServiceFileHandler : IFileHandler
     {
         private ConnectedServiceHandlerContext Context;
+        private readonly IThreadHelper threadHelper;
+
         public Project Project { get; private set; }
 
         /// <summary>
@@ -28,10 +33,11 @@ namespace Microsoft.OData.ConnectedService
         /// </summary>
         /// <param name="context">The <see cref="ConnectedServiceHandlerContext"/ object></param>
         /// <param name="project">An object of the project.</param>
-        public ConnectedServiceFileHandler(ConnectedServiceHandlerContext context, Project project )
+        public ConnectedServiceFileHandler(ConnectedServiceHandlerContext context, Project project, IThreadHelper threadHelper)
         {
             this.Context = context;
             this.Project = project;
+            this.threadHelper = threadHelper;
         }
 
         /// <summary>
@@ -57,39 +63,49 @@ namespace Microsoft.OData.ConnectedService
         /// Sets the CSDL file as an embedded resource
         /// </summary>
         /// <param name="fileName">The name of the file to set as embedded resource</param>
-        public void SetFileAsEmbeddedResource(string fileName)
+        public async Task SetFileAsEmbeddedResourceAsync(string fileName)
         {
-            var dte = Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(DTE)) as DTE;
-            if (dte != null)
+            await this.threadHelper.RunInUiThreadAsync(() =>
             {
-                var projectItem = this.Project.ProjectItems.Item("Connected Services").ProjectItems.Item(((ODataConnectedServiceInstance)this.Context.ServiceInstance).ServiceConfig.ServiceName).ProjectItems.Item(fileName);
-                projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionEmbeddedResource;
-            }
+#pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
+                if (Package.GetGlobalService(typeof(DTE)) is DTE dte)
+                {
+                    var projectItem = this.Project.ProjectItems.Item("Connected Services").ProjectItems.Item(((ODataConnectedServiceInstance)this.Context.ServiceInstance).ServiceConfig.ServiceName).ProjectItems.Item(fileName);
+                    projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionEmbeddedResource;
+                    return true;
+                }
+#pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
+                return false;
+            }).ConfigureAwait(true);
         }
 
         /// <summary>
         /// Sets the container property attribute to either true or false
         /// </summary>
         /// <returns>A value of either true or false</returns>
-        public bool EmitContainerPropertyAttribute()
+        public async Task<bool> EmitContainerPropertyAttributeAsync()
         {
-            var vsProject = this.Project.Object as VSProject;
-            if (vsProject != null)
+           return await threadHelper.RunInUiThreadAsync(() =>
             {
-                foreach (Reference reference in vsProject.References)
+#pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
+                if (this.Project.Object is VSProject vsProject)
                 {
-                    if (reference.SourceProject == null)
+                    foreach (Reference reference in vsProject.References)
                     {
-                        // Assembly reference (For project reference, SourceProject != null)
-                        if (reference.Name.Equals("Microsoft.OData.Client", StringComparison.Ordinal))
+                        if (reference.SourceProject == null)
                         {
-                            return Version.Parse(reference.Version) > Version.Parse("7.6.4.0");
+                            // Assembly reference (For project reference, SourceProject != null)
+                            if (reference.Name.Equals("Microsoft.OData.Client", StringComparison.Ordinal))
+                            {
+                                return Version.Parse(reference.Version) > Version.Parse("7.6.4.0");
+                            }
                         }
                     }
                 }
-            }
+#pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
 
-            return false;
+                return false;
+            }).ConfigureAwait(true);
         }
     }
 }

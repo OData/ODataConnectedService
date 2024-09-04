@@ -26,12 +26,12 @@ namespace Microsoft.OData.CodeGen.FileHandling
         /// Sets a file as an embedded resource
         /// </summary>
         /// <param name="fileName">The name of the file to set as an embedded resource</param>
-        void SetFileAsEmbeddedResource(string fileName);
+        Task SetFileAsEmbeddedResourceAsync(string fileName);
 
         /// <summary>
         /// Emits container property attribute
         /// </summary>
         /// <returns></returns>
-        bool EmitContainerPropertyAttribute();
+        Task<bool> EmitContainerPropertyAttributeAsync();
     }
 }
