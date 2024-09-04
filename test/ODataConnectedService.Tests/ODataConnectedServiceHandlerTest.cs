@@ -59,7 +59,7 @@ namespace Microsoft.OData.ConnectedService.Tests
         [InlineData("AddServiceInstanceAsync", 4, true)]
         [InlineData("UpdateServiceInstanceAsync", 4, false)]
         [InlineData("UpdateServiceInstanceAsync", 4, true)]
-        public async Task TestAddUpdateServiceInstance_SavesCustomHttpHeadersToDesignerDataAccordingToStoreCustomHttpHeaders(string method, int edmxVersion, bool store)
+        public async Task TestAddUpdateServiceInstance_SavesCustomHttpHeadersToDesignerDataAccordingToStoreCustomHttpHeadersAsync(string method, int edmxVersion, bool store)
         {
             var descriptorFactory = new TestCodeGenDescriptorFactory();
             var serviceHandler = new ODataConnectedServiceHandler(descriptorFactory);

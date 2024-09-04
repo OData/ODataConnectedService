@@ -1019,7 +1019,7 @@ namespace ODataConnectedService.Tests
         }
 
         [StaFact]
-        public async Task ShouldDeselectBoundOperations_WhenRelatedTypeIsDeselectedBefore()
+        public async Task ShouldDeselectBoundOperations_WhenRelatedTypeIsDeselectedBeforeAsync()
         {
             var context = new TestConnectedServiceProviderContext();
             using (var wizard = new ODataConnectedServiceWizard(context))
