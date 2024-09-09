@@ -548,8 +548,9 @@ namespace Client.SampleServiceV4.Default
                     var assembly = global::System.Reflection.Assembly.GetExecutingAssembly();
                     // If multiple resource names end with the file name, select the shortest one.
                     var resourcePath = global::System.Linq.Enumerable.First(
-                        global::System.Linq.Enumerable.OrderBy(assembly.GetManifestResourceNames(), n => n.Length),
-                        str => str.EndsWith(filePath));
+                        global::System.Linq.Enumerable.OrderBy(
+                            global::System.Linq.Enumerable.Where(assembly.GetManifestResourceNames(), name => name.EndsWith(filePath)),
+                            filteredName => filteredName.Length));
                     global::System.IO.Stream stream = assembly.GetManifestResourceStream(resourcePath);
                     return global::System.Xml.XmlReader.Create(new global::System.IO.StreamReader(stream));
                 }

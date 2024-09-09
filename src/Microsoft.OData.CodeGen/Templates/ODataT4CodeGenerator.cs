@@ -5123,8 +5123,9 @@ this.Write(@""")]
                     var assembly = global::System.Reflection.Assembly.GetExecutingAssembly();
                     // If multiple resource names end with the file name, select the shortest one.
                     var resourcePath = global::System.Linq.Enumerable.First(
-                        global::System.Linq.Enumerable.OrderBy(assembly.GetManifestResourceNames(), n => n.Length),
-                        str => str.EndsWith(filePath));
+                        global::System.Linq.Enumerable.OrderBy(
+                            global::System.Linq.Enumerable.Where(assembly.GetManifestResourceNames(), name => name.EndsWith(filePath)),
+                            filteredName => filteredName.Length));
                     global::System.IO.Stream stream = assembly.GetManifestResourceStream(resourcePath);
                     return global::System.Xml.XmlReader.Create(new global::System.IO.StreamReader(stream));
                 }
@@ -7303,8 +7304,9 @@ this.Write(@""")>  _
                     ' If multiple resource names end with the file name, select the shortest one.
                     Dim resourcePath As Global.System.String =
                         Global.System.Linq.Enumerable.First(
-                            Global.System.Linq.Enumerable.OrderBy(assembly.GetManifestResourceNames(), Function(n) n.Length),
-                            Function(str) str.EndsWith(filePath))
+                            Global.System.Linq.Enumerable.OrderBy(
+                                Global.System.Linq.Enumerable.Where(assembly.GetManifestResourceNames(), Function(name) name.EndsWith(filePath)),
+                                Function(filteredName) filteredName.Length))
                     Dim stream As Global.System.IO.Stream = assembly.GetManifestResourceStream(resourcePath)
                     Return Global.System.Xml.XmlReader.Create(New Global.System.IO.StreamReader(stream))
                 Catch e As Global.System.Xml.XmlException
