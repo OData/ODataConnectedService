@@ -34,7 +34,7 @@ namespace ODataConnectedService.Tests.ViewModels
         }
 
         [StaFact]
-        public async Task OnPageLeavingConfigODataEndpointPageTest()
+        public async Task OnPageLeavingConfigODataEndpointPageTestAsync()
         {
             string edmx = GeneratedCodeHelpers.LoadReferenceContent("Simple.xml");
             string expectedTempfileContent = GeneratedCodeHelpers.LoadReferenceContent("TempSimple.xml");

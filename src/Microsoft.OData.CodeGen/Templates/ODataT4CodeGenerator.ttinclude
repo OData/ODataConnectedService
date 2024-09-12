@@ -25,9 +25,9 @@
 <#@ Import Namespace="System.IO" #>
 <#@ Import Namespace="System.Linq" #>
 <#@ Import Namespace="System.Net"#>
-<#@ Import Namespace="System.Security"#>
 <#@ Import Namespace="System.Text"#>
 <#@ Import Namespace= "System.Text.RegularExpressions"#>
+<#@ Import Namespace= "System.Threading.Tasks"#>
 <#@ Import Namespace="System.Xml"#>
 <#@ Import Namespace="System.Xml.Linq" #>
 <#@ Import Namespace="Microsoft.OData.Edm.Csdl" #>
@@ -40,8 +40,15 @@
 <#@ Import Namespace="Microsoft.OData.CodeGen.Logging" #>
 <#@ Import Namespace= "Microsoft.OData.CodeGen.Common"#>
 <#@include file="ODataT4CodeGenFilesManager.ttinclude"
-#><#
-    CodeGenerationContext context;
+#>
+<#
+    // This will be used whenever the code is ran in the t4 environment as T4 doesn't support full async execution.
+    this.TransformTextAsync().GetAwaiter().GetResult();
+#><#+
+
+public virtual async Task<string> TransformTextAsync()
+{
+     CodeGenerationContext context;
     if (!string.IsNullOrWhiteSpace(this.Edmx))
     {
         context = new CodeGenerationContext(this.Edmx, this.NamespacePrefix)
@@ -125,12 +132,16 @@
             throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "Code gen for the target language '{0}' is not supported.", this.TargetLanguage.ToString()));
     }
 
-#><#=template.TransformText()#><#
+    this.Write(this.ToStringHelper.ToStringWithCulture(await template.TransformText()));
+
     foreach (string warning in context.Warnings)
     {
         this.Warning(warning);
     }
-#><#+
+
+    return this.GenerationEnvironment.ToString();
+}
+
 /// <summary>
 /// The string for the edmx content.
 /// </summary>
@@ -1662,13 +1673,13 @@ public abstract class ODataClientTemplate : TemplateBase
     /// Generates code for the OData client.
     /// </summary>
     /// <returns>The generated code for the OData client.</returns>
-    public override string TransformText()
+    public override async Task<string> TransformText()
     {
         context.MultipleFilesManager.StartHeader();
         this.WriteFileHeader();
         context.MultipleFilesManager.EndBlock();
         this.WriteNamespaces();
-        context.MultipleFilesManager.GenerateFiles(context.GenerateMultipleFiles, null, null, null, false, false);
+        await context.MultipleFilesManager.GenerateFilesAsync(context.GenerateMultipleFiles);
         return context.MultipleFilesManager.Template.ToString();
     }
 
@@ -1696,7 +1707,6 @@ public abstract class ODataClientTemplate : TemplateBase
     {
         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
 
-        IEdmSchemaElement[] schemaElementsInModel = this.context.NamespacesInModel.SelectMany(n => this.context.GetSchemaElements(n)).ToArray();
         IEdmSchemaElement[] schemaElements = this.context.GetSchemaElements(fullNamespace).ToArray();
         if (schemaElements.OfType<IEdmEntityContainer>().Any()) {
             IEdmEntityContainer container = schemaElements.OfType<IEdmEntityContainer>().Single();
@@ -3342,7 +3352,7 @@ public abstract class TemplateBase
     /// <summary>
     /// Create the template output
     /// </summary>
-    public abstract string TransformText();
+    public abstract Task<string> TransformText();
 
     #region Transform-time helpers
     /// <summary>

@@ -15,6 +15,7 @@ using Microsoft.VisualStudio.ConnectedServices;
 using NuGet.VisualStudio;
 using Shell = Microsoft.VisualStudio.Shell;
 
+
 namespace Microsoft.OData.ConnectedService
 {
     /// <summary>
