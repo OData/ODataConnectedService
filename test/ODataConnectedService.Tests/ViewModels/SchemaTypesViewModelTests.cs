@@ -10,6 +10,7 @@ using System.Linq;
 using FluentAssertions;
 using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService.ViewModels;
+using Microsoft.OData.ConnectedService.Views;
 using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -922,6 +923,30 @@ namespace ODataConnectedService.Tests.ViewModels
                         }
                     }
                 });
+            }
+        }
+
+        [TestMethod]
+        public void LoadSchemaTypes_ShouldOnlyShowItemsInPaginator()
+        {
+            using (var viewModel = new SchemaTypesViewModel())
+            {
+                var listToLoad = Enumerable.Range(1, 80)
+                    .Select(x => new string(Enumerable.Repeat('A', x).ToArray()))
+                    .Select(name => new EdmEntityType("Test", name)).ToArray();
+        
+                viewModel.LoadSchemaTypes(listToLoad, new Dictionary<IEdmType, List<IEdmOperation>>());
+
+                viewModel.OnPageEnteringAsync(null).Wait();
+                Assert.AreEqual(viewModel.SchemaTypes.Count(), listToLoad.Length);
+                var view = viewModel.View as SchemaTypes;
+                Assert.IsNotNull(viewModel);
+                Assert.AreEqual(view.SchemaTypesTreeView.Items.Count, 50);
+                Assert.AreEqual(view.PageInfoTextBlock.Text, "Page 1 of 2");
+
+                view.DisplayPage(2);
+                Assert.AreEqual(view.SchemaTypesTreeView.Items.Count, 30);
+                Assert.AreEqual(view.PageInfoTextBlock.Text, "Page 2 of 2");
             }
         }
     }

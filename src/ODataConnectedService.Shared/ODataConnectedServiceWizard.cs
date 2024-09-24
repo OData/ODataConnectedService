@@ -45,6 +45,11 @@ namespace Microsoft.OData.ConnectedService
 
         internal string ProcessedEndpointForSchemaTypes;
 
+        /// <summary>
+        /// An IEdmModel that allows us to reduce the number of I/O operations between page transitions after the ConfigureODataModel Page.
+        /// </summary>
+        internal IEdmModel Model { get; set; }
+
         public ODataConnectedServiceWizard(ConnectedServiceProviderContext context)
         {
             Context = context;
@@ -64,6 +69,7 @@ namespace Microsoft.OData.ConnectedService
             OperationImportsViewModel.PageEntering += OperationImportsViewModel_PageEntering;
             SchemaTypesViewModel.PageEntering += SchemaTypeSelectionViewModel_PageEntering;
             SchemaTypesViewModel.PageLeaving += SchemaTypeSelectionViewModel_PageLeaving;
+            ConfigODataEndpointViewModel.PageLeaving += ConfigODataEndpointViewModel_PageLeaving;
 
             if (Context != null && Context.IsUpdating)
             {
@@ -175,6 +181,17 @@ namespace Microsoft.OData.ConnectedService
             }
         }
 
+        public void ConfigODataEndpointViewModel_PageLeaving(object sender, EventArgs args)
+        {
+            if (sender is ConfigODataEndpointViewModel configOdataViewModel)
+            {
+                if (configOdataViewModel.View is ConfigODataEndpoint configOdataView)
+                {
+                    this.Model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+                }
+            }
+        }
+
         public void AdvancedSettingsViewModel_PageEntering(object sender, EventArgs args)
         {
             if (sender is AdvancedSettingsViewModel advancedSettingsViewModel)
@@ -206,7 +223,7 @@ namespace Microsoft.OData.ConnectedService
                         return;
                     }
 
-                    var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+                    var model = this.Model ?? EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
                     var operations = EdmHelper.GetOperationImports(model);
                     OperationImportsViewModel.LoadOperationImports(operations, new HashSet<string>(SchemaTypesViewModel.ExcludedSchemaTypeNames), SchemaTypesViewModel.SchemaTypeModelMap);
 
@@ -226,7 +243,7 @@ namespace Microsoft.OData.ConnectedService
             {
                 if (ProcessedEndpointForSchemaTypes != UserSettings.Endpoint)
                 {
-                    var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+                    var model = this.Model ?? EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
                     var entityTypes = EdmHelper.GetSchemaTypes(model);
                     var boundOperations = EdmHelper.GetBoundOperations(model);
                     SchemaTypesViewModel.LoadSchemaTypes(entityTypes, boundOperations);
@@ -245,7 +262,7 @@ namespace Microsoft.OData.ConnectedService
 
         public void SchemaTypeSelectionViewModel_PageLeaving(object sender, EventArgs args)
         {
-            var model = EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
+            var model = this.Model ?? EdmHelper.GetEdmModelFromFile(ConfigODataEndpointViewModel.MetadataTempPath);
 
             // exclude related operation imports for excluded types
             var operations = EdmHelper.GetOperationImports(model);
