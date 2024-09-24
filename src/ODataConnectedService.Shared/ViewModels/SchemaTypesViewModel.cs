@@ -26,7 +26,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// Debounces the user input events on the search box so the last event can be executed for pagination.
         /// </summary>
         private const int DebounceTimeInMilliseconds = 250;
-        
+
         /// <summary>
         /// Timer for scheduling UI draw events in response to search.
         /// </summary>
@@ -88,6 +88,7 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                 schemaView.DisplayPage(1);
             }
         }
+
         /// <summary>
         /// Gets the schema types that start with the search text or with it's bound operations start with the search text.
         /// </summary>

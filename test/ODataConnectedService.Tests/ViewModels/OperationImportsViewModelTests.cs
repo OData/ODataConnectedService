@@ -12,6 +12,7 @@ using Microsoft.OData.ConnectedService.ViewModels;
 using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
+using Microsoft.OData.ConnectedService.Views;
 
 namespace ODataConnectedService.Tests.ViewModels
 {
@@ -211,6 +212,33 @@ namespace ODataConnectedService.Tests.ViewModels
                     new OperationImportModel { Name = "Func1", IsSelected = true },
                     new OperationImportModel { Name = "AnotherFunc2", IsSelected = true }
                 });
+            }
+        }
+
+        [TestMethod]
+        public void LoadSchemaTypes_ShouldOnlyShowItemsInPaginator()
+        {
+            using (var viewModel = new OperationImportsViewModel())
+            {
+
+                var container = new EdmEntityContainer("Test", "Default");
+                var listToLoad = new List<IEdmOperationImport>(Enumerable.Range(1, 80)
+                    .Select(x => new string(Enumerable.Repeat('A', x).ToArray()))
+                    .Select(name => new EdmActionImport(container, name, new EdmAction("Test",name, null))));
+
+                viewModel.LoadOperationImports(listToLoad, new HashSet<string>(), new Dictionary<string, SchemaTypeModel>());
+
+
+                viewModel.OnPageEnteringAsync(null).Wait();
+                Assert.AreEqual(viewModel.OperationImports.Count(), listToLoad.Count);
+                var view = viewModel.View as OperationImports;
+                Assert.IsNotNull(viewModel);
+                Assert.AreEqual(view.OperationImportsList.Items.Count, 50);
+                Assert.AreEqual(view.PageInfoTextBlock.Text, "Page 1 of 2");
+
+                view.DisplayPage(2);
+                Assert.AreEqual(view.OperationImportsList.Items.Count, 30);
+                Assert.AreEqual(view.PageInfoTextBlock.Text, "Page 2 of 2");
             }
         }
     }

@@ -82,6 +82,12 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <!-- Pagination Controls -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button Content="Previous" Click="PreviousButton_Click" Margin="5"/>
+            <TextBlock x:Name="PageInfoTextBlock" VerticalAlignment="Center" Margin="5"/>
+            <Button Content="Next" Click="NextButton_Click" Margin="5"/>
+        </StackPanel>
         <DockPanel Margin="0,5,0,0">
             <CheckBox
                 x:Name="ShowReturnTypeAndParameters"
