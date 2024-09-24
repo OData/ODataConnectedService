@@ -1083,8 +1083,16 @@ namespace ODataConnectedService.Tests
         [Fact]
         public void LoadSchemaTypes_ShouldOnlyShowItemsInPaginator()
         {
-            using (var viewModel = new SchemaTypesViewModel())
+            ServiceConfigurationV4 savedConfig = GetTestConfig();
+            var context = new TestConnectedServiceProviderContext(true, savedConfig);
+            using (var wizard = new ODataConnectedServiceWizard(context))
             {
+                var endpointPage = wizard.ConfigODataEndpointViewModel;
+                endpointPage.UserSettings.Endpoint = MetadataPathV3;
+                endpointPage.OnPageLeavingAsync(null).Wait();
+
+                var viewModel = wizard.SchemaTypesViewModel;
+
                 var listToLoad = Enumerable.Range(1, 80)
                     .Select(x => new string(Enumerable.Repeat('A', x).ToArray()))
                     .Select(name => new EdmEntityType("Test", name)).ToArray();
@@ -1107,8 +1115,14 @@ namespace ODataConnectedService.Tests
         [Fact]
         public void LoadOperationTypes_ShouldOnlyShowItemsInPaginator()
         {
-            using (var viewModel = new OperationImportsViewModel())
+            ServiceConfigurationV4 savedConfig = GetTestConfig();
+            var context = new TestConnectedServiceProviderContext(true, savedConfig);
+            using (var wizard = new ODataConnectedServiceWizard(context))
             {
+                var endpointPage = wizard.ConfigODataEndpointViewModel;
+                endpointPage.UserSettings.Endpoint = MetadataPathV3;
+                endpointPage.OnPageLeavingAsync(null).Wait();
+                var viewModel = wizard.OperationImportsViewModel;
 
                 var container = new EdmEntityContainer("Test", "Default");
                 var listToLoad = new List<IEdmOperationImport>(Enumerable.Range(1, 80)

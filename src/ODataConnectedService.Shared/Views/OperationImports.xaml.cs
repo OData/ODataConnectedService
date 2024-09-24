@@ -12,7 +12,7 @@ namespace Microsoft.OData.ConnectedService.Views
     public partial class OperationImports : UserControl
     {
         private int currentPage = 1;
-        private int itemsPerPage = 50;
+        private readonly int itemsPerPage = 50;
         public OperationImports()
         {
             InitializeComponent();
@@ -34,6 +34,7 @@ namespace Microsoft.OData.ConnectedService.Views
         /// <param name="pageNumber">The page to view indexes start from 1.</param>
         public void DisplayPage(int pageNumber)
         {
+            pageNumber = pageNumber < 1 ? 1 : pageNumber;
             int startIndex = (pageNumber - 1) * itemsPerPage;
             int endIndex = startIndex + itemsPerPage;
 
