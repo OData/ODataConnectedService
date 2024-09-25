@@ -10,6 +10,7 @@ using System.Linq;
 using FluentAssertions;
 using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService.ViewModels;
+using Microsoft.OData.ConnectedService.Views;
 using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

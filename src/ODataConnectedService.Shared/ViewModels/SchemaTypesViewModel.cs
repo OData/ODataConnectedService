@@ -23,6 +23,16 @@ namespace Microsoft.OData.ConnectedService.ViewModels
     internal class SchemaTypesViewModel : ConnectedServiceWizardPage
     {
         /// <summary>
+        /// Debounces the user input events on the search box so the last event can be executed for pagination.
+        /// </summary>
+        private const int DebounceTimeInMilliseconds = 250;
+
+        /// <summary>
+        /// Timer for scheduling UI draw events in response to search.
+        /// </summary>
+        private System.Windows.Threading.DispatcherTimer _searchTimer;
+
+        /// <summary>
         /// User settings.
         /// </summary>
         /// <remarks>
@@ -51,9 +61,31 @@ namespace Microsoft.OData.ConnectedService.ViewModels
             set
             {
                 _searchText = value;
-
+                _searchTimer?.Stop();
+                _searchTimer?.Start();
                 this.OnPropertyChanged(nameof(SearchText));
-                this.OnPropertyChanged(nameof(FilteredSchemaTypes));
+            }
+        }
+
+        /// <summary>
+        /// Schedules the timer to draw after the debounce duration.
+        /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Event arguments</param>
+        private void OnSearchTimerTick(object sender, EventArgs e)
+        {
+            _searchTimer?.Stop();
+            RefreshPaginatorView();
+        }
+
+        /// <summary>
+        /// Reloads the paginator in response to user events on the Search text.
+        /// </summary>
+        private void RefreshPaginatorView()
+        {
+            if (this.View is SchemaTypes schemaView)
+            {
+                schemaView.DisplayPage(1);
             }
         }
 
@@ -128,8 +160,14 @@ namespace Microsoft.OData.ConnectedService.ViewModels
         /// <param name="args">Event arguments being passed to the method.</param>
         public override async Task OnPageEnteringAsync(WizardEnteringArgs args)
         {
+            _searchTimer = new System.Windows.Threading.DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(DebounceTimeInMilliseconds)
+            };
+            _searchTimer.Tick += OnSearchTimerTick;
+
             this.IsEntered = true;
-            await base.OnPageEnteringAsync(args).ConfigureAwait(false);
+            await base.OnPageEnteringAsync(args);
             View = new SchemaTypes() { DataContext = this };
             PageEntering?.Invoke(this, EventArgs.Empty);
             if (this.View is SchemaTypes view)
@@ -138,6 +176,8 @@ namespace Microsoft.OData.ConnectedService.ViewModels
                 view.SelectedBoundOperationsCount.Text = SchemaTypes
                     .Where(x => x.IsSelected && x.BoundOperations?.Any() == true).SelectMany(x => x.BoundOperations)
                     .Count(x => x.IsSelected).ToString(CultureInfo.InvariantCulture);
+
+                view.DisplayPage(1);
             }
         }
 

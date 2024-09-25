@@ -18,7 +18,9 @@ using FluentAssertions;
 using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService;
+using Microsoft.OData.ConnectedService.ViewModels;
 using Microsoft.OData.ConnectedService.Views;
+using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.ConnectedServices;
 using Microsoft.VisualStudio.Shell;
 using Xunit;
@@ -1081,6 +1083,72 @@ namespace ODataConnectedService.Tests
                 var advancedView = advancedPage.View as AdvancedSettings;
                 advancedView.settings.RaiseEvent(new RoutedEventArgs(Hyperlink.ClickEvent));
                 Assert.Equal(Visibility.Hidden, advancedView.AdvancedSettingsForv4.Visibility);
+            }
+        }
+
+
+        [Fact]
+        public void LoadSchemaTypes_ShouldOnlyShowItemsInPaginator()
+        {
+            ServiceConfigurationV4 savedConfig = GetTestConfig();
+            var context = new TestConnectedServiceProviderContext(true, savedConfig);
+            using (var wizard = new ODataConnectedServiceWizard(context))
+            {
+                var endpointPage = wizard.ConfigODataEndpointViewModel;
+                endpointPage.UserSettings.Endpoint = MetadataPathV3;
+                endpointPage.OnPageLeavingAsync(null).Wait();
+
+                var viewModel = wizard.SchemaTypesViewModel;
+
+                var listToLoad = Enumerable.Range(1, 80)
+                    .Select(x => new string(Enumerable.Repeat('A', x).ToArray()))
+                    .Select(name => new EdmEntityType("Test", name)).ToArray();
+
+                viewModel.LoadSchemaTypes(listToLoad, new Dictionary<IEdmType, List<IEdmOperation>>());
+
+                viewModel.OnPageEnteringAsync(null).Wait();
+                Assert.Equal(viewModel.SchemaTypes.Count(), listToLoad.Length);
+                var view = viewModel.View as SchemaTypes;
+                Assert.NotNull(viewModel);
+                Assert.Equal(50, view.SchemaTypesTreeView.Items.Count);
+                Assert.Equal("Page 1 of 2", view.PageInfoTextBlock.Text);
+
+                view.DisplayPage(2);
+                Assert.Equal(30, view.SchemaTypesTreeView.Items.Count);
+                Assert.Equal("Page 2 of 2", view.PageInfoTextBlock.Text);
+            }
+        }
+
+        [Fact]
+        public void LoadOperationTypes_ShouldOnlyShowItemsInPaginator()
+        {
+            ServiceConfigurationV4 savedConfig = GetTestConfig();
+            var context = new TestConnectedServiceProviderContext(true, savedConfig);
+            using (var wizard = new ODataConnectedServiceWizard(context))
+            {
+                var endpointPage = wizard.ConfigODataEndpointViewModel;
+                endpointPage.UserSettings.Endpoint = MetadataPathV3;
+                endpointPage.OnPageLeavingAsync(null).Wait();
+                var viewModel = wizard.OperationImportsViewModel;
+
+                var container = new EdmEntityContainer("Test", "Default");
+                var listToLoad = new List<IEdmOperationImport>(Enumerable.Range(1, 80)
+                    .Select(x => new string(Enumerable.Repeat('A', x).ToArray()))
+                    .Select(name => new EdmActionImport(container, name, new EdmAction("Test", name, null))));
+
+                viewModel.LoadOperationImports(listToLoad, new HashSet<string>(), new Dictionary<string, SchemaTypeModel>());
+
+
+                viewModel.OnPageEnteringAsync(null).Wait();
+                Assert.Equal(viewModel.OperationImports.Count(), listToLoad.Count);
+                var view = viewModel.View as OperationImports;
+                Assert.NotNull(viewModel);
+                Assert.Equal(50, view.OperationImportsList.Items.Count);
+                Assert.Equal("Page 1 of 2", view.PageInfoTextBlock.Text);
+
+                view.DisplayPage(2);
+                Assert.Equal(30, view.OperationImportsList.Items.Count);
+                Assert.Equal("Page 2 of 2", view.PageInfoTextBlock.Text);
             }
         }
     }
