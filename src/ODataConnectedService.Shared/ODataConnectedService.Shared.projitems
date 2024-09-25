@@ -26,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ODataConnectedServiceInstance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ODataConnectedServiceProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ODataConnectedServiceWizard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Threading\IThreadHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AdvancedSettingsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ConfigODataEndpointViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\OperationImportsViewModel.cs" />

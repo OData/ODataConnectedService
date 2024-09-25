@@ -8,12 +8,11 @@
 using System;
 using System.Threading.Tasks;
 using EnvDTE;
-using Microsoft.OData.CodeGen;
 using Microsoft.OData.CodeGen.FileHandling;
 using Microsoft.VisualStudio.ConnectedServices;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Threading;
 using VSLangProj;
+using Microsoft.OData.ConnectedService.Threading;
 using Task = System.Threading.Tasks.Task;
 
 namespace Microsoft.OData.ConnectedService
@@ -33,6 +32,7 @@ namespace Microsoft.OData.ConnectedService
         /// </summary>
         /// <param name="context">The <see cref="ConnectedServiceHandlerContext"/ object></param>
         /// <param name="project">An object of the project.</param>
+        /// <param name="threadHelper">A thread helper that marshals the thread to the correct thread.</param>
         public ConnectedServiceFileHandler(ConnectedServiceHandlerContext context, Project project, IThreadHelper threadHelper)
         {
             this.Context = context;
@@ -51,16 +51,17 @@ namespace Microsoft.OData.ConnectedService
         {
             if (oDataFileOptions != null)
             {
-                return await this.Context.HandlerHelper.AddFileAsync(fileName, targetPath, new AddFileOptions { SuppressOverwritePrompt = oDataFileOptions.SuppressOverwritePrompt, OpenOnComplete = oDataFileOptions.OpenOnComplete }).ConfigureAwait(true);
+                return await this.Context.HandlerHelper.AddFileAsync(fileName, targetPath, new AddFileOptions { SuppressOverwritePrompt = oDataFileOptions.SuppressOverwritePrompt, OpenOnComplete = oDataFileOptions.OpenOnComplete });
             }
             else
             {
-                return await this.Context.HandlerHelper.AddFileAsync(fileName, targetPath).ConfigureAwait(true);
+                return await this.Context.HandlerHelper.AddFileAsync(fileName, targetPath);
             }
         }
 
         /// <summary>
-        /// Sets the CSDL file as an embedded resource
+        /// Sets the CSDL file as an embedded resource.
+        /// <remark>Since this method may be executed in a background thread this will require to switch to the main thread.</remark>
         /// </summary>
         /// <param name="fileName">The name of the file to set as embedded resource</param>
         public async Task SetFileAsEmbeddedResourceAsync(string fileName)
@@ -76,36 +77,37 @@ namespace Microsoft.OData.ConnectedService
                 }
 #pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
                 return false;
-            }).ConfigureAwait(true);
+            });
         }
 
         /// <summary>
         /// Sets the container property attribute to either true or false
+        /// <remark>Since this method may be executed in a background thread this will require to switch to the main thread.</remark>
         /// </summary>
         /// <returns>A value of either true or false</returns>
         public async Task<bool> EmitContainerPropertyAttributeAsync()
         {
-           return await threadHelper.RunInUiThreadAsync(() =>
-            {
+            return await threadHelper.RunInUiThreadAsync(() =>
+             {
 #pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
-                if (this.Project.Object is VSProject vsProject)
-                {
-                    foreach (Reference reference in vsProject.References)
-                    {
-                        if (reference.SourceProject == null)
-                        {
-                            // Assembly reference (For project reference, SourceProject != null)
-                            if (reference.Name.Equals("Microsoft.OData.Client", StringComparison.Ordinal))
-                            {
-                                return Version.Parse(reference.Version) > Version.Parse("7.6.4.0");
-                            }
-                        }
-                    }
-                }
+                 if (this.Project.Object is VSProject vsProject)
+                 {
+                     foreach (Reference reference in vsProject.References)
+                     {
+                         if (reference.SourceProject == null)
+                         {
+                             // Assembly reference (For project reference, SourceProject != null)
+                             if (reference.Name.Equals("Microsoft.OData.Client", StringComparison.Ordinal))
+                             {
+                                 return Version.Parse(reference.Version) > Version.Parse("7.6.4.0");
+                             }
+                         }
+                     }
+                 }
 #pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
 
-                return false;
-            }).ConfigureAwait(true);
+                 return false;
+             });
         }
     }
 }
