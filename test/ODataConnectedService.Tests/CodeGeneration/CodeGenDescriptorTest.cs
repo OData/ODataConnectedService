@@ -13,7 +13,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using EnvDTE;
 using Microsoft.OData.CodeGen.CodeGeneration;

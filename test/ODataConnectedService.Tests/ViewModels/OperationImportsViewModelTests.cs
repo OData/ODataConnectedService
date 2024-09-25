@@ -12,6 +12,7 @@ using Microsoft.OData.ConnectedService.ViewModels;
 using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
+using Microsoft.OData.ConnectedService.Views;
 
 namespace ODataConnectedService.Tests.ViewModels
 {
@@ -212,6 +213,6 @@ namespace ODataConnectedService.Tests.ViewModels
                     new OperationImportModel { Name = "AnotherFunc2", IsSelected = true }
                 });
             }
-        }
+        }        
     }
 }

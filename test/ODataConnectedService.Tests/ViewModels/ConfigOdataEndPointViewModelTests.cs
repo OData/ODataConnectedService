@@ -101,6 +101,7 @@ namespace ODataConnectedService.Tests.ViewModels
             //Check if $metadata is appended as the last segment
             Assert.Equal("http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
 
+            // @todo: marabooy: Check where this is mocked out as it fails when async api's are used.
             //Check if an exception is thrown for an invalid url and the user is notified
             //pageNavigationResult = await pageNavigationResultTask;
             //Assert.NotNull(pageNavigationResult.ErrorMessage);

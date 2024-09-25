@@ -89,22 +89,22 @@
     <PackageReference Include="Microsoft.OData.Edm">
       <Version>7.6.3</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.9.37000" ExcludeAssets="runtime">
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.11.40262" ExcludeAssets="runtime">
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.ConnectedServices">
       <Version>16.2.45</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK">
-      <Version>17.3.32804.24</Version>
+      <Version>17.11.40262</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VSSDK.BuildTools">
-      <Version>17.10.2179</Version>
+      <Version>17.11.435</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="NuGet.VisualStudio">
-      <Version>17.6.0</Version>
+      <Version>17.11.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
