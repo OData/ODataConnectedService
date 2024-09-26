@@ -101,14 +101,13 @@ namespace ODataConnectedService.Tests.ViewModels
             //Check if $metadata is appended as the last segment
             Assert.Equal("http://user:password@mysite/ODataService/$metadata?$schemaversion=2.0", configOdataEndPointViewModel.ServiceConfiguration.Endpoint);
 
-            // @todo: marabooy: Check where this is mocked out as it fails when async api's are used.
             //Check if an exception is thrown for an invalid url and the user is notified
-            //pageNavigationResult = await pageNavigationResultTask;
-            //Assert.NotNull(pageNavigationResult.ErrorMessage);
-            //Assert.True(pageNavigationResult.ErrorMessage.Contains("The remote name could not be resolved")
-            //    || pageNavigationResult.ErrorMessage.Contains("The remote server returned an error: (407) Proxy Authentication Required"));
-            //Assert.False(pageNavigationResult.IsSuccess);
-            //Assert.True(pageNavigationResult.ShowMessageBoxOnFailure);
+            pageNavigationResult = await pageNavigationResultTask;
+            Assert.NotNull(pageNavigationResult.ErrorMessage);
+            Assert.True(pageNavigationResult.ErrorMessage.Contains("The remote name could not be resolved")
+                || pageNavigationResult.ErrorMessage.Contains("The remote server returned an error: (407) Proxy Authentication Required"));
+            Assert.False(pageNavigationResult.IsSuccess);
+            Assert.True(pageNavigationResult.ShowMessageBoxOnFailure);
 
 
             configOdataEndPointViewModel.UserSettings.Endpoint = Path.Combine(Directory.GetCurrentDirectory(), "EdmxFile.xml");
