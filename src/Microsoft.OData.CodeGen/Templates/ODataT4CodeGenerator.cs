@@ -17,9 +17,9 @@ namespace Microsoft.OData.CodeGen.Templates
     using System.IO;
     using System.Linq;
     using System.Net;
-    using System.Security;
     using System.Text;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
     using System.Xml;
     using System.Xml.Linq;
     using Microsoft.OData.Edm.Csdl;
@@ -31,6 +31,7 @@ namespace Microsoft.OData.CodeGen.Templates
     using Microsoft.OData.CodeGen.FileHandling;
     using Microsoft.OData.CodeGen.Logging;
     using Microsoft.OData.CodeGen.Common;
+    using System.Security;
     
     /// <summary>
     /// Class to produce the template output
@@ -62,97 +63,8 @@ namespace Microsoft.OData.CodeGen.Templates
 //---------------------------------------------------------------------------------
 */
 
-    CodeGenerationContext context;
-    if (!string.IsNullOrWhiteSpace(this.Edmx))
-    {
-        context = new CodeGenerationContext(this.Edmx, this.NamespacePrefix)
-        {
-            UseDataServiceCollection = this.UseDataServiceCollection,
-            TargetLanguage = this.TargetLanguage,
-            EnableNamingAlias = this.EnableNamingAlias,
-            IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
-            MetadataFilePath = this.MetadataFilePath,
-            MetadataFileRelativePath = this.MetadataFileRelativePath,
-            MakeTypesInternal = this.MakeTypesInternal,
-            MultipleFilesManager = new FilesManager(null),
-            OmitVersioningInfo = this.OmitVersioningInfo,
-            GenerateMultipleFiles = this.GenerateMultipleFiles,
-            ExcludedOperationImports = this.ExcludedOperationImports,
-            ExcludedBoundOperations = this.ExcludedBoundOperations,
-            ExcludedSchemaTypes = this.ExcludedSchemaTypes,
-            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute
-        };
-    }
-    else
-    {
-        this.ApplyParametersFromCommandLine();
-        if (string.IsNullOrEmpty(metadataDocumentUri))
-        {
-            this.ApplyParametersFromConfigurationClass();
-        }
-
-        WebProxy proxy = null;
-        if(this.IncludeWebProxy)
-        {
-            proxy = new WebProxy(this.WebProxyHost,true);
-
-            if(this.IncludeWebProxyNetworkCredentials)
-            {
-               NetworkCredential  credentials = new NetworkCredential(this.WebProxyNetworkCredentialsUsername,
-               this.WebProxyNetworkCredentialsPassword,
-               this.WebProxyNetworkCredentialsDomain);
-               proxy.Credentials = credentials;
-            }
-
-        }
-
-        context = new CodeGenerationContext(new Uri(this.MetadataDocumentUri, UriKind.Absolute), this.NamespacePrefix, proxy, this.CustomHttpHeaders)
-        {
-            UseDataServiceCollection = this.UseDataServiceCollection,
-            TargetLanguage = this.TargetLanguage,
-            EnableNamingAlias = this.EnableNamingAlias,
-            IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
-            MetadataFilePath = this.MetadataFilePath,
-            MetadataFileRelativePath = this.MetadataFileRelativePath,
-            MakeTypesInternal = this.MakeTypesInternal,
-            MultipleFilesManager = new FilesManager(null),
-            OmitVersioningInfo = this.OmitVersioningInfo,
-            GenerateMultipleFiles = this.GenerateMultipleFiles,
-            ExcludedOperationImports = this.ExcludedOperationImports,
-            ExcludedBoundOperations = this.ExcludedBoundOperations,
-            ExcludedSchemaTypes = this.ExcludedSchemaTypes,
-            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute
-        };
-    }
-
-     this.MultipleFilesManager = context.MultipleFilesManager;
-
-    if(this.GetReferencedModelReaderFunc != null)
-    {
-        context.GetReferencedModelReaderFunc = this.GetReferencedModelReaderFunc;
-    }
-
-    ODataClientTemplate template;
-    switch(this.TargetLanguage)
-    {
-        case LanguageOption.CSharp:
-            template = new ODataClientCSharpTemplate(context);
-            break;
-        case LanguageOption.VB:
-            template = new ODataClientVBTemplate(context);
-            break;
-
-        default:
-            throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "Code gen for the target language '{0}' is not supported.", this.TargetLanguage.ToString()));
-    }
-
-
-            this.Write(this.ToStringHelper.ToStringWithCulture(template.TransformText()));
-
-    foreach (string warning in context.Warnings)
-    {
-        this.Warning(warning);
-    }
+    // This will be used whenever the code is ran in the t4 environment as T4 doesn't support full async execution.
+    this.TransformTextAsync().GetAwaiter().GetResult();
 
             return this.GenerationEnvironment.ToString();
         }
@@ -275,6 +187,103 @@ public static class Customization
 	}
 }
 
+
+
+public virtual async Task<string> TransformTextAsync()
+{
+     CodeGenerationContext context;
+    if (!string.IsNullOrWhiteSpace(this.Edmx))
+    {
+        context = new CodeGenerationContext(this.Edmx, this.NamespacePrefix)
+        {
+            UseDataServiceCollection = this.UseDataServiceCollection,
+            TargetLanguage = this.TargetLanguage,
+            EnableNamingAlias = this.EnableNamingAlias,
+            IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
+            MetadataFilePath = this.MetadataFilePath,
+            MetadataFileRelativePath = this.MetadataFileRelativePath,
+            MakeTypesInternal = this.MakeTypesInternal,
+            MultipleFilesManager = new FilesManager(null),
+            OmitVersioningInfo = this.OmitVersioningInfo,
+            GenerateMultipleFiles = this.GenerateMultipleFiles,
+            ExcludedOperationImports = this.ExcludedOperationImports,
+            ExcludedBoundOperations = this.ExcludedBoundOperations,
+            ExcludedSchemaTypes = this.ExcludedSchemaTypes,
+            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute
+        };
+    }
+    else
+    {
+        this.ApplyParametersFromCommandLine();
+        if (string.IsNullOrEmpty(metadataDocumentUri))
+        {
+            this.ApplyParametersFromConfigurationClass();
+        }
+
+        WebProxy proxy = null;
+        if(this.IncludeWebProxy)
+        {
+            proxy = new WebProxy(this.WebProxyHost,true);
+
+            if(this.IncludeWebProxyNetworkCredentials)
+            {
+               NetworkCredential  credentials = new NetworkCredential(this.WebProxyNetworkCredentialsUsername,
+               this.WebProxyNetworkCredentialsPassword,
+               this.WebProxyNetworkCredentialsDomain);
+               proxy.Credentials = credentials;
+            }
+
+        }
+
+        context = new CodeGenerationContext(new Uri(this.MetadataDocumentUri, UriKind.Absolute), this.NamespacePrefix, proxy, this.CustomHttpHeaders)
+        {
+            UseDataServiceCollection = this.UseDataServiceCollection,
+            TargetLanguage = this.TargetLanguage,
+            EnableNamingAlias = this.EnableNamingAlias,
+            IgnoreUnexpectedElementsAndAttributes = this.IgnoreUnexpectedElementsAndAttributes,
+            MetadataFilePath = this.MetadataFilePath,
+            MetadataFileRelativePath = this.MetadataFileRelativePath,
+            MakeTypesInternal = this.MakeTypesInternal,
+            MultipleFilesManager = new FilesManager(null),
+            OmitVersioningInfo = this.OmitVersioningInfo,
+            GenerateMultipleFiles = this.GenerateMultipleFiles,
+            ExcludedOperationImports = this.ExcludedOperationImports,
+            ExcludedBoundOperations = this.ExcludedBoundOperations,
+            ExcludedSchemaTypes = this.ExcludedSchemaTypes,
+            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute
+        };
+    }
+
+     this.MultipleFilesManager = context.MultipleFilesManager;
+
+    if(this.GetReferencedModelReaderFunc != null)
+    {
+        context.GetReferencedModelReaderFunc = this.GetReferencedModelReaderFunc;
+    }
+
+    ODataClientTemplate template;
+    switch(this.TargetLanguage)
+    {
+        case LanguageOption.CSharp:
+            template = new ODataClientCSharpTemplate(context);
+            break;
+        case LanguageOption.VB:
+            template = new ODataClientVBTemplate(context);
+            break;
+
+        default:
+            throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "Code gen for the target language '{0}' is not supported.", this.TargetLanguage.ToString()));
+    }
+
+    this.Write(this.ToStringHelper.ToStringWithCulture(await template.TransformText()));
+
+    foreach (string warning in context.Warnings)
+    {
+        this.Warning(warning);
+    }
+
+    return this.GenerationEnvironment.ToString();
+}
 
 /// <summary>
 /// The string for the edmx content.
@@ -1807,13 +1816,13 @@ public abstract class ODataClientTemplate : TemplateBase
     /// Generates code for the OData client.
     /// </summary>
     /// <returns>The generated code for the OData client.</returns>
-    public override string TransformText()
+    public override async Task<string> TransformText()
     {
         context.MultipleFilesManager.StartHeader();
         this.WriteFileHeader();
         context.MultipleFilesManager.EndBlock();
         this.WriteNamespaces();
-        context.MultipleFilesManager.GenerateFiles(context.GenerateMultipleFiles, null, null, null, false, false);
+        await context.MultipleFilesManager.GenerateFilesAsync(context.GenerateMultipleFiles);
         return context.MultipleFilesManager.Template.ToString();
     }
 
@@ -1841,7 +1850,6 @@ public abstract class ODataClientTemplate : TemplateBase
     {
         this.WriteNamespaceStart(this.context.GetPrefixedNamespace(fullNamespace, this, true, false));
 
-        IEdmSchemaElement[] schemaElementsInModel = this.context.NamespacesInModel.SelectMany(n => this.context.GetSchemaElements(n)).ToArray();
         IEdmSchemaElement[] schemaElements = this.context.GetSchemaElements(fullNamespace).ToArray();
         if (schemaElements.OfType<IEdmEntityContainer>().Any()) {
             IEdmEntityContainer container = schemaElements.OfType<IEdmEntityContainer>().Single();
@@ -3487,7 +3495,7 @@ public abstract class TemplateBase
     /// <summary>
     /// Create the template output
     /// </summary>
-    public abstract string TransformText();
+    public abstract Task<string> TransformText();
 
     #region Transform-time helpers
     /// <summary>
@@ -8571,10 +8579,13 @@ public class FilesManager {
     /// Creates an instance of the FilesManager. The object used to generate and manage
     /// multiple source files.
     /// </summary>
-    private class Block {
-
+    internal class Block
+    {
         /// <summary> Name of the block.</summary>
         public string Name;
+
+        /// <summary> Temporary file path of the block.</summary>
+        public string TemporaryFilePath;
 
         /// <summary> The line in the template from which the block starts.</summary>
         public int Start;
@@ -8582,7 +8593,7 @@ public class FilesManager {
         /// <summary> Length of the block.</summary>
         public int Length;
 
-         /// <summary> Block currently being processed.</summary>
+        /// <summary> Block currently being processed.</summary>
         public bool IsContainer;
     }
 
@@ -8590,7 +8601,7 @@ public class FilesManager {
     private Block _currentBlock;
 
     /// <summary> A list of all the blocks of texts to be used to generate multiple files.</summary>
-    private List<Block> _files = new List<Block>();
+    internal List<Block> files = new List<Block>();
 
     /// <summary> A block describing the footer of all files.</summary>
     private Block _footer = new Block();
@@ -8598,8 +8609,6 @@ public class FilesManager {
     /// <summary> A block describing the header of all files.</summary>
     private Block _header = new Block();
 
-    /// <summary> A list of file names to be generated.</summary>
-    protected List<String> _generatedFileNames = new List<String>();
 
     /// <summary> Contains generated text.</summary>
     public StringBuilder Template
@@ -8620,6 +8629,8 @@ public class FilesManager {
 
         CurrentBlock = new Block { Name = name, IsContainer =  isContainer};
     }
+
+    public int FileCount => files.Count;
 
     /// <summary>
     /// Marks the start of the footer for all files.
@@ -8652,7 +8663,7 @@ public class FilesManager {
 
         if (CurrentBlock != _header && CurrentBlock != _footer)
         {
-            _files.Add(CurrentBlock);
+            files.Add(CurrentBlock);
         }
 
         _currentBlock = null;
@@ -8663,43 +8674,58 @@ public class FilesManager {
     /// </summary>
     /// <param name="split">If true the function is executed and multiple files generated
     /// otherwise only a single file is generated.</param>
-    [SecurityCritical]
-    public virtual void GenerateFiles(bool split, IFileHandler handlerHelper, IMessageLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE)
+    public virtual async Task GenerateFilesAsync(bool split)
     {
         if (split)
         {
+            var tasks = new List<Task>();
             EndBlock();
             string headerText = Template.ToString(_header.Start, _header.Length);
             string footerText = Template.ToString(_footer.Start, _footer.Length);
-            string outputPath ="";
-
-            outputPath = Path.GetTempPath();
-            
-            _files.Reverse();
-
-            foreach(Block block in _files)
+            var outputPath = Path.GetTempPath();
+            int length = files.Count;
+            for (int i = length; i > 0; i--)
             {
-                if(block.IsContainer) continue;
+                Block block = files[i - 1];
+                if (block.IsContainer) continue;
                 string fileName = Path.Combine(outputPath, block.Name);
+                string content = headerText + Template.ToString(block.Start, block.Length) + footerText;
+                tasks.Add(CreateFileAsync(fileName, content));
+                block.TemporaryFilePath = fileName;
+                Template.Remove(block.Start, block.Length);
+            }
 
-                if(fileCreated)
-                {
-                    string outputFile = Path.Combine(referenceFolder, block.Name);
-                    bool fileExists = File.Exists(outputFile);
-                    handlerHelper.AddFileAsync(fileName, outputFile, new ODataFileOptions { OpenOnComplete = OpenGeneratedFilesInIDE, SuppressOverwritePrompt = true }).ContinueWith(
-                        async _ =>
-                        {
-                            await logger?.WriteMessageAsync(LogMessageCategory.Information,
-                                "\"{0}\" has been {1}.", new FileInfo(fileName).Name, fileExists ? "updated" : "added");
-                        }, System.Threading.Tasks.TaskContinuationOptions.ExecuteSynchronously);
-                }
-                else
-                {
-                    string content = headerText + Template.ToString(block.Start, block.Length) + footerText;
-                    _generatedFileNames.Add(fileName);
-                    CreateFile(fileName, content);
-                    Template.Remove(block.Start, block.Length);
-                }
+            await Task.WhenAll(tasks);
+        }
+    }
+
+    /// <summary>
+    /// Copies the generated file asyncronously using the file handler.
+    /// </summary>
+    /// <param name="split">If true the function is executed and multiple files generated otherwise only a single file is generated.</param>
+    public virtual async Task CopyGeneratedFilesAsync(bool split, IFileHandler handlerHelper, IMessageLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE)
+    {
+        if (split)
+        {
+            int length = files.Count;
+            await logger?.WriteMessageAsync(LogMessageCategory.Information, "Adding {0} Generated files to the project. This may take a while!", length);
+            for (int i = length; i > 0; i--)
+            {
+                Block block = files[i - 1];
+                if (block.IsContainer) continue;
+                string fileName = block.TemporaryFilePath;
+                if (!File.Exists(fileName)) continue;
+
+                string outputFile = Path.Combine(referenceFolder, block.Name);
+                bool fileExists = File.Exists(outputFile);
+              
+                await handlerHelper.AddFileAsync(fileName, outputFile, new ODataFileOptions { OpenOnComplete = OpenGeneratedFilesInIDE, SuppressOverwritePrompt = true })
+                .ContinueWith(
+                    async _ =>
+                    {
+                        await logger?.WriteMessageAsync(LogMessageCategory.Information,
+                            "\"{0}\" has been {1}.", block.Name, fileExists ? "updated" : "added");
+                    }, System.Threading.Tasks.TaskContinuationOptions.ExecuteSynchronously);
             }
         }
     }
@@ -8709,12 +8735,15 @@ public class FilesManager {
     /// </summary>
     /// <param name="fileName">Name of the file to be created</param>
     /// <param name="content">Content of the file to be created</param>
-    protected virtual void CreateFile(string fileName, string content)
+    protected virtual async Task CreateFileAsync(string fileName, string content)
     {
-        if (IsFileContentDifferent(fileName, content))
+        using (FileStream fileStream = File.OpenWrite(fileName))
+        using (var writer = new StreamWriter(fileStream))
         {
-                 File.WriteAllText(fileName, content);
-        }           
+            // Truncates the file so if it exists the older content is overwritten.
+            fileStream.SetLength(0);
+            await writer.WriteAsync(content).ConfigureAwait(false);
+        }
     }
 
     public virtual string GetCustomToolNamespace(string fileName)
@@ -8728,17 +8757,6 @@ public class FilesManager {
         {
             return null;
         }
-    }
-
-    /// <summary>
-    /// checks if the generated content is different from the existing content.
-    /// </summary>
-    /// <param name="fileName">Name of the existing file</param>
-    /// <param name="newContent">Content of existing file</param>
-    /// <returns>true if the file content is different</returns>
-    protected bool IsFileContentDifferent(string fileName, string newContent)
-    {
-        return !(File.Exists(fileName) && File.ReadAllText(fileName) == newContent);
     }
 
     /// <summary>
@@ -8771,30 +8789,6 @@ public class FilesManager {
     }
 
     private class VSManager : FilesManager {
-
-    /// <summary>
-    ///Creates a file with the name <paramref name="fileName"> and content <paramref name="content">.
-    /// </summary>
-    /// <param name="fileName">Name of the file to be created</param>
-    /// <param name="content">Content of the file to be created</param>
-    protected override void CreateFile(string fileName, string content)
-    {
-        if (IsFileContentDifferent(fileName, content))
-        {
-            File.WriteAllText(fileName, content);
-        }
-    }
-
-    /// <summary>
-    /// Generates multiple files depending on the number of blocks.
-    /// </summary>
-    /// <param name="split">If true the function is executed and multiple files generated
-    /// otherwise only a single file is generated.</param>
-    [SecurityCritical]
-    public override void GenerateFiles(bool split, IFileHandler handlerHelper, IMessageLogger logger, string referenceFolder, bool fileCreated, bool OpenGeneratedFilesInIDE) 
-    {
-        base.GenerateFiles(split, handlerHelper, logger, referenceFolder, fileCreated, OpenGeneratedFilesInIDE);
-    }
 
     /// <summary>
     /// VSManager constructor. Initializes the template variable.

@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ConnectedServiceFileHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ConnectedServiceMessageLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ConnectedServicePackageInstaller.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ConnectedServiceThreadHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\SchemaTypeModelToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
@@ -25,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ODataConnectedServiceInstance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ODataConnectedServiceProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ODataConnectedServiceWizard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Threading\IThreadHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AdvancedSettingsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ConfigODataEndpointViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\OperationImportsViewModel.cs" />

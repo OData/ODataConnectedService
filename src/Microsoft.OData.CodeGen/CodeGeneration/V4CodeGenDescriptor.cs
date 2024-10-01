@@ -35,13 +35,13 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
 
         public override async Task AddNugetPackagesAsync()
         {
-            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Adding Nuget Packages...").ConfigureAwait(false);
+            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Adding Nuget Packages...");
 
 
             foreach (var nugetPackage in Common.Constants.V4NuGetPackages)
-                await PackageInstaller.CheckAndInstallNuGetPackageAsync(Common.Constants.NuGetOnlineRepository, nugetPackage).ConfigureAwait(false);
+                await PackageInstaller.CheckAndInstallNuGetPackageAsync(Common.Constants.NuGetOnlineRepository, nugetPackage);
 
-            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Nuget Packages were installed.").ConfigureAwait(false);
+            await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Nuget Packages were installed.");
         }
 
         public override async Task AddGeneratedClientCodeAsync(string metadata, string outputDirectory, LanguageOption languageOption, ServiceConfiguration serviceConfiguration)
@@ -96,7 +96,7 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
 
             await FileHandler.AddFileAsync(csdlTempFile, metadataFile, new ODataFileOptions { SuppressOverwritePrompt = true });
 
-            FileHandler.SetFileAsEmbeddedResource(csdlFileName);
+            await FileHandler.SetFileAsEmbeddedResourceAsync(csdlFileName);
 
             var t4TempFile = Path.GetTempFileName();
 
@@ -193,28 +193,31 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
             var metadataFile = Path.Combine(referenceFolder, csdlFileName);
             await FileHandler.AddFileAsync(tempFile, metadataFile, new ODataFileOptions { SuppressOverwritePrompt = true });
 
-            FileHandler.SetFileAsEmbeddedResource(csdlFileName);
-            t4CodeGenerator.EmitContainerPropertyAttribute = FileHandler.EmitContainerPropertyAttribute();
+            await FileHandler.SetFileAsEmbeddedResourceAsync(csdlFileName);
+            t4CodeGenerator.EmitContainerPropertyAttribute = await FileHandler.EmitContainerPropertyAttributeAsync();
 
             t4CodeGenerator.MetadataFilePath = metadataFile;
             t4CodeGenerator.MetadataFileRelativePath = csdlFileName;
 
             using (StreamWriter writer = File.CreateText(tempFile))
             {
-                await writer.WriteAsync(t4CodeGenerator.TransformText());
+                await writer.WriteAsync(await t4CodeGenerator.TransformTextAsync());
                 await writer.FlushAsync();
                 if (t4CodeGenerator.Errors != null && t4CodeGenerator.Errors.Count > 0)
                 {
                     foreach (var err in t4CodeGenerator.Errors)
                     {
-                        await MessageLogger.WriteMessageAsync(LogMessageCategory.Warning, err.ToString()).ConfigureAwait(false);
+                        await MessageLogger.WriteMessageAsync(LogMessageCategory.Warning, err.ToString());
                     }
                 }
             }
 
             var outputFile = Path.Combine(referenceFolder, $"{this.GeneratedFileNamePrefix(serviceConfiguration.GeneratedFileNamePrefix)}{(languageOption == LanguageOption.GenerateCSharpCode ? ".cs" : ".vb")}");
             await FileHandler.AddFileAsync(tempFile, outputFile, new ODataFileOptions { SuppressOverwritePrompt = true });
-            t4CodeGenerator.MultipleFilesManager?.GenerateFiles(serviceConfiguration.GenerateMultipleFiles, FileHandler, MessageLogger, referenceFolder, true, serviceConfiguration.OpenGeneratedFilesInIDE);
+            if (t4CodeGenerator.MultipleFilesManager != null)
+            {
+               await t4CodeGenerator.MultipleFilesManager?.CopyGeneratedFilesAsync(serviceConfiguration.GenerateMultipleFiles, FileHandler, MessageLogger, referenceFolder, true, serviceConfiguration.OpenGeneratedFilesInIDE);
+            }
             await MessageLogger.WriteMessageAsync(LogMessageCategory.Information, "Client Proxy for OData V4 was generated.");
         }
     }
