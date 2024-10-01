@@ -47,17 +47,10 @@ namespace Microsoft.OData.ConnectedService
         /// <param name="targetPath">The path target where you want to copy a file to </param>
         /// <param name="oDataFileOptions">The options to use when adding a file to a target path.</param>
         /// <returns>Returns the path to the file that was added</returns>
-        public async Task<string> AddFileAsync(string fileName, string targetPath, ODataFileOptions oDataFileOptions)
-        {
-            if (oDataFileOptions != null)
-            {
-                return await this.Context.HandlerHelper.AddFileAsync(fileName, targetPath, new AddFileOptions { SuppressOverwritePrompt = oDataFileOptions.SuppressOverwritePrompt, OpenOnComplete = oDataFileOptions.OpenOnComplete });
-            }
-            else
-            {
-                return await this.Context.HandlerHelper.AddFileAsync(fileName, targetPath);
-            }
-        }
+        public Task<string> AddFileAsync(string fileName, string targetPath, ODataFileOptions oDataFileOptions)
+            => oDataFileOptions != null
+                ? this.Context.HandlerHelper.AddFileAsync(fileName, targetPath, new AddFileOptions { SuppressOverwritePrompt = oDataFileOptions.SuppressOverwritePrompt, OpenOnComplete = oDataFileOptions.OpenOnComplete })
+                : this.Context.HandlerHelper.AddFileAsync(fileName, targetPath);
 
         /// <summary>
         /// Sets the CSDL file as an embedded resource.
@@ -68,14 +61,14 @@ namespace Microsoft.OData.ConnectedService
         {
             await this.threadHelper.RunInUiThreadAsync(() =>
             {
-#pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
+#pragma warning disable VSTHRD010 // This invokes the code in the required main thread.
                 if (Package.GetGlobalService(typeof(DTE)) is DTE dte)
                 {
                     var projectItem = this.Project.ProjectItems.Item("Connected Services").ProjectItems.Item(((ODataConnectedServiceInstance)this.Context.ServiceInstance).ServiceConfig.ServiceName).ProjectItems.Item(fileName);
                     projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionEmbeddedResource;
                     return true;
                 }
-#pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
+#pragma warning restore VSTHRD010 // This invokes the code in the required main thread.
                 return false;
             });
         }
@@ -85,9 +78,9 @@ namespace Microsoft.OData.ConnectedService
         /// <remark>Since this method may be executed in a background thread this will require to switch to the main thread.</remark>
         /// </summary>
         /// <returns>A value of either true or false</returns>
-        public async Task<bool> EmitContainerPropertyAttributeAsync()
-        {
-            return await threadHelper.RunInUiThreadAsync(() =>
+        public Task<bool> EmitContainerPropertyAttributeAsync()
+        => threadHelper.RunInUiThreadAsync(() =>
+
              {
 #pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
                  if (this.Project.Object is VSProject vsProject)
@@ -108,6 +101,5 @@ namespace Microsoft.OData.ConnectedService
 
                  return false;
              });
-        }
     }
 }
