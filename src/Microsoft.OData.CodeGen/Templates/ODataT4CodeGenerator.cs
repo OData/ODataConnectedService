@@ -123,9 +123,13 @@ public static class Configuration
 	// This flag indicates whether to omit runtime version and code generation timestamp from the generated files
 	public const bool OmitVersioningInfo = false;
 
-	//This files indicates whether to generate the files into multiple files or single.
+	//This flag indicates whether to generate the files into multiple files or single.
     //If set to true then multiple files will be generated. Otherwise only a single file is generated.
     public const bool GenerateMultipleFiles = false;
+
+	//This flag indicates whether to use DateOnly or TimeOnly.
+    //If set to true then DateOnly or TimeOnly is used. Otherwise Date or TimeOfDay is used.
+    public const bool UseDateTimeOnly = false;
 
 	// (Optional) Custom http headers as a multiline string
 	public const string CustomHttpHeaders = "";
@@ -206,6 +210,7 @@ public virtual async Task<string> TransformTextAsync()
             MultipleFilesManager = new FilesManager(null),
             OmitVersioningInfo = this.OmitVersioningInfo,
             GenerateMultipleFiles = this.GenerateMultipleFiles,
+            UseDateTimeOnly = this.UseDateTimeOnly,
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedBoundOperations = this.ExcludedBoundOperations,
             ExcludedSchemaTypes = this.ExcludedSchemaTypes,
@@ -247,6 +252,7 @@ public virtual async Task<string> TransformTextAsync()
             MultipleFilesManager = new FilesManager(null),
             OmitVersioningInfo = this.OmitVersioningInfo,
             GenerateMultipleFiles = this.GenerateMultipleFiles,
+            UseDateTimeOnly = this.UseDateTimeOnly,
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedBoundOperations = this.ExcludedBoundOperations,
             ExcludedSchemaTypes = this.ExcludedSchemaTypes,
@@ -514,6 +520,16 @@ public bool GenerateMultipleFiles
     get;
     set;
 }
+
+/// <summary>
+/// true to use DateOnly or TimeOnly, false to use Date or TimeOfDay.
+/// </summary>
+public bool UseDateTimeOnly
+{
+    get;
+    set;
+}
+
 /// <summary>
 /// Boolean to show if we should include the web proxy
 /// </summary>
@@ -764,6 +780,7 @@ private void ApplyParametersFromConfigurationClass()
     this.MetadataFilePath = Configuration.MetadataFilePath;
     this.MetadataFileRelativePath = Configuration.MetadataFileRelativePath;
     this.GenerateMultipleFiles = Configuration.GenerateMultipleFiles;
+    this.UseDateTimeOnly = Configuration.UseDateTimeOnly;
     this.SetCustomHttpHeadersFromString(Configuration.CustomHttpHeaders);
     this.ExcludedOperationImports = Configuration.ExcludedOperationImports.Split(',')
         .Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
@@ -1281,6 +1298,15 @@ public class CodeGenerationContext
     /// true to generate multiple files, false generate a single file.
     /// </summary>
     public bool GenerateMultipleFiles
+    {
+        get;
+        set;
+    }
+
+        /// <summary>
+    /// true to use DateOnly or TimeOnly, false to use Date or TimeOfDay.
+    /// </summary>
+    public bool UseDateTimeOnly
     {
         get;
         set;
@@ -4298,10 +4324,10 @@ public sealed class ODataClientCSharpTemplate : ODataClientTemplate
     internal override string GeometryMultiPolygonTypeName { get { return "global::Microsoft.Spatial.GeometryMultiPolygon"; } }
     internal override string GeometryMultiLineStringTypeName { get { return "global::Microsoft.Spatial.GeometryMultiLineString"; } }
     internal override string GeometryMultiPointTypeName { get { return "global::Microsoft.Spatial.GeometryMultiPoint"; } }
-    internal override string DateTypeName { get { return "global::Microsoft.OData.Edm.Date"; } }
+    internal override string DateTypeName { get { return context.UseDateTimeOnly ? "global::System.DateOnly" : "global::Microsoft.OData.Edm.Date"; } }
     internal override string DateTimeOffsetTypeName { get { return "global::System.DateTimeOffset"; } }
     internal override string DurationTypeName { get { return "global::System.TimeSpan"; } }
-    internal override string TimeOfDayTypeName { get { return "global::Microsoft.OData.Edm.TimeOfDay"; } }
+    internal override string TimeOfDayTypeName { get { return context.UseDateTimeOnly ? "global::System.TimeOnly" : "global::Microsoft.OData.Edm.TimeOfDay"; } }
     internal override string XmlConvertClassName { get { return "global::System.Xml.XmlConvert"; } }
     internal override string EnumTypeName { get { return "global::System.Enum"; } }
     internal override string DictionaryInterfaceName { get { return "global::System.Collections.Generic.IDictionary<{0}, {1}>"; } }
@@ -6441,10 +6467,10 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
     internal override string GeometryMultiPolygonTypeName { get { return "Global.Microsoft.Spatial.GeometryMultiPolygon"; } }
     internal override string GeometryMultiLineStringTypeName { get { return "Global.Microsoft.Spatial.GeometryMultiLineString"; } }
     internal override string GeometryMultiPointTypeName { get { return "Global.Microsoft.Spatial.GeometryMultiPoint"; } }
-    internal override string DateTypeName { get { return "Global.Microsoft.OData.Edm.Date"; } }
+    internal override string DateTypeName { get { return context.UseDateTimeOnly ? "global::System.DateOnly" : "global::Microsoft.OData.Edm.Date"; } }
     internal override string DateTimeOffsetTypeName { get { return "Global.System.DateTimeOffset"; } }
     internal override string DurationTypeName { get { return "Global.System.TimeSpan"; } }
-    internal override string TimeOfDayTypeName { get { return "Global.Microsoft.OData.Edm.TimeOfDay"; } }
+    internal override string TimeOfDayTypeName { get { return context.UseDateTimeOnly ? "global::System.TimeOnly" : "global::Microsoft.OData.Edm.TimeOfDay"; } }
     internal override string XmlConvertClassName { get { return "Global.System.Xml.XmlConvert"; } }
     internal override string EnumTypeName { get { return "Global.System.Enum"; } }
     internal override string DictionaryInterfaceName { get { return "Global.System.Collections.Generic.IDictionary(Of {0}, {1})"; } }
