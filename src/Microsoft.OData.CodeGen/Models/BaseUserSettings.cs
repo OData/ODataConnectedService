@@ -38,6 +38,8 @@ namespace Microsoft.OData.CodeGen.Models
 
         private bool generateMultipleFiles;
 
+        private bool useDateTimeOnly;
+
         private string customHttpHeaders;
 
         private bool storeCustomHttpHeaders;
@@ -200,6 +202,20 @@ namespace Microsoft.OData.CodeGen.Models
             set
             {
                 generateMultipleFiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value that determines whether to use <see cref="System.DateOnly"/> or <see cref="System.TimeOnly"/> for Edm.Date and Edm.TimeOfDay.
+        /// </summary>
+        [DataMember]
+        public bool UseDateTimeOnly
+        {
+            get { return useDateTimeOnly; }
+            set
+            {
+                useDateTimeOnly = value;
                 OnPropertyChanged();
             }
         }

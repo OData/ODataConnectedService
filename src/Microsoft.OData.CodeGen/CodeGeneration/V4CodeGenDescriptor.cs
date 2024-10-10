@@ -122,6 +122,7 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
                 text = Regex.Replace(text, "(public const bool IgnoreUnexpectedElementsAndAttributes = )true;", "$1" + serviceConfiguration.IgnoreUnexpectedElementsAndAttributes.ToString(CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture) + ";");
                 text = Regex.Replace(text, "(public const bool MakeTypesInternal = )false;", "$1" + serviceConfiguration.MakeTypesInternal.ToString(CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture) + ";");
                 text = Regex.Replace(text, "(public const bool GenerateMultipleFiles = )false;", "$1" + serviceConfiguration.GenerateMultipleFiles.ToString(CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture) + ";");
+                text = Regex.Replace(text, "(public const bool UseDateTimeOnly = )false;", "$1" + serviceConfiguration.UseDateTimeOnly.ToString(CultureInfo.InvariantCulture).ToLower(CultureInfo.InvariantCulture) + ";");
                 var customHeaders = serviceConfiguration.CustomHttpHeaders ?? "";
                 text = Regex.Replace(text, "(public const string CustomHttpHeaders = )\"\";", "$1@\"" + customHeaders + "\";");
                 text = Regex.Replace(text, "(public const string MetadataFilePath = )\"\";", "$1@\"" + metadataFile + "\";");
@@ -163,6 +164,7 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
             t4CodeGenerator.MakeTypesInternal = serviceConfiguration.MakeTypesInternal;
             t4CodeGenerator.OmitVersioningInfo = serviceConfiguration.OmitVersioningInfo;
             t4CodeGenerator.GenerateMultipleFiles = serviceConfiguration.GenerateMultipleFiles;
+            t4CodeGenerator.UseDateTimeOnly = serviceConfiguration.UseDateTimeOnly;
             t4CodeGenerator.ExcludedOperationImports = serviceConfiguration.ExcludedOperationImports;
             t4CodeGenerator.ExcludedBoundOperations = serviceConfiguration.ExcludedBoundOperations;
             t4CodeGenerator.ExcludedSchemaTypes = serviceConfiguration.ExcludedSchemaTypes;

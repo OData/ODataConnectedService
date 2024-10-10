@@ -39,9 +39,13 @@ public static class Configuration
 	// This flag indicates whether to omit runtime version and code generation timestamp from the generated files
 	public const bool OmitVersioningInfo = false;
 
-	//This files indicates whether to generate the files into multiple files or single.
+	//This flag indicates whether to generate the files into multiple files or single.
     //If set to true then multiple files will be generated. Otherwise only a single file is generated.
     public const bool GenerateMultipleFiles = false;
+
+	//This flag indicates whether to use DateOnly or TimeOnly.
+    //If set to true then DateOnly or TimeOnly is used. Otherwise Date or TimeOfDay is used.
+    public const bool UseDateTimeOnly = false;
 
 	// (Optional) Custom http headers as a multiline string
 	public const string CustomHttpHeaders = "";

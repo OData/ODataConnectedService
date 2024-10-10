@@ -132,6 +132,14 @@ namespace Microsoft.OData.Cli
 
             this.AddOption(multipleFiles);
 
+            Option useDateTimeOnly = new Option<bool>(new[] { "--date-time-only" })
+            {
+                Name = "date-time-only",
+                Description = "Use C# DateOnly and TimeOnly for Edm.Date and Edm.TimeOfDay."
+            };
+
+            this.AddOption(useDateTimeOnly);
+
             Option excludedOperationImports = new Option<string>(new[] { "--excluded-operation-imports", "-eoi" })
             {
                 Name = "excluded-operation-imports",
@@ -305,6 +313,7 @@ namespace Microsoft.OData.Cli
                 UseDataServiceCollection = (generateOptions.EnableTracking == null) ? (configUserSettings?.UseDataServiceCollection ?? false) : generateOptions.EnableTracking.Value,
                 MakeTypesInternal = (generateOptions.EnableInternal == null) ? (configUserSettings?.MakeTypesInternal ?? false) : generateOptions.EnableInternal.Value,
                 GenerateMultipleFiles = (generateOptions.MultipleFiles == null) ? (configUserSettings?.GenerateMultipleFiles ?? false) : generateOptions.MultipleFiles.Value,
+                UseDateTimeOnly = (generateOptions.UseDateTimeOnly == null) ? (configUserSettings?.UseDateTimeOnly ?? false) : generateOptions.UseDateTimeOnly.Value,
                 ExcludedSchemaTypes = excludedSchemaTypes,
             };
 

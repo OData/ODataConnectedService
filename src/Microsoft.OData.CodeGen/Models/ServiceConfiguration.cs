@@ -22,6 +22,7 @@ namespace Microsoft.OData.CodeGen.Models
         public bool MakeTypesInternal { get; set; }
         public bool OpenGeneratedFilesInIDE { get; set; }
         public bool GenerateMultipleFiles { get; set; }
+        public bool UseDateTimeOnly { get; set; }
         public string CustomHttpHeaders { get; set; }
         public bool IncludeWebProxy { get; set; }
         public string WebProxyHost { get; set; }
