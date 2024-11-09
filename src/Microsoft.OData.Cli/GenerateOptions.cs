@@ -67,6 +67,11 @@ namespace Microsoft.OData.Cli
         public bool? MultipleFiles { get; set; }
 
         /// <summary>
+        /// Gets or sets a value that determines whether to use DateOnly and TimeOnly for Edm.Date and Edm.TimeOfDay.
+        /// </summary>
+        public bool? UseDateTimeOnly { get; set; }
+
+        /// <summary>
         /// Gets or sets the comma-separated list of the names of operation imports to exclude from the generated code. Example: ExcludedOperationImport1,ExcludedOperationImport2.
         /// </summary>
         public string ExcludedOperationImports { get; set; }
