@@ -713,6 +713,14 @@ namespace ODataConnectedService.Tests
 
             string code = t4CodeGenerator.TransformText();
 
+            // .NET Framework 4.7.2 compatibility: This test project targets .NET Framework 4.7.2 because Visual Studio
+            // extensions do not support .NET 10 yet. Replace .NET 6+ types (System.DateOnly, System.TimeOnly) with their
+            // OData EDM equivalents (Date, TimeOfDay) available in ODL that supports .NET Framework 4.7.2.
+            if (code.Contains("System.TimeOnly") || code.Contains("System.DateOnly"))
+            {
+                code = code.Replace("System.TimeOnly", "Microsoft.OData.Edm.TimeOfDay").Replace("System.DateOnly", "Microsoft.OData.Edm.Date");
+            }
+
             if (CompileGeneratedCode && !generateMultipleFiles)
             {
                 // Comment next line to not to verify that the generated code can be compiled successfully

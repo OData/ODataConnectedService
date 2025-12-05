@@ -1690,10 +1690,10 @@ public abstract class ODataClientTemplate : TemplateBase
     internal abstract string GeometryMultiPolygonTypeName { get; }
     internal abstract string GeometryMultiLineStringTypeName { get; }
     internal abstract string GeometryMultiPointTypeName { get; }
-    internal abstract string DateTypeName { get; }
+    internal abstract string DateOnlyTypeName { get; }
     internal abstract string DateTimeOffsetTypeName { get; }
     internal abstract string DurationTypeName { get; }
-    internal abstract string TimeOfDayTypeName { get; }
+    internal abstract string TimeOnlyTypeName { get; }
     internal abstract string XmlConvertClassName { get; }
     internal abstract string EnumTypeName { get; }
     internal abstract string DictionaryInterfaceName { get; }
@@ -4038,8 +4038,8 @@ internal static class Utils
             }
             else if (valueClrType.Equals(clientTemplate.GuidTypeName)
                 | valueClrType.Equals(clientTemplate.DateTimeOffsetTypeName)
-                | valueClrType.Equals(clientTemplate.DateTypeName)
-                | valueClrType.Equals(clientTemplate.TimeOfDayTypeName))
+                | valueClrType.Equals(clientTemplate.DateOnlyTypeName)
+                | valueClrType.Equals(clientTemplate.TimeOnlyTypeName))
             {
                 defaultValue = valueClrType + ".Parse(\"" + defaultValue + "\")";
             }
@@ -4219,11 +4219,11 @@ internal static class Utils
         }
         else if (kind== EdmPrimitiveTypeKind.Date)
         {
-            type= clientTemplate.DateTypeName;
+            type= clientTemplate.DateOnlyTypeName;
         }
         else if (kind== EdmPrimitiveTypeKind.TimeOfDay)
         {
-            type= clientTemplate.TimeOfDayTypeName;
+            type= clientTemplate.TimeOnlyTypeName;
         }
         else
         {
@@ -4298,10 +4298,10 @@ public sealed class ODataClientCSharpTemplate : ODataClientTemplate
     internal override string GeometryMultiPolygonTypeName { get { return "global::Microsoft.Spatial.GeometryMultiPolygon"; } }
     internal override string GeometryMultiLineStringTypeName { get { return "global::Microsoft.Spatial.GeometryMultiLineString"; } }
     internal override string GeometryMultiPointTypeName { get { return "global::Microsoft.Spatial.GeometryMultiPoint"; } }
-    internal override string DateTypeName { get { return "global::Microsoft.OData.Edm.Date"; } }
+    internal override string DateOnlyTypeName { get { return "global::System.DateOnly"; } }
     internal override string DateTimeOffsetTypeName { get { return "global::System.DateTimeOffset"; } }
     internal override string DurationTypeName { get { return "global::System.TimeSpan"; } }
-    internal override string TimeOfDayTypeName { get { return "global::Microsoft.OData.Edm.TimeOfDay"; } }
+    internal override string TimeOnlyTypeName { get { return "global::System.TimeOnly"; } }
     internal override string XmlConvertClassName { get { return "global::System.Xml.XmlConvert"; } }
     internal override string EnumTypeName { get { return "global::System.Enum"; } }
     internal override string DictionaryInterfaceName { get { return "global::System.Collections.Generic.IDictionary<{0}, {1}>"; } }
@@ -6441,10 +6441,10 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
     internal override string GeometryMultiPolygonTypeName { get { return "Global.Microsoft.Spatial.GeometryMultiPolygon"; } }
     internal override string GeometryMultiLineStringTypeName { get { return "Global.Microsoft.Spatial.GeometryMultiLineString"; } }
     internal override string GeometryMultiPointTypeName { get { return "Global.Microsoft.Spatial.GeometryMultiPoint"; } }
-    internal override string DateTypeName { get { return "Global.Microsoft.OData.Edm.Date"; } }
+    internal override string DateOnlyTypeName { get { return "Global.System.DateOnly"; } }
     internal override string DateTimeOffsetTypeName { get { return "Global.System.DateTimeOffset"; } }
     internal override string DurationTypeName { get { return "Global.System.TimeSpan"; } }
-    internal override string TimeOfDayTypeName { get { return "Global.Microsoft.OData.Edm.TimeOfDay"; } }
+    internal override string TimeOnlyTypeName { get { return "Global.System.TimeOnly"; } }
     internal override string XmlConvertClassName { get { return "Global.System.Xml.XmlConvert"; } }
     internal override string EnumTypeName { get { return "Global.System.Enum"; } }
     internal override string DictionaryInterfaceName { get { return "Global.System.Collections.Generic.IDictionary(Of {0}, {1})"; } }

@@ -288,14 +288,14 @@ namespace ODataConnectedService.Tests
                 get { return "GeometryMultiPoint"; }
             }
 
-            internal override string DateTypeName
+            internal override string DateOnlyTypeName
             {
-                get { return "Date"; }
+                get { return "DateOnly"; }
             }
 
-            internal override string TimeOfDayTypeName
+            internal override string TimeOnlyTypeName
             {
-                get { return "TimeOfDay"; }
+                get { return "TimeOnly"; }
             }
 
             internal override string DateTimeOffsetTypeName

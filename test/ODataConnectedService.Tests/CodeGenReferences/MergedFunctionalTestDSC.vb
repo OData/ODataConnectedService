@@ -2783,8 +2783,8 @@ Namespace MergedFunctionalTest.DSC
                     ByVal nonNullableStringProp As String,  _
                     ByVal nonNullableDurationProp As Global.System.TimeSpan,  _
                     ByVal nonNullableDateTimeOffsetProp As Global.System.DateTimeOffset,  _
-                    ByVal nonNullableDateProp As Global.Microsoft.OData.Edm.Date,  _
-                    ByVal nonNullableTimeOfDayProp As Global.Microsoft.OData.Edm.TimeOfDay,  _
+                    ByVal nonNullableDateProp As Global.System.DateOnly,  _
+                    ByVal nonNullableTimeOfDayProp As Global.System.TimeOnly,  _
                     ByVal nonNullableStreamProp As Global.Microsoft.OData.Client.DataServiceStreamLink,  _
                     ByVal nonNullableSByteProp As SByte,  _
                     ByVal nonNullableGeography As Global.Microsoft.Spatial.Geography,  _
@@ -3727,7 +3727,7 @@ Namespace MergedFunctionalTest.DSC
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
-        Public Overridable Property NonNullableDateProp() As Global.Microsoft.OData.Edm.Date
+        Public Overridable Property NonNullableDateProp() As Global.System.DateOnly
             Get
                 Return Me._NonNullableDateProp
             End Get
@@ -3739,8 +3739,8 @@ Namespace MergedFunctionalTest.DSC
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Private _NonNullableDateProp As Global.Microsoft.OData.Edm.Date
-        Partial Private Sub OnNonNullableDatePropChanging(ByVal value As Global.Microsoft.OData.Edm.Date)
+        Private _NonNullableDateProp As Global.System.DateOnly
+        Partial Private Sub OnNonNullableDatePropChanging(ByVal value As Global.System.DateOnly)
         End Sub
         Partial Private Sub OnNonNullableDatePropChanged()
         End Sub
@@ -3748,7 +3748,7 @@ Namespace MergedFunctionalTest.DSC
         ''' There are no comments for Property ExplicitlyNullableDateProp in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Overridable Property ExplicitlyNullableDateProp() As Global.System.Nullable(Of Global.Microsoft.OData.Edm.Date)
+        Public Overridable Property ExplicitlyNullableDateProp() As Global.System.Nullable(Of Global.System.DateOnly)
             Get
                 Return Me._ExplicitlyNullableDateProp
             End Get
@@ -3760,8 +3760,8 @@ Namespace MergedFunctionalTest.DSC
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Private _ExplicitlyNullableDateProp As Global.System.Nullable(Of Global.Microsoft.OData.Edm.Date)
-        Partial Private Sub OnExplicitlyNullableDatePropChanging(ByVal value As Global.System.Nullable(Of Global.Microsoft.OData.Edm.Date))
+        Private _ExplicitlyNullableDateProp As Global.System.Nullable(Of Global.System.DateOnly)
+        Partial Private Sub OnExplicitlyNullableDatePropChanging(ByVal value As Global.System.Nullable(Of Global.System.DateOnly))
         End Sub
         Partial Private Sub OnExplicitlyNullableDatePropChanged()
         End Sub
@@ -3769,7 +3769,7 @@ Namespace MergedFunctionalTest.DSC
         ''' There are no comments for Property NullableDateProp in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Overridable Property NullableDateProp() As Global.System.Nullable(Of Global.Microsoft.OData.Edm.Date)
+        Public Overridable Property NullableDateProp() As Global.System.Nullable(Of Global.System.DateOnly)
             Get
                 Return Me._NullableDateProp
             End Get
@@ -3781,8 +3781,8 @@ Namespace MergedFunctionalTest.DSC
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Private _NullableDateProp As Global.System.Nullable(Of Global.Microsoft.OData.Edm.Date)
-        Partial Private Sub OnNullableDatePropChanging(ByVal value As Global.System.Nullable(Of Global.Microsoft.OData.Edm.Date))
+        Private _NullableDateProp As Global.System.Nullable(Of Global.System.DateOnly)
+        Partial Private Sub OnNullableDatePropChanging(ByVal value As Global.System.Nullable(Of Global.System.DateOnly))
         End Sub
         Partial Private Sub OnNullableDatePropChanged()
         End Sub
@@ -3791,7 +3791,7 @@ Namespace MergedFunctionalTest.DSC
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
-        Public Overridable Property NonNullableTimeOfDayProp() As Global.Microsoft.OData.Edm.TimeOfDay
+        Public Overridable Property NonNullableTimeOfDayProp() As Global.System.TimeOnly
             Get
                 Return Me._NonNullableTimeOfDayProp
             End Get
@@ -3803,8 +3803,8 @@ Namespace MergedFunctionalTest.DSC
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Private _NonNullableTimeOfDayProp As Global.Microsoft.OData.Edm.TimeOfDay
-        Partial Private Sub OnNonNullableTimeOfDayPropChanging(ByVal value As Global.Microsoft.OData.Edm.TimeOfDay)
+        Private _NonNullableTimeOfDayProp As Global.System.TimeOnly
+        Partial Private Sub OnNonNullableTimeOfDayPropChanging(ByVal value As Global.System.TimeOnly)
         End Sub
         Partial Private Sub OnNonNullableTimeOfDayPropChanged()
         End Sub
@@ -3812,7 +3812,7 @@ Namespace MergedFunctionalTest.DSC
         ''' There are no comments for Property ExplicitlyNullableTimeOfDayProp in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Overridable Property ExplicitlyNullableTimeOfDayProp() As Global.System.Nullable(Of Global.Microsoft.OData.Edm.TimeOfDay)
+        Public Overridable Property ExplicitlyNullableTimeOfDayProp() As Global.System.Nullable(Of Global.System.TimeOnly)
             Get
                 Return Me._ExplicitlyNullableTimeOfDayProp
             End Get
@@ -3824,8 +3824,8 @@ Namespace MergedFunctionalTest.DSC
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Private _ExplicitlyNullableTimeOfDayProp As Global.System.Nullable(Of Global.Microsoft.OData.Edm.TimeOfDay)
-        Partial Private Sub OnExplicitlyNullableTimeOfDayPropChanging(ByVal value As Global.System.Nullable(Of Global.Microsoft.OData.Edm.TimeOfDay))
+        Private _ExplicitlyNullableTimeOfDayProp As Global.System.Nullable(Of Global.System.TimeOnly)
+        Partial Private Sub OnExplicitlyNullableTimeOfDayPropChanging(ByVal value As Global.System.Nullable(Of Global.System.TimeOnly))
         End Sub
         Partial Private Sub OnExplicitlyNullableTimeOfDayPropChanged()
         End Sub
@@ -3833,7 +3833,7 @@ Namespace MergedFunctionalTest.DSC
         ''' There are no comments for Property NullableTimeOfDayProp in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Public Overridable Property NullableTimeOfDayProp() As Global.System.Nullable(Of Global.Microsoft.OData.Edm.TimeOfDay)
+        Public Overridable Property NullableTimeOfDayProp() As Global.System.Nullable(Of Global.System.TimeOnly)
             Get
                 Return Me._NullableTimeOfDayProp
             End Get
@@ -3845,8 +3845,8 @@ Namespace MergedFunctionalTest.DSC
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Private _NullableTimeOfDayProp As Global.System.Nullable(Of Global.Microsoft.OData.Edm.TimeOfDay)
-        Partial Private Sub OnNullableTimeOfDayPropChanging(ByVal value As Global.System.Nullable(Of Global.Microsoft.OData.Edm.TimeOfDay))
+        Private _NullableTimeOfDayProp As Global.System.Nullable(Of Global.System.TimeOnly)
+        Partial Private Sub OnNullableTimeOfDayPropChanging(ByVal value As Global.System.Nullable(Of Global.System.TimeOnly))
         End Sub
         Partial Private Sub OnNullableTimeOfDayPropChanged()
         End Sub
@@ -5437,7 +5437,7 @@ Namespace MergedFunctionalTest.DSC
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
-        Public Overridable Property BagOfDate() As Global.System.Collections.ObjectModel.ObservableCollection(Of Global.Microsoft.OData.Edm.Date)
+        Public Overridable Property BagOfDate() As Global.System.Collections.ObjectModel.ObservableCollection(Of Global.System.DateOnly)
             Get
                 Return Me._BagOfDate
             End Get
@@ -5449,8 +5449,8 @@ Namespace MergedFunctionalTest.DSC
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Private _BagOfDate As Global.System.Collections.ObjectModel.ObservableCollection(Of Global.Microsoft.OData.Edm.Date) = New Global.System.Collections.ObjectModel.ObservableCollection(Of Global.Microsoft.OData.Edm.Date)()
-        Partial Private Sub OnBagOfDateChanging(ByVal value As Global.System.Collections.ObjectModel.ObservableCollection(Of Global.Microsoft.OData.Edm.Date))
+        Private _BagOfDate As Global.System.Collections.ObjectModel.ObservableCollection(Of Global.System.DateOnly) = New Global.System.Collections.ObjectModel.ObservableCollection(Of Global.System.DateOnly)()
+        Partial Private Sub OnBagOfDateChanging(ByVal value As Global.System.Collections.ObjectModel.ObservableCollection(Of Global.System.DateOnly))
         End Sub
         Partial Private Sub OnBagOfDateChanged()
         End Sub
@@ -5459,7 +5459,7 @@ Namespace MergedFunctionalTest.DSC
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
-        Public Overridable Property BagOfTimeOfDay() As Global.System.Collections.ObjectModel.ObservableCollection(Of Global.Microsoft.OData.Edm.TimeOfDay)
+        Public Overridable Property BagOfTimeOfDay() As Global.System.Collections.ObjectModel.ObservableCollection(Of Global.System.TimeOnly)
             Get
                 Return Me._BagOfTimeOfDay
             End Get
@@ -5471,8 +5471,8 @@ Namespace MergedFunctionalTest.DSC
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Private _BagOfTimeOfDay As Global.System.Collections.ObjectModel.ObservableCollection(Of Global.Microsoft.OData.Edm.TimeOfDay) = New Global.System.Collections.ObjectModel.ObservableCollection(Of Global.Microsoft.OData.Edm.TimeOfDay)()
-        Partial Private Sub OnBagOfTimeOfDayChanging(ByVal value As Global.System.Collections.ObjectModel.ObservableCollection(Of Global.Microsoft.OData.Edm.TimeOfDay))
+        Private _BagOfTimeOfDay As Global.System.Collections.ObjectModel.ObservableCollection(Of Global.System.TimeOnly) = New Global.System.Collections.ObjectModel.ObservableCollection(Of Global.System.TimeOnly)()
+        Partial Private Sub OnBagOfTimeOfDayChanging(ByVal value As Global.System.Collections.ObjectModel.ObservableCollection(Of Global.System.TimeOnly))
         End Sub
         Partial Private Sub OnBagOfTimeOfDayChanged()
         End Sub
@@ -6300,7 +6300,7 @@ Namespace MergedFunctionalTest.DSC
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
-        Public Overridable Property DateProp() As Global.Microsoft.OData.Edm.Date
+        Public Overridable Property DateProp() As Global.System.DateOnly
             Get
                 Return Me._DateProp
             End Get
@@ -6312,8 +6312,8 @@ Namespace MergedFunctionalTest.DSC
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Private _DateProp As Global.Microsoft.OData.Edm.Date = Global.Microsoft.OData.Edm.Date.Parse("2014-10-08")
-        Partial Private Sub OnDatePropChanging(ByVal value As Global.Microsoft.OData.Edm.Date)
+        Private _DateProp As Global.System.DateOnly = Global.System.DateOnly.Parse("2014-10-08")
+        Partial Private Sub OnDatePropChanging(ByVal value As Global.System.DateOnly)
         End Sub
         Partial Private Sub OnDatePropChanged()
         End Sub
@@ -6322,7 +6322,7 @@ Namespace MergedFunctionalTest.DSC
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
         <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
-        Public Overridable Property TimeOfDayProp() As Global.Microsoft.OData.Edm.TimeOfDay
+        Public Overridable Property TimeOfDayProp() As Global.System.TimeOnly
             Get
                 Return Me._TimeOfDayProp
             End Get
@@ -6334,8 +6334,8 @@ Namespace MergedFunctionalTest.DSC
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")>  _
-        Private _TimeOfDayProp As Global.Microsoft.OData.Edm.TimeOfDay = Global.Microsoft.OData.Edm.TimeOfDay.Parse("12:34:56")
-        Partial Private Sub OnTimeOfDayPropChanging(ByVal value As Global.Microsoft.OData.Edm.TimeOfDay)
+        Private _TimeOfDayProp As Global.System.TimeOnly = Global.System.TimeOnly.Parse("12:34:56")
+        Partial Private Sub OnTimeOfDayPropChanging(ByVal value As Global.System.TimeOnly)
         End Sub
         Partial Private Sub OnTimeOfDayPropChanged()
         End Sub
