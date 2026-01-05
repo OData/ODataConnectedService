@@ -155,9 +155,14 @@ namespace ODataConnectedService.Tests.TestHelpers
             // This test project targets .NET Framework 4.7.2 (cannot upgrade to .NET 10 because Visual Studio
             // extensions do not support .NET 10 yet), so we replace these types with their OData EDM equivalents
             // (TimeOfDay and Date) available in ODL (OData Edm library) which supports .NET Framework 4.7.2.
-            if (source.Contains("System.TimeOnly") || source.Contains("System.DateOnly"))
+            if (source.Contains("System.TimeOnly"))
             {
-                source = source.Replace("System.TimeOnly", "Microsoft.OData.Edm.TimeOfDay").Replace("System.DateOnly", "Microsoft.OData.Edm.Date");
+                source = source.Replace("System.TimeOnly", "Microsoft.OData.Edm.TimeOfDay");
+            }
+
+            if (source.Contains("System.DateOnly"))
+            {
+                source = source.Replace("System.DateOnly", "Microsoft.OData.Edm.Date");
             }
 
             CompilerResults results = codeProvider.CompileAssemblyFromSource(compilerOptions, source);
