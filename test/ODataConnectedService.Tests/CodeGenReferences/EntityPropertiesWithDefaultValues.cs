@@ -594,7 +594,7 @@ namespace Namespace1
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
 
         [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "DateProp is required.")]
-        public virtual global::Microsoft.OData.Edm.Date DateProp
+        public virtual global::System.DateOnly DateProp
         {
             get
             {
@@ -608,15 +608,15 @@ namespace Namespace1
             }
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
-        private global::Microsoft.OData.Edm.Date _DateProp = global::Microsoft.OData.Edm.Date.Parse("2020-02-02");
-        partial void OnDatePropChanging(global::Microsoft.OData.Edm.Date value);
+        private global::System.DateOnly _DateProp = global::System.DateOnly.Parse("2020-02-02");
+        partial void OnDatePropChanging(global::System.DateOnly value);
         partial void OnDatePropChanged();
         /// <summary>
         /// There are no comments for Property NullableDateProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
 
-        public virtual global::System.Nullable<global::Microsoft.OData.Edm.Date> NullableDateProp
+        public virtual global::System.Nullable<global::System.DateOnly> NullableDateProp
         {
             get
             {
@@ -630,8 +630,8 @@ namespace Namespace1
             }
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
-        private global::System.Nullable<global::Microsoft.OData.Edm.Date> _NullableDateProp = global::Microsoft.OData.Edm.Date.Parse("2020-02-02");
-        partial void OnNullableDatePropChanging(global::System.Nullable<global::Microsoft.OData.Edm.Date> value);
+        private global::System.Nullable<global::System.DateOnly> _NullableDateProp = global::System.DateOnly.Parse("2020-02-02");
+        partial void OnNullableDatePropChanging(global::System.Nullable<global::System.DateOnly> value);
         partial void OnNullableDatePropChanged();
         /// <summary>
         /// There are no comments for Property DateTimeOffsetProp in the schema.
@@ -684,7 +684,7 @@ namespace Namespace1
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
 
         [global::System.ComponentModel.DataAnnotations.RequiredAttribute(ErrorMessage = "TimeOfDayProp is required.")]
-        public virtual global::Microsoft.OData.Edm.TimeOfDay TimeOfDayProp
+        public virtual global::System.TimeOnly TimeOfDayProp
         {
             get
             {
@@ -698,15 +698,15 @@ namespace Namespace1
             }
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
-        private global::Microsoft.OData.Edm.TimeOfDay _TimeOfDayProp = global::Microsoft.OData.Edm.TimeOfDay.Parse("22:44");
-        partial void OnTimeOfDayPropChanging(global::Microsoft.OData.Edm.TimeOfDay value);
+        private global::System.TimeOnly _TimeOfDayProp = global::System.TimeOnly.Parse("22:44");
+        partial void OnTimeOfDayPropChanging(global::System.TimeOnly value);
         partial void OnTimeOfDayPropChanged();
         /// <summary>
         /// There are no comments for Property NullableTimeOfDayProp in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
 
-        public virtual global::System.Nullable<global::Microsoft.OData.Edm.TimeOfDay> NullableTimeOfDayProp
+        public virtual global::System.Nullable<global::System.TimeOnly> NullableTimeOfDayProp
         {
             get
             {
@@ -720,8 +720,8 @@ namespace Namespace1
             }
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
-        private global::System.Nullable<global::Microsoft.OData.Edm.TimeOfDay> _NullableTimeOfDayProp = global::Microsoft.OData.Edm.TimeOfDay.Parse("22:44");
-        partial void OnNullableTimeOfDayPropChanging(global::System.Nullable<global::Microsoft.OData.Edm.TimeOfDay> value);
+        private global::System.Nullable<global::System.TimeOnly> _NullableTimeOfDayProp = global::System.TimeOnly.Parse("22:44");
+        partial void OnNullableTimeOfDayPropChanging(global::System.Nullable<global::System.TimeOnly> value);
         partial void OnNullableTimeOfDayPropChanged();
         /// <summary>
         /// There are no comments for Property DurationProp in the schema.

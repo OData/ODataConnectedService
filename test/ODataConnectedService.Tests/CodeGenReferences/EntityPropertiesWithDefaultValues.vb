@@ -545,7 +545,7 @@ Namespace Namespace1
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
-        Public Overridable Property DateProp() As Global.Microsoft.OData.Edm.Date
+        Public Overridable Property DateProp() As Global.System.DateOnly
             Get
                 Return Me._DateProp
             End Get
@@ -556,8 +556,8 @@ Namespace Namespace1
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
-        Private _DateProp As Global.Microsoft.OData.Edm.Date = Global.Microsoft.OData.Edm.Date.Parse("2020-02-02")
-        Partial Private Sub OnDatePropChanging(ByVal value As Global.Microsoft.OData.Edm.Date)
+        Private _DateProp As Global.System.DateOnly = Global.System.DateOnly.Parse("2020-02-02")
+        Partial Private Sub OnDatePropChanging(ByVal value As Global.System.DateOnly)
         End Sub
         Partial Private Sub OnDatePropChanged()
         End Sub
@@ -565,7 +565,7 @@ Namespace Namespace1
         ''' There are no comments for Property NullableDateProp in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
-        Public Overridable Property NullableDateProp() As Global.System.Nullable(Of Global.Microsoft.OData.Edm.Date)
+        Public Overridable Property NullableDateProp() As Global.System.Nullable(Of Global.System.DateOnly)
             Get
                 Return Me._NullableDateProp
             End Get
@@ -576,8 +576,8 @@ Namespace Namespace1
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
-        Private _NullableDateProp As Global.System.Nullable(Of Global.Microsoft.OData.Edm.Date) = Global.Microsoft.OData.Edm.Date.Parse("2020-02-02")
-        Partial Private Sub OnNullableDatePropChanging(ByVal value As Global.System.Nullable(Of Global.Microsoft.OData.Edm.Date))
+        Private _NullableDateProp As Global.System.Nullable(Of Global.System.DateOnly) = Global.System.DateOnly.Parse("2020-02-02")
+        Partial Private Sub OnNullableDatePropChanging(ByVal value As Global.System.Nullable(Of Global.System.DateOnly))
         End Sub
         Partial Private Sub OnNullableDatePropChanged()
         End Sub
@@ -627,7 +627,7 @@ Namespace Namespace1
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
         <Global.System.ComponentModel.DataAnnotations.RequiredAttribute()>  _
-        Public Overridable Property TimeOfDayProp() As Global.Microsoft.OData.Edm.TimeOfDay
+        Public Overridable Property TimeOfDayProp() As Global.System.TimeOnly
             Get
                 Return Me._TimeOfDayProp
             End Get
@@ -638,8 +638,8 @@ Namespace Namespace1
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
-        Private _TimeOfDayProp As Global.Microsoft.OData.Edm.TimeOfDay = Global.Microsoft.OData.Edm.TimeOfDay.Parse("22:44")
-        Partial Private Sub OnTimeOfDayPropChanging(ByVal value As Global.Microsoft.OData.Edm.TimeOfDay)
+        Private _TimeOfDayProp As Global.System.TimeOnly = Global.System.TimeOnly.Parse("22:44")
+        Partial Private Sub OnTimeOfDayPropChanging(ByVal value As Global.System.TimeOnly)
         End Sub
         Partial Private Sub OnTimeOfDayPropChanged()
         End Sub
@@ -647,7 +647,7 @@ Namespace Namespace1
         ''' There are no comments for Property NullableTimeOfDayProp in the schema.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
-        Public Overridable Property NullableTimeOfDayProp() As Global.System.Nullable(Of Global.Microsoft.OData.Edm.TimeOfDay)
+        Public Overridable Property NullableTimeOfDayProp() As Global.System.Nullable(Of Global.System.TimeOnly)
             Get
                 Return Me._NullableTimeOfDayProp
             End Get
@@ -658,8 +658,8 @@ Namespace Namespace1
             End Set
         End Property
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")>  _
-        Private _NullableTimeOfDayProp As Global.System.Nullable(Of Global.Microsoft.OData.Edm.TimeOfDay) = Global.Microsoft.OData.Edm.TimeOfDay.Parse("22:44")
-        Partial Private Sub OnNullableTimeOfDayPropChanging(ByVal value As Global.System.Nullable(Of Global.Microsoft.OData.Edm.TimeOfDay))
+        Private _NullableTimeOfDayProp As Global.System.Nullable(Of Global.System.TimeOnly) = Global.System.TimeOnly.Parse("22:44")
+        Partial Private Sub OnNullableTimeOfDayPropChanging(ByVal value As Global.System.Nullable(Of Global.System.TimeOnly))
         End Sub
         Partial Private Sub OnNullableTimeOfDayPropChanged()
         End Sub

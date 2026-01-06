@@ -600,13 +600,13 @@ namespace ODataConnectedService.Tests
         [TestMethod]
         public void GetClrTypeNameDateShouldBeGlobalMicrosoftODataEdmLibraryDate()
         {
-            ODataT4CodeGenerator.Utils.GetClrTypeName(new EdmPrimitiveType(EdmPrimitiveTypeKind.Date), template).Should().Be("global::Microsoft.OData.Edm.Date");
+            ODataT4CodeGenerator.Utils.GetClrTypeName(new EdmPrimitiveType(EdmPrimitiveTypeKind.Date), template).Should().Be("global::System.DateOnly");
         }
 
         [TestMethod]
         public void GetClrTypeNameTimeOfDayShouldBeGlobalMicrosoftODataEdmLibraryTimeOfDay()
         {
-            ODataT4CodeGenerator.Utils.GetClrTypeName(new EdmPrimitiveType(EdmPrimitiveTypeKind.TimeOfDay), template).Should().Be("global::Microsoft.OData.Edm.TimeOfDay");
+            ODataT4CodeGenerator.Utils.GetClrTypeName(new EdmPrimitiveType(EdmPrimitiveTypeKind.TimeOfDay), template).Should().Be("global::System.TimeOnly");
         }
 
         [TestMethod]

@@ -81,7 +81,7 @@ namespace Microsoft.OData.TestService
         /// There are no comments for Property WakeUpTime in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        public virtual global::System.Nullable<global::Microsoft.OData.Edm.TimeOfDay> WakeUpTime
+        public virtual global::System.Nullable<global::System.TimeOnly> WakeUpTime
         {
             get
             {
@@ -95,8 +95,8 @@ namespace Microsoft.OData.TestService
             }
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "2.4.0")]
-        private global::System.Nullable<global::Microsoft.OData.Edm.TimeOfDay> _WakeUpTime;
-        partial void OnWakeUpTimeChanging(global::System.Nullable<global::Microsoft.OData.Edm.TimeOfDay> value);
+        private global::System.Nullable<global::System.TimeOnly> _WakeUpTime;
+        partial void OnWakeUpTimeChanging(global::System.Nullable<global::System.TimeOnly> value);
         partial void OnWakeUpTimeChanged();
         /// <summary>
         /// There are no comments for ReminderView in the schema.
