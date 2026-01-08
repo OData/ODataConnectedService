@@ -196,6 +196,9 @@ namespace Microsoft.OData.CodeGen.CodeGeneration
             await FileHandler.SetFileAsEmbeddedResourceAsync(csdlFileName);
             t4CodeGenerator.EmitContainerPropertyAttribute = await FileHandler.EmitContainerPropertyAttributeAsync();
 
+            // Determine whether to emit native DateOnly and TimeOnly types
+            t4CodeGenerator.EmitNativeDateTimeTypes = await FileHandler.EmitNativeDateTimeTypesAsync();
+
             t4CodeGenerator.MetadataFilePath = metadataFile;
             t4CodeGenerator.MetadataFileRelativePath = csdlFileName;
 

@@ -42,6 +42,12 @@ stages:
   - job: Build
     steps:
 
+    - task: UseDotNet@2
+      displayName: 'Use .NET SDK 8.0.x'
+      inputs:
+        packageType: 'sdk'
+        version: '8.0.x'
+
     - task: NuGetToolInstaller@0
       inputs:
         versionSpec: '>=5.2.0'
@@ -57,6 +63,7 @@ stages:
         solution: '$(sln)'
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
+        msbuildArgs: '/p:DeployExtension=false'
       
     - task: DotNetCoreCLI@2
       displayName: 'Pack Microsoft.OData.Cli package'
@@ -135,7 +142,7 @@ stages:
         Contents: '$(productFilesVs2022Plus)'
         TargetFolder: '$(Build.ArtifactStagingDirectory)\Product2022plus'
         OverWrite: true
-
+        
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact - VSIX'
       inputs:
@@ -149,7 +156,7 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)\VSIX2022Plus'
         ArtifactName: 'VSIX2022Plus'
         publishLocation: 'Container'
-        
+
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact - ODataCLINupkg'
       inputs:
@@ -323,3 +330,4 @@ stages:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg'
               ArtifactName: SignedODataCLINupkg
               publishLocation: 'Container'
+              

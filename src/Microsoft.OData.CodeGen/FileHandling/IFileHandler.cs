@@ -31,7 +31,14 @@ namespace Microsoft.OData.CodeGen.FileHandling
         /// <summary>
         /// Emits container property attribute
         /// </summary>
-        /// <returns></returns>
+        /// <returns>>A task that represents the asynchronous operation. true if container property can be emitted; otherwise false</returns>
         Task<bool> EmitContainerPropertyAttributeAsync();
+
+        /// <summary>
+        /// Emits dotnet native date and time types (DateOnly and TimeOnly) to the target environment asynchronously.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous operation. true if the native
+        /// date and time types can be emitted; otherwise, false.</returns>
+        Task<bool> EmitNativeDateTimeTypesAsync();
     }
 }
