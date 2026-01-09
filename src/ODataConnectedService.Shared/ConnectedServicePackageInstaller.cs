@@ -26,7 +26,7 @@ namespace Microsoft.OData.ConnectedService
         public ConnectedServiceHandlerContext Context { get; private set; }
         public Project Project { get; private set; }
         public IMessageLogger MessageLogger { get; private set; }
-        public IVsPackageInstaller PackageInstaller { get; protected set; }
+        public IVsPackageInstaller2 PackageInstaller { get; protected set; }
 
         public IVsPackageInstallerServices PackageInstallerServices { get; protected set; }
 
@@ -53,7 +53,7 @@ namespace Microsoft.OData.ConnectedService
             if (componentModel != null)
             {
                 this.PackageInstallerServices = componentModel.GetService<IVsPackageInstallerServices>();
-                this.PackageInstaller = componentModel.GetService<IVsPackageInstaller>();
+                this.PackageInstaller = componentModel.GetService<IVsPackageInstaller2>();
             }
         }
 
@@ -70,7 +70,7 @@ namespace Microsoft.OData.ConnectedService
                 {
                     if (!PackageInstallerServices.IsPackageInstalled(this.Project, packageName))
                     {
-                        PackageInstaller.InstallPackage(packageSource, this.Project, packageName, (string)null, false); ;
+                        PackageInstaller.InstallLatestPackage(packageSource, this.Project, packageName, true, false);
 
                         await (this.MessageLogger?.WriteMessageAsync(LogMessageCategory.Information, $"Nuget Package \"{packageName}\" for OData client was added.")).ConfigureAwait(false);
                     }
