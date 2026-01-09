@@ -17,23 +17,18 @@ variables:
   productFiles: 'Microsoft.OData.ConnectedService.*?(*.dll|*.config|*.pdb)'
   productBinPathVs2022Plus: '$(connectedServiceDir)\src\ODataConnectedService_VS2022Plus\bin\$(BuildConfiguration)'
   productFilesVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.*?(*.dll|*.config|*.pdb)'
-  productBinPathVs2026Plus: '$(connectedServiceDir)\src\ODataConnectedService_VS2026Plus\bin\$(BuildConfiguration)'
-  productFilesVs2026Plus: 'Microsoft.OData.ConnectedService.VS2026Plus.*?(*.dll|*.config|*.pdb)'
   productFilesODataCLI: 'Microsoft.OData.Cli.*?(*.dll|*.config|*.pdb)'
   testBinPath: '$(connectedServiceDir)\test\ODataConnectedService.Tests\bin\$(BuildConfiguration)'
   testBinPathODataCLI: '$(connectedServiceDir)\test\Microsoft.OData.Cli.Tests\bin\$(BuildConfiguration)'
   vsixPath: '$(productBinPath)'
   vsixFile: 'Microsoft.OData.ConnectedService.vsix'
   vsixFileVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.vsix'
-  vsixFileVs2026Plus: 'Microsoft.OData.ConnectedService.VS2026Plus.vsix'
   nupkgFile: 'Microsoft.OData.Cli.nupkg'
   signingFiles: 'Microsoft.OData.ConnectedService.dll'
   signingFilesVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.dll'
-  signingFilesVs2026Plus: 'Microsoft.OData.ConnectedService.VS2026Plus.dll'
   signingFilesODataCLI: 'Microsoft.OData.Cli.dll'
   mainDll: 'Microsoft.OData.ConnectedService.dll'
   mainDllVs2022Plus: 'Microsoft.OData.ConnectedService.VS2022Plus.dll'
-  mainDllVs2026Plus: 'Microsoft.OData.ConnectedService.VS2026Plus.dll'
   mainDllODataCLI: 'Microsoft.OData.Cli.dll'
   testDll: 'ODataConnectedService.Tests.dll'
   testDllODataCLI: 'Microsoft.OData.Cli.Tests.dll'
@@ -133,14 +128,6 @@ stages:
         OverWrite: true
 
     - task: CopyFiles@2
-      displayName: 'Copy Files - 2026plus VSIX to Artifacts Staging'
-      inputs:
-        SourceFolder: '$(productBinPathVs2026Plus)'
-        Contents: 'Microsoft.OData.ConnectedService.VS2026Plus.vsix'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)\VSIX2026plus'
-        OverWrite: true
-
-    - task: CopyFiles@2
       displayName: 'Copy Files - Stage Product'
       inputs:
         SourceFolder: '$(productBinPath)'
@@ -156,14 +143,6 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)\Product2022plus'
         OverWrite: true
 
-    - task: CopyFiles@2
-      displayName: 'Copy Files - Stage Product 2026plus'
-      inputs:
-        SourceFolder: '$(productBinPathVs2026Plus)'
-        Contents: '$(productFilesVs2026Plus)'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)\Product2026plus'
-        OverWrite: true
-        
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact - VSIX'
       inputs:
@@ -177,14 +156,7 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)\VSIX2022Plus'
         ArtifactName: 'VSIX2022Plus'
         publishLocation: 'Container'
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact - VSIX2026Plus'
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)\VSIX2026plus'
-        ArtifactName: 'VSIX2026Plus'
-        publishLocation: 'Container'
-
+        
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact - ODataCLINupkg'
       inputs:
@@ -296,55 +268,6 @@ stages:
               ArtifactName: 'SignedVSIX2022Plus'
               publishLocation: 'Container'
 
-- stage: CodeSign3
-  condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
-  jobs:
-  - deployment: CodeSign
-    displayName: Code Signing
-    pool:
-      vmImage: windows-latest    
-    environment: Code Sign - Approvals
-    variables:
-    - group: Code Signing
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: DotNetCoreCLI@2
-            inputs:
-              command: custom
-              custom: tool
-              arguments: install --tool-path . --prerelease sign
-            displayName: Install SignTool tool
-          
-          # Sign the VSIX archive as well as files contained in the VSIX that are listed in config/filelist.txt
-          # For more info about the Sign CLI tool, visit: https://github.com/dotnet/sign
-          - task: AzureCLI@2
-            inputs:
-              azureSubscription: 'Code Signing'
-              scriptType: pscore
-              scriptLocation: inlineScript
-              inlineScript: |
-                .\sign code azure-key-vault `
-                "**/*.{dll,vsix,zip,nupkg}" `
-                --base-directory "$(Pipeline.Workspace)/VSIX2026Plus" `
-                --output "$(Build.ArtifactStagingDirectory)/SignedVSIX2026Plus" `
-                --file-list "$(Pipeline.Workspace)/configs/filelist.txt" `
-                --publisher-name "OData Labs" `
-                --description "OData Connected Service 2026+" `
-                --description-url "https://github.com/OData/ODataConnectedService" `
-                --azure-key-vault-managed-identity `
-                --azure-key-vault-certificate "$(SignKeyVaultCertificate)" `
-                --azure-key-vault-url "$(SignKeyVaultUrl)"
-            displayName: Code signing - VSIX2026Plus
-
-          # Publish the signed VSIX as an artifact so we can download it after the build
-          - task: PublishBuildArtifacts@1
-            displayName: 'Publish Artifact: SignedVSIX2026Plus'
-            inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)/SignedVSIX2026Plus'
-              ArtifactName: 'SignedVSIX2026Plus'
-
 - stage: CodeSignODataCLI
   condition: and(succeeded('Build'), not(eq(variables['build.reason'], 'PullRequest')))
   jobs:
@@ -407,4 +330,3 @@ stages:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg'
               ArtifactName: SignedODataCLINupkg
               publishLocation: 'Container'
-              

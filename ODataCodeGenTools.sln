@@ -26,8 +26,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{87FB2A7F-D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6500B077-1097-408B-B99A-6105EE8F4400}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODataConnectedService_VS2026Plus", "src\ODataConnectedService_VS2026Plus\ODataConnectedService_VS2026Plus.csproj", "{A1558D4D-3675-4E76-9659-282E19772DEC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -110,18 +108,6 @@ Global
 		{FE62623D-B8AF-49E2-AEB2-4EF50419777A}.Release|arm64.Build.0 = Release|Any CPU
 		{FE62623D-B8AF-49E2-AEB2-4EF50419777A}.Release|x86.ActiveCfg = Release|Any CPU
 		{FE62623D-B8AF-49E2-AEB2-4EF50419777A}.Release|x86.Build.0 = Release|Any CPU
-		{A1558D4D-3675-4E76-9659-282E19772DEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1558D4D-3675-4E76-9659-282E19772DEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1558D4D-3675-4E76-9659-282E19772DEC}.Debug|arm64.ActiveCfg = Debug|arm64
-		{A1558D4D-3675-4E76-9659-282E19772DEC}.Debug|arm64.Build.0 = Debug|arm64
-		{A1558D4D-3675-4E76-9659-282E19772DEC}.Debug|x86.ActiveCfg = Debug|x86
-		{A1558D4D-3675-4E76-9659-282E19772DEC}.Debug|x86.Build.0 = Debug|x86
-		{A1558D4D-3675-4E76-9659-282E19772DEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1558D4D-3675-4E76-9659-282E19772DEC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1558D4D-3675-4E76-9659-282E19772DEC}.Release|arm64.ActiveCfg = Release|arm64
-		{A1558D4D-3675-4E76-9659-282E19772DEC}.Release|arm64.Build.0 = Release|arm64
-		{A1558D4D-3675-4E76-9659-282E19772DEC}.Release|x86.ActiveCfg = Release|x86
-		{A1558D4D-3675-4E76-9659-282E19772DEC}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -134,7 +120,6 @@ Global
 		{61E9E534-C672-4109-A6E1-9AA6F14B6C54} = {6500B077-1097-408B-B99A-6105EE8F4400}
 		{15769DAB-F3B0-4E82-A125-CF55ACB04D07} = {6500B077-1097-408B-B99A-6105EE8F4400}
 		{FE62623D-B8AF-49E2-AEB2-4EF50419777A} = {87FB2A7F-D758-4DBF-8B36-0007A3E156E9}
-		{A1558D4D-3675-4E76-9659-282E19772DEC} = {6500B077-1097-408B-B99A-6105EE8F4400}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FD696714-8F52-4A00-93F4-43C843F184DB}
@@ -142,7 +127,6 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\ODataConnectedService.Shared\ODataConnectedService.Shared.projitems*{15769dab-f3b0-4e82-a125-cf55acb04d07}*SharedItemsImports = 4
 		src\ODataConnectedService.Shared\ODataConnectedService.Shared.projitems*{61e9e534-c672-4109-a6e1-9aa6f14b6c54}*SharedItemsImports = 13
-		src\ODataConnectedService.Shared\ODataConnectedService.Shared.projitems*{a1558d4d-3675-4e76-9659-282e19772dec}*SharedItemsImports = 4
 		src\ODataConnectedService.Shared\ODataConnectedService.Shared.projitems*{a8bc5b8e-9ab7-4257-b8f1-e7c62169f9b5}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal

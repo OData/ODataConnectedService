@@ -53,5 +53,44 @@ namespace Microsoft.OData.ConnectedService.Common
                     return LanguageOption.GenerateCSharpCode;
             }
         }
+
+
+        ///// <summary>
+        ///// Gets the target frameworks for the current project.
+        ///// </summary>
+        ///// <returns>A string of the target frameworks for the provided project</returns>
+        //public static string GetProjectTargetFrameworks(this Project project)
+        //{
+        //    return threadHelper.RunInUiThreadAsync(() =>
+        //    {
+        //        if (project == null)
+        //        {
+        //            return string.Empty;
+        //        }
+
+        //        // Try to get TargetFrameworks (multi-targeting)
+        //        var targetFrameworks = project?.Properties.Item("TargetFrameworks")?.Value as string;
+        //        if (!string.IsNullOrEmpty(targetFrameworks))
+        //        {
+        //            return targetFrameworks;
+        //        }
+
+        //        // Fallback to TargetFramework (single target)
+        //        var targetFramework = project?.Properties.Item("TargetFramework")?.Value as string;
+        //        if (!string.IsNullOrEmpty(targetFramework))
+        //        {
+        //            return targetFramework;
+        //        }
+
+        //        // Legacy approach for .NET Framework projects
+        //        var targetFrameworkMoniker = project?.Properties?.Item("TargetFrameworkMoniker")?.Value as string;
+        //        if (!string.IsNullOrEmpty(targetFrameworkMoniker))
+        //        {
+        //            return targetFrameworkMoniker;
+        //        }
+
+        //        return string.Empty;
+        //    });
+        //}
     }
 }

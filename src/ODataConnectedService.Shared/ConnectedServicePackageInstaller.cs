@@ -30,6 +30,8 @@ namespace Microsoft.OData.ConnectedService
 
         public IVsPackageInstallerServices PackageInstallerServices { get; protected set; }
 
+        private readonly string TargetFrameworkMoniker;
+
         /// <summary>
         /// Creates an instance of <see cref="ConnectedServicePackageInstaller"/> 
         /// </summary>
@@ -42,6 +44,10 @@ namespace Microsoft.OData.ConnectedService
             this.Context = context;
             this.Project = project;
             this.MessageLogger = messageLogger;
+
+            Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
+            TargetFrameworkMoniker = (string)this.Project.Properties?.Item("TargetFrameworkMoniker")?.Value;
         }
 
         /// <summary>
@@ -70,7 +76,19 @@ namespace Microsoft.OData.ConnectedService
                 {
                     if (!PackageInstallerServices.IsPackageInstalled(this.Project, packageName))
                     {
-                        PackageInstaller.InstallLatestPackage(packageSource, this.Project, packageName, true, false);
+                        // For .NET Core and later, always install the latest version of the package
+                        if (!string.IsNullOrEmpty(TargetFrameworkMoniker) && int.TryParse(TargetFrameworkMoniker.Substring(3), out var dotnetVersion) && dotnetVersion >= 0)
+                        {
+                            // No need to install System.Text.Json as it is part of the shared framework
+                            if (!packageName.Equals("System.Text.Json", StringComparison.Ordinal))
+                            {
+                                PackageInstaller.InstallLatestPackage(packageSource, this.Project, packageName, true, false);
+                            }
+                        }
+                        else
+                        {
+                            PackageInstaller.InstallPackage(packageSource, this.Project, packageName, (string)null, false);
+                        }
 
                         await (this.MessageLogger?.WriteMessageAsync(LogMessageCategory.Information, $"Nuget Package \"{packageName}\" for OData client was added.")).ConfigureAwait(false);
                     }
