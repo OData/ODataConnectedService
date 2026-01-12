@@ -135,7 +135,6 @@ namespace Microsoft.OData.Cli.Tests.FileHandling
         {
             // Create a .csproj in memory
             var pre = ProjectRootElement.Create();
-            pre.Sdk = "Microsoft.NET.Sdk";
 
             var pg = pre.AddPropertyGroup();
             pg.AddProperty("TargetFramework", "net8.0");
@@ -153,8 +152,8 @@ namespace Microsoft.OData.Cli.Tests.FileHandling
 
         private static Project CreateProjectWithoutODataClient()
         {
+            // Create a .csproj in memory
             var pre = ProjectRootElement.Create();
-            pre.Sdk = "Microsoft.NET.Sdk";
 
             var pg = pre.AddPropertyGroup();
             pg.AddProperty("TargetFramework", "net8.0");
