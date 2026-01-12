@@ -17,12 +17,7 @@ namespace Microsoft.OData.Cli.Tests.FileHandling
     {
         public ODataCliFileHandlerTests()
         {
-            // Ensure MSBuild is registered for Project API usage
-            if (!MSBuildLocator.IsRegistered)
-            {
-                // pick VS or the .NET SDK automatically
-                MSBuildLocator.RegisterDefaults();
-            }
+            EnsureMSBuildLoadedIfNot();
         }
 
         [Fact]
@@ -178,6 +173,23 @@ namespace Microsoft.OData.Cli.Tests.FileHandling
         {
             var loggerMock = new Mock<IMessageLogger>();
             return new ODataCliFileHandler(loggerMock.Object, project);
+        }
+
+        private void EnsureMSBuildLoadedIfNot()
+        {
+            if (!MSBuildLocator.IsRegistered)
+            {
+                try
+                {
+                    MSBuildLocator.RegisterDefaults();
+                }
+                catch (InvalidOperationException)
+                {
+                    // MSBuild assemblies were already loaded before registration
+                    // This can happen if another test class already loaded MSBuild types
+                    // Safe to ignore since MSBuild is already available
+                }
+            }
         }
     }
 }
