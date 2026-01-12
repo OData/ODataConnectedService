@@ -66,7 +66,8 @@ public virtual async Task<string> TransformTextAsync()
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedBoundOperations = this.ExcludedBoundOperations,
             ExcludedSchemaTypes = this.ExcludedSchemaTypes,
-            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute
+            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute,
+            EmitNativeDateTimeTypes = this.EmitNativeDateTimeTypes
         };
     }
     else
@@ -107,7 +108,8 @@ public virtual async Task<string> TransformTextAsync()
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedBoundOperations = this.ExcludedBoundOperations,
             ExcludedSchemaTypes = this.ExcludedSchemaTypes,
-            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute
+            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute,
+            EmitNativeDateTimeTypes = this.EmitNativeDateTimeTypes
         };
     }
 
@@ -421,6 +423,15 @@ public string WebProxyNetworkCredentialsPassword
 /// </summary>
 public bool EmitContainerPropertyAttribute
 {
+    get;
+    internal set;
+}
+
+/// <summary>
+/// true to emit .NET date/time types (DateOnly and TimeOnly) instead of Microsoft.OData.Edm.Date and Microsoft.OData.Edm.TimeOfDay, false otherwise
+/// </summary>
+public bool EmitNativeDateTimeTypes 
+{ 
     get;
     internal set;
 }
@@ -1185,6 +1196,17 @@ public class CodeGenerationContext
     /// true to emit container property attribute on dynamic property container, false otherwise.
     /// </summary>
     public bool EmitContainerPropertyAttribute
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
+    /// true to use native .NET date/time types (DateOnly and TimeOnly) instead of
+    /// Microsoft.OData.Edm.Date and Microsoft.OData.Edm.TimeOfDay, false otherwise.
+    /// Set to true when targeting .NET 10.0 or later.
+    /// </summary>
+    public bool EmitNativeDateTimeTypes
     {
         get;
         set;

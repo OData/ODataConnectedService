@@ -978,5 +978,107 @@ namespace ODataConnectedService.Tests
                 Assert.IsTrue(normalizedGeneratedCode.IndexOf(otherContainerPropertyAttributeSnippet, StringComparison.Ordinal) == -1);
             }
         }
+
+        [TestMethod]
+        public void SetEmitNativeDateTimeTypes_True_GenerateNativeDateTimeTypes()
+        {
+            var edmx = @"<?xml version=""1.0"" standalone=""yes"" ?>
+<edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
+  <edmx:DataServices>
+    <Schema Namespace=""NS"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
+      <EntityType Name=""Order"">
+        <Key>
+          <PropertyRef Name=""Id"" />
+        </Key>
+        <Property Name=""Id"" Type=""Edm.Int32"" Nullable=""false"" />
+        <Property Name=""Amount"" Type=""Edm.Decimal"" Nullable=""false"" Scale=""variable"" />
+        <Property Name=""OrderDate"" Type=""Edm.Date"" Nullable=""false"" />
+        <Property Name=""OrderTime"" Type=""Edm.TimeOfDay"" Nullable=""false"" />
+      </EntityType>
+      <EntityContainer Name=""Container"">
+        <EntitySet Name=""Orders"" EntityType=""NS.Order"" />
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
+";
+
+            var t4CodeGenerator = new ODataT4CodeGenerator
+            {
+                Edmx = edmx,
+                GetReferencedModelReaderFunc = null,
+                NamespacePrefix = null,
+                EnableNamingAlias = false,
+                IgnoreUnexpectedElementsAndAttributes = false,
+                GenerateMultipleFiles = false,
+                ExcludedSchemaTypes = null,
+                EmitNativeDateTimeTypes = true
+            };
+
+            // CSharp
+            t4CodeGenerator.TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp;
+            var generatedCode = t4CodeGenerator.TransformText();
+
+            Assert.IsTrue(generatedCode.IndexOf("public virtual global::System.DateOnly OrderDate", StringComparison.Ordinal) > 0);
+            Assert.IsTrue(generatedCode.IndexOf("public virtual global::System.TimeOnly OrderTime", StringComparison.Ordinal) > 0);
+
+            // VB
+            t4CodeGenerator.TargetLanguage = ODataT4CodeGenerator.LanguageOption.VB;
+            generatedCode = t4CodeGenerator.TransformText();
+
+            Assert.IsTrue(generatedCode.IndexOf("Public Overridable Property OrderDate() As Global.System.DateOnly", StringComparison.Ordinal) > 0);
+            Assert.IsTrue(generatedCode.IndexOf("Public Overridable Property OrderTime() As Global.System.TimeOnly", StringComparison.Ordinal) > 0);
+        }
+
+        [TestMethod]
+        public void SetEmitNativeDateTimeTypes_False_GenerateODataEdmTypes()
+        {
+            var edmx = @"<?xml version=""1.0"" standalone=""yes"" ?>
+<edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
+  <edmx:DataServices>
+    <Schema Namespace=""NS"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
+      <EntityType Name=""Order"">
+        <Key>
+          <PropertyRef Name=""Id"" />
+        </Key>
+        <Property Name=""Id"" Type=""Edm.Int32"" Nullable=""false"" />
+        <Property Name=""Amount"" Type=""Edm.Decimal"" Nullable=""false"" Scale=""variable"" />
+        <Property Name=""OrderDate"" Type=""Edm.Date"" Nullable=""false"" />
+        <Property Name=""OrderTime"" Type=""Edm.TimeOfDay"" Nullable=""false"" />
+      </EntityType>
+      <EntityContainer Name=""Container"">
+        <EntitySet Name=""Orders"" EntityType=""NS.Order"" />
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
+";
+
+            var t4CodeGenerator = new ODataT4CodeGenerator
+            {
+                Edmx = edmx,
+                GetReferencedModelReaderFunc = null,
+                NamespacePrefix = null,
+                EnableNamingAlias = false,
+                IgnoreUnexpectedElementsAndAttributes = false,
+                GenerateMultipleFiles = false,
+                ExcludedSchemaTypes = null,
+                EmitNativeDateTimeTypes = false
+            };
+
+            // CSharp
+            t4CodeGenerator.TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp;
+            var generatedCode = t4CodeGenerator.TransformText();
+
+            Assert.IsTrue(generatedCode.IndexOf("public virtual global::Microsoft.OData.Edm.Date OrderDate", StringComparison.Ordinal) > 0);
+            Assert.IsTrue(generatedCode.IndexOf("public virtual global::Microsoft.OData.Edm.TimeOfDay OrderTime", StringComparison.Ordinal) > 0);
+
+            // VB
+            t4CodeGenerator.TargetLanguage = ODataT4CodeGenerator.LanguageOption.VB;
+            generatedCode = t4CodeGenerator.TransformText();
+
+            Assert.IsTrue(generatedCode.IndexOf("Public Overridable Property OrderDate() As Global.Microsoft.OData.Edm.Date", StringComparison.Ordinal) > 0);
+            Assert.IsTrue(generatedCode.IndexOf("Public Overridable Property OrderTime() As Global.Microsoft.OData.Edm.TimeOfDay", StringComparison.Ordinal) > 0);
+        }
     }
 }

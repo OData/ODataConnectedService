@@ -209,7 +209,8 @@ public virtual async Task<string> TransformTextAsync()
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedBoundOperations = this.ExcludedBoundOperations,
             ExcludedSchemaTypes = this.ExcludedSchemaTypes,
-            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute
+            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute,
+            EmitNativeDateTimeTypes = this.EmitNativeDateTimeTypes
         };
     }
     else
@@ -250,7 +251,8 @@ public virtual async Task<string> TransformTextAsync()
             ExcludedOperationImports = this.ExcludedOperationImports,
             ExcludedBoundOperations = this.ExcludedBoundOperations,
             ExcludedSchemaTypes = this.ExcludedSchemaTypes,
-            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute
+            EmitContainerPropertyAttribute = this.EmitContainerPropertyAttribute,
+            EmitNativeDateTimeTypes = this.EmitNativeDateTimeTypes
         };
     }
 
@@ -564,6 +566,15 @@ public string WebProxyNetworkCredentialsPassword
 /// </summary>
 public bool EmitContainerPropertyAttribute
 {
+    get;
+    internal set;
+}
+
+/// <summary>
+/// true to emit .NET date/time types (DateOnly and TimeOnly) instead of Microsoft.OData.Edm.Date and Microsoft.OData.Edm.TimeOfDay, false otherwise
+/// </summary>
+public bool EmitNativeDateTimeTypes 
+{ 
     get;
     internal set;
 }
@@ -1328,6 +1339,17 @@ public class CodeGenerationContext
     /// true to emit container property attribute on dynamic property container, false otherwise.
     /// </summary>
     public bool EmitContainerPropertyAttribute
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
+    /// true to use native .NET date/time types (DateOnly and TimeOnly) instead of
+    /// Microsoft.OData.Edm.Date and Microsoft.OData.Edm.TimeOfDay, false otherwise.
+    /// Set to true when targeting .NET 10.0 or later.
+    /// </summary>
+    public bool EmitNativeDateTimeTypes
     {
         get;
         set;
@@ -4298,10 +4320,10 @@ public sealed class ODataClientCSharpTemplate : ODataClientTemplate
     internal override string GeometryMultiPolygonTypeName { get { return "global::Microsoft.Spatial.GeometryMultiPolygon"; } }
     internal override string GeometryMultiLineStringTypeName { get { return "global::Microsoft.Spatial.GeometryMultiLineString"; } }
     internal override string GeometryMultiPointTypeName { get { return "global::Microsoft.Spatial.GeometryMultiPoint"; } }
-    internal override string DateTypeName { get { return "global::Microsoft.OData.Edm.Date"; } }
+    internal override string DateTypeName { get { return this.context.EmitNativeDateTimeTypes ? "global::System.DateOnly" : "global::Microsoft.OData.Edm.Date"; } }
     internal override string DateTimeOffsetTypeName { get { return "global::System.DateTimeOffset"; } }
     internal override string DurationTypeName { get { return "global::System.TimeSpan"; } }
-    internal override string TimeOfDayTypeName { get { return "global::Microsoft.OData.Edm.TimeOfDay"; } }
+    internal override string TimeOfDayTypeName { get { return this.context.EmitNativeDateTimeTypes ? "global::System.TimeOnly" : "global::Microsoft.OData.Edm.TimeOfDay"; } }
     internal override string XmlConvertClassName { get { return "global::System.Xml.XmlConvert"; } }
     internal override string EnumTypeName { get { return "global::System.Enum"; } }
     internal override string DictionaryInterfaceName { get { return "global::System.Collections.Generic.IDictionary<{0}, {1}>"; } }
@@ -6441,10 +6463,10 @@ public sealed class ODataClientVBTemplate : ODataClientTemplate
     internal override string GeometryMultiPolygonTypeName { get { return "Global.Microsoft.Spatial.GeometryMultiPolygon"; } }
     internal override string GeometryMultiLineStringTypeName { get { return "Global.Microsoft.Spatial.GeometryMultiLineString"; } }
     internal override string GeometryMultiPointTypeName { get { return "Global.Microsoft.Spatial.GeometryMultiPoint"; } }
-    internal override string DateTypeName { get { return "Global.Microsoft.OData.Edm.Date"; } }
+    internal override string DateTypeName { get { return this.context.EmitNativeDateTimeTypes ? "Global.System.DateOnly" : "Global.Microsoft.OData.Edm.Date"; } }
     internal override string DateTimeOffsetTypeName { get { return "Global.System.DateTimeOffset"; } }
     internal override string DurationTypeName { get { return "Global.System.TimeSpan"; } }
-    internal override string TimeOfDayTypeName { get { return "Global.Microsoft.OData.Edm.TimeOfDay"; } }
+    internal override string TimeOfDayTypeName { get { return this.context.EmitNativeDateTimeTypes ? "Global.System.TimeOnly" : "Global.Microsoft.OData.Edm.TimeOfDay"; } }
     internal override string XmlConvertClassName { get { return "Global.System.Xml.XmlConvert"; } }
     internal override string EnumTypeName { get { return "Global.System.Enum"; } }
     internal override string DictionaryInterfaceName { get { return "Global.System.Collections.Generic.IDictionary(Of {0}, {1})"; } }

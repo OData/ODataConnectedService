@@ -70,7 +70,7 @@ namespace Microsoft.OData.ConnectedService
                 {
                     if (!PackageInstallerServices.IsPackageInstalled(this.Project, packageName))
                     {
-                        PackageInstaller.InstallPackage(packageSource, this.Project, packageName, (string)null, false); ;
+                        PackageInstaller.InstallPackage(packageSource, this.Project, packageName, (string)null, false);
 
                         await (this.MessageLogger?.WriteMessageAsync(LogMessageCategory.Information, $"Nuget Package \"{packageName}\" for OData client was added.")).ConfigureAwait(false);
                     }

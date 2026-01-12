@@ -8,6 +8,8 @@
 using System.CommandLine;
 using System.CommandLine.Parsing;
 using System.Text.RegularExpressions;
+using Microsoft.Build.Evaluation;
+using Microsoft.Build.Locator;
 using Microsoft.OData.CodeGen.Common;
 
 namespace Microsoft.OData.Cli.Tests.CodeGeneration
@@ -16,6 +18,7 @@ namespace Microsoft.OData.Cli.Tests.CodeGeneration
     {
         private readonly GenerateCommand generateCommand;
         private readonly string metadataUri = Path.Combine(Environment.CurrentDirectory, "CodeGeneration\\Artifacts\\SampleServiceV4.xml");
+        private readonly string metadataUriWithDateOnlyAndTimeOnly = Path.Combine(Environment.CurrentDirectory, "CodeGeneration\\Artifacts\\SampleServiceV4WithDateOnlyAndTimeOnly.xml");
         private readonly string lowerCamelCaseMetadataUri = Path.Combine(Environment.CurrentDirectory, "CodeGeneration\\Artifacts\\SampleServiceV4LowerCamelCase.xml");
         private readonly string outputDir;
 
@@ -23,6 +26,9 @@ namespace Microsoft.OData.Cli.Tests.CodeGeneration
         {
             this.generateCommand = new GenerateCommand();
             this.outputDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+
+            // Ensure MSBuild is registered for Project API usage
+            EnsureMSBuildLoadedIfNot();
         }
 
         [Fact]
@@ -489,10 +495,49 @@ namespace Microsoft.OData.Cli.Tests.CodeGeneration
                 Regex.Replace(inputCsdlContent, @"\s+", ""));
         }
 
+        [Fact]
+        public void TestCodeGeneration_WithODataClient9_UsesNativeDateTimeTypes()
+        {
+            this.CreateTestProjectInOutputDir("net8.0", "9.0.0-preview.3");
+
+            var parseResult = this.generateCommand.Parse($"--metadata-uri {this.metadataUriWithDateOnlyAndTimeOnly} --outputdir {this.outputDir}");
+            parseResult.Invoke();
+
+            var referenceProxyFile = Assert.Single(Directory.GetFiles(outputDir, $"{Constants.DefaultReferenceFileName}.cs"));
+            var generatedCode = File.ReadAllText(referenceProxyFile);
+
+            Assert.NotNull(generatedCode);
+            Assert.NotEmpty(generatedCode);
+
+            Assert.Contains("public virtual global::System.DateOnly OrderDate", generatedCode);
+            Assert.Contains("public virtual global::System.TimeOnly OrderTime", generatedCode);
+        }
+
+        [Fact]
+        public void TestCodeGeneration_WithODataClientVersionLessThan9_UsesNativeDateTimeTypes()
+        {
+            this.CreateTestProjectInOutputDir("net8.0", "8.4.3");
+
+            var parseResult = this.generateCommand.Parse($"--metadata-uri {this.metadataUriWithDateOnlyAndTimeOnly} --outputdir {this.outputDir}");
+            parseResult.Invoke();
+
+            var referenceProxyFile = Assert.Single(Directory.GetFiles(outputDir, $"{Constants.DefaultReferenceFileName}.cs"));
+            var generatedCode = File.ReadAllText(referenceProxyFile);
+
+            Assert.NotNull(generatedCode);
+            Assert.NotEmpty(generatedCode);
+
+            Assert.Contains("public virtual global::Microsoft.OData.Edm.Date OrderDate", generatedCode);
+            Assert.Contains("public virtual global::Microsoft.OData.Edm.TimeOfDay OrderTime", generatedCode);
+        }
+
         public void Dispose()
         {
             try
             {
+                // Unload MSBuild projects before deleting directory
+                ProjectCollection.GlobalProjectCollection.UnloadAllProjects();
+
                 // Delete the temp directory if possible
                 if (Directory.Exists(outputDir))
                 {
@@ -502,6 +547,55 @@ namespace Microsoft.OData.Cli.Tests.CodeGeneration
             catch
             {
                 // Ignore - Temporary files are eventually clean up
+            }
+        }
+
+        private void CreateTestProjectInOutputDir(string targetFramework, string odataClientVersion)
+        {
+            if (!Directory.Exists(this.outputDir))
+            {
+                Directory.CreateDirectory(this.outputDir);
+            }
+
+            var projectPath = Path.Combine(this.outputDir, "TestProject.csproj");
+
+            var projectContent = $@"<Project>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>{targetFramework}</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+ <ItemGroup>
+    <PackageReference Include=""Microsoft.OData.Client"" Version=""{odataClientVersion}"" />    
+    <PackageReference Include=""Microsoft.OData.Core"" Version=""{odataClientVersion}"" />    
+    <PackageReference Include=""Microsoft.OData.Edm"" Version=""{odataClientVersion}"" />
+    <PackageReference Include=""Microsoft.Spatial"" Version=""{odataClientVersion}"" />
+    <PackageReference Include=""System.Text.Json"" Version=""9.0.11"" />
+    <PackageReference Include=""System.ComponentModel.Annotations"" Version=""4.6.0"" />
+  </ItemGroup>
+
+</Project>";
+
+            File.WriteAllText(projectPath, projectContent);
+        }
+
+        private static void EnsureMSBuildLoadedIfNot()
+        {
+            if (!MSBuildLocator.IsRegistered)
+            {
+                try
+                {
+                    MSBuildLocator.RegisterDefaults();
+                }
+                catch (InvalidOperationException)
+                {
+                    // MSBuild assemblies were already loaded before registration
+                    // This can happen if another test class already loaded MSBuild types
+                    // Safe to ignore since MSBuild is already available
+                }
             }
         }
     }

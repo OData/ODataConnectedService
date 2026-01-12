@@ -143,5 +143,34 @@ namespace Microsoft.OData.Cli
 
             return targetFrameworks;
         }
+
+        /// <summary>
+        /// Checks if the Microsoft.OData.Client package version in the project is at least 9.0.0.
+        /// </summary>
+        /// <param name="project">An instance of the loaded <see cref="Project"/>.</param>
+        /// <returns>True if the Microsoft.OData.Client version is at least 9.0.0; otherwise, false.</returns>
+        internal static bool CheckODataClientVersion(this Project project)
+        {
+            if (project == null)
+            {
+                return false;
+            }
+
+            var version = project.GetItems("PackageReference")
+                .FirstOrDefault(pr => pr.EvaluatedInclude.Equals("Microsoft.OData.Client", StringComparison.OrdinalIgnoreCase))
+                ?.GetMetadataValue("Version");
+
+            if (string.IsNullOrEmpty(version))
+            {
+                return false;
+            }
+
+            if (version.Contains('-'))
+            {
+                version = version.Substring(0, version.IndexOf("-"));
+            }
+
+            return Version.TryParse(version, out Version odataClientVersion) && odataClientVersion >= Version.Parse("9.0.0");
+        }
     }
 }
