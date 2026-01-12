@@ -160,7 +160,12 @@ namespace Microsoft.OData.Cli
                 .FirstOrDefault(pr => pr.EvaluatedInclude.Equals("Microsoft.OData.Client", StringComparison.OrdinalIgnoreCase))
                 ?.GetMetadataValue("Version");
 
-            if (version != null && version.Contains('-'))
+            if (string.IsNullOrEmpty(version))
+            {
+                return false;
+            }
+
+            if (version.Contains('-'))
             {
                 version = version.Substring(0, version.IndexOf("-"));
             }

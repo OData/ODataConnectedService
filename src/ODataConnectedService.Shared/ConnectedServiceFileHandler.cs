@@ -101,9 +101,9 @@ namespace Microsoft.OData.ConnectedService
         {
             return this.threadHelper.RunInUiThreadAsync(() =>
             {
-                if (this.isOdataClientVersionCached)
+                if (this.isOdataClientVersionCached && this.odataClientVersion != null)
                 {
-                    return this.odataClientVersion != null && versionPredicate(this.odataClientVersion);
+                    return versionPredicate(this.odataClientVersion);
                 }
 
 #pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
