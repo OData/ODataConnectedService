@@ -220,7 +220,7 @@ namespace Microsoft.OData.Cli.PackageInstallers
             PackageSearchResource searchResource = await sourceRepository.GetResourceAsync<PackageSearchResource>();
 
             string[] targetProjectFrameworks = new[] { projectTargetFramework };
-            SearchFilter searchFilter = new SearchFilter(true) // True to include prerelease packages
+            SearchFilter searchFilter = new SearchFilter(false)
             {
                 SupportedFrameworks = targetProjectFrameworks
             };

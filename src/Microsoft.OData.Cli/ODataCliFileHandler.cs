@@ -102,7 +102,7 @@ namespace Microsoft.OData.Cli
         /// <returns>A bool indicating whether to emit native date and time types or not</returns>
         public Task<bool> EmitNativeDateTimeTypesAsync()
         {
-            return Task.FromResult(true);
+            return Task.FromResult(this.project.CheckODataClientVersion());
         }
 
         /// <summary>
