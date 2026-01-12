@@ -74,6 +74,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4WithDateOnlyAndTimeOnly.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="CodeGeneration\Artifacts\SampleServiceV4.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

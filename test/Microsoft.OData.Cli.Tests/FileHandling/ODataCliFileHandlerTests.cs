@@ -174,7 +174,7 @@ namespace Microsoft.OData.Cli.Tests.FileHandling
             return new ODataCliFileHandler(loggerMock.Object, project);
         }
 
-        private void EnsureMSBuildLoadedIfNot()
+        private static void EnsureMSBuildLoadedIfNot()
         {
             if (!MSBuildLocator.IsRegistered)
             {
