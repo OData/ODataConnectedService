@@ -1061,7 +1061,7 @@ namespace ODataConnectedService.Tests
             }
         }
 
-        [Fact]
+        [StaFact]
         public async Task UnsupportedFeaturesAreDisabledOrHidden_WhenServiceIsV3OrLessAsync()
         {
             var context = new TestConnectedServiceProviderContext();
