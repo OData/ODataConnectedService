@@ -55,10 +55,12 @@
                     <TextBlock TextWrapping="Wrap" Margin="0, 0, 40, 0">Omit runtime version and code generation timestamp from the generated files</TextBlock>
                 </CheckBox>
                 <CheckBox x:Name="IncludeT4File" Content="Add code templates (Whether to include the T4 files into this project)" IsChecked="{Binding Path=UserSettings.IncludeT4File, Mode=TwoWay}"
-            		HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 15" FontWeight="Medium"/>
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 15" FontWeight="Medium"/>
                 <CheckBox x:Name="OpenGeneratedFilesInIDE" Content="Open generated files in the IDE when generation completes" IsChecked="{Binding Path=UserSettings.OpenGeneratedFilesInIDE, Mode=TwoWay}"
                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5"/>
                 <CheckBox x:Name="GenerateMultipleFiles" Content="Generate multiple files" IsChecked="{Binding Path=UserSettings.GenerateMultipleFiles, Mode=TwoWay}"
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5"/>
+                <CheckBox x:Name="UseDateTimeOnly" Content="Use C# DateOnly and TimeOnly for Edm.Date and Edm.TimeOfDay" IsChecked="{Binding Path=UserSettings.UseDateTimeOnly, Mode=TwoWay}"
                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 5"/>
             </StackPanel>
         </StackPanel>
