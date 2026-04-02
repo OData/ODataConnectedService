@@ -65,6 +65,7 @@ stages:
         packagesToPack: src/Microsoft.OData.Cli/Microsoft.OData.Cli.csproj
         outputDir: '$(Build.ArtifactStagingDirectory)\ODataCLINupkg'
         nobuild: true
+        arguments: '-p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
 
     - task: VSTest@2
       displayName: 'Unit Tests (ODataConnectedService.Tests)'
@@ -312,6 +313,15 @@ stages:
                 --azure-key-vault-certificate "$(SignKeyVaultCertificate)" `
                 --azure-key-vault-url "$(SignKeyVaultUrl)"
             displayName: Code signing - ODataCLINupkg              
+
+          # Copy the .snupkg into SignedODataCLINupkg
+          - task: CopyFiles@2
+            displayName: 'Copy snupkg into SignedODataCLINupkg'
+            inputs:
+              SourceFolder: '$(Pipeline.Workspace)\ODataCLINupkg'
+              Contents: '*.snupkg'
+              TargetFolder: '$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg'
+              OverWrite: true
 
           # Publish the signed CLI as an artifact so we can download it after the build
           - task: PublishBuildArtifacts@1
