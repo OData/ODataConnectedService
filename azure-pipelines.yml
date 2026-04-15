@@ -61,10 +61,16 @@ stages:
     - task: DotNetCoreCLI@2
       displayName: 'Pack Microsoft.OData.Cli package'
       inputs:
-        command: pack
-        packagesToPack: src/Microsoft.OData.Cli/Microsoft.OData.Cli.csproj
-        outputDir: '$(Build.ArtifactStagingDirectory)\ODataCLINupkg'
-        arguments: '--no-restore -c $(BuildConfiguration) -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
+        command: custom
+        custom: pack
+        arguments: >
+          src/Microsoft.OData.Cli/Microsoft.OData.Cli.csproj
+          -c $(BuildConfiguration)
+          --no-restore
+          -p:IncludeSymbols=true
+          -p:SymbolPackageFormat=snupkg
+          --output $(Build.ArtifactStagingDirectory)\ODataCLINupkg
+          --verbosity normal
 
     - task: VSTest@2
       displayName: 'Unit Tests (ODataConnectedService.Tests)'
