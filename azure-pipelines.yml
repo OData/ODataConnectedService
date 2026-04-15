@@ -42,14 +42,11 @@ stages:
   - job: Build
     steps:
 
-    - task: NuGetToolInstaller@0
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet restore - ODataCodeGenTools.sln'
       inputs:
-        versionSpec: '>=5.2.0'
-
-    - task: NuGetCommand@2
-      displayName: 'Nuget restore - ODataCodeGenTools.sln'
-      inputs:
-        restoreSolution: '$(sln)'
+        command: restore
+        projects: '$(sln)'
 
     - task: VSBuild@1
       displayName: 'Build solution - ODataCodeGenTools.sln'
@@ -64,7 +61,7 @@ stages:
         command: pack
         packagesToPack: src/Microsoft.OData.Cli/Microsoft.OData.Cli.csproj
         outputDir: '$(Build.ArtifactStagingDirectory)\ODataCLINupkg'
-        arguments: '-p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
+        arguments: '--no-restore -c $(BuildConfiguration) -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
 
     - task: VSTest@2
       displayName: 'Unit Tests (ODataConnectedService.Tests)'
