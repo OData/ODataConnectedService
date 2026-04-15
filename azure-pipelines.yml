@@ -42,17 +42,14 @@ stages:
   - job: Build
     steps:
 
-    - task: UseDotNet@2
-      displayName: 'Use .NET SDK 8.x'
+    - task: NuGetToolInstaller@0
       inputs:
-        packageType: 'sdk'
-        version: '8.0.x'
+        versionSpec: '>=5.8.0'
 
-    - task: DotNetCoreCLI@2
-      displayName: 'dotnet restore - ODataCodeGenTools.sln'
+    - task: NuGetCommand@2
+      displayName: 'Nuget restore - ODataCodeGenTools.sln'
       inputs:
-        command: restore
-        projects: '$(sln)'
+        restoreSolution: '$(sln)'
 
     - task: VSBuild@1
       displayName: 'Build solution - ODataCodeGenTools.sln'
