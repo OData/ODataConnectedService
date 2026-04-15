@@ -64,7 +64,6 @@ stages:
         command: pack
         packagesToPack: src/Microsoft.OData.Cli/Microsoft.OData.Cli.csproj
         outputDir: '$(Build.ArtifactStagingDirectory)\ODataCLINupkg'
-        nobuild: true
         arguments: '-p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
 
     - task: VSTest@2
