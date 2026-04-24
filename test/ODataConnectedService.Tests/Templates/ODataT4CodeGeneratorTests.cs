@@ -340,6 +340,17 @@ namespace ODataConnectedService.Tests
         }
 
         [TestMethod]
+        public void MergedFunctionalTest_UseDateTimeOnly()
+        {
+            string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.MergedFunctionalTest.Metadata, null, true, false, useDateTimeOnly: true);
+
+            code.Should().Contain("global::System.DateOnly nonNullableDateProp");
+            code.Should().Contain("global::System.TimeOnly nonNullableTimeOfDayProp");
+            code.Should().Contain("public virtual global::System.DateOnly nonNullableDateProp");
+            code.Should().Contain("public virtual global::System.TimeOnly NonNullableTimeOfDayProp");
+        }
+
+        [TestMethod]
         public void CodeGenWithKeywordsAsNames()
         {
             string code = CodeGenWithT4Template(ODataT4CodeGeneratorTestDescriptors.KeywordsAsNames.Metadata, null, true, false);
@@ -666,7 +677,7 @@ namespace ODataConnectedService.Tests
             bool ignoreUnexpectedElementsAndAttributes = false,
             Func<Uri, WebProxy, IList<string>, XmlReader> getReferencedModelReaderFunc = null,
             bool appendDSCSuffix = false, string MetadataFilePath = null, bool generateMultipleFiles = false, bool omitVersioningInfo = false,
-            string metadataDocumentUri = null, IEnumerable<string> excludedSchemaTypes = default(List<string>))
+            string metadataDocumentUri = null, IEnumerable<string> excludedSchemaTypes = default(List<string>), bool useDateTimeOnly = false)
         {
             if (useDataServiceCollection
                 && appendDSCSuffix) // hack now
@@ -691,6 +702,7 @@ namespace ODataConnectedService.Tests
                 EnableNamingAlias = enableNamingAlias,
                 IgnoreUnexpectedElementsAndAttributes = ignoreUnexpectedElementsAndAttributes,
                 GenerateMultipleFiles = generateMultipleFiles,
+                UseDateTimeOnly = useDateTimeOnly,
                 OmitVersioningInfo = omitVersioningInfo,
                 ExcludedSchemaTypes = excludedSchemaTypes
             };
