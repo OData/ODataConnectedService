@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>odata-cli</ToolCommandName>
     <RootNamespace>Microsoft.OData.Cli</RootNamespace>
     <AssemblyName>Microsoft.OData.Cli</AssemblyName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
-    <Version>0.3.1</Version>
+    <Version>0.4.0</Version>
     <Authors>Microsoft</Authors>
     <Product>Microsoft.OData.Cli</Product>
     <Description>The odata-cli is a CLI tool for generating strongly typed C# and Visual Basic client code for a specified OData service. It generates a DataServiceContext class to interact with the service and CLR types for each entity type and complex type in the service model. It does exactly what the OData Connected Service does.  </Description>
@@ -24,10 +24,14 @@
   
   <ItemGroup>
     <PackageReference Include="Microsoft.Build" Version="17.0.0" ExcludeAssets="runtime" />
-    <PackageReference Include="Microsoft.Build.Locator" Version="1.4.1" />
+    <PackageReference Include="Microsoft.Build.Locator" Version="1.11.2" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.0.0" ExcludeAssets="runtime" />
     <PackageReference Include="NuGet.PackageManagement" Version="6.1.0" />
     <PackageReference Include="NuGet.Protocol" Version="6.3.3" />
+    <!-- NuGet.Frameworks ships inside the .NET SDK/MSBuild. Let the SDK provide it at runtime
+         (resolved via MSBuildLocator) instead of shipping our own copy, which would conflict with
+         the SDK's MSBuild assemblies (MSBuildLocator diagnostic MSBL001). -->
+    <PackageReference Include="NuGet.Frameworks" Version="6.3.3" ExcludeAssets="runtime" PrivateAssets="all" />
     <PackageReference Include="System.CodeDom" Version="7.0.0-preview.1.22076.8" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
     <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta4.22272.1" />
