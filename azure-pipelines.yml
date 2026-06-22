@@ -50,7 +50,7 @@ stages:
 
     - task: NuGetToolInstaller@0
       inputs:
-        versionSpec: '>=5.2.0'
+        versionSpec: '>=5.8.0'
 
     - task: NuGetCommand@2
       displayName: 'Nuget restore - ODataCodeGenTools.sln'
@@ -68,10 +68,17 @@ stages:
     - task: DotNetCoreCLI@2
       displayName: 'Pack Microsoft.OData.Cli package'
       inputs:
-        command: pack
-        packagesToPack: src/Microsoft.OData.Cli/Microsoft.OData.Cli.csproj
-        outputDir: '$(Build.ArtifactStagingDirectory)\ODataCLINupkg'
-        nobuild: true
+        command: custom
+        custom: pack
+        arguments: >
+          src/Microsoft.OData.Cli/Microsoft.OData.Cli.csproj
+          -c $(BuildConfiguration)
+          --no-restore
+          --no-build
+          -p:IncludeSymbols=true
+          -p:SymbolPackageFormat=snupkg
+          --output $(Build.ArtifactStagingDirectory)\ODataCLINupkg
+          --verbosity normal
 
     - task: VSTest@2
       displayName: 'Unit Tests (ODataConnectedService.Tests)'
@@ -205,7 +212,6 @@ stages:
                 --publisher-name "OData Labs" `
                 --description "OData Connected Service" `
                 --description-url "https://github.com/OData/ODataConnectedService" `
-                --azure-key-vault-managed-identity `
                 --azure-key-vault-certificate "$(SignKeyVaultCertificate)" `
                 --azure-key-vault-url "$(SignKeyVaultUrl)"
             displayName: Code signing - VSIX
@@ -255,7 +261,6 @@ stages:
                 --publisher-name "OData Labs" `
                 --description "OData Connected Service 2022+" `
                 --description-url "https://github.com/OData/ODataConnectedService" `
-                --azure-key-vault-managed-identity `
                 --azure-key-vault-certificate "$(SignKeyVaultCertificate)" `
                 --azure-key-vault-url "$(SignKeyVaultUrl)"
             displayName: Code signing - VSIX2022Plus
@@ -311,17 +316,25 @@ stages:
               scriptLocation: inlineScript
               inlineScript: |
                 .\sign code azure-key-vault `
-                "**/*.{{dll,exe,zip,nupkg}}" `
+                "**/*.{dll,exe,zip,nupkg}" `
                 --base-directory "$(Pipeline.Workspace)\ODataCLINupkg" `
                 --output "$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg" `
                 --file-list "$(Pipeline.Workspace)\configs\filelist.txt" `
                 --publisher-name "OData Labs" `
                 --description "OData CLI" `
                 --description-url "https://github.com/OData/ODataConnectedService" `
-                --azure-key-vault-managed-identity `
                 --azure-key-vault-certificate "$(SignKeyVaultCertificate)" `
                 --azure-key-vault-url "$(SignKeyVaultUrl)"
             displayName: Code signing - ODataCLINupkg              
+
+          # Copy the .snupkg into SignedODataCLINupkg
+          - task: CopyFiles@2
+            displayName: 'Copy snupkg into SignedODataCLINupkg'
+            inputs:
+              SourceFolder: '$(Pipeline.Workspace)\ODataCLINupkg'
+              Contents: '*.snupkg'
+              TargetFolder: '$(Build.ArtifactStagingDirectory)\SignedODataCLINupkg'
+              OverWrite: true
 
           # Publish the signed CLI as an artifact so we can download it after the build
           - task: PublishBuildArtifacts@1
