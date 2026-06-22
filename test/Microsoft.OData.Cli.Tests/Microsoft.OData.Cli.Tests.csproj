@@ -60,6 +60,7 @@
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="Microsoft.Build" Version="17.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="xunit" Version="2.5.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
   </ItemGroup>
@@ -73,6 +74,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="CodeGeneration\Artifacts\SampleServiceV4WithDateOnlyAndTimeOnly.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="CodeGeneration\Artifacts\SampleServiceV4.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -97,6 +97,15 @@ namespace Microsoft.OData.Cli
         }
 
         /// <summary>
+        /// True if the native date and time types can be emitted; otherwise, false.
+        /// </summary>
+        /// <returns>A bool indicating whether to emit native date and time types or not</returns>
+        public Task<bool> EmitNativeDateTimeTypesAsync()
+        {
+            return Task.FromResult(this.project.CheckODataClientVersion());
+        }
+
+        /// <summary>
         /// Sets the CSDL file as an embedded resource
         /// </summary>
         /// <param name="fileName">The name of the file to set as embedded resource</param>
