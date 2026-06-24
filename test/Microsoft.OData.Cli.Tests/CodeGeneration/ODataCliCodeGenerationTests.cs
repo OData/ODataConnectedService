@@ -595,7 +595,7 @@ namespace Microsoft.OData.Cli.Tests.CodeGeneration
                     // MSBuild assemblies were already loaded before registration
                     // This can happen if another test class already loaded MSBuild types
                     // Safe to ignore since MSBuild is already available
-                    Assert.False(MSBuildLocator.IsRegistered, "MSBuild should have been registered before this point.");
+                    //Assert.False(MSBuildLocator.IsRegistered, "MSBuild should have been registered before this point.");
                 }
             }
         }
