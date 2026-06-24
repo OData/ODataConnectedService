@@ -31,7 +31,7 @@ namespace Microsoft.OData.CodeGen.FileHandling
         /// <summary>
         /// Emits container property attribute
         /// </summary>
-        /// <returns>>A task that represents the asynchronous operation. true if container property can be emitted; otherwise false</returns>
+        /// <returns>A task that represents the asynchronous operation. true if container property can be emitted; otherwise false</returns>
         Task<bool> EmitContainerPropertyAttributeAsync();
 
         /// <summary>

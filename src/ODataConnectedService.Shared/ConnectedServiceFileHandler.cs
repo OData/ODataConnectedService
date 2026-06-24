@@ -107,7 +107,7 @@ namespace Microsoft.OData.ConnectedService
                 }
 
 #pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
-                if (this.Project.Object is VSProject vsProject)
+                if (this.Project?.Object is VSProject vsProject)
                 {
                     foreach (Reference reference in vsProject.References)
                     {
@@ -115,14 +115,22 @@ namespace Microsoft.OData.ConnectedService
                             reference.Name.Equals("Microsoft.OData.Client", StringComparison.Ordinal))
                         {
                             var currentVersion = reference.Version;
-                            if (currentVersion.Contains("-"))
+                            var hyphenIndex = currentVersion?.IndexOf('-') ?? -1;
+                            if (hyphenIndex >= 0)
                             {
-                                currentVersion = currentVersion.Substring(0, currentVersion.IndexOf('-'));
+                                currentVersion = currentVersion.Substring(0, hyphenIndex);
                             }
 
-                            this.odataClientVersion = Version.Parse(currentVersion);
+                            if (Version.TryParse(currentVersion, out var parsedVersion))
+                            {
+                                this.odataClientVersion = parsedVersion;
+                                this.isOdataClientVersionCached = true;
+                                return versionPredicate(this.odataClientVersion);
+                            }
+
+                            this.odataClientVersion = null;
                             this.isOdataClientVersionCached = true;
-                            return versionPredicate(this.odataClientVersion);
+                            return false;
                         }
                     }
                 }

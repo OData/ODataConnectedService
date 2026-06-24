@@ -1347,7 +1347,7 @@ public class CodeGenerationContext
     /// <summary>
     /// true to use native .NET date/time types (DateOnly and TimeOnly) instead of
     /// Microsoft.OData.Edm.Date and Microsoft.OData.Edm.TimeOfDay, false otherwise.
-    /// Set to true when targeting .NET 10.0 or later.
+    /// Set to true when targeting Microsoft.OData.Client 9.0.0 or later.
     /// </summary>
     public bool EmitNativeDateTimeTypes
     {

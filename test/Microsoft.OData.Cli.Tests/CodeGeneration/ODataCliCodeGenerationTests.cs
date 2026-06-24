@@ -514,7 +514,7 @@ namespace Microsoft.OData.Cli.Tests.CodeGeneration
         }
 
         [Fact]
-        public void TestCodeGeneration_WithODataClientVersionLessThan9_UsesNativeDateTimeTypes()
+        public void TestCodeGeneration_WithODataClientVersionLessThan9_UsesODataEdmTypes()
         {
             this.CreateTestProjectInOutputDir("net8.0", "8.4.3");
 
@@ -595,6 +595,7 @@ namespace Microsoft.OData.Cli.Tests.CodeGeneration
                     // MSBuild assemblies were already loaded before registration
                     // This can happen if another test class already loaded MSBuild types
                     // Safe to ignore since MSBuild is already available
+                    Assert.False(MSBuildLocator.IsRegistered, "MSBuild should have been registered before this point.");
                 }
             }
         }
