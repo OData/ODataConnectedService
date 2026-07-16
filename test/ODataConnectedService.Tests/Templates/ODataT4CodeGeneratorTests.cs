@@ -978,5 +978,74 @@ namespace ODataConnectedService.Tests
                 Assert.IsTrue(normalizedGeneratedCode.IndexOf(otherContainerPropertyAttributeSnippet, StringComparison.Ordinal) == -1);
             }
         }
+
+
+        [DataTestMethod]
+        [DataRow(true,
+    "public virtual global::System.DateOnly OrderDate",
+    "public virtual global::System.TimeOnly OrderTime",
+    "Public Overridable Property OrderDate() As Global.System.DateOnly",
+    "Public Overridable Property OrderTime() As Global.System.TimeOnly",
+    DisplayName = "EmitNativeDateTimeTypes_True_GeneratesNativeDateTimeTypes")]
+        [DataRow(false,
+    "public virtual global::Microsoft.OData.Edm.Date OrderDate",
+    "public virtual global::Microsoft.OData.Edm.TimeOfDay OrderTime",
+    "Public Overridable Property OrderDate() As Global.Microsoft.OData.Edm.Date",
+    "Public Overridable Property OrderTime() As Global.Microsoft.OData.Edm.TimeOfDay",
+    DisplayName = "EmitNativeDateTimeTypes_False_GeneratesODataEdmTypes")]
+        public void SetEmitNativeDateTimeTypes_GeneratesExpectedTypes(
+    bool emitNativeDateTimeTypes,
+    string expectedCSharpDateType,
+    string expectedCSharpTimeType,
+    string expectedVBDateType,
+    string expectedVBTimeType)
+        {
+            var edmx = @"<?xml version=""1.0"" standalone=""yes"" ?>
+<edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
+  <edmx:DataServices>
+    <Schema Namespace=""NS"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
+      <EntityType Name=""Order"">
+        <Key>
+          <PropertyRef Name=""Id"" />
+        </Key>
+        <Property Name=""Id"" Type=""Edm.Int32"" Nullable=""false"" />
+        <Property Name=""Amount"" Type=""Edm.Decimal"" Nullable=""false"" Scale=""variable"" />
+        <Property Name=""OrderDate"" Type=""Edm.Date"" Nullable=""false"" />
+        <Property Name=""OrderTime"" Type=""Edm.TimeOfDay"" Nullable=""false"" />
+      </EntityType>
+      <EntityContainer Name=""Container"">
+        <EntitySet Name=""Orders"" EntityType=""NS.Order"" />
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
+";
+
+            var t4CodeGenerator = new ODataT4CodeGenerator
+            {
+                Edmx = edmx,
+                GetReferencedModelReaderFunc = null,
+                NamespacePrefix = null,
+                EnableNamingAlias = false,
+                IgnoreUnexpectedElementsAndAttributes = false,
+                GenerateMultipleFiles = false,
+                ExcludedSchemaTypes = null,
+                EmitNativeDateTimeTypes = emitNativeDateTimeTypes
+            };
+
+            // CSharp
+            t4CodeGenerator.TargetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp;
+            var generatedCode = t4CodeGenerator.TransformText();
+
+            Assert.IsTrue(generatedCode.IndexOf(expectedCSharpDateType, StringComparison.Ordinal) > 0);
+            Assert.IsTrue(generatedCode.IndexOf(expectedCSharpTimeType, StringComparison.Ordinal) > 0);
+
+            // VB
+            t4CodeGenerator.TargetLanguage = ODataT4CodeGenerator.LanguageOption.VB;
+            generatedCode = t4CodeGenerator.TransformText();
+
+            Assert.IsTrue(generatedCode.IndexOf(expectedVBDateType, StringComparison.Ordinal) > 0);
+            Assert.IsTrue(generatedCode.IndexOf(expectedVBTimeType, StringComparison.Ordinal) > 0);
+        }
     }
 }
