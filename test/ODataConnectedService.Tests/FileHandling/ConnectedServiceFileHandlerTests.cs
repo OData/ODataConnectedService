@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 // <copyright file="ConnectedServiceFileHandlerTests.cs" company=".NET Foundation">
 //      Copyright (c) .NET Foundation and Contributors. All rights reserved. 
 //      See License.txt in the project root for license information.
@@ -8,13 +8,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EnvDTE;
+using Microsoft.OData.CodeGen.Logging;
 using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService;
 using Microsoft.OData.ConnectedService.Tests.TestHelpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ODataConnectedService.Tests.TestHelpers;
-using VSLangProj;
 
 namespace ODataConnectedService.Tests.FileHandling
 {
@@ -25,8 +25,8 @@ namespace ODataConnectedService.Tests.FileHandling
         public async Task EmitNativeDateTimeTypesAsync_ShouldReturnTrue_WhenODataClientVersionIsGreaterThanOrEqualTo9_0_0Async()
         {
             // Arrange
-            var project = CreateProjectWithODataClientVersion("9.0.0");
-            var fileHandler = CreateFileHandler(project);
+            var project = new Mock<Project>().Object;
+            var fileHandler = CreateFileHandler(project, CreateProvider("Microsoft.OData.Client", "9.0.0"));
 
             // Act
             var result = await fileHandler.EmitNativeDateTimeTypesAsync().ConfigureAwait(false);
@@ -39,8 +39,8 @@ namespace ODataConnectedService.Tests.FileHandling
         public async Task EmitNativeDateTimeTypesAsync_ShouldReturnTrue_WhenODataClientVersionIsPrereleaseAsync()
         {
             // Arrange
-            var project = CreateProjectWithODataClientVersion("9.0.0-preview.3");
-            var fileHandler = CreateFileHandler(project);
+            var project = new Mock<Project>().Object;
+            var fileHandler = CreateFileHandler(project, CreateProvider("Microsoft.OData.Client", "9.0.0-preview.3"));
 
             // Act
             var result = await fileHandler.EmitNativeDateTimeTypesAsync().ConfigureAwait(false);
@@ -53,8 +53,8 @@ namespace ODataConnectedService.Tests.FileHandling
         public async Task EmitNativeDateTimeTypesAsync_ShouldReturnFalse_WhenODataClientVersionIsLessThan9_0_0_Async()
         {
             // Arrange
-            var project = CreateProjectWithODataClientVersion("8.0.0");
-            var fileHandler = CreateFileHandler(project);
+            var project = new Mock<Project>().Object;
+            var fileHandler = CreateFileHandler(project, CreateProvider("Microsoft.OData.Client", "8.0.0"));
 
             // Act
             var result = await fileHandler.EmitNativeDateTimeTypesAsync().ConfigureAwait(false);
@@ -67,8 +67,8 @@ namespace ODataConnectedService.Tests.FileHandling
         public async Task EmitNativeDateTimeTypesAsync_ShouldReturnFalse_WhenODataClientReferenceNotFoundAsync()
         {
             // Arrange
-            var project = CreateProjectWithoutODataClient();
-            var fileHandler = CreateFileHandler(project);
+            var project = new Mock<Project>().Object;
+            var fileHandler = CreateFileHandler(project, new FakeInstalledPackagesProvider());
 
             // Act
             var result = await fileHandler.EmitNativeDateTimeTypesAsync().ConfigureAwait(false);
@@ -81,27 +81,9 @@ namespace ODataConnectedService.Tests.FileHandling
         public async Task CheckODataClientVersionAsync_ShouldCacheVersion_AndReuseOnSubsequentCallsAsync()
         {
             // Arrange
-            var referenceMock = new Mock<Reference>();
-            referenceMock.SetupGet(r => r.Name).Returns("Microsoft.OData.Client");
-            referenceMock.SetupGet(r => r.Version).Returns("9.0.0.0");
-            referenceMock.SetupGet(r => r.SourceProject).Returns((Project)null);
-
-            var referencesMock = new Mock<References>();
-            var callCount = 0;
-            referencesMock.Setup(r => r.GetEnumerator())
-                .Returns(() =>
-                {
-                    callCount++;
-                    return new List<Reference> { referenceMock.Object }.GetEnumerator();
-                });
-
-            var vsProjectMock = new Mock<VSProject>();
-            vsProjectMock.SetupGet(vsp => vsp.References).Returns(referencesMock.Object);
-
+            var provider = new FakeInstalledPackagesProvider(new InstalledPackageInfo("Microsoft.OData.Client", "9.0.0"));
             var projectMock = new Mock<Project>();
-            projectMock.SetupGet(p => p.Object).Returns(vsProjectMock.Object);
-
-            var fileHandler = CreateFileHandler(projectMock.Object);
+            var fileHandler = CreateFileHandler(projectMock.Object, provider);
 
             // Act
             var result1 = await fileHandler.EmitNativeDateTimeTypesAsync().ConfigureAwait(false);
@@ -110,50 +92,59 @@ namespace ODataConnectedService.Tests.FileHandling
             // Assert
             Assert.IsTrue(result1);
             Assert.IsTrue(result2);
-            Assert.AreEqual(1, callCount, "References should only be enumerated once due to caching");
+            Assert.AreEqual(1, provider.CallCount, "Installed packages should only be enumerated once due to caching");
         }
 
-        private static Project CreateProjectWithODataClientVersion(string version)
+        [TestMethod]
+        public async Task CheckODataClientVersionAsync_ShouldCacheMissingPackageAsync()
         {
-            var referenceMock = new Mock<Reference>();
-            referenceMock.SetupGet(r => r.Name).Returns("Microsoft.OData.Client");
-            referenceMock.SetupGet(r => r.Version).Returns(version);
-            referenceMock.SetupGet(r => r.SourceProject).Returns((Project)null);
+            var provider = new FakeInstalledPackagesProvider();
+            var fileHandler = CreateFileHandler(new Mock<Project>().Object, provider);
 
-            var referencesMock = new Mock<References>();
-            referencesMock.Setup(r => r.GetEnumerator())
-                .Returns(new List<Reference> { referenceMock.Object }.GetEnumerator());
-
-            var vsProjectMock = new Mock<VSProject>();
-            vsProjectMock.SetupGet(vsp => vsp.References).Returns(referencesMock.Object);
-
-            var projectMock = new Mock<Project>();
-            projectMock.SetupGet(p => p.Object).Returns(vsProjectMock.Object);
-
-            return projectMock.Object;
+            Assert.IsFalse(await fileHandler.EmitNativeDateTimeTypesAsync().ConfigureAwait(false));
+            Assert.IsFalse(await fileHandler.EmitNativeDateTimeTypesAsync().ConfigureAwait(false));
+            Assert.AreEqual(1, provider.CallCount);
         }
 
-        private static Project CreateProjectWithoutODataClient()
+        [TestMethod]
+        public async Task EmitNativeDateTimeTypesAsync_ShouldMatchPackageIdCaseInsensitivelyAsync()
         {
-            var referenceMock = new Mock<Reference>();
-            referenceMock.SetupGet(r => r.Name).Returns("System.Core");
-            referenceMock.SetupGet(r => r.Version).Returns("4.0.0.0");
-            referenceMock.SetupGet(r => r.SourceProject).Returns((Project)null);
+            var project = new Mock<Project>().Object;
+            var fileHandler = CreateFileHandler(project, CreateProvider("microsoft.odata.client", "9.0.0"));
 
-            var referencesMock = new Mock<References>();
-            referencesMock.Setup(r => r.GetEnumerator())
-                .Returns(new List<Reference> { referenceMock.Object }.GetEnumerator());
+            var result = await fileHandler.EmitNativeDateTimeTypesAsync().ConfigureAwait(false);
 
-            var vsProjectMock = new Mock<VSProject>();
-            vsProjectMock.SetupGet(vsp => vsp.References).Returns(referencesMock.Object);
-
-            var projectMock = new Mock<Project>();
-            projectMock.SetupGet(p => p.Object).Returns(vsProjectMock.Object);
-
-            return projectMock.Object;
+            Assert.IsTrue(result);
         }
 
-        private static ConnectedServiceFileHandler CreateFileHandler(Project project)
+        [TestMethod]
+        public async Task EmitNativeDateTimeTypesAsync_ShouldWarnOnce_WhenInstalledVersionCannotBeParsedAsync()
+        {
+            var logger = new Mock<IMessageLogger>();
+            logger.Setup(value => value.WriteMessageAsync(It.IsAny<LogMessageCategory>(), It.IsAny<string>(), It.IsAny<object[]>()))
+                .Returns(Task.CompletedTask);
+            var provider = CreateProvider("Microsoft.OData.Client", "invalid-version");
+            var fileHandler = CreateFileHandler(new Mock<Project>().Object, provider, logger.Object);
+
+            Assert.IsFalse(await fileHandler.EmitNativeDateTimeTypesAsync().ConfigureAwait(false));
+            Assert.IsFalse(await fileHandler.EmitContainerPropertyAttributeAsync().ConfigureAwait(false));
+            logger.Verify(
+                value => value.WriteMessageAsync(
+                    LogMessageCategory.Warning,
+                    It.Is<string>(message => message.Contains("could not be resolved")),
+                    It.IsAny<object[]>()),
+                Times.Once);
+        }
+
+        private static FakeInstalledPackagesProvider CreateProvider(string packageId, string version)
+        {
+            return new FakeInstalledPackagesProvider(new InstalledPackageInfo(packageId, version));
+        }
+
+        private static ConnectedServiceFileHandler CreateFileHandler(
+            Project project,
+            IInstalledPackagesProvider packagesProvider = null,
+            IMessageLogger logger = null)
         {
             var serviceConfig = new ServiceConfigurationV4 { ServiceName = "TestService" };
             var serviceInstance = new ODataConnectedServiceInstance
@@ -170,7 +161,26 @@ namespace ODataConnectedService.Tests.FileHandling
             var context = new TestConnectedServiceHandlerContext(serviceInstance, handlerHelper);
             var threadHelper = new TestThreadHelper();
 
-            return new ConnectedServiceFileHandler(context, project, threadHelper);
+            logger = logger ?? new Mock<IMessageLogger>().Object;
+            return new ConnectedServiceFileHandler(context, project, threadHelper, logger, packagesProvider);
+        }
+
+        private sealed class FakeInstalledPackagesProvider : IInstalledPackagesProvider
+        {
+            private readonly IReadOnlyList<InstalledPackageInfo> packages;
+
+            public FakeInstalledPackagesProvider(params InstalledPackageInfo[] packages)
+            {
+                this.packages = packages;
+            }
+
+            public int CallCount { get; private set; }
+
+            public Task<IReadOnlyList<InstalledPackageInfo>> GetInstalledPackagesAsync()
+            {
+                this.CallCount++;
+                return Task.FromResult(this.packages);
+            }
         }
     }
 }
