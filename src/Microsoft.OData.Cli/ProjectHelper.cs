@@ -9,7 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Microsoft.Build.Evaluation;
+using Microsoft.OData.CodeGen.Common;
+using Microsoft.OData.CodeGen.Logging;
+using NuGet.Versioning;
 
 namespace Microsoft.OData.Cli
 {
@@ -149,28 +154,124 @@ namespace Microsoft.OData.Cli
         /// </summary>
         /// <param name="project">An instance of the loaded <see cref="Project"/>.</param>
         /// <returns>True if the Microsoft.OData.Client version is at least 9.0.0; otherwise, false.</returns>
-        internal static bool CheckODataClientVersion(this Project project)
+        internal static async Task<bool> CheckODataClientVersionAsync(this Project project, IMessageLogger logger)
         {
             if (project == null)
             {
                 return false;
             }
 
-            var version = project.GetItems("PackageReference")
-                .FirstOrDefault(pr => pr.EvaluatedInclude.Equals("Microsoft.OData.Client", StringComparison.OrdinalIgnoreCase))
-                ?.GetMetadataValue("Version");
+            ProjectItem packageReference = project.GetItems("PackageReference")
+                .FirstOrDefault(pr => pr.EvaluatedInclude.Equals(Constants.V4ClientNuGetPackage, StringComparison.OrdinalIgnoreCase));
 
-            if (string.IsNullOrEmpty(version))
+            if (packageReference == null)
             {
                 return false;
             }
 
-            if (version.Contains('-'))
+            if (TryGetODataClientVersion(project, packageReference, out Version version))
             {
-                version = version.Substring(0, version.IndexOf("-"));
+                return ODataClientVersionChecker.SupportsNativeDateTimeTypes(version);
             }
 
-            return Version.TryParse(version, out Version odataClientVersion) && odataClientVersion >= Version.Parse("9.0.0");
+            if (logger != null)
+            {
+                await logger.WriteMessageAsync(
+                    LogMessageCategory.Warning,
+                    "Microsoft.OData.Client is referenced, but its version could not be resolved. Legacy date and time types will be generated.")
+                    .ConfigureAwait(false);
+            }
+
+            return false;
+        }
+
+        private static bool TryGetODataClientVersion(Project project, ProjectItem packageReference, out Version version)
+        {
+            if (TryGetVersionFromAssetsFile(project, out version))
+            {
+                return true;
+            }
+
+            if (TryParseVersionExpression(packageReference.GetMetadataValue("VersionOverride"), out version))
+            {
+                return true;
+            }
+
+            ProjectItem packageVersion = project.GetItems("PackageVersion")
+                .FirstOrDefault(item => item.EvaluatedInclude.Equals(Constants.V4ClientNuGetPackage, StringComparison.OrdinalIgnoreCase));
+            if (packageVersion != null && TryParseVersionExpression(packageVersion.GetMetadataValue("Version"), out version))
+            {
+                return true;
+            }
+
+            return TryParseVersionExpression(packageReference.GetMetadataValue("Version"), out version);
+        }
+
+        private static bool TryGetVersionFromAssetsFile(Project project, out Version version)
+        {
+            version = null;
+            string assetsFile = project.GetPropertyValue("ProjectAssetsFile");
+            if (string.IsNullOrWhiteSpace(assetsFile))
+            {
+                assetsFile = Path.Combine(project.DirectoryPath, "obj", "project.assets.json");
+            }
+
+            if (!File.Exists(assetsFile))
+            {
+                return false;
+            }
+
+            try
+            {
+                using (JsonDocument document = JsonDocument.Parse(File.ReadAllText(assetsFile)))
+                {
+                    if (!document.RootElement.TryGetProperty("libraries", out JsonElement libraries))
+                    {
+                        return false;
+                    }
+
+                    foreach (JsonProperty library in libraries.EnumerateObject())
+                    {
+                        int separatorIndex = library.Name.LastIndexOf('/');
+                        if (separatorIndex <= 0 ||
+                            !library.Name.Substring(0, separatorIndex).Equals(Constants.V4ClientNuGetPackage, StringComparison.OrdinalIgnoreCase))
+                        {
+                            continue;
+                        }
+
+                        return TryParseVersionExpression(library.Name.Substring(separatorIndex + 1), out version);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return false;
+        }
+
+        private static bool TryParseVersionExpression(string versionExpression, out Version version)
+        {
+            version = null;
+            if (string.IsNullOrWhiteSpace(versionExpression))
+            {
+                return false;
+            }
+
+            if (NuGetVersion.TryParse(versionExpression, out NuGetVersion nuGetVersion))
+            {
+                version = nuGetVersion.Version;
+                return true;
+            }
+
+            if (VersionRange.TryParse(versionExpression, out VersionRange versionRange) && versionRange.MinVersion != null)
+            {
+                version = versionRange.MinVersion.Version;
+                return true;
+            }
+
+            return false;
         }
     }
 }

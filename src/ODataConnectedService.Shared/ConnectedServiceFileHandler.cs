@@ -6,14 +6,28 @@
 //----------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using EnvDTE;
+using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.FileHandling;
+using Microsoft.OData.CodeGen.Logging;
 using Microsoft.OData.ConnectedService.Threading;
+using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.ConnectedServices;
 using Microsoft.VisualStudio.Shell;
+using NuGet.VisualStudio;
 using VSLangProj;
 using Task = System.Threading.Tasks.Task;
+#if VS2022PLUS
+using System.Threading;
+using Microsoft.ServiceHub.Framework;
+using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Shell.ServiceBroker;
+using NuGet.VisualStudio.Contracts;
+#endif
 
 namespace Microsoft.OData.ConnectedService
 {
@@ -24,10 +38,14 @@ namespace Microsoft.OData.ConnectedService
     {
         private ConnectedServiceHandlerContext Context;
         private readonly IThreadHelper threadHelper;
+        private readonly IMessageLogger messageLogger;
+        private readonly IInstalledPackagesProvider packagesProvider;
 
-        // Cache the OData Client version to avoid multiple project references enumeration
+        // Cache the OData Client version to avoid multiple installed-package queries.
         private Version odataClientVersion = null;
         private bool isOdataClientVersionCached = false;
+        private bool isOdataClientPackageInstalled = false;
+        private bool versionResolutionWarningLogged = false;
 
         public Project Project { get; private set; }
 
@@ -38,10 +56,22 @@ namespace Microsoft.OData.ConnectedService
         /// <param name="project">An object of the project.</param>
         /// <param name="threadHelper">A thread helper that marshals the thread to the correct thread.</param>
         public ConnectedServiceFileHandler(ConnectedServiceHandlerContext context, Project project, IThreadHelper threadHelper)
+            : this(context, project, threadHelper, new ConnectedServiceMessageLogger(context))
+        {
+        }
+
+        internal ConnectedServiceFileHandler(
+            ConnectedServiceHandlerContext context,
+            Project project,
+            IThreadHelper threadHelper,
+            IMessageLogger messageLogger,
+            IInstalledPackagesProvider packagesProvider = null)
         {
             this.Context = context;
             this.Project = project;
             this.threadHelper = threadHelper;
+            this.messageLogger = messageLogger;
+            this.packagesProvider = packagesProvider;
         }
 
         /// <summary>
@@ -90,56 +120,204 @@ namespace Microsoft.OData.ConnectedService
         /// </summary>
         /// <returns>A task that represents the asynchronous operation. True if native date and time types are supported; otherwise, false.</returns>
         public Task<bool> EmitNativeDateTimeTypesAsync()
-            => this.CheckODataClientVersionAsync(version => version >= Version.Parse("9.0.0") || version >= Version.Parse("9.0.0.0"));
+            => this.CheckODataClientVersionAsync(ODataClientVersionChecker.SupportsNativeDateTimeTypes);
 
         /// <summary>
         /// Checks if the Microsoft.OData.Client reference meets a version condition.
         /// </summary>
         /// <param name="versionPredicate">A predicate to evaluate against the OData Client version.</param>
         /// <returns>True if the reference exists and meets the version condition; otherwise false.</returns>
-        private Task<bool> CheckODataClientVersionAsync(Func<Version, bool> versionPredicate)
+        private async Task<bool> CheckODataClientVersionAsync(Func<Version, bool> versionPredicate)
         {
-            return this.threadHelper.RunInUiThreadAsync(() =>
+            if (!this.isOdataClientVersionCached)
             {
-                if (this.isOdataClientVersionCached && this.odataClientVersion != null)
+                IReadOnlyList<InstalledPackageInfo> installedPackages =
+                    await this.GetInstalledPackagesAsync().ConfigureAwait(false);
+
+                InstalledPackageInfo odataClientPackage = installedPackages?.FirstOrDefault(
+                    package => package.Id.Equals(
+                        Microsoft.OData.CodeGen.Common.Constants.V4ClientNuGetPackage,
+                        StringComparison.OrdinalIgnoreCase));
+
+                this.isOdataClientPackageInstalled = odataClientPackage != null;
+                if (odataClientPackage != null &&
+                    ODataClientVersionChecker.TryParseVersion(odataClientPackage.Version, out Version parsedVersion))
                 {
-                    return versionPredicate(this.odataClientVersion);
+                    this.odataClientVersion = parsedVersion;
                 }
 
+                this.isOdataClientVersionCached = true;
+            }
+
+            Version version = this.odataClientVersion;
+
+            if (version == null &&
+                this.isOdataClientPackageInstalled &&
+                !this.versionResolutionWarningLogged &&
+                this.messageLogger != null)
+            {
+                this.versionResolutionWarningLogged = true;
+                await this.messageLogger.WriteMessageAsync(
+                    LogMessageCategory.Warning,
+                    "Microsoft.OData.Client is installed, but its version could not be resolved. Legacy date and time types will be generated.")
+                    .ConfigureAwait(false);
+            }
+
+            return version != null && versionPredicate(version);
+        }
+
+        /// <summary>
+        /// Gets the packages installed in the project, using the injected
+        /// <see cref="IInstalledPackagesProvider"/> when one is supplied (for testing) or the
+        /// platform-specific NuGet query otherwise.
+        /// </summary>
+        /// <returns>The installed packages.</returns>
+        private Task<IReadOnlyList<InstalledPackageInfo>> GetInstalledPackagesAsync()
+        {
+            if (this.packagesProvider != null)
+            {
+                return this.packagesProvider.GetInstalledPackagesAsync();
+            }
+
+            return this.ResolveInstalledPackagesAsync();
+        }
+
+#if VS2022PLUS
+        /// <summary>
+        /// Resolves the installed packages using the brokered <see cref="INuGetProjectService"/>,
+        /// which supersedes the obsolete <c>IVsPackageInstallerServices</c> API.
+        /// </summary>
+        /// <returns>The installed packages.</returns>
+        private async Task<IReadOnlyList<InstalledPackageInfo>> ResolveInstalledPackagesAsync()
+        {
+            Guid projectGuid = await this.threadHelper.RunInUiThreadAsync(() => this.TryGetProjectGuid()).ConfigureAwait(false);
+            IBrokeredServiceContainer serviceContainer = await this.threadHelper.RunInUiThreadAsync(() =>
+            {
 #pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
-                if (this.Project?.Object is VSProject vsProject)
+                return Package.GetGlobalService(typeof(SVsBrokeredServiceContainer)) as IBrokeredServiceContainer;
+#pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
+            }).ConfigureAwait(false);
+
+            if (projectGuid == Guid.Empty || serviceContainer == null)
+            {
+                return Array.Empty<InstalledPackageInfo>();
+            }
+
+            IServiceBroker serviceBroker = serviceContainer.GetFullAccessServiceBroker();
+            INuGetProjectService nugetProjectService = await serviceBroker
+                .GetProxyAsync<INuGetProjectService>(NuGetServices.NuGetProjectServiceV1)
+                .ConfigureAwait(false);
+
+            try
+            {
+                if (nugetProjectService == null)
                 {
-                    foreach (Reference reference in vsProject.References)
-                    {
-                        if (reference.SourceProject == null &&
-                            reference.Name.Equals("Microsoft.OData.Client", StringComparison.Ordinal))
-                        {
-                            var currentVersion = reference.Version;
-                            var hyphenIndex = currentVersion?.IndexOf('-') ?? -1;
-                            if (hyphenIndex >= 0)
-                            {
-                                currentVersion = currentVersion.Substring(0, hyphenIndex);
-                            }
-
-                            if (Version.TryParse(currentVersion, out var parsedVersion))
-                            {
-                                this.odataClientVersion = parsedVersion;
-                                this.isOdataClientVersionCached = true;
-                                return versionPredicate(this.odataClientVersion);
-                            }
-
-                            this.odataClientVersion = null;
-                            this.isOdataClientVersionCached = true;
-                            return false;
-                        }
-                    }
+                    return Array.Empty<InstalledPackageInfo>();
                 }
+
+                InstalledPackagesResult result = await nugetProjectService
+                    .GetInstalledPackagesAsync(projectGuid, CancellationToken.None)
+                    .ConfigureAwait(false);
+
+                if (result == null ||
+                    result.Status != InstalledPackageResultStatus.Successful ||
+                    result.Packages == null)
+                {
+                    return Array.Empty<InstalledPackageInfo>();
+                }
+
+                return result.Packages
+                    .Select(package => new InstalledPackageInfo(package.Id, package.Version))
+                    .ToList();
+            }
+            finally
+            {
+                (nugetProjectService as IDisposable)?.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Resolves the project GUID required by <see cref="INuGetProjectService"/>. Must be called on the UI thread.
+        /// </summary>
+        /// <returns>The project GUID, or <see cref="Guid.Empty"/> when it could not be resolved.</returns>
+        private Guid TryGetProjectGuid()
+        {
+#pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
+            if (Package.GetGlobalService(typeof(SVsSolution)) is IVsSolution solution &&
+                solution.GetProjectOfUniqueName(this.Project.UniqueName, out IVsHierarchy hierarchy) == VSConstants.S_OK &&
+                hierarchy != null &&
+                hierarchy.GetGuidProperty(VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ProjectIDGuid, out Guid projectGuid) == VSConstants.S_OK)
+            {
+                return projectGuid;
+            }
 #pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
 
-                this.odataClientVersion = null;
-                this.isOdataClientVersionCached = true;
-                return false;
+            return Guid.Empty;
+        }
+#else
+        /// <summary>
+        /// Resolves the installed packages using <c>IVsPackageInstallerServices</c>.
+        /// </summary>
+        /// <returns>The installed packages.</returns>
+        private Task<IReadOnlyList<InstalledPackageInfo>> ResolveInstalledPackagesAsync()
+        {
+            return this.threadHelper.RunInUiThreadAsync<IReadOnlyList<InstalledPackageInfo>>(() =>
+            {
+#pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
+                IVsPackageInstallerServices packageInstallerServices = null;
+                if (Package.GetGlobalService(typeof(SComponentModel)) is IComponentModel componentModel)
+                {
+                    packageInstallerServices = componentModel.GetService<IVsPackageInstallerServices>();
+                }
+
+                if (packageInstallerServices == null)
+                {
+                    return Array.Empty<InstalledPackageInfo>();
+                }
+
+                return packageInstallerServices
+                    .GetInstalledPackages(this.Project)
+                    .Select(metadata => new InstalledPackageInfo(metadata.Id, metadata.VersionString))
+                    .ToList();
+#pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
             });
         }
+#endif
+    }
+
+    /// <summary>
+    /// Provides the packages installed in a project. Abstracts the VS-version-specific NuGet
+    /// query API so OData client version resolution can be unit tested.
+    /// </summary>
+    internal interface IInstalledPackagesProvider
+    {
+        /// <summary>
+        /// Gets the packages installed in the project.
+        /// </summary>
+        /// <returns>The installed packages.</returns>
+        Task<IReadOnlyList<InstalledPackageInfo>> GetInstalledPackagesAsync();
+    }
+
+    /// <summary>
+    /// Represents an installed NuGet package id and version, independent of the VS-version-specific API.
+    /// </summary>
+    internal sealed class InstalledPackageInfo
+    {
+        /// <summary>
+        /// Creates an instance of <see cref="InstalledPackageInfo"/>.
+        /// </summary>
+        /// <param name="id">The package id.</param>
+        /// <param name="version">The installed package version string.</param>
+        public InstalledPackageInfo(string id, string version)
+        {
+            this.Id = id;
+            this.Version = version;
+        }
+
+        /// <summary>Gets the package id.</summary>
+        public string Id { get; }
+
+        /// <summary>Gets the installed package version string.</summary>
+        public string Version { get; }
     }
 }

@@ -617,6 +617,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             Assert.IsTrue(installer.InstalledPackages.Contains(Microsoft.OData.CodeGen.Common.Constants.V4SpatialNuGetPackage));
         }
 
+#if !VS2022PLUS
         [Ignore]
         [TestMethod]
         public void TestAddNugetPackageAsync_ShouldNotInstalledODataClientLibrariesIfAlreadyInstalled()
@@ -652,6 +653,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             Assert.IsFalse(installer.InstalledPackages.Contains(Microsoft.OData.CodeGen.Common.Constants.V4ODataNuGetPackage));
             Assert.IsFalse(installer.InstalledPackages.Contains(Microsoft.OData.CodeGen.Common.Constants.V4SpatialNuGetPackage));
         }
+#endif
 
         [Ignore]
         [TestMethod]
@@ -822,6 +824,74 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             GeneratedCodeHelpers.VerifyGeneratedCode(expectedCode, generatedCode);
         }
 
+        [TestMethod]
+        public void TestV4AddGeneratedClientCode_WithODataClient9_EmitsNativeDateTimeTypes()
+        {
+            var generatedCode = GenerateV4CodeWithODataClientVersion("9.0.0");
+
+            Assert.IsTrue(generatedCode.Contains("global::System.DateOnly OrderDate"),
+                "Expected native System.DateOnly to be emitted for Microsoft.OData.Client 9.0.0.");
+            Assert.IsTrue(generatedCode.Contains("global::System.TimeOnly OrderTime"),
+                "Expected native System.TimeOnly to be emitted for Microsoft.OData.Client 9.0.0.");
+        }
+
+        [TestMethod]
+        public void TestV4AddGeneratedClientCode_WithODataClientVersionLessThan9_EmitsEdmDateTimeTypes()
+        {
+            var generatedCode = GenerateV4CodeWithODataClientVersion("8.0.0");
+
+            Assert.IsTrue(generatedCode.Contains("global::Microsoft.OData.Edm.Date OrderDate"),
+                "Expected legacy Microsoft.OData.Edm.Date to be emitted for Microsoft.OData.Client 8.0.0.");
+            Assert.IsTrue(generatedCode.Contains("global::Microsoft.OData.Edm.TimeOfDay OrderTime"),
+                "Expected legacy Microsoft.OData.Edm.TimeOfDay to be emitted for Microsoft.OData.Client 8.0.0.");
+        }
+
+        /// <summary>
+        /// Runs the real V4 code generator end-to-end against a metadata document that contains
+        /// Edm.Date and Edm.TimeOfDay properties, using an injected package provider to simulate the
+        /// installed Microsoft.OData.Client version, and returns the generated source code.
+        /// </summary>
+        static string GenerateV4CodeWithODataClientVersion(string odataClientVersion)
+        {
+            var serviceName = "DateTimeService";
+            var referenceFolderPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName);
+            Directory.CreateDirectory(referenceFolderPath);
+            Project project = CreateTestProject(TestProjectRootPath, ODataT4CodeGenerator.LanguageOption.CSharp);
+            var serviceConfig = new ServiceConfigurationV4()
+            {
+                Endpoint = Path.Combine(Directory.GetCurrentDirectory(), "CodeGeneration", "SampleServiceV4WithDateOnlyAndTimeOnly.xml"),
+                ServiceName = serviceName,
+                GeneratedFileNamePrefix = "Reference",
+                EdmxVersion = Microsoft.OData.CodeGen.Common.Constants.EdmxVersion4,
+                IncludeT4File = false
+            };
+            var serviceInstance = new ODataConnectedServiceInstance()
+            {
+                ServiceConfig = serviceConfig,
+                Name = serviceName
+            };
+
+            var handlerHelper = new TestConnectedServiceHandlerHelper { ServicesRootFolder = ServicesRootFolder };
+            ConnectedServiceHandlerContext context = new TestConnectedServiceHandlerContext(serviceInstance, handlerHelper);
+
+            var packagesProvider = new FakeInstalledPackagesProvider(new InstalledPackageInfo("Microsoft.OData.Client", odataClientVersion));
+            var fileHandler = new ConnectedServiceFileHandler(context, project, new TestThreadHelper(), new ConnectedServiceMessageLogger(context), packagesProvider);
+
+            var descriptor = new TestV4CodeGenDescriptor(
+                fileHandler,
+                new ConnectedServiceMessageLogger(context),
+                new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)),
+                new ODataT4CodeGeneratorFactory());
+
+            descriptor.AddGeneratedClientCodeAsync(serviceConfig.Endpoint, referenceFolderPath, LanguageOption.GenerateCSharpCode, serviceConfig)
+                .ConfigureAwait(false).GetAwaiter().GetResult();
+
+            var addedFile = handlerHelper.AddedFiles.FirstOrDefault();
+            Assert.IsNotNull(addedFile, "The V4 code generator did not produce any output file.");
+
+            return File.ReadAllText(addedFile.SourceFile);
+        }
+
         static V4CodeGenDescriptor SetupCodeGenDescriptor(ServiceConfiguration serviceConfig, string serviceName, IODataT4CodeGeneratorFactory codeGenFactory, TestConnectedServiceHandlerHelper handlerHelper, ODataT4CodeGenerator.LanguageOption targetLanguage = ODataT4CodeGenerator.LanguageOption.CSharp)
         {
             var referenceFolderPath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName);
@@ -874,6 +944,21 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
         public TestV4CodeGenDescriptor(IFileHandler fileHandler, IMessageLogger messageLogger, IPackageInstaller packageInstaller, IODataT4CodeGeneratorFactory codeGenFactory)
             : base(fileHandler, messageLogger, packageInstaller, codeGenFactory)
         {
+        }
+    }
+
+    sealed class FakeInstalledPackagesProvider : IInstalledPackagesProvider
+    {
+        private readonly IReadOnlyList<InstalledPackageInfo> packages;
+
+        public FakeInstalledPackagesProvider(params InstalledPackageInfo[] packages)
+        {
+            this.packages = packages;
+        }
+
+        public Task<IReadOnlyList<InstalledPackageInfo>> GetInstalledPackagesAsync()
+        {
+            return Task.FromResult(this.packages);
         }
     }
 

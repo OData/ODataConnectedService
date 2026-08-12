@@ -531,6 +531,145 @@ namespace Microsoft.OData.Cli.Tests.CodeGeneration
             Assert.Contains("public virtual global::Microsoft.OData.Edm.TimeOfDay OrderTime", generatedCode);
         }
 
+        [Fact]
+        public void TestCodeGeneration_WithCentralPackageManagement_UsesNativeDateTimeTypes()
+        {
+            // Version comes from a <PackageVersion> item (Directory.Packages.props style), not the <PackageReference>.
+            this.WriteTestProject($@"<Project Sdk=""Microsoft.NET.Sdk"">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include=""Microsoft.OData.Client"" Version=""9.0.0"" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include=""Microsoft.OData.Client"" />
+  </ItemGroup>
+</Project>");
+
+            var parseResult = this.generateCommand.Parse($"--metadata-uri {this.metadataUriWithDateOnlyAndTimeOnly} --outputdir {this.outputDir}");
+            parseResult.Invoke();
+
+            var referenceProxyFile = Assert.Single(Directory.GetFiles(this.outputDir, $"{Constants.DefaultReferenceFileName}.cs"));
+            var generatedCode = File.ReadAllText(referenceProxyFile);
+
+            Assert.NotNull(generatedCode);
+            Assert.NotEmpty(generatedCode);
+            Assert.Contains("public virtual global::System.DateOnly OrderDate", generatedCode);
+            Assert.Contains("public virtual global::System.TimeOnly OrderTime", generatedCode);
+        }
+
+        [Fact]
+        public void TestCodeGeneration_WithVersionOverride_UsesNativeDateTimeTypes()
+        {
+            // Central version is < 9, but VersionOverride bumps it to a supported version.
+            this.WriteTestProject($@"<Project Sdk=""Microsoft.NET.Sdk"">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include=""Microsoft.OData.Client"" Version=""8.0.0"" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include=""Microsoft.OData.Client"" VersionOverride=""9.0.0"" />
+  </ItemGroup>
+</Project>");
+
+            var parseResult = this.generateCommand.Parse($"--metadata-uri {this.metadataUriWithDateOnlyAndTimeOnly} --outputdir {this.outputDir}");
+            parseResult.Invoke();
+
+            var referenceProxyFile = Assert.Single(Directory.GetFiles(this.outputDir, $"{Constants.DefaultReferenceFileName}.cs"));
+            var generatedCode = File.ReadAllText(referenceProxyFile);
+
+            Assert.NotNull(generatedCode);
+            Assert.NotEmpty(generatedCode);
+            Assert.Contains("public virtual global::System.DateOnly OrderDate", generatedCode);
+            Assert.Contains("public virtual global::System.TimeOnly OrderTime", generatedCode);
+        }
+
+        [Fact]
+        public void TestCodeGeneration_WithMSBuildPropertyVersion_UsesNativeDateTimeTypes()
+        {
+            // Version is expressed as an MSBuild property and must be evaluated.
+            this.WriteTestProject($@"<Project Sdk=""Microsoft.NET.Sdk"">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ODataClientVersion>9.0.0</ODataClientVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include=""Microsoft.OData.Client"" Version=""$(ODataClientVersion)"" />
+  </ItemGroup>
+</Project>");
+
+            var parseResult = this.generateCommand.Parse($"--metadata-uri {this.metadataUriWithDateOnlyAndTimeOnly} --outputdir {this.outputDir}");
+            parseResult.Invoke();
+
+            var referenceProxyFile = Assert.Single(Directory.GetFiles(this.outputDir, $"{Constants.DefaultReferenceFileName}.cs"));
+            var generatedCode = File.ReadAllText(referenceProxyFile);
+
+            Assert.NotNull(generatedCode);
+            Assert.NotEmpty(generatedCode);
+            Assert.Contains("public virtual global::System.DateOnly OrderDate", generatedCode);
+            Assert.Contains("public virtual global::System.TimeOnly OrderTime", generatedCode);
+        }
+
+        [Fact]
+        public void TestCodeGeneration_WithVersionRange_UsesNativeDateTimeTypes()
+        {
+            // A version range whose minimum is supported.
+            this.WriteTestProject($@"<Project Sdk=""Microsoft.NET.Sdk"">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include=""Microsoft.OData.Client"" Version=""[9.0.0,10.0.0)"" />
+  </ItemGroup>
+</Project>");
+
+            var parseResult = this.generateCommand.Parse($"--metadata-uri {this.metadataUriWithDateOnlyAndTimeOnly} --outputdir {this.outputDir}");
+            parseResult.Invoke();
+
+            var referenceProxyFile = Assert.Single(Directory.GetFiles(this.outputDir, $"{Constants.DefaultReferenceFileName}.cs"));
+            var generatedCode = File.ReadAllText(referenceProxyFile);
+
+            Assert.NotNull(generatedCode);
+            Assert.NotEmpty(generatedCode);
+            Assert.Contains("public virtual global::System.DateOnly OrderDate", generatedCode);
+            Assert.Contains("public virtual global::System.TimeOnly OrderTime", generatedCode);
+        }
+
+        [Fact]
+        public void TestCodeGeneration_WithRestoredAssetsFile_UsesNativeDateTimeTypes()
+        {
+            // Declared version is < 9, but the restored project.assets.json resolves a supported version and must win.
+            this.WriteTestProject($@"<Project Sdk=""Microsoft.NET.Sdk"">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include=""Microsoft.OData.Client"" Version=""8.0.0"" />
+  </ItemGroup>
+</Project>");
+
+            Directory.CreateDirectory(Path.Combine(this.outputDir, "obj"));
+            File.WriteAllText(
+                Path.Combine(this.outputDir, "obj", "project.assets.json"),
+                @"{ ""version"": 3, ""libraries"": { ""Microsoft.OData.Client/9.0.0"": { ""type"": ""package"" } } }");
+
+            var parseResult = this.generateCommand.Parse($"--metadata-uri {this.metadataUriWithDateOnlyAndTimeOnly} --outputdir {this.outputDir}");
+            parseResult.Invoke();
+
+            var referenceProxyFile = Assert.Single(Directory.GetFiles(this.outputDir, $"{Constants.DefaultReferenceFileName}.cs"));
+            var generatedCode = File.ReadAllText(referenceProxyFile);
+
+            Assert.NotNull(generatedCode);
+            Assert.NotEmpty(generatedCode);
+            Assert.Contains("public virtual global::System.DateOnly OrderDate", generatedCode);
+            Assert.Contains("public virtual global::System.TimeOnly OrderTime", generatedCode);
+        }
+
         public void Dispose()
         {
             try
@@ -559,7 +698,7 @@ namespace Microsoft.OData.Cli.Tests.CodeGeneration
 
             var projectPath = Path.Combine(this.outputDir, "TestProject.csproj");
 
-            var projectContent = $@"<Project>
+            var projectContent = $@"<Project Sdk=""Microsoft.NET.Sdk"">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -580,6 +719,16 @@ namespace Microsoft.OData.Cli.Tests.CodeGeneration
 </Project>";
 
             File.WriteAllText(projectPath, projectContent);
+        }
+
+        private void WriteTestProject(string projectContent)
+        {
+            if (!Directory.Exists(this.outputDir))
+            {
+                Directory.CreateDirectory(this.outputDir);
+            }
+
+            File.WriteAllText(Path.Combine(this.outputDir, "TestProject.csproj"), projectContent);
         }
 
         private static void EnsureMSBuildLoadedIfNot()

@@ -122,13 +122,97 @@ namespace Microsoft.OData.Cli.Tests.FileHandling
         {
             // Arrange
             var project = CreateProjectWithODataClientVersion("invalid-version");
-            var fileHandler = CreateFileHandler(project);
+            var loggerMock = new Mock<IMessageLogger>();
+            var fileHandler = CreateFileHandler(project, loggerMock);
 
             // Act
             var result = await fileHandler.EmitNativeDateTimeTypesAsync();
 
             // Assert
             Assert.False(result);
+            loggerMock.Verify(
+                logger => logger.WriteMessageAsync(
+                    LogMessageCategory.Warning,
+                    It.Is<string>(message => message.Contains("could not be resolved")),
+                    It.IsAny<object[]>()),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task EmitNativeDateTimeTypesAsync_ShouldUseCentralPackageVersion()
+        {
+            var project = CreateCentrallyManagedProject("9.0.0");
+            var fileHandler = CreateFileHandler(project);
+
+            var result = await fileHandler.EmitNativeDateTimeTypesAsync();
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public async Task EmitNativeDateTimeTypesAsync_ShouldPreferVersionOverride()
+        {
+            var project = CreateCentrallyManagedProject("8.0.0", "9.0.0");
+            var fileHandler = CreateFileHandler(project);
+
+            var result = await fileHandler.EmitNativeDateTimeTypesAsync();
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public async Task EmitNativeDateTimeTypesAsync_ShouldEvaluatePropertyBasedVersion()
+        {
+            var pre = ProjectRootElement.Create();
+            pre.AddPropertyGroup().AddProperty("ODataClientVersion", "9.0.0");
+            var packageReference = pre.AddItemGroup().AddItem("PackageReference", "Microsoft.OData.Client");
+            packageReference.AddMetadata("Version", "$(ODataClientVersion)", expressAsAttribute: true);
+            var project = new Project(pre);
+            project.ReevaluateIfNecessary();
+
+            var result = await CreateFileHandler(project).EmitNativeDateTimeTypesAsync();
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public async Task EmitNativeDateTimeTypesAsync_ShouldSupportVersionRangeWithSupportedMinimum()
+        {
+            var project = CreateProjectWithODataClientVersion("[9.0.0,10.0.0)");
+
+            var result = await CreateFileHandler(project).EmitNativeDateTimeTypesAsync();
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public async Task EmitNativeDateTimeTypesAsync_ShouldPreferRestoredAssetsVersion()
+        {
+            string projectDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            Directory.CreateDirectory(Path.Combine(projectDirectory, "obj"));
+            string assetsFile = Path.Combine(projectDirectory, "obj", "project.assets.json");
+            File.WriteAllText(
+                assetsFile,
+                @"{ ""version"": 3, ""libraries"": { ""Microsoft.OData.Client/9.0.0"": { ""type"": ""package"" } } }");
+
+            try
+            {
+                var pre = ProjectRootElement.Create();
+                pre.AddPropertyGroup().AddProperty("ProjectAssetsFile", assetsFile);
+                var packageReference = pre.AddItemGroup().AddItem("PackageReference", "Microsoft.OData.Client");
+                packageReference.AddMetadata("Version", "8.0.0", expressAsAttribute: true);
+                var project = new Project(pre);
+                project.ReevaluateIfNecessary();
+
+                var result = await CreateFileHandler(project).EmitNativeDateTimeTypesAsync();
+
+                Assert.True(result);
+            }
+            finally
+            {
+                ProjectCollection.GlobalProjectCollection.UnloadAllProjects();
+                Directory.Delete(projectDirectory, true);
+            }
         }
 
         private static Project CreateProjectWithODataClientVersion(string version)
@@ -168,10 +252,34 @@ namespace Microsoft.OData.Cli.Tests.FileHandling
             return project;
         }
 
-        private static ODataCliFileHandler CreateFileHandler(Project project)
+        private static Project CreateCentrallyManagedProject(string centralVersion, string? versionOverride = null)
         {
-            var loggerMock = new Mock<IMessageLogger>();
-            return new ODataCliFileHandler(loggerMock.Object, project);
+            var pre = ProjectRootElement.Create();
+            var propertyGroup = pre.AddPropertyGroup();
+            propertyGroup.AddProperty("TargetFramework", "net8.0");
+            propertyGroup.AddProperty("ManagePackageVersionsCentrally", "true");
+
+            var packageVersion = pre.AddItemGroup().AddItem("PackageVersion", "Microsoft.OData.Client");
+            packageVersion.AddMetadata("Version", centralVersion, expressAsAttribute: true);
+
+            var packageReference = pre.AddItemGroup().AddItem("PackageReference", "Microsoft.OData.Client");
+            if (!string.IsNullOrEmpty(versionOverride))
+            {
+                packageReference.AddMetadata("VersionOverride", versionOverride, expressAsAttribute: true);
+            }
+
+            var project = new Project(pre);
+            project.ReevaluateIfNecessary();
+            return project;
+        }
+
+        private static ODataCliFileHandler CreateFileHandler(Project? project, Mock<IMessageLogger>? loggerMock = null)
+        {
+            loggerMock ??= new Mock<IMessageLogger>();
+            loggerMock
+                .Setup(logger => logger.WriteMessageAsync(It.IsAny<LogMessageCategory>(), It.IsAny<string>(), It.IsAny<object[]>()))
+                .Returns(Task.CompletedTask);
+            return new ODataCliFileHandler(loggerMock.Object, project!);
         }
 
         private static void EnsureMSBuildLoadedIfNot()

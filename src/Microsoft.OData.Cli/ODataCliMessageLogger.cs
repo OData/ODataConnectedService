@@ -37,9 +37,10 @@ namespace Microsoft.OData.Cli
         /// <returns>A completed Task</returns>
         public Task WriteMessageAsync(LogMessageCategory logMessageCategory, string message, params object[] args)
         {
-            if (logMessageCategory == LogMessageCategory.Error)
+            if (logMessageCategory == LogMessageCategory.Error || logMessageCategory == LogMessageCategory.Warning)
             {
-                this.console.Error.Write(message + "\n");
+                string prefix = logMessageCategory == LogMessageCategory.Warning ? "Warning: " : string.Empty;
+                this.console.Error.Write(prefix + message + "\n");
             }
             else if (logMessageCategory == LogMessageCategory.Information)
             {
