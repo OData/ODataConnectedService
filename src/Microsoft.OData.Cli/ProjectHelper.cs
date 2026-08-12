@@ -243,11 +243,7 @@ namespace Microsoft.OData.Cli
                     }
                 }
             }
-            catch (IOException)
-            {
-                return false;
-            }
-            catch (JsonException)
+            catch (Exception)
             {
                 return false;
             }

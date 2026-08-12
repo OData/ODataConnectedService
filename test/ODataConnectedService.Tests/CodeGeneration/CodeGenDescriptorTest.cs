@@ -883,7 +883,8 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
                 new ConnectedServicePackageInstaller(context, project, new ConnectedServiceMessageLogger(context)),
                 new ODataT4CodeGeneratorFactory());
 
-            descriptor.AddGeneratedClientCodeAsync(serviceConfig.Endpoint, referenceFolderPath, LanguageOption.GenerateCSharpCode, serviceConfig).Wait();
+            descriptor.AddGeneratedClientCodeAsync(serviceConfig.Endpoint, referenceFolderPath, LanguageOption.GenerateCSharpCode, serviceConfig)
+                .ConfigureAwait(false).GetAwaiter().GetResult();
 
             var addedFile = handlerHelper.AddedFiles.FirstOrDefault();
             Assert.IsNotNull(addedFile, "The V4 code generator did not produce any output file.");
