@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Microsoft.OData.CodeGen.Models
 {
@@ -22,12 +23,21 @@ namespace Microsoft.OData.CodeGen.Models
         public bool MakeTypesInternal { get; set; }
         public bool OpenGeneratedFilesInIDE { get; set; }
         public bool GenerateMultipleFiles { get; set; }
+        [IgnoreDataMember]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public string CustomHttpHeaders { get; set; }
         public bool IncludeWebProxy { get; set; }
         public string WebProxyHost { get; set; }
         public bool IncludeWebProxyNetworkCredentials { get; set; }
         public bool StoreWebProxyNetworkCredentials { get; set; }
+        [IgnoreDataMember]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public string WebProxyNetworkCredentialsUsername { get; set; }
+        [IgnoreDataMember]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public string WebProxyNetworkCredentialsPassword { get; set; }
         public string WebProxyNetworkCredentialsDomain { get; set; }
         public bool IncludeCustomHeaders { get; set; }

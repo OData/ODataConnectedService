@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using EnvDTE;
 using Microsoft.OData.CodeGen;
 using Microsoft.OData.CodeGen.CodeGeneration;
+using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService.Common;
 using Microsoft.VisualStudio.ConnectedServices;
 using ODataConnectedService.Shared;
@@ -51,20 +52,34 @@ namespace Microsoft.OData.ConnectedService
         {
             Project project = ProjectHelper.GetProjectFromHierarchy(context.ProjectHierarchy);
             var serviceInstance = (ODataConnectedServiceInstance)context.ServiceInstance;
-            var codeGenDescriptor = await GenerateCodeAsync(serviceInstance.ServiceConfig.Endpoint, serviceInstance.ServiceConfig.EdmxVersion, context, project).ConfigureAwait(false);            
-            if (!serviceInstance.ServiceConfig.StoreCustomHttpHeaders)
+            var codeGenDescriptor = await GenerateCodeAsync(serviceInstance.ServiceConfig.Endpoint, serviceInstance.ServiceConfig.EdmxVersion, context, project).ConfigureAwait(false);
+            context.SetExtendedDesignerData(CreatePersistedServiceConfiguration(serviceInstance.ServiceConfig));
+            return codeGenDescriptor;
+        }
+
+        private static ServiceConfiguration CreatePersistedServiceConfiguration(ServiceConfiguration serviceConfiguration)
+        {
+            if (serviceConfiguration.CustomHttpHeaders == null
+                && serviceConfiguration.WebProxyNetworkCredentialsUsername == null
+                && serviceConfiguration.WebProxyNetworkCredentialsPassword == null
+                && !serviceConfiguration.StoreCustomHttpHeaders
+                && !serviceConfiguration.StoreWebProxyNetworkCredentials)
             {
-                serviceInstance.ServiceConfig.CustomHttpHeaders = null;
-            }
-            if (!serviceInstance.ServiceConfig.StoreWebProxyNetworkCredentials)
-            {
-                serviceInstance.ServiceConfig.WebProxyNetworkCredentialsUsername = null;
-                serviceInstance.ServiceConfig.WebProxyNetworkCredentialsPassword = null;
-                serviceInstance.ServiceConfig.WebProxyNetworkCredentialsDomain = null;
+                return serviceConfiguration;
             }
 
-            context.SetExtendedDesignerData(serviceInstance.ServiceConfig);
-            return codeGenDescriptor;
+            var persistedServiceConfiguration = serviceConfiguration is ServiceConfigurationV4
+                ? new ServiceConfigurationV4()
+                : new ServiceConfiguration();
+
+            persistedServiceConfiguration.CopyPropertiesFrom(serviceConfiguration);
+            persistedServiceConfiguration.CustomHttpHeaders = null;
+            persistedServiceConfiguration.WebProxyNetworkCredentialsUsername = null;
+            persistedServiceConfiguration.WebProxyNetworkCredentialsPassword = null;
+            persistedServiceConfiguration.StoreCustomHttpHeaders = false;
+            persistedServiceConfiguration.StoreWebProxyNetworkCredentials = false;
+
+            return persistedServiceConfiguration;
         }
 
         private async Task<BaseCodeGenDescriptor> GenerateCodeAsync(string metadataUri, Version edmxVersion, ConnectedServiceHandlerContext context, Project project)
