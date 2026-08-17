@@ -18,6 +18,7 @@ using Microsoft.OData.CodeGen.FileHandling;
 using Microsoft.OData.CodeGen.Logging;
 using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.CodeGen.PackageInstallation;
+using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Tests.TestHelpers;
 using Microsoft.VisualStudio.Shell.Interop;
 using Moq;
@@ -180,6 +181,52 @@ namespace Microsoft.OData.ConnectedService.Tests
             Assert.DoesNotContain($"\"{nameof(ServiceConfiguration.WebProxyNetworkCredentialsPassword)}\":", context.SavedExtendedDesignDataJson);
             Assert.Contains($"\"{nameof(ServiceConfiguration.WebProxyHost)}\":\"http://example.com:80\"", context.SavedExtendedDesignDataJson);
             Assert.Contains($"\"{nameof(ServiceConfiguration.WebProxyNetworkCredentialsDomain)}\":\"example\"", context.SavedExtendedDesignDataJson);
+        }
+
+        [StaTheory]
+        [InlineData("AddServiceInstanceAsync")]
+        [InlineData("UpdateServiceInstanceAsync")]
+        public async Task TestAddUpdateServiceInstance_UserProvidedRequestValuesReachCodeGenerationAsync(string method)
+        {
+            var userSettings = new UserSettings(configName: $"HandlerTest-{Guid.NewGuid():N}")
+            {
+                ServiceName = "TestService",
+                Endpoint = "http://service/$metadata",
+                IncludeCustomHeaders = true,
+                CustomHttpHeaders = "X-One: value\nX-Two: another-value",
+                IncludeWebProxy = true,
+                WebProxyHost = "http://example.com:80",
+                IncludeWebProxyNetworkCredentials = true,
+                WebProxyNetworkCredentialsDomain = "example",
+                WebProxyNetworkCredentialsUsername = "user",
+                WebProxyNetworkCredentialsPassword = "password"
+            };
+            var serviceConfig = new ServiceConfigurationV4()
+            {
+                EdmxVersion = new Version(4, 0, 0, 0)
+            };
+            serviceConfig.CopyPropertiesFrom(userSettings);
+            var descriptorFactory = new TestCodeGenDescriptorFactory();
+            var serviceHandler = new ODataConnectedServiceHandler(descriptorFactory);
+            var context = SetupContext(serviceConfig);
+
+            await InvokeHandlerAsync(serviceHandler, context, method);
+
+            var descriptor = (TestCodeGenDescriptor)descriptorFactory.CreatedInstance;
+            var generatedServiceConfig = descriptor.GeneratedServiceConfiguration;
+            Assert.Same(serviceConfig, generatedServiceConfig);
+            Assert.Equal("X-One: value\nX-Two: another-value", generatedServiceConfig.CustomHttpHeaders);
+            Assert.Equal("http://example.com:80", generatedServiceConfig.WebProxyHost);
+            Assert.Equal("example", generatedServiceConfig.WebProxyNetworkCredentialsDomain);
+            Assert.Equal("user", generatedServiceConfig.WebProxyNetworkCredentialsUsername);
+            Assert.Equal("password", generatedServiceConfig.WebProxyNetworkCredentialsPassword);
+
+            var savedServiceConfig = Assert.IsType<ServiceConfigurationV4>(context.SavedExtendedDesignData);
+            Assert.Null(savedServiceConfig.CustomHttpHeaders);
+            Assert.Equal("http://example.com:80", savedServiceConfig.WebProxyHost);
+            Assert.Equal("example", savedServiceConfig.WebProxyNetworkCredentialsDomain);
+            Assert.Null(savedServiceConfig.WebProxyNetworkCredentialsUsername);
+            Assert.Null(savedServiceConfig.WebProxyNetworkCredentialsPassword);
         }
 
         [Theory]

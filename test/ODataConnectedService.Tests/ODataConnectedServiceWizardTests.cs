@@ -601,7 +601,7 @@ namespace ODataConnectedService.Tests
                 Assert.True(config.IncludeWebProxy);
                 Assert.Equal("http://localhost:8080", config.WebProxyHost);
                 Assert.True(config.IncludeWebProxyNetworkCredentials);
-                Assert.True(config.StoreCustomHttpHeaders);
+                Assert.True(config.StoreWebProxyNetworkCredentials);
                 Assert.Equal("domain", config.WebProxyNetworkCredentialsDomain);
                 Assert.Equal("user", config.WebProxyNetworkCredentialsUsername);
                 Assert.Equal("pass", config.WebProxyNetworkCredentialsPassword);
