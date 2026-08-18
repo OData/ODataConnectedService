@@ -96,7 +96,7 @@ namespace Microsoft.OData.ConnectedService.Tests
             };
             var context = SetupContext(serviceConfig);
 
-            await InvokeHandlerAsync(serviceHandler, context, method);
+            await InvokeHandlerAsync(serviceHandler, context, method).ConfigureAwait(false);
 
             var descriptor = descriptorFactory.CreatedInstance as TestCodeGenDescriptor;
             Assert.True(descriptor.AddedClientCode);
@@ -124,7 +124,7 @@ namespace Microsoft.OData.ConnectedService.Tests
             };
             var context = SetupContext(serviceConfig);
 
-            await InvokeHandlerAsync(serviceHandler, context, method);
+            await InvokeHandlerAsync(serviceHandler, context, method).ConfigureAwait(false);
 
             var savedServiceConfig = (ServiceConfiguration)context.SavedExtendedDesignData;
             var descriptor = (TestCodeGenDescriptor)descriptorFactory.CreatedInstance;
@@ -163,7 +163,7 @@ namespace Microsoft.OData.ConnectedService.Tests
             };
             var context = SetupContext(serviceConfig);
 
-            await InvokeHandlerAsync(serviceHandler, context, method);
+            await InvokeHandlerAsync(serviceHandler, context, method).ConfigureAwait(false);
 
             var savedServiceConfig = (ServiceConfiguration)context.SavedExtendedDesignData;
             var descriptor = (TestCodeGenDescriptor)descriptorFactory.CreatedInstance;
@@ -210,7 +210,7 @@ namespace Microsoft.OData.ConnectedService.Tests
             var serviceHandler = new ODataConnectedServiceHandler(descriptorFactory);
             var context = SetupContext(serviceConfig);
 
-            await InvokeHandlerAsync(serviceHandler, context, method);
+            await InvokeHandlerAsync(serviceHandler, context, method).ConfigureAwait(false);
 
             var descriptor = (TestCodeGenDescriptor)descriptorFactory.CreatedInstance;
             var generatedServiceConfig = descriptor.GeneratedServiceConfiguration;
@@ -284,19 +284,19 @@ namespace Microsoft.OData.ConnectedService.Tests
             };
             var context = SetupContext(serviceConfig);
 
-            await InvokeHandlerAsync(serviceHandler, context, method);
+            await InvokeHandlerAsync(serviceHandler, context, method).ConfigureAwait(false);
             AssertPersistedOptionalRequestValuesAreOmitted(context);
 
             serviceConfig.CustomHttpHeaders = null;
             serviceConfig.WebProxyNetworkCredentialsUsername = null;
             serviceConfig.WebProxyNetworkCredentialsPassword = null;
-            await InvokeHandlerAsync(serviceHandler, context, method);
+            await InvokeHandlerAsync(serviceHandler, context, method).ConfigureAwait(false);
             AssertPersistedOptionalRequestValuesAreOmitted(context);
 
             serviceConfig.CustomHttpHeaders = "X-New: new-value";
             serviceConfig.WebProxyNetworkCredentialsUsername = "new-user";
             serviceConfig.WebProxyNetworkCredentialsPassword = "new-password";
-            await InvokeHandlerAsync(serviceHandler, context, method);
+            await InvokeHandlerAsync(serviceHandler, context, method).ConfigureAwait(false);
             AssertPersistedOptionalRequestValuesAreOmitted(context);
 
             Assert.Equal("X-New: new-value", serviceConfig.CustomHttpHeaders);
@@ -320,7 +320,7 @@ namespace Microsoft.OData.ConnectedService.Tests
             };
             var context = SetupContext(serviceConfig);
 
-            await InvokeHandlerAsync(serviceHandler, context, method);
+            await InvokeHandlerAsync(serviceHandler, context, method).ConfigureAwait(false);
 
             var savedServiceConfig = Assert.IsType<ServiceConfigurationV4>(context.SavedExtendedDesignData);
             Assert.True(savedServiceConfig.EnableNamingAlias);
@@ -362,7 +362,7 @@ namespace Microsoft.OData.ConnectedService.Tests
             using (var tokenSource = new CancellationTokenSource())
             {
                 await (typeof(ODataConnectedServiceHandler).GetMethod(method).Invoke(
-                    serviceHandler, new object[] { context, tokenSource.Token }) as Task);
+                    serviceHandler, new object[] { context, tokenSource.Token }) as Task).ConfigureAwait(false);
             }
         }
 
