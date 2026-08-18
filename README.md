@@ -75,6 +75,26 @@ as the class it is testing, followed by the suffix `Test`.
 Example: for some class `Microsoft.OData.ConnectedService.X.Y` located in `src\X\Y.cs`,
 the test class would be `Microsoft.OData.Tests.ConnectedService.Tests.X.YTest` located in `test\X\YTest.cs`
 
+#### Legacy persistence options feature flag
+
+The endpoint configuration view has a default-off `AppContext` switch:
+
+```text
+Microsoft.OData.ConnectedService.ShowLegacyPersistenceOptions
+```
+
+When the switch is disabled or not defined, the legacy **store custom headers** and **store proxy credentials** controls remain collapsed. When it is enabled, both controls are visible. The switch only controls UI visibility; custom HTTP headers and proxy username/password values are still excluded from connected-service designer data.
+
+Set the switch before creating the endpoint configuration view:
+
+```csharp
+AppContext.SetSwitch(
+    "Microsoft.OData.ConnectedService.ShowLegacyPersistenceOptions",
+    true);
+```
+
+`ConfigODataEndpoint` reads the switch during construction, so changing it does not affect views that have already been created. Set the value to `false`, or leave the switch undefined, to retain the default behavior.
+
 ### Building Command-line 
 The project can also be build using on the command-line by relying on the provided build.cmd
 

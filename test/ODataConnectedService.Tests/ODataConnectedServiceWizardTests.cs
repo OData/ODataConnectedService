@@ -18,6 +18,7 @@ using FluentAssertions;
 using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.Models;
 using Microsoft.OData.ConnectedService;
+using Microsoft.OData.ConnectedService.Common;
 using Microsoft.OData.ConnectedService.Views;
 using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.ConnectedServices;
@@ -465,6 +466,36 @@ namespace ODataConnectedService.Tests
                 Assert.False(advancedView.IncludeT4File.IsEnabled);
                 Assert.False(advancedView.GenerateMultipleFiles.IsEnabled);
                 Assert.False(advancedView.OmitVersioningInfo.IsEnabled);
+            }
+        }
+
+        [StaTheory]
+        [InlineData(false, Visibility.Collapsed)]
+        [InlineData(true, Visibility.Visible)]
+        public void TestLegacyPersistenceOptionsVisibility(bool flagEnabled, Visibility expectedVisibility)
+        {
+            var endpointView = new ConfigODataEndpoint(flagEnabled);
+
+            Assert.Equal(expectedVisibility, endpointView.StoreCustomHttpHeaders.Visibility);
+            Assert.Equal(expectedVisibility, endpointView.StoreWebProxyNetworkCredentials.Visibility);
+        }
+
+        [Fact]
+        public void TestFeatureFlagUsesAppContextSwitch()
+        {
+            const string switchName = "Microsoft.OData.ConnectedService.Tests.FeatureFlag";
+
+            AppContext.SetSwitch(switchName, false);
+            Assert.False(FeatureFlags.IsEnabled(switchName));
+
+            try
+            {
+                AppContext.SetSwitch(switchName, true);
+                Assert.True(FeatureFlags.IsEnabled(switchName));
+            }
+            finally
+            {
+                AppContext.SetSwitch(switchName, false);
             }
         }
 
