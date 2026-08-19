@@ -8596,7 +8596,6 @@ this.Write("End Namespace\r\n");
 /// </summary>
 /// <param name="context">The code generation context.</param>
 public class FilesManager {
-
     /// <summary>
     /// Creates an instance of the FilesManager. The object used to generate and manage
     /// multiple source files.
@@ -8702,15 +8701,15 @@ public class FilesManager {
         {
             var tasks = new List<Task>();
             EndBlock();
+            ValidateGeneratedFileNames();
             string headerText = Template.ToString(_header.Start, _header.Length);
             string footerText = Template.ToString(_footer.Start, _footer.Length);
-            var outputPath = Path.GetTempPath();
             int length = files.Count;
             for (int i = length; i > 0; i--)
             {
                 Block block = files[i - 1];
                 if (block.IsContainer) continue;
-                string fileName = Path.Combine(outputPath, block.Name);
+                string fileName = Path.GetTempFileName();
                 string content = headerText + Template.ToString(block.Start, block.Length) + footerText;
                 tasks.Add(CreateFileAsync(fileName, content));
                 block.TemporaryFilePath = fileName;
@@ -8729,6 +8728,7 @@ public class FilesManager {
     {
         if (split)
         {
+            ValidateGeneratedFileNames();
             int length = files.Count;
             await logger?.WriteMessageAsync(LogMessageCategory.Information, "Adding {0} Generated files to the project. This may take a while!", length);
             for (int i = length; i > 0; i--)
@@ -8738,7 +8738,7 @@ public class FilesManager {
                 string fileName = block.TemporaryFilePath;
                 if (!File.Exists(fileName)) continue;
 
-                string outputFile = Path.Combine(referenceFolder, block.Name);
+                string outputFile = ResolveGeneratedFilePath(referenceFolder, block.Name);
                 bool fileExists = File.Exists(outputFile);
               
                 await handlerHelper.AddFileAsync(fileName, outputFile, new ODataFileOptions { OpenOnComplete = OpenGeneratedFilesInIDE, SuppressOverwritePrompt = true })
@@ -8766,6 +8766,98 @@ public class FilesManager {
             fileStream.SetLength(0);
             await writer.WriteAsync(content).ConfigureAwait(false);
         }
+    }
+
+    private void ValidateGeneratedFileNames()
+    {
+        HashSet<string> fileNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        int length = files.Count;
+        for (int i = length; i > 0; i--)
+        {
+            Block block = files[i - 1];
+            if (block.IsContainer) continue;
+            ValidateGeneratedFileName(block.Name);
+            if (!fileNames.Add(block.Name))
+            {
+                throw new InvalidOperationException("Generated file names must be unique.");
+            }
+        }
+    }
+
+    private static string ResolveGeneratedFilePath(string outputDirectory, string fileName)
+    {
+        string fullOutputDirectory = Path.GetFullPath(outputDirectory);
+        string outputDirectoryPrefix = fullOutputDirectory.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+            + Path.DirectorySeparatorChar;
+        string fullOutputPath = Path.GetFullPath(Path.Combine(fullOutputDirectory, fileName));
+        StringComparison comparison = Path.DirectorySeparatorChar == '\\'
+            ? StringComparison.OrdinalIgnoreCase
+            : StringComparison.Ordinal;
+        if (!fullOutputPath.StartsWith(outputDirectoryPrefix, comparison))
+        {
+            throw new InvalidOperationException("Generated file path must remain within the output directory.");
+        }
+
+        return fullOutputPath;
+    }
+
+    private static void ValidateGeneratedFileName(string fileName)
+    {
+        if (String.IsNullOrWhiteSpace(fileName))
+        {
+            throw new InvalidOperationException("Generated file name cannot be null or empty.");
+        }
+
+        if (fileName == "."
+            || fileName == ".."
+            || fileName.IndexOf('/') >= 0
+            || fileName.IndexOf('\\') >= 0
+            || fileName.IndexOf(':') >= 0
+            || fileName.IndexOf('"') >= 0
+            || fileName.IndexOf('<') >= 0
+            || fileName.IndexOf('>') >= 0
+            || fileName.IndexOf('|') >= 0
+            || fileName.IndexOf('?') >= 0
+            || fileName.IndexOf('*') >= 0
+            || fileName.EndsWith(".", StringComparison.Ordinal)
+            || fileName.EndsWith(" ", StringComparison.Ordinal)
+            || ContainsControlCharacter(fileName)
+            || IsReservedFileName(fileName))
+        {
+            throw new InvalidOperationException("Generated file name must not include directory information or invalid characters.");
+        }
+    }
+
+    private static bool ContainsControlCharacter(string fileName)
+    {
+        int length = fileName.Length;
+        for (int i = 0; i < length; i++)
+        {
+            if (fileName[i] < 32)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool IsReservedFileName(string fileName)
+    {
+        string baseName = Path.GetFileNameWithoutExtension(fileName);
+        if (baseName.Equals("CON", StringComparison.OrdinalIgnoreCase)
+            || baseName.Equals("PRN", StringComparison.OrdinalIgnoreCase)
+            || baseName.Equals("AUX", StringComparison.OrdinalIgnoreCase)
+            || baseName.Equals("NUL", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return baseName.Length == 4
+            && (baseName.StartsWith("COM", StringComparison.OrdinalIgnoreCase)
+                || baseName.StartsWith("LPT", StringComparison.OrdinalIgnoreCase))
+            && baseName[3] >= '1'
+            && baseName[3] <= '9';
     }
 
     public virtual string GetCustomToolNamespace(string fileName)

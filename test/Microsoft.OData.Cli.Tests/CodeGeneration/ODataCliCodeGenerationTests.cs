@@ -249,6 +249,98 @@ namespace Microsoft.OData.Cli.Tests.CodeGeneration
             CodeVerificationHelper.VerifyGeneratedCode(cityProxyExpectedCode, cityProxyGeneratedCode);
         }
 
+        [Fact]
+        public void TestMultipleFilesOptionRejectsGeneratedFileNameWithDirectorySegments()
+        {
+            string uniqueName = $"Outside{Guid.NewGuid():N}";
+            string metadataPath = this.WriteMetadataWithTypeNames("SafeType", $"../{uniqueName}");
+            string outputParent = Directory.GetParent(this.outputDir)!.FullName;
+            string outsidePath = Path.Combine(outputParent, $"{uniqueName}.cs");
+            string originalContent = "Original content";
+            File.WriteAllText(outsidePath, originalContent);
+
+            try
+            {
+                var parseResult = this.generateCommand.Parse(
+                    $"--metadata-uri {metadataPath} --outputdir {this.outputDir} --multiple-files");
+
+                int exitCode = parseResult.Invoke();
+
+                Assert.NotEqual(0, exitCode);
+                Assert.Equal(originalContent, File.ReadAllText(outsidePath));
+                Assert.False(File.Exists(Path.Combine(this.outputDir, "SafeType.cs")));
+            }
+            finally
+            {
+                File.Delete(metadataPath);
+                if (File.Exists(outsidePath))
+                {
+                    File.Delete(outsidePath);
+                }
+            }
+        }
+
+        [Theory]
+        [InlineData("../Outside", false)]
+        [InlineData(@"..\Outside", false)]
+        [InlineData(@"C:\Outside", false)]
+        [InlineData("../Outside", true)]
+        [InlineData(@"..\Outside", true)]
+        [InlineData(@"C:\Outside", true)]
+        public void TestMultipleFilesOptionRejectsInvalidTypeOrNamespaceFileName(
+            string modelName,
+            bool useModelNamespace)
+        {
+            string metadataPath = useModelNamespace
+                ? this.WriteMetadataWithDuplicateTypeName(modelName)
+                : this.WriteMetadataWithTypeNames(modelName);
+
+            try
+            {
+                var parseResult = this.generateCommand.Parse(
+                    $"--metadata-uri {metadataPath} --outputdir {this.outputDir} --multiple-files");
+
+                int exitCode = parseResult.Invoke();
+
+                Assert.NotEqual(0, exitCode);
+                Assert.False(Directory.Exists(this.outputDir)
+                    && Directory.EnumerateFiles(this.outputDir, "*.cs", SearchOption.AllDirectories).Any());
+            }
+            finally
+            {
+                File.Delete(metadataPath);
+            }
+        }
+
+        [Fact]
+        public void TestDefaultGenerationWithTypeNameContainingDirectorySegmentsCreatesOnlyReferenceFile()
+        {
+            string uniqueName = $"Outside{Guid.NewGuid():N}";
+            string metadataPath = this.WriteMetadataWithTypeNames($"../{uniqueName}");
+            string outputParent = Directory.GetParent(this.outputDir)!.FullName;
+            string outsidePath = Path.Combine(outputParent, $"{uniqueName}.cs");
+
+            try
+            {
+                var parseResult = this.generateCommand.Parse(
+                    $"--metadata-uri {metadataPath} --outputdir {this.outputDir}");
+
+                int exitCode = parseResult.Invoke();
+
+                Assert.Equal(0, exitCode);
+                Assert.True(File.Exists(Path.Combine(this.outputDir, $"{Constants.DefaultReferenceFileName}.cs")));
+                Assert.False(File.Exists(outsidePath));
+            }
+            finally
+            {
+                File.Delete(metadataPath);
+                if (File.Exists(outsidePath))
+                {
+                    File.Delete(outsidePath);
+                }
+            }
+        }
+
         public static IEnumerable<object[]> GetCodeGeneratedForExcludedOperationImportsOptionTestData()
         {
             return
@@ -687,6 +779,44 @@ namespace Microsoft.OData.Cli.Tests.CodeGeneration
             {
                 // Ignore - Temporary files are eventually clean up
             }
+        }
+
+        private string WriteMetadataWithTypeNames(params string[] typeNames)
+        {
+            string metadataPath = Path.Combine(Path.GetTempPath(), $"ODataMetadata-{Guid.NewGuid():N}.xml");
+            string typeElements = String.Concat(typeNames.Select(
+                typeName => $"      <ComplexType Name=\"{typeName}\" />{Environment.NewLine}"));
+            string metadata = $"""
+                <?xml version="1.0" encoding="utf-8"?>
+                <edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+                  <edmx:DataServices>
+                    <Schema Namespace="Generated" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                {typeElements}    </Schema>
+                  </edmx:DataServices>
+                </edmx:Edmx>
+                """;
+            File.WriteAllText(metadataPath, metadata);
+            return metadataPath;
+        }
+
+        private string WriteMetadataWithDuplicateTypeName(string namespaceName)
+        {
+            string metadataPath = Path.Combine(Path.GetTempPath(), $"ODataMetadata-{Guid.NewGuid():N}.xml");
+            string metadata = $"""
+                <?xml version="1.0" encoding="utf-8"?>
+                <edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+                  <edmx:DataServices>
+                    <Schema Namespace="{namespaceName}" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                      <ComplexType Name="Item" />
+                    </Schema>
+                    <Schema Namespace="Control" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                      <ComplexType Name="Item" />
+                    </Schema>
+                  </edmx:DataServices>
+                </edmx:Edmx>
+                """;
+            File.WriteAllText(metadataPath, metadata);
+            return metadataPath;
         }
 
         private void CreateTestProjectInOutputDir(string targetFramework, string odataClientVersion)
