@@ -8596,6 +8596,8 @@ this.Write("End Namespace\r\n");
 /// </summary>
 /// <param name="context">The code generation context.</param>
 public class FilesManager {
+    private static readonly char[] InvalidGeneratedFileNameChars = { '/', '\\', ':', '"', '<', '>', '|', '?', '*' };
+
     /// <summary>
     /// Creates an instance of the FilesManager. The object used to generate and manage
     /// multiple source files.
@@ -8704,12 +8706,13 @@ public class FilesManager {
             ValidateGeneratedFileNames();
             string headerText = Template.ToString(_header.Start, _header.Length);
             string footerText = Template.ToString(_footer.Start, _footer.Length);
+            string outputPath = Path.GetTempPath();
             int length = files.Count;
             for (int i = length; i > 0; i--)
             {
                 Block block = files[i - 1];
                 if (block.IsContainer) continue;
-                string fileName = Path.GetTempFileName();
+                string fileName = Path.Combine(outputPath, block.Name);
                 string content = headerText + Template.ToString(block.Start, block.Length) + footerText;
                 tasks.Add(CreateFileAsync(fileName, content));
                 block.TemporaryFilePath = fileName;
@@ -8741,13 +8744,9 @@ public class FilesManager {
                 string outputFile = ResolveGeneratedFilePath(referenceFolder, block.Name);
                 bool fileExists = File.Exists(outputFile);
               
-                await handlerHelper.AddFileAsync(fileName, outputFile, new ODataFileOptions { OpenOnComplete = OpenGeneratedFilesInIDE, SuppressOverwritePrompt = true })
-                .ContinueWith(
-                    async _ =>
-                    {
-                        await logger?.WriteMessageAsync(LogMessageCategory.Information,
-                            "\"{0}\" has been {1}.", block.Name, fileExists ? "updated" : "added");
-                    }, System.Threading.Tasks.TaskContinuationOptions.ExecuteSynchronously);
+                await handlerHelper.AddFileAsync(fileName, outputFile, new ODataFileOptions { OpenOnComplete = OpenGeneratedFilesInIDE, SuppressOverwritePrompt = true });
+                await logger?.WriteMessageAsync(LogMessageCategory.Information,
+                    "\"{0}\" has been {1}.", block.Name, fileExists ? "updated" : "added");
             }
         }
     }
@@ -8810,15 +8809,7 @@ public class FilesManager {
 
         if (fileName == "."
             || fileName == ".."
-            || fileName.IndexOf('/') >= 0
-            || fileName.IndexOf('\\') >= 0
-            || fileName.IndexOf(':') >= 0
-            || fileName.IndexOf('"') >= 0
-            || fileName.IndexOf('<') >= 0
-            || fileName.IndexOf('>') >= 0
-            || fileName.IndexOf('|') >= 0
-            || fileName.IndexOf('?') >= 0
-            || fileName.IndexOf('*') >= 0
+            || fileName.IndexOfAny(InvalidGeneratedFileNameChars) >= 0
             || fileName.EndsWith(".", StringComparison.Ordinal)
             || fileName.EndsWith(" ", StringComparison.Ordinal)
             || ContainsControlCharacter(fileName)

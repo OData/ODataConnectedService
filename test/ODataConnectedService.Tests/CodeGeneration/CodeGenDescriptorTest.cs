@@ -204,23 +204,32 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             // when ODataT4CodeGenerator.TransformText() was called. Since we're using a dummy code generator
             // we need to manually ensure those files exist
             codeGen.MultipleFilesManager.GenerateFilesAsync(true).Wait();
-            
-            codeGenDescriptor.AddGeneratedClientCodeAsync(serviceConfig.Endpoint, referenceFolderPath, LanguageOption.GenerateCSharpCode, serviceConfig).Wait();
             var file1TempPath = codeGen.MultipleFilesManager.files[0].TemporaryFilePath;
             var file2TempPath = codeGen.MultipleFilesManager.files[1].TemporaryFilePath;
-            Assert.AreNotEqual(file1TempPath, file2TempPath);
-            var expectedMainFilePath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "Main.cs");
-            var mainFile = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == expectedMainFilePath);
-            Assert.IsNotNull(mainFile);
-            Assert.AreEqual("Generated code", File.ReadAllText(mainFile.SourceFile));
-            var expectedFile1Path = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "File1.cs");
-            var file1 = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == expectedFile1Path);
-            Assert.IsNotNull(file1);
-            Assert.AreEqual("Contents1", File.ReadAllText(file1.SourceFile));
-            var expectedFile2Path = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "File2.cs");
-            var file2 = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == expectedFile2Path);
-            Assert.IsNotNull(file2);
-            Assert.AreEqual("Contents2", File.ReadAllText(file2.SourceFile));
+            try
+            {
+                codeGenDescriptor.AddGeneratedClientCodeAsync(serviceConfig.Endpoint, referenceFolderPath, LanguageOption.GenerateCSharpCode, serviceConfig).Wait();
+                Assert.AreNotEqual(file1TempPath, file2TempPath);
+                Assert.AreEqual(Path.Combine(Path.GetTempPath(), "File1.cs"), file1TempPath);
+                Assert.AreEqual(Path.Combine(Path.GetTempPath(), "File2.cs"), file2TempPath);
+                var expectedMainFilePath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "Main.cs");
+                var mainFile = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == expectedMainFilePath);
+                Assert.IsNotNull(mainFile);
+                Assert.AreEqual("Generated code", File.ReadAllText(mainFile.SourceFile));
+                var expectedFile1Path = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "File1.cs");
+                var file1 = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == expectedFile1Path);
+                Assert.IsNotNull(file1);
+                Assert.AreEqual("Contents1", File.ReadAllText(file1.SourceFile));
+                var expectedFile2Path = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "File2.cs");
+                var file2 = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == expectedFile2Path);
+                Assert.IsNotNull(file2);
+                Assert.AreEqual("Contents2", File.ReadAllText(file2.SourceFile));
+            }
+            finally
+            {
+                File.Delete(file1TempPath);
+                File.Delete(file2TempPath);
+            }
         }
 
         [TestMethod]
