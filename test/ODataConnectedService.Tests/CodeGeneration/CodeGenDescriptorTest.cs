@@ -257,28 +257,30 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             await AssertGeneratedFileNameRejectedAsync(fileName).ConfigureAwait(false);
         }
 
-        public static IEnumerable<object[]> ReservedFileNameTestData
-        {
-            get
-            {
-                string[] reservedFileNames =
-                {
-                    "CON", "PRN", "AUX", "NUL",
-                    "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9",
-                    "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"
-                };
-
-                foreach (string reservedFileName in reservedFileNames)
-                {
-                    yield return new object[] { $"{reservedFileName}.cs" };
-                }
-
-                yield return new object[] { "con.CS" };
-            }
-        }
-
         [DataTestMethod]
-        [DynamicData(nameof(ReservedFileNameTestData), DynamicDataSourceType.Property)]
+        [DataRow("CON.cs")]
+        [DataRow("PRN.cs")]
+        [DataRow("AUX.cs")]
+        [DataRow("NUL.cs")]
+        [DataRow("COM1.cs")]
+        [DataRow("COM2.cs")]
+        [DataRow("COM3.cs")]
+        [DataRow("COM4.cs")]
+        [DataRow("COM5.cs")]
+        [DataRow("COM6.cs")]
+        [DataRow("COM7.cs")]
+        [DataRow("COM8.cs")]
+        [DataRow("COM9.cs")]
+        [DataRow("LPT1.cs")]
+        [DataRow("LPT2.cs")]
+        [DataRow("LPT3.cs")]
+        [DataRow("LPT4.cs")]
+        [DataRow("LPT5.cs")]
+        [DataRow("LPT6.cs")]
+        [DataRow("LPT7.cs")]
+        [DataRow("LPT8.cs")]
+        [DataRow("LPT9.cs")]
+        [DataRow("con.CS")]
         public async Task GenerateFilesAsync_WithReservedFileName_ThrowsInvalidOperationException(string fileName)
         {
             await AssertGeneratedFileNameRejectedAsync(fileName).ConfigureAwait(false);
