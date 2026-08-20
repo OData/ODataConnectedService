@@ -204,22 +204,325 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             // when ODataT4CodeGenerator.TransformText() was called. Since we're using a dummy code generator
             // we need to manually ensure those files exist
             codeGen.MultipleFilesManager.GenerateFilesAsync(true).Wait();
-            
-            codeGenDescriptor.AddGeneratedClientCodeAsync(serviceConfig.Endpoint, referenceFolderPath, LanguageOption.GenerateCSharpCode, serviceConfig).Wait();
             var file1TempPath = codeGen.MultipleFilesManager.files[0].TemporaryFilePath;
             var file2TempPath = codeGen.MultipleFilesManager.files[1].TemporaryFilePath;
-            var expectedMainFilePath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "Main.cs");
-            var mainFile = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == expectedMainFilePath);
-            Assert.IsNotNull(mainFile);
-            Assert.AreEqual("Generated code", File.ReadAllText(mainFile.SourceFile));
-            var expectedFile1Path = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "File1.cs");
-            var file1 = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == expectedFile1Path);
-            Assert.IsNotNull(file1);
-            Assert.AreEqual("Contents1", File.ReadAllText(file1.SourceFile));
-            var expectedFile2Path = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "File2.cs");
-            var file2 = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == expectedFile2Path);
-            Assert.IsNotNull(file2);
-            Assert.AreEqual("Contents2", File.ReadAllText(file2.SourceFile));
+            try
+            {
+                codeGenDescriptor.AddGeneratedClientCodeAsync(serviceConfig.Endpoint, referenceFolderPath, LanguageOption.GenerateCSharpCode, serviceConfig).Wait();
+                Assert.AreNotEqual(file1TempPath, file2TempPath);
+                Assert.AreEqual(Path.Combine(Path.GetTempPath(), "File1.cs"), file1TempPath);
+                Assert.AreEqual(Path.Combine(Path.GetTempPath(), "File2.cs"), file2TempPath);
+                var expectedMainFilePath = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "Main.cs");
+                var mainFile = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == expectedMainFilePath);
+                Assert.IsNotNull(mainFile);
+                Assert.AreEqual("Generated code", File.ReadAllText(mainFile.SourceFile));
+                var expectedFile1Path = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "File1.cs");
+                var file1 = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == expectedFile1Path);
+                Assert.IsNotNull(file1);
+                Assert.AreEqual("Contents1", File.ReadAllText(file1.SourceFile));
+                var expectedFile2Path = Path.Combine(TestProjectRootPath, ServicesRootFolder, serviceName, "File2.cs");
+                var file2 = handlerHelper.AddedFiles.FirstOrDefault(f => f.CreatedFile == expectedFile2Path);
+                Assert.IsNotNull(file2);
+                Assert.AreEqual("Contents2", File.ReadAllText(file2.SourceFile));
+            }
+            finally
+            {
+                File.Delete(file1TempPath);
+                File.Delete(file2TempPath);
+            }
+        }
+
+        [TestMethod]
+        public void StartNewFile_WithNullName_ThrowsArgumentNullException()
+        {
+            var manager = new ODataT4CodeGenerator.FilesManager(new StringBuilder());
+
+            Assert.ThrowsException<ArgumentNullException>(() => manager.StartNewFile(null, false));
+        }
+
+        [DataTestMethod]
+        [DataRow("")]
+        [DataRow(" ")]
+        [DataRow(".")]
+        [DataRow("..")]
+        [DataRow("../Outside.cs")]
+        [DataRow(@"..\Outside.cs")]
+        [DataRow("Folder/Outside.cs")]
+        [DataRow(@"Folder\Outside.cs")]
+        [DataRow(@"C:\Outside.cs")]
+        [DataRow("Trailing.")]
+        [DataRow("Trailing ")]
+        public async Task GenerateFilesAsync_WithNonFileNameValue_ThrowsInvalidOperationException(string fileName)
+        {
+            await AssertGeneratedFileNameRejectedAsync(fileName).ConfigureAwait(false);
+        }
+
+        [DataTestMethod]
+        [DataRow("CON.cs")]
+        [DataRow("PRN.cs")]
+        [DataRow("AUX.cs")]
+        [DataRow("NUL.cs")]
+        [DataRow("COM1.cs")]
+        [DataRow("COM2.cs")]
+        [DataRow("COM3.cs")]
+        [DataRow("COM4.cs")]
+        [DataRow("COM5.cs")]
+        [DataRow("COM6.cs")]
+        [DataRow("COM7.cs")]
+        [DataRow("COM8.cs")]
+        [DataRow("COM9.cs")]
+        [DataRow("LPT1.cs")]
+        [DataRow("LPT2.cs")]
+        [DataRow("LPT3.cs")]
+        [DataRow("LPT4.cs")]
+        [DataRow("LPT5.cs")]
+        [DataRow("LPT6.cs")]
+        [DataRow("LPT7.cs")]
+        [DataRow("LPT8.cs")]
+        [DataRow("LPT9.cs")]
+        [DataRow("con.CS")]
+        public async Task GenerateFilesAsync_WithReservedFileName_ThrowsInvalidOperationException(string fileName)
+        {
+            await AssertGeneratedFileNameRejectedAsync(fileName).ConfigureAwait(false);
+        }
+
+        public static IEnumerable<object[]> ControlCharacterTestData
+        {
+            get
+            {
+                for (int value = 0; value < 32; value++)
+                {
+                    yield return new object[] { $"Name{(char)value}Part.cs" };
+                }
+            }
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(ControlCharacterTestData), DynamicDataSourceType.Property)]
+        public async Task GenerateFilesAsync_WithControlCharacter_ThrowsInvalidOperationException(string fileName)
+        {
+            await AssertGeneratedFileNameRejectedAsync(fileName).ConfigureAwait(false);
+        }
+
+        public static IEnumerable<object[]> InvalidGeneratedFileNameCharacterTestData
+        {
+            get
+            {
+                char[] invalidCharacters = { '/', '\\', ':', '"', '<', '>', '|', '?', '*' };
+                foreach (char invalidCharacter in invalidCharacters)
+                {
+                    yield return new object[] { $"Name{invalidCharacter}Part.cs" };
+                }
+            }
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(InvalidGeneratedFileNameCharacterTestData), DynamicDataSourceType.Property)]
+        public async Task GenerateFilesAsync_WithInvalidFileNameCharacter_ThrowsInvalidOperationException(string fileName)
+        {
+            await AssertGeneratedFileNameRejectedAsync(fileName).ConfigureAwait(false);
+        }
+
+        [DataTestMethod]
+        [DataRow("COM0.cs")]
+        [DataRow("COM10.cs")]
+        [DataRow("LPT0.cs")]
+        [DataRow("LPT10.cs")]
+        [DataRow("Console.cs")]
+        [DataRow("Name Part.cs")]
+        public async Task GenerateFilesAsync_WithSimilarValidFileName_GeneratesFile(string fileName)
+        {
+            var template = new StringBuilder();
+            var manager = new ODataT4CodeGenerator.FilesManager(template);
+            manager.StartNewFile(fileName, false);
+            template.Append("Contents");
+            manager.EndBlock();
+
+            try
+            {
+                await manager.GenerateFilesAsync(true).ConfigureAwait(false);
+
+                Assert.IsTrue(File.Exists(manager.files[0].TemporaryFilePath));
+            }
+            finally
+            {
+                File.Delete(manager.files[0].TemporaryFilePath);
+            }
+        }
+
+        private static async Task AssertGeneratedFileNameRejectedAsync(string fileName)
+        {
+            var template = new StringBuilder();
+            var manager = new ODataT4CodeGenerator.FilesManager(template);
+            manager.StartNewFile("Valid.cs", false);
+            template.Append("Valid");
+            manager.EndBlock();
+            manager.StartNewFile(fileName, false);
+            template.Append("Invalid");
+            manager.EndBlock();
+
+            await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => manager.GenerateFilesAsync(true)).ConfigureAwait(false);
+
+            Assert.IsTrue(manager.files.All(block => block.TemporaryFilePath == null));
+        }
+
+        [TestMethod]
+        public async Task GenerateFilesAsync_WhenSplitIsFalse_DoesNotCreateQueuedFile()
+        {
+            var template = new StringBuilder();
+            var manager = new ODataT4CodeGenerator.FilesManager(template);
+            string fileName = "../NotGenerated.cs";
+            manager.StartNewFile(fileName, false);
+            template.Append("Contents");
+            manager.EndBlock();
+
+            await manager.GenerateFilesAsync(false).ConfigureAwait(false);
+
+            Assert.IsNull(manager.files[0].TemporaryFilePath);
+            Assert.AreEqual("Contents", template.ToString());
+        }
+
+        [TestMethod]
+        public async Task GenerateFilesAsync_AfterBlocksAreCleared_DoesNotCreateFiles()
+        {
+            var template = new StringBuilder();
+            var manager = new ODataT4CodeGenerator.FilesManager(template);
+            string fileName = $"Cleared-{Guid.NewGuid():N}.cs";
+            string expectedPath = Path.Combine(Path.GetTempPath(), fileName);
+            manager.StartNewFile(fileName, false);
+            template.Append("Cleared contents");
+            manager.EndBlock();
+            manager.files.Clear();
+
+            await manager.GenerateFilesAsync(true).ConfigureAwait(false);
+
+            Assert.IsFalse(File.Exists(expectedPath));
+        }
+
+        [TestMethod]
+        public async Task GenerateFilesAsync_AfterBlockIsRemovedAndAnotherIsAdded_GeneratesOnlyCurrentBlock()
+        {
+            var template = new StringBuilder();
+            var manager = new ODataT4CodeGenerator.FilesManager(template);
+            string removedFileName = $"Removed-{Guid.NewGuid():N}.cs";
+            string currentFileName = $"Current-{Guid.NewGuid():N}.cs";
+            string removedPath = Path.Combine(Path.GetTempPath(), removedFileName);
+
+            manager.StartNewFile(removedFileName, false);
+            template.Append("Removed contents");
+            manager.EndBlock();
+            manager.files.RemoveAt(0);
+            manager.StartNewFile(currentFileName, false);
+            template.Append("Current contents");
+            manager.EndBlock();
+
+            try
+            {
+                await manager.GenerateFilesAsync(true).ConfigureAwait(false);
+
+                Assert.IsFalse(File.Exists(removedPath));
+                Assert.IsTrue(File.Exists(manager.files[0].TemporaryFilePath));
+                Assert.AreEqual("Current contents", File.ReadAllText(manager.files[0].TemporaryFilePath));
+            }
+            finally
+            {
+                string temporaryFilePath = manager.files[0].TemporaryFilePath;
+                if (File.Exists(temporaryFilePath))
+                {
+                    File.Delete(temporaryFilePath);
+                }
+            }
+        }
+
+        [DataTestMethod]
+        [DataRow("Same.cs", "Same.cs")]
+        [DataRow("Same.cs", "same.cs")]
+        public async Task GenerateFilesAsync_WithDuplicateNames_RejectsBatchBeforeCreatingFiles(
+            string firstFileName,
+            string secondFileName)
+        {
+            var template = new StringBuilder();
+            var manager = new ODataT4CodeGenerator.FilesManager(template);
+            manager.StartNewFile(firstFileName, false);
+            template.Append("First");
+            manager.EndBlock();
+            manager.StartNewFile(secondFileName, false);
+            template.Append("Second");
+            manager.EndBlock();
+
+            await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => manager.GenerateFilesAsync(true)).ConfigureAwait(false);
+
+            Assert.IsTrue(manager.files.All(block => block.TemporaryFilePath == null));
+        }
+
+        [TestMethod]
+        public async Task GenerateFilesAsync_WithChangedBlockName_RejectsOutputBeforeCreatingFile()
+        {
+            var template = new StringBuilder();
+            var manager = new ODataT4CodeGenerator.FilesManager(template);
+            string outsideFileName = $"Outside-{Guid.NewGuid():N}.cs";
+            string changedName = $"../{outsideFileName}";
+            string outsidePath = Path.GetFullPath(Path.Combine(Path.GetTempPath(), changedName));
+            manager.StartNewFile($"Original-{Guid.NewGuid():N}.cs", false);
+            template.Append("Contents");
+            manager.EndBlock();
+            manager.files[0].Name = changedName;
+
+            try
+            {
+                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => manager.GenerateFilesAsync(true)).ConfigureAwait(false);
+
+                Assert.IsFalse(File.Exists(outsidePath));
+                Assert.IsNull(manager.files[0].TemporaryFilePath);
+            }
+            finally
+            {
+                if (File.Exists(outsidePath))
+                {
+                    File.Delete(outsidePath);
+                }
+            }
+        }
+
+        [TestMethod]
+        public async Task CopyGeneratedFilesAsync_WithChangedBlockName_RejectsOutputBeforeAddingFile()
+        {
+            var template = new StringBuilder();
+            var manager = new ODataT4CodeGenerator.FilesManager(template);
+            var fileHandler = new Mock<IFileHandler>();
+            var logger = new Mock<IMessageLogger>();
+            string originalFileName = $"Original-{Guid.NewGuid():N}.cs";
+            string outsideFileName = $"Outside-{Guid.NewGuid():N}.cs";
+            string referenceFolder = Path.Combine(TestProjectRootPath, ServicesRootFolder, "MyService");
+            string outsidePath = Path.GetFullPath(Path.Combine(referenceFolder, "..", outsideFileName));
+            manager.StartNewFile(originalFileName, false);
+            template.Append("Contents");
+            manager.EndBlock();
+
+            try
+            {
+                await manager.GenerateFilesAsync(true).ConfigureAwait(false);
+                manager.files[0].Name = $"../{outsideFileName}";
+
+                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() =>
+                    manager.CopyGeneratedFilesAsync(true, fileHandler.Object, logger.Object, referenceFolder, true, false)).ConfigureAwait(false);
+
+                Assert.IsFalse(File.Exists(outsidePath));
+                fileHandler.Verify(
+                    handler => handler.AddFileAsync(
+                        It.IsAny<string>(),
+                        It.IsAny<string>(),
+                        It.IsAny<ODataFileOptions>()),
+                    Times.Never);
+            }
+            finally
+            {
+                string temporaryFilePath = manager.files[0].TemporaryFilePath;
+                if (File.Exists(temporaryFilePath))
+                {
+                    File.Delete(temporaryFilePath);
+                }
+            }
         }
 
         [TestMethod]

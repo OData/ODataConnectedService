@@ -30,6 +30,16 @@
 /// </summary>
 /// <param name="context">The code generation context.</param>
 public class FilesManager {
+    private static readonly char[] InvalidGeneratedFileNameChars = { '/', '\\', ':', '"', '<', '>', '|', '?', '*' };
+
+    // Windows reserves these device names even when followed by an extension:
+    // console, printer, auxiliary, null, serial ports, and parallel printer ports.
+    private static readonly HashSet<string> ReservedFileNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        "CON", "PRN", "AUX", "NUL",
+        "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9",
+        "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"
+    };
 
     /// <summary>
     /// Creates an instance of the FilesManager. The object used to generate and manage
@@ -136,9 +146,10 @@ public class FilesManager {
         {
             var tasks = new List<Task>();
             EndBlock();
+            ValidateGeneratedFileNames();
             string headerText = Template.ToString(_header.Start, _header.Length);
             string footerText = Template.ToString(_footer.Start, _footer.Length);
-            var outputPath = Path.GetTempPath();
+            string outputPath = Path.GetTempPath();
             int length = files.Count;
             for (int i = length; i > 0; i--)
             {
@@ -163,6 +174,7 @@ public class FilesManager {
     {
         if (split)
         {
+            ValidateGeneratedFileNames();
             int length = files.Count;
             await logger?.WriteMessageAsync(LogMessageCategory.Information, "Adding {0} Generated files to the project. This may take a while!", length);
             for (int i = length; i > 0; i--)
@@ -172,16 +184,12 @@ public class FilesManager {
                 string fileName = block.TemporaryFilePath;
                 if (!File.Exists(fileName)) continue;
 
-                string outputFile = Path.Combine(referenceFolder, block.Name);
+                string outputFile = ResolveGeneratedFilePath(referenceFolder, block.Name);
                 bool fileExists = File.Exists(outputFile);
               
-                await handlerHelper.AddFileAsync(fileName, outputFile, new ODataFileOptions { OpenOnComplete = OpenGeneratedFilesInIDE, SuppressOverwritePrompt = true })
-                .ContinueWith(
-                    async _ =>
-                    {
-                        await logger?.WriteMessageAsync(LogMessageCategory.Information,
-                            "\"{0}\" has been {1}.", block.Name, fileExists ? "updated" : "added");
-                    }, System.Threading.Tasks.TaskContinuationOptions.ExecuteSynchronously);
+                await handlerHelper.AddFileAsync(fileName, outputFile, new ODataFileOptions { OpenOnComplete = OpenGeneratedFilesInIDE, SuppressOverwritePrompt = true });
+                await logger?.WriteMessageAsync(LogMessageCategory.Information,
+                    "\"{0}\" has been {1}.", block.Name, fileExists ? "updated" : "added");
             }
         }
     }
@@ -200,6 +208,79 @@ public class FilesManager {
             fileStream.SetLength(0);
             await writer.WriteAsync(content).ConfigureAwait(false);
         }
+    }
+
+    private void ValidateGeneratedFileNames()
+    {
+        HashSet<string> fileNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        int length = files.Count;
+        for (int i = length; i > 0; i--)
+        {
+            Block block = files[i - 1];
+            if (block.IsContainer) continue;
+            ValidateGeneratedFileName(block.Name);
+            if (!fileNames.Add(block.Name))
+            {
+                throw new InvalidOperationException("Generated file names must be unique.");
+            }
+        }
+    }
+
+    private static string ResolveGeneratedFilePath(string outputDirectory, string fileName)
+    {
+        string fullOutputDirectory = Path.GetFullPath(outputDirectory);
+        string outputDirectoryPrefix = fullOutputDirectory.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+            + Path.DirectorySeparatorChar;
+        string fullOutputPath = Path.GetFullPath(Path.Combine(fullOutputDirectory, fileName));
+        StringComparison comparison = Path.DirectorySeparatorChar == '\\'
+            ? StringComparison.OrdinalIgnoreCase
+            : StringComparison.Ordinal;
+        if (!fullOutputPath.StartsWith(outputDirectoryPrefix, comparison))
+        {
+            throw new InvalidOperationException("Generated file path must remain within the output directory.");
+        }
+
+        return fullOutputPath;
+    }
+
+    private static void ValidateGeneratedFileName(string fileName)
+    {
+        if (String.IsNullOrWhiteSpace(fileName))
+        {
+            throw new InvalidOperationException("Generated file name cannot be null or empty.");
+        }
+
+        if (fileName == "."
+            || fileName == ".."
+            || fileName.IndexOfAny(InvalidGeneratedFileNameChars) >= 0
+            || fileName.EndsWith(".", StringComparison.Ordinal)
+            || fileName.EndsWith(" ", StringComparison.Ordinal)
+            || ContainsControlCharacter(fileName)
+            || IsReservedFileName(fileName))
+        {
+            throw new InvalidOperationException("Generated file name must not include directory information or invalid characters.");
+        }
+    }
+
+    private static bool ContainsControlCharacter(string fileName)
+    {
+        // U+0000 through U+001F are non-printing control characters and invalid in Windows file names.
+        int length = fileName.Length;
+        for (int i = 0; i < length; i++)
+        {
+            if (fileName[i] < 32)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool IsReservedFileName(string fileName)
+    {
+        string baseName = Path.GetFileNameWithoutExtension(fileName);
+        return ReservedFileNames.Contains(baseName);
     }
 
     public virtual string GetCustomToolNamespace(string fileName)
