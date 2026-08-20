@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\EdmHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ExtensionMethods.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ExtensionsHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\FeatureFlags.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ProjectHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\UserSettingsPersistenceHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ConnectedServiceFileHandler.cs" />

@@ -30,9 +30,12 @@ namespace Microsoft.OData.ConnectedService.Tests.TestHelpers
 
         public object SavedExtendedDesignData { get; private set; }
 
+        public string SavedExtendedDesignDataJson { get; private set; }
+
         public override void SetExtendedDesignerData<TData>(TData data)
         {
             SavedExtendedDesignData = data;
+            SavedExtendedDesignDataJson = Newtonsoft.Json.JsonConvert.SerializeObject(data);
         }
         public override IDictionary<string, object> Args =>
             throw new System.NotImplementedException();

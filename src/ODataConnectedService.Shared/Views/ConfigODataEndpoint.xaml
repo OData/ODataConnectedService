@@ -126,7 +126,8 @@
                 VerticalAlignment="Top"
                 Content="Save Custom Http Headers In Settings Config File"
                 FontWeight="Medium"
-                IsChecked="{Binding Path=UserSettings.StoreCustomHttpHeaders, Mode=TwoWay}" />
+                IsChecked="{Binding Path=UserSettings.StoreCustomHttpHeaders, Mode=TwoWay}"
+                Visibility="Collapsed" />
         </StackPanel>
 
         <CheckBox
@@ -212,8 +213,8 @@
                     VerticalAlignment="Top"
                     Content="Save Web Proxy Credentials In Settings Config File"
                     FontWeight="Medium"
-                    IsChecked="{Binding Path=UserSettings.StoreWebProxyNetworkCredentials, Mode=TwoWay}" />
-
+                    IsChecked="{Binding Path=UserSettings.StoreWebProxyNetworkCredentials, Mode=TwoWay}"
+                    Visibility="Collapsed" />
             </StackPanel>
         </StackPanel>
     </StackPanel>

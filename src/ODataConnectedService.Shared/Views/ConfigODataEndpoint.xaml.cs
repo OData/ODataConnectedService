@@ -22,8 +22,19 @@ namespace Microsoft.OData.ConnectedService.Views
         internal UserSettings UserSettings { get; set; }
 
         public ConfigODataEndpoint()
+            : this(FeatureFlags.IsEnabled(FeatureFlags.ShowLegacyPersistenceOptions))
+        {
+        }
+
+        internal ConfigODataEndpoint(bool showLegacyPersistenceOptions)
         {
             InitializeComponent();
+
+            Visibility legacyPersistenceOptionsVisibility = showLegacyPersistenceOptions
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+            StoreCustomHttpHeaders.Visibility = legacyPersistenceOptionsVisibility;
+            StoreWebProxyNetworkCredentials.Visibility = legacyPersistenceOptionsVisibility;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
