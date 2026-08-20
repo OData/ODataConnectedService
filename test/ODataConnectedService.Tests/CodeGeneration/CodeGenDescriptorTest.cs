@@ -250,23 +250,105 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
         [DataRow("Folder/Outside.cs")]
         [DataRow(@"Folder\Outside.cs")]
         [DataRow(@"C:\Outside.cs")]
-        [DataRow("Name:Part.cs")]
-        [DataRow("Name|Part.cs")]
-        [DataRow("Name?Part.cs")]
-        [DataRow("Name*Part.cs")]
-        [DataRow("Name\"Part.cs")]
-        [DataRow("Name<Part.cs")]
-        [DataRow("Name>Part.cs")]
-        [DataRow("Name\u0001Part.cs")]
         [DataRow("Trailing.")]
         [DataRow("Trailing ")]
-        [DataRow("CON.cs")]
-        [DataRow("prn.cs")]
-        [DataRow("AUX.cs")]
-        [DataRow("nul.cs")]
-        [DataRow("COM1.cs")]
-        [DataRow("lpt9.cs")]
         public async Task GenerateFilesAsync_WithNonFileNameValue_ThrowsInvalidOperationException(string fileName)
+        {
+            await AssertGeneratedFileNameRejectedAsync(fileName).ConfigureAwait(false);
+        }
+
+        public static IEnumerable<object[]> ReservedFileNameTestData
+        {
+            get
+            {
+                string[] reservedFileNames =
+                {
+                    "CON", "PRN", "AUX", "NUL",
+                    "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9",
+                    "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"
+                };
+
+                foreach (string reservedFileName in reservedFileNames)
+                {
+                    yield return new object[] { $"{reservedFileName}.cs" };
+                }
+
+                yield return new object[] { "con.CS" };
+            }
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(ReservedFileNameTestData), DynamicDataSourceType.Property)]
+        public async Task GenerateFilesAsync_WithReservedFileName_ThrowsInvalidOperationException(string fileName)
+        {
+            await AssertGeneratedFileNameRejectedAsync(fileName).ConfigureAwait(false);
+        }
+
+        public static IEnumerable<object[]> ControlCharacterTestData
+        {
+            get
+            {
+                for (int value = 0; value < 32; value++)
+                {
+                    yield return new object[] { $"Name{(char)value}Part.cs" };
+                }
+            }
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(ControlCharacterTestData), DynamicDataSourceType.Property)]
+        public async Task GenerateFilesAsync_WithControlCharacter_ThrowsInvalidOperationException(string fileName)
+        {
+            await AssertGeneratedFileNameRejectedAsync(fileName).ConfigureAwait(false);
+        }
+
+        public static IEnumerable<object[]> InvalidGeneratedFileNameCharacterTestData
+        {
+            get
+            {
+                char[] invalidCharacters = { '/', '\\', ':', '"', '<', '>', '|', '?', '*' };
+                foreach (char invalidCharacter in invalidCharacters)
+                {
+                    yield return new object[] { $"Name{invalidCharacter}Part.cs" };
+                }
+            }
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(InvalidGeneratedFileNameCharacterTestData), DynamicDataSourceType.Property)]
+        public async Task GenerateFilesAsync_WithInvalidFileNameCharacter_ThrowsInvalidOperationException(string fileName)
+        {
+            await AssertGeneratedFileNameRejectedAsync(fileName).ConfigureAwait(false);
+        }
+
+        [DataTestMethod]
+        [DataRow("COM0.cs")]
+        [DataRow("COM10.cs")]
+        [DataRow("LPT0.cs")]
+        [DataRow("LPT10.cs")]
+        [DataRow("Console.cs")]
+        [DataRow("Name Part.cs")]
+        public async Task GenerateFilesAsync_WithSimilarValidFileName_GeneratesFile(string fileName)
+        {
+            var template = new StringBuilder();
+            var manager = new ODataT4CodeGenerator.FilesManager(template);
+            manager.StartNewFile(fileName, false);
+            template.Append("Contents");
+            manager.EndBlock();
+
+            try
+            {
+                await manager.GenerateFilesAsync(true).ConfigureAwait(false);
+
+                Assert.IsTrue(File.Exists(manager.files[0].TemporaryFilePath));
+            }
+            finally
+            {
+                File.Delete(manager.files[0].TemporaryFilePath);
+            }
+        }
+
+        private static async Task AssertGeneratedFileNameRejectedAsync(string fileName)
         {
             var template = new StringBuilder();
             var manager = new ODataT4CodeGenerator.FilesManager(template);
@@ -277,7 +359,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             template.Append("Invalid");
             manager.EndBlock();
 
-            await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => manager.GenerateFilesAsync(true));
+            await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => manager.GenerateFilesAsync(true)).ConfigureAwait(false);
 
             Assert.IsTrue(manager.files.All(block => block.TemporaryFilePath == null));
         }
@@ -292,7 +374,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             template.Append("Contents");
             manager.EndBlock();
 
-            await manager.GenerateFilesAsync(false);
+            await manager.GenerateFilesAsync(false).ConfigureAwait(false);
 
             Assert.IsNull(manager.files[0].TemporaryFilePath);
             Assert.AreEqual("Contents", template.ToString());
@@ -310,7 +392,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             manager.EndBlock();
             manager.files.Clear();
 
-            await manager.GenerateFilesAsync(true);
+            await manager.GenerateFilesAsync(true).ConfigureAwait(false);
 
             Assert.IsFalse(File.Exists(expectedPath));
         }
@@ -334,7 +416,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
 
             try
             {
-                await manager.GenerateFilesAsync(true);
+                await manager.GenerateFilesAsync(true).ConfigureAwait(false);
 
                 Assert.IsFalse(File.Exists(removedPath));
                 Assert.IsTrue(File.Exists(manager.files[0].TemporaryFilePath));
@@ -366,7 +448,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
             template.Append("Second");
             manager.EndBlock();
 
-            await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => manager.GenerateFilesAsync(true));
+            await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => manager.GenerateFilesAsync(true)).ConfigureAwait(false);
 
             Assert.IsTrue(manager.files.All(block => block.TemporaryFilePath == null));
         }
@@ -386,7 +468,7 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
 
             try
             {
-                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => manager.GenerateFilesAsync(true));
+                await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => manager.GenerateFilesAsync(true)).ConfigureAwait(false);
 
                 Assert.IsFalse(File.Exists(outsidePath));
                 Assert.IsNull(manager.files[0].TemporaryFilePath);
@@ -417,11 +499,11 @@ namespace Microsoft.OData.ConnectedService.Tests.CodeGeneration
 
             try
             {
-                await manager.GenerateFilesAsync(true);
+                await manager.GenerateFilesAsync(true).ConfigureAwait(false);
                 manager.files[0].Name = $"../{outsideFileName}";
 
                 await Assert.ThrowsExceptionAsync<InvalidOperationException>(() =>
-                    manager.CopyGeneratedFilesAsync(true, fileHandler.Object, logger.Object, referenceFolder, true, false));
+                    manager.CopyGeneratedFilesAsync(true, fileHandler.Object, logger.Object, referenceFolder, true, false)).ConfigureAwait(false);
 
                 Assert.IsFalse(File.Exists(outsidePath));
                 fileHandler.Verify(
