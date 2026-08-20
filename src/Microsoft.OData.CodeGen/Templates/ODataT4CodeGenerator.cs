@@ -8598,6 +8598,15 @@ this.Write("End Namespace\r\n");
 public class FilesManager {
     private static readonly char[] InvalidGeneratedFileNameChars = { '/', '\\', ':', '"', '<', '>', '|', '?', '*' };
 
+    // Windows reserves these device names even when followed by an extension:
+    // console, printer, auxiliary, null, serial ports, and parallel printer ports.
+    private static readonly HashSet<string> ReservedFileNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        "CON", "PRN", "AUX", "NUL",
+        "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9",
+        "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"
+    };
+
     /// <summary>
     /// Creates an instance of the FilesManager. The object used to generate and manage
     /// multiple source files.
@@ -8821,6 +8830,7 @@ public class FilesManager {
 
     private static bool ContainsControlCharacter(string fileName)
     {
+        // U+0000 through U+001F are non-printing control characters and invalid in Windows file names.
         int length = fileName.Length;
         for (int i = 0; i < length; i++)
         {
@@ -8836,19 +8846,7 @@ public class FilesManager {
     private static bool IsReservedFileName(string fileName)
     {
         string baseName = Path.GetFileNameWithoutExtension(fileName);
-        if (baseName.Equals("CON", StringComparison.OrdinalIgnoreCase)
-            || baseName.Equals("PRN", StringComparison.OrdinalIgnoreCase)
-            || baseName.Equals("AUX", StringComparison.OrdinalIgnoreCase)
-            || baseName.Equals("NUL", StringComparison.OrdinalIgnoreCase))
-        {
-            return true;
-        }
-
-        return baseName.Length == 4
-            && (baseName.StartsWith("COM", StringComparison.OrdinalIgnoreCase)
-                || baseName.StartsWith("LPT", StringComparison.OrdinalIgnoreCase))
-            && baseName[3] >= '1'
-            && baseName[3] <= '9';
+        return ReservedFileNames.Contains(baseName);
     }
 
     public virtual string GetCustomToolNamespace(string fileName)
