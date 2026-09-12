@@ -6,23 +6,18 @@
 //----------------------------------------------------------------------------
 
 using System;
+using System.Collections.Concurrent;
+using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using EnvDTE;
+using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.Logging;
 using Microsoft.OData.CodeGen.PackageInstallation;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.ConnectedServices;
 using NuGet.VisualStudio;
 using Shell = Microsoft.VisualStudio.Shell;
-#if VS2022PLUS
-using System.Linq;
-using System.Threading;
-using Microsoft.ServiceHub.Framework;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.Shell.ServiceBroker;
-using NuGet.VisualStudio.Contracts;
-#endif
 
 
 namespace Microsoft.OData.ConnectedService
@@ -32,14 +27,15 @@ namespace Microsoft.OData.ConnectedService
     /// </summary>
     public class ConnectedServicePackageInstaller : IPackageInstaller
     {
+        private static readonly ConcurrentDictionary<string, string> InstalledPackageVersions =
+            new ConcurrentDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
         public ConnectedServiceHandlerContext Context { get; private set; }
         public Project Project { get; private set; }
         public IMessageLogger MessageLogger { get; private set; }
         public IVsPackageInstaller PackageInstaller { get; protected set; }
 
-#if !VS2022PLUS
         public IVsPackageInstallerServices PackageInstallerServices { get; protected set; }
-#endif
 
         /// <summary>
         /// Creates an instance of <see cref="ConnectedServicePackageInstaller"/> 
@@ -63,9 +59,7 @@ namespace Microsoft.OData.ConnectedService
             var componentModel = (IComponentModel)Shell.Package.GetGlobalService(typeof(SComponentModel));
             if (componentModel != null)
             {
-#if !VS2022PLUS
                 this.PackageInstallerServices = componentModel.GetService<IVsPackageInstallerServices>();
-#endif
                 this.PackageInstaller = componentModel.GetService<IVsPackageInstaller>();
             }
         }
@@ -77,107 +71,88 @@ namespace Microsoft.OData.ConnectedService
         /// <param name="packageName">The name of the package to be installed</param>
         public async Task CheckAndInstallNuGetPackageAsync(string packageSource, string packageName)
         {
-            if (PackageInstaller != null)
+            if (PackageInstaller == null)
             {
-                try
-                {
-                    if (!await this.IsPackageInstalledAsync(packageName).ConfigureAwait(false))
-                    {
-                        PackageInstaller.InstallPackage(packageSource, this.Project, packageName, (string)null, false);
-
-                        await (this.MessageLogger?.WriteMessageAsync(LogMessageCategory.Information, $"Nuget Package \"{packageName}\" for OData client was added.")).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        await (this.MessageLogger?.WriteMessageAsync(LogMessageCategory.Information, $"Nuget Package \"{packageName}\" for OData client already installed.")).ConfigureAwait(false);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    await (this.MessageLogger?.WriteMessageAsync(LogMessageCategory.Error, $"Nuget Package \"{packageName}\" for OData client not installed. Error: {ex.Message}.")).ConfigureAwait(false);
-                }
+                await (this.MessageLogger?.WriteMessageAsync(LogMessageCategory.Error, "The packages were not installed. An error occurred during the installation of packages.")).ConfigureAwait(false);
+                throw new InvalidOperationException("The Visual Studio NuGet package installer is unavailable.");
             }
-            else
+
+            try
             {
-                await (this.MessageLogger?.WriteMessageAsync(LogMessageCategory.Error, $"The packages were not installed. An error occurred during the installation of packages.")).ConfigureAwait(false);
+                await Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                string targetFramework = GetTargetFrameworkMoniker(this.Project);
+                string packageKey = GetPackageKey(this.Project, packageName);
+                string packageVersion = await NuGetPackageVersionResolver.GetLatestCompatibleVersionAsync(
+                    packageSource, packageName, targetFramework).ConfigureAwait(false);
+                await Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+                bool isInstalled = this.IsPackageInstalled(packageName, packageVersion);
+                if (!isInstalled)
+                {
+                    PackageInstaller.InstallPackage(packageSource, this.Project, packageName, packageVersion, false);
+                }
+
+                if (packageVersion != null)
+                {
+                    InstalledPackageVersions[packageKey] = packageVersion;
+                }
+
+                string action = isInstalled ? "already installed" : "was added";
+                await (this.MessageLogger?.WriteMessageAsync(
+                    LogMessageCategory.Information,
+                    $"Nuget Package \"{packageName}\" for OData client {action}.")).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                await (this.MessageLogger?.WriteMessageAsync(LogMessageCategory.Error, $"Nuget Package \"{packageName}\" for OData client not installed. Error: {ex.Message}.")).ConfigureAwait(false);
+                throw;
             }
         }
 
-#if VS2022PLUS
-        /// <summary>
-        /// Determines whether the specified package is installed in the project using the brokered
-        /// <see cref="INuGetProjectService"/>, which supersedes the obsolete <c>IVsPackageInstallerServices</c> API.
-        /// </summary>
-        /// <param name="packageName">The package id to look for.</param>
-        /// <returns>True if the package is installed; otherwise false.</returns>
-        private async Task<bool> IsPackageInstalledAsync(string packageName)
+        private bool IsPackageInstalled(string packageName, string packageVersion)
         {
-            await Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
-            Guid projectGuid = this.TryGetProjectGuid();
-            IBrokeredServiceContainer serviceContainer = Shell.Package.GetGlobalService(typeof(SVsBrokeredServiceContainer)) as IBrokeredServiceContainer;
-
-            if (projectGuid == Guid.Empty || serviceContainer == null)
+            if (this.PackageInstallerServices == null)
             {
                 return false;
             }
 
-            IServiceBroker serviceBroker = serviceContainer.GetFullAccessServiceBroker();
-            INuGetProjectService nugetProjectService = await serviceBroker
-                .GetProxyAsync<INuGetProjectService>(NuGetServices.NuGetProjectServiceV1)
-                .ConfigureAwait(false);
+            return packageVersion == null
+                ? this.PackageInstallerServices.IsPackageInstalled(this.Project, packageName)
+                : this.PackageInstallerServices.IsPackageInstalledEx(this.Project, packageName, packageVersion);
+        }
 
+        internal static string GetTargetFrameworkMoniker(Project project)
+        {
+            string targetFrameworkMoniker = GetProjectProperty(project, "TargetFrameworkMoniker");
+            if (!string.IsNullOrWhiteSpace(targetFrameworkMoniker))
+            {
+                return targetFrameworkMoniker;
+            }
+
+            return GetProjectProperty(project, "TargetFramework") ?? GetProjectProperty(project, "TargetFrameworkVersion");
+        }
+
+        private static string GetProjectProperty(Project project, string propertyName)
+        {
             try
             {
-                if (nugetProjectService == null)
-                {
-                    return false;
-                }
-
-                InstalledPackagesResult result = await nugetProjectService
-                    .GetInstalledPackagesAsync(projectGuid, CancellationToken.None)
-                    .ConfigureAwait(false);
-
-                return result != null &&
-                    result.Status == InstalledPackageResultStatus.Successful &&
-                    result.Packages != null &&
-                    result.Packages.Any(p => p.Id.Equals(packageName, StringComparison.OrdinalIgnoreCase));
+                return Convert.ToString(project?.Properties?.Item(propertyName)?.Value, CultureInfo.InvariantCulture);
             }
-            finally
-            {
-                (nugetProjectService as IDisposable)?.Dispose();
-            }
+            catch (ArgumentException) { return null; }
+            catch (COMException) { return null; }
         }
 
-        /// <summary>
-        /// Resolves the project GUID required by <see cref="INuGetProjectService"/>. Must be called on the UI thread.
-        /// </summary>
-        /// <returns>The project GUID, or <see cref="Guid.Empty"/> when it could not be resolved.</returns>
-        private Guid TryGetProjectGuid()
+        internal static bool TryGetInstalledPackageVersion(Project project, string packageName, out string packageVersion)
         {
-#pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
-            if (Shell.Package.GetGlobalService(typeof(SVsSolution)) is IVsSolution solution &&
-                solution.GetProjectOfUniqueName(this.Project.UniqueName, out IVsHierarchy hierarchy) == VSConstants.S_OK &&
-                hierarchy != null &&
-                hierarchy.GetGuidProperty(VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ProjectIDGuid, out Guid projectGuid) == VSConstants.S_OK)
-            {
-                return projectGuid;
-            }
-#pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
+            return InstalledPackageVersions.TryGetValue(GetPackageKey(project, packageName), out packageVersion);
+        }
 
-            return Guid.Empty;
-        }
-#else
-        /// <summary>
-        /// Determines whether the specified package is installed in the project using <c>IVsPackageInstallerServices</c>.
-        /// </summary>
-        /// <param name="packageName">The package id to look for.</param>
-        /// <returns>True if the package is installed; otherwise false.</returns>
-        private Task<bool> IsPackageInstalledAsync(string packageName)
+        private static string GetPackageKey(Project project, string packageName)
         {
-            return Task.FromResult(this.PackageInstallerServices != null &&
-                this.PackageInstallerServices.IsPackageInstalled(this.Project, packageName));
+            return $"{project?.FullName}|{packageName}";
         }
-#endif
+
     }
 }

@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Build.Evaluation;
+using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.Logging;
 using NuGet.Common;
 using NuGet.Configuration;
@@ -209,30 +210,16 @@ namespace Microsoft.OData.Cli.PackageInstallers
         /// </summary>
         /// <param name="packageId">The nuget package to be installed</param>
         /// <param name="sourceRepository">The <see cref="SourceRepository"/> to use.</param>
-        /// <param name="projectTargetVersion">The version of net framework/.netcore that the project targets.</param>
+        /// <param name="projectTargetFramework">The version of net framework/.netcore that the project targets.</param>
         /// <returns>The <see cref="NuGetVersion"/> of the package</returns>
         private async Task<NuGetVersion> GetPackageLatestNugetVersionAsync(
             string packageId,
             SourceRepository sourceRepository,
             string projectTargetFramework)
         {
-            NuGetVersion packageVersion = null;
-            PackageSearchResource searchResource = await sourceRepository.GetResourceAsync<PackageSearchResource>();
-
-            string[] targetProjectFrameworks = new[] { projectTargetFramework };
-            SearchFilter searchFilter = new SearchFilter(false)
-            {
-                SupportedFrameworks = targetProjectFrameworks
-            };
-
-            IEnumerable<IPackageSearchMetadata> jsonNugetPackages = await searchResource
-                .SearchAsync(packageId, searchFilter, 0, 10, new Logger(this.messageLogger), CancellationToken.None);
-
-            //The first one is the latest package that is compatible with the supported framework
-            IPackageSearchMetadata jsonPackage = jsonNugetPackages.First();
-            packageVersion = NuGetVersion.Parse(jsonPackage.Identity.Version.ToString());
-
-            return packageVersion;
+            string packageVersion = await NuGetPackageVersionResolver.GetLatestCompatibleVersionAsync(
+                sourceRepository.PackageSource.Source, packageId, projectTargetFramework);
+            return NuGetVersion.Parse(packageVersion);
         }
 
         /// <summary>

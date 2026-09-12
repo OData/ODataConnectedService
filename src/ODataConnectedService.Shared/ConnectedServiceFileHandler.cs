@@ -14,20 +14,10 @@ using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.FileHandling;
 using Microsoft.OData.CodeGen.Logging;
 using Microsoft.OData.ConnectedService.Threading;
-using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.ConnectedServices;
 using Microsoft.VisualStudio.Shell;
-using NuGet.VisualStudio;
 using VSLangProj;
 using Task = System.Threading.Tasks.Task;
-#if VS2022PLUS
-using System.Threading;
-using Microsoft.ServiceHub.Framework;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.Shell.ServiceBroker;
-using NuGet.VisualStudio.Contracts;
-#endif
 
 namespace Microsoft.OData.ConnectedService
 {
@@ -81,10 +71,14 @@ namespace Microsoft.OData.ConnectedService
         /// <param name="targetPath">The path target where you want to copy a file to </param>
         /// <param name="oDataFileOptions">The options to use when adding a file to a target path.</param>
         /// <returns>Returns the path to the file that was added</returns>
-        public Task<string> AddFileAsync(string fileName, string targetPath, ODataFileOptions oDataFileOptions)
-            => oDataFileOptions != null
-                ? this.Context.HandlerHelper.AddFileAsync(fileName, targetPath, new AddFileOptions { SuppressOverwritePrompt = oDataFileOptions.SuppressOverwritePrompt, OpenOnComplete = oDataFileOptions.OpenOnComplete })
-                : this.Context.HandlerHelper.AddFileAsync(fileName, targetPath);
+        public async Task<string> AddFileAsync(string fileName, string targetPath, ODataFileOptions oDataFileOptions)
+        {
+            Task<string> addFileTask = await this.threadHelper.RunInUiThreadAsync(() =>
+                oDataFileOptions != null
+                    ? this.Context.HandlerHelper.AddFileAsync(fileName, targetPath, new AddFileOptions { SuppressOverwritePrompt = oDataFileOptions.SuppressOverwritePrompt, OpenOnComplete = oDataFileOptions.OpenOnComplete })
+                    : this.Context.HandlerHelper.AddFileAsync(fileName, targetPath));
+            return await addFileTask.ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Sets the CSDL file as an embedded resource.
@@ -131,19 +125,35 @@ namespace Microsoft.OData.ConnectedService
         {
             if (!this.isOdataClientVersionCached)
             {
-                IReadOnlyList<InstalledPackageInfo> installedPackages =
-                    await this.GetInstalledPackagesAsync().ConfigureAwait(false);
-
-                InstalledPackageInfo odataClientPackage = installedPackages?.FirstOrDefault(
-                    package => package.Id.Equals(
-                        Microsoft.OData.CodeGen.Common.Constants.V4ClientNuGetPackage,
-                        StringComparison.OrdinalIgnoreCase));
-
-                this.isOdataClientPackageInstalled = odataClientPackage != null;
-                if (odataClientPackage != null &&
-                    ODataClientVersionChecker.TryParseVersion(odataClientPackage.Version, out Version parsedVersion))
+                if (this.packagesProvider == null)
                 {
-                    this.odataClientVersion = parsedVersion;
+                    string packageVersion = await this.threadHelper.RunInUiThreadAsync(() =>
+                    {
+                        ConnectedServicePackageInstaller.TryGetInstalledPackageVersion(
+                            this.Project,
+                            Microsoft.OData.CodeGen.Common.Constants.V4ClientNuGetPackage,
+                            out string installedVersion);
+                        return installedVersion;
+                    });
+                    this.isOdataClientPackageInstalled =
+                        ODataClientVersionChecker.TryParseVersion(packageVersion, out this.odataClientVersion);
+                }
+                else
+                {
+                    IReadOnlyList<InstalledPackageInfo> installedPackages =
+                        await this.packagesProvider.GetInstalledPackagesAsync().ConfigureAwait(false);
+
+                    InstalledPackageInfo odataClientPackage = installedPackages?.FirstOrDefault(
+                        package => package.Id.Equals(
+                            Microsoft.OData.CodeGen.Common.Constants.V4ClientNuGetPackage,
+                            StringComparison.OrdinalIgnoreCase));
+
+                    this.isOdataClientPackageInstalled = odataClientPackage != null;
+                    if (odataClientPackage != null &&
+                        ODataClientVersionChecker.TryParseVersion(odataClientPackage.Version, out Version parsedVersion))
+                    {
+                        this.odataClientVersion = parsedVersion;
+                    }
                 }
 
                 this.isOdataClientVersionCached = true;
@@ -166,123 +176,6 @@ namespace Microsoft.OData.ConnectedService
             return version != null && versionPredicate(version);
         }
 
-        /// <summary>
-        /// Gets the packages installed in the project, using the injected
-        /// <see cref="IInstalledPackagesProvider"/> when one is supplied (for testing) or the
-        /// platform-specific NuGet query otherwise.
-        /// </summary>
-        /// <returns>The installed packages.</returns>
-        private Task<IReadOnlyList<InstalledPackageInfo>> GetInstalledPackagesAsync()
-        {
-            if (this.packagesProvider != null)
-            {
-                return this.packagesProvider.GetInstalledPackagesAsync();
-            }
-
-            return this.ResolveInstalledPackagesAsync();
-        }
-
-#if VS2022PLUS
-        /// <summary>
-        /// Resolves the installed packages using the brokered <see cref="INuGetProjectService"/>,
-        /// which supersedes the obsolete <c>IVsPackageInstallerServices</c> API.
-        /// </summary>
-        /// <returns>The installed packages.</returns>
-        private async Task<IReadOnlyList<InstalledPackageInfo>> ResolveInstalledPackagesAsync()
-        {
-            Guid projectGuid = await this.threadHelper.RunInUiThreadAsync(() => this.TryGetProjectGuid()).ConfigureAwait(false);
-            IBrokeredServiceContainer serviceContainer = await this.threadHelper.RunInUiThreadAsync(() =>
-            {
-#pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
-                return Package.GetGlobalService(typeof(SVsBrokeredServiceContainer)) as IBrokeredServiceContainer;
-#pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
-            }).ConfigureAwait(false);
-
-            if (projectGuid == Guid.Empty || serviceContainer == null)
-            {
-                return Array.Empty<InstalledPackageInfo>();
-            }
-
-            IServiceBroker serviceBroker = serviceContainer.GetFullAccessServiceBroker();
-            INuGetProjectService nugetProjectService = await serviceBroker
-                .GetProxyAsync<INuGetProjectService>(NuGetServices.NuGetProjectServiceV1)
-                .ConfigureAwait(false);
-
-            try
-            {
-                if (nugetProjectService == null)
-                {
-                    return Array.Empty<InstalledPackageInfo>();
-                }
-
-                InstalledPackagesResult result = await nugetProjectService
-                    .GetInstalledPackagesAsync(projectGuid, CancellationToken.None)
-                    .ConfigureAwait(false);
-
-                if (result == null ||
-                    result.Status != InstalledPackageResultStatus.Successful ||
-                    result.Packages == null)
-                {
-                    return Array.Empty<InstalledPackageInfo>();
-                }
-
-                return result.Packages
-                    .Select(package => new InstalledPackageInfo(package.Id, package.Version))
-                    .ToList();
-            }
-            finally
-            {
-                (nugetProjectService as IDisposable)?.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Resolves the project GUID required by <see cref="INuGetProjectService"/>. Must be called on the UI thread.
-        /// </summary>
-        /// <returns>The project GUID, or <see cref="Guid.Empty"/> when it could not be resolved.</returns>
-        private Guid TryGetProjectGuid()
-        {
-#pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
-            if (Package.GetGlobalService(typeof(SVsSolution)) is IVsSolution solution &&
-                solution.GetProjectOfUniqueName(this.Project.UniqueName, out IVsHierarchy hierarchy) == VSConstants.S_OK &&
-                hierarchy != null &&
-                hierarchy.GetGuidProperty(VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ProjectIDGuid, out Guid projectGuid) == VSConstants.S_OK)
-            {
-                return projectGuid;
-            }
-#pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
-
-            return Guid.Empty;
-        }
-#else
-        /// <summary>
-        /// Resolves the installed packages using <c>IVsPackageInstallerServices</c>.
-        /// </summary>
-        /// <returns>The installed packages.</returns>
-        private Task<IReadOnlyList<InstalledPackageInfo>> ResolveInstalledPackagesAsync()
-        {
-            return this.threadHelper.RunInUiThreadAsync<IReadOnlyList<InstalledPackageInfo>>(() =>
-            {
-#pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
-                IVsPackageInstallerServices packageInstallerServices = null;
-                if (Package.GetGlobalService(typeof(SComponentModel)) is IComponentModel componentModel)
-                {
-                    packageInstallerServices = componentModel.GetService<IVsPackageInstallerServices>();
-                }
-
-                if (packageInstallerServices == null)
-                {
-                    return Array.Empty<InstalledPackageInfo>();
-                }
-
-                return packageInstallerServices
-                    .GetInstalledPackages(this.Project)
-                    .Select(metadata => new InstalledPackageInfo(metadata.Id, metadata.VersionString))
-                    .ToList();
-#pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
-            });
-        }
-#endif
     }
 
     /// <summary>
