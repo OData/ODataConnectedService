@@ -42,6 +42,7 @@ namespace Microsoft.OData.Cli.PackageInstallers
         private readonly string packageSource;
         private readonly IMessageLogger messageLogger;
         private SourceRepository SourceRepository { get; set; }
+        private SourceRepositoryProvider SourceRepositoryProvider { get; set; }
         private string RootPath { get; set; }
         private ISettings DefaultSettings { get; set; }
 
@@ -80,6 +81,8 @@ namespace Microsoft.OData.Cli.PackageInstallers
             }
             
             this.DefaultSettings = Settings.LoadDefaultSettings(this.RootPath);
+            PackageSourceProvider packageSourceProvider = new PackageSourceProvider(this.DefaultSettings);
+            this.SourceRepositoryProvider = new SourceRepositoryProvider(packageSourceProvider, providers);
         }
 
         /// <summary>
@@ -94,7 +97,11 @@ namespace Microsoft.OData.Cli.PackageInstallers
             using (SourceCacheContext cacheContext = new SourceCacheContext())
             {
                 Logger logger = new Logger(this.messageLogger);
-                IEnumerable<SourceRepository> repositories = new[] { this.SourceRepository };
+                IReadOnlyList<SourceRepository> repositories = new[] { this.SourceRepository }
+                    .Concat(this.SourceRepositoryProvider.GetRepositories())
+                    .GroupBy(repository => repository.PackageSource.Source, StringComparer.OrdinalIgnoreCase)
+                    .Select(group => group.First())
+                    .ToList();
                 HashSet<SourcePackageDependencyInfo> availablePackages = new HashSet<SourcePackageDependencyInfo>(PackageIdentityComparer.Default);
                 NuGetFramework nuGetFramework = NuGetFramework.ParseFolder(projectTargetVersion?.Split('=')[1]);
 
@@ -197,6 +204,8 @@ namespace Microsoft.OData.Cli.PackageInstallers
                         new PackageIdentity(dependency.Id, dependency.VersionRange.MinVersion),
                         framework, cacheContext, logger, repositories, availablePackages);
                 }
+
+                return;
             }
         }
 
