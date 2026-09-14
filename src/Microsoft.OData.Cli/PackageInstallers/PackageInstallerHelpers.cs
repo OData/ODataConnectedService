@@ -42,7 +42,6 @@ namespace Microsoft.OData.Cli.PackageInstallers
         private readonly string packageSource;
         private readonly IMessageLogger messageLogger;
         private SourceRepository SourceRepository { get; set; }
-        private SourceRepositoryProvider SourceRepositoryProvider { get; set; }
         private string RootPath { get; set; }
         private ISettings DefaultSettings { get; set; }
 
@@ -81,8 +80,6 @@ namespace Microsoft.OData.Cli.PackageInstallers
             }
             
             this.DefaultSettings = Settings.LoadDefaultSettings(this.RootPath);
-            PackageSourceProvider packageSourceProvider = new PackageSourceProvider(this.DefaultSettings);
-            this.SourceRepositoryProvider = new SourceRepositoryProvider(packageSourceProvider, providers);
         }
 
         /// <summary>
@@ -97,7 +94,7 @@ namespace Microsoft.OData.Cli.PackageInstallers
             using (SourceCacheContext cacheContext = new SourceCacheContext())
             {
                 Logger logger = new Logger(this.messageLogger);
-                IEnumerable<SourceRepository> repositories = this.SourceRepositoryProvider.GetRepositories();
+                IEnumerable<SourceRepository> repositories = new[] { this.SourceRepository };
                 HashSet<SourcePackageDependencyInfo> availablePackages = new HashSet<SourcePackageDependencyInfo>(PackageIdentityComparer.Default);
                 NuGetFramework nuGetFramework = NuGetFramework.ParseFolder(projectTargetVersion?.Split('=')[1]);
 
@@ -113,7 +110,7 @@ namespace Microsoft.OData.Cli.PackageInstallers
                     Enumerable.Empty<PackageReference>(),
                     Enumerable.Empty<PackageIdentity>(),
                     availablePackages,
-                    this.SourceRepositoryProvider.GetRepositories().Select(s => s.PackageSource),
+                    repositories.Select(repository => repository.PackageSource),
                     logger);
 
                 PackageResolver resolver = new PackageResolver();

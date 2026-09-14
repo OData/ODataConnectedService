@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using EnvDTE;
@@ -80,10 +81,10 @@ namespace Microsoft.OData.ConnectedService
             try
             {
                 await Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                string targetFramework = GetTargetFrameworkMoniker(this.Project);
+                string[] targetFrameworks = GetTargetFrameworkMonikers(this.Project);
                 string packageKey = GetPackageKey(this.Project, packageName);
                 string packageVersion = await NuGetPackageVersionResolver.GetLatestCompatibleVersionAsync(
-                    packageSource, packageName, targetFramework).ConfigureAwait(false);
+                    packageSource, packageName, targetFrameworks).ConfigureAwait(false);
                 await Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
                 bool isInstalled = this.IsPackageInstalled(packageName, packageVersion);
@@ -123,15 +124,26 @@ namespace Microsoft.OData.ConnectedService
                 : this.PackageInstallerServices.IsPackageInstalledEx(this.Project, packageName, packageVersion);
         }
 
-        internal static string GetTargetFrameworkMoniker(Project project)
+        internal static string[] GetTargetFrameworkMonikers(Project project)
         {
+            string targetFrameworks = GetProjectProperty(project, "TargetFrameworks");
+            if (!string.IsNullOrWhiteSpace(targetFrameworks))
+            {
+                return targetFrameworks
+                    .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(framework => framework.Trim())
+                    .Where(framework => framework.Length > 0)
+                    .ToArray();
+            }
+
             string targetFrameworkMoniker = GetProjectProperty(project, "TargetFrameworkMoniker");
             if (!string.IsNullOrWhiteSpace(targetFrameworkMoniker))
             {
-                return targetFrameworkMoniker;
+                return new[] { targetFrameworkMoniker };
             }
 
-            return GetProjectProperty(project, "TargetFramework") ?? GetProjectProperty(project, "TargetFrameworkVersion");
+            string targetFramework = GetProjectProperty(project, "TargetFramework") ?? GetProjectProperty(project, "TargetFrameworkVersion");
+            return string.IsNullOrWhiteSpace(targetFramework) ? Array.Empty<string>() : new[] { targetFramework };
         }
 
         private static string GetProjectProperty(Project project, string propertyName)

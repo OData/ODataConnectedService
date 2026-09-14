@@ -93,7 +93,8 @@ namespace Microsoft.OData.CodeGen.Common
                     }
                 }
 
-                return packages.FirstOrDefault()?.Identity.Version.ToNormalizedString();
+                throw new InvalidOperationException(
+                    $"No stable version of package '{packageId}' is compatible with all target frameworks.");
             }
         }
 
