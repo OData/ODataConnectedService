@@ -121,6 +121,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="$(OutputPath)Newtonsoft.Json.dll;$(OutputPath)NuGet.Common.dll;$(OutputPath)NuGet.Configuration.dll;$(OutputPath)NuGet.Frameworks.dll;$(OutputPath)NuGet.Packaging.dll;$(OutputPath)NuGet.Protocol.dll;$(OutputPath)NuGet.Versioning.dll;$(OutputPath)System.Text.Json.dll">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Resource Include="..\SharedFiles\Resources\Icon.png">
       <Link>Resources\Icon.png</Link>
     </Resource>

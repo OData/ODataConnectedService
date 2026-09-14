@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Common\ExtensionMethodsTests.cs" />
     <Compile Include="Common\EdmHelperTests.cs" />
+    <Compile Include="Common\NuGetPackageVersionResolverTests.cs" />
     <Compile Include="Converters\BoolToVisibilityConverterTests.cs" />
     <Compile Include="Converters\SchemaTypeModelToVisibilityConverterTests.cs" />
     <Compile Include="FileHandling\ConnectedServiceFileHandlerTests.cs" />

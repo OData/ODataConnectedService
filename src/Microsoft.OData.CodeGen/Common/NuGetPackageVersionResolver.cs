@@ -28,9 +28,22 @@ namespace Microsoft.OData.CodeGen.Common
         /// <param name="packageId">The ID of the NuGet package.</param>
         /// <param name="targetFramework">The target framework to check compatibility against.</param>
         /// <returns>The latest compatible version of the NuGet package as a string.</returns>
-        public static async Task<string> GetLatestCompatibleVersionAsync(string packageSource, string packageId, string targetFramework)
+        public static Task<string> GetLatestCompatibleVersionAsync(string packageSource, string packageId, string targetFramework) =>
+            GetLatestCompatibleVersionAsync(packageSource, packageId, new[] { targetFramework });
+
+        /// <summary>
+        /// Get the latest version of a NuGet package compatible with all specified target frameworks.
+        /// </summary>
+        /// <param name="packageSource">The source of the NuGet package.</param>
+        /// <param name="packageId">The ID of the NuGet package.</param>
+        /// <param name="targetFrameworks">The target frameworks to check compatibility against.</param>
+        /// <returns>The latest compatible version of the NuGet package as a string.</returns>
+        public static async Task<string> GetLatestCompatibleVersionAsync(string packageSource, string packageId, IEnumerable<string> targetFrameworks)
         {
-            SourceRepository repository = new SourceRepository(new PackageSource(packageSource), Repository.Provider.GetCoreV3());
+            SourceRepository repository = new SourceRepository(
+                new PackageSource(packageSource),
+                // The core provider set includes both V3 and legacy V2 feed providers.
+                Repository.Provider.GetCoreV3());
             PackageMetadataResource metadataResource = await repository.GetResourceAsync<PackageMetadataResource>().ConfigureAwait(false);
 
             using (var cacheContext = new SourceCacheContext())
@@ -40,16 +53,18 @@ namespace Microsoft.OData.CodeGen.Common
                     .ConfigureAwait(false);
 
                 IReadOnlyList<IPackageSearchMetadata> packages = metadata.OrderByDescending(candidate => candidate.Identity.Version).ToList();
+                IReadOnlyList<NuGetFramework> frameworks = targetFrameworks
+                    .Where(targetFramework => !string.IsNullOrWhiteSpace(targetFramework))
+                    .Select(ParseTargetFramework)
+                    .ToList();
 
-                if (string.IsNullOrWhiteSpace(targetFramework))
+                if (frameworks.Count == 0)
                 {
                     return packages.FirstOrDefault()?.Identity.Version.ToNormalizedString();
                 }
 
                 FindPackageByIdResource packageResource = await repository.GetResourceAsync<FindPackageByIdResource>().ConfigureAwait(false);
-                NuGetFramework framework = targetFramework.StartsWith(".", StringComparison.Ordinal)
-                    ? NuGetFramework.ParseFrameworkName(targetFramework, DefaultFrameworkNameProvider.Instance)
-                    : NuGetFramework.ParseFolder(targetFramework);
+                FrameworkReducer frameworkReducer = new FrameworkReducer();
 
                 foreach (IPackageSearchMetadata package in packages)
                 {
@@ -70,7 +85,7 @@ namespace Microsoft.OData.CodeGen.Common
                                 .GetSupportedFrameworksAsync(CancellationToken.None)
                                 .ConfigureAwait(false);
 
-                            if (new FrameworkReducer().GetNearest(framework, packageFrameworks) != null)
+                            if (IsCompatibleWithAllFrameworks(frameworks, packageFrameworks, frameworkReducer))
                             {
                                 return package.Identity.Version.ToNormalizedString();
                             }
@@ -80,6 +95,39 @@ namespace Microsoft.OData.CodeGen.Common
 
                 return packages.FirstOrDefault()?.Identity.Version.ToNormalizedString();
             }
+        }
+
+        /// <summary>
+        /// Checks if the package frameworks are compatible with all the target frameworks.
+        /// </summary>
+        /// <param name="targetFrameworks">The target frameworks to check compatibility against.</param>
+        /// <param name="packageFrameworks">The package frameworks to check for compatibility.</param>
+        /// <param name="frameworkReducer">An optional framework reducer to use for compatibility checks.</param>
+        /// <returns>True if the package frameworks are compatible with all the target frameworks; otherwise, false.</returns>
+        internal static bool IsCompatibleWithAllFrameworks(
+            IEnumerable<NuGetFramework> targetFrameworks, IEnumerable<NuGetFramework> packageFrameworks, FrameworkReducer frameworkReducer = null)
+        {
+            frameworkReducer = frameworkReducer ?? new FrameworkReducer();
+            return targetFrameworks.All(
+                targetFramework => frameworkReducer.GetNearest(targetFramework, packageFrameworks) != null);
+        }
+
+        internal static NuGetFramework ParseTargetFramework(string targetFramework)
+        {
+            if (targetFramework.StartsWith("v4.", StringComparison.OrdinalIgnoreCase))
+            {
+                targetFramework = $".NETFramework,Version={targetFramework}";
+            }
+
+            int versionSeparator = targetFramework.LastIndexOf('=');
+            if (versionSeparator >= 0 && targetFramework.Substring(versionSeparator + 1).StartsWith("net", StringComparison.OrdinalIgnoreCase))
+            {
+                return NuGetFramework.ParseFolder(targetFramework.Substring(versionSeparator + 1));
+            }
+
+            return targetFramework.StartsWith(".", StringComparison.Ordinal)
+                ? NuGetFramework.ParseFrameworkName(targetFramework, DefaultFrameworkNameProvider.Instance)
+                : NuGetFramework.ParseFolder(targetFramework);
         }
     }
 }

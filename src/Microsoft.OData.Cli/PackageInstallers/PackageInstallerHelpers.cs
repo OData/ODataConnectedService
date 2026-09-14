@@ -92,7 +92,7 @@ namespace Microsoft.OData.Cli.PackageInstallers
         /// <param name="packageId">The package to install</param>
         /// <param name="projectTargetVersion">The version of .net framework that the project targets.</param>
         /// <returns>A completed task of the package installation.</returns>
-        internal async Task InstallPackagesOnDotNetV4FrameworkProjects(string packageId, string projectTargetVersion)
+        internal async Task InstallPackagesOnDotNetV4FrameworkProjects(string packageId, string projectTargetVersion, NuGetVersion packageVersion)
         {
             using (SourceCacheContext cacheContext = new SourceCacheContext())
             {
@@ -100,7 +100,6 @@ namespace Microsoft.OData.Cli.PackageInstallers
                 IEnumerable<SourceRepository> repositories = this.SourceRepositoryProvider.GetRepositories();
                 HashSet<SourcePackageDependencyInfo> availablePackages = new HashSet<SourcePackageDependencyInfo>(PackageIdentityComparer.Default);
                 NuGetFramework nuGetFramework = NuGetFramework.ParseFolder(projectTargetVersion?.Split('=')[1]);
-                NuGetVersion packageVersion = await GetPackageLatestNugetVersionAsync(packageId, this.SourceRepository, nuGetFramework.DotNetFrameworkName);
 
                 //get all the package dependencies
                 await GetPackageDependencies(
@@ -209,16 +208,14 @@ namespace Microsoft.OData.Cli.PackageInstallers
         /// The target framework of the project provided.
         /// </summary>
         /// <param name="packageId">The nuget package to be installed</param>
-        /// <param name="sourceRepository">The <see cref="SourceRepository"/> to use.</param>
-        /// <param name="projectTargetFramework">The version of net framework/.netcore that the project targets.</param>
+        /// <param name="projectTargetFrameworks">The target frameworks of the project.</param>
         /// <returns>The <see cref="NuGetVersion"/> of the package</returns>
-        private async Task<NuGetVersion> GetPackageLatestNugetVersionAsync(
-            string packageId,
-            SourceRepository sourceRepository,
-            string projectTargetFramework)
+        internal async Task<NuGetVersion> GetPackageLatestNugetVersionAsync(string packageId, IEnumerable<string> projectTargetFrameworks)
         {
             string packageVersion = await NuGetPackageVersionResolver.GetLatestCompatibleVersionAsync(
-                sourceRepository.PackageSource.Source, packageId, projectTargetFramework);
+                this.SourceRepository.PackageSource.Source,
+                packageId,
+                projectTargetFrameworks);
             return NuGetVersion.Parse(packageVersion);
         }
 
@@ -326,31 +323,12 @@ namespace Microsoft.OData.Cli.PackageInstallers
         }
 
         /// <summary>
-        /// Installs Packages on any project that uses the PackageReference method to reference packages.
-        /// Uses the dotnet Cli
+        /// Installs a package on a project that uses PackageReference.
         /// </summary>
         /// <param name="packageName">The name of the package to install</param>
-        /// <param name="messageLogger">An instance of <see cref="IMessageLogger"> to use in logging</param>
-        internal async Task InstallPackagesOnDotNetCoreFrameworks(string packageName, IMessageLogger messageLogger, string projectTargetFramework)
+        /// <param name="packageVersion">The package version to install.</param>
+        internal void InstallPackageReference(string packageName, NuGetVersion packageVersion)
         {
-
-            ILogger logger = new Logger(this.messageLogger);
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            FindPackageByIdResource resource = await this.SourceRepository.GetResourceAsync<FindPackageByIdResource>();
-            NuGetFramework nuGetFramework = NuGetFramework.ParseFolder(projectTargetFramework?.Split('=')[1]);
-            NuGetVersion packageVersion = await GetPackageLatestNugetVersionAsync(packageName, this.SourceRepository, nuGetFramework.DotNetFrameworkName);
-            using (MemoryStream packageStream = new MemoryStream())
-            {
-                await resource.CopyNupkgToStreamAsync(
-               packageName,
-               packageVersion,
-               packageStream,
-               new SourceCacheContext(),
-               logger,
-               cancellationToken);
-            }
-
             ProjectItem checkIfItemExists = this.project.GetItems("PackageReference").FirstOrDefault(a => a.EvaluatedInclude.Contains(packageName));
             if (checkIfItemExists == null)
             {

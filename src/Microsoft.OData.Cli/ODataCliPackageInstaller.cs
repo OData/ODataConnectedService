@@ -10,6 +10,7 @@ using Microsoft.Build.Evaluation;
 using Microsoft.OData.Cli.PackageInstallers;
 using Microsoft.OData.CodeGen.Logging;
 using Microsoft.OData.CodeGen.PackageInstallation;
+using NuGet.Versioning;
 
 namespace Microsoft.OData.Cli
 {
@@ -47,15 +48,28 @@ namespace Microsoft.OData.Cli
 
             PackageInstallerHelpers packageInstallerHelper = new PackageInstallerHelpers(this.project, packageSource, this.messageLogger);
             string[] projectTargetFrameworks = this.project.GetProjectTargetFrameworks();
+            NuGetVersion packageVersion = await packageInstallerHelper.GetPackageLatestNugetVersionAsync(
+                packageName,
+                projectTargetFrameworks);
+
+            if (!string.IsNullOrWhiteSpace(this.project.Xml.Sdk))
+            {
+                packageInstallerHelper.InstallPackageReference(packageName, packageVersion);
+                return;
+            }
+
             foreach (string projectTargetFramework in projectTargetFrameworks)
             {
                 if (projectTargetFramework.Contains("net4"))
                 {
-                    await packageInstallerHelper.InstallPackagesOnDotNetV4FrameworkProjects(packageName, projectTargetFramework);
+                    await packageInstallerHelper.InstallPackagesOnDotNetV4FrameworkProjects(
+                        packageName,
+                        projectTargetFramework,
+                        packageVersion);
                 }
                 else
                 {
-                    await packageInstallerHelper.InstallPackagesOnDotNetCoreFrameworks(packageName, this.messageLogger, projectTargetFramework);
+                    packageInstallerHelper.InstallPackageReference(packageName, packageVersion);
                 }
             }
         }
