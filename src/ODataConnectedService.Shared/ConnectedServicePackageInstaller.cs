@@ -30,6 +30,7 @@ namespace Microsoft.OData.ConnectedService
     {
         private static readonly ConcurrentDictionary<string, string> InstalledPackageVersions =
             new ConcurrentDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        private readonly NuGetPackageVersionResolver packageVersionResolver = new NuGetPackageVersionResolver();
 
         public ConnectedServiceHandlerContext Context { get; private set; }
         public Project Project { get; private set; }
@@ -83,7 +84,7 @@ namespace Microsoft.OData.ConnectedService
                 await Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                 string[] targetFrameworks = GetTargetFrameworkMonikers(this.Project);
                 string packageKey = GetPackageKey(this.Project, packageName);
-                string packageVersion = await NuGetPackageVersionResolver.GetLatestCompatibleVersionAsync(
+                string packageVersion = await this.packageVersionResolver.GetLatestCompatiblePackageVersionAsync(
                     packageSource, packageName, targetFrameworks).ConfigureAwait(false);
                 await Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 

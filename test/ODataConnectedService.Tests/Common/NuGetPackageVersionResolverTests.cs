@@ -51,5 +51,23 @@ namespace ODataConnectedService.Tests
 
             Assert.IsTrue(compatible);
         }
+
+        [DataTestMethod]
+        [DataRow(Constants.V4ClientNuGetPackage)]
+        [DataRow(Constants.V4ODataNuGetPackage)]
+        [DataRow(Constants.V4EdmNuGetPackage)]
+        [DataRow(Constants.V4SpatialNuGetPackage)]
+        public void UsesODataClientVersion_ReturnsTrueForVersionAlignedPackages(string packageId)
+        {
+            Assert.IsTrue(NuGetPackageVersionResolver.UsesODataClientVersion(packageId));
+        }
+
+        [DataTestMethod]
+        [DataRow(Constants.V4SystemComponentModelAnnotationsNuGetPackage)]
+        [DataRow(Constants.V3ClientNuGetPackage)]
+        public void UsesODataClientVersion_ReturnsFalseForIndependentPackages(string packageId)
+        {
+            Assert.IsFalse(NuGetPackageVersionResolver.UsesODataClientVersion(packageId));
+        }
     }
 }
