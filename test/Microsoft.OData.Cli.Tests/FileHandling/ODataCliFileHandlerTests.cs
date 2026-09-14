@@ -215,6 +215,38 @@ namespace Microsoft.OData.Cli.Tests.FileHandling
             }
         }
 
+        [Fact]
+        public async Task AddFileAsync_ShouldNotAddCompileItemForSdkMultiTargetProject()
+        {
+            string projectDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            string sourceDirectory = Path.Combine(projectDirectory, "source");
+            Directory.CreateDirectory(sourceDirectory);
+            string projectPath = Path.Combine(projectDirectory, "TestProject.csproj");
+            string sourcePath = Path.Combine(sourceDirectory, "Reference.cs");
+            string targetPath = Path.Combine(projectDirectory, "Reference.cs");
+            File.WriteAllText(
+                projectPath,
+                "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFrameworks>net10.0;net472</TargetFrameworks></PropertyGroup></Project>");
+            File.WriteAllText(sourcePath, "namespace TestProject { internal class Reference { } }");
+
+            try
+            {
+                var project = new Project(projectPath);
+
+                await CreateFileHandler(project).AddFileAsync(sourcePath, targetPath);
+
+                Assert.DoesNotContain(
+                    "<Compile Include=\"Reference.cs\"",
+                    File.ReadAllText(projectPath),
+                    StringComparison.Ordinal);
+            }
+            finally
+            {
+                ProjectCollection.GlobalProjectCollection.UnloadAllProjects();
+                Directory.Delete(projectDirectory, true);
+            }
+        }
+
         private static Project CreateProjectWithODataClientVersion(string version)
         {
             // Create a .csproj in memory
