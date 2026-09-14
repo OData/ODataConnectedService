@@ -62,7 +62,6 @@ namespace Microsoft.OData.CodeGen.Common
             V4ODataNuGetPackage,
             V4EdmNuGetPackage,
             V4SpatialNuGetPackage,
-            V4SystemTextJsonNuGetPackage,
             V4SystemComponentModelAnnotationsNuGetPackage
         };
 

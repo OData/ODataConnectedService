@@ -58,19 +58,17 @@ namespace Microsoft.OData.Cli
                     this.project = ProjectHelper.ReloadProject(this.project.DirectoryPath);
                     string[] projectTargetFrameworks = this.project.GetProjectTargetFrameworks();
 
-                    foreach (string projectTargetFramework in projectTargetFrameworks)
+                    if (string.IsNullOrWhiteSpace(this.project.Xml.Sdk))
                     {
-                        if (projectTargetFramework.Contains("net4"))
+                        foreach (string projectTargetFramework in projectTargetFrameworks)
                         {
-                            //If the filename being copied to the project folder is not 'Csdl.xml' and it has not already been copied,
-                            //then add it to the project file. 
-                            //Example of what the if statement below will output if true:
-                            //<ItemGroup>
-                            //    <Compile Include="Reference.cs" />
-                            //</ItemGroup>
-                            if (!Path.GetFileName(targetPath).EndsWith(Constants.CsdlFileNameSuffix) && project.GetItemsByEvaluatedInclude(Path.GetFileName(targetPath)).Count == 0)
+                            if (projectTargetFramework.Contains("net4"))
                             {
-                                ProjectHelper.AddProjectItem(this.project, "Compile", Path.GetFileName(targetPath));
+                                // Classic projects require source files to be explicitly included.
+                                if (!Path.GetFileName(targetPath).EndsWith(Constants.CsdlFileNameSuffix) && project.GetItemsByEvaluatedInclude(Path.GetFileName(targetPath)).Count == 0)
+                                {
+                                    ProjectHelper.AddProjectItem(this.project, "Compile", Path.GetFileName(targetPath));
+                                }
                             }
                         }
                     }
