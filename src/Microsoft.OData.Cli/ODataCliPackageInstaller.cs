@@ -8,6 +8,7 @@
 using System.Threading.Tasks;
 using Microsoft.Build.Evaluation;
 using Microsoft.OData.Cli.PackageInstallers;
+using Microsoft.OData.CodeGen.Common;
 using Microsoft.OData.CodeGen.Logging;
 using Microsoft.OData.CodeGen.PackageInstallation;
 using NuGet.Versioning;
@@ -21,6 +22,7 @@ namespace Microsoft.OData.Cli
     {
         private Project project;
         private IMessageLogger messageLogger;
+        private readonly NuGetPackageVersionResolver packageVersionResolver = new NuGetPackageVersionResolver();
 
         /// <summary>
         /// Creates an instance of <see cref="ODataCliPackageInstaller"/> 
@@ -50,7 +52,8 @@ namespace Microsoft.OData.Cli
             string[] projectTargetFrameworks = this.project.GetProjectTargetFrameworks();
             NuGetVersion packageVersion = await packageInstallerHelper.GetPackageLatestNugetVersionAsync(
                 packageName,
-                projectTargetFrameworks);
+                projectTargetFrameworks,
+                this.packageVersionResolver);
 
             if (!string.IsNullOrWhiteSpace(this.project.Xml.Sdk))
             {

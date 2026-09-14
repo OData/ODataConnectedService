@@ -216,9 +216,12 @@ namespace Microsoft.OData.Cli.PackageInstallers
         /// <param name="packageId">The nuget package to be installed</param>
         /// <param name="projectTargetFrameworks">The target frameworks of the project.</param>
         /// <returns>The <see cref="NuGetVersion"/> of the package</returns>
-        internal async Task<NuGetVersion> GetPackageLatestNugetVersionAsync(string packageId, IEnumerable<string> projectTargetFrameworks)
+        internal async Task<NuGetVersion> GetPackageLatestNugetVersionAsync(
+            string packageId,
+            IEnumerable<string> projectTargetFrameworks,
+            NuGetPackageVersionResolver packageVersionResolver)
         {
-            string packageVersion = await NuGetPackageVersionResolver.GetLatestCompatibleVersionAsync(
+            string packageVersion = await packageVersionResolver.GetLatestCompatiblePackageVersionAsync(
                 this.SourceRepository.PackageSource.Source,
                 packageId,
                 projectTargetFrameworks);

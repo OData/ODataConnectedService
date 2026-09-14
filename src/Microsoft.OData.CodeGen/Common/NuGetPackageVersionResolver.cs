@@ -19,8 +19,28 @@ using NuGet.Protocol.Core.Types;
 
 namespace Microsoft.OData.CodeGen.Common
 {
-    public static class NuGetPackageVersionResolver
+    public class NuGetPackageVersionResolver
     {
+        private Task<string> odataClientPackageVersionTask;
+
+        public Task<string> GetLatestCompatiblePackageVersionAsync(string packageSource, string packageId, IEnumerable<string> targetFrameworks)
+        {
+            if (!UsesODataClientVersion(packageId))
+            {
+                return GetLatestCompatibleVersionAsync(packageSource, packageId, targetFrameworks);
+            }
+
+            if (this.odataClientPackageVersionTask == null)
+            {
+                this.odataClientPackageVersionTask = GetLatestCompatibleVersionAsync(
+                    packageSource,
+                    Constants.V4ClientNuGetPackage,
+                    targetFrameworks);
+            }
+
+            return this.odataClientPackageVersionTask;
+        }
+
         /// <summary>
         /// Get the latest compatible version of a NuGet package from a given package source for a specified target framework.
         /// </summary>
@@ -129,6 +149,14 @@ namespace Microsoft.OData.CodeGen.Common
             return targetFramework.StartsWith(".", StringComparison.Ordinal)
                 ? NuGetFramework.ParseFrameworkName(targetFramework, DefaultFrameworkNameProvider.Instance)
                 : NuGetFramework.ParseFolder(targetFramework);
+        }
+
+        internal static bool UsesODataClientVersion(string packageId)
+        {
+            return packageId == Constants.V4ClientNuGetPackage
+                || packageId == Constants.V4ODataNuGetPackage
+                || packageId == Constants.V4EdmNuGetPackage
+                || packageId == Constants.V4SpatialNuGetPackage;
         }
     }
 }
