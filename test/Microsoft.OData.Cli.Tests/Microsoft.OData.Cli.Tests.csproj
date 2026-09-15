@@ -1,12 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <!-- Microsoft.Build.Locator's MSBL001 check forbids shipping NuGet.Frameworks, expecting the SDK's
+         copy to be used. We must ship it: the .NET 10 SDK carries NuGet.Frameworks 7.x, which drops the
+         public NuGetFrameworkFullComparer constructor that our pinned NuGet.Protocol 6.3.3 calls, so
+         binding to the SDK copy throws MethodAccessException. Microsoft.Build* stay runtime-excluded. -->
+    <DisableMSBuildAssemblyCopyCheck>true</DisableMSBuildAssemblyCopyCheck>
   </PropertyGroup>
 
   <ItemGroup>
@@ -57,12 +62,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="coverlet.collector" Version="6.0.2" />
     <PackageReference Include="Microsoft.Build" Version="17.0.0" ExcludeAssets="runtime" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="Microsoft.Build.Locator" Version="1.11.2" />
+    <!-- Match the CLI: ship NuGet.Frameworks 6.x so the test host does not bind NuGet.Protocol 6.3.3
+         against the .NET 10 SDK's NuGet.Frameworks 7.x. -->
+    <PackageReference Include="NuGet.Frameworks" Version="6.3.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
     <PackageReference Include="Moq" Version="4.20.72" />
-    <PackageReference Include="xunit" Version="2.5.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
   </ItemGroup>
 
   <ItemGroup>
