@@ -42,12 +42,6 @@ stages:
   - job: Build
     steps:
 
-    - task: UseDotNet@2
-      displayName: 'Use .NET SDK 8.0.x'
-      inputs:
-        packageType: 'sdk'
-        version: '8.0.x'
-
     - task: NuGetToolInstaller@0
       inputs:
         versionSpec: '>=5.8.0'
